@@ -17,5 +17,8 @@ export type propertyData = {
     garages: number,
     region: string,
     name: string,
-    slug: string
+    slug: string,
+    gallery_images?: string[];
+    description?: string;
+    amenities?: string[];
 };

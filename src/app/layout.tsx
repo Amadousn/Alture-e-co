@@ -1,13 +1,9 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import Aoscompo from "@/utils/aos";
 const dmsans = DM_Sans({ subsets: ["latin"] });
-import NextTopLoader from 'nextjs-toploader';
 import { AppContextProvider } from "../context-api/PropertyContext";
-import Footer from "./components/layout/footer";
-import ScrollToTop from "./components/scroll-to-top";
-import Header from "./components/layout/header";
+import { NextAuthProvider } from "./components/auth/NextAuthProvider";
 
 export default function RootLayout({
   children,
@@ -16,24 +12,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${dmsans.className}`}>
-        <AppContextProvider>
-          <ThemeProvider
-            attribute="class"
-            enableSystem={false}
-            defaultTheme="dark"
-          >
-            <Aoscompo>
-              <Header />
-              <NextTopLoader />
+      <body className={`${dmsans.className}`} suppressHydrationWarning={true}>
+        <NextAuthProvider>
+          <AppContextProvider>
+            <ThemeProvider
+              attribute="class"
+              enableSystem={false}
+              defaultTheme="dark"
+            >
               {children}
-              <Footer />
-            </Aoscompo>
-            <ScrollToTop />
-          </ThemeProvider>
-        </AppContextProvider>
+            </ThemeProvider>
+          </AppContextProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
 }
-a

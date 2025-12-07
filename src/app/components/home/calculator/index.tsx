@@ -71,12 +71,6 @@ export default function Calculator() {
           <div data-aos="fade-up">
             <Link
               href="/properties/properties-list"
-              className="text-xl bg-primary py-3 px-8 text-white rounded-lg me-3 mb-2 border border-primary hover:bg-blue-700"
-            >
-              Buy House
-            </Link>
-            <Link
-              href="/properties/properties-list"
               className="text-xl hover:bg-primary hover:text-white py-3 px-8 text-primary border border-primary rounded-lg me-3 mb-2"
             >
               Sell House
@@ -90,16 +84,6 @@ export default function Calculator() {
             </p>
             <div className="flex justify-center">
               <div className="flex p-3 border-4 rounded-full bg-transparent border-cyan items-center justify-center">
-                <button
-                  className={`px-6 py-2 text-base focus:outline-none ${
-                    activeTab === "buy"
-                      ? "text-white bg-cyan rounded-full"
-                      : "text-white transition duration-300 rounded-full"
-                  }`}
-                  onClick={() => handleTabChange("buy")}
-                >
-                  Buy
-                </button>
                 <button
                   className={`px-6 py-2 text-base focus:outline-none ${
                     activeTab === "sell"

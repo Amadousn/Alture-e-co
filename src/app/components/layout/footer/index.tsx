@@ -1,112 +1,98 @@
 "use client";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 
 const Footer = () => {
   return (
-    <footer className="relative z-10 bg-semidark dark:bg-semidark">
-      <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md pt-10 pb-5 px-0 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-12 gap-4">
-          <div className="md:col-span-4 col-span-12 flex flex-col px-4 sm:px-0">
-            <Link href="/" className="mb-6 inline-block max-w-40">
-              <div className="text-2xl font-bold text-white">
-                <span className="text-primary">A&C</span> Alture & Co.
+    <footer className="relative z-10 bg-black border-t border-white/10">
+      <div className="container mx-auto max-w-7xl pt-20 pb-10 px-6">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8 mb-20">
+          
+          {/* Brand Column */}
+          <div className="md:col-span-4 col-span-12">
+            <Link href="/" className="inline-block mb-8">
+              <div className="text-3xl font-light text-white tracking-tighter">
+                <span className="text-[#D4AF37] font-bold">Alture</span> & Co.
               </div>
             </Link>
-            <p className="text-sm text-gray mb-4">
-              Discreet advisory firm specializing in real estate and digital capital structuring
+            <p className="text-gray-400 font-light leading-relaxed max-w-xs mb-8">
+              Discreet advisory firm specializing in premium real estate and digital capital structuring across Dubai and Europe.
             </p>
-          </div>
-          <div className="md:col-span-8 col-span-12 grid grid-cols-12 gap-4 px-4 sm:px-0">
-            <div className="w-full lg:col-span-4 col-span-12">
-              <h4 className="mb-4 text-lg text-white">
-                Location
-              </h4>
-              <p className="mb-2 text-gray text-base">
-                Dubai, UAE
-              </p>
-              <p className="mb-6 text-sm text-gray">
-                Strategic wealth management across Europe & UAE
-              </p>
+            <div className="flex gap-4">
+               <SocialLink icon="ph:instagram-logo-thin" href="#" />
+               <SocialLink icon="ph:linkedin-logo-thin" href="#" />
+               <SocialLink icon="ph:twitter-logo-thin" href="#" />
             </div>
-            <div className="w-full lg:col-span-4 col-span-12">
-              <h4 className="mb-4 text-lg text-white">
-                Navigation
-              </h4>
-              <ul>
-                <li>
-                  <Link href="#what-we-offer" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    What We Manage
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#who-we-are" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Who We Are
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#strategic-vision" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Strategic Vision
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#contact" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Contact
-                  </Link>
-                </li>
+          </div>
+
+          {/* Navigation Columns */}
+          <div className="md:col-span-8 col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-12">
+            <div>
+              <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-8">Explore</h4>
+              <ul className="space-y-4">
+                <FooterLink href="/" label="Home" />
+                <FooterLink href="/properties/properties-list" label="Properties" />
+                <FooterLink href="/#what-we-offer" label="Services" />
+                <FooterLink href="/#strategic-vision" label="Vision" />
               </ul>
             </div>
-            <div className="w-full lg:col-span-4 col-span-12">
-              <h4 className="mb-4 text-lg text-white">
-                Services
-              </h4>
-              <ul>
-                <li>
-                  <Link href="#what-we-offer" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Real Estate Management
-                  </Link>
+            
+            <div>
+              <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-8">Legal</h4>
+              <ul className="space-y-4">
+                <FooterLink href="#" label="Privacy Policy" />
+                <FooterLink href="#" label="Terms of Service" />
+                <FooterLink href="#" label="Disclaimer" />
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-8">Contact</h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-gray-400 font-light">
+                   <Icon icon="ph:map-pin-thin" className="w-5 h-5 mt-1 text-[#D4AF37]" />
+                   <span>Dubai, UAE<br/>Financial Center</span>
                 </li>
                 <li>
-                  <Link href="#what-we-offer" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Digital Assets
-                  </Link>
+                   <a href="https://wa.me/971509845622" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
+                      <Icon icon="ph:whatsapp-logo-thin" className="w-5 h-5 text-[#D4AF37]" />
+                      +971 50 984 5622
+                   </a>
                 </li>
                 <li>
-                  <Link href="#what-we-offer" className="mb-3 inline-block text-base text-gray hover:text-primary transition-colors">
-                    Cross-Border Coordination
-                  </Link>
+                   <a href="mailto:Celine@altureandco.com" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
+                      <Icon icon="ph:envelope-simple-thin" className="w-5 h-5 text-[#D4AF37]" />
+                      Celine@altureandco.com
+                   </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-      </div>
-      <div className="border-t border-dark_border py-8">
-        <div className="container flex flex-col lg:flex-row justify-between items-center mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="lg:max-w-45 max-w-full text-center lg:text-left mb-4 lg:mb-0">
-            <div className="flex lg:flex-nowrap flex-wrap lg:flex-row lg:gap-11 gap-4 text-base sm:text-lg md:text-xl">
-              <p className="text-white">
-                Phone :
-                <a href="https://wa.me/971509845622" className="text-gray hover:text-primary transition-colors ml-2">
-                  +971 50 984 5622
-                </a>
-              </p>
-              <p className="text-white">
-                Email :
-                <a href="mailto:Celine@altureandco.com" className="text-gray hover:text-primary transition-colors ml-2">
-                  Celine@altureandco.com
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="text-center lg:text-right">
-            <p className="text-sm text-gray">
-              © 2025 Alture & Co. All rights reserved.
-            </p>
-          </div>
+
+        {/* Copyright */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 font-light uppercase tracking-wider">
+          <p> 2025 Alture & Co. All rights reserved.</p>
+          <p>Designed for Excellence</p>
         </div>
       </div>
     </footer>
   );
 };
+
+const FooterLink = ({ href, label }: { href: string, label: string }) => (
+  <li>
+    <Link href={href} className="text-gray-400 hover:text-[#D4AF37] transition-colors font-light text-sm tracking-wide">
+      {label}
+    </Link>
+  </li>
+);
+
+const SocialLink = ({ icon, href }: { icon: string, href: string }) => (
+  <a href={href} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300">
+    <Icon icon={icon} className="w-5 h-5" />
+  </a>
+);
 
 export default Footer;
