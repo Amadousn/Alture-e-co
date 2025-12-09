@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import SocialSignIn from "../social-button/SocialSignIn";
@@ -51,13 +52,23 @@ const Signin = () => {
       return;
     }
     setLoading(true);
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      localStorage.setItem("user", JSON.stringify({ user: loginData.email }));
-      router.push("/");
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: loginData.email,
+        password: loginData.password,
+      });
+
+      if (result?.error) {
+        toast.error("Invalid email or password");
+        setLoading(false);
+      } else {
+        toast.success("Login successful!");
+        router.push("/admin");
+      }
     } catch (error) {
-      alert("Something went wrong. Please try again.");
-    } finally {
+      toast.error("Something went wrong. Please try again.");
       setLoading(false);
     }
   };

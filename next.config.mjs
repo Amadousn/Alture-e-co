@@ -2,7 +2,7 @@
 const basePath = process.env.NODE_ENV === 'production' ? '/property-nextjs' : '';
 
 const nextConfig = {
-  output: 'export',
+  // output: 'export',
   basePath,
   assetPrefix: basePath,
   images: {
