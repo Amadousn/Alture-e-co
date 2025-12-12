@@ -67,9 +67,9 @@ const Contact = () => {
                             </a>
 
                             {/* Location */}
-                            <div className="flex items-start gap-4 p-6 border border-primary/30 shadow-sm">
-                                <div className="w-12 h-12 border border-primary flex items-center justify-center flex-shrink-0">
-                                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="group flex items-start gap-4 p-6 border border-primary/30 hover:border-primary hover:bg-primary/5 transition-all shadow-sm hover:shadow-md">
+                                <div className="w-12 h-12 border border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>

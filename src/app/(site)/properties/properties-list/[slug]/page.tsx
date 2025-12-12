@@ -19,7 +19,7 @@ const formatPrice = (price: string | number) => {
       maximumFractionDigits: 0
     }).format(num);
   }
-  return price;
+  return String(price);
 };
 
 export async function generateStaticParams() {

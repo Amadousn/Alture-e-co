@@ -4,6 +4,15 @@ export const extendedConfig = {
     'deatail_shadow': '0px 20px 80px 0px #68758D26',
     "darkmd": "rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px",
   },
+  keyframes: {
+    scroll: {
+      '0%': { transform: 'translateX(0)' },
+      '100%': { transform: 'translateX(-50%)' },
+    }
+  },
+  animation: {
+    scroll: 'scroll 40s linear infinite',
+  },
   transitionDuration: {
     '150': '150ms',
   },

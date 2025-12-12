@@ -84,7 +84,7 @@ const WhoWeAre = () => {
                     {/* Bottom Stats/Highlights */}
                     <div className="grid grid-cols-3 gap-8 mt-16 pt-12 border-t border-primary/20" data-aos="fade-up" data-aos-delay="200">
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-primary mb-2">20-40+</div>
+                            <div className="text-3xl font-bold text-primary mb-2">120-150</div>
                             <div className="text-sm text-black">Assets per Portfolio</div>
                         </div>
                         <div className="text-center border-x border-primary/20">
