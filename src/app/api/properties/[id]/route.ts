@@ -60,17 +60,30 @@ export async function PUT(request: Request, context: Context) {
 export async function DELETE(request: Request, context: Context) {
     const params = await context.params;
     const { id } = params;
+    console.log(`[API DELETE] Received request for ID: ${id}`);
+
     try {
         const data = getData();
-        const filteredData = data.filter((item: any) => item.id !== id);
+        console.log(`[API DELETE] Current Data Length: ${data.length}`);
+
+        const filteredData = data.filter((item: any) => String(item.id) !== id);
+        console.log(`[API DELETE] Filtered Data Length: ${filteredData.length}`);
 
         if (data.length === filteredData.length) {
+            console.log(`[API DELETE] ID not found: ${id}`);
             return NextResponse.json({ error: 'Property not found' }, { status: 404 });
         }
 
-        saveData(filteredData);
-        return NextResponse.json({ message: 'Property deleted successfully' });
+        const saved = saveData(filteredData);
+        if (saved) {
+            console.log(`[API DELETE] Successfully saved changes.`);
+            return NextResponse.json({ message: 'Property deleted successfully' });
+        } else {
+            console.error(`[API DELETE] Failed to save data.`);
+            return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
+        }
     } catch (error) {
+        console.error(`[API DELETE] Exception:`, error);
         return NextResponse.json({ error: 'Failed to delete property' }, { status: 500 });
     }
 }

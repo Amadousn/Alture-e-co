@@ -10,24 +10,38 @@ import { useRouter } from "next/navigation";
 
 export default function PropertiesClient({ initialData }: { initialData: propertyData[] }) {
     const [properties, setProperties] = useState<propertyData[]>(initialData);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [confirmingId, setConfirmingId] = useState<string | null>(null);
     const router = useRouter();
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this property?")) return;
+        // Two-step confirmation logic
+        if (confirmingId !== id) {
+            setConfirmingId(id);
+            // Auto-reset confirmation after 3 seconds
+            setTimeout(() => setConfirmingId(null), 3000);
+            return;
+        }
+
+        // Proceed with deletion
+        setConfirmingId(null);
+        setDeletingId(id);
 
         try {
-            const res = await fetch(`/api/properties/${id}`, {
+            const res = await fetch(`/api/properties/${id}/`, {
                 method: "DELETE",
             });
 
             if (res.ok) {
-                setProperties(properties.filter((p) => p.id !== id));
+                setProperties(prev => prev.filter((p) => p.id !== id));
                 toast.success("Property deleted successfully");
             } else {
                 toast.error("Failed to delete property");
             }
         } catch (error) {
             toast.error("An error occurred");
+        } finally {
+            setDeletingId(null);
         }
     };
 
@@ -112,9 +126,23 @@ export default function PropertiesClient({ initialData }: { initialData: propert
                                         </Link>
                                         <button
                                             onClick={() => handleDelete(property.id!)}
-                                            className="font-medium text-red-500 hover:text-red-400 transition-colors flex items-center gap-1"
+                                            disabled={deletingId === property.id}
+                                            className={`font-medium transition-all duration-200 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${confirmingId === property.id
+                                                    ? "text-red-100 bg-red-600 px-3 py-1 rounded-md shadow-lg shadow-red-600/20"
+                                                    : "text-red-500 hover:text-red-400"
+                                                }`}
                                         >
-                                            <Icon icon="lucide:trash-2" className="w-4 h-4" /> Delete
+                                            {deletingId === property.id ? (
+                                                <Icon icon="lucide:loader-2" className="w-4 h-4 animate-spin" />
+                                            ) : (
+                                                <Icon icon={confirmingId === property.id ? "lucide:alert-circle" : "lucide:trash-2"} className="w-4 h-4" />
+                                            )}
+                                            {deletingId === property.id
+                                                ? "Deleting..."
+                                                : confirmingId === property.id
+                                                    ? "Sure?"
+                                                    : "Delete"
+                                            }
                                         </button>
                                     </div>
                                 </td>
