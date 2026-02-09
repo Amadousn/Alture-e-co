@@ -48,7 +48,7 @@ export default function DiscoverProperties() {
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-4 gap-8">
                     {propertiesData.map((property, index) => (
                         <div key={index} className="image-item block" onClick={() => updateFilter('category', property.category)} data-aos="fade-up" data-aos-delay={`${index * 100}`}>
-                            <Link href={`/properties/properties-list`} className='group'>
+                            <Link href="#contact" className='group'>
                                 <Image
                                     src={getImgPath(property.category_img)}
                                     alt="Image"

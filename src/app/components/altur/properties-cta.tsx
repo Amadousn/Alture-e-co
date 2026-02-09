@@ -60,10 +60,10 @@ const PropertiesCTA = () => {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
                         <Link
-                            href="/properties/properties-list"
+                            href="#contact"
                             className="btn w-full sm:w-auto px-8 py-4 text-center flex items-center justify-center gap-2 group"
                         >
-                            View All Properties
+                            Contact for Portfolio
                             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
