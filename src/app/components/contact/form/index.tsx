@@ -53,7 +53,7 @@ const ContactForm = () => {
         reset();
       })
       .catch((error) => {
-        console.log(error.message);
+        console.error(error.message);
       });
   };
 
@@ -61,7 +61,7 @@ const ContactForm = () => {
     <>
       <section className="dark:bg-darkmode lg:pb-24 pb-16 px-4">
         <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md">
-          <div className="grid md:grid-cols-12 grid-cols-1 gap-8 items-center">  
+          <div className="grid md:grid-cols-12 grid-cols-1 gap-8 items-center">
             <div className="col-span-6">
               <h2 className="max-w-72 text-[40px] leading-[1.2] font-bold mb-9">Get Online Consultation</h2>
               <form onSubmit={handleSubmit} className="flex flex-wrap w-full m-auto justify-between">
@@ -103,8 +103,8 @@ const ContactForm = () => {
                   </div>
                   <div className="mx-0 my-2.5 flex-1">
                     <label htmlFor="Specialist" className="pb-3 inline-block text-17">Specialist*</label>
-                    <select  
-                    name="specialist"
+                    <select
+                      name="specialist"
                       id="specialist"
                       value={formData.specialist}
                       onChange={handleChange} className="custom-select w-full text-17 px-4 py-2.5 rounded-lg border-border dark:text-white border-solid dark:bg-darkmode border transition-all duration-500 focus:border-primary dark:focus:border-primary dark:border-dark_border focus:border-solid focus:outline-0">
@@ -124,7 +124,7 @@ const ContactForm = () => {
                   <div className="mx-0 my-2.5 flex-1">
                     <label htmlFor="date" className="pb-3 inline-block text-17">Date*</label>
                     <input
-                       id='date'
+                      id='date'
                       type='date'
                       name='date'
                       value={formData.date}

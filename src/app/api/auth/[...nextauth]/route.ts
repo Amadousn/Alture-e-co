@@ -11,19 +11,18 @@ const handler = NextAuth({
       },
       async authorize(credentials, req) {
         // Debug logs
-        console.log("Authorize called with:", credentials);
-        console.log("Expected email:", process.env.ADMIN_EMAIL || "admin@alture.com");
-        
+
+
         const user = { id: "1", name: "Admin User", email: "admin@alture.com" };
 
         if (
           credentials?.email === "admin@alture.com" &&
           credentials?.password === "admin"
         ) {
-          console.log("Login authorized!");
+
           return user;
         }
-        console.log("Login FAILED.");
+
         return null;
       }
     })

@@ -12,10 +12,14 @@ import Contact from '../components/altur/contact';
 export const metadata: Metadata = {
   title: "Alture & Co. - Strategic Portfolio Management",
   description: "Premium real estate and digital asset structuring in Dubai. Luxury properties, crypto portfolio management, and cross-border wealth coordination.",
+  icons: {
+    icon: 'data:,', // Hide favicon
+  },
 };
 
 export default function Home() {
   // Read properties from JSON file
+  /* 
   let properties = [];
   try {
     const filePath = join(process.cwd(), 'public/data/propertydata.json');
@@ -24,12 +28,13 @@ export default function Home() {
   } catch (error) {
     console.error("Failed to load properties for homepage:", error);
   }
+  */
 
   return (
     <main>
       <Hero />
       <WhatWeOffer />
-      <FeaturedProperties properties={properties} />
+      {/* <FeaturedProperties properties={properties} /> */}
       <WhoWeAre />
       <StrategicVision />
       <Contact />

@@ -40,9 +40,9 @@ const Header: React.FC = () => {
 
   const menuItems = [
     { label: "HOME", href: "/" },
-    { label: "PROPERTIES", href: "/properties/properties-list" },
-    { label: "SERVICES", href: "/#what-we-offer" },
-    { label: "ABOUT", href: "/#who-we-are" },
+    { label: "WHAT WE DO", href: "/#what-we-offer" },
+    { label: "WHO WE ARE", href: "/#who-we-are" },
+    { label: "STRATEGIC VISION", href: "/#strategic-vision" },
     { label: "CONTACT", href: "/#contact" },
   ];
 
@@ -51,18 +51,17 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        sticky 
-          ? "bg-black/90 backdrop-blur-md shadow-lg border-b border-white/10 py-4" 
-          : "bg-transparent py-6"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${sticky
+        ? "bg-black/90 backdrop-blur-md shadow-lg border-b border-white/10 py-4"
+        : "bg-transparent py-6"
+        }`}
     >
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-6">
         {/* Logo Area */}
         <div className="flex-shrink-0">
-           <Logo />
+          <Logo />
         </div>
-        
+
         {/* Centered Desktop Navigation */}
         <nav className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-8">
           {menuItems.map((item, index) => (
@@ -71,15 +70,15 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Right Actions (Admin) */}
-        <div className="hidden lg:flex items-center">
-          <Link 
+        {/* <div className="hidden lg:flex items-center">
+          <Link
             href="/dashboard"
             className="px-5 py-2 rounded-full border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-colors text-xs font-bold tracking-widest uppercase flex items-center gap-2"
           >
             <Icon icon="ph:user-thin" className="w-4 h-4" />
             Admin
           </Link>
-        </div>
+        </div> */}
 
         {/* Mobile Toggle */}
         <div className="flex items-center lg:hidden">
@@ -101,31 +100,30 @@ const Header: React.FC = () => {
       {/* Mobile Menu Drawer */}
       <div
         ref={mobileMenuRef}
-        className={`lg:hidden fixed top-0 right-0 h-full w-[300px] bg-[#0a0a0a] border-l border-white/10 shadow-2xl transform transition-transform duration-300 z-50 ${
-          navbarOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`lg:hidden fixed top-0 right-0 h-full w-[300px] bg-[#0a0a0a] border-l border-white/10 shadow-2xl transform transition-transform duration-300 z-50 ${navbarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
+          <div className="flex items-center justify-between p-6 border-b border-white/10">
             <span className="text-white font-bold tracking-widest">MENU</span>
             <button onClick={() => setNavbarOpen(false)} className="text-white">
-                <Icon icon="ph:x" className="w-6 h-6" />
+              <Icon icon="ph:x" className="w-6 h-6" />
             </button>
-            </div>
-            
-            <nav className="flex flex-col p-6 space-y-6">
+          </div>
+
+          <nav className="flex flex-col p-6 space-y-6">
             {menuItems.map((item, index) => (
-                <MobileHeaderLink key={index} item={item} />
+              <MobileHeaderLink key={index} item={item} />
             ))}
             <div className="h-px bg-white/10 my-4" />
-            <Link 
-                href="/dashboard"
-                className="text-[#D4AF37] font-medium flex items-center gap-3"
+            {/* <Link
+              href="/dashboard"
+              className="text-[#D4AF37] font-medium flex items-center gap-3"
             >
-                <Icon icon="ph:user-circle" className="w-5 h-5" />
-                Admin Dashboard
-            </Link>
-            </nav>
+              <Icon icon="ph:user-circle" className="w-5 h-5" />
+              Admin Dashboard
+            </Link> */}
+          </nav>
         </div>
       </div>
     </header>

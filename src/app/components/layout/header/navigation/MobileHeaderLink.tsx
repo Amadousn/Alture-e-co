@@ -18,7 +18,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
   const path = usePathname();
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" suppressHydrationWarning={true}>
       <button
         onClick={item.submenu ? handleToggle : handlenav}
         className={`flex items-center justify-between w-full py-2 px-3 rounded-md text-black focus:outline-none dark:text-white dark:text-opacity-60 ${path === item.href ? 'bg-primary text-white dark:bg-primary dark:text-white dark:text-opacity-100' : ' text-black dark:text-white '} ${path.startsWith(`/${item.label.toLowerCase()}`) ? "bg-primary text-white dark:bg-primary dark:text-white dark:text-opacity-100 " : null}`}

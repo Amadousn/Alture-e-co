@@ -22,6 +22,7 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
       className={`${item.submenu ? "relative" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      suppressHydrationWarning={true}
     >
       <Link href={item.href} className={`text-sm tracking-wide flex py-3 font-medium text-midnight_text hover:text-primary dark:text-white dark:hover:text-primary ${path === item.href ? '!text-primary' : ' text-black dark:text-white '} ${path.startsWith(`/${item.label.toLowerCase()}`) ? "!text-primary " : null}`}>
         {item.label}
