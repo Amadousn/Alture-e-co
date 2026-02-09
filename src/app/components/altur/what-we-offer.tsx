@@ -2,7 +2,7 @@
 
 const WhatWeOffer = () => {
     return (
-        <section id="what-we-offer" className="py-20 bg-black relative overflow-hidden">
+        <section id="what-we-offer" className="py-12 md:py-20 bg-black relative overflow-hidden">
             {/* Grid Background */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0" style={{
@@ -13,31 +13,31 @@ const WhatWeOffer = () => {
 
             <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
                 {/* Section Header */}
-                <div className="mb-16" data-aos="fade-up">
+                <div className="mb-12 md:mb-16" data-aos="fade-up">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-                        <span className="text-primary text-sm font-mono tracking-widest">SERVICES</span>
+                        <span className="text-primary text-xs md:text-sm font-mono tracking-widest">SERVICES</span>
                         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
+                    <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-white">
                         What We <span className="text-primary">Manage</span>
                     </h2>
-                    <p className="text-xl text-gray text-center max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-gray text-center max-w-2xl mx-auto">
                         Comprehensive wealth management across real estate and digital assets
                     </p>
                 </div>
 
                 {/* Services Grid - Modern Layout */}
-                <div className="grid md:grid-cols-3 gap-8 mb-12">
+                <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
                     {/* Service 1: Proprietary Trading */}
                     <div className="group relative" data-aos="fade-up" data-aos-delay="100">
                         {/* Gold border that animates on hover */}
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-primary via-secondary to-primary opacity-0 group-hover:opacity-100 blur transition duration-500"></div>
 
-                        <div className="relative bg-black border border-primary/30 p-8 h-full shadow-sm hover:shadow-xl hover:shadow-primary/20 transition-all">
+                        <div className="relative bg-black border border-primary/30 p-6 md:p-8 h-full shadow-sm hover:shadow-xl hover:shadow-primary/20 transition-all">
                             {/* Number indicator */}
                             <div className="flex items-start justify-between mb-6">
-                                <span className="text-6xl font-bold text-primary/20 group-hover:text-primary/30 transition-colors">01</span>
+                                <span className="text-5xl md:text-6xl font-bold text-primary/20 group-hover:text-primary/30 transition-colors">01</span>
                                 <div className="w-12 h-12 border border-primary/50 flex items-center justify-center">
                                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />

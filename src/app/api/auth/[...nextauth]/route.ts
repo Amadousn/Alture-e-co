@@ -33,4 +33,11 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-export { handler as GET, handler as POST };
+async function authHandler(req: any, ctx: any) {
+  if (ctx.params && typeof ctx.params.then === 'function') {
+    ctx.params = await ctx.params;
+  }
+  return handler(req, ctx);
+}
+
+export { authHandler as GET, authHandler as POST };

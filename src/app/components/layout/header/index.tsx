@@ -94,26 +94,32 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       {navbarOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300" 
+          onClick={() => setNavbarOpen(false)}
+        />
       )}
 
       {/* Mobile Menu Drawer */}
       <div
         ref={mobileMenuRef}
-        className={`lg:hidden fixed top-0 right-0 h-full w-[300px] bg-[#0a0a0a] border-l border-white/10 shadow-2xl transform transition-transform duration-300 z-50 ${navbarOpen ? "translate-x-0" : "translate-x-full"
+        className={`lg:hidden fixed top-0 right-0 h-full w-[85%] sm:w-[350px] bg-[#050505]/95 backdrop-blur-xl border-l border-[#D4AF37]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-50 ${navbarOpen ? "translate-x-0" : "translate-x-full"
           }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-6 border-b border-white/10">
-            <span className="text-white font-bold tracking-widest">MENU</span>
-            <button onClick={() => setNavbarOpen(false)} className="text-white">
+          <div className="flex items-center justify-between p-8 border-b border-white/5">
+            <span className="text-[#D4AF37] font-bold tracking-[0.2em] text-lg">MENU</span>
+            <button 
+              onClick={() => setNavbarOpen(false)} 
+              className="text-white/70 hover:text-[#D4AF37] transition-colors p-2 rounded-full hover:bg-white/5"
+            >
               <Icon icon="ph:x" className="w-6 h-6" />
             </button>
           </div>
 
-          <nav className="flex flex-col p-6 space-y-6">
+          <nav className="flex flex-col p-8 space-y-2 overflow-y-auto">
             {menuItems.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} />
+              <MobileHeaderLink key={index} item={item} onClick={() => setNavbarOpen(false)} />
             ))}
             <div className="h-px bg-white/10 my-4" />
             {/* <Link

@@ -2,7 +2,7 @@
 
 const WhoWeAre = () => {
     return (
-        <section id="who-we-are" className="py-20 bg-white relative overflow-hidden">
+        <section id="who-we-are" className="py-12 md:py-20 bg-white relative overflow-hidden">
             {/* Animated background lines */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-primary to-transparent"></div>
@@ -13,32 +13,32 @@ const WhoWeAre = () => {
             <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
                 <div className="max-w-5xl mx-auto">
                     {/* Section Header */}
-                    <div className="mb-12" data-aos="fade-up">
-                        <div className="flex items-center gap-4 mb-6">
+                    <div className="mb-8 md:mb-12" data-aos="fade-up">
+                        <div className="flex items-center gap-4 mb-4 md:mb-6">
                             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary to-primary"></div>
-                            <span className="text-primary text-sm font-mono tracking-widest">ABOUT</span>
+                            <span className="text-primary text-xs md:text-sm font-mono tracking-widest">ABOUT</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+                        <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-black">
                             Who We Are
                         </h2>
                     </div>
 
                     {/* Main Content - Split Layout */}
-                    <div className="grid md:grid-cols-2 gap-12" data-aos="fade-up" data-aos-delay="100">
+                    <div className="grid md:grid-cols-2 gap-8 md:gap-12" data-aos="fade-up" data-aos-delay="100">
                         {/* Left: Description */}
-                        <div className="space-y-6">
-                            <div className="border-l-2 border-primary pl-6">
-                                <p className="text-xl text-black leading-relaxed mb-4">
+                        <div className="space-y-4 md:space-y-6">
+                            <div className="border-l-2 border-primary pl-4 md:pl-6">
+                                <p className="text-lg md:text-xl text-black leading-relaxed mb-3 md:mb-4">
                                     Alture & Co. is a <span className="text-primary font-medium">discreet advisory firm</span> based in Dubai.
                                 </p>
-                                <p className="text-lg text-black leading-relaxed">
+                                <p className="text-base md:text-lg text-black leading-relaxed">
                                     Focused on real estate and digital capital, the firm serves an international clientele across{" "}
                                     <span className="text-primary font-semibold">Europe and the UAE</span>.
                                 </p>
                             </div>
 
-                            <div className="pt-6 border-t border-primary/20">
-                                <p className="text-base text-black leading-relaxed">
+                            <div className="pt-4 md:pt-6 border-t border-primary/20">
+                                <p className="text-sm md:text-base text-black leading-relaxed">
                                     Every engagement is guided by <span className="text-primary font-medium">long-term vision</span>,{" "}
                                     <span className="text-primary font-medium">clarity</span>, and{" "}
                                     <span className="text-primary font-medium">full confidentiality</span>.
@@ -48,33 +48,33 @@ const WhoWeAre = () => {
 
                         {/* Right: Clientele */}
                         <div>
-                            <h3 className="text-xl font-bold mb-8 text-black flex items-center gap-3">
+                            <h3 className="text-lg md:text-xl font-bold mb-6 md:mb-8 text-black flex items-center gap-3">
                                 <div className="w-8 h-px bg-primary"></div>
                                 Our Clientele
                             </h3>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3 md:space-y-4">
                                 <div className="group flex items-start gap-4 p-4 bg-white border-2 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all shadow-sm">
                                     <div className="w-2 h-2 bg-primary mt-2 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
                                     <div>
-                                        <h4 className="text-black font-semibold mb-1">Private <span className="text-primary">Investors</span></h4>
-                                        <p className="text-sm text-black">Managing significant capital across markets</p>
+                                        <h4 className="text-black font-semibold mb-1 text-sm md:text-base">Private <span className="text-primary">Investors</span></h4>
+                                        <p className="text-xs md:text-sm text-black">Managing significant capital across markets</p>
                                     </div>
                                 </div>
 
                                 <div className="group flex items-start gap-4 p-4 bg-white border-2 border-secondary/30 hover:border-secondary hover:bg-secondary/5 transition-all shadow-sm">
                                     <div className="w-2 h-2 bg-secondary mt-2 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
                                     <div>
-                                        <h4 className="text-black font-semibold mb-1"><span className="text-secondary">Founders</span></h4>
-                                        <p className="text-sm text-black">Entrepreneurs building global ventures</p>
+                                        <h4 className="text-black font-semibold mb-1 text-sm md:text-base"><span className="text-secondary">Founders</span></h4>
+                                        <p className="text-xs md:text-sm text-black">Entrepreneurs building global ventures</p>
                                     </div>
                                 </div>
 
                                 <div className="group flex items-start gap-4 p-4 bg-white border-2 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all shadow-sm">
                                     <div className="w-2 h-2 bg-primary mt-2 flex-shrink-0 group-hover:scale-150 transition-transform"></div>
                                     <div>
-                                        <h4 className="text-black font-semibold mb-1">Independent <span className="text-primary">Wealth Managers</span></h4>
-                                        <p className="text-sm text-black">Professionals seeking strategic partnerships</p>
+                                        <h4 className="text-black font-semibold mb-1 text-sm md:text-base">Independent <span className="text-primary">Wealth Managers</span></h4>
+                                        <p className="text-xs md:text-sm text-black">Professionals seeking strategic partnerships</p>
                                     </div>
                                 </div>
                             </div>
@@ -82,18 +82,18 @@ const WhoWeAre = () => {
                     </div>
 
                     {/* Bottom Stats/Highlights */}
-                    <div className="grid grid-cols-3 gap-8 mt-16 pt-12 border-t border-primary/20" data-aos="fade-up" data-aos-delay="200">
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-primary mb-2">20-40+</div>
-                            <div className="text-sm text-black">Assets per Portfolio</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-16 pt-8 md:pt-12 border-t border-primary/20" data-aos="fade-up" data-aos-delay="200">
+                        <div className="text-center pb-6 sm:pb-0 border-b sm:border-b-0 border-primary/10 sm:border-none">
+                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">20-40+</div>
+                            <div className="text-xs md:text-sm text-black">Assets per Portfolio</div>
                         </div>
-                        <div className="text-center border-x border-primary/20">
-                            <div className="text-3xl font-bold text-primary mb-2">2</div>
-                            <div className="text-sm text-black">Continents Covered</div>
+                        <div className="text-center pb-6 sm:pb-0 border-b sm:border-b-0 border-primary/10 sm:border-none sm:border-x sm:border-primary/20">
+                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">2</div>
+                            <div className="text-xs md:text-sm text-black">Continents Covered</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-primary mb-2">100%</div>
-                            <div className="text-sm text-black">Confidential</div>
+                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">100%</div>
+                            <div className="text-xs md:text-sm text-black">Confidential</div>
                         </div>
                     </div>
                 </div>

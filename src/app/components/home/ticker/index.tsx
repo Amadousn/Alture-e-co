@@ -19,13 +19,13 @@ const Ticker = () => {
     const displayedItems = [...tickerItems, ...tickerItems, ...tickerItems];
 
     return (
-        <div className="w-full bg-black/80 backdrop-blur-md border-t border-b border-white/5 overflow-hidden py-3 relative z-20">
+        <div className="w-full bg-black/80 backdrop-blur-md border-t border-b border-white/5 overflow-hidden py-2 md:py-3 relative z-20">
             <div className="flex animate-marquee whitespace-nowrap">
                 {displayedItems.map((item, index) => (
-                    <div key={index} className="flex items-center mx-8 space-x-3">
-                        <span className="text-gray-400 font-bold tracking-widest text-xs">{item.symbol}</span>
-                        <span className="text-white font-light text-sm">{item.value}</span>
-                        <span className={`${item.up ? "text-green-400" : "text-red-400"} text-xs font-medium`}>
+                    <div key={index} className="flex items-center mx-4 md:mx-8 space-x-2 md:space-x-3">
+                        <span className="text-gray-400 font-bold tracking-widest text-[10px] md:text-xs">{item.symbol}</span>
+                        <span className="text-white font-light text-xs md:text-sm">{item.value}</span>
+                        <span className={`${item.up ? "text-green-400" : "text-red-400"} text-[10px] md:text-xs font-medium`}>
                             {item.change}
                         </span>
                     </div>
@@ -40,6 +40,11 @@ const Ticker = () => {
         }
         .animate-marquee {
           animation: marquee 40s linear infinite;
+        }
+        @media (max-width: 768px) {
+            .animate-marquee {
+                animation: marquee 30s linear infinite;
+            }
         }
       `}</style>
         </div>

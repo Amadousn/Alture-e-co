@@ -11,7 +11,7 @@ export default function FeaturedProperties({ properties }: { properties: propert
   const featured = properties.slice(0, 3);
 
   return (
-    <section className="py-24 bg-black relative overflow-hidden">
+    <section className="py-12 md:py-24 bg-black relative overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
           <Image
@@ -33,30 +33,30 @@ export default function FeaturedProperties({ properties }: { properties: propert
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
             <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="h-px w-12 bg-[#D4AF37]"></div>
                 <span className="text-[#D4AF37] text-xs font-bold tracking-[0.3em] uppercase">Exclusive</span>
                 <div className="h-px w-12 bg-[#D4AF37]"></div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-thin text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-thin text-white mb-4 md:mb-6">
                 Featured <span className="text-[#D4AF37]">Properties</span>
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
                 Explore our latest hand-picked selection of premium real estate opportunities in Dubai.
             </p>
         </div>
 
         {/* Properties Grid */}
         {featured.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {featured.map((property) => (
                 <Link 
                     href={`/properties/properties-list/${property.slug}`} 
                     key={property.id}
                     className="group block"
                 >
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm mb-6">
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm mb-4 md:mb-6">
                         <Image
                             src={getImgPath(property.property_img)}
                             alt={property.property_title}
@@ -66,7 +66,7 @@ export default function FeaturedProperties({ properties }: { properties: propert
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                         
                         {/* Price Badge */}
-                        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-[#D4AF37]/30 px-4 py-2 text-white text-xs font-bold tracking-widest uppercase">
+                        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-[#D4AF37]/30 px-3 py-1.5 md:px-4 md:py-2 text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
                             {property.status}
                         </div>
                     </div>
@@ -75,10 +75,10 @@ export default function FeaturedProperties({ properties }: { properties: propert
                         <div className="text-[#D4AF37] text-xs uppercase tracking-widest font-bold">
                             {property.location}
                         </div>
-                        <h3 className="text-2xl font-light text-white group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-xl md:text-2xl font-light text-white group-hover:text-[#D4AF37] transition-colors">
                             {property.property_title}
                         </h3>
-                        <div className="flex items-center gap-4 text-gray-400 text-sm font-light pt-2 border-t border-white/10 mt-4">
+                        <div className="flex items-center gap-4 text-gray-400 text-xs md:text-sm font-light pt-2 border-t border-white/10 mt-2 md:mt-4">
                             <span className="flex items-center gap-1">
                                 <Icon icon="ph:bed-thin" className="w-4 h-4" /> {property.beds} Beds
                             </span>
@@ -89,7 +89,7 @@ export default function FeaturedProperties({ properties }: { properties: propert
                                 <Icon icon="ph:ruler-thin" className="w-4 h-4" /> {property.livingArea}
                             </span>
                         </div>
-                        <div className="pt-2 text-xl text-white font-medium">
+                        <div className="pt-1 md:pt-2 text-lg md:text-xl text-white font-medium">
                             {property.property_price}
                         </div>
                     </div>
@@ -97,17 +97,17 @@ export default function FeaturedProperties({ properties }: { properties: propert
             ))}
             </div>
         ) : (
-            <div className="text-center py-20 border border-[#D4AF37]/20 rounded-lg bg-[#111]">
-                <p className="text-gray-400 text-lg font-light">No properties available at the moment.</p>
-                <p className="text-[#D4AF37] text-sm mt-2">Check back soon for exclusive listings.</p>
+            <div className="text-center py-12 md:py-20 border border-[#D4AF37]/20 rounded-lg bg-[#111]">
+                <p className="text-gray-400 text-base md:text-lg font-light">No properties available at the moment.</p>
+                <p className="text-[#D4AF37] text-xs md:text-sm mt-2">Check back soon for exclusive listings.</p>
             </div>
         )}
 
         {/* View All Button */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-12 md:mt-16">
             <Link 
                 href="/properties/properties-list"
-                className="inline-block border border-white/20 text-white px-10 py-4 text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-300"
+                className="inline-block border border-white/20 text-white px-8 py-3 md:px-10 md:py-4 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-300"
             >
                 View All Listings
             </Link>
