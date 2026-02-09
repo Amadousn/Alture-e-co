@@ -52,7 +52,7 @@ export default function FeaturedProperties({ properties }: { properties: propert
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {featured.map((property) => (
                 <Link 
-                    href={`/properties/properties-list/${property.slug}`} 
+                    href="#contact" 
                     key={property.id}
                     className="group block"
                 >
@@ -106,10 +106,10 @@ export default function FeaturedProperties({ properties }: { properties: propert
         {/* View All Button */}
         <div className="text-center mt-12 md:mt-16">
             <Link 
-                href="/properties/properties-list"
+                href="#contact"
                 className="inline-block border border-white/20 text-white px-8 py-3 md:px-10 md:py-4 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-300"
             >
-                View All Listings
+                Contact for Exclusive Listings
             </Link>
         </div>
 

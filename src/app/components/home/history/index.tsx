@@ -23,10 +23,10 @@ export default function History() {
             of Letraset sheets containing Lorem Ipsum passages.
           </p>
           <Link
-            href="/properties/properties-list"
+            href="#contact"
             className="text-xl px-9 py-3 border border-primary text-primary hover:text-white hover:bg-primary rounded-lg"
           >
-            More Details
+            Contact Us
           </Link>
         </div>
         <div
