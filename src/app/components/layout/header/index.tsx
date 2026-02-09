@@ -47,7 +47,7 @@ const Header: React.FC = () => {
   ];
 
   // Check if user is on dashboard to hide header (handled by layout normally, but safety check)
-  if (pathUrl.startsWith('/dashboard')) return null;
+  // if (pathUrl.startsWith('/dashboard')) return null;
 
   return (
     <header
