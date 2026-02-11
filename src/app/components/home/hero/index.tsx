@@ -21,7 +21,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black"></div>
          </div>
 
-         <div className="container mx-auto max-w-7xl relative z-10 px-4 md:px-6 h-full flex flex-col justify-center items-center flex-grow py-12 md:py-0">
+         <div className="container mx-auto max-w-7xl relative z-10 px-4 md:px-6 h-full flex flex-col justify-center md:justify-start items-center flex-grow py-12 md:pt-48 md:pb-12">
 
             {/* Main Content - Centered */}
             <div className="text-center max-w-5xl mb-12 md:mb-16" data-aos="fade-up">
