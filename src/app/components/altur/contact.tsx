@@ -51,7 +51,7 @@ const Contact = () => {
                             </a>
 
                             {/* Email */}
-                            <a href="mailto:Celine@altureandco.com" className="group flex items-start gap-4 p-4 md:p-6 border border-secondary/30 hover:border-secondary hover:bg-secondary/5 transition-all shadow-sm hover:shadow-md">
+                            <a href="mailto:celine@altureandco.com" className="group flex items-start gap-4 p-4 md:p-6 border border-secondary/30 hover:border-secondary hover:bg-secondary/5 transition-all shadow-sm hover:shadow-md">
                                 <div className="w-10 h-10 md:w-12 md:h-12 border border-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-secondary group-hover:text-white transition-colors text-secondary">
                                     <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -60,7 +60,7 @@ const Contact = () => {
                                 <div>
                                     <p className="text-sm text-black mb-1">Email</p>
                                     <p className="text-base md:text-lg font-medium text-black group-hover:text-secondary transition-colors">
-                                        <span className="text-secondary break-all">Celine@altureandco.com</span>
+                                        <span className="text-secondary break-all">celine@altureandco.com</span>
                                     </p>
                                     <p className="text-xs text-black mt-2">For <span className="text-secondary">detailed inquiries</span></p>
                                 </div>

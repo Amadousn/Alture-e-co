@@ -60,9 +60,9 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:Celine@altureandco.com" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
+                  <a href="mailto:celine@altureandco.com" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
                     <Icon icon="ph:envelope-simple-thin" className="w-5 h-5 text-[#D4AF37] flex-shrink-0" />
-                    <span className="text-sm md:text-base break-all">Celine@altureandco.com</span>
+                    <span className="text-sm md:text-base break-all">celine@altureandco.com</span>
                   </a>
                 </li>
               </ul>
