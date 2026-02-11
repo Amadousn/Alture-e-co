@@ -23,7 +23,7 @@ const WhatWeOffer = () => {
                         What We <span className="text-primary">Manage</span>
                     </h2>
                     <p className="text-lg md:text-xl text-gray text-center max-w-2xl mx-auto">
-                        Comprehensive wealth management across real estate and digital assets
+                        Comprehensive wealth management across digital assets and strategic capital markets
                     </p>
                 </div>
 

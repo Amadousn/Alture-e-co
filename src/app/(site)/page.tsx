@@ -8,7 +8,7 @@ import Contact from '../components/altur/contact';
 
 export const metadata: Metadata = {
   title: "Alture & Co. - Strategic Portfolio Management",
-  description: "Premium real estate and digital asset structuring in Dubai. Luxury properties, crypto portfolio management, and cross-border wealth coordination.",
+  description: "Premium digital asset structuring in Dubai. Crypto portfolio management and cross-border wealth coordination.",
   icons: {
     icon: 'data:,', // Hide favicon
   },

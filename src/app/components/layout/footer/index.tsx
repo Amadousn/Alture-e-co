@@ -17,7 +17,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xs mb-6 md:mb-8">
-              Discreet advisory firm specializing in premium real estate and digital capital structuring across Dubai and Europe.
+              Discreet advisory firm specializing in digital capital structuring across Dubai and Europe.
             </p>
             <div className="flex gap-4">
               <SocialLink icon="ph:instagram-logo-thin" href="#" />

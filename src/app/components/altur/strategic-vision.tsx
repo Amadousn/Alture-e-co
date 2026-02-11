@@ -72,7 +72,7 @@ const StrategicVision = () => {
                             <div>
                                 <h3 className="text-lg md:text-xl font-bold mb-2 text-white">Exclusive Opportunities</h3>
                                 <p className="text-gray text-xs md:text-sm">
-                                    Access to premium real estate and emerging digital asset markets
+                                    Access to exclusive digital asset markets and private investment circles
                                 </p>
                             </div>
                         </div>

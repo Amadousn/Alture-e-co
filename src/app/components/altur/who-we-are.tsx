@@ -32,7 +32,7 @@ const WhoWeAre = () => {
                                     Alture & Co. is a <span className="text-primary font-medium">discreet advisory firm</span> based in Dubai.
                                 </p>
                                 <p className="text-base md:text-lg text-black leading-relaxed">
-                                    Focused on real estate and digital capital, the firm serves an international clientele across{" "}
+                                    Focused on digital capital and strategic structuring, the firm serves an international clientele across{" "}
                                     <span className="text-primary font-semibold">Europe and the UAE</span>.
                                 </p>
                             </div>
@@ -81,21 +81,6 @@ const WhoWeAre = () => {
                         </div>
                     </div>
 
-                    {/* Bottom Stats/Highlights */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-16 pt-8 md:pt-12 border-t border-primary/20" data-aos="fade-up" data-aos-delay="200">
-                        <div className="text-center pb-6 sm:pb-0 border-b sm:border-b-0 border-primary/10 sm:border-none">
-                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">20-40+</div>
-                            <div className="text-xs md:text-sm text-black">Assets per Portfolio</div>
-                        </div>
-                        <div className="text-center pb-6 sm:pb-0 border-b sm:border-b-0 border-primary/10 sm:border-none sm:border-x sm:border-primary/20">
-                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">2</div>
-                            <div className="text-xs md:text-sm text-black">Continents Covered</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">100%</div>
-                            <div className="text-xs md:text-sm text-black">Confidential</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
