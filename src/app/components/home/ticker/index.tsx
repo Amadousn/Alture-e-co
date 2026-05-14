@@ -1,21 +1,53 @@
 "use client";
-import React from "react";
-// We'll use a simple CSS animation for the marquee if no library is preferred, 
-// but to ensure smoothness without extra deps, let's use a standard CSS keyframe approach.
+import React, { useEffect, useState } from "react";
+
+type TickerItem = {
+    symbol: string;
+    value: string;
+    change: string;
+    up: boolean;
+};
+
+const FALLBACK_ITEMS: TickerItem[] = [
+    { symbol: "BTC", value: "$98,432.10", change: "+2.4%", up: true },
+    { symbol: "ETH", value: "$2,845.50", change: "+1.2%", up: true },
+    { symbol: "SOL", value: "$324.15", change: "-0.5%", up: false },
+    { symbol: "GOLD", value: "$2,750.80", change: "+0.3%", up: true },
+    { symbol: "S&P 500", value: "5,890.20", change: "+0.8%", up: true },
+    { symbol: "EUR/USD", value: "1.0845", change: "-0.1%", up: false },
+    { symbol: "NASDAQ", value: "18,430.50", change: "+1.1%", up: true },
+    { symbol: "OIL (WTI)", value: "$76.40", change: "+0.4%", up: true },
+];
+
+const REFRESH_MS = 5 * 60 * 1000;
 
 const Ticker = () => {
-    const tickerItems = [
-        { symbol: "BTC", value: "$98,432.10", change: "+2.4%", up: true },
-        { symbol: "ETH", value: "$2,845.50", change: "+1.2%", up: true },
-        { symbol: "SOL", value: "$324.15", change: "-0.5%", up: false },
-        { symbol: "GOLD", value: "$2,750.80", change: "+0.3%", up: true },
-        { symbol: "S&P 500", value: "5,890.20", change: "+0.8%", up: true },
-        { symbol: "EUR/USD", value: "1.0845", change: "-0.1%", up: false },
-        { symbol: "NASDAQ", value: "18,430.50", change: "+1.1%", up: true },
-        { symbol: "OIL (WTI)", value: "$76.40", change: "+0.4%", up: true },
-    ];
+    const [tickerItems, setTickerItems] = useState<TickerItem[]>(FALLBACK_ITEMS);
 
-    // Duplicate items for seamless infinite scroll
+    useEffect(() => {
+        let cancelled = false;
+
+        const load = async () => {
+            try {
+                const res = await fetch("/api/ticker", { cache: "no-store" });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!cancelled && Array.isArray(data.items) && data.items.length > 0) {
+                    setTickerItems(data.items);
+                }
+            } catch {
+                // garde le fallback
+            }
+        };
+
+        load();
+        const id = setInterval(load, REFRESH_MS);
+        return () => {
+            cancelled = true;
+            clearInterval(id);
+        };
+    }, []);
+
     const displayedItems = [...tickerItems, ...tickerItems, ...tickerItems];
 
     return (
@@ -32,7 +64,6 @@ const Ticker = () => {
                 ))}
             </div>
 
-            {/* Tailwind Custom Animation (Inline style for quick integration if tailwind config missing) */}
             <style jsx>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
