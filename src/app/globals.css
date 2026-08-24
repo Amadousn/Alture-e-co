@@ -10,6 +10,39 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Sitewide ambient background, sits behind all page content */
+@keyframes ambientGridDrift {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 48px 48px; }
+}
+
+.ambient-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image:
+        linear-gradient(#D4AF37 1px, transparent 1px),
+        linear-gradient(90deg, #D4AF37 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: ambientGridDrift 70s linear infinite;
+}
+
+.ambient-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    width: 1100px;
+    height: 1100px;
+    max-width: 160vw;
+    max-height: 160vw;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.07) 0%, rgba(212, 175, 55, 0) 70%);
+}
+
 * {
     margin: 0%;
     padding: 0%;
@@ -62,19 +95,19 @@ body {
     }
 
     h1 {
-        @apply md:text-[51px] md:leading-[1.2] text-[28px] leading-[1.2] font-bold text-white;
+        @apply md:text-[51px] md:leading-[1.2] text-[28px] leading-[1.2] font-light text-white;
     }
 
     h2 {
-        @apply md:text-[40px] leading-[1.2] text-2xl font-bold text-white;
+        @apply md:text-[40px] leading-[1.2] text-2xl font-light text-white;
     }
 
     h3 {
-        @apply md:text-[28px] leading-[1.2] text-lg font-bold text-white;
+        @apply md:text-[28px] leading-[1.2] text-lg font-light text-white;
     }
 
     h4 {
-        @apply text-2xl font-bold text-white;
+        @apply text-2xl font-light text-white;
     }
 
     h5 {

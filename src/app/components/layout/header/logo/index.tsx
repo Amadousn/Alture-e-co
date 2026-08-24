@@ -7,9 +7,6 @@ const Logo: React.FC = () => {
       <span className="text-2xl font-bold text-black dark:text-white leading-none">
         Alture <span className="text-primary">&</span> Co.
       </span>
-      <span className="text-[9px] text-gray-600 dark:text-gray-400 tracking-[0.15em] uppercase mt-1">
-        Strategic Advisory
-      </span>
     </Link>
   );
 };

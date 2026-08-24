@@ -13,6 +13,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <body className={`${dmsans.className}`} suppressHydrationWarning={true}>
+        <div className="ambient-grid" />
+        <div className="ambient-glow" />
         {/* <NextAuthProvider> */}
           {/* <AppContextProvider> */}
             <ThemeProvider

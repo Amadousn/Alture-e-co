@@ -40,9 +40,7 @@ const Header: React.FC = () => {
 
   const menuItems = [
     { label: "HOME", href: "/" },
-    { label: "WHAT WE DO", href: "/#what-we-offer" },
-    { label: "WHO WE ARE", href: "/#who-we-are" },
-    { label: "STRATEGIC VISION", href: "/#strategic-vision" },
+    { label: "ALTURELOCK", href: "/alturelock" },
     { label: "CONTACT", href: "/#contact" },
   ];
 

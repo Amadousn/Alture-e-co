@@ -16,13 +16,8 @@ const Footer = () => {
                 <span className="text-[#D4AF37] font-bold">Alture</span> & Co.
               </div>
             </Link>
-            <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xs mb-6 md:mb-8">
-              Discreet advisory firm specializing in digital capital structuring across Dubai and Europe.
-            </p>
             <div className="flex gap-4">
-              <SocialLink icon="ph:instagram-logo-thin" href="#" />
-              <SocialLink icon="ph:linkedin-logo-thin" href="#" />
-              <SocialLink icon="ph:twitter-logo-thin" href="#" />
+              <SocialLink icon="ph:instagram-logo-thin" href="https://instagram.com/altureandco" />
             </div>
           </div>
 
@@ -32,17 +27,17 @@ const Footer = () => {
               <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-4 md:mb-8">Explore</h4>
               <ul className="space-y-3 md:space-y-4">
                 <FooterLink href="/" label="Home" />
-                <FooterLink href="/#what-we-offer" label="Services" />
-                <FooterLink href="/#strategic-vision" label="Vision" />
+                <FooterLink href="/alturelock" label="AltureLock" />
+                <FooterLink href="/#contact" label="Contact" />
               </ul>
             </div>
 
             <div>
               <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.2em] mb-4 md:mb-8">Legal</h4>
               <ul className="space-y-3 md:space-y-4">
-                <FooterLink href="#" label="Privacy Policy" />
-                <FooterLink href="#" label="Terms of Service" />
-                <FooterLink href="#" label="Disclaimer" />
+                <FooterLink href="/privacy-policy" label="Privacy Policy" />
+                <FooterLink href="/terms-of-service" label="Terms of Service" />
+                <FooterLink href="/disclaimer" label="Disclaimer" />
               </ul>
             </div>
 
@@ -51,13 +46,7 @@ const Footer = () => {
               <ul className="space-y-3 md:space-y-4">
                 <li className="flex items-start gap-3 text-gray-400 font-light">
                   <Icon icon="ph:map-pin-thin" className="w-5 h-5 mt-1 text-[#D4AF37] flex-shrink-0" />
-                  <span className="text-sm md:text-base">Dubai, UAE<br />Financial Center</span>
-                </li>
-                <li>
-                  <a href="https://wa.me/971509845622" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
-                    <Icon icon="ph:whatsapp-logo-thin" className="w-5 h-5 text-[#D4AF37] flex-shrink-0" />
-                    <span className="text-sm md:text-base">+971 50 984 5622</span>
-                  </a>
+                  <span className="text-sm md:text-base">Business Bay, Dubai</span>
                 </li>
                 <li>
                   <a href="mailto:celine@altureandco.com" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
@@ -73,7 +62,6 @@ const Footer = () => {
         {/* Copyright */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 font-light uppercase tracking-wider text-center md:text-left">
           <p> 2025 Alture & Co. All rights reserved.</p>
-          <p>Designed for Excellence</p>
         </div>
       </div>
     </footer>
