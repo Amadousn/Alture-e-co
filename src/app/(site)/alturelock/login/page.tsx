@@ -3,17 +3,12 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
-// Boot sequence stages, revealed one at a time.
+// Entrance stages, revealed one at a time.
 const STAGES = [
-    "prompt",      // alturelock@alture ~ %
-    "init",        // initializing...
-    "session",     // checking session... done
-    "ruleset",     // loading ruleset... done
-    "brand",       // AltureLock / your co-pilot
+    "brand",       // AltureLock / Your Co-Pilot
     "username",
     "password",
     "button",
-    "final",       // closing prompt with blinking cursor
 ] as const;
 
 const STEP_DELAY_MS = 220;
@@ -62,58 +57,37 @@ const AltureLockLoginPage = () => {
         <section className="min-h-[100dvh] flex flex-col items-center justify-center bg-black px-4 py-20 font-mono">
             <div className="w-full max-w-sm">
                 <div className="border border-white/10 bg-black p-8 md:p-10">
-                    <div className="min-h-[1.25rem]">
-                        {visible("prompt") && (
-                            <p className="text-xs text-gray-600">alturelock@alture ~ %</p>
-                        )}
-                    </div>
-                    <div className="min-h-[1.25rem]">
-                        {visible("init") && (
-                            <p className="text-xs text-gray-600">initializing...</p>
-                        )}
-                    </div>
-                    <div className="min-h-[1.25rem]">
-                        {visible("session") && (
-                            <p className="text-xs text-gray-600">checking session... done</p>
-                        )}
-                    </div>
-                    <div className="min-h-[1.25rem] mb-6">
-                        {visible("ruleset") && (
-                            <p className="text-xs text-gray-600">loading ruleset... done</p>
-                        )}
-                    </div>
-
                     {visible("brand") && (
                         <div className="mb-8">
                             <h1 className="text-2xl md:text-3xl font-normal mb-1">
                                 <span className="text-white">Alture</span><span className="text-primary">Lock</span>
                             </h1>
-                            <p className="text-xs text-gray-600">// your co-pilot</p>
+                            <p className="text-xs text-gray-600">Your Co-Pilot</p>
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         {visible("username") && (
                             <div>
-                                <label className="block text-xs text-gray-500 mb-2">$ username</label>
+                                <label className="block text-xs text-gray-500 mb-2">Username</label>
                                 <input
                                     type="text"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     autoComplete="username"
-                                    className="w-full bg-black border border-white/15 text-white text-sm px-3 py-2 focus:border-primary focus:outline-none transition-colors font-mono"
+                                    className="w-full bg-black border border-white/30 text-white text-sm px-3 py-2 focus:border-primary focus:outline-none transition-colors font-mono"
                                 />
                             </div>
                         )}
                         {visible("password") && (
                             <div>
-                                <label className="block text-xs text-gray-500 mb-2">$ password</label>
+                                <label className="block text-xs text-gray-500 mb-2">Password</label>
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     autoComplete="current-password"
-                                    className="w-full bg-black border border-white/15 text-white text-sm px-3 py-2 focus:border-primary focus:outline-none transition-colors font-mono"
+                                    className="w-full bg-black border border-white/30 text-white text-sm px-3 py-2 focus:border-primary focus:outline-none transition-colors font-mono"
                                 />
                             </div>
                         )}
@@ -132,28 +106,12 @@ const AltureLockLoginPage = () => {
                             </button>
                         )}
                     </form>
-
-                    {visible("final") && (
-                        <p className="text-xs text-gray-600 mt-6">
-                            alturelock@alture ~ % <span className="term-cursor">_</span>
-                        </p>
-                    )}
                 </div>
 
                 <p className="text-xs text-center leading-relaxed mt-8 max-w-xs mx-auto text-gray-600">
                     // Ten years of experience does not stop a broken rule. Under pressure, everyone is human, not a machine. This is not about being a beginner or being profitable. It is about staying disciplined when it matters most.
                 </p>
             </div>
-
-            <style jsx>{`
-                @keyframes termBlink {
-                    0%, 50% { opacity: 1; }
-                    50.01%, 100% { opacity: 0; }
-                }
-                .term-cursor {
-                    animation: termBlink 1s steps(1) infinite;
-                }
-            `}</style>
         </section>
     );
 };
