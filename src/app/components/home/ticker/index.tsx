@@ -9,12 +9,12 @@ type TickerItem = {
 };
 
 const FALLBACK_ITEMS: TickerItem[] = [
-    { symbol: "BTC", value: "$98,432.10", change: "+2.4%", up: true },
-    { symbol: "ETH", value: "$2,845.50", change: "+1.2%", up: true },
-    { symbol: "SOL", value: "$324.15", change: "-0.5%", up: false },
-    { symbol: "XRP", value: "$2.1500", change: "+0.9%", up: true },
-    { symbol: "BNB", value: "$695.20", change: "+0.6%", up: true },
-    { symbol: "DOGE", value: "$0.31500", change: "-1.1%", up: false },
+    { symbol: "BTC", value: "$78,000.00", change: "+0.0%", up: true },
+    { symbol: "ETH", value: "$2,450.00", change: "+0.0%", up: true },
+    { symbol: "SOL", value: "$97.00", change: "+0.0%", up: true },
+    { symbol: "XRP", value: "$1.4100", change: "+0.0%", up: true },
+    { symbol: "BNB", value: "$700.00", change: "+0.0%", up: true },
+    { symbol: "DOGE", value: "$0.08600", change: "+0.0%", up: true },
 ];
 
 const REFRESH_MS = 45 * 1000;
