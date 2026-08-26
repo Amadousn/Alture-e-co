@@ -9,13 +9,13 @@ type TickerItem = {
     up: boolean;
 };
 
-const BINANCE_SYMBOLS: { pair: string; label: string; decimals: number }[] = [
-    { pair: "BTCUSDT", label: "BTC", decimals: 2 },
-    { pair: "ETHUSDT", label: "ETH", decimals: 2 },
-    { pair: "SOLUSDT", label: "SOL", decimals: 2 },
-    { pair: "XRPUSDT", label: "XRP", decimals: 4 },
-    { pair: "BNBUSDT", label: "BNB", decimals: 2 },
-    { pair: "DOGEUSDT", label: "DOGE", decimals: 5 },
+const COINGECKO_IDS: { id: string; label: string; decimals: number }[] = [
+    { id: "bitcoin", label: "BTC", decimals: 2 },
+    { id: "ethereum", label: "ETH", decimals: 2 },
+    { id: "solana", label: "SOL", decimals: 2 },
+    { id: "ripple", label: "XRP", decimals: 4 },
+    { id: "binancecoin", label: "BNB", decimals: 2 },
+    { id: "dogecoin", label: "DOGE", decimals: 5 },
 ];
 
 const FALLBACK: TickerItem[] = [
@@ -36,22 +36,23 @@ function formatNumber(n: number, decimals: number) {
 
 async function fetchCrypto(): Promise<TickerItem[] | null> {
     try {
-        const symbols = encodeURIComponent(JSON.stringify(BINANCE_SYMBOLS.map((s) => s.pair)));
-        const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${symbols}`, {
-            next: { revalidate: 45 },
-        });
+        const ids = COINGECKO_IDS.map((s) => s.id).join(",");
+        const res = await fetch(
+            `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`,
+            { next: { revalidate: 45 } }
+        );
         if (!res.ok) return null;
         const json = await res.json();
-        if (!Array.isArray(json)) return null;
+        if (typeof json !== "object" || json === null) return null;
 
-        return BINANCE_SYMBOLS.map(({ pair, label, decimals }) => {
-            const entry = json.find((e: any) => e?.symbol === pair);
+        return COINGECKO_IDS.map(({ id, label, decimals }) => {
+            const entry = json[id];
             const fallback = FALLBACK.find((f) => f.symbol === label)!;
             if (!entry) return fallback;
 
-            const price = parseFloat(entry.lastPrice);
-            const pct = parseFloat(entry.priceChangePercent);
-            if (Number.isNaN(price) || Number.isNaN(pct)) return fallback;
+            const price = entry.usd;
+            const pct = entry.usd_24h_change;
+            if (typeof price !== "number" || typeof pct !== "number") return fallback;
 
             return {
                 symbol: label,

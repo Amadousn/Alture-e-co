@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import AltureLockSimulator from "@/app/components/altur/alture-lock/simulator";
 import PriceAlerts from "@/app/components/altur/alture-lock/price-alerts";
 import IntroSequence from "@/app/components/altur/alture-lock/intro-sequence";
+import LiveTradePanel from "@/app/components/altur/alture-lock/live-trade-panel";
 
 export const metadata: Metadata = {
     title: "AltureLock | Alture & Co.",
@@ -58,6 +59,11 @@ const AltureLockPage = () => {
             {/* Live price alerts */}
             <section className="bg-black pb-16 md:pb-20 px-4 md:px-6">
                 <PriceAlerts />
+            </section>
+
+            {/* Live trade panel */}
+            <section className="bg-black pb-16 md:pb-20 px-4 md:px-6">
+                <LiveTradePanel />
             </section>
 
             {/* Interactive simulation */}
