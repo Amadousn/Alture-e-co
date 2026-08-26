@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type PricePoint = { t: number; price: number };
 
@@ -41,23 +41,6 @@ const GRID_LINES = 5;
 // (in viewBox units), rather than reacting anywhere across the whole hero.
 const PROXIMITY_THRESHOLD = VIEW_HEIGHT * 0.12;
 
-// preserveAspectRatio="none" stretches the viewBox to fill the container, so on
-// a narrow, tall mobile screen the same price swings get stretched vertically
-// far more than horizontally, turning a calm line into aggressive spikes. This
-// compensates by shrinking the amplitude around its center as the container's
-// aspect ratio departs from the chart's natural (wide) shape. Desktop-ish
-// aspect ratios are left untouched.
-const ASPECT_UNCHANGED_ABOVE = 1.2;
-const MIN_AMPLITUDE_FACTOR = 0.35;
-
-function getAmplitudeFactor(width: number, height: number): number {
-    if (!width || !height) return 1;
-    const aspect = width / height;
-    if (aspect >= ASPECT_UNCHANGED_ABOVE) return 1;
-    const factor = aspect / ASPECT_UNCHANGED_ABOVE;
-    return Math.min(1, Math.max(MIN_AMPLITUDE_FACTOR, factor));
-}
-
 function formatPrice(value: number): string {
     return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -70,8 +53,6 @@ type Props = {
 
 const HeroChartBackground = ({ mousePos }: Props) => {
     const [history, setHistory] = useState<PricePoint[]>(FALLBACK_HISTORY);
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const [amplitudeFactor, setAmplitudeFactor] = useState(1);
 
     useEffect(() => {
         let cancelled = false;
@@ -96,38 +77,14 @@ const HeroChartBackground = ({ mousePos }: Props) => {
         };
     }, []);
 
-    useEffect(() => {
-        const el = wrapperRef.current;
-        if (!el) return;
-        const update = () => setAmplitudeFactor(getAmplitudeFactor(el.clientWidth, el.clientHeight));
-        update();
-        const observer = new ResizeObserver(update);
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-
     const prices = history.map((p) => p.price);
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
     const range = maxPrice - minPrice || 1;
 
-    const bandHeight = VIEW_HEIGHT - TOP_PADDING - BOTTOM_PADDING;
-    const bandMidY = TOP_PADDING + bandHeight / 2;
-
-    // As the chart compresses on mobile, its center of gravity also shifts up
-    // into a safe zone clear of the headline's text-mask band, instead of
-    // collapsing toward the middle of the section where the text lives. At
-    // amplitudeFactor 1 (desktop) this has zero effect, matching before exactly.
-    const SAFE_ANCHOR_Y = VIEW_HEIGHT * 0.2;
-    const compressionBlend =
-        amplitudeFactor >= 1 ? 0 : (1 - amplitudeFactor) / (1 - MIN_AMPLITUDE_FACTOR);
-    const anchorY = bandMidY + (SAFE_ANCHOR_Y - bandMidY) * compressionBlend;
-
     const scaleX = (i: number) => (i / (history.length - 1)) * VIEW_WIDTH;
-    const scaleY = (price: number) => {
-        const normalized = (price - minPrice) / range - 0.5; // -0.5 .. 0.5
-        return anchorY - normalized * bandHeight * amplitudeFactor;
-    };
+    const scaleY = (price: number) =>
+        VIEW_HEIGHT - BOTTOM_PADDING - ((price - minPrice) / range) * (VIEW_HEIGHT - TOP_PADDING - BOTTOM_PADDING);
 
     const linePath = history
         .map((p, i) => `${i === 0 ? "M" : "L"}${scaleX(i).toFixed(1)},${scaleY(p.price).toFixed(1)}`)
@@ -150,7 +107,7 @@ const HeroChartBackground = ({ mousePos }: Props) => {
     const dotX = scaleX(activeIndex);
     const dotY = scaleY(activePoint.price);
 
-    const tagWidth = 148;
+    const tagWidth = 168;
     const tagHeight = 34;
     const tagHalf = tagWidth / 2;
     const tagX = Math.min(VIEW_WIDTH - tagWidth - 10, Math.max(10, dotX - tagHalf));
@@ -164,7 +121,7 @@ const HeroChartBackground = ({ mousePos }: Props) => {
     };
 
     return (
-        <div ref={wrapperRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} preserveAspectRatio="none" className="w-full h-full">
                 <defs>
                     <linearGradient id="heroLineFill" x1="0" y1="0" x2="0" y2="1">
@@ -207,7 +164,9 @@ const HeroChartBackground = ({ mousePos }: Props) => {
                 {/* Price tag */}
                 <g style={transitionStyle} transform={`translate(${tagX}, ${tagY})`}>
                     <rect width={tagWidth} height={tagHeight} rx={3} fill="#000000" fillOpacity={0.85} stroke="#D4AF37" strokeOpacity={0.5} strokeWidth={1} />
-                    <text x={tagWidth / 2} y={22} textAnchor="middle" fill="#D4AF37" fontSize={15} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
+                    <circle cx={16} cy={tagHeight / 2} r={7} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
+                    <circle cx={16} cy={tagHeight / 2} r={2.25} fill="#34D399" fillOpacity={0.85} />
+                    <text x={30} y={22} textAnchor="start" fill="#D4AF37" fontSize={17} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
                         {formatPrice(activePoint.price)}
                     </text>
                 </g>
@@ -224,6 +183,13 @@ const HeroChartBackground = ({ mousePos }: Props) => {
                 }
                 .hero-chart-dot-glow {
                     animation: heroChartDotPulse 2.4s ease-in-out infinite;
+                }
+                @keyframes heroTagLivePulse {
+                    0%, 100% { r: 3; opacity: 0.45; }
+                    50% { r: 7.5; opacity: 0.06; }
+                }
+                .hero-tag-live-glow {
+                    animation: heroTagLivePulse 3.2s ease-in-out infinite;
                 }
             `}</style>
         </div>
