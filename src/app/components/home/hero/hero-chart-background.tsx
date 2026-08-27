@@ -46,13 +46,29 @@ function formatPrice(value: number): string {
 }
 
 type MousePos = { xFraction: number; yFraction: number } | null;
+type TextZone = { top: number; bottom: number } | null;
+
+// Used only until the real headline position has been measured (first paint).
+const DEFAULT_TEXT_TOP = 0.34;
+const DEFAULT_TEXT_BOTTOM = 0.58;
+const TEXT_MARGIN = 0.05;
 
 type Props = {
     mousePos: MousePos;
+    textZone: TextZone;
 };
 
-const HeroChartBackground = ({ mousePos }: Props) => {
+const HeroChartBackground = ({ mousePos, textZone }: Props) => {
     const [history, setHistory] = useState<PricePoint[]>(FALLBACK_HISTORY);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const query = window.matchMedia("(max-width: 767px)");
+        const update = () => setIsMobile(query.matches);
+        update();
+        query.addEventListener("change", update);
+        return () => query.removeEventListener("change", update);
+    }, []);
 
     useEffect(() => {
         let cancelled = false;
@@ -107,18 +123,53 @@ const HeroChartBackground = ({ mousePos }: Props) => {
     const dotX = scaleX(activeIndex);
     const dotY = scaleY(activePoint.price);
 
-    const tagWidth = 168;
-    const tagHeight = 34;
+    // Text-danger band is measured from the headline's real DOM position
+    // (passed down as textZone), not guessed as a fixed percentage, since
+    // the text's actual proportion of the hero varies by breakpoint and
+    // aspect ratio. The tag and the chart mask both stay clear of it, on top
+    // of staying clear of the header above and the ticker below, at any
+    // screen size, not just at the resting position.
+    const textTopFrac = Math.max(0, (textZone?.top ?? DEFAULT_TEXT_TOP) - TEXT_MARGIN);
+    const textBottomFrac = Math.min(1, (textZone?.bottom ?? DEFAULT_TEXT_BOTTOM) + TEXT_MARGIN);
+
+    const tagWidth = 140;
+    const tagHeight = 22;
     const tagHalf = tagWidth / 2;
-    const tagX = Math.min(VIEW_WIDTH - tagWidth - 10, Math.max(10, dotX - tagHalf));
-    // Always stays fully within the hero, clear of both the header area above
-    // and the ticker bar below, regardless of where the dot currently sits.
-    const tagY = Math.min(VIEW_HEIGHT - BOTTOM_PADDING - tagHeight - 14, Math.max(16, dotY - 56));
+
+    // Mobile has no hover/touch tracking, so the only thing that was ever
+    // moving the tag there was live price data shifting the resting point
+    // over time. Pin it to one fixed spot, top-right of the hero, so it
+    // never moves at all on mobile regardless of what the chart is doing.
+    const MOBILE_TAG_X = VIEW_WIDTH - tagWidth - 40;
+    const MOBILE_TAG_Y = 105;
+
+    let tagX: number;
+    let tagY: number;
+    if (isMobile) {
+        tagX = MOBILE_TAG_X;
+        tagY = MOBILE_TAG_Y;
+    } else {
+        tagX = Math.min(VIEW_WIDTH - tagWidth - 10, Math.max(10, dotX - tagHalf));
+
+        const DANGER_TOP = VIEW_HEIGHT * textTopFrac;
+        const DANGER_BOTTOM = VIEW_HEIGHT * textBottomFrac;
+        const SAFE_MARGIN = 14;
+        const minTagY = 16;
+        const maxTagY = VIEW_HEIGHT - BOTTOM_PADDING - tagHeight - 14;
+
+        tagY = Math.min(maxTagY, Math.max(minTagY, dotY - 44));
+        if (tagY + tagHeight > DANGER_TOP - SAFE_MARGIN && tagY < DANGER_BOTTOM + SAFE_MARGIN) {
+            const upperCandidate = Math.max(minTagY, DANGER_TOP - SAFE_MARGIN - tagHeight);
+            const lowerCandidate = Math.min(maxTagY, DANGER_BOTTOM + SAFE_MARGIN);
+            tagY = Math.abs(tagY - upperCandidate) <= Math.abs(tagY - lowerCandidate) ? upperCandidate : lowerCandidate;
+        }
+    }
 
     const transitionStyle = {
         transition:
             "cx 450ms cubic-bezier(0.22, 1, 0.36, 1), cy 450ms cubic-bezier(0.22, 1, 0.36, 1), x 450ms cubic-bezier(0.22, 1, 0.36, 1), y 450ms cubic-bezier(0.22, 1, 0.36, 1)",
     };
+    const tagTransitionStyle = isMobile ? undefined : transitionStyle;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -128,13 +179,14 @@ const HeroChartBackground = ({ mousePos }: Props) => {
                         <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.2" />
                         <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
                     </linearGradient>
-                    {/* Keeps the chart faint specifically behind the headline band, regardless of where the real data happens to peak */}
+                    {/* Keeps the chart faint specifically behind the headline band, using
+                        the same measured text zone as the tag's danger band above */}
                     <linearGradient id="heroTextSafeGradient" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#FFFFFF" />
-                        <stop offset="24%" stopColor="#FFFFFF" />
-                        <stop offset="34%" stopColor="#333333" />
-                        <stop offset="58%" stopColor="#333333" />
-                        <stop offset="68%" stopColor="#FFFFFF" />
+                        <stop offset={`${Math.max(0, (textTopFrac - 0.1) * 100).toFixed(1)}%`} stopColor="#FFFFFF" />
+                        <stop offset={`${(textTopFrac * 100).toFixed(1)}%`} stopColor="#333333" />
+                        <stop offset={`${(textBottomFrac * 100).toFixed(1)}%`} stopColor="#333333" />
+                        <stop offset={`${Math.min(100, (textBottomFrac + 0.1) * 100).toFixed(1)}%`} stopColor="#FFFFFF" />
                         <stop offset="100%" stopColor="#FFFFFF" />
                     </linearGradient>
                     <mask id="heroTextSafeMask">
@@ -161,12 +213,11 @@ const HeroChartBackground = ({ mousePos }: Props) => {
                 {/* Crosshair */}
                 <line x1={dotX} x2={dotX} y1={0} y2={VIEW_HEIGHT} stroke="#D4AF37" strokeOpacity={0.12} strokeWidth={1} strokeDasharray="6 6" vectorEffect="non-scaling-stroke" style={transitionStyle} />
 
-                {/* Price tag */}
-                <g style={transitionStyle} transform={`translate(${tagX}, ${tagY})`}>
-                    <rect width={tagWidth} height={tagHeight} rx={3} fill="#000000" fillOpacity={0.85} stroke="#D4AF37" strokeOpacity={0.5} strokeWidth={1} />
-                    <circle cx={16} cy={tagHeight / 2} r={7} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
-                    <circle cx={16} cy={tagHeight / 2} r={2.25} fill="#34D399" fillOpacity={0.85} />
-                    <text x={30} y={22} textAnchor="start" fill="#D4AF37" fontSize={17} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
+                {/* Price tag, plain text, no box */}
+                <g style={tagTransitionStyle} transform={`translate(${tagX}, ${tagY})`}>
+                    <circle cx={7} cy={tagHeight / 2 + 1} r={6} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
+                    <circle cx={7} cy={tagHeight / 2 + 1} r={2} fill="#34D399" fillOpacity={0.85} />
+                    <text x={20} y={tagHeight - 5} textAnchor="start" fill="#D4AF37" fontSize={16} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
                         {formatPrice(activePoint.price)}
                     </text>
                 </g>
