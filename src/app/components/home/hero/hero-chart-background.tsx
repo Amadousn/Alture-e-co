@@ -41,10 +41,6 @@ const GRID_LINES = 5;
 // (in viewBox units), rather than reacting anywhere across the whole hero.
 const PROXIMITY_THRESHOLD = VIEW_HEIGHT * 0.12;
 
-function formatPrice(value: number): string {
-    return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
-
 type MousePos = { xFraction: number; yFraction: number } | null;
 type TextZone = { top: number; bottom: number } | null;
 
@@ -60,15 +56,6 @@ type Props = {
 
 const HeroChartBackground = ({ mousePos, textZone }: Props) => {
     const [history, setHistory] = useState<PricePoint[]>(FALLBACK_HISTORY);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const query = window.matchMedia("(max-width: 767px)");
-        const update = () => setIsMobile(query.matches);
-        update();
-        query.addEventListener("change", update);
-        return () => query.removeEventListener("change", update);
-    }, []);
 
     useEffect(() => {
         let cancelled = false;
@@ -126,57 +113,15 @@ const HeroChartBackground = ({ mousePos, textZone }: Props) => {
     // Text-danger band is measured from the headline's real DOM position
     // (passed down as textZone), not guessed as a fixed percentage, since
     // the text's actual proportion of the hero varies by breakpoint and
-    // aspect ratio. The tag and the chart mask both stay clear of it, on top
-    // of staying clear of the header above and the ticker below, at any
-    // screen size, not just at the resting position.
+    // aspect ratio. The chart mask stays clear of it, on top of staying
+    // clear of the header above and the ticker below, at any screen size.
     const textTopFrac = Math.max(0, (textZone?.top ?? DEFAULT_TEXT_TOP) - TEXT_MARGIN);
     const textBottomFrac = Math.min(1, (textZone?.bottom ?? DEFAULT_TEXT_BOTTOM) + TEXT_MARGIN);
-
-    const tagWidth = 140;
-    const tagHeight = 22;
-    const tagHalf = tagWidth / 2;
-
-    // Mobile gets its own, larger presentation: bigger type and more
-    // breathing room on every side, since it's the only price readout
-    // visible there (desktop also has the top-right live header).
-    const MOBILE_TAG_WIDTH = 200;
-    const MOBILE_TAG_HEIGHT = 38;
-    const MOBILE_FONT_SIZE = 26;
-
-    // Mobile has no hover/touch tracking, so the only thing that was ever
-    // moving the tag there was live price data shifting the resting point
-    // over time. Pin it to one fixed spot, top-right of the hero, so it
-    // never moves at all on mobile regardless of what the chart is doing.
-    const MOBILE_TAG_X = VIEW_WIDTH - MOBILE_TAG_WIDTH - 90;
-    const MOBILE_TAG_Y = 115;
-
-    let tagX: number;
-    let tagY: number;
-    if (isMobile) {
-        tagX = MOBILE_TAG_X;
-        tagY = MOBILE_TAG_Y;
-    } else {
-        tagX = Math.min(VIEW_WIDTH - tagWidth - 10, Math.max(10, dotX - tagHalf));
-
-        const DANGER_TOP = VIEW_HEIGHT * textTopFrac;
-        const DANGER_BOTTOM = VIEW_HEIGHT * textBottomFrac;
-        const SAFE_MARGIN = 14;
-        const minTagY = 16;
-        const maxTagY = VIEW_HEIGHT - BOTTOM_PADDING - tagHeight - 14;
-
-        tagY = Math.min(maxTagY, Math.max(minTagY, dotY - 44));
-        if (tagY + tagHeight > DANGER_TOP - SAFE_MARGIN && tagY < DANGER_BOTTOM + SAFE_MARGIN) {
-            const upperCandidate = Math.max(minTagY, DANGER_TOP - SAFE_MARGIN - tagHeight);
-            const lowerCandidate = Math.min(maxTagY, DANGER_BOTTOM + SAFE_MARGIN);
-            tagY = Math.abs(tagY - upperCandidate) <= Math.abs(tagY - lowerCandidate) ? upperCandidate : lowerCandidate;
-        }
-    }
 
     const transitionStyle = {
         transition:
             "cx 450ms cubic-bezier(0.22, 1, 0.36, 1), cy 450ms cubic-bezier(0.22, 1, 0.36, 1), x 450ms cubic-bezier(0.22, 1, 0.36, 1), y 450ms cubic-bezier(0.22, 1, 0.36, 1)",
     };
-    const tagTransitionStyle = isMobile ? undefined : transitionStyle;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -220,27 +165,6 @@ const HeroChartBackground = ({ mousePos, textZone }: Props) => {
                 {/* Crosshair */}
                 <line x1={dotX} x2={dotX} y1={0} y2={VIEW_HEIGHT} stroke="#D4AF37" strokeOpacity={0.12} strokeWidth={1} strokeDasharray="6 6" vectorEffect="non-scaling-stroke" style={transitionStyle} />
 
-                {/* Price tag, plain text, no box */}
-                <g style={tagTransitionStyle} transform={`translate(${tagX}, ${tagY})`}>
-                    {isMobile ? (
-                        <>
-                            <circle cx={10} cy={MOBILE_TAG_HEIGHT / 2} r={8} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
-                            <circle cx={10} cy={MOBILE_TAG_HEIGHT / 2} r={3} fill="#34D399" fillOpacity={0.85} />
-                            <text x={28} y={MOBILE_TAG_HEIGHT / 2 + 9} textAnchor="start" fill="#D4AF37" fontSize={MOBILE_FONT_SIZE} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
-                                {formatPrice(activePoint.price)}
-                            </text>
-                        </>
-                    ) : (
-                        <>
-                            <circle cx={7} cy={tagHeight / 2 + 1} r={6} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
-                            <circle cx={7} cy={tagHeight / 2 + 1} r={2} fill="#34D399" fillOpacity={0.85} />
-                            <text x={20} y={tagHeight - 5} textAnchor="start" fill="#D4AF37" fontSize={16} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
-                                {formatPrice(activePoint.price)}
-                            </text>
-                        </>
-                    )}
-                </g>
-
                 {/* Glow dot */}
                 <circle cx={dotX} cy={dotY} r={7} fill="#FFD400" fillOpacity={0.3} style={transitionStyle} className="hero-chart-dot-glow" />
                 <circle cx={dotX} cy={dotY} r={3.5} fill="#FFD400" style={transitionStyle} />
@@ -253,13 +177,6 @@ const HeroChartBackground = ({ mousePos, textZone }: Props) => {
                 }
                 .hero-chart-dot-glow {
                     animation: heroChartDotPulse 2.4s ease-in-out infinite;
-                }
-                @keyframes heroTagLivePulse {
-                    0%, 100% { r: 3; opacity: 0.45; }
-                    50% { r: 7.5; opacity: 0.06; }
-                }
-                .hero-tag-live-glow {
-                    animation: heroTagLivePulse 3.2s ease-in-out infinite;
                 }
             `}</style>
         </div>

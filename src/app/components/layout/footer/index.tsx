@@ -36,6 +36,12 @@ const Footer = () => {
                 <FooterLink href="/" label={t.footer.home} />
                 <FooterLink href="/alturelock" label={t.footer.alturelock} />
                 <FooterLink href="/#contact" label={t.footer.contactLink} />
+                <li>
+                  <Link href="/education" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-light text-sm tracking-wide">
+                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#E879F9" }} />
+                    {t.footer.education}
+                  </Link>
+                </li>
               </ul>
             </div>
 

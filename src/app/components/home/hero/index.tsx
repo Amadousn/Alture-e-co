@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import Ticker from "../ticker";
 import HeroChartBackground from "./hero-chart-background";
-import LivePriceHeader from "./live-price-header";
 import { useLanguage } from "@/app/i18n/language-context";
 
 const Hero = () => {
@@ -57,9 +56,9 @@ const Hero = () => {
          {/* Live price chart texture */}
          <HeroChartBackground mousePos={mousePos} textZone={textZone} />
 
-         {/* Live BTC price readout, top right */}
-         <div className="hidden md:block absolute top-24 right-6 md:right-10 z-20">
-            <LivePriceHeader />
+         {/* Soft ambient glow behind the headline */}
+         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]">
+            <div className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-gradient-to-br from-[#D4AF37]/20 via-[#D4AF37]/8 to-transparent blur-[100px]" />
          </div>
 
          <div className="container mx-auto max-w-7xl relative z-10 px-4 md:px-6 h-full flex flex-col justify-center items-center flex-grow py-12">

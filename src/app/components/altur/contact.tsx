@@ -7,6 +7,11 @@ const Contact = () => {
 
     return (
         <section id="contact" className="py-12 md:py-20 bg-black relative overflow-hidden">
+            {/* Soft ambient glow behind the contact grid */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-[480px] h-[480px] rounded-full bg-gradient-to-br from-[#D4AF37]/15 via-[#D4AF37]/6 to-transparent blur-[100px]" />
+            </div>
+
             <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
                 <div className="max-w-5xl mx-auto">
                     {/* Contact Grid */}

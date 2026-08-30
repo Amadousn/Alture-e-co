@@ -39,6 +39,7 @@ type Dictionary = {
         home: string;
         alturelock: string;
         contactLink: string;
+        education: string;
         privacyPolicy: string;
         termsOfService: string;
         disclaimer: string;
@@ -107,6 +108,7 @@ export const translations: Record<Language, Dictionary> = {
             home: "Home",
             alturelock: "AltureLock",
             contactLink: "Contact",
+            education: "Private",
             privacyPolicy: "Privacy Policy",
             termsOfService: "Terms of Service",
             disclaimer: "Disclaimer",
@@ -171,6 +173,7 @@ export const translations: Record<Language, Dictionary> = {
             home: "Accueil",
             alturelock: "AltureLock",
             contactLink: "Contact",
+            education: "Privé",
             privacyPolicy: "Politique de Confidentialité",
             termsOfService: "Conditions d'Utilisation",
             disclaimer: "Avertissement",
@@ -234,6 +237,7 @@ export const translations: Record<Language, Dictionary> = {
             home: "Home",
             alturelock: "AltureLock",
             contactLink: "Contatti",
+            education: "Privato",
             privacyPolicy: "Informativa sulla Privacy",
             termsOfService: "Termini di Servizio",
             disclaimer: "Disclaimer",
@@ -297,6 +301,7 @@ export const translations: Record<Language, Dictionary> = {
             home: "Главная",
             alturelock: "AltureLock",
             contactLink: "Контакты",
+            education: "Приватный доступ",
             privacyPolicy: "Политика Конфиденциальности",
             termsOfService: "Условия Использования",
             disclaimer: "Отказ от Ответственности",

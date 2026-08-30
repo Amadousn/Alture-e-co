@@ -16,6 +16,11 @@ const WhatWeOffer = () => {
                 }}></div>
             </div>
 
+            {/* Soft ambient glow behind the section header */}
+            <div className="absolute inset-x-0 top-0 flex items-start justify-center pointer-events-none">
+                <div className="w-[500px] h-[500px] -translate-y-1/3 rounded-full bg-gradient-to-br from-[#D4AF37]/15 via-[#D4AF37]/6 to-transparent blur-[100px]" />
+            </div>
+
             <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
                 {/* Section Header */}
                 <div className="mb-12 md:mb-16" data-aos="fade-up">
