@@ -1,6 +1,10 @@
 "use client";
 
+import { useLanguage } from "@/app/i18n/language-context";
+
 const Contact = () => {
+    const { t } = useLanguage();
+
     return (
         <section id="contact" className="py-12 md:py-20 bg-black relative overflow-hidden">
             <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
@@ -15,7 +19,7 @@ const Contact = () => {
                             {/* Email */}
                             <a href="mailto:celine@altureandco.com" className="group md:px-8 py-2 text-center md:text-left">
                                 <span className="block text-xs font-mono tracking-[0.2em] text-primary/50 mb-3">01</span>
-                                <p className="text-sm font-light text-gray-400 mb-1">Email</p>
+                                <p className="text-sm font-light text-gray-400 mb-1">{t.contact.email}</p>
                                 <p className="inline-block relative text-base md:text-lg font-light text-white group-hover:text-primary transition-colors break-all">
                                     celine@altureandco.com
                                     <span className="absolute left-0 -bottom-1 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"></span>
@@ -25,7 +29,7 @@ const Contact = () => {
                             {/* Location */}
                             <div className="group md:px-8 py-2 text-center md:text-left">
                                 <span className="block text-xs font-mono tracking-[0.2em] text-primary/50 mb-3">02</span>
-                                <p className="text-sm font-light text-gray-400 mb-1">Location</p>
+                                <p className="text-sm font-light text-gray-400 mb-1">{t.contact.location}</p>
                                 <p className="inline-block relative text-base md:text-lg font-light text-white">
                                     Business Bay, Dubai
                                     <span className="absolute left-0 -bottom-1 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"></span>

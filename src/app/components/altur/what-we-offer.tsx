@@ -1,7 +1,11 @@
 "use client";
 import Link from "next/link";
+import { useLanguage } from "@/app/i18n/language-context";
 
 const WhatWeOffer = () => {
+    const { t } = useLanguage();
+    const { offer } = t;
+
     return (
         <section id="what-we-offer" className="py-12 md:py-20 bg-black relative overflow-hidden">
             {/* Grid Background */}
@@ -16,7 +20,7 @@ const WhatWeOffer = () => {
                 {/* Section Header */}
                 <div className="mb-12 md:mb-16" data-aos="fade-up">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-center text-white">
-                        Core <span className="text-primary">Disciplines</span>
+                        {offer.sectionTitlePlain} <span className="text-primary">{offer.sectionTitleAccent}</span>
                     </h2>
                 </div>
 
@@ -32,14 +36,15 @@ const WhatWeOffer = () => {
                                 </svg>
                             </div>
 
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">Proprietary Trading</h3>
+                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service1.title}</h3>
                             <p className="text-gray font-light leading-relaxed mb-6">
-                                Crypto trading executed from our Dubai desk, using in-house strategies and risk-controlled execution.
+                                {offer.service1.description}
                             </p>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-light text-gray/70">Institutional-grade execution, based in Dubai</p>
-                                <p className="text-sm font-light text-gray/70">Performance available on request</p>
+                                {offer.service1.bullets.map((bullet, i) => (
+                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -54,15 +59,15 @@ const WhatWeOffer = () => {
                                 </svg>
                             </div>
 
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">AI Market Data &amp; News</h3>
+                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service2.title}</h3>
                             <p className="text-gray font-light leading-relaxed mb-6">
-                                Real-time market intelligence, including news, momentum shifts, and volatility signals, surfaced through our data feed.
+                                {offer.service2.description}
                             </p>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-light text-gray/70">Live market news &amp; data feed</p>
-                                <p className="text-sm font-light text-gray/70">Momentum and volatility tracking</p>
-                                <p className="text-sm font-light text-gray/70">Signals to inform, not replace, judgment</p>
+                                {offer.service2.bullets.map((bullet, i) => (
+                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -77,23 +82,22 @@ const WhatWeOffer = () => {
                                 </svg>
                             </div>
 
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">Trading Rules System</h3>
+                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service3.title}</h3>
                             <p className="text-gray font-light leading-relaxed mb-6">
-                                Software built into the trade itself, enforced at the account level. Every order passes through it before execution. One loss triggers a session lock.
+                                {offer.service3.description}
                             </p>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-light text-gray/70">Pre-trade checklist, hard drawdown stop, strategy confirmation</p>
-                                <p className="text-sm font-light text-gray/70">Session lock after one loss, configurable</p>
-                                <p className="text-sm font-light text-gray/70">Connected directly to your broker</p>
-                                <p className="text-sm font-light text-gray/70">Secured with IP-restricted API keys</p>
+                                {offer.service3.bullets.map((bullet, i) => (
+                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
+                                ))}
                             </div>
 
                             <Link
                                 href="/alturelock"
                                 className="inline-block mt-6 text-sm font-light text-primary hover:text-primary_hover transition-colors"
                             >
-                                Explore AltureLock →
+                                {offer.service3.cta}
                             </Link>
                         </div>
                     </div>

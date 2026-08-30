@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import Ticker from "../ticker";
 import HeroChartBackground from "./hero-chart-background";
 import LivePriceHeader from "./live-price-header";
+import { useLanguage } from "@/app/i18n/language-context";
 
 const Hero = () => {
+   const { t } = useLanguage();
    const sectionRef = useRef<HTMLElement>(null);
    const headlineRef = useRef<HTMLDivElement>(null);
    const [mousePos, setMousePos] = useState<{ xFraction: number; yFraction: number } | null>(null);
@@ -65,11 +67,11 @@ const Hero = () => {
             {/* Main Content - Centered */}
             <div ref={headlineRef} className="text-center max-w-3xl" data-aos="fade-up">
                <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-6 md:mb-8 tracking-normal leading-snug">
-                  We trade crypto. With <span className="text-primary">rules</span>, not feelings.
+                  {t.hero.headline} <span className="text-primary">{t.hero.headlineAccent}</span>{t.hero.headlineSuffix}
                </h1>
 
                <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
-                  A discreet proprietary desk in Dubai. Every trade passes through the same system before it&apos;s placed.
+                  {t.hero.subtext}
                </p>
             </div>
 

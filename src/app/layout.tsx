@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { LanguageProvider } from "./i18n/language-context";
 const dmsans = DM_Sans({ subsets: ["latin"] });
 // import { AppContextProvider } from "../context-api/PropertyContext";
 // import { NextAuthProvider } from "./components/auth/NextAuthProvider";
@@ -42,7 +43,9 @@ export default function RootLayout({
               enableSystem={false}
               defaultTheme="dark"
             >
-              {children}
+              <LanguageProvider>
+                {children}
+              </LanguageProvider>
             </ThemeProvider>
           {/* </AppContextProvider> */}
         {/* </NextAuthProvider> */}

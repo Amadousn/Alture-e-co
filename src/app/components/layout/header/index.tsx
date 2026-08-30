@@ -7,10 +7,13 @@ import Logo from "./logo";
 import HeaderLink from "./navigation/HeaderLink";
 import MobileHeaderLink from "./navigation/MobileHeaderLink";
 import { Icon } from "@iconify/react";
+import { useLanguage } from "@/app/i18n/language-context";
+import { LANGUAGES } from "@/app/i18n/translations";
 
 const Header: React.FC = () => {
   const pathUrl = usePathname();
   const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -39,10 +42,47 @@ const Header: React.FC = () => {
   }, [navbarOpen]);
 
   const menuItems = [
-    { label: "HOME", href: "/" },
-    { label: "ALTURELOCK", href: "/alturelock" },
-    { label: "CONTACT", href: "/#contact" },
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.alturelock, href: "/alturelock" },
+    { label: t.nav.contact, href: "/#contact" },
   ];
+
+  const LanguageSwitcher = ({ className }: { className?: string }) => (
+    <div className={`flex items-center gap-1.5 text-xs font-medium tracking-wide ${className ?? ""}`}>
+      {LANGUAGES.map((lang, i) => (
+        <div key={lang.code} className="flex items-center gap-1.5">
+          {i > 0 && <span className="text-white/20">/</span>}
+          <button
+            type="button"
+            onClick={() => setLanguage(lang.code)}
+            className={`transition-colors ${language === lang.code ? "text-[#D4AF37]" : "text-gray-500 hover:text-white"}`}
+          >
+            {lang.label}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+
+  const PrivateLockIcon = ({ className, gradientId }: { className?: string; gradientId: string }) => (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+      style={{ filter: "drop-shadow(0 0 5px rgba(216, 166, 255, 0.55)) drop-shadow(0 0 3px rgba(244, 114, 182, 0.5))" }}
+    >
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#D8B4FE" />
+          <stop offset="50%" stopColor="#E879F9" />
+          <stop offset="100%" stopColor="#F472B6" />
+        </linearGradient>
+      </defs>
+      <rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke={`url(#${gradientId})`} strokeWidth="1.5" />
+      <path d="M8 10.5V7.5a4 4 0 018 0v3" stroke={`url(#${gradientId})`} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
 
   // Check if user is on dashboard to hide header (handled by layout normally, but safety check)
   // if (pathUrl.startsWith('/dashboard')) return null;
@@ -65,18 +105,15 @@ const Header: React.FC = () => {
           {menuItems.map((item, index) => (
             <HeaderLink key={index} item={item} />
           ))}
+          <Link href="/education" aria-label="Private education access" className="flex items-center py-3 opacity-90 hover:opacity-100 transition-opacity">
+            <PrivateLockIcon gradientId="lockGradientDesktop" className="w-4 h-4" />
+          </Link>
         </nav>
 
-        {/* Right Actions (Admin) */}
-        {/* <div className="hidden lg:flex items-center">
-          <Link
-            href="/dashboard"
-            className="px-5 py-2 rounded-full border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-colors text-xs font-bold tracking-widest uppercase flex items-center gap-2"
-          >
-            <Icon icon="ph:user-thin" className="w-4 h-4" />
-            Admin
-          </Link>
-        </div> */}
+        {/* Right Actions (Language) */}
+        <div className="hidden lg:flex items-center">
+          <LanguageSwitcher />
+        </div>
 
         {/* Mobile Toggle */}
         <div className="flex items-center lg:hidden">
@@ -119,7 +156,16 @@ const Header: React.FC = () => {
             {menuItems.map((item, index) => (
               <MobileHeaderLink key={index} item={item} onClick={() => setNavbarOpen(false)} />
             ))}
+            <Link
+              href="/education"
+              onClick={() => setNavbarOpen(false)}
+              className="flex items-center gap-3 py-4 px-2 border-b border-white/5 text-gray-400 hover:text-white transition-colors"
+            >
+              <PrivateLockIcon gradientId="lockGradientMobile" className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm tracking-[0.15em] uppercase font-light">Private</span>
+            </Link>
             <div className="h-px bg-white/10 my-4" />
+            <LanguageSwitcher className="px-2" />
             {/* <Link
               href="/dashboard"
               className="text-[#D4AF37] font-medium flex items-center gap-3"

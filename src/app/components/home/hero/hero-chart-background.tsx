@@ -136,12 +136,19 @@ const HeroChartBackground = ({ mousePos, textZone }: Props) => {
     const tagHeight = 22;
     const tagHalf = tagWidth / 2;
 
+    // Mobile gets its own, larger presentation: bigger type and more
+    // breathing room on every side, since it's the only price readout
+    // visible there (desktop also has the top-right live header).
+    const MOBILE_TAG_WIDTH = 200;
+    const MOBILE_TAG_HEIGHT = 38;
+    const MOBILE_FONT_SIZE = 26;
+
     // Mobile has no hover/touch tracking, so the only thing that was ever
     // moving the tag there was live price data shifting the resting point
     // over time. Pin it to one fixed spot, top-right of the hero, so it
     // never moves at all on mobile regardless of what the chart is doing.
-    const MOBILE_TAG_X = VIEW_WIDTH - tagWidth - 40;
-    const MOBILE_TAG_Y = 105;
+    const MOBILE_TAG_X = VIEW_WIDTH - MOBILE_TAG_WIDTH - 90;
+    const MOBILE_TAG_Y = 115;
 
     let tagX: number;
     let tagY: number;
@@ -215,11 +222,23 @@ const HeroChartBackground = ({ mousePos, textZone }: Props) => {
 
                 {/* Price tag, plain text, no box */}
                 <g style={tagTransitionStyle} transform={`translate(${tagX}, ${tagY})`}>
-                    <circle cx={7} cy={tagHeight / 2 + 1} r={6} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
-                    <circle cx={7} cy={tagHeight / 2 + 1} r={2} fill="#34D399" fillOpacity={0.85} />
-                    <text x={20} y={tagHeight - 5} textAnchor="start" fill="#D4AF37" fontSize={16} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
-                        {formatPrice(activePoint.price)}
-                    </text>
+                    {isMobile ? (
+                        <>
+                            <circle cx={10} cy={MOBILE_TAG_HEIGHT / 2} r={8} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
+                            <circle cx={10} cy={MOBILE_TAG_HEIGHT / 2} r={3} fill="#34D399" fillOpacity={0.85} />
+                            <text x={28} y={MOBILE_TAG_HEIGHT / 2 + 9} textAnchor="start" fill="#D4AF37" fontSize={MOBILE_FONT_SIZE} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
+                                {formatPrice(activePoint.price)}
+                            </text>
+                        </>
+                    ) : (
+                        <>
+                            <circle cx={7} cy={tagHeight / 2 + 1} r={6} fill="#34D399" fillOpacity={0.16} className="hero-tag-live-glow" />
+                            <circle cx={7} cy={tagHeight / 2 + 1} r={2} fill="#34D399" fillOpacity={0.85} />
+                            <text x={20} y={tagHeight - 5} textAnchor="start" fill="#D4AF37" fontSize={16} fontFamily="ui-monospace, SFMono-Regular, monospace" fontWeight={600}>
+                                {formatPrice(activePoint.price)}
+                            </text>
+                        </>
+                    )}
                 </g>
 
                 {/* Glow dot */}
