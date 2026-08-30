@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTheme } from "next-themes";
 import Logo from "./logo";
 import HeaderLink from "./navigation/HeaderLink";
@@ -17,8 +18,26 @@ const Header: React.FC = () => {
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Portals need the document to exist, so only render the portal after mount.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Locks background scroll while the mobile menu is open, so the page
+  // underneath can't be scrolled while the overlay is showing.
+  useEffect(() => {
+    if (navbarOpen) {
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = previousOverflow;
+      };
+    }
+  }, [navbarOpen]);
 
   // Function to handle scroll to set sticky class
   const handleScroll = () => {
@@ -88,6 +107,7 @@ const Header: React.FC = () => {
   // if (pathUrl.startsWith('/dashboard')) return null;
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${sticky
         ? "bg-black/90 backdrop-blur-md shadow-lg border-b border-white/10 py-4"
@@ -126,57 +146,60 @@ const Header: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu Overlay */}
-      {navbarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300" 
-          onClick={() => setNavbarOpen(false)}
-        />
-      )}
-
-      {/* Mobile Menu Drawer */}
-      <div
-        ref={mobileMenuRef}
-        className={`lg:hidden fixed top-0 right-0 h-full w-[85%] sm:w-[350px] bg-[#050505]/95 backdrop-blur-xl border-l border-[#D4AF37]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-50 ${navbarOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-8 border-b border-white/5">
-            <span className="text-[#D4AF37] font-bold tracking-[0.2em] text-lg">MENU</span>
-            <button 
-              onClick={() => setNavbarOpen(false)} 
-              className="text-white/70 hover:text-[#D4AF37] transition-colors p-2 rounded-full hover:bg-white/5"
-            >
-              <Icon icon="ph:x" className="w-6 h-6" />
-            </button>
-          </div>
-
-          <nav className="flex flex-col p-8 space-y-2 overflow-y-auto">
-            {menuItems.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} onClick={() => setNavbarOpen(false)} />
-            ))}
-            <Link
-              href="/education"
-              onClick={() => setNavbarOpen(false)}
-              className="flex items-center gap-3 py-4 px-2 border-b border-white/5 text-gray-400 hover:text-white transition-colors"
-            >
-              <PrivateLockIcon gradientId="lockGradientMobile" className="w-4 h-4 flex-shrink-0" />
-              <span className="text-sm tracking-[0.15em] uppercase font-light">Private</span>
-            </Link>
-            <div className="h-px bg-white/10 my-4" />
-            <LanguageSwitcher className="px-2" />
-            {/* <Link
-              href="/dashboard"
-              className="text-[#D4AF37] font-medium flex items-center gap-3"
-            >
-              <Icon icon="ph:user-circle" className="w-5 h-5" />
-              Admin Dashboard
-            </Link> */}
-          </nav>
-        </div>
-      </div>
     </header>
+
+    {/* Mobile menu is portaled directly to the document body, outside the
+        header, so it's never a descendant of an element with backdrop-filter.
+        Nesting it inside the (sometimes blurred) header breaks true
+        viewport-fixed positioning on mobile Safari, which was causing the
+        menu to open at the current scroll position instead of the top. */}
+    {mounted && createPortal(
+      <>
+        {navbarOpen && (
+          <div
+            className="lg:hidden fixed inset-0 w-screen h-screen bg-black/80 backdrop-blur-sm z-[100] transition-opacity duration-300"
+            onClick={() => setNavbarOpen(false)}
+          />
+        )}
+
+        <div
+          ref={mobileMenuRef}
+          className={`lg:hidden fixed top-0 right-0 w-[85%] sm:w-[350px] bg-[#050505]/95 backdrop-blur-xl border-l border-[#D4AF37]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-[101] ${navbarOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          style={{ height: "100dvh" }}
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between p-8 border-b border-white/5">
+              <span className="text-[#D4AF37] font-bold tracking-[0.2em] text-lg">MENU</span>
+              <button
+                onClick={() => setNavbarOpen(false)}
+                className="text-white/70 hover:text-[#D4AF37] transition-colors p-2 rounded-full hover:bg-white/5"
+              >
+                <Icon icon="ph:x" className="w-6 h-6" />
+              </button>
+            </div>
+
+            <nav className="flex flex-col p-8 space-y-2 overflow-y-auto">
+              {menuItems.map((item, index) => (
+                <MobileHeaderLink key={index} item={item} onClick={() => setNavbarOpen(false)} />
+              ))}
+              <Link
+                href="/education"
+                onClick={() => setNavbarOpen(false)}
+                className="flex items-center gap-3 py-4 px-2 border-b border-white/5 text-gray-400 hover:text-white transition-colors"
+              >
+                <PrivateLockIcon gradientId="lockGradientMobile" className="w-4 h-4 flex-shrink-0" />
+                <span className="text-sm tracking-[0.15em] uppercase font-light">Private</span>
+              </Link>
+              <div className="h-px bg-white/10 my-4" />
+              <LanguageSwitcher className="px-2" />
+            </nav>
+          </div>
+        </div>
+      </>,
+      document.body
+    )}
+    </>
   );
 };
 
