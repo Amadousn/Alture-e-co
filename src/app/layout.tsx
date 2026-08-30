@@ -8,6 +8,7 @@ const dmsans = DM_Sans({ subsets: ["latin"] });
 // import { NextAuthProvider } from "./components/auth/NextAuthProvider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.altureandco.com"),
   icons: {
     icon: [
       { url: "/favicon-32x32.png?v=2", sizes: "32x32", type: "image/png" },
