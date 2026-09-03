@@ -1281,15 +1281,6 @@
         "include_margins": true
       }
     },
-    "mix_preuve": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<style>:root{--rx-ink:#211C17;--rx-cream:#F7F3EC;--rx-sand:#EFE6D8;--rx-terra:#C15D2F;--rx-mute:#6B6154}.rx{max-width:1240px;margin:0 auto;padding:0 24px;color:var(--rx-ink)}.rx-full{width:100vw;margin-left:calc(50% - 50vw)}.rx-hd{text-align:center;max-width:34ch;margin:0 auto 36px}.rx-hd h2{margin:0;font-size:clamp(30px,3.4vw,40px);line-height:1.12;font-weight:500;letter-spacing:-.015em;text-wrap:balance}.rx-hd p{margin:12px 0 0;font-size:17px;line-height:1.5;color:var(--rx-mute)}.rx-g4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}.rx-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.rx-g4 img,.rx-g3 img{width:100%;height:auto;object-fit:cover;display:block}.rx-g3 img{border-radius:15px;aspect-ratio:3/4}.rx-g4 img{aspect-ratio:9/16}.rx-cap{margin:12px 0 0;font-size:17px;font-weight:600}.rx-cap span{display:block;font-size:15px;font-weight:400;color:var(--rx-mute);margin-top:3px}.rx-cta{display:inline-block;background:var(--rx-terra);color:#fff;text-decoration:none;font-size:16px;font-weight:600;padding:18px 46px;border-radius:10px;border:0;cursor:pointer;transition:opacity .18s}.rx-cta:hover{opacity:.88}.rx-cta:focus-visible{outline:3px solid var(--rx-ink);outline-offset:3px}.rx-c{text-align:center}.rx-gar{background:var(--rx-sand);border-radius:15px;padding:38px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:center}.rx-gar b{display:block;font-size:19px;font-weight:700;margin-bottom:5px}.rx-gar span{font-size:15px;line-height:1.45;color:var(--rx-mute)}.rx-gar svg{width:26px;height:26px;margin:0 auto 12px;display:block;stroke:var(--rx-terra);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}@media(max-width:749px){.rx{padding:0 18px}.rx-hd{margin-bottom:24px}.rx-g4{grid-template-columns:repeat(2,1fr)}.rx-g3{grid-template-columns:1fr;gap:22px}.rx-gar{grid-template-columns:1fr;gap:24px;padding:30px 22px}.rx-cta{display:block;text-align:center;padding:18px 20px}}</style><script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.rx-cta');if(!a)return;e.preventDefault();var f=document.querySelector('form[action*=\"/cart/add\"]');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});});</script><div class=\"rx-hd\"><h2>Ils ont arrêté de le faire au rasoir.</h2><p>Colis neutre, cinq minutes sous la douche.</p></div><div class=\"rx-full rx-g4\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-01.png?v=1788422644&width=700\" alt=\"Client Raselio dans sa salle de bain\" loading=\"lazy\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-02.png?v=1788422636&width=700\" alt=\"Client Raselio, serviette a la taille\" loading=\"lazy\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-03.png?v=1788422636&width=700\" alt=\"Client Raselio devant son lavabo\" loading=\"lazy\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-04.png?v=1788422636&width=700\" alt=\"Client Raselio de dos\" loading=\"lazy\"></div>",
-        "color_scheme": "background-1",
-        "padding_top": 64,
-        "padding_bottom": 0
-      }
-    },
     "mix_cta1": {
       "type": "custom-liquid",
       "settings": {
@@ -1302,7 +1293,7 @@
     "mix_zones": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"rx-hd\"><h2>Du maillot au torse, une seule lame.</h2></div><div class=\"rx rx-g3\"><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-avis-v2-01-maillot.png?v=1788415168&width=760\" alt=\"Tonte du maillot avec la tondeuse Raselio\" loading=\"lazy\"><p class=\"rx-cap\">Maillot et aine<span>La peau la plus fine, la plus mobile.</span></p></div><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-cmp-torse.png?v=1788420612&width=760\" alt=\"Tondeuse Raselio utilisee sur le torse\" loading=\"lazy\"><p class=\"rx-cap\">Torse et ventre<span>Sans repasser dix fois au même endroit.</span></p></div><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-avis-v2-05-plis.png?v=1788415168&width=760\" alt=\"Tete arrondie de la tondeuse Raselio sur le pli de l aine\" loading=\"lazy\"><p class=\"rx-cap\">Plis et angles<span>La tête arrondie suit la peau.</span></p></div></div>",
+        "custom_liquid": "<style>:root{--rx-ink:#211C17;--rx-cream:#F7F3EC;--rx-sand:#EFE6D8;--rx-terra:#C15D2F;--rx-mute:#6B6154}.rx{max-width:1240px;margin:0 auto;padding:0 24px;color:var(--rx-ink)}.rx-full{width:100vw;margin-left:calc(50% - 50vw)}.rx-hd{text-align:center;max-width:34ch;margin:0 auto 36px}.rx-hd h2{margin:0;font-size:clamp(30px,3.4vw,40px);line-height:1.12;font-weight:500;letter-spacing:-.015em;text-wrap:balance}.rx-hd p{margin:12px 0 0;font-size:17px;line-height:1.5;color:var(--rx-mute)}.rx-g4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}.rx-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.rx-g4 img,.rx-g3 img{width:100%;height:auto;object-fit:cover;display:block}.rx-g3 img{border-radius:15px;aspect-ratio:3/4}.rx-g4 img{aspect-ratio:9/16}.rx-cap{margin:12px 0 0;font-size:17px;font-weight:600}.rx-cap span{display:block;font-size:15px;font-weight:400;color:var(--rx-mute);margin-top:3px}.rx-cta{display:inline-block;background:var(--rx-terra);color:#fff;text-decoration:none;font-size:16px;font-weight:600;padding:18px 46px;border-radius:10px;border:0;cursor:pointer;transition:opacity .18s}.rx-cta:hover{opacity:.88}.rx-cta:focus-visible{outline:3px solid var(--rx-ink);outline-offset:3px}.rx-c{text-align:center}.rx-gar{background:var(--rx-sand);border-radius:15px;padding:38px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:center}.rx-gar b{display:block;font-size:19px;font-weight:700;margin-bottom:5px}.rx-gar span{font-size:15px;line-height:1.45;color:var(--rx-mute)}.rx-gar svg{width:26px;height:26px;margin:0 auto 12px;display:block;stroke:var(--rx-terra);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}@media(max-width:749px){.rx{padding:0 18px}.rx-hd{margin-bottom:24px}.rx-g4{grid-template-columns:repeat(2,1fr)}.rx-g3{grid-template-columns:1fr;gap:22px}.rx-gar{grid-template-columns:1fr;gap:24px;padding:30px 22px}.rx-cta{display:block;text-align:center;padding:18px 20px}}</style><script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.rx-cta');if(!a)return;e.preventDefault();var f=document.querySelector('form[action*=\"/cart/add\"]');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});});</script><div class=\"rx-hd\"><h2>Du maillot au torse, une seule lame.</h2></div><div class=\"rx rx-g3\"><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-avis-v2-01-maillot.png?v=1788415168&width=760\" alt=\"Tonte du maillot avec la tondeuse Raselio\" loading=\"lazy\"><p class=\"rx-cap\">Maillot et aine<span>La peau la plus fine, la plus mobile.</span></p></div><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-cmp-torse.png?v=1788420612&width=760\" alt=\"Tondeuse Raselio utilisee sur le torse\" loading=\"lazy\"><p class=\"rx-cap\">Torse et ventre<span>Sans repasser dix fois au même endroit.</span></p></div><div><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-avis-v2-05-plis.png?v=1788415168&width=760\" alt=\"Tete arrondie de la tondeuse Raselio sur le pli de l aine\" loading=\"lazy\"><p class=\"rx-cap\">Plis et angles<span>La tête arrondie suit la peau.</span></p></div></div>",
         "color_scheme": "background-1",
         "padding_top": 72,
         "padding_bottom": 72
@@ -1338,15 +1329,14 @@
   },
   "order": [
     "main",
-    "mix_preuve",
     "shoppable_videos_npAUN8",
     "mix_cta1",
     "custom_liquid_slider_ba",
     "lumin_hero_3etapes",
     "lumin_grids_EAtzYR",
+    "comparison_table_pAMhAV",
     "mix_zones",
     "mix_cta2",
-    "comparison_table_pAMhAV",
     "collapsible_content_kdacf9",
     "mix_garantie",
     "lumin_review_kL78Mn",
