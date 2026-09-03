@@ -227,156 +227,6 @@
         "padding_bottom": 64
       }
     },
-    "lumin_hero_3etapes": {
-      "type": "lumin-hero",
-      "blocks": {
-        "hero_3etapes01": {
-          "type": "hero",
-          "settings": {
-            "use_video": false,
-            "main_image_width": 400,
-            "show_1": true,
-            "image_1": "shopify://shop_images/raselio-etape1-sabot.png",
-            "head_1": "1. Clipsez le sabot",
-            "text_1": "Trois hauteurs au choix. Vous tondez, vous ne rasez pas à blanc : vous décidez de ce que vous gardez.",
-            "show_2": true,
-            "image_2": "shopify://shop_images/raselio-etape2-passage.png",
-            "head_2": "2. Passez sans appuyer",
-            "text_2": "Gestes lents, aucune pression. La LED éclaire la zone, la tête arrondie suit la peau.",
-            "show_3": true,
-            "image_3": "shopify://shop_images/raselio-etape3-rincage.png",
-            "head_3": "3. Rincez, c'est fini",
-            "text_3": "La tête se rince à l'eau en quelques secondes. Rien à démonter, rien à nettoyer derrière vous.",
-            "show_4": false,
-            "head_4": "Heading",
-            "text_4": "",
-            "show_5": false,
-            "head_5": "Heading",
-            "text_5": "",
-            "show_6": false,
-            "head_6": "Heading",
-            "text_6": ""
-          }
-        }
-      },
-      "block_order": [
-        "hero_3etapes01"
-      ],
-      "settings": {
-        "color_scheme": "background-1",
-        "color_scheme_2": "background-1",
-        "title": "Comment ça marche",
-        "heading_size": "h1",
-        "layout_style": "slider",
-        "column_alignment": "center",
-        "column_alignment_dt": "center",
-        "column_alignment_mb": "center",
-        "head_text": "5 MINUTES, SOUS LA DOUCHE",
-        "feature_image": 72,
-        "feature_image_mb": 52,
-        "gap_section_top": 0,
-        "gap_section_bottom": 5,
-        "pad_section_top": 25,
-        "pad_section_bottom": 25
-      }
-    },
-    "comparison_table_pAMhAV": {
-      "type": "comparison-table",
-      "blocks": {
-        "row_EcyaNq": {
-          "type": "row",
-          "settings": {
-            "benefit": "Lame calibrée pour la peau fine des parties intimes",
-            "us": true,
-            "others": false
-          }
-        },
-        "row_led": {
-          "type": "row",
-          "settings": {
-            "benefit": "LED intégrée : vous voyez la zone que vous tondez",
-            "us": true,
-            "others": false
-          }
-        },
-        "row_pN3qAQ": {
-          "type": "row",
-          "settings": {
-            "benefit": "Tête arrondie qui suit la peau au lieu de l'accrocher",
-            "us": true,
-            "others": false
-          }
-        },
-        "row_h9g3LP": {
-          "type": "row",
-          "settings": {
-            "benefit": "Hauteurs réglables : vous tondez, vous ne rasez pas à blanc",
-            "us": true,
-            "others": false
-          }
-        },
-        "row_TKDWRX": {
-          "type": "row",
-          "settings": {
-            "benefit": "S'utilise et se rince sous la douche",
-            "us": true,
-            "others": false
-          }
-        },
-        "row_hygiene": {
-          "type": "row",
-          "settings": {
-            "benefit": "Une lame dédiée, jamais celle qui touche votre visage",
-            "us": true,
-            "others": false
-          }
-        }
-      },
-      "block_order": [
-        "row_EcyaNq",
-        "row_led",
-        "row_pN3qAQ",
-        "row_h9g3LP",
-        "row_TKDWRX",
-        "row_hygiene"
-      ],
-      "custom_css": [
-        "table,table th,table td,.comparison-table th,.comparison-table td {border-color: #c15d2f !important;}"
-      ],
-      "settings": {
-        "title": "Votre tondeuse à barbe n'a rien à faire sous la ceinture",
-        "heading_size": "h1",
-        "text": "<p>La peau du visage est épaisse et tendue. Celle des parties intimes est fine et mobile. Une lame calibrée pour la barbe y tire, y pince et y accroche. Et elle n'a rien à faire ensuite sur votre visage.</p>",
-        "button_label": "Je passe à Raselio · 34,99 €",
-        "link": "#",
-        "button_style_secondary": false,
-        "layout": "table_second",
-        "content_center": "center",
-        "color_scheme": "background-1",
-        "logo_width": 90,
-        "mobile_logo_width": 60,
-        "us_label": "RASELIO",
-        "others_label": "Tondeuse à barbe",
-        "benefit_color_scheme": "accent-2",
-        "icon_cells_color_scheme": "",
-        "checkmark_color": "#c15d2f",
-        "x_color": "#211c17",
-        "checkmark_active_color": "#f7f3ec",
-        "x_active_color": "#211c17",
-        "active_color": "#c15d2f",
-        "active_text_color": "#f7f3ec",
-        "active_border_color": "#c15d2f",
-        "table_corner_radius": 8,
-        "font_size": 16,
-        "table_shadow_opacity": 25,
-        "table_shadow_horizontal_offset": 2,
-        "table_shadow_vertical_offset": 11,
-        "table_shadow_blur": 20,
-        "table_border_thickness": 1,
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
     "collapsible_content_kdacf9": {
       "type": "collapsible-content",
       "blocks": {
@@ -882,7 +732,7 @@
     "tech_section": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">La différence Raselio</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Pensée pour cette zone, pas pour votre barbe.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;align-items:center;\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260830_005806_ad64ddf6-d384-4670-9395-3881595edb1a.png?width=1200\" alt=\"Macro de la tête arrondie et des lames céramique Raselio\" loading=\"lazy\" style=\"width:100%;border-radius:12px;display:block;\"><div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Tête arrondie + lames céramique</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">La lame glisse sur une peau fine et mobile au lieu de la pincer.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Vous ne retenez plus votre souffle à chaque passage.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">LED intégrée près de la lame</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous voyez les plis et les angles que vous deviniez.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Un seul passage au lieu de trois, aucun geste au jugé.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Sabot 3 hauteurs</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous tondez court sans raser à blanc.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Pas de repousse qui pique ni de boutons trois jours après.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Lame dédiée à cette zone</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Elle ne repasse jamais sur votre visage.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">L'hygiène évidente que votre tondeuse à barbe ne peut pas offrir.</p></div></div></div></div>",
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">La différence Raselio</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Pensée pour cette zone, pas pour votre barbe.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;align-items:center;\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260830_005806_ad64ddf6-d384-4670-9395-3881595edb1a.png?width=1200\" alt=\"Macro de la tête arrondie et des lames céramique Raselio\" loading=\"lazy\" style=\"width:100%;border-radius:12px;display:block;\"><div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Tête arrondie + lames céramique</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">La lame glisse sur une peau fine et mobile au lieu de la pincer.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Vous ne retenez plus votre souffle à chaque passage.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">LED intégrée près de la lame</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous voyez les plis et les angles que vous deviniez.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Un seul passage au lieu de trois, aucun geste au jugé.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Sabot 3 hauteurs</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous tondez court sans raser à blanc.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Pas de repousse qui pique ni de boutons trois jours après.</p></div></div></div></div>",
         "color_scheme": "background-1",
         "padding_top": 40,
         "padding_bottom": 48
@@ -1076,11 +926,9 @@
   "order": [
     "main",
     "problem_section",
-    "comparison_table_pAMhAV",
     "custom_liquid_slider_ba",
     "tech_section",
     "lumin_grids_EAtzYR",
-    "lumin_hero_3etapes",
     "video_align_css",
     "shoppable_videos_npAUN8",
     "lumin_review_kL78Mn",
