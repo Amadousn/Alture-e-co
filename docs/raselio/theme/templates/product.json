@@ -1,0 +1,900 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "breadcrumbs_MW6ytk": {
+          "type": "breadcrumbs",
+          "disabled": true,
+          "settings": {
+            "title_home": "Accueil",
+            "text_transform": "none",
+            "text_size": 14,
+            "spacing": 0,
+            "padding_top": 0,
+            "padding_top_mb": 0,
+            "padding_bottom": 0,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "custom_liquid_review_stars": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .product__title,.product__title h1,.product__title h2{text-align:left!important;}\n  .product-reviews{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer;margin:0 0 8px;}\n  .review-stars{height:16px;width:auto;}\n  .review-summary{color:#000000;font-size:14px;font-weight:500;}\n</style>\n<a href=\"#reviews\" class=\"product-reviews\" aria-label=\"Voir les 1 734 avis client\">\n  <img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"Évaluation 5 sur 5\" class=\"review-stars\">\n  <span class=\"review-summary\">EXCELLENT <strong>4.7/5</strong> | 1 734 Avis</span>\n</a>"
+          }
+        },
+        "title_Fnnnm3": {
+          "type": "title",
+          "settings": {
+            "title_size_dt": 26,
+            "title_size_mb": 26,
+            "title_line_height": 1.1,
+            "title_text_transform": "none",
+            "title_letter_spacing": 0,
+            "title_font_weight": 400
+          }
+        },
+        "custom_liquid_benefits": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<ul style=\"list-style:none;padding:0;margin:2px 0 14px;display:flex;flex-direction:column;gap:8px;\"><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#211c17;\"><span aria-hidden=\"true\" style=\"color:#c15d2f;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>Tête arrondie et lames céramique :</strong> la peau glisse, elle n'est pas pincée.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#211c17;\"><span aria-hidden=\"true\" style=\"color:#c15d2f;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>LED intégrée :</strong> vous voyez enfin la zone que vous tondez, même dans les plis.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#211c17;\"><span aria-hidden=\"true\" style=\"color:#c15d2f;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>100 % étanche :</strong> 5 minutes sous la douche, rincée en 10 secondes.</span></li></ul>"
+          }
+        },
+        "custom_liquid_price": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% assign v = product.selected_or_first_available_variant %}<div style=\"display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:4px 0 4px;\"><span style=\"font-size:32px;font-weight:800;color:#211c17;line-height:1;\">{{ v.price | money }}</span>{% if v.compare_at_price and v.compare_at_price > v.price %}<span style=\"font-size:18px;color:#7b7168;text-decoration:line-through;\">{{ v.compare_at_price | money }}</span>{% endif %}</div><p style=\"margin:0 0 14px;font-size:13px;color:#5a5048;\">Prix de lancement · Livraison Colissimo offerte</p>"
+          }
+        },
+        "review_v1_FKwtt9": {
+          "type": "review_v1",
+          "disabled": true,
+          "settings": {
+            "name": "",
+            "text": "",
+            "background_review": "#ffecef",
+            "text_color": "#000000",
+            "verified_badge": "#59a10b",
+            "border_color": "#ff7e8d",
+            "border_style": "dashed",
+            "border_size": 0.2,
+            "font_size": 12,
+            "padding_top": 5,
+            "padding_bottom": 15,
+            "margin_top": 10,
+            "margin_bottom": 10
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true,
+            "skip_cart": false,
+            "button_padding_top": 20,
+            "button_padding_bottom": 20,
+            "button_custom_style": true,
+            "button_font_size": 20,
+            "button_height": 45,
+            "lm_main_button": "#c15d2f",
+            "lm_main_button_gr": "",
+            "lm_main_text": "#f7f3ec",
+            "lm_main_text_hover": "#f7f3ec",
+            "lm_main_button_hover": "#a94e26",
+            "lm_main_button_gr_hover": "",
+            "lm_main_button_border_width": 0,
+            "lm_main_button_border_color": "#c15d2f"
+          }
+        },
+        "payment_pcDBqV": {
+          "type": "payment",
+          "settings": {
+            "original": "custom",
+            "payment_icon": "visa,master,paypal,apple_pay,shopify-pay,google-pay",
+            "payment_content_alignment": "center",
+            "custom_icon_1_width": 34,
+            "custom_icon_2_width": 34,
+            "custom_icon_3_width": 34
+          }
+        },
+        "custom_liquid_reviews_carousel": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n    .carousel-container-{{block.id}} {\n      width: 100%;\n      overflow: hidden;\n      height: 110px;\n      position: relative;\n      touch-action: pan-y;\n      margin-top: 14px;\n    }\n    .carousel-wrapper-{{block.id}} {\n      display: flex;\n      transition: transform 0.5s ease-in-out;\n    }\n    .review-box-{{block.id}} {\n      flex: 0 0 100%;\n      box-sizing: border-box;\n      padding: 10px;\n      display: flex;\n      align-items: center;\n      text-align: left;\n      margin: 0;\n    }\n    .product-image-{{block.id}} {\n      max-width: 70px;\n      height: auto;\n      border: 0px solid #ddd;\n      border-radius: 12px;\n      margin-right: 10px;\n      margin-bottom: 5px;\n      object-fit: cover;\n      aspect-ratio: 1/1;\n    }\n    .review-text-{{block.id}} {\n      font-size: 12px;\n      color: #211c17;\n      margin: 0;\n      line-height: 1.3;\n      font-style: italic;\n    }\n    .trustpilot-container-{{block.id}} {\n      display: flex;\n      align-items: baseline;\n      font-size: 12px;\n    }\n    .trustpilot-name-{{block.id}} {\n      margin-right: 5px;\n      color: #6b6154;\n    }\n    .trustpilot-stars-{{block.id}} img {\n      width: 85px;\n      height: auto;\n      margin-top: 6px;\n    }\n    .arrow-{{block.id}} {\n      position: absolute;\n      top: 50%;\n      transform: translateY(-50%);\n      cursor: pointer;\n      font-size: 22px;\n      color: #c15d2f;\n      z-index: 2;\n    }\n    .arrow-{{block.id}}.left { left: 0; }\n    .arrow-{{block.id}}.right { right: 0; }\n  </style>\n<div class=\"carousel-container-{{block.id}}\" ontouchstart=\"startTouch{{block.id}}(event)\" ontouchmove=\"moveTouch{{block.id}}(event)\" ontouchend=\"endTouch{{block.id}}()\">\n    <div class=\"arrow-{{block.id}} left\" onclick=\"prevReview{{block.id}}()\">‹</div>\n    <div class=\"carousel-wrapper-{{block.id}}\" id=\"carouselWrapper{{block.id}}\">\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/WhatsApp_Image_2026-07-25_at_05.08.51.jpg\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Reçue hier, testée ce matin : pas une seule coupure, même en bas. Bien plus rassurant qu'avec ma tondeuse à barbe.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Maxime L.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/WhatsApp_Image_2026-07-25_at_05.08.51_1.jpg\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Je l'utilise sous la douche, résultat nickel et pas d'irritation le lendemain. Prise en main simple, livraison rapide.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Kevin D.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_91f0e2bb-11f0-4b44-83bd-38fed59027fc.png\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"J'avais toujours peur de me couper à cet endroit. Là je vois ce que je fais avec la LED, c'est propre et confortable. Je recommande.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Thomas B.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_bf6401e2-7d03-4041-a5e0-4beb9e9a70a2.png\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Beaucoup plus rassurant pour la zone intime : on règle la hauteur, on passe sans appuyer et c'est net.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Lucas M.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_91f0e2bb-11f0-4b44-83bd-38fed59027fc.png?v=1786545236\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Cette zone était galère à entretenir, surtout dans les plis. Avec la tête arrondie ça passe tout seul. Finition premium.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Antoine R.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_79997cda-cf58-4681-9191-7f992714a7a0.png?v=1786545236\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Étanche, je la rince directement sous l'eau après la douche. Ça glisse tout seul, aucune irritation après.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Hugo D.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_1b9441d7-c3e0-4852-b600-75837abd7aa4.png?v=1786545235\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Parfaite pour les zones sensibles : coupe confortable, aucun accroc pour l'instant et un vrai gain de temps.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Nicolas P.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n      <div class=\"review-box-{{block.id}}\">\n        <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260812_143050_bf6401e2-7d03-4041-a5e0-4beb9e9a70a2.png?v=1786545236\" alt=\"Client Raselio\" class=\"product-image-{{block.id}}\">\n        <div>\n          <div class=\"review-text-{{block.id}}\">\"Je stressais de me tailler là au rasoir. Avec Raselio j'ai arrêté d'appréhender : pas de coupure ni de rougeur pour moi, même sur les zones les plus sensibles.\"</div>\n          <div class=\"trustpilot-container-{{block.id}}\">\n            <span class=\"trustpilot-name-{{block.id}}\">Julien F.</span>\n            <div class=\"trustpilot-stars-{{block.id}}\"><img src=\"https://cdn.shopify.com/s/files/1/0862/4694/9130/files/stars-5_1.svg?v=1756194428\" alt=\"5 étoiles\"></div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"arrow-{{block.id}} right\" onclick=\"nextReview{{block.id}}()\">›</div>\n  </div>\n<script>\n  (function(){\n    var idx = 0;\n    var wrap = document.getElementById('carouselWrapper{{block.id}}');\n    var boxes = wrap.querySelectorAll('.review-box-{{block.id}}');\n    var total = boxes.length;\n    var startX, endX;\n    function update(){ wrap.style.transform = 'translateX(' + (-idx * 100) + '%)'; }\n    window.nextReview{{block.id}} = function(){ idx = (idx + 1) % total; update(); };\n    window.prevReview{{block.id}} = function(){ idx = (idx - 1 + total) % total; update(); };\n    window.startTouch{{block.id}} = function(e){ startX = e.touches[0].clientX; };\n    window.moveTouch{{block.id}} = function(e){ endX = e.touches[0].clientX; if (startX - endX > 50) { nextReview{{block.id}}(); } else if (endX - startX > 50) { prevReview{{block.id}}(); } };\n    window.endTouch{{block.id}} = function(){ startX = 0; endX = 0; };\n    setInterval(function(){ nextReview{{block.id}}(); }, 5000);\n  })();\n</script>"
+          }
+        },
+        "collapsible_tab_pack": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Dans la boîte",
+            "icon": "none",
+            "content": "<ul><li>La tondeuse Raselio™ MS-810</li><li>Le sabot guide de coupe, 3 hauteurs</li><li>Le socle de charge</li><li>Le câble USB</li><li>La brosse de nettoyage</li><li>Le flacon d'huile d'entretien</li></ul>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        },
+        "custom_liquid_reassurance": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"margin:14px 0 6px;padding:12px 8px;border:1px solid rgba(33,28,23,.14);border-radius:8px;background:#f7f3ec;display:flex;gap:6px;\"><div style=\"flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:12.5px;line-height:1.3;font-weight:600;color:#211c17;\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5z\"/><path d=\"M9 12l2 2 4-4\"/></svg><span>Garantie<br>2 ans</span></div><div style=\"flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:12.5px;line-height:1.3;font-weight:600;color:#211c17;\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7v6h6\"/><path d=\"M3 13a9 9 0 1 0 3-6.7L3 9\"/></svg><span>30 jours satisfait<br>ou remboursé</span></div><div style=\"flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:12.5px;line-height:1.3;font-weight:600;color:#211c17;\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 8l-9-5-9 5v8l9 5 9-5z\"/><path d=\"M3 8l9 5 9-5M12 13v8\"/></svg><span>Colis neutre<br>et discret</span></div></div><p style=\"display:flex;align-items:center;gap:8px;margin:8px 0 10px;font-size:13px;color:#5a5048;line-height:1.35;\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M1 3h13v13H1zM14 8h4l3 3v5h-7z\"/><circle cx=\"5.5\" cy=\"18.5\" r=\"2.5\"/><circle cx=\"17.5\" cy=\"18.5\" r=\"2.5\"/></svg><span>Expédiée sous 24 à 48 h en Colissimo suivi · livraison estimée <strong style=\"color:#211c17;\">le <span id=\"rz-eta\"></span></strong></span></p><script>(function(){var e=document.getElementById(\"rz-eta\");if(!e)return;var d=new Date();var add=4;while(add>0){d.setDate(d.getDate()+1);if(d.getDay()!=0)add--;}e.textContent=d.toLocaleDateString(\"fr-FR\",{weekday:\"long\",day:\"numeric\",month:\"long\"});})();</script>"
+          }
+        },
+        "collapsible_tab_specs": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Caractéristiques",
+            "icon": "none",
+            "content": "<ul><li>Lames céramique, tête arrondie amovible</li><li>Éclairage LED intégré près de la lame</li><li>Sabot guide de coupe, 3 hauteurs</li><li>Boîtier 100 % étanche : utilisation sous la douche, rinçage à l'eau</li><li>Sans fil, charge sur socle par câble USB</li><li>Autonomie : environ 90 minutes, charge complète en 1 h 30 environ</li><li>Garantie 2 ans contre tout défaut de fabrication</li></ul>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        },
+        "collapsible_tab_livraison": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livraison, garantie, retours",
+            "icon": "none",
+            "content": "<p><strong>Livraison Colissimo offerte.</strong> Commande préparée et expédiée sous 24 à 48 h, en Colissimo suivi. Le numéro de suivi vous est envoyé par e-mail dès l'expédition. Emballage neutre, sans mention du produit.</p><p><strong>Satisfait ou remboursé 30 jours.</strong> Si Raselio ne vous convient pas, contactez notre support dans les 30 jours suivant la réception : vous êtes remboursé intégralement.</p><p><strong>Garantie 2 ans.</strong> Votre Raselio est garantie 2 ans contre tout défaut de fabrication. En cas de problème, notre support la remplace.</p><p><strong>Entretien.</strong> Rincez la tête à l'eau après chaque passage, essuyez le boîtier et laissez sécher sur le socle.</p>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumbs_MW6ytk",
+        "custom_liquid_review_stars",
+        "title_Fnnnm3",
+        "custom_liquid_benefits",
+        "custom_liquid_price",
+        "review_v1_FKwtt9",
+        "buy_buttons",
+        "custom_liquid_reassurance",
+        "payment_pcDBqV",
+        "custom_liquid_reviews_carousel",
+        "collapsible_tab_pack",
+        "collapsible_tab_specs",
+        "collapsible_tab_livraison"
+      ],
+      "custom_css": [
+        ".price-item--strikethrough {color: #e00000 !important;}",
+        ".price--on-sale .price-item--regular {color: #e00000 !important;}",
+        "[data-amose-bundle] {color: #000 !important;}",
+        "[data-amose-bundle] .price,[data-amose-bundle] s,[data-amose-bundle] del,[data-amose-bundle] .compare-at-price {color: #e00000 !important;}",
+        "[data-amose-bundle] [class*=\"card\"],[data-amose-bundle] [class*=\"option\"],[data-amose-bundle] [class*=\"container\"] {border-color: #c15d2f !important;}",
+        ".sp-option-qty-btn,.sp-option-qty-value {color: #fff !important;}"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "no_scroll": false,
+        "show_feature_image_first": false,
+        "color_scheme": "background-1",
+        "block_padding": 1.5,
+        "media_size": "large",
+        "constrain_to_viewport": false,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "hide_slider_buttons": false,
+        "thumbnail_layout": "medium",
+        "thumbnail_size": 54,
+        "thumbnail_radius": 0,
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": false,
+        "enable_video_looping": true,
+        "variant_image_filtering": "none",
+        "filtering_products": [
+          "raselio-tondeuse-parties-intimes"
+        ],
+        "mobile_thumbnails": "dots",
+        "mobile_slider_height": "auto",
+        "show_full_image": false,
+        "first_image_size": 92,
+        "second_image_size": 0,
+        "show_container": false,
+        "container_bg": "#ffffff",
+        "container_radius": 10,
+        "container_padding": 20,
+        "container_border_color": "#ffc7c7",
+        "show_container_mb": false,
+        "container_bg_mb": "#ffffff",
+        "container_padding_mb": 20,
+        "container_radius_mb": 8,
+        "container_border_color_mb": "#fbdcdc",
+        "container_text": "",
+        "container_text_size": 13,
+        "container_text_bg": "#ffeeee",
+        "container_text_txt": "#000000",
+        "container_text_animation": false,
+        "container_text_speed": 20,
+        "padding_top": 24,
+        "padding_top_mb": 16,
+        "padding_bottom": 64
+      }
+    },
+    "lumin_hero_3etapes": {
+      "type": "lumin-hero",
+      "blocks": {
+        "hero_3etapes01": {
+          "type": "hero",
+          "settings": {
+            "use_video": false,
+            "main_image_width": 400,
+            "show_1": true,
+            "image_1": "shopify://shop_images/raselio-etape1-sabot.png",
+            "head_1": "1. Clipsez le sabot",
+            "text_1": "Trois hauteurs au choix. Vous tondez, vous ne rasez pas à blanc : vous décidez de ce que vous gardez.",
+            "show_2": true,
+            "image_2": "shopify://shop_images/raselio-etape2-passage.png",
+            "head_2": "2. Passez sans appuyer",
+            "text_2": "Gestes lents, aucune pression. La LED éclaire la zone, la tête arrondie suit la peau.",
+            "show_3": true,
+            "image_3": "shopify://shop_images/raselio-etape3-rincage.png",
+            "head_3": "3. Rincez, c'est fini",
+            "text_3": "La tête se rince à l'eau en quelques secondes. Rien à démonter, rien à nettoyer derrière vous.",
+            "show_4": false,
+            "head_4": "Heading",
+            "text_4": "",
+            "show_5": false,
+            "head_5": "Heading",
+            "text_5": "",
+            "show_6": false,
+            "head_6": "Heading",
+            "text_6": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_3etapes01"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "color_scheme_2": "background-1",
+        "title": "Comment ça marche",
+        "heading_size": "h1",
+        "layout_style": "slider",
+        "column_alignment": "center",
+        "column_alignment_dt": "center",
+        "column_alignment_mb": "center",
+        "head_text": "5 MINUTES, SOUS LA DOUCHE",
+        "feature_image": 72,
+        "feature_image_mb": 52,
+        "gap_section_top": 0,
+        "gap_section_bottom": 5,
+        "pad_section_top": 25,
+        "pad_section_bottom": 25
+      }
+    },
+    "comparison_table_pAMhAV": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_EcyaNq": {
+          "type": "row",
+          "settings": {
+            "benefit": "Lame calibrée pour la peau fine des parties intimes",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_led": {
+          "type": "row",
+          "settings": {
+            "benefit": "LED intégrée : vous voyez la zone que vous tondez",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_pN3qAQ": {
+          "type": "row",
+          "settings": {
+            "benefit": "Tête arrondie qui suit la peau au lieu de l'accrocher",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_h9g3LP": {
+          "type": "row",
+          "settings": {
+            "benefit": "Hauteurs réglables : vous tondez, vous ne rasez pas à blanc",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_TKDWRX": {
+          "type": "row",
+          "settings": {
+            "benefit": "S'utilise et se rince sous la douche",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_hygiene": {
+          "type": "row",
+          "settings": {
+            "benefit": "Une lame dédiée, jamais celle qui touche votre visage",
+            "us": true,
+            "others": false
+          }
+        }
+      },
+      "block_order": [
+        "row_EcyaNq",
+        "row_led",
+        "row_pN3qAQ",
+        "row_h9g3LP",
+        "row_TKDWRX",
+        "row_hygiene"
+      ],
+      "custom_css": [
+        "table,table th,table td,.comparison-table th,.comparison-table td {border-color: #c15d2f !important;}"
+      ],
+      "settings": {
+        "title": "Votre tondeuse à barbe n'a rien à faire sous la ceinture",
+        "heading_size": "h1",
+        "text": "<p>La peau du visage est épaisse et tendue. Celle des parties intimes est fine et mobile. Une lame calibrée pour la barbe y tire, y pince et y accroche. Et elle n'a rien à faire ensuite sur votre visage.</p>",
+        "button_label": "Je passe à Raselio · 34,99 €",
+        "link": "#",
+        "button_style_secondary": false,
+        "layout": "table_second",
+        "content_center": "center",
+        "color_scheme": "background-1",
+        "logo_width": 90,
+        "mobile_logo_width": 60,
+        "us_label": "RASELIO",
+        "others_label": "Tondeuse à barbe",
+        "benefit_color_scheme": "accent-2",
+        "icon_cells_color_scheme": "",
+        "checkmark_color": "#c15d2f",
+        "x_color": "#211c17",
+        "checkmark_active_color": "#f7f3ec",
+        "x_active_color": "#211c17",
+        "active_color": "#c15d2f",
+        "active_text_color": "#f7f3ec",
+        "active_border_color": "#c15d2f",
+        "table_corner_radius": 8,
+        "font_size": 16,
+        "table_shadow_opacity": 25,
+        "table_shadow_horizontal_offset": 2,
+        "table_shadow_vertical_offset": 11,
+        "table_shadow_blur": 20,
+        "table_border_thickness": 1,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "collapsible_content_kdacf9": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_jPMXwy": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "J'ai peur de me couper à cet endroit.",
+            "icon": "none",
+            "row_content": "<p>C'est la question qu'on nous pose le plus, alors la réponse honnête d'abord : aucune tondeuse ne peut garantir qu'une coupure est impossible, et personne ne devrait vous le promettre. Ce que Raselio change, c'est tout ce qui provoque les accidents. La LED éclaire la zone, vous ne travaillez plus à l'aveugle dans les plis. La tête arrondie suit la peau au lieu de l'accrocher. Le sabot maintient une distance constante entre la lame et la peau. Vous ne tondez plus en espérant. Vous voyez, et vous contrôlez.</p>",
+            "page": ""
+          }
+        },
+        "faq_barbe": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ma tondeuse à barbe ne suffit pas ?",
+            "icon": "none",
+            "row_content": "<p>Non, pour deux raisons. La peau du visage est épaisse et tendue ; celle des parties intimes est fine et mobile : une lame calibrée pour la barbe y tire et y accroche. Et il y a l'hygiène : la lame qui passe sur l'entrejambe n'a rien à faire ensuite sur votre visage. Raselio est une lame dédiée, qui ne sert qu'à ça.</p>",
+            "page": ""
+          }
+        },
+        "faq_repousse": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ça va repousser en piquant ?",
+            "icon": "none",
+            "row_content": "<p>Moins qu'après un rasoir. Un rasage à blanc coupe le poil au ras de la peau, parfois en dessous : c'est ce qui provoque la repousse dure et les poils incarnés. Raselio tond à quelques millimètres et laisse le poil au-dessus de la peau. La repousse est nettement plus douce. C'est pour cela qu'on parle de tondre, pas de raser.</p>",
+            "page": ""
+          }
+        },
+        "faq_discret": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Le colis est-il discret ?",
+            "icon": "none",
+            "row_content": "<p>Oui. Emballage neutre, aucune mention du produit ni de son usage à l'extérieur. Personne autour de vous ne saura ce qu'il y a dans le carton.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_9dFaXk": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Peut-on l'utiliser sous la douche ?",
+            "icon": "none",
+            "row_content": "<p>Oui, le boîtier est 100 % étanche. Vous pouvez l'utiliser sous la douche, à sec comme sur peau mouillée, puis rincer la tête directement sous l'eau.</p>",
+            "page": ""
+          }
+        },
+        "faq_recharge": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Quelle autonomie, comment la recharger ?",
+            "icon": "none",
+            "row_content": "<p>Raselio se recharge sur son socle, via un câble USB. Une charge complète (environ 1 h 30) offre jusqu'à 90 minutes d'autonomie, soit plusieurs semaines d'utilisation.</p>",
+            "page": ""
+          }
+        },
+        "faq_garantie": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Garantie et retours : comment ça marche ?",
+            "icon": "none",
+            "row_content": "<p>Deux protections distinctes. Une garantie satisfait ou remboursé de 30 jours : si Raselio ne vous convient pas, contactez notre support dans les 30 jours suivant la réception et vous êtes remboursé intégralement. Et une garantie produit de 2 ans contre tout défaut de fabrication.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_jPMXwy",
+        "faq_barbe",
+        "faq_repousse",
+        "faq_discret",
+        "collapsible_row_9dFaXk",
+        "faq_recharge",
+        "faq_garantie"
+      ],
+      "settings": {
+        "caption": "FAQ",
+        "heading": "Questions fréquentes",
+        "heading_size": "h0",
+        "heading_alignment": "center",
+        "layout": "section",
+        "color_scheme": "accent-1",
+        "container_color_scheme": "background-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "small",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "lumin_review_kL78Mn": {
+      "type": "Lumin-review",
+      "blocks": {
+        "review_mN56Op": {
+          "type": "review",
+          "settings": {
+            "selected_product": "raselio-tondeuse-parties-intimes",
+            "star_rating": 5,
+            "name_text": "Lucas M.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a une semaine",
+            "review_head": "Parfaite pour la zone intime",
+            "review_text": "Je l'utilise pour mes parties intimes : la coupe est précise et bien plus confortable qu'un rasoir, sans irritation.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_karimB": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Karim B.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 6 jours",
+            "review_head": "J'avais peur de me couper",
+            "review_text": "Franchement j'appréhendais de passer une lame là. Avec l'éclairage on voit ce quon fait, et la tête arrondie rassure tout de suite. Beaucoup moins de stress.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_mathieuL": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Mathieu L.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 2 jours",
+            "review_head": "Les couilles, enfin tranquille",
+            "review_text": "On va pas se mentir, c'est pour ça que je l'ai achetée. La peau bouge dans tous les sens à cet endroit et là ça suit sans accrocher. Plus jamais ma tondeuse à barbe.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_romainT": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Romain T.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 3 jours",
+            "review_head": "Je retenais mon souffle à chaque fois",
+            "review_text": "Sérieusement, avant je retenais mon souffle en passant la lame en bas. Avec celle-ci la tête est arrondie et on voit bien avec la lumière, je me suis détendu dès la première fois.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_qR78St": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Thomas R.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 4 jours",
+            "review_head": "Pas une coupure pour l'instant",
+            "review_text": "Elle passe sans tirer les poils, même sur les zones les plus sensibles. Pas une coupure depuis que je l'ai, résultat propre et régulier.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_kevinP": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Kevin P.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a une semaine",
+            "review_head": "Plus de stress le matin",
+            "review_text": "Avant je repoussais toujours le moment de passer en bas parce que j'avais peur de me couper. Maintenant je le fais sous la douche en 3 minutes sans y penser.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_bastienM": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Bastien M.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 2 jours",
+            "review_head": "J'utilisais ma tondeuse de barbe",
+            "review_text": "Erreur d'avoir utilisé ma tondeuse à barbe pour ça : ça tirait et ça irritait. Celle-ci est vraiment adaptée aux zones sensibles, rien à voir côté confort.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_alexG": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Alexandre G.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a une semaine",
+            "review_head": "Mieux que le rasoir jetable",
+            "review_text": "J'utilisais un rasoir jetable sous la douche, boutons et petites coupures garanties. Là je règle le sabot, ça passe tranquille. Pas le même confort, clairement.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_uV90Wx": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Mehdi B",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "hier",
+            "review_head": "Top sous la douche",
+            "review_text": "Le fait qu'elle soit étanche est un vrai plus : je l'utilise sous la douche et je la rince en quelques secondes.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_adrienM": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Adrien M.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 12 jours",
+            "review_head": "Rien à voir avec un rasoir",
+            "review_text": "Rasoir = boutons et petites coupures sur les testicules à chaque fois. Avec le sabot réglé au plus court c'est net, sans rougeur le lendemain. Livrée en 2 jours.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_yanisR": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Yanis R.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a 8 jours",
+            "review_head": "Une zone enfin simple à entretenir",
+            "review_text": "C'est toujours galère d'entretenir cette zone proprement. Les hauteurs réglables et la prise en main changent tout, c'est rapide et net.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_samiK": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Sami K.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a 10 jours",
+            "review_head": "Les plis, enfin gérables",
+            "review_text": "Le plus dur c'était les plis et les endroits qu'on ne voit pas. La LED aide vraiment, et la tête ne s'accroche pas. Ça me prend 5 min maintenant.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_yZ12Ab": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Enzo D.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a 3 jours",
+            "review_head": "Rassurant pour la zone intime",
+            "review_text": "Beaucoup plus rassurant pour la zone intime. On règle la hauteur, on passe sans appuyer, et c'est net.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_florianD": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Florian D.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 5 jours",
+            "review_head": "Confortable, aucune irritation",
+            "review_text": "Je la passe sous la douche, aucune irritation après, et le nettoyage prend dix secondes. C'est devenu un réflexe dans ma routine.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_hugoB": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Hugo B.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 3 semaines",
+            "review_head": "Bonne surprise",
+            "review_text": "Je pensais que c'était un gadget. En vrai la lumière sert vraiment pour les zones qu'on voit pas et la batterie tient longtemps. Un peu bruyante mais franchement très bien.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_clemV": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Clément V.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 4 jours",
+            "review_head": "Simple, je l'ai gardée dans la douche",
+            "review_text": "Pas grand chose à dire, elle fait le job. Étanche donc elle reste dans la douche, un coup d'eau et c'est propre. Seul bémol : j'aurais aimé une housse, mais sinon nickel.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_cD34Ef": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Julien P.",
+            "country_code": "FR",
+            "show_country_flag": true,
+            "date_text": "il y a 2 semaines",
+            "review_head": "Moins d'irritations pour moi",
+            "review_text": "Moins d'irritations pour moi qu'avant, même sur les zones délicates. La prise en main est vraiment bonne.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        },
+        "review_gH56Ij": {
+          "type": "review",
+          "settings": {
+            "selected_product": "",
+            "star_rating": 5,
+            "name_text": "Nicolas A.",
+            "country_code": "CA",
+            "show_country_flag": true,
+            "date_text": "il y a 5 jours",
+            "review_head": "Simple et efficace",
+            "review_text": "Simple et efficace pour entretenir mes parties intimes. 100% étanche, nettoyage rapide, je recommande.",
+            "like_size": 0,
+            "dislike_size": 0,
+            "feature_font_size": 16
+          }
+        }
+      },
+      "block_order": [
+        "review_mN56Op",
+        "review_karimB",
+        "review_mathieuL",
+        "review_romainT",
+        "review_qR78St",
+        "review_kevinP",
+        "review_bastienM",
+        "review_alexG",
+        "review_uV90Wx",
+        "review_adrienM",
+        "review_yanisR",
+        "review_samiK",
+        "review_yZ12Ab",
+        "review_florianD",
+        "review_hugoB",
+        "review_clemV",
+        "review_cD34Ef",
+        "review_gH56Ij"
+      ],
+      "settings": {
+        "editing": true,
+        "color_scheme": "background-1",
+        "header_text": "Ce que disent nos clients",
+        "show_top": true,
+        "rating_text": "4.7",
+        "rating_range": 4.5,
+        "star_size_top": 1,
+        "rating_count": "Basé sur 1 734 avis",
+        "show_customer_images": true,
+        "show_country_flags": true,
+        "customer_image_size": 40,
+        "customer_image_radius": 30,
+        "customer_initials_bg": "#ffd700",
+        "customer_initials_color": "#000000",
+        "review_column_mobile": 1,
+        "review_column_tab": 2,
+        "review_column_desk": 3,
+        "review_load": 6,
+        "load_text": "Voir plus d'avis",
+        "rw_img_size": 90,
+        "rw_img_radius": 6,
+        "block_name_size": 20,
+        "date_size": 12,
+        "block_head_size": 18,
+        "block_text_size": 14,
+        "star_style": "star",
+        "star_size": 0.7,
+        "star_radius": 0,
+        "feature_svg_color": "#000000",
+        "inactive_star_color": "#e2e2e2",
+        "show_border": true,
+        "rw_border": "#f2f2f2",
+        "border_radius": 10,
+        "section_bg3": "#000000",
+        "section_bg2": "#000000",
+        "verify_text": "Achat vérifié",
+        "review_bg": "#ffffff",
+        "feature_acc_color": "#000000",
+        "review_pd": 20,
+        "review_pd_m": 20,
+        "show_footer": true,
+        "show_product": true,
+        "product_image_radius": 4,
+        "like_text": "Cet avis vous a-t-il été utile ?",
+        "show_add_review_button": true,
+        "review_cta_heading": "Évaluez ce produit",
+        "review_cta_subtext": "Partagez vos pensées avec d'autres clients",
+        "add_review_button_text": "Ajoutez votre avis",
+        "review_cta_heading_color": "#333333",
+        "review_cta_subtext_color": "#666666",
+        "add_review_button_bg": "#000000",
+        "add_review_button_text_color": "#ffffff",
+        "modal_title": "Rédigez votre avis",
+        "name_label": "Votre nom",
+        "rating_label": "Note",
+        "title_label": "Titre de l'avis",
+        "review_label": "Votre avis",
+        "email_label": "Votre e-mail",
+        "date_format": "detailed",
+        "cancel_button_text": "Annuler",
+        "submit_button_text": "Envoyer l'avis",
+        "success_message_title": "Merci pour votre avis !",
+        "success_message_body": "Votre avis a été soumis avec succès et sera transmis à notre équipe.",
+        "success_message_duration": "3",
+        "success_message_bg": "#4caf50",
+        "success_message_text": "#ffffff",
+        "success_message_position": "top-right",
+        "success_message_font_size": 16,
+        "success_message_show_icon": true,
+        "email_subject": "Nouvel avis soumis",
+        "email_method": "real_form",
+        "rw_margin": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_review_popup": true,
+        "popup_helpful_text": "Cet avis vous a-t-il été utile ?",
+        "show_popup_helpful_buttons": true,
+        "show_popup_product_info": true,
+        "popup_image_quality": "800",
+        "popup_customer_image_size": 60,
+        "enable_image_enlarge": true
+      }
+    },
+    "174300570336aa0ded": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "problem_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">Pourquoi un outil dédié</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Cette zone mérite son propre outil.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;\"><div style=\"background:#efe6d8;border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;\"><p style=\"margin:0;font-size:19px;font-weight:700;line-height:1.25;\">Vous retenez votre souffle.</p><p style=\"margin:0;font-size:15px;line-height:1.5;color:#5a5048;\">Une lame dessinée pour la joue, posée sur la peau la plus fine et la plus mobile du corps. Chaque passage se fait les dents serrées.</p></div><div style=\"background:#efe6d8;border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;\"><p style=\"margin:0;font-size:19px;font-weight:700;line-height:1.25;\">Vous ne voyez pas ce que vous faites.</p><p style=\"margin:0;font-size:15px;line-height:1.5;color:#5a5048;\">Des plis, des angles, une zone que l'on devine plus qu'on ne la voit. Vous passez au jugé, au-dessus d'une lame.</p></div><div style=\"background:#efe6d8;border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;\"><p style=\"margin:0;font-size:19px;font-weight:700;line-height:1.25;\">Ça pique trois jours après.</p><p style=\"margin:0;font-size:15px;line-height:1.5;color:#5a5048;\">Le rasage à blanc coupe le poil sous la peau : repousse dure, rougeurs, poils incarnés, toujours au mauvais moment.</p></div></div><p style=\"margin:26px 0 0;text-align:center;font-size:20px;font-weight:600;\">Ce n'est pas votre geste. C'est l'outil.</p></div>",
+        "color_scheme": "background-1",
+        "padding_top": 48,
+        "padding_bottom": 40
+      }
+    },
+    "tech_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">La différence Raselio</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Pensée pour cette zone, pas pour votre barbe.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;align-items:center;\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260830_005806_ad64ddf6-d384-4670-9395-3881595edb1a.png?width=1200\" alt=\"Macro de la tête arrondie et des lames céramique Raselio\" loading=\"lazy\" style=\"width:100%;border-radius:12px;display:block;\"><div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Tête arrondie + lames céramique</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">La lame glisse sur une peau fine et mobile au lieu de la pincer.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Vous ne retenez plus votre souffle à chaque passage.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">LED intégrée près de la lame</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous voyez les plis et les angles que vous deviniez.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Un seul passage au lieu de trois, aucun geste au jugé.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Sabot 3 hauteurs</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous tondez court sans raser à blanc.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Pas de repousse qui pique ni de boutons trois jours après.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Lame dédiée à cette zone</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Elle ne repasse jamais sur votre visage.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">L'hygiène évidente que votre tondeuse à barbe ne peut pas offrir.</p></div></div></div></div>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
+    },
+    "guarantee_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">Essayez sans risque</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Vous ne décidez pas aujourd'hui. Vous décidez dans 30 jours.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;\"><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7v6h6\"/><path d=\"M3 13a9 9 0 1 0 3-6.7L3 9\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">30 jours satisfait ou remboursé</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.45;\">Si Raselio ne vous convient pas, vous êtes remboursé intégralement.</p></div><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5z\"/><path d=\"M9 12l2 2 4-4\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">Garantie 2 ans</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.45;\">Tout défaut de fabrication est couvert. Notre support remplace votre tondeuse.</p></div><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 8l-9-5-9 5v8l9 5 9-5z\"/><path d=\"M3 8l9 5 9-5M12 13v8\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">Colis neutre, livraison offerte</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.45;\">Emballage discret, Colissimo suivi, expédié sous 24 à 48 h.</p></div></div><div style=\"text-align:center;margin-top:28px;\"><a href=\"#\" style=\"display:inline-block;background:#c15d2f;color:#f7f3ec;font-weight:700;padding:16px 34px;border-radius:6px;text-decoration:none;font-size:16px;\">Essayer Raselio 30 jours · 34,99 €</a><p style=\"margin:12px 0 0;font-size:13px;color:#5a5048;\">Marque française · Support en français par e-mail</p></div></div>",
+        "color_scheme": "background-1",
+        "padding_top": 44,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "problem_section",
+    "comparison_table_pAMhAV",
+    "tech_section",
+    "lumin_hero_3etapes",
+    "guarantee_section",
+    "collapsible_content_kdacf9",
+    "lumin_review_kL78Mn",
+    "174300570336aa0ded"
+  ]
+}
