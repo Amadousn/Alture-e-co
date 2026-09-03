@@ -35,7 +35,9 @@ Les sept descriptions alternatives ont été réécrites. Les anciennes ne corre
 
 Zone d'achat : 3 bullets sous le titre, prix sans badge de remise ni mention de lancement, barré en rouge, bouton, puis moyens de paiement et une ligne de garantie. Accordéons : Dans la boîte, Caractéristiques, Livraison, Garantie et retours.
 
-Sections dans l'ordre : achat, problème, comparatif tondeuse à barbe, avant/après LED, technologie, deux images bénéfices, trois étapes, vidéos clients, avis, FAQ, garantie et retours.
+Sections dans l'ordre, 11 au total : zone d'achat, problème, avant/après LED, technologie en 3 blocs, les deux images bénéfices du client, vidéos clients, avis, FAQ, garantie et retours.
+
+Retirées parce que la galerie les porte désormais : le tableau comparatif, identique à la carte 3, et la section trois étapes, identique à la carte 6. Le bloc technologie perd sa ligne « lame dédiée », déjà présente dans la carte comparatif. La page passe de 13 à 11 sections sans perdre un seul argument.
 
 Avant/après : concept changé, de la peau irritée vers la LED éteinte puis allumée. Même scène, même geste, images alignées au pixel.
 
