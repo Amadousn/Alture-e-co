@@ -1,0 +1,12 @@
+{
+  "note": "Etat de la galerie produit avant refonte CRO du 3 septembre 2026. Pour revenir en arriere : recreer ces media dans cet ordre avec ces alt.",
+  "product_id": "gid://shopify/Product/15882947854667",
+  "media": [
+    {"pos": 1, "id": "gid://shopify/MediaImage/73590682321227", "file": "ChatGPT_Image_21_aout_2026_20_25_27.png", "alt": "Raselio, tondeuse intime homme pour parties intimes et zones sensibles", "contenu": "hero, promesse + 4 cartes orange"},
+    {"pos": 2, "id": "gid://shopify/MediaImage/73585046978891", "file": "ChatGPTImage21aout2026_01_31_06.png", "alt": "Tondeuse parties intimes homme Raselio avec eclairage LED", "contenu": "comparatif Raselio vs les autres"},
+    {"pos": 3, "id": "gid://shopify/MediaImage/73585047011659", "file": "ChatGPTImage21aout2026_01_31_16.png", "alt": "Tondeuse zones sensibles Raselio, tete arrondie et lames ceramique", "contenu": "Adoptee par 17 000+ hommes"},
+    {"pos": 4, "id": "gid://shopify/MediaImage/73585047044427", "file": "ChatGPTImage21aout2026_01_31_21.png", "alt": "Tondeuse corps homme Raselio 100% etanche, utilisable sous la douche", "contenu": "Rasage intime zero stress, produit en main"},
+    {"pos": 5, "id": "gid://shopify/MediaImage/73590524870987", "file": "ChatGPT_Image_21_aout_2026_19_56_50.png", "alt": "", "contenu": "flat lay accessoires"},
+    {"pos": 6, "id": "gid://shopify/MediaImage/73844466155851", "file": "raselio-raison7-A.png", "alt": "Raselio raison 7 - satisfait ou rembourse 30 jours - version A", "contenu": "Rasage intime zero compromis"}
+  ]
+}
