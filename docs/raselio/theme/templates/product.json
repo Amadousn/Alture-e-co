@@ -884,6 +884,79 @@
         "padding_top": 44,
         "padding_bottom": 52
       }
+    },
+    "shoppable_videos_npAUN8": {
+      "type": "shoppable-videos",
+      "blocks": {
+        "slide_Ba3TEU": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/hf_20260821_223807_30362a76-5f2c-4026-83b9-020a3588b6c7.mp4",
+            "video_autoplay": true,
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#211c17",
+            "custom_badge": "Offre limitée",
+            "custom_badge_bg_color": "#c15d2f"
+          }
+        },
+        "slide_DWWhbG": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/hf_20260822_061428_1babb0bb-bd77-4a44-bf19-fd9952b09c88.mp4",
+            "video_autoplay": true,
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#211c17",
+            "custom_badge": "Offre limitée",
+            "custom_badge_bg_color": "#c15d2f"
+          }
+        },
+        "slide_KPLNPa": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/hf_20260821_223807_46e44949-ff41-4362-a87a-71db7c8f1731.mp4",
+            "video_autoplay": true,
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#211c17",
+            "custom_badge": "Offre limitée",
+            "custom_badge_bg_color": "#c15d2f"
+          }
+        },
+        "slide_pLxhzb": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/hf_20260822_064105_fb169df9-675d-4a77-83eb-ec1c8544383d.mp4",
+            "video_autoplay": true,
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#211c17",
+            "custom_badge": "Offre limitée",
+            "custom_badge_bg_color": "#c15d2f"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Ba3TEU",
+        "slide_DWWhbG",
+        "slide_KPLNPa",
+        "slide_pLxhzb"
+      ],
+      "name": "Shoppable videos",
+      "settings": {
+        "color_scheme": "background-1",
+        "title": "Ils ont adopté Raselio",
+        "heading_size": "h1",
+        "card_color_scheme": "background-1",
+        "card_text_alignment": "center",
+        "card_border_thickness": 1,
+        "card_border_opacity": 25,
+        "card_corner_radius": 6,
+        "columns_desktop": 4,
+        "pt": 36,
+        "pb": 36
+      }
     }
   },
   "order": [
@@ -895,6 +968,7 @@
     "guarantee_section",
     "collapsible_content_kdacf9",
     "lumin_review_kL78Mn",
+    "shoppable_videos_npAUN8",
     "174300570336aa0ded"
   ]
 }
