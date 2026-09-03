@@ -16,7 +16,7 @@ Limite à connaître : le réseau de cette session bloque l'affichage direct de 
 | Ajouts panier | 28 (1,8 %) | Faible, mais le vrai problème est en amont |
 | Checkouts atteints | 12 | 43 % des paniers vont au checkout : correct |
 | Commandes attribuées | 3 (8 réelles depuis le 26/08) | Conversion mobile 0,34 %, desktop 0,00 % |
-| Sessions arrivant sur la page d'accueil | 694 (46 %) | 2 paniers, 0 vente |
+| Sessions arrivant sur la page d'accueil | 694 (46 %) | 2 paniers, 0 vente. Décomposition : 296 issues d'un boost « Campagne de trafic web » du 9 août (archivée), ~350 robots américains en direct, ~50 humains (lien bio, saisie directe) |
 | Sessions arrivant sur la fiche produit | 343 | 15 paniers, 3 ventes (0,9 %) |
 | Sessions arrivant sur l'advertorial « 7 raisons / tondeuse à barbe » | 135 | 6 paniers ; 3 des 8 acheteurs y ont commencé leur parcours |
 | Sessions sur `/products/cutlab-essentials-bundle` | 95 | Redirigé vers un handle qui n'existe plus : page 404 |
@@ -48,7 +48,7 @@ Décision Head of CRO : persona opérationnel principal = « Marc, 54 ans », en
 
 La fiche ne manque ni d'arguments ni de sections. Elle manque de crédibilité, de clarté immédiate et d'ordre. Sept freins, par ordre d'impact :
 
-1. **La moitié du trafic n'arrive jamais sur la fiche.** 694 sessions atterrissent sur l'accueil et produisent 0 vente. Origine probable : URL « raselio.com » écrite dans les textes d'annonce, lien bio Instagram, et trafic « direct » du navigateur in-app Meta. Tout lien payant et le lien bio doivent pointer vers la fiche ou l'advertorial.
+1. **Le trafic mesuré est gonflé et une partie a été envoyée au mauvais endroit.** Sur les 694 sessions qui atterrissent sur l'accueil (0 vente), 296 viennent d'un boost « Campagne de trafic web sur mesure » du 9 août lancé depuis la Page Facebook (objectif Trafic, 516 clics à 0,07 €, vers raselio.com tout court), aujourd'hui archivé ; environ 350 sont des robots américains en « direct » (crawlers d'applications, scans) ; une cinquantaine seulement sont des humains venus du lien bio ou d'une saisie directe. La campagne active « CBO 30 V2 » envoie bien vers la fiche et l'advertorial. Conséquences : ne plus jamais booster depuis la Page, mettre l'URL de la fiche sur le lien bio et le bouton de la Page, et lire Shopify Analytics filtré sur la France pour connaître le vrai taux de conversion humain, supérieur au 0,64 % affiché.
 2. **La preuve sociale est inventée et se voit.** « 4,7/5 sur 1 734 avis », « + de 17 000 hommes », « 758 clients », 26 avis rédigés à la main avec dates fictives et drapeaux canadiens, badge « Achat vérifié », carrousel imitant Trustpilot, badge « Offre limitée » sur des vidéos IA. La boutique a 8 commandes depuis le 26 août. Un acheteur de 55 ans repère ces incohérences, et le Code de la consommation (pratique commerciale trompeuse, art. L121-2) expose la boutique à une sanction. Le nombre « 1 734 avis » est le même que sur Trael. C'est le frein n°1 côté confiance.
 3. **Le registre ne correspond pas à l'acheteur.** « Tu la rases en retenant ton souffle », « Les couilles, enfin tranquille », mélange tu/vous entre fiche, FAQ et advertorial. L'acheteur réel lit « vous ».
 4. **Le prix barré n'est pas crédible.** 75,00 € barré, -53 %, sans historique de vente à ce prix. Un prix de référence doit correspondre à un prix réellement pratiqué (réglementation omnibus 2022). Un prix barré exagéré fait baisser la valeur perçue au lieu de la monter.
@@ -58,7 +58,7 @@ La fiche ne manque ni d'arguments ni de sections. Elle manque de crédibilité, 
 
 ## 2. Pourquoi la fiche ne convertit pas (résumé en une phrase par cause)
 
-- Le visiteur payant arrive au mauvais endroit une fois sur deux.
+- Une campagne de trafic boostée depuis la Page a envoyé 296 clics bon marché sur l'accueil, et les robots gonflent les chiffres : la conversion humaine réelle est sous-estimée, mais reste insuffisante.
 - Quand il arrive au bon endroit, il ne voit pas en 2 secondes ce que fait l'objet ni pour qui.
 - La page lui demande de croire des chiffres impossibles avant de lui avoir montré le produit en main.
 - Elle lui parle comme à un jeune de 25 ans alors qu'il a 55 ans.
@@ -453,7 +453,7 @@ Position gagnante : « la spécialiste zone intime au prix d'une tondeuse géné
 
 | Modification | Raison | Impact attendu | Effort | KPI |
 |---|---|---|---|---|
-| Rediriger tous les liens payants et le lien bio vers la fiche ou l'advertorial ; réparer la redirection `cutlab-essentials-bundle` | 46 % du trafic n'atteint pas la fiche, 95 sessions en 404 | +30 à +50 % de sessions sur la fiche à budget égal | 1 h | % sessions atterrissant sur la fiche |
+| Lien bio Instagram et bouton de la Page Facebook vers la fiche ; interdiction du bouton « Booster » depuis la Page ; réparer la redirection `cutlab-essentials-bundle` ; lire les analytics filtrés sur la France | 296 sessions d'un boost vers l'accueil et 95 sessions en 404 sans aucune vente ; ~350 sessions robots faussent le taux de conversion | Trafic humain concentré sur la fiche, mesure fiable | 30 min | % sessions humaines atterrissant sur la fiche |
 | Retirer toute preuve sociale inventée (chiffres, avis rédigés, carrousel, badge « Offre limitée », drapeaux CA) sur fiche, advertorial, 7 raisons, annonces | Crédibilité et conformité | Moins de rebond des 45+, zéro risque de sanction | 2 h | Taux d'ajout panier |
 | Passer toute la fiche au « vous », supprimer les mots crus, unifier « Raselio™ MS-810 » | Acheteur réel 45-65 ans | Lecture fluide, cohérence pub → page | 2 h | Temps sur page, ATC |
 | Remplacer le paragraphe sous le titre par les 3 bullets | Compréhension en 3 secondes | ATC | 20 min | ATC |
