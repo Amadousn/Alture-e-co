@@ -153,19 +153,12 @@
             "open_by_default": false,
             "show_product_description": false
           }
-        },
-        "custom_liquid_promesse": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<p style=\"margin:6px 0 18px;font-size:clamp(21px,2.6vw,27px);line-height:1.22;font-weight:500;letter-spacing:-.01em;color:#211C17\">Tondez le maillot sans serrer les dents.</p>"
-          }
         }
       },
       "block_order": [
         "breadcrumbs_MW6ytk",
         "custom_liquid_review_stars",
         "title_Fnnnm3",
-        "custom_liquid_promesse",
         "custom_liquid_benefits",
         "custom_liquid_price",
         "review_v1_FKwtt9",
@@ -736,6 +729,24 @@
         "padding_bottom": 40
       }
     },
+    "tech_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">La différence Raselio</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Pensée pour cette zone, pas pour votre barbe.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;align-items:center;\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/hf_20260830_005806_ad64ddf6-d384-4670-9395-3881595edb1a.png?width=1200\" alt=\"Macro de la tête arrondie et des lames céramique Raselio\" loading=\"lazy\" style=\"width:100%;border-radius:12px;display:block;\"><div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Tête arrondie + lames céramique</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">La lame glisse sur une peau fine et mobile au lieu de la pincer.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Vous ne retenez plus votre souffle à chaque passage.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">LED intégrée près de la lame</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous voyez les plis et les angles que vous deviniez.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Un seul passage au lieu de trois, aucun geste au jugé.</p></div><div style=\"display:grid;grid-template-columns:1fr;gap:4px;padding:14px 0;border-top:1px solid rgba(33,28,23,.14);\"><p style=\"margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#c15d2f;font-weight:700;\">Sabot 3 hauteurs</p><p style=\"margin:0;font-size:16px;font-weight:600;line-height:1.35;\">Vous tondez court sans raser à blanc.</p><p style=\"margin:0;font-size:14.5px;color:#5a5048;line-height:1.45;\">Pas de repousse qui pique ni de boutons trois jours après.</p></div></div></div></div>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
+    },
+    "guarantee_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"max-width:1100px;margin:0 auto;padding:0 20px;color:#211c17;\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c15d2f;font-weight:700;text-align:center;\">Garantie et retours</p><h2 style=\"margin:0 0 28px;text-align:center;font-size:clamp(26px,4vw,38px);line-height:1.15;text-wrap:balance;\">Vous ne decidez pas aujourd'hui. Vous decidez dans 30 jours.</h2><div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;\"><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7v6h6\"/><path d=\"M3 13a9 9 0 1 0 3-6.7L3 9\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">Retour sous 30 jours</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.5;\">Ecrivez a notre support dans les 30 jours suivant la reception. Nous vous envoyons la marche a suivre et vous remboursons integralement des reception du colis.</p></div><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5z\"/><path d=\"M9 12l2 2 4-4\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">Garantie 2 ans</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.5;\">Tout defaut de fabrication est couvert pendant deux ans. Notre support remplace votre tondeuse, sans frais.</p></div><div style=\"background:#fffdf9;border:1px solid rgba(33,28,23,.14);border-radius:12px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#c15d2f\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 8l-9-5-9 5v8l9 5 9-5z\"/><path d=\"M3 8l9 5 9-5M12 13v8\"/></svg><p style=\"margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;\">Colis neutre</p><p style=\"margin:0;font-size:14px;color:#5a5048;line-height:1.5;\">Emballage discret, aucune mention du produit. Colissimo suivi, expedie sous 24 a 48 h.</p></div></div><div style=\"text-align:center;margin-top:30px;\"><a href=\"#\" style=\"display:inline-block;background:#c15d2f;color:#f7f3ec;font-weight:700;padding:16px 34px;border-radius:6px;text-decoration:none;font-size:16px;\">Essayer Raselio 30 jours &middot; 34,99 &euro;</a><p style=\"margin:12px 0 0;font-size:13px;color:#5a5048;\">Marque francaise &middot; Support en francais par e-mail</p></div></div>",
+        "color_scheme": "background-1",
+        "padding_top": 44,
+        "padding_bottom": 52
+      }
+    },
     "shoppable_videos_npAUN8": {
       "type": "shoppable-videos",
       "blocks": {
@@ -919,88 +930,20 @@
         "padding_top": 64,
         "padding_bottom": 64
       }
-    },
-    "social_strip": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<style>:root{--rs-ink:#211C17;--rs-cream:#F7F3EC;--rs-sand:#EFE6D8;--rs-terra:#C15D2F;--rs-mute:#6B6154;--rs-line:rgba(33,28,23,.12)}.rs{max-width:1180px;margin:0 auto;padding:0 24px;color:var(--rs-ink)}.rs-full{width:100vw;margin-left:calc(50% - 50vw)}.rs-center{text-align:center;max-width:720px}.rs-eb{margin:0 0 12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--rs-terra)}.rs h2{margin:0 0 16px;font-size:clamp(30px,3.6vw,40px);line-height:1.14;font-weight:500;letter-spacing:-.015em;text-wrap:balance}.rs-lead{margin:0;font-size:19px;line-height:1.55;color:var(--rs-mute);max-width:56ch}.rs-center .rs-lead{margin-left:auto;margin-right:auto}.rs p{font-size:17px;line-height:1.6}.rs-cta{display:inline-block;margin-top:26px;background:var(--rs-terra);color:#fff;text-decoration:none;font-family:inherit;font-size:16px;font-weight:600;padding:17px 42px;border-radius:10px;border:0;cursor:pointer;transition:opacity .18s}.rs-cta:hover{opacity:.88}.rs-cta:focus-visible{outline:3px solid var(--rs-ink);outline-offset:3px}.rs-2col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}.rs-4up{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}.rs-4up img{width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;display:block}.rs-fig{width:100%;height:auto;object-fit:cover;border-radius:12px;display:block}.rs-rows{display:flex;flex-direction:column;margin-top:22px}.rs-rows>div{padding:16px 0;border-top:1px solid var(--rs-line)}.rs-rows b{display:block;font-size:17px;font-weight:700;margin-bottom:4px}.rs-rows span{font-size:16px;line-height:1.5;color:var(--rs-mute)}.rs-hero{position:relative;background:var(--rs-ink)}.rs-hero>img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}.rs-hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(20,17,14,.92) 0%,rgba(20,17,14,.72) 34%,rgba(20,17,14,0) 62%)}.rs-over{position:absolute;inset:0;display:flex;align-items:center;z-index:2}.rs-over .rs{width:100%}.rs-over .rs>div{max-width:32ch;color:var(--rs-cream)}.rs-over h2{color:var(--rs-cream)}.rs-over .rs-eb{color:#E5946A}.rs-over p{color:var(--rs-cream);opacity:.84;margin:0}@media(max-width:749px){.rs{padding:0 18px}.rs-lead{font-size:17px}.rs-cta{display:block;text-align:center;padding:17px 24px}.rs-2col{grid-template-columns:1fr;gap:26px}.rs-2col.rs-flip>div:last-child{order:-1}.rs-4up{grid-template-columns:repeat(2,1fr)}.rs-hero>img{aspect-ratio:4/5}.rs-hero:after{background:linear-gradient(180deg,rgba(20,17,14,0) 30%,rgba(20,17,14,.55) 62%,rgba(20,17,14,.96) 100%)}.rs-over{position:static;background:var(--rs-ink);padding:0 0 34px;margin-top:-2px}.rs-over .rs>div{max-width:none}}</style><script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.rs-cta');if(!a)return;e.preventDefault();var f=document.querySelector('form[action*=\"/cart/add\"]');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});});</script><div class=\"rs rs-center\" style=\"margin-bottom:38px\"><p class=\"rs-eb\">Ils l’ont adopté</p><h2>Ils s’y sont mis. Personne ne s’en est aperçu.</h2><p class=\"rs-lead\">Colis neutre, cinq minutes sous la douche, et rien à expliquer à personne.</p></div><div class=\"rs-full rs-4up\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-01.png?v=1788422643&width=700\" alt=\"Homme d'une cinquantaine d'annees tenant la tondeuse Raselio dans sa salle de bain\" loading=\"lazy\" width=\"540\" height=\"960\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-02.png?v=1788422636&width=700\" alt=\"Homme torse nu avec serviette tenant la tondeuse Raselio\" loading=\"lazy\" width=\"540\" height=\"960\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-03.png?v=1788422636&width=700\" alt=\"Homme aux cheveux gris devant son lavabo, la tondeuse Raselio posee a cote\" loading=\"lazy\" width=\"540\" height=\"960\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-portrait-04.png?v=1788422636&width=700\" alt=\"Homme de dos, serviette sur l'epaule, tondeuse Raselio en main\" loading=\"lazy\" width=\"540\" height=\"960\"></div>",
-        "color_scheme": "background-1",
-        "padding_top": 72,
-        "padding_bottom": 0
-      }
-    },
-    "led_lifestyle": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs-full rs-hero\"><img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-led-large.png?v=1788422636&width=1800\" alt=\"La LED de la tondeuse Raselio eclaire la zone dans une salle de bain sombre\" loading=\"lazy\" width=\"1600\" height=\"900\"><div class=\"rs-over\"><div class=\"rs\"><div><p class=\"rs-eb\">La séance</p><h2>Cinq minutes, la porte fermée, et c’est réglé.</h2><p>Sous la douche ou à sec. La LED éclaire la zone, la tête arrondie suit la peau. Vous ne tâtonnez plus.</p><a href=\"#\" class=\"rs-cta\">Je commande ma Raselio</a></div></div></div></div>",
-        "color_scheme": "background-1",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "mecanisme": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs rs-2col rs-flip\"><div><p class=\"rs-eb\">Le détail qui change tout</p><h2>La tête est arrondie. C’est tout le sujet.</h2><p style=\"color:var(--rs-mute);margin:0 0 14px\">Une lame plate ponte le pli, et la peau vient se loger dessous. C’est là que ça pince, et c’est pour ça qu’on serre les dents.</p><p style=\"color:var(--rs-mute);margin:0\">La tête arrondie de Raselio suit la courbe et reste au contact. C’est la seule raison pour laquelle cette zone se tond sans appréhension.</p></div><div><img class=\"rs-fig\" src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-mecanisme-large.png?v=1788422636&width=1200\" alt=\"Macro de la tete arrondie Raselio epousant le pli de la peau\" loading=\"lazy\" width=\"900\" height=\"600\" style=\"aspect-ratio:3/2\"></div></div>",
-        "color_scheme": "background-1",
-        "padding_top": 88,
-        "padding_bottom": 88
-      }
-    },
-    "garantie_v2": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs rs-2col\"><div><img class=\"rs-fig\" src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-garantie-socle.png?v=1788422636&width=1100\" alt=\"Tondeuse Raselio sur son socle de charge pose sur du lin naturel\" loading=\"lazy\" width=\"900\" height=\"672\" style=\"aspect-ratio:4/3\"></div><div><p class=\"rs-eb\">Sans risque</p><h2>Vous décidez dans trente jours, pas aujourd’hui.</h2><div class=\"rs-rows\"><div><b>30 jours pour changer d’avis</b><span>Remboursé intégralement, sans avoir à vous justifier.</span></div><div><b>Garantie 2 ans</b><span>Défaut de fabrication couvert, remplacement sans frais.</span></div><div><b>Colis neutre, expédié de France</b><span>Aucune mention du produit sur le carton. Suivi Colissimo.</span></div></div><a href=\"#\" class=\"rs-cta\">Je commande ma Raselio</a></div></div>",
-        "color_scheme": "background-1",
-        "padding_top": 88,
-        "padding_bottom": 88
-      }
-    },
-    "cloture": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs rs-center\" style=\"max-width:640px\"><h2 style=\"margin-bottom:14px\">Cette zone mérite mieux qu’un rasoir de dépannage.</h2><p class=\"rs-lead\">Un outil pensé pour elle, une lame qui ne touche jamais votre visage, et trente jours pour en juger.</p><a href=\"#\" class=\"rs-cta\">Je commande ma Raselio</a></div>",
-        "color_scheme": "background-1",
-        "padding_top": 80,
-        "padding_bottom": 88
-      }
-    },
-    "cta_videos": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs rs-center\"><a href=\"#\" class=\"rs-cta\">Je commande ma Raselio</a></div>",
-        "color_scheme": "background-1",
-        "padding_top": 8,
-        "padding_bottom": 64
-      }
-    },
-    "cta_comparatif": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"rs rs-center\"><a href=\"#\" class=\"rs-cta\">Je commande ma Raselio</a></div>",
-        "color_scheme": "background-1",
-        "padding_top": 0,
-        "padding_bottom": 72
-      }
     }
   },
   "order": [
     "main",
-    "social_strip",
-    "shoppable_videos_npAUN8",
-    "cta_videos",
-    "led_lifestyle",
     "problem_section",
-    "custom_liquid_slider_ba",
     "comparatif_illustre",
-    "cta_comparatif",
-    "collapsible_content_kdacf9",
-    "mecanisme",
+    "custom_liquid_slider_ba",
+    "tech_section",
     "lumin_grids_EAtzYR",
-    "garantie_v2",
     "video_align_css",
+    "shoppable_videos_npAUN8",
     "lumin_review_kL78Mn",
-    "cloture",
+    "collapsible_content_kdacf9",
+    "guarantee_section",
     "174300570336aa0ded"
   ]
 }
