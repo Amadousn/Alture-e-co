@@ -38,7 +38,7 @@
         "custom_liquid_benefits": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<ul style=\"list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:9px\"><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>Tête arrondie et lames céramique :</strong> la peau glisse, elle n’est pas pincée.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>LED intégrée :</strong> tu vois enfin la zone que tu tonds, même dans les plis.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>100 % étanche :</strong> 5 minutes sous la douche, rincée en 10 secondes.</span></li></ul>"
+            "custom_liquid": "<ul style=\"list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:9px\"><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>Tête arrondie et lames céramique :</strong> la peau glisse, elle n’est pas pincée.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>LED intégrée :</strong> vous voyez enfin la zone que vous tondez, même dans les plis.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:#211c17\"><span style=\"color:#c15d2f;font-weight:700;flex:none;line-height:1.45\">✓</span><span><strong>100 % étanche :</strong> 5 minutes sous la douche, rincée en 10 secondes.</span></li></ul>"
           }
         },
         "custom_liquid_price": {
@@ -183,7 +183,7 @@
           "settings": {
             "timeline_color_scheme": "background-1",
             "order_within_label": "Commande avant",
-            "ships_within_label": "Chez toi le",
+            "ships_within_label": "Chez vous le",
             "reset_hour": 23,
             "shipping_lead_days": 1,
             "skip_saturday": false,
@@ -203,7 +203,7 @@
           "settings": {
             "heading": "Description",
             "icon": "none",
-            "content": "<p><strong>Tu n'as pas peur de la tondeuse. Tu as peur de ce que tu ne vois pas.</strong> Les testicules, l'aine, l'entrejambe : c'est la zone où la peau est la plus fine, la plus mobile, et la plus difficile à regarder pendant que tu travailles. C'est exactement le problème que Raselio règle.</p><p>Une LED intégrée éclaire la zone pendant que tu tonds. Fini le geste à l'aveugle dans les plis. La tête arrondie épouse la peau au lieu de l'accrocher. Les lames céramique sont calibrées pour cette peau-là, pas pour une barbe. Tu règles la hauteur, tu passes sans appuyer, et tu gardes la main sur ce qui se passe.</p><p>Boîtier 100 % étanche : sous la douche, sur peau sèche ou mouillée, puis rinçage en quelques secondes. Trois hauteurs de coupe, parce que l'objectif n'est pas de tout raser à blanc, mais de garder ce que tu veux garder, proprement. Batterie rechargeable sur socle. Garantie 2 ans.</p>",
+            "content": "<p><strong>Vous n'avez pas peur de la tondeuse. Vous avez peur de ce que vous ne voyez pas.</strong> Les testicules, l'aine, l'entrejambe : c'est la zone où la peau est la plus fine, la plus mobile, et la plus difficile à regarder pendant que vous travaillez. C'est exactement le problème que Raselio règle.</p><p>Une LED intégrée éclaire la zone pendant que vous tondez. Fini le geste à l'aveugle dans les plis. La tête arrondie épouse la peau au lieu de l'accrocher. Les lames céramique sont calibrées pour cette peau-là, pas pour une barbe. Vous réglez la hauteur, vous passez sans appuyer, et vous gardez la main sur ce qui se passe.</p><p>Boîtier 100 % étanche : sous la douche, sur peau sèche ou mouillée, puis rinçage en quelques secondes. Trois hauteurs de coupe, parce que l'objectif n'est pas de tout raser à blanc, mais de garder ce que vous voulez garder, proprement. Batterie rechargeable sur socle. Garantie 2 ans.</p>",
             "page": "",
             "open_by_default": false,
             "show_product_description": true
@@ -225,7 +225,7 @@
           "settings": {
             "heading": "Entretien & Garantie",
             "icon": "none",
-            "content": "<p><strong>Entretien</strong></p><p>Rince la lame à l'eau courante après chaque passage, essuie le boîtier et laisse sécher. Étanche, Raselio se nettoie en quelques secondes, même sous la douche.</p><p><strong>Garantie 2 ans</strong></p><p>Ta Raselio est garantie 2 ans contre tout défaut de fabrication. En cas de problème, notre support te la remplace.</p>",
+            "content": "<p><strong>Entretien</strong></p><p>Rincez la lame à l'eau courante après chaque passage, essuyez le boîtier et laissez sécher. Étanche, Raselio se nettoie en quelques secondes, même sous la douche.</p><p><strong>Garantie 2 ans</strong></p><p>Votre Raselio est garantie 2 ans contre tout défaut de fabrication. En cas de problème, notre support vous la remplace.</p>",
             "page": "",
             "open_by_default": false,
             "show_product_description": false
@@ -236,7 +236,7 @@
           "settings": {
             "heading": "Livraison & Retour",
             "icon": "none",
-            "content": "<p><strong>Livraison Colissimo offerte</strong></p><p>Commande préparée et expédiée sous 24 à 48h, en Colissimo suivi. Un numéro de suivi t'est envoyé par email dès l'expédition.</p><p><strong>Satisfait ou remboursé — 30 jours</strong></p><p>Si Raselio ne te convient pas, contacte notre support dans les 30 jours suivant la réception : tu es remboursé intégralement.</p>",
+            "content": "<p><strong>Livraison Colissimo offerte</strong></p><p>Commande préparée et expédiée sous 24 à 48h, en Colissimo suivi. Un numéro de suivi vous est envoyé par email dès l'expédition.</p><p><strong>Satisfait ou remboursé — 30 jours</strong></p><p>Si Raselio ne vous convient pas, contactez notre support dans les 30 jours suivant la réception : vous êtes remboursé intégralement.</p>",
             "page": "",
             "open_by_default": false,
             "show_product_description": false
@@ -255,7 +255,7 @@
             "title": "Fréquemment achetés ensemble",
             "title_font_size": "fs-lg",
             "title_text_style": "body",
-            "description": "<p>Ajoute-les maintenant, tu paieras la livraison une seule fois.</p>",
+            "description": "<p>Ajoutez-les maintenant, vous paierez la livraison une seule fois.</p>",
             "description_font_size": "fs-sm"
           }
         }
@@ -345,12 +345,12 @@
             "main_image_width": 400,
             "show_1": true,
             "image_1": "shopify://shop_images/ChatGPT_Image_21_aout_2026_16_30_19.png",
-            "head_1": "Étape 1 — Choisis ta hauteur",
-            "text_1": "Trois hauteurs de sabot. Tu tonds, tu ne rases pas à blanc : tu décides de ce que tu gardes. Sous la douche ou à sec, comme tu préfères.",
+            "head_1": "Étape 1 — Choisissez votre hauteur",
+            "text_1": "Trois hauteurs de sabot. Vous tondez, vous ne rasez pas à blanc : vous décidez de ce que vous gardez. Sous la douche ou à sec, comme vous préférez.",
             "show_2": true,
             "image_2": "shopify://shop_images/WhatsApp_Image_2026-08-23_at_00.50.46.jpg",
             "head_2": "Étape 2 — Passe sans appuyer",
-            "text_2": "Gestes lents, aucune pression. La LED éclaire la zone, la tête arrondie suit la peau. Tu vois où tu vas au lieu de deviner.",
+            "text_2": "Gestes lents, aucune pression. La LED éclaire la zone, la tête arrondie suit la peau. Vous voyez où vous allez au lieu de deviner.",
             "show_3": true,
             "image_3": "shopify://shop_images/ChatGPT_Image_21_aout_2026_16_30_27.png",
             "head_3": "Étape 3 — Rince, c'est fini",
@@ -439,12 +439,12 @@
             "padding_size_in": 10,
             "text_border": 0,
             "bg_color": "rgba(0,0,0,0)",
-            "head": "Elle vit dans ta douche",
+            "head": "Elle vit dans votre douche",
             "head_color": "#ffffff",
             "head_size_d": 30,
             "head_size_m": 24,
             "margin_bottom": 15,
-            "text": "100 % étanche. Tu tonds sous l'eau, tu rinces la lame, c'est réglé. Pas de mousse, pas de lavabo à nettoyer derrière.",
+            "text": "100 % étanche. Vous tondez sous l'eau, vous rincez la lame, c'est réglé. Pas de mousse, pas de lavabo à nettoyer derrière.",
             "text_color": "#ffffff",
             "text_size_d": 16,
             "text_size_m": 14,
@@ -475,7 +475,7 @@
     "custom_liquid_slider_ba": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div style=\"max-width:900px;margin:0 auto;padding:0 16px;text-align:center;\">\n  <div style=\"font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#c15d2f;font-weight:700;margin-bottom:8px;\">L’éclairage intégré</div>\n  <h2 style=\"font-size:34px;line-height:1.15;color:#211c17;font-weight:800;margin:0 0 10px;\">Tondeuse classique <span style=\"color:#8a8178;font-weight:600;\">vs</span> RASELIO Pro</h2>\n  <p style=\"font-size:15px;line-height:1.5;color:#6b6154;max-width:520px;margin:0 auto 26px;\">Rougeurs, tiraillements, poils incarnés : ce n'est pas toi qui t'y prends mal, c'est l'outil qui n'est pas fait pour cette peau. Glisse le curseur.</p>\n  <div id=\"raselioBA\" style=\"--p:50%;position:relative;width:100%;max-width:440px;margin:0 auto;aspect-ratio:896/1200;border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(33,28,23,.18);cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-led-avec.png?v=1788416456\" alt=\"Peau nette avec RASELIO Pro\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-led-sans.png?v=1788416456\" alt=\"Peau irritée après une tondeuse classique\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;clip-path:inset(0 calc(100% - var(--p)) 0 0);-webkit-clip-path:inset(0 calc(100% - var(--p)) 0 0);\">\n    <div style=\"position:absolute;bottom:16px;left:14px;background:rgba(33,28,23,.80);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">SANS LED</div>\n    <div style=\"position:absolute;bottom:16px;right:14px;background:#c15d2f;color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">AVEC LED RASELIO</div>\n    <div style=\"position:absolute;top:0;bottom:0;left:var(--p);width:3px;background:#f7f3ec;transform:translateX(-1.5px);box-shadow:0 0 10px rgba(0,0,0,.35);pointer-events:none;\">\n      <div style=\"position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#f7f3ec;box-shadow:0 3px 12px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#c15d2f;font-size:20px;font-weight:900;\">↔</div>\n    </div>\n  </div>\n</div>\n<script>\n(function(){\n  var el=document.getElementById('raselioBA'); if(!el||el.dataset.init)return; el.dataset.init='1';\n  var dragging=false;\n  function setP(x){var r=el.getBoundingClientRect();var p=(x-r.left)/r.width*100;p=Math.max(0,Math.min(100,p));el.style.setProperty('--p',p+'%');}\n  function pt(e){return e.touches&&e.touches[0]?e.touches[0].clientX:e.clientX;}\n  el.addEventListener('mousedown',function(e){dragging=true;setP(pt(e));});\n  window.addEventListener('mousemove',function(e){if(dragging)setP(pt(e));});\n  window.addEventListener('mouseup',function(){dragging=false;});\n  el.addEventListener('touchstart',function(e){dragging=true;setP(pt(e));},{passive:true});\n  window.addEventListener('touchmove',function(e){if(dragging)setP(pt(e));},{passive:true});\n  window.addEventListener('touchend',function(){dragging=false;});\n})();\n</script>",
+        "custom_liquid": "<div style=\"max-width:900px;margin:0 auto;padding:0 16px;text-align:center;\">\n  <div style=\"font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#c15d2f;font-weight:700;margin-bottom:8px;\">L’éclairage intégré</div>\n  <h2 style=\"font-size:34px;line-height:1.15;color:#211c17;font-weight:800;margin:0 0 10px;\">On ne taille pas droit ce qu'on ne voit pas.</h2>\n  <p style=\"font-size:15px;line-height:1.5;color:#6b6154;max-width:520px;margin:0 auto 26px;\">Rougeurs, tiraillements, poils incarnés : ce n'est pas vous qui vous y prenez mal, c'est l'outil qui n'est pas fait pour cette peau. Glissez le curseur.</p>\n  <div id=\"raselioBA\" style=\"--p:50%;position:relative;width:100%;max-width:440px;margin:0 auto;aspect-ratio:896/1200;border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(33,28,23,.18);cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-led-avec.png?v=1788416456\" alt=\"Peau nette avec RASELIO Pro\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-led-sans.png?v=1788416456\" alt=\"Peau irritée après une tondeuse classique\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;clip-path:inset(0 calc(100% - var(--p)) 0 0);-webkit-clip-path:inset(0 calc(100% - var(--p)) 0 0);\">\n    <div style=\"position:absolute;bottom:16px;left:14px;background:rgba(33,28,23,.80);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">SANS LED</div>\n    <div style=\"position:absolute;bottom:16px;right:14px;background:#c15d2f;color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">AVEC LED RASELIO</div>\n    <div style=\"position:absolute;top:0;bottom:0;left:var(--p);width:3px;background:#f7f3ec;transform:translateX(-1.5px);box-shadow:0 0 10px rgba(0,0,0,.35);pointer-events:none;\">\n      <div style=\"position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#f7f3ec;box-shadow:0 3px 12px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#c15d2f;font-size:20px;font-weight:900;\">↔</div>\n    </div>\n  </div>\n</div>\n<script>\n(function(){\n  var el=document.getElementById('raselioBA'); if(!el||el.dataset.init)return; el.dataset.init='1';\n  var dragging=false;\n  function setP(x){var r=el.getBoundingClientRect();var p=(x-r.left)/r.width*100;p=Math.max(0,Math.min(100,p));el.style.setProperty('--p',p+'%');}\n  function pt(e){return e.touches&&e.touches[0]?e.touches[0].clientX:e.clientX;}\n  el.addEventListener('mousedown',function(e){dragging=true;setP(pt(e));});\n  window.addEventListener('mousemove',function(e){if(dragging)setP(pt(e));});\n  window.addEventListener('mouseup',function(){dragging=false;});\n  el.addEventListener('touchstart',function(e){dragging=true;setP(pt(e));},{passive:true});\n  window.addEventListener('touchmove',function(e){if(dragging)setP(pt(e));},{passive:true});\n  window.addEventListener('touchend',function(){dragging=false;});\n})();\n</script>",
         "color_scheme": "background-1",
         "padding_top": 24,
         "padding_bottom": 40
@@ -495,7 +495,7 @@
         "row_led": {
           "type": "row",
           "settings": {
-            "benefit": "LED intégrée : tu vois la zone que tu tonds",
+            "benefit": "LED intégrée : vous voyez la zone que vous tondez",
             "us": true,
             "others": false
           }
@@ -511,7 +511,7 @@
         "row_h9g3LP": {
           "type": "row",
           "settings": {
-            "benefit": "Hauteurs réglables : tu tonds, tu ne rases pas à blanc",
+            "benefit": "Hauteurs réglables : vous tondez, vous ne rasez pas à blanc",
             "us": true,
             "others": false
           }
@@ -527,7 +527,7 @@
         "row_hygiene": {
           "type": "row",
           "settings": {
-            "benefit": "Une lame dédiée, jamais celle qui touche ton visage",
+            "benefit": "Une lame dédiée, jamais celle qui touche votre visage",
             "us": true,
             "others": false
           }
@@ -563,9 +563,9 @@
         "table,table th,table td,.comparison-table th,.comparison-table td {border-color: #c15d2f !important;}"
       ],
       "settings": {
-        "title": "Ta tondeuse à barbe n'est pas faite pour cette zone",
+        "title": "Votre tondeuse à barbe n'est pas faite pour cette zone",
         "heading_size": "h1",
-        "text": "<p>La peau du visage est épaisse et tendue. Celle des parties intimes est fine et mobile. Une lame calibrée pour la barbe y tire, y pince et y accroche — et elle n'a rien à faire ensuite sur ton visage.</p>",
+        "text": "<p>La peau du visage est épaisse et tendue. Celle des parties intimes est fine et mobile. Une lame calibrée pour la barbe y tire, y pince et y accroche — et elle n'a rien à faire ensuite sur votre visage.</p>",
         "button_label": "Je prends Raselio — 39,90 €",
         "link": "",
         "button_style_secondary": false,
@@ -874,7 +874,7 @@
           "settings": {
             "heading": "J'ai peur de me couper à cet endroit.",
             "icon": "none",
-            "row_content": "<p>C'est la question qu'on nous pose le plus, alors la réponse honnête d'abord : aucune tondeuse ne peut garantir qu'une coupure est impossible, et personne ne devrait te le promettre.</p><p>Ce que Raselio change, c'est tout ce qui provoque les accidents. La LED éclaire la zone, donc tu ne travailles plus à l'aveugle dans les plis. La tête arrondie suit la peau au lieu de l'accrocher. Le sabot maintient une distance constante entre la lame et la peau. Et la lame céramique est calibrée pour cette peau-là. Tu ne tonds plus en espérant — tu vois, et tu contrôles.</p>",
+            "row_content": "<p>C'est la question qu'on nous pose le plus, alors la réponse honnête d'abord : aucune tondeuse ne peut garantir qu'une coupure est impossible, et personne ne devrait vous le promettre.</p><p>Ce que Raselio change, c'est tout ce qui provoque les accidents. La LED éclaire la zone, donc vous ne travaillez plus à l'aveugle dans les plis. La tête arrondie suit la peau au lieu de l'accrocher. Le sabot maintient une distance constante entre la lame et la peau. Et la lame céramique est calibrée pour cette peau-là. Vous ne tondez plus en espérant — vous voyez, et vous contrôlez.</p>",
             "page": ""
           }
         },
@@ -883,7 +883,7 @@
           "settings": {
             "heading": "Ma tondeuse à barbe ne suffit pas ?",
             "icon": "none",
-            "row_content": "<p>Non, pour deux raisons. La peau du visage est épaisse et tendue ; celle des parties intimes est fine et mobile — une lame calibrée pour la barbe y tire et y accroche. Et il y a l'hygiène : la lame qui passe sur ton entrejambe n'a rien à faire ensuite sur ton visage. Raselio est une lame dédiée, qui ne sert qu'à ça.</p>",
+            "row_content": "<p>Non, pour deux raisons. La peau du visage est épaisse et tendue ; celle des parties intimes est fine et mobile — une lame calibrée pour la barbe y tire et y accroche. Et il y a l'hygiène : la lame qui passe sur votre entrejambe n'a rien à faire ensuite sur votre visage. Raselio est une lame dédiée, qui ne sert qu'à ça.</p>",
             "page": ""
           }
         },
@@ -901,7 +901,7 @@
           "settings": {
             "heading": "Le colis est-il discret ?",
             "icon": "none",
-            "row_content": "<p>Oui. Emballage neutre, aucune mention du produit ni de son usage à l'extérieur. Personne autour de toi ne saura ce qu'il y a dans le carton.</p>",
+            "row_content": "<p>Oui. Emballage neutre, aucune mention du produit ni de son usage à l'extérieur. Personne autour de vous ne saura ce qu'il y a dans le carton.</p>",
             "page": ""
           }
         },
@@ -919,7 +919,7 @@
           "settings": {
             "heading": "Y a-t-il un éclairage pour bien voir ?",
             "icon": "none",
-            "row_content": "<p>Oui. Un éclairage LED est intégré près de la lame : il éclaire la zone pendant que tu tonds, pour voir ce que tu fais, même dans les plis et les angles difficiles.</p>",
+            "row_content": "<p>Oui. Un éclairage LED est intégré près de la lame : il éclaire la zone pendant que vous tondez, pour voir ce que vous faites, même dans les plis et les angles difficiles.</p>",
             "page": ""
           }
         },
@@ -928,7 +928,7 @@
           "settings": {
             "heading": "Peut-on l'utiliser sous la douche ?",
             "icon": "none",
-            "row_content": "<p>Oui, le boîtier est 100 % étanche. Tu peux l'utiliser sous la douche, à sec comme sur peau mouillée.</p>",
+            "row_content": "<p>Oui, le boîtier est 100 % étanche. Vous pouvez l'utiliser sous la douche, à sec comme sur peau mouillée.</p>",
             "page": ""
           }
         },
@@ -964,7 +964,7 @@
           "settings": {
             "heading": "Comment la nettoyer ?",
             "icon": "none",
-            "row_content": "<p>Rince la lame à l'eau courante après chaque utilisation, essuie le boîtier et laisse sécher. L'entretien prend quelques secondes.</p>",
+            "row_content": "<p>Rincez la lame à l'eau courante après chaque utilisation, essuyez le boîtier et laissez sécher. L'entretien prend quelques secondes.</p>",
             "page": ""
           }
         },
@@ -982,7 +982,7 @@
           "settings": {
             "heading": "Quels accessoires sont inclus ?",
             "icon": "none",
-            "row_content": "<p>Tu reçois la tondeuse Raselio avec ses accessoires : le sabot guide de coupe, le socle de charge, le câble USB, la brosse de nettoyage et un flacon d'huile d'entretien.</p>",
+            "row_content": "<p>Vous recevez la tondeuse Raselio avec ses accessoires : le sabot guide de coupe, le socle de charge, le câble USB, la brosse de nettoyage et un flacon d'huile d'entretien.</p>",
             "page": ""
           }
         },
@@ -991,7 +991,7 @@
           "settings": {
             "heading": "Quelle est la garantie ?",
             "icon": "none",
-            "row_content": "<p>Deux protections distinctes : une <strong>garantie produit de 2 ans</strong> contre tout défaut de fabrication, et une <strong>garantie satisfait ou remboursé de 30 jours</strong> si Raselio ne te convient pas après l'avoir essayée.</p>",
+            "row_content": "<p>Deux protections distinctes : une <strong>garantie produit de 2 ans</strong> contre tout défaut de fabrication, et une <strong>garantie satisfait ou remboursé de 30 jours</strong> si Raselio ne vous convient pas après l'avoir essayée.</p>",
             "page": ""
           }
         },
@@ -1000,7 +1000,7 @@
           "settings": {
             "heading": "La tondeuse RASELIO ne me convient pas, que faire ?",
             "icon": "none",
-            "row_content": "<p>Tu es couvert par la garantie satisfait ou remboursé 30 jours. Contacte notre support et tu es remboursé intégralement. Et ta tondeuse reste garantie 2 ans.</p>",
+            "row_content": "<p>Vous êtes couvert par la garantie satisfait ou remboursé 30 jours. Contactez notre support et vous êtes remboursé intégralement. Et votre tondeuse reste garantie 2 ans.</p>",
             "page": ""
           }
         },
@@ -1009,7 +1009,7 @@
           "settings": {
             "heading": "Comment fonctionne la livraison ?",
             "icon": "none",
-            "row_content": "<p>Ta commande est préparée et expédiée sous 24 à 48h. Un numéro de suivi t'est envoyé par email dès l'expédition.</p>",
+            "row_content": "<p>Votre commande est préparée et expédiée sous 24 à 48h. Un numéro de suivi vous est envoyé par email dès l'expédition.</p>",
             "page": ""
           }
         },
@@ -1018,7 +1018,7 @@
           "settings": {
             "heading": "Comment fonctionnent les retours ?",
             "icon": "none",
-            "row_content": "<p>Si Raselio ne te convient pas, retourne-la dans les 30 jours suivant la réception pour un remboursement intégral.</p>",
+            "row_content": "<p>Si Raselio ne vous convient pas, retournez-la dans les 30 jours suivant la réception pour un remboursement intégral.</p>",
             "page": ""
           }
         }
