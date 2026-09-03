@@ -957,14 +957,119 @@
         "pt": 36,
         "pb": 36
       }
+    },
+    "custom_liquid_slider_ba": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div style=\"max-width:900px;margin:0 auto;padding:0 16px;text-align:center;\">\n  <div style=\"font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#c15d2f;font-weight:700;margin-bottom:8px;\">La différence RASELIO</div>\n  <h2 style=\"font-size:34px;line-height:1.15;color:#211c17;font-weight:800;margin:0 0 10px;\">Tondeuse classique <span style=\"color:#8a8178;font-weight:600;\">vs</span> Raselio</h2>\n  <p style=\"font-size:15px;line-height:1.5;color:#6b6154;max-width:520px;margin:0 auto 26px;\">Rougeurs, tiraillements, poils incarnés : ce n'est pas vous qui vous y prenez mal, c'est l'outil qui n'est pas fait pour cette peau. Glissez le curseur.</p>\n  <div id=\"raselioBA\" style=\"--p:50%;position:relative;width:100%;max-width:440px;margin:0 auto;aspect-ratio:896/1200;border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(33,28,23,.18);cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-apres-pro.png?v=1786925424\" alt=\"Peau nette avec Raselio\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;\">\n    <img src=\"https://cdn.shopify.com/s/files/1/1067/3265/0827/files/raselio-avant-classique-2.png?v=1786966135\" alt=\"Peau irritée après une tondeuse classique\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;clip-path:inset(0 calc(100% - var(--p)) 0 0);-webkit-clip-path:inset(0 calc(100% - var(--p)) 0 0);\">\n    <div style=\"position:absolute;bottom:16px;left:14px;background:rgba(33,28,23,.80);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">TONDEUSE CLASSIQUE</div>\n    <div style=\"position:absolute;bottom:16px;right:14px;background:#c15d2f;color:#fff;font-size:11.5px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:30px;\">RASELIO</div>\n    <div style=\"position:absolute;top:0;bottom:0;left:var(--p);width:3px;background:#f7f3ec;transform:translateX(-1.5px);box-shadow:0 0 10px rgba(0,0,0,.35);pointer-events:none;\">\n      <div style=\"position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#f7f3ec;box-shadow:0 3px 12px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#c15d2f;font-size:20px;font-weight:900;\">↔</div>\n    </div>\n  </div>\n</div>\n<script>\n(function(){\n  var el=document.getElementById('raselioBA'); if(!el||el.dataset.init)return; el.dataset.init='1';\n  var dragging=false;\n  function setP(x){var r=el.getBoundingClientRect();var p=(x-r.left)/r.width*100;p=Math.max(0,Math.min(100,p));el.style.setProperty('--p',p+'%');}\n  function pt(e){return e.touches&&e.touches[0]?e.touches[0].clientX:e.clientX;}\n  el.addEventListener('mousedown',function(e){dragging=true;setP(pt(e));});\n  window.addEventListener('mousemove',function(e){if(dragging)setP(pt(e));});\n  window.addEventListener('mouseup',function(){dragging=false;});\n  el.addEventListener('touchstart',function(e){dragging=true;setP(pt(e));},{passive:true});\n  window.addEventListener('touchmove',function(e){if(dragging)setP(pt(e));},{passive:true});\n  window.addEventListener('touchend',function(){dragging=false;});\n})();\n</script>",
+        "color_scheme": "background-1",
+        "padding_top": 24,
+        "padding_bottom": 40
+      }
+    },
+    "lumin_grids_EAtzYR": {
+      "type": "lumin-grids",
+      "blocks": {
+        "image_PwFxtG": {
+          "type": "image",
+          "settings": {
+            "large_up_hide": false,
+            "grid_width_desktop": "50",
+            "medium_hide": false,
+            "grid_width_tablet": "50",
+            "small_hide": false,
+            "image": "shopify://shop_images/ChatGPT_Image_17_aout_2026_19_56_51.png",
+            "overlay_opacity": 42,
+            "opacity_color": "#000000",
+            "opacity_color_full": false,
+            "padding_size": 30,
+            "padding_size_in": 10,
+            "text_border": 0,
+            "bg_color": "rgba(0,0,0,0)",
+            "head": "Elle suit la peau, elle ne la pince pas",
+            "head_color": "#ffffff",
+            "head_size_d": 30,
+            "head_size_m": 24,
+            "margin_bottom": 15,
+            "text": "Tête arrondie et lames céramique : le contact reste doux là où la peau est la plus fine et la plus mobile.",
+            "text_color": "#ffffff",
+            "text_size_d": 16,
+            "text_size_m": 14,
+            "button-text": "",
+            "button_link": "",
+            "desktop_content_alignment": "center",
+            "image_content_position": "bottom-center",
+            "grid-url": ""
+          }
+        },
+        "image_qwXkb9": {
+          "type": "image",
+          "settings": {
+            "large_up_hide": false,
+            "grid_width_desktop": "50",
+            "medium_hide": false,
+            "grid_width_tablet": "50",
+            "small_hide": false,
+            "image": "shopify://shop_images/ChatGPT_Image_21_aout_2026_19_56_28.png",
+            "overlay_opacity": 42,
+            "opacity_color": "#000000",
+            "opacity_color_full": false,
+            "padding_size": 30,
+            "padding_size_in": 10,
+            "text_border": 0,
+            "bg_color": "rgba(0,0,0,0)",
+            "head": "Elle vit dans votre douche",
+            "head_color": "#ffffff",
+            "head_size_d": 30,
+            "head_size_m": 24,
+            "margin_bottom": 15,
+            "text": "100 % étanche. Vous tondez sous l'eau, vous rincez la lame, c'est réglé. Pas de poils dans le lavabo.",
+            "text_color": "#ffffff",
+            "text_size_d": 16,
+            "text_size_m": 14,
+            "button-text": "",
+            "button_link": "",
+            "desktop_content_alignment": "center",
+            "image_content_position": "bottom-center",
+            "grid-url": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_PwFxtG",
+        "image_qwXkb9"
+      ],
+      "settings": {
+        "video_border": 6,
+        "zoom_hover": true,
+        "loading_color": "#f2f2f2",
+        "grid_gap": 8,
+        "color_scheme": "",
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "margin_top": 36,
+        "margin_bottom": 36
+      }
+    },
+    "video_align_css": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>@media screen and (min-width:990px){#lm-shoppable-videos-shoppable_videos_npAUN8 slider-component{max-width:120rem;margin:0 auto;padding:0 5rem;}#lm-shoppable-videos-shoppable_videos_npAUN8 .slider{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;overflow:visible;scroll-snap-type:none;margin:0;padding:0;}#lm-shoppable-videos-shoppable_videos_npAUN8 .slider__slide{width:auto!important;max-width:none!important;scroll-snap-align:none;margin:0;}#lm-shoppable-videos-shoppable_videos_npAUN8 .slider-buttons{display:none;}}@media screen and (max-width:989px){#lm-shoppable-videos-shoppable_videos_npAUN8 .slider{scroll-padding-left:1.5rem;}}</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
     "problem_section",
     "comparison_table_pAMhAV",
+    "custom_liquid_slider_ba",
     "tech_section",
+    "lumin_grids_EAtzYR",
     "lumin_hero_3etapes",
+    "video_align_css",
     "shoppable_videos_npAUN8",
     "lumin_review_kL78Mn",
     "collapsible_content_kdacf9",
