@@ -54,16 +54,16 @@ ${steps.map((s,i)=>`<div style="display:flex;gap:30px;align-items:flex-start;bac
 </div>
 <div class="foot" style="color:${MUTE}">Sous la douche ou à sec, comme vous préférez.</div></div>`;
 
-const nums=[['3','hauteurs de coupe'],['90','minutes d’autonomie'],['100%','étanche, sous la douche'],['2 ans','de garantie'],['30 j','satisfait ou remboursé'],['0 €','de livraison']];
+const nums=[['3','hauteurs de coupe'],['90','minutes d’autonomie'],['1 h 30','pour une charge complète'],['100%','étanche, sous la douche'],['1','LED intégrée dans la tête'],['10 s','pour rincer la lame']];
 const D=`<div class="wrap" style="background:${CREAM};color:${INK}">
 <div class="eb">Ce que vous obtenez</div>
-<h1>Rien à croire<br>sur parole.</h1>
+<h1>Les faits,<br>rien d’autre.</h1>
 <div style="margin-top:50px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
 ${nums.map(n=>`<div style="background:#fff;border:2px solid rgba(33,28,23,.1);border-radius:18px;padding:34px 24px;text-align:center">
  <div style="font-family:Fraunces,serif;font-size:76px;line-height:1;color:${TERRA};font-weight:600;margin-bottom:12px">${n[0]}</div>
  <div style="font-size:27px;line-height:1.3;font-weight:500;color:${MUTE}">${n[1]}</div></div>`).join('')}
 </div>
-<div class="foot">Emballage neutre et discret. Support en français.</div></div>`;
+<div class="foot">Sans fil, rechargeable sur son socle. Lames céramique, tête arrondie amovible.</div></div>`;
 
 const cards={ 'card-comparatif':A, 'card-zones':B, 'card-etapes':C, 'card-chiffres':D };
 (async()=>{ const b=await chromium.launch();
