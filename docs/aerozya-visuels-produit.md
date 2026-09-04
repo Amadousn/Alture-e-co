@@ -11,34 +11,37 @@ prompt (et non au milieu) supprime cette dérive. Ne jamais revenir à des réf�
 
 ## 1. Design system (à réutiliser tel quel pour tout nouveau visuel)
 
-### Couleurs
+### Couleurs — extraites du thème Shopify (config/settings_data.json)
+Ne pas estimer ces valeurs à l'œil sur une capture : les relire dans le thème.
+
 | Rôle | Hex |
 |---|---|
-| Fond bleu nuit profond | `#0A1628` |
-| Fond bleu nuit secondaire | `#12233D` |
-| Noir de vignettage (macro) | `#060D18` |
-| Bleu électrique (accent, flux, filets, pictos) | `#2E8BFF` |
-| Bleu glacier (halo, particules) | `#8FC7FF` |
-| Blanc titres | `#FFFFFF` |
-| Gris froid corps de texte | `#C8D4E2` |
+| Vert profond — fond dominant et texte foncé | `#0B2E2D` |
+| Vert quasi noir — vignettage macro | `#061A19` |
+| Turquoise — accent, boutons, filets, pictos | `#0F9E9C` |
+| Turquoise clair / foncé — dégradés | `#2DBEBC` / `#0B7876` |
+| Menthe pâle — surfaces claires | `#EEF7F6` → `#D8EFEE` → `#BEE0DE` |
+| Blanc — titres sur fond sombre | `#FFFFFF` |
+| Rouge promo (soldes uniquement, hors DA) | `#FF5454` |
 
-### Typographie
-- Sans-serif géométrique (famille Montserrat / Inter).
-- Headline : Bold, blanc, 2 lignes max, très grand — lisible en vignette.
-- Corps : Medium, gris froid, 1 ligne quand possible, jamais plus de 2.
-- Labels bénéfices : Medium, blanc, capitales douces.
-- Cible 50–70 ans : la lisibilité prime sur le design.
+Le flux d'air est **turquoise**. La LED de l'appareil reste **bleue** : c'est le matériel
+physique, pas un choix graphique.
+
+### Typographie — polices du thème
+- Titres : **Fraunces** (serif, graisse 500) — `fraunces_n5`
+- Textes et labels : **Harmonia Sans** (400) — `harmonia_sans_n4`
+- Boutons : police de titre, bold, capitales
 
 ### Mise en page (invariants)
 - Wordmark `AEROZYA` : capitales blanches, interlettrage large, **coin haut-gauche**, petit.
 - Marges : 8 % sur les 4 côtés.
 - Le texte ne chevauche jamais le produit ni un visage.
-- Pictos : trait fin blanc dans un cercle bleu électrique translucide.
-- Séparateurs : filets verticaux bleu électrique 2 px.
+- Pictos : trait fin blanc dans un cercle turquoise translucide.
+- Séparateurs : filets verticaux turquoise 2 px.
 
 ### Traitement photo
 Photoréaliste cinématographique, noirs profonds, fort contraste, lumière latérale douce,
-liseré bleu électrique sur le produit, grain léger, aucune sursaturation.
+liseré turquoise sur le produit, grain léger, aucune sursaturation. Jamais de bleu nuit.
 
 ### Géométrie réelle du produit — source de vérité
 Décrire cette géométrie **en toutes lettres dans chaque prompt**, en plus de la référence
@@ -105,7 +108,9 @@ châtain clair, maquillage minimal, texture de peau et ridules crédibles, aucun
 de chirurgie esthétique, expression détendue et sincère. Jamais de mannequin de 20–30 ans.
 
 ## 4. Faits produits vérifiés (ne rien inventer au-delà)
-- Garantie / essai : **90 jours**, remboursé si l'odeur est toujours là.
+- Garantie / essai : **90 jours** (fiche produit). ⚠️ Le tiroir panier du thème affiche
+  **30 jours** (`head_message`) — incohérence à trancher côté boutique, c'est un
+  engagement contractuel.
 - **Un seul bouton**, aucun mode ni niveau de puissance.
 - Sans filtre, sans recharge, sans consommable.
 - Recharge **USB-C**.
