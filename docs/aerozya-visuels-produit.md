@@ -40,10 +40,29 @@ prompt (et non au milieu) supprime cette dérive. Ne jamais revenir à des réf�
 Photoréaliste cinématographique, noirs profonds, fort contraste, lumière latérale douce,
 liseré bleu électrique sur le produit, grain léger, aucune sursaturation.
 
-### Règle produit absolue
-Le purificateur est reproduit à l'identique depuis les photos de référence : forme,
-proportions, épaisseur, grille, bouton unique, LED, couleur, finition mate, texture,
-emplacement du logo. Aucun ajout de bouton, écran, molette, port ou gravure.
+### Géométrie réelle du produit — source de vérité
+Décrire cette géométrie **en toutes lettres dans chaque prompt**, en plus de la référence
+image. Une référence seule ne suffit pas : le modèle a dérivé tant que la forme n'était
+pas écrite.
+
+- **Forme : OVALE allongé** (stade / rectangle aux bouts arrondis), nettement plus large
+  que profond, profil bas. **Jamais un cercle** — c'était l'erreur des premières séries.
+- **Corps en deux parties** : couvercle blanc brillant légèrement bombé, posé sur un socle
+  blanc qui se resserre vers le bas.
+- **Un seul bouton**, rond, encastré dans le couvercle, **décalé vers une extrémité** et
+  non centré. Symbole power, anneau lumineux bleu.
+- **Bande de grille** entre couvercle et socle : renfoncement étroit à fines lamelles
+  verticales, sur tout le pourtour, éclairé en bleu de l'intérieur.
+- **Port USB-C** avec son cache, sur la face avant du socle.
+- Blanc brillant, aucun marquage, aucun texte imprimé sur l'objet.
+
+Interdits : rendre l'objet circulaire, centrer le bouton, omettre la bande ou le port,
+ajouter un second bouton / écran / molette / logo / gravure, changer la couleur.
+
+### Référence image
+Utiliser le **détourage validé** sur fond transparent, et lui seul. Ne jamais repasser
+plusieurs images de scène en entrée : le modèle mélange les sources et recompose un
+appareil approximatif.
 
 ### Règle de sécurité (ozone)
 L'appareil fonctionne **pièce vide, sans personne ni animal**. Le flux d'air bleu visible
@@ -68,6 +87,10 @@ cliente, l'appareil est posé **au repos**, éteint : la scène se déroule apr�
 
 Bandeau du visuel 1 : Neutralise les odeurs · Simple à utiliser · Compact et discret
 Bandeau du visuel 10 : Garantie 90 jours · Paiement sécurisé · Livraison offerte
+
+Sur toute scène comportant une personne, l'appareil est **éteint, bande bleue non
+allumée** — l'ozone impose une pièce vide. La bande n'est allumée que sur les visuels
+sans personne (1, 3, 10, 11, 12).
 
 Visuel 10 : **aucun packaging représenté** tant qu'une photo réelle de la boîte n'est pas
 fournie — dessiner un carton reviendrait à inventer son impression. Appareil + câble USB-C.
