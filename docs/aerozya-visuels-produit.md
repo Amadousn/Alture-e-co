@@ -1,7 +1,13 @@
 # Aerozya — Série de 10 visuels produit (fiche Shopify)
 
 Campagne carrée 2048 × 2048, optimisée mobile, un message marketing par image.
-Générée avec Nano Banana Pro (Higgsfield), références produit = photos de la fiche Shopify.
+Générée avec Nano Banana Pro (Higgsfield).
+
+**Référence produit : une seule photo réelle, jamais plusieurs.** Les images de la fiche
+Shopify (appareil en main, main sur le bouton, colis) sont des scènes, pas des packshots :
+en passer plusieurs en entrée fait mélanger les sources au modèle, qui recompose alors un
+appareil approximatif. Une photo réelle unique + la règle de fidélité placée **en tête** du
+prompt (et non au milieu) supprime cette dérive. Ne jamais revenir à des références multiples.
 
 ## 1. Design system (à réutiliser tel quel pour tout nouveau visuel)
 
@@ -58,9 +64,17 @@ cliente, l'appareil est posé **au repos**, éteint : la scène se déroule apr�
 | 8 | Augmenter la valeur perçue | Pensé pour votre intérieur. | Un format compact et un design discret qui s'intègrent naturellement chez vous. |
 | 9 | Créer de la confiance | Une maison où l'on se sent bien. | Aerozya accompagne simplement votre quotidien pour rendre votre intérieur plus agréable. |
 | 10 | Enlever le risque d'achat | Essayez Aerozya chez vous. | 90 jours pour vous faire votre avis. |
+| 11 | Écraser les alternatives | Recouvrir l'odeur, ou la détruire. | Bougies et sprays posent un parfum par-dessus. Aerozya agit sur la molécule elle-même. |
 
 Bandeau du visuel 1 : Neutralise les odeurs · Simple à utiliser · Compact et discret
 Bandeau du visuel 10 : Garantie 90 jours · Paiement sécurisé · Livraison offerte
+
+Visuel 10 : **aucun packaging représenté** tant qu'une photo réelle de la boîte n'est pas
+fournie — dessiner un carton reviendrait à inventer son impression. Appareil + câble USB-C.
+
+Visuel 11 — comparatif, 4 lignes, toutes tirées de la fiche produit :
+Détruit l'odeur à la source · Sans filtre ni recharge · Sans parfum ajouté · Rien à racheter
+« Silencieux » est volontairement exclu : aucune donnée sonore fournie.
 
 ## 3. Casting lifestyle
 Femme française réelle de 55 à 70 ans selon le visuel : cheveux gris / blond cendré /
