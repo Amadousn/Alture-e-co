@@ -1,10 +1,11 @@
 {
   "run_id": "",
-  "brand_id": "",
+  "brand_id": "a81e7c77-ca41-4cbd-acf8-ec27ea58eb37",
   "brand_name": "Raselio",
   "github_repo_url": "https://github.com/amadousn/alture-e-co",
   "brain_subfolder": "raselio-brain",
   "parker_brain_version": "v15",
   "created_at": "2026-09-06T06:30:00Z",
-  "notes": "run_id and brand_id are empty because the Parker MCP returned no brands for this account on 2026-09-06 (organizations: []). Fill them once the Raselio brand exists in Parker and update_parker_brain_setup_status can be called. This brain is self-managed on the amadousn/alture-e-co GitHub repo (subfolder raselio-brain), not a parker-brain-org repo."
+  "notes": "brand_id découvert le 2026-09-06 à 09:50 UTC : la marque Raselio n'existait pas dans le Parker MCP au début du build (get_available_brands renvoyait organizations: []) et est apparue en cours de route. run_id reste vide : update_parker_brain_setup_status n'a pas été appelé pendant ce build. Ce cerveau est auto-géré sur le dépôt GitHub amadousn/alture-e-co (sous-dossier raselio-brain), pas un dépôt parker-brain-org.",
+  "brand_org": "Dylan's Org"
 }
