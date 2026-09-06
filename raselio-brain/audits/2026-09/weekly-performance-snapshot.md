@@ -1,0 +1,87 @@
+---
+brand: raselio
+brand_id: a81e7c77-ca41-4cbd-acf8-ec27ea58eb37
+doc: weekly-performance-snapshot
+week: 2026-36
+generated_on: 2026-09-06
+refresh_by: 2026-09-13
+date_range: 2026-08-31 to 2026-09-06
+data_sources_read: [Parker MCP search_facebook_ads_sql (173 annonces, tags IA, entonnoir, adIds ciblés sur le lot RENTRÉE et le lot EMOTION), Parker MCP search_facebook_ad_comments_sql, Parker MCP check_northbeam_connection (non connecté), source-pulls/meta-account-breakdowns.md (série quotidienne du compte, 2026-08-01 au 2026-09-06), source-pulls/meta-ads-all.md (183 annonces avec leur date de création), source-pulls/meta-account-campaigns-adsets.md, source-pulls/shopify-analytics.md (série ShopifyQL jour par jour), source-pulls/shopify-orders-and-customers.md (11 commandes), sub-context-docs/marketing-calendar-and-campaigns.md, running-notes/brand-rules.md]
+data_limitations: [Semaine PARTIELLE. Le pull est arrêté le 2026-09-06 à 08:00 UTC, donc le dimanche ne compte que huit heures : 10,58 € de dépense compte et 4 sessions Shopify. Toute comparaison avec la semaine précédente, qui est complète, sous-estime légèrement la semaine 36. | Aucun instantané de la semaine précédente n'existe. Ce document est le premier de sa cadence, et la comparaison est reconstruite à la main depuis la série quotidienne. | La série quotidienne est au niveau COMPTE et inclut la marque soeur Trael. Les campagnes Trael sont en pause depuis le 2026-08-31, donc la contamination de la semaine 36 est faible mais non nulle. | Aucune donnée de dépense par annonce et par jour. Le pull donne la dépense cumulée à vie de chaque annonce, pas sa répartition dans le temps. Les annonces créées pendant la semaine ont donc une dépense hebdomadaire connue, égale à leur cumul, et les annonces plus anciennes n'en ont pas. La section « annonces en hausse » ne peut donc porter que sur les créations de la semaine, et le dit. | Aucun taux d'accroche ni taux de rétention cette semaine : les trois vidéos du compte datent du 14 août et vivent dans une campagne en pause. Elles n'ont rien dépensé sur la fenêtre. | 3 achats attribués sur la semaine. Aucun verdict de ce document n'est statistiquement solide. | Northbeam n'est pas connecté, vérifié le 2026-09-06.]
+---
+
+# Weekly performance snapshot — Raselio — 2026-36
+
+## Performance snapshot, past 7 days
+
+**La semaine 36, du lundi 2026-08-31 au dimanche 2026-09-06, arrêtée au pull de 08:00 UTC.** Dépense compte **298,89 €** contre 446,21 € la semaine 35, soit **une baisse de 33,0 %**. Impressions 17 166 contre 23 575, en baisse de 27,2 %. Clics 412 contre 733, en baisse de 43,8 %. CTR 2,40 % contre 3,11 %. CPM 17,41 € contre 18,93 €. **Achats attribués : 3, comme la semaine précédente.** Côté boutique, 5 commandes pour 174,95 € contre 6 commandes pour 202,37 €. Tout verified sur la série quotidienne du compte croisée avec la série ShopifyQL.
+
+Le chiffre qui compte est celui-ci : **le coût par achat attribué passe de 148,74 € à 99,63 €**, et le coût par commande Shopify réelle de 74,37 € à 59,78 €. Deuxième semaine consécutive d'amélioration, et c'est la seule bonne nouvelle de la fenêtre. Le seuil de rentabilité reste autour de 21 à 23 €, donc la marque perd toujours de l'argent sur chaque vente, mais elle en perd moins vite. Lecture, inferred, confiance moyenne : la baisse de dépense n'a pas coûté de ventes, elle a coûté du volume de clics. Le compte a acheté moins de clics et vendu autant. C'est le comportement d'un compte qui commence à trouver à qui parler, pas d'un compte qui décroche.
+
+Un point ne se résout pas et il faut le poser tel quel. **Les sessions Shopify montent de 470 à 741, une hausse de 57,7 %, pendant que les clics payés baissent de 44 %.** Les ajouts panier restent à 17 et les sessions arrivant au paiement à 7, exactement comme la semaine précédente. Verified des deux côtés. Une seule journée porte l'écart, le 3 septembre avec 213 sessions pour 61 clics payés. Data-limited : rien dans les sources ne dit d'où vient ce trafic, et la ventilation Shopify sur 90 jours montre 989 sessions de bureau depuis les États-Unis alors que 100 % des commandes sont françaises. À surveiller la semaine prochaine avant d'en tirer quoi que ce soit.
+
+## Total ads launched last week
+
+**114 annonces Raselio créées dans la semaine**, contre 40 la semaine précédente, verified sur les dates de création des 183 annonces. C'est presque le triple, dans une semaine où la dépense a baissé d'un tiers. Le détail par jour : 5 le 31 août, le lot `POSTIT ÉMOTIONNEL x5 | BATCH V6` ; 4 le 1er septembre, le lot `VISUELS WINNER RENTRÉE x5 | BATCH V8` ; 19 le 2 septembre, le lot `19 STATIQUES CONCEPTS | BATCH V9` ; 30 le 3 septembre, le lot `RS30 | 7 RAISONS` ; 27 le 4 septembre, le lot `RS-W/N | STATIQUES 04-09` ; 29 le 5 septembre, le lot `RS-R30 | STATIQUES 05-09`. Toutes des statiques.
+
+**Ces 114 annonces ont consommé 182,06 € au total, soit 1,60 € chacune en moyenne**, verified. Les 86 créées les trois derniers jours en cumulent environ 11,50 €. Lecture, inferred : la production accélère, la diffusion non. Un lot fabriqué n'est pas un lot diffusé, et à ce rythme aucune de ces annonces n'atteindra jamais le seuil de coupe que l'équipe s'est écrit, 45 € sans ajout panier ou 90 € sans achat.
+
+Deux lancements méritent d'être nommés. Le lot `EMOTION`, cinq annonces le 31 août, est le seul de la semaine à avoir reçu un vrai budget, 85,04 € d'ad set, et le seul dont on connaisse le texte à l'image : `EMOTION 3` porte, verbatim, « **Ta barbe est soignée. Et tes boules ?** », `EMOTION 4` porte « **Gêné de te déshabiller ? Plus jamais.** », `EMOTION 2` porte « **Le moment de vérité, c'est quand le boxer tombe.** », verified via Parker. Il est en pause depuis, avec zéro achat pour 85 €. Et le lot `RENTRÉE`, quatre annonces le 1er septembre, 28,42 € : Parker donne enfin ce que les noms cachaient, et le résultat est net. **Les quatre portent la même chose à l'image, « Soyez impeccable partout. »**, et une seule des quatre mentionne la rentrée dans son texte, `RENTREE 1`, verbatim : « Torse, jambes, zone intime : une seule tondeuse pour tout. La rentrée, c'est maintenant. » Les trois autres ne portent aucun message saisonnier, seulement « 🚚 Livraison gratuite · Expédié le jour même ». Verified. Autrement dit, « rentrée » est un nom de lot et une promesse de livraison, pas un angle de saison.
+
+## Rising ads
+
+Réserve de méthode avant la liste : **aucune donnée de dépense par annonce et par jour n'existe dans ce dossier**, donc une vraie hausse semaine contre semaine n'est calculable pour aucune annonce ancienne. Ce qui est calculable sans ambiguïté, ce sont les annonces créées pendant la semaine : leur dépense de la semaine est leur dépense totale, et leur base de la semaine précédente est zéro. La liste ci-dessous est donc la liste des vraies entrées, pas un classement de montée.
+
+- **`EMOTION 1 - Elle remarquera tout`** — 0,00 € la semaine 35, **27,51 € la semaine 36**, 1 424 impressions, CTR 3,65 %, CPC 0,53 €, **0 achat**, ROAS 0. En pause. Texte à l'image, verbatim : « Elle ne dira rien. Mais elle remarquera tout. »
+- **`RENTREE 1 - 3 postit zones`** — 0,00 € → **18,48 €**, 851 impressions, CTR 1,88 %, CPC 1,16 €, **0 achat**, ROAS 0. En pause.
+- **`EMOTION 3 - Barbe soignee et tes boules`** — 0,00 € → **17,81 €**, 868 impressions, CTR 3,57 %, **2 ajouts panier, 1 paiement initié, 0 achat**, ROAS 0. En pause.
+- **`EMOTION 4 - Gene de te deshabiller`** — 0,00 € → **17,69 €**, 1 272 impressions, CTR 2,99 %, **1 ajout panier, 1 paiement initié, 0 achat**, ROAS 0. En pause.
+- **`RS30-7R 01 - Impeccable a tout age`** — 0,00 € → **12,07 €**, 448 impressions, CTR 2,01 %, **1 ajout panier, 1 paiement initié, 0 achat**, ROAS 0. Active.
+
+**Le motif est clair et il n'est pas rassurant : les cinq entrées de la semaine sont toutes à ROAS zéro.** Elles montent en dépense pour une raison de diffusion, pas de performance, ce qui est le comportement normal d'un CBO qui explore un nouveau lot. Quatre des cinq sont déjà en pause. Le seul point commun de fond entre elles : quatre sur cinq ouvrent sur la gêne ou le regard de la partenaire, et Parker tague trois d'entre elles avec l'émotion **Shame**. Sur la semaine, l'ensemble du compte a produit 3 achats, et aucun ne vient de ces cinq annonces. Les trois achats de la semaine se logent dans des annonces créées la semaine précédente, la famille « Impeccable » du 30 août.
+
+L'annonce qui porte réellement les ventes n'est donc pas une entrée mais une survivante : `RASELIO | IMPECCABLE | CROP TAILLE`, créée le 2026-08-30, active, 54,79 € à vie, 2 achats, ROAS 1,28, 8 ajouts panier. Sa part exacte de la semaine 36 n'est pas isolable, data-limited.
+
+## Patterns and data points worth knowing
+
+**Un. La production a triplé et la dépense a chuté d'un tiers dans la même semaine.** 114 annonces créées pour 298,89 € dépensés, soit environ 2,60 € de dépense compte disponible par annonce nouvellement créée. Le CBO répartit maintenant 50 €/jour entre onze ad sets. La méthode de lecture de compte est claire : avec un CBO on juge au niveau campagne, mais le système a besoin d'événements pour optimiser, et avec 6 achats à vie il n'y en a pas. C'est le point qui commande la semaine 37.
+
+**Deux. Le changement de référence produit est passé pendant la semaine.** Les commandes #1001 à #1006 portaient le code `CUTLAB-TRIM-SOLO`, et à partir de la commande #1007 le 1er septembre le code devient `Electric intimate hair removal device`, verified. Cinq semaines après le changement de nom, l'ancienne marque quitte enfin le catalogue. Rien dans les chiffres de la semaine ne bouge à cette date, mais c'est un jalon à noter parce qu'il ferme un chantier ouvert depuis le 26 juillet.
+
+**Trois. La rentrée est passée sans angle de rentrée.** La fenêtre saisonnière court de fin août à mi-septembre et elle est presque terminée. Le seul lot étiqueté rentrée porte 28,42 €, quatre annonces, et une seule des quatre en parle. La marque aura donc traversé sa première fenêtre calendaire sans jamais l'avoir travaillée. Ce n'est pas grave en soi, c'est une fenêtre à faible enjeu, mais c'est un apprentissage saisonnier que la marque n'aura pas pour les fenêtres qui comptent, Noël et la Saint-Valentin.
+
+**Quatre. Le compte a reçu son deuxième commentaire de toute son existence cette semaine.** Le 2026-09-01, sous `EMOTION 3 - Barbe soignee et tes boules`, un lecteur a écrit, verbatim : « **Lol** ». Le premier était arrivé la veille, le 31 août, sous `RASELIO | IMPECCABLE | BOXER`, verbatim : « **Plus rien de la bête sauvage qui sommeille en nous.** » Deux commentaires sur 47 484 impressions à vie, verified, corpus complet. Ce n'est pas un signal de performance, c'est un signal d'engagement quasi nul.
+
+## Open loops
+
+**1. Les sessions du site montent pendant que les clics payés baissent.**
+741 sessions Shopify cette semaine contre 470 la précédente, alors que les clics payés passent de 733 à 412, verified des deux côtés. Une seule journée porte l'écart, le 3 septembre, 213 sessions pour 61 clics payés. Les ajouts panier et les paiements atteints n'ont pas bougé d'un point.
+*Pull : **Surprise**.* Deux compteurs qui devraient monter et descendre ensemble sont partis dans des directions opposées la même semaine, sans qu'aucune source ne l'explique.
+**Question : d'où vient le trafic qui est arrivé sur le site cette semaine sans passer par un clic payé ?**
+Si c'est du trafic réel, la marque a une source de visites qu'elle ne connaît pas et ne travaille pas. Si c'est du bruit automatisé, alors tous les taux de conversion calculés sur les sessions de ce dossier sont faux dans le mauvais sens. Territoire : **Product**.
+
+**2. Le compte fabrique trois fois plus vite qu'il ne diffuse.**
+114 annonces créées cette semaine pour 182,06 € de dépense cumulée sur ces mêmes annonces, contre 40 annonces la semaine précédente pour 446,36 €. La règle de coupe que l'équipe s'est écrite, 45 € sans ajout panier, n'a jamais pu s'appliquer à une seule des 114.
+*Pull : **Motif**.* Le même geste se répète depuis trois semaines, un lot de plus, et l'écart entre ce qui est fabriqué et ce qui est financé s'élargit à chaque fois.
+**Question : qu'est-ce que l'équipe attend d'un lot de trente créas quand le budget quotidien est de 50 € ?**
+Si le but est d'apprendre, aucun de ces lots ne peut rien apprendre à ce niveau de dépense. Si le but est de nourrir l'algorithme en diversité, alors la question devient combien de ces créas sont réellement différentes aux yeux du système. Territoire : **Messaging**.
+
+## Appendix - Parker media links
+
+| ID | Source | Lien Parker | Média d'origine | Où c'est discuté |
+|---|---|---|---|---|
+| M001 | `EMOTION 1 - Elle remarquera tout` — 27,51 €, 0 achat | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505897029591&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/78c767302f0891d2968bbef0869a2250ba9f24d4e1056e478477685f65fd8649.jpg | Annonces en hausse |
+| M002 | `EMOTION 3 - Barbe soignee et tes boules` — 17,81 €, porte le commentaire « Lol » | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505897035991&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/4a0a0082ea9dc0203d233b4028ac5aff304ee33bf011aa179de3c2c45f0f93e0.jpg | Annonces en hausse, motifs |
+| M003 | `EMOTION 4 - Gene de te deshabiller` — 17,69 €, 1 ajout panier | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505897038991&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/2e9d84eb2acf984db9326d0888a47bee54a2c669eaef05b6124851955b5b0f44.jpg | Annonces en hausse |
+| M004 | `EMOTION 2 - Moment de verite` — texte à l'image du lot | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505897032791&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/0f24e713cafab7134963cdf6750aa5f04f1fc26f0d477680331291055608a012.jpg | Annonces lancées |
+| M005 | `RENTREE 1 - 3 postit zones` — 18,48 €, la seule à mentionner la rentrée | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52506092389591&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/0abd9ffb26cd4b5cc1528da6fe111eaa3781cf35a8d43c878e411855102226a3.jpg | Annonces lancées, motifs |
+| M006 | `RENTREE 2 - Crop serre main` — 7,51 €, aucun message de saison | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52506092395591&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/3c5e79e1877ae9eed1e05a68893142a6e143430c3cbc21df8277e763740bff85.jpg | Annonces lancées |
+| M007 | `RENTREE 5 - Flat lay produit` — 1,72 €, 3 paiements initiés | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52506092392991&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/6f1103a089cdcb39d13b9b55b5aaa539c572beed1055d3e2e6fa5884e847a15e.jpg | Annonces lancées |
+| M008 | `RENTREE 4 - Avant Apres` — 0,40 €, 27 impressions | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52506092396391&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/037a8c91cedeec8301e28f92a608e89842b7cd73635fb8d92a9541405be32614.jpg | Annonces lancées |
+| M009 | `RS30-7R 01 - Impeccable a tout age` — 12,07 €, 1 ajout panier, active | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52506751290991&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/fc0ee49a58a9ac53abbd7d0b50a4dd21b3e9b6ce87a3ede0131d27144ee253b1.jpg | Annonces en hausse |
+| M010 | `RASELIO \| IMPECCABLE \| CROP TAILLE` — 2 achats, la survivante | https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505820203791&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 | https://auth.heyparker.ai/storage/v1/object/public/internal-facebook-ads/a81e7c77-ca41-4cbd-acf8-ec27ea58eb37/c2668809251f9beb1751ba474b53bb4fdf74de5fe409060341b6eeadf7a4f22c.jpg | Annonces en hausse |
+| M011 | Commentaire du 2026-09-01, « Lol » | https://www.facebook.com/122109959949409627/posts/122108944095409627?comment_id=2257250055117203 | — | Motifs, point quatre |
+| M012 | Commentaire du 2026-08-31, « Plus rien de la bête sauvage qui sommeille en nous. » | https://www.facebook.com/122109959949409627/posts/122108833431409627?comment_id=1395943165961254 | — | Motifs, point quatre |
+| M013 | Série quotidienne du compte, 2026-08-01 au 2026-09-06 | — | `source-pulls/meta-account-breakdowns.md` | Instantané de performance |
+| M014 | Dates de création des 183 annonces | — | `source-pulls/meta-ads-all.md` | Annonces lancées |
+| M015 | Série ShopifyQL jour par jour, sessions et entonnoir | — | `source-pulls/shopify-analytics.md` | Instantané, boucle ouverte 1 |
