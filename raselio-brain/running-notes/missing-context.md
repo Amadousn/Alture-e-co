@@ -116,6 +116,21 @@ Blancs nommés propres à la carte concurrentielle :
 5. **Les cinq requêtes search_meta_ads en français sur la France ont renvoyé zéro ligne.** Aucune découverte de concurrent par mots-clés publicitaires n'a été possible, et discover_meta_ads n'accepte pas de filtre pays. La grappe française a donc été trouvée par lookup_brand sur des noms devinés, ce qui peut avoir manqué des acteurs.
 6. **Le décalage Thomyle non expliqué :** 97 741,09 € de dépense EU cumulée et 108 visites mensuelles sur le même site, d'après la même source. Porté en boucle ouverte.
 
+### reputation-analysis.md (généré 2026-09-06)
+
+Passe **partielle** : la source la plus lourde d'une lecture de réputation, les avis clients, n'existe pas. Blancs nommés :
+
+1. **D'où viennent « 17 000 hommes » et « 4,7/5 · 1 734 avis » ?** Déjà en question d'intake n° 3, et ce document en fait le point dur. La marque affiche 1 734 avis et en a 0, elle affiche 17 000 clients et en a 11. Le même « 1 734 avis » figure sur la marque sœur Trael, ce qui pointe un gabarit. Les créas antérieures disaient 35 000. Risque de conformité actif, puisque ces mentions tournent en publicité payée aujourd'hui. Seule la marque peut répondre.
+2. **Les témoignages inventés.** L'équipe a écrit elle-même que les créas 16, 17, 27, W12 et N08 utilisent des prénoms et des citations de témoignage inventés, et l'advertorial est signé « Par Julien M. », personne non identifiable. À remplacer par de vrais avis. Le repli déjà écrit par l'équipe, « Déjà adoptée par des milliers d'hommes », n'a jamais été appliqué.
+3. **Commentaires publicitaires : non tirés, jamais lus.** 183 annonces, 1 100 clics, 44 672 impressions, et personne n'a ouvert un seul commentaire, faute de brand_id Parker. C'est le trou le plus rattrapable et la seule surface publique où des Français ont réagi à la marque.
+4. **Aucun social organique lu.** Aucun handle Instagram, TikTok ou YouTube dans une source ; seule une page Facebook id 1234695553067195 est connue. Ni les posts ni les commentaires n'ont été vus.
+5. **Sites d'avis et de signalement illisibles.** Trustpilot, Signal Arnaques, Avis Vérifiés, Scamadviser, Amazon.fr et Cdiscount refusent la connexion depuis cette session. Aucune fiche Raselio n'a été trouvée par la recherche, mais l'absence n'a pas pu être confirmée par lecture directe. À revérifier en priorité.
+6. **Trajectoire de sentiment non calculable.** Première version du document, aucun avis à suivre dans le temps. Un tableau de compteurs au 2026-09-06 sert de point zéro pour le prochain run.
+7. **Le nom « Cutlab » appartient déjà à au moins trois entités françaises** : cutlab.fr, kits de couteaux pliants ; lecutlab.fr, découpe numérique ; CUTlab d'Infolab. La marque a reçu un e-mail « Notice of DMCA Infringement » le 2026-08-16 depuis une adresse `pusan.ac.kr` signée « The Meta Business Team », et a changé de nom fin juillet. Rien dans les sources ne relie ces faits. Seule la marque sait s'il y a eu une mise en demeure réelle.
+8. **Le chantier Cutlab dans les politiques n'est toujours pas fait.** Cinq politiques sur six portent « Cutlab », deux renvoient à cutlabsupport@gmail.com, les CGV portent « Nom du médiateur : [À COMPLÉTER OBLIGATOIREMENT] », la page Contact est vide. Quarante jours après le changement de nom.
+9. **Aucun placement dans un comparatif de catégorie.** Un agrégateur français publie un « top 10 tondeuse anti coupure partie intime » daté de septembre 2026 sans Raselio. Autorité réelle, atteignable, jamais visée.
+10. **Aucun dispositif de réponse aux commentaires publicitaires** n'a pu être constaté ni infirmé. La seule réponse client documentée tient en deux mots, « Hello sure ».
+
 ## Resolved — with date and where the answer lives
 
 - 2026-09-06 — Ad naming convention: read directly from the account → `running-notes/brand-rules.md`.
