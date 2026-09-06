@@ -40,6 +40,32 @@ sources: build-day intake gaps + data_limitations across all docs + the brand-ro
 
 Filled by each doc's `data_limitations` frontmatter as the build runs — see the individual docs under `sub-context-docs/`, `personas/`, `audits/`, `competitors/`.
 
+### operations-and-team.md (généré 2026-09-06)
+
+Document reconstruit à 100 % depuis les traces, sans une seule réponse de la marque : l'intake de set-up n'a pas pu être posé, le build a tourné sans personne. Blancs nommés, à demander à Dylan :
+
+1. **Le budget marketing.** Aucun montant total, mensuel ou annuel n'existe dans une source. Seule la dépense déjà engagée est lisible, 684,82 € sur Meta du 2026-08-10 au 2026-09-06. Fermeté du budget, horizon, et qui peut le changer : non stated.
+2. **Le coût de structure.** Abonnement Shopify, crédits Higgsfield, IONOS, OVHcloud, Hostinger, frais Shopify Payments, coût réel du Colissimo par commande : aucun montant nulle part. La marge unitaire de 23,58 € utilisée partout dans le brain est donc une marge avant port et avant frais de paiement.
+3. **Les heures disponibles.** Combien de temps par semaine Raselio reçoit réellement, face à Trael et Aerozya. Rien ne le dit, et ça dimensionne toute vague créative.
+4. **Ce que l'équipe veut automatiser, dans ses mots.** Aucun souhait n'a jamais été formulé. Les trois candidats lus dans les gestes (rangement des images, saisie du classeur, recopiage vers Shopify) sont des inférences.
+5. **Les droits d'écriture.** L'assistant a écrit le 2026-07-26 « Je n'ai pas les droits d'écriture sur les politiques légales de la boutique ». À sonder : vraie limite ou droit jamais ouvert.
+6. **Les huit jours d'extinction publicitaire du 17 au 24 août 2026.** Zéro euro dépensé, aucune explication dans une source.
+7. **Satisfaction sur les outils et intention de déléguer.** Aucun prestataire n'apparaît ; trois demandes d'accès collaborateur et deux démarchages d'agence sont restés sans suite visible. Non confirmé par la marque.
+8. **Le fournisseur.** Délai d'approvisionnement, stock détenu, point de départ des colis : rien dans les sources au-delà de la référence RUILANG 810 sur 1688.
+9. **Qui tranche entre Dylan et l'assistant IA** quand le brief et l'exécution divergent. Exemple mesuré : le brief du 3 septembre écrit « exclure les 18-44 des campagnes de conversion » et les ad sets actifs s'appellent toujours « HOMMES 18-55 » douze jours plus tard.
+
+### marketing-calendar-and-campaigns.md (généré 2026-09-06)
+
+Blancs nommés propres au calendrier :
+
+1. **Le calendrier à venir.** Rien, absolument rien dans les sources ne dit ce qui est prévu après le 2026-09-06. Seule la marque peut le donner.
+2. **Aucun historique d'une année sur l'autre.** La marque a 46 jours : la section des moments récurrents est structurellement vide et le restera jusqu'à ce qu'une saison revienne. Premier vrai test : Black Friday 2026, le 27 novembre.
+3. **Le lot RENTRÉE du 2026-09-01.** Quatre annonces, 28,42 €, creative read unavailable. Ce que l'équipe attendait de cet angle : non stated.
+4. **Les visuels de sept lots créatifs** (RENTRÉE, POSTIT, EMOTION, IMPECCABLE, RS·C/PP, W/N, R02-R30) n'ont pas pu être inspectés : pas de brand_id Parker, et les documents de l'équipe ne couvrent que les lots du 23 août et du 3 septembre.
+5. **La mise en scène saisonnière du magasin.** raselio.com est bloqué par le proxy : page d'accueil, bandeaux promotionnels et habillage non vus.
+6. **Aucun rythme d'inbox et aucun rythme organique.** Pas d'ESP, pas de handle Instagram, TikTok ou YouTube ; le plan de trois posts Facebook du 14 août est la seule trace organique et rien ne confirme qu'il a été publié.
+7. **Les prochains lancements produit.** Un deuxième SKU, un accessoire, une lame de rechange ou le retour du pack : seule la marque le sait. Le doc Grümwise du 13 août listait « tête rasoir à grille, embout nez, set 7 coupe-ongles, trousse cuir » comme pièces déjà disponibles chez le fournisseur, stated.
+
 ## Resolved — with date and where the answer lives
 
 - 2026-09-06 — Ad naming convention: read directly from the account → `running-notes/brand-rules.md`.
