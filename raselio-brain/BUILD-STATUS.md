@@ -1,10 +1,10 @@
 # BUILD-STATUS — Raselio brand brain
 
-**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 0 → Phase 1 (extraction des sources en cours)
+**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 (sources presque complètes ; branche 1A démarrée) · dernière mise à jour 2026-09-06 08:05 UTC
 
 **En attente de vous : rien pour l'instant.** Le build tourne sans intervention. Les questions que seul vous pouvez trancher sont consignées dans `running-notes/missing-context.md` et vous seront présentées à la fin, avec la roadmap stratégique à valider.
 
-Ce qui se passe maintenant : trois agents copient les données brutes (Shopify, compte Meta, Google Drive, Gmail, concurrents) dans `source-pulls/`. Ensuite la Phase 1 (audit) lance les cinq branches en parallèle.
+Ce qui se passe maintenant : les sources Shopify, Gmail et une partie de Drive sont dans `source-pulls/` (sauvegardées sur la branche). Deux extractions (compte Meta ; reste de Drive + concurrents Brandsearch) avaient été coupées par la limite d'usage de la session à 07:00 UTC et ont été relancées à 08:02 UTC. La branche 1A (identité, site, opérations, calendrier) tourne en parallèle.
 
 ## Tableau de bord
 
@@ -32,7 +32,7 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [done] `parker_config.json`, `running-notes/standard-sync.md`
 - [done] Intake (à partir des documents de l'équipe) → `running-notes/brand-rules.md`, `success-definition.md`, `missing-context.md`
 - [done] `BUILD-STATUS.md`
-- [running] Sources brutes → `source-pulls/`
+- [running] Sources brutes → `source-pulls/` (Shopify ✓, Gmail ✓, Drive 7/10, Meta en cours, Brandsearch en cours)
 
 ### Phase 1E — audits de référence
 - [pending] audits-quarterly/90-day-creative-strategy-audit → `audits/2026-Q3/90-day-creative-strategy-audit.md`
@@ -54,7 +54,8 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [pending] audits-monthly-external/monthly-top-impressions-report → `audits/2026-09/external/…`
 
 ### Phase 1A — fondation marque
-- [pending] brand-identity-analysis · operations-and-team · website-and-product-audit · category-and-market-research · competitive-landscape · customer-journey-and-persona-discovery · community-and-forums · reputation-analysis · marketing-calendar-and-campaigns · visual-vocabulary → `sub-context-docs/`
+- [running] brand-identity-analysis · operations-and-team · website-and-product-audit · marketing-calendar-and-campaigns
+- [pending] category-and-market-research · competitive-landscape · customer-journey-and-persona-discovery · community-and-forums · reputation-analysis · visual-vocabulary → `sub-context-docs/`
 - [pending] ad-account-evaluation · performance-targets-and-metrics · organic-channels-inventory (bloqués sur 1E) → `sub-context-docs/`
 - [pending] brand-profile-narrative → `sub-context-docs/brand-profile-narrative.md`
 
