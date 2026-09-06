@@ -32,6 +32,10 @@ sources: build-day intake gaps + data_limitations across all docs + the brand-ro
 10. **The roadmap review moment** — the build did not pause at Phase 2 (nobody was present); the strategic roadmap is drafted and awaiting your approve / adjust / reject.
 11. **Anything an agency you just hired should know** — process, tools, statuses, who decides. Voice-dictate it long.
 
+## Blocage de build en cours
+
+- **2026-09-06 08:34 UTC — limite de dépense mensuelle du compte Claude atteinte.** Le build de la Phase 1 s'est arrêté après deux tranches de fondation sur quatorze. La limite de session se réinitialise à 13h00 UTC ; la limite mensuelle demande une action sur https://claude.ai/settings/usage. Rien n'est perdu : `BUILD-STATUS.md` porte le ledger complet et la procédure de reprise.
+
 ## Per-doc named blanks
 
 Filled by each doc's `data_limitations` frontmatter as the build runs — see the individual docs under `sub-context-docs/`, `personas/`, `audits/`, `competitors/`.

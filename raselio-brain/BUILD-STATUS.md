@@ -1,10 +1,10 @@
 # BUILD-STATUS — Raselio brand brain
 
-**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 — branche A (fondation marque) en cours, sources quasi complètes · dernière mise à jour 2026-09-06 08:30 UTC
+**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 — **BUILD EN PAUSE**, blocage de compte · dernière mise à jour 2026-09-06 08:40 UTC
 
-**En attente de vous : rien pour l'instant.** Le build tourne sans intervention. Les questions que seul vous pouvez trancher sont consignées dans `running-notes/missing-context.md` et vous seront présentées à la fin, avec la roadmap stratégique à valider.
+**EN ATTENTE DE VOUS — le build est bloqué.** Le compte a atteint sa **limite de dépense mensuelle** ; la limite de session se réinitialise à **13h00 UTC**. Aucun agent ne peut plus tourner. Deux façons de repartir : relever la limite sur https://claude.ai/settings/usage, ou attendre 13h00 UTC et relancer en disant simplement « reprends le build ». Tout ce qui est écrit est sauvegardé sur la branche, rien n'est perdu.
 
-Ce qui se passe maintenant : les sources Shopify, Gmail, Google Drive et Brandsearch sont complètes ; les extractions Meta (campagnes, ad sets, 183 annonces, ventilations, tendances) sont écrites. Reste le corpus de copy des créatives et la bibliothèque publicitaire, en cours. Trois agents écrivent en parallèle les tranches de fondation. La session avait atteint sa limite d'usage à 07:00 puis 08:10 UTC, ce qui a coupé plusieurs agents en vol ; leur travail déjà écrit a été conservé et poussé, et ils ont été relancés.
+Reprise après blocage : le ledger ci-dessous dit exactement quel prompt reste à lancer. La reprise recommence à la première ligne `pending`, dans l'ordre des dépendances.
 
 ## Tableau de bord
 
@@ -38,7 +38,7 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [done] Sources Google Drive (11 documents équipe + inventaire)
 - [done] Sources Brandsearch (concurrents, corpus publicitaire Thomyle)
 - [done] Sources Meta (5 campagnes, 16 ad sets, 183 annonces, ventilations âge/genre et placements, série quotidienne, tendances)
-- [running] Corpus copy des créatives Meta + bibliothèque publicitaire FR
+- [blocked] Corpus copy des créatives Meta + bibliothèque publicitaire FR — limite de dépense du compte atteinte le 2026-09-06 à 08:34 UTC
 
 ### Phase 1E — audits de référence
 - [pending] audits-quarterly/90-day-creative-strategy-audit → `audits/2026-Q3/90-day-creative-strategy-audit.md`
@@ -62,8 +62,8 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 ### Phase 1A — fondation marque
 - [done] brand-identity-analysis → `sub-context-docs/brand-identity-analysis.md`
 - [done] website-and-product-audit → `sub-context-docs/website-and-product-audit.md`
-- [running] operations-and-team · marketing-calendar-and-campaigns · category-and-market-research
-- [running] competitive-landscape · customer-journey-and-persona-discovery · community-and-forums
+- [blocked] operations-and-team · marketing-calendar-and-campaigns · category-and-market-research — limite de dépense atteinte
+- [blocked] competitive-landscape · customer-journey-and-persona-discovery · community-and-forums — limite de dépense atteinte
 - [pending] reputation-analysis · visual-vocabulary → `sub-context-docs/`
 - [pending] ad-account-evaluation · performance-targets-and-metrics · organic-channels-inventory (bloqués sur 1E) → `sub-context-docs/`
 - [pending] brand-profile-narrative → `sub-context-docs/brand-profile-narrative.md`
@@ -96,12 +96,19 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [pending] revue de complétude du build
 - [pending] sauvegarde (commit + push sur la branche `claude/clone-brain-raselio-ysv5ue`)
 
+## Comment reprendre
+
+1. Relever la limite de dépense (https://claude.ai/settings/usage) ou attendre 13h00 UTC.
+2. Dire « reprends le build du cerveau Raselio ».
+3. La reprise lit ce fichier, repart de la première ligne `pending` ou `blocked`, et respecte l'ordre des dépendances : les audits de référence (1E) avant les trois one-pagers de compte, la fondation (1A) avant `brand-profile-narrative`, tout Phase 1 avant le roll-up des boucles ouvertes, puis Phase 2 et Phase 3.
+4. Le contrat commun des agents rédacteurs est dans le scratchpad de session ; s'il a disparu, il est reconstructible depuis `parker-system/prompts/onboarding-runner.md` (section « How to delegate a prompt — the fidelity contract »).
+
 ## Points d'attention
 
 - Parker MCP : aucune marque Raselio configurée → les sources « commentaires pubs, avis, sondages post-achat, Reddit, TikTok » seront **data-limited**. Rien n'est inventé pour combler.
 - Parker Desktop absent → sauvegarde par git sur votre dépôt GitHub (self-managed).
 - Tag `v15` de la fabrique = même commit que `v14` ; les vraies v15/v16 sont sur `main` sans tag. Consigné dans `running-notes/standard-sync.md`.
 
-## La suite
+## La suite, dès le déblocage
 
-Dès que `source-pulls/` est rempli : Phase 1E (audits) et 1A/1B/1C/1D en parallèle, revues, puis synthèses et roll-up des boucles ouvertes.
+Dans l'ordre : (1) finir le corpus copy des créatives Meta, qui alimente l'audit des hooks ; (2) les six tranches de fondation restantes ; (3) la branche 1E (17 audits de référence) ; (4) les concurrents, personas et voix du client ; (5) les synthèses et le roll-up ; (6) la stratégie et les briefs ; (7) le contrat, la vérification et la sauvegarde finale.
