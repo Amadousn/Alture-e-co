@@ -4,28 +4,34 @@ doc: voc-metaphor
 generated_on: 2026-09-06
 refresh_by: 2026-12-06
 corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
-customer_snippets_captured: 0
+customer_snippets_captured: 1
 brand_projected_entries_quarantined: 7
 category_theme_entries: 1
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/drive-9-ads-statiques-prompts-2026-08-23.md, source-pulls/drive-higgsfield-prompts-final-2026-09-03.md, sub-context-docs/brand-identity-analysis.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; 1 image construite par un client, soit une récurrence de 1 sur un dénominateur de 2
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/drive-9-ads-statiques-prompts-2026-08-23.md, source-pulls/drive-higgsfield-prompts-final-2026-09-03.md, sub-context-docs/brand-identity-analysis.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md]
-data_limitations: [Aucune métaphore de client n'existe et aucune n'a été capturée. La métaphore est, avec l'allitération, l'un des deux signaux que la méthode range en priorité haute, et c'est aussi la catégorie que le modèle du template désigne comme la plus susceptible d'être enseignée par la marque plutôt qu'apportée par le client. Ici le risque est total : 100 % des images disponibles sont écrites par la marque, donc toute image reprise en aval sans le drapeau d'écho serait une invention pure. Aucun verbatim de catégorie n'est atteignable, toute lecture directe du web étant refusée par le proxy.]
+data_limitations: [Une seule image construite par un client existe, sur un corpus client de 2 enregistrements interrogé en direct via Parker le 2026-09-06. Une récurrence de 1 sur un dénominateur de 2 est un candidat, jamais un motif, et la confiance est thin par construction. L'auteur est anonyme, les champs author_id et author_name sont vides, donc rien n'est connu de qui a écrit, ni l'âge, ni la région, ni s'il a acheté. Les tags identité et signal comportemental restent null, aucun slug persona n'existant dans personas-profile.md. Les sept autres images du document sont écrites par la marque et rangées en annexe. Aucun verbatim d'image de catégorie n'est atteignable : toute lecture directe du web est refusée par le proxy, et le document de contexte de marque Parker ne contient aucune image de client, seulement des descriptions littérales.]
 ---
 
 # VoC metaphor - Raselio
 
 ## Ce que cette passe a trouvé
 
-**Zéro métaphore de client. Cent pour cent des images disponibles sont écrites par la marque.**
+**Une image, et une seule, construite par un client. C'est la meilleure chose que ce système ait trouvée pour cette marque.**
 
-Cette catégorie est celle où le garde-fou compte le plus, et le template le dit explicitement : la métaphore est la catégorie la plus susceptible d'être enseignée par la marque plutôt qu'apportée par le client. Chez Raselio, ce n'est pas un risque, c'est l'état de fait complet. Il n'existe pas une seule image produite par un client, parce qu'il n'existe pas un seul client qui ait écrit.
+La voici, verbatim, avec sa date et sa surface.
 
-**Et la marque en produit beaucoup, de bonne qualité.** C'est précisément ce qui rend cette passe dangereuse. « Découper au cutter ce qui demande un scalpel » est une comparaison forte, exacte et mémorable. « Cette séance qui ressemble plus à du déminage qu'à de l'entretien » est du bon travail. « Vous ne feriez pas ça à un kiwi » est le genre d'image qui, dans un vrai corpus d'avis, serait une pépite immédiate. Aucune des trois ne vient d'un client. Elles viennent d'un rédacteur qui travaille bien.
+> « Plus rien de la bête sauvage qui sommeille en nous. » Le 2026-08-31 à 15h46 UTC, en commentaire sous l'annonce `52505820194591`, « RASELIO | IMPECCABLE | BOXER ». 0 like, 0 réponse.
 
-**La piste de recherche.** Les sept surfaces de la méthode ont été visées et le détail complet est dans `voc-corpus-profile.md` : 0 avis, 0 sondage, 0 commentaire publicitaire lu sur 163 annonces et 1 084 clics, 0 verbatim de forum sur 13 lectures refusées le 2026-09-06 plus 4 refusées aujourd'hui, 0 message client dans 46 fils Gmail, 6 requêtes de marque qui ne rendent aucune page mentionnant Raselio.
+**Pourquoi c'est une métaphore et pas autre chose.** Le test de la passe est simple : le client compare-t-il une chose à une autre, ou décrit-il la chose elle-même ? Ici il y a bien une comparaison, et elle est double. La pilosité devient une bête sauvage. Et cette bête ne rugit pas, elle sommeille, ce qui donne à la zone un statut de puissance en réserve plutôt que de désordre à corriger. C'est un modèle mental complet, tenu en huit mots, et il est aux antipodes de celui que la marque propose.
+
+**Ce que ça vaut, honnêtement.** Récurrence de 1 sur un dénominateur de 2 enregistrements. C'est un candidat, jamais un motif, et la méthode est nette : une phrase frappante qui apparaît une fois est un candidat, pas un patron. Confiance thin. L'auteur est anonyme, les champs `author_id` et `author_name` sont vides, donc on ne sait ni son âge, ni sa région, ni s'il a acheté. Ce que je peux dire, c'est que c'est du français spontané, sous une publicité, sans marque dans la pièce pour lui souffler la formule, et que le drapeau d'écho est à false parce qu'aucune formulation approchante n'existe nulle part dans la copie de Raselio.
+
+**Et la marque, elle, en produit beaucoup, de bonne qualité.** C'est ce qui rend cette passe dangereuse. « Découper au cutter ce qui demande un scalpel » est une comparaison forte, exacte et mémorable. « Cette séance qui ressemble plus à du déminage qu'à de l'entretien » est du bon travail. « Vous ne feriez pas ça à un kiwi » est le genre d'image qui, dans un vrai corpus d'avis, serait une pépite immédiate. Aucune des trois ne vient d'un client. Elles viennent d'un rédacteur qui travaille bien, et le template prévient que la métaphore est la catégorie la plus susceptible d'être enseignée par la marque plutôt qu'apportée par le client. Sept images sur huit, ici, sont enseignées.
+
+**La piste de recherche.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, donc les sources ont été interrogées et pas déduites, le 2026-09-06. Commentaires publicitaires : `total: 2`, corpus complet. Avis : 0, avec un message de l'outil disant que la base est vide et que ce n'est pas un problème d'accès. Sondages post-achat : 0. Aucun outil Reddit dans cette installation. Historique de conversations Parker : 0 fil. Forums et avis tiers : 13 lectures directes refusées le 2026-09-06 par une passe antérieure, 4 de plus refusées pour cette passe, dont Wikipédia. Gmail : 0 message client sur 46 fils. Six requêtes de marque ne rendent aucune page mentionnant Raselio.
 
 **Une observation qui vaut d'être notée, parce qu'elle porte sur le vocabulaire de la catégorie et pas sur une métaphore.** La recherche de marque « Raselio tondeuse avis forum » renvoie neuf forums de tondeuses à gazon, verified par la passe `community-and-forums` du 2026-09-06. L'index lit « tondeuse » comme un outil de jardin. Ce n'est pas une métaphore de client, c'est une collision de vocabulaire, et elle est rangée dans `voc-category-jargon` où elle a de la valeur.
 
@@ -33,13 +39,39 @@ Cette catégorie est celle où le garde-fou compte le plus, et le template le di
 
 ## Metaphors
 
-**Aucune. 0 métaphore capturée sur 0 enregistrement de langage client disponible.**
+**Une entrée, sur un corpus de 2 enregistrements lus.**
 
 ```yaml
-# 0 entrée.
-# Aucune analogie construite par un client de Raselio n'existe au 2026-09-06.
-# Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: metaphor
-# et le champ supplémentaire alliteration: [true|false].
+- snippet: "Plus rien de la bête sauvage qui sommeille en nous."
+  category: metaphor
+  identity_tag: null
+  behavioral_signal_tag: null
+  source:
+    type: ad-comment
+    platform: Facebook, page 1234695553067195, sous l'annonce 52505820194591 « RASELIO | IMPECCABLE | BOXER »
+    review_id: 3c2ca5a3-6d53-5564-6fd8-f33d60753d83
+    date: 2026-08-31
+    url: https://www.facebook.com/122109959949409627/posts/122108833431409627?comment_id=1395943165961254
+  recurrence: 1
+  source_diversity: [ad-comment]
+  first_seen: 2026-08-31
+  last_seen: 2026-08-31
+  confidence: thin
+  brand_self_echo: false
+  alliteration: false
+  notes: >
+    Dénominateur : 1 sur 2 enregistrements de langage client existants pour cette marque,
+    tirés en direct de Parker le 2026-09-06, qui renvoie total 2. Récurrence de 1, donc
+    candidat et non motif, et confiance thin par application de la règle du template.
+    L'image sous-jacente est double : la pilosité comme bête sauvage, et cette bête
+    endormie plutôt qu'agitée, ce qui fait de la zone une puissance en réserve et non un
+    désordre. C'est le modèle mental inverse de celui de la marque, qui traite la zone
+    comme un problème d'outil à régler. Écho de marque à false : aucune formulation
+    approchante n'existe dans la copie de Raselio, ni sur les 4 surfaces du site, ni dans
+    les 30 fiches créa du 2026-09-03, ni dans les 9 du 2026-08-23.
+    Auteur anonyme, author_id et author_name vides, donc aucun tag d'identité possible,
+    et de toute façon personas-profile.md n'existe pas encore.
+    Contexte de diffusion : 0 like, 0 réponse. La marque n'a jamais repris la balle.
 ```
 
 ## Annexe A — Images construites par la marque
@@ -191,11 +223,23 @@ Cette catégorie est celle où le garde-fou compte le plus, et le template le di
 
 ## Open loops
 
-**1. La marque a écrit toutes les images, et personne ne sait laquelle le client reprend.**
+**1. Le seul client qui a construit une image la retourne contre la proposition de la marque.**
 
-Observation. Sept images construites par la marque, aucune reprise observée, parce qu'il n'existe aucune surface où une reprise pourrait être observée. Verified.
+Observation. « Plus rien de la bête sauvage qui sommeille en nous. », 2026-08-31, verified via Parker. Un homme réagit à une publicité de tondeuse intime en décrivant la pilosité comme une puissance endormie qu'on lui demande de sacrifier. Les sept images écrites par la marque décrivent toutes la zone comme un problème d'outil, jamais comme quelque chose qui se perd.
 
-Pull. **Gap.** Il fired quand j'ai constaté que la catégorie de langage la plus riche de cette marque est aussi celle où le taux d'adoption par le client est structurellement inconnaissable aujourd'hui.
+Pull. **Résonance.** Il fired parce que cette phrase vaut mieux que la plupart des accroches du répertoire, elle a été écrite gratuitement par un inconnu, et elle dit exactement le contraire de ce que la marque suppose.
+
+Question. Qu'est-ce qu'un homme pense perdre quand il rase cette zone ?
+
+Justification. Si la perte est réelle et répandue, la marque vend une soustraction à des gens qui y voient un renoncement, et son argument d'outil ne touche jamais la vraie objection. Une seule ligne ne le prouve pas, mais c'est la première fois qu'un signal client pointe une direction que la marque n'a pas envisagée.
+
+Territoire. Messaging.
+
+**2. La marque a écrit sept images sur huit, et personne ne sait laquelle le client reprend.**
+
+Observation. Sept images construites par la marque, aucune reprise observée dans les 2 enregistrements clients disponibles. Verified.
+
+Pull. **Gap.** Il fired quand j'ai constaté que la catégorie de langage la plus riche de cette marque repose à sept huitièmes sur un rédacteur.
 
 Question. Quelles images les clients emploient-ils spontanément pour parler de cet outil et de cette zone ?
 

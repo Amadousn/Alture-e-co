@@ -3,15 +3,15 @@ brand: raselio
 doc: voc-corpus-profile
 generated_on: 2026-09-06
 refresh_by: 2026-12-06
-raw_records_received: 0
-normalized_records: 0
+raw_records_received: 2
+normalized_records: 2
 deduplicated_records_removed: 0
-date_range: aucune, le corpus est vide
-sources_read: [shopify-store-and-product.md (4 surfaces de texte de marque, 6 politiques, 1 fiche produit), shopify-orders-and-customers.md (11 commandes, 14 fiches clients), shopify-analytics.md (8 requêtes ShopifyQL, 2 431 sessions sur 90 jours), meta-ads-all.md (183 lignes annonce dont 163 Raselio), meta-account-campaigns-adsets.md, meta-account-breakdowns.md, meta-performance-trend.md, gmail-brand-signals.md (46 fils sur la requête `raselio OR cutlab`, corps complets de 8 fils), drive-30-statiques-meta-plan-2026-09-03.md (30 fiches créa complètes), drive-30-creas-json-2026-09-03.md (30 enregistrements titre + texte principal), drive-30-creas-meta-index-2026-09-03.md, drive-9-ads-statiques-prompts-2026-08-23.md (9 concepts, ère tutoiement), drive-higgsfield-prompts-final-2026-09-03.md, drive-30-statiques-generees-2026-09-04.md, sub-context-docs/reputation-analysis.md, sub-context-docs/community-and-forums.md, sub-context-docs/customer-journey-and-persona-discovery.md, running-notes/brand-rules.md, WebSearch (6 requêtes lancées le 2026-09-06 sur les avis de la catégorie), WebFetch (4 tentatives le 2026-09-06, 4 échecs)]
-expected_sources_missing: [customer-reviews — n'existe pas, aucune application d'avis installée sur Shopify, aucun métachamp d'avis, aucune fiche marketplace, aucun agrégateur ; post-purchase-surveys — n'existe pas, aucun outil de sondage branché et Parker MCP ne couvre pas cette marque ; NPS — n'existe pas ; ad-comments — NON TIRÉS, les 163 annonces Raselio ont porté 43 270 impressions et 1 084 clics et pas un commentaire n'a été ouvert, faute de brand_id Parker ; organic-social — aucun handle Instagram, TikTok ou YouTube connu, seule une page Facebook id 1234695553067195 est nommée, aucun post ni commentaire lu ; reddit — accès Parker inexistant et lecture directe refusée par le proxy réseau ; other-reviews — Amazon.fr, Cdiscount, Trustpilot, Avis Vérifiés, Signal Arnaques, Best Buy, Walmart tous refusés par le proxy ; support-tickets — aucun outil de support, la boîte fondateur ne contient aucun ticket client]
-structured_fields_available: [aucun champ structuré d'avis client n'existe. Les seuls champs structurés du périmètre portent sur des commandes et des annonces, pas sur du langage client : Shopify order_id, order_date, first_name, last_initial, city, order_value, SKU ; Meta ad_id, ad_name, campaign_id, adset_id, created_date, spend, impressions, reach, clicks, ctr, cpc, cpm, purchases, roas, âge, sexe, plateforme, placement. Aucun de ces champs ne porte de texte écrit par un client.]
-model_applied_tags: [aucun tag n'a été appliqué à un enregistrement client, parce qu'il n'y a aucun enregistrement client à taguer. Les seuls tags posés par ce document le sont sur du texte écrit par la marque et portent tous le préfixe brand-projected : brand-projected-pain, brand-projected-outcome, brand-projected-metaphor, brand-projected-objection, brand-projected-aspiration, brand-projected-trigger, brand-projected-jargon, brand-projected-anti-language, ère de rédaction (tutoiement 2026-08-23 contre vouvoiement 2026-09-03), et témoignage fabriqué. Ce sont des jugements de modèle sur de la copie de marque, jamais des lectures de langage client.]
-data_limitations: [LE CORPUS DE LANGAGE CLIENT EST VIDE. 0 enregistrement normalisé sur 0 enregistrement brut reçu. Ce n'est pas une passe partielle, c'est une passe sans matière première, et tous les chiffres du document tournent autour de ce zéro. Détail par surface. Avis : 0, et l'absence est vérifiée à la source, pas supposée, puisque la boutique n'a aucune application d'avis et aucun métachamp d'avis. Sondages post-achat : 0, aucun outil branché. Commentaires publicitaires : jamais tirés, ce qui est différent de zéro commentaire, et c'est le trou le plus rattrapable du document. Forums et Reddit : 0 verbatim, 13 lectures directes refusées le 2026-09-06 par une passe antérieure, 4 lectures de plus tentées aujourd'hui et refusées, dont en.wikipedia.org, ce qui montre que le blocage est total et pas ciblé. Boîte mail : 46 fils lus, 1 message de formulaire de contact, classé démarchage d'agence par la passe Gmail, donc 0 enregistrement client. Conséquence : aucun taux de sentiment, aucune distribution de notes, aucune fréquence de thème, aucun découpage par SKU, âge, région ou type d'acheteur ne peut être calculé, et aucun ne l'est. Les sections sentiment, motivation, cadeau, objection, expérience produit et transformation sont data-limited de bout en bout. Le seul index de langage que ce document peut livrer est un index de langage écrit par la marque, mis en quarantaine et jamais présenté comme du langage client.]
+date_range: 2026-08-31 to 2026-09-01
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — get_available_brands (org « Dylan's Org », 1 marque), search_facebook_ad_comments_sql (2 lignes, total renvoyé 2), search_facebook_ad_comments_semantic (totalCommentsAnalyzed 2), search_customer_reviews_sql (0 ligne, message explicite de base vide), search_customer_reviews_semantic (totalReviewsAnalyzed 0), semantic_search_post_purchase_survey (totalResponsesForBrand 0), get_brand_persona (document de contexte de marque complet, généré par Parker), search_chat_history mode listThreads (0 fil), aucun outil Reddit n'existe dans cette installation, une recherche d'outil sur reddit ne renvoie rien, tous appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md n'existait pas avant ce run, source-pulls/shopify-store-and-product.md (4 surfaces de texte de marque, 6 politiques, 1 fiche produit), source-pulls/shopify-orders-and-customers.md (11 commandes, 14 fiches clients), source-pulls/shopify-analytics.md (8 requêtes ShopifyQL, 2 431 sessions sur 90 jours), source-pulls/meta-ads-all.md (183 lignes annonce dont 163 Raselio), source-pulls/meta-account-campaigns-adsets.md, source-pulls/meta-account-breakdowns.md, source-pulls/meta-performance-trend.md, source-pulls/gmail-brand-signals.md (46 fils, corps complets de 8 fils), source-pulls/drive-30-statiques-meta-plan-2026-09-03.md (30 fiches créa complètes), source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/drive-30-creas-meta-index-2026-09-03.md, source-pulls/drive-9-ads-statiques-prompts-2026-08-23.md, source-pulls/drive-higgsfield-prompts-final-2026-09-03.md, sub-context-docs/organic-channels-inventory.md, sub-context-docs/reputation-analysis.md, sub-context-docs/community-and-forums.md, sub-context-docs/customer-journey-and-persona-discovery.md, running-notes/brand-rules.md, WebSearch (6 requêtes le 2026-09-06), WebFetch (4 tentatives le 2026-09-06, 4 échecs)]
+expected_sources_missing: [customer-reviews — n'existe pas, confirmé par l'outil et non déduit : search_customer_reviews_sql répond « The database does not contain any customer reviews yet for this brand. No reviews have been uploaded or imported. This is not an access issue » ; aucune application d'avis sur Shopify, aucun métachamp d'avis, aucune fiche marketplace, aucun agrégateur. post-purchase-surveys — n'existe pas, confirmé par l'outil : totalResponsesForBrand 0. NPS — idem, aucun sondage. organic-social — aucune publication observable, aucun compte Instagram rattaché au compte publicitaire, search_and_manage_organic_social n'existe pas dans cette installation Parker. reddit — lecture directe refusée par le proxy réseau, 13 tentatives le 2026-09-06 par la passe community-and-forums, 4 de plus pour cette passe. other-reviews — Amazon.fr, Cdiscount, Trustpilot, Best Buy, Walmart tous refusés par le proxy. support-tickets — aucun outil de support, aucun ticket client dans 46 fils Gmail]
+structured_fields_available: [Sur les 2 enregistrements clients : comment_id, message, created_time, like_count, comment_count, permalink_url, ad_ids, ad_names, post_ids, parent_comment_ids, comment_length, snapshot_date. Champs présents et vides sur les 2 : author_id, author_name. Champs inexistants sur cette source : note, SKU, âge, sexe, région, statut de premier acheteur, canal, appareil. Hors langage client, les champs structurés du périmètre portent sur des commandes et des annonces : Shopify order_id, order_date, first_name, last_initial, city, order_value, SKU ; Meta ad_id, ad_name, campaign_id, adset_id, created_date, spend, impressions, reach, clicks, ctr, cpc, cpm, purchases, roas, âge, sexe, plateforme, placement]
+model_applied_tags: [Sur les 2 enregistrements clients, 4 tags posés à la main : sentiment, présence de langage exploitable, catégorie VoC d'appartenance, écho de marque. Aucun n'est un champ structuré, tous sont des jugements de modèle, et l'échantillon est de 2, ce qui les rend indicatifs et rien de plus. Sur le texte écrit par la marque, tous les tags portent le préfixe brand-projected : brand-projected-pain, brand-projected-outcome, brand-projected-metaphor, brand-projected-objection, brand-projected-aspiration, brand-projected-trigger, brand-projected-jargon, brand-projected-anti-language, plus era (tutoiement 2026-08-23 contre vouvoiement 2026-09-03) et fabricated-testimonial]
+data_limitations: [LE CORPUS DE LANGAGE CLIENT COMPTE 2 ENREGISTREMENTS. Deux commentaires publicitaires, tirés en direct de Parker le 2026-09-06, qui répond total 2. L'un des deux, « Lol », ne porte aucun langage exploitable. Il reste donc UN SEUL verbatim client utilisable pour toute la marque. Toutes les mesures que cette passe devait produire, sentiment, distribution de notes, fréquences de thèmes, découpages par SKU, âge, région ou type d'acheteur, sont non calculables sur un échantillon de 2 et ne sont pas calculées. Détail par surface. Avis : 0, absence confirmée par l'outil Parker et non déduite. Sondages post-achat : 0, absence confirmée par l'outil. Commentaires publicitaires : 2 sur 163 annonces, 43 270 impressions et 1 084 clics côté Raselio seul, soit un taux de commentaire proche de zéro et deux commentaires sans aucune réponse de la marque. Forums et Reddit : 0 verbatim, toutes les lectures directes refusées, 13 le 2026-09-06 par une passe antérieure et 4 de plus aujourd'hui, dont en.wikipedia.org, ce qui montre que le blocage est global et non ciblé. Boîte mail : 46 fils lus, 1 message de formulaire, classé démarchage d'agence, donc 0 enregistrement client. Aucun verbatim de catégorie n'est atteignable non plus, pour la même raison réseau, donc l'axe de secours ne rend que des thèmes résumés par WebSearch. Le seul index de langage volumineux que ce document peut livrer est un index de langage écrit par la marque, mis en quarantaine et jamais présenté comme du langage client.]
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md]
 ---
 
@@ -19,199 +19,228 @@ methods_loaded: [creative-strategy-context/customer-review-mining-method.md, cre
 
 ## Executive summary
 
-**Le corpus de langage client de Raselio est vide. Zéro enregistrement, sur toutes les surfaces, vérifié.** Tout le reste de ce document découle de ce fait, et le travail utile a été de mesurer précisément la forme de ce vide plutôt que de le combler.
+**Le corpus de langage client de Raselio compte deux enregistrements. Deux commentaires publicitaires, et rien d'autre, sur toutes les surfaces, vérifié en direct.** Tout le reste de ce document découle de ce chiffre, et le travail utile a été de mesurer précisément la forme de ce presque-vide plutôt que de le combler.
 
 Voici les cinq constats qui comptent.
 
-**1. Zéro avis client existe, et l'absence est vérifiée à la source.** Verified. La boutique Shopify `8piiys-jj.myshopify.com` ne porte aucune application d'avis, aucun métachamp d'avis, et aucune fiche marketplace ni aucun agrégateur ne rend Raselio. Ce n'est pas « les avis n'ont pas pu être tirés ». C'est « il n'y a rien à tirer ». La différence est importante pour le prochain run : la boucle se ferme en installant une collecte, pas en rebranchant un outil.
+**1. Le corpus tient en deux lignes, et une seule porte du langage.** Verified, tiré de Parker le 2026-09-06 avec le brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, qui renvoie `total: 2`. Les voici en entier.
 
-**2. Le vide n'est pas anormal pour l'âge de la marque, et le dire est plus honnête que de le déplorer.** Verified. La boutique a 46 jours d'existence commerciale au 2026-09-06, 11 commandes et 0 client récurrent sur 11. Un corpus d'avis à ce stade serait suspect, pas rassurant. La question utile n'est pas « pourquoi n'y a-t-il pas d'avis », c'est « qu'est-ce qui est en place pour qu'il y en ait dans trente jours », et la réponse est rien.
+> « Plus rien de la bête sauvage qui sommeille en nous. » Le 2026-08-31 à 15h46 UTC, sous l'annonce `52505820194591`, « RASELIO | IMPECCABLE | BOXER ». 0 like, 0 réponse.
 
-**3. La surface de langage client la plus grosse existe déjà et n'a jamais été ouverte : les commentaires publicitaires.** Verified sur le compte, data-limited sur le contenu. Les 163 annonces Raselio du compte 1573950771030463 ont porté 43 270 impressions et 1 084 clics entre le 2026-08-10 et le 2026-09-06. Des Français ont réagi sous ces annonces. Pas un commentaire n'a été lu, parce que Parker MCP ne connaît pas cette marque au 2026-09-06 et que `get_available_brands` renvoie une liste d'organisations vide. C'est le seul endroit du périmètre où du langage client réel existe aujourd'hui, gratuit, en français, et déjà écrit.
+> « Lol » Le 2026-09-01 à 15h37 UTC, sous l'annonce `52505897035991`, « EMOTION 3 - Barbe soignee et tes boules ». 0 like, 0 réponse.
 
-**4. Ce que la marque possède à la place, c'est un corpus de langage projeté, et il est dense.** Verified. Quatre surfaces de texte sur le site et 30 fiches créa du 2026-09-03 portant chacune un titre, un texte principal et le texte présent sur l'image, plus 9 concepts antérieurs du 2026-08-23. Cette matière est riche, précise et souvent excellente. Elle n'est pas du langage client. C'est l'hypothèse que la marque se fait du langage de son client, et ce document la range en quarantaine sous l'étiquette `brand-projected`, jamais dans le bac client.
+Le second ne porte rien d'exploitable, trois caractères. Le premier est la seule phrase qu'un Français ait jamais adressée publiquement à cette marque, et c'est une bonne phrase : elle construit une image, la pilosité comme bête sauvage endormie, et elle formule en creux une résistance que rien dans les documents de la marque n'avait nommée, l'idée que se raser là revient à renoncer à quelque chose. Ce verbatim est entré dans deux bacs, les images et les objections, à confiance thin, sur un dénominateur de 2 enregistrements lus.
 
-**5. Une partie de ce langage projeté est faussement attribuée à des clients, et l'équipe le sait.** Verified sur ses propres documents. Le brief du 2026-09-03 écrit lui-même : « Les créas 16, 17, 27 utilisent des prénoms fictifs de témoignage (Hervé D., Catherine) : à remplacer par de vrais avis clients dès que possible ». La créa 16 fait dire à « Hervé D. · Achat vérifié ★★★★★ » la phrase « Franchement, je retenais mon souffle à chaque passage. Là, zéro coupure, zéro rougeur. J'aurais dû le faire il y a 20 ans. » Cette phrase est de la copie publicitaire. Elle a la forme exacte d'une pépite de mining et elle en a la séduction. Elle n'entre dans aucun bac de ce système, sous aucune condition, et ce document la nomme pour que personne ne la reprenne par erreur dans six mois.
+**2. Zéro avis et zéro sondage, et l'absence est confirmée par l'outil, pas déduite.** Verified. `search_customer_reviews_sql` répond en toutes lettres que la base ne contient aucun avis pour cette marque et que ce n'est pas un problème d'accès. `semantic_search_post_purchase_survey` renvoie `totalResponsesForBrand: 0`. La boutique n'a par ailleurs aucune application d'avis et aucun métachamp d'avis. La boucle se ferme donc en installant une collecte, pas en rebranchant un outil.
 
-**Le levier créatif le plus important que ce corpus révèle.** Il est négatif et il est le seul honnête : aucune décision de messaging ne peut aujourd'hui s'appuyer sur du langage client chez Raselio, donc chaque angle qui tourne est une hypothèse non testée. Le compte le montre déjà : CTR de 3,02 % sur la campagne principale contre un taux de conversion site d'environ 0,2 %, stated d'après la lecture de l'équipe. Les gens cliquent sur le langage projeté et n'achètent pas. Le corpus vide est exactement l'explication candidate la plus simple de cet écart, et il ne peut pas être vérifié tant qu'il reste vide.
+**3. Deux commentaires sur 43 270 impressions, c'est en soi une mesure.** Verified. Le compte Raselio a porté 163 annonces, 43 270 impressions et 1 084 clics entre le 2026-08-10 et le 2026-09-06. Il en sort deux commentaires, zéro like, zéro réponse de la marque. Ce n'est pas un problème d'accès, c'est une absence d'engagement réel, et elle dit quelque chose sur des créas statiques qui diffusent sans jamais provoquer. Sur un échantillon aussi petit, je le note comme une observation et pas comme un diagnostic.
 
-**La plus grosse limite du document.** Il n'y a pas de corpus. Tout ce qui suit décrit un vide avec précision au lieu de décrire des clients.
+**4. Ce que la marque possède à la place est un corpus de langage projeté, et il est dense.** Verified. Quatre surfaces de texte sur le site et 30 fiches créa du 2026-09-03 portant chacune un titre, un texte principal et le texte présent sur l'image, plus 9 concepts antérieurs du 2026-08-23. Cette matière est riche et souvent excellente. Elle n'est pas du langage client. C'est l'hypothèse que la marque se fait du langage de son client, et ce document la range en quarantaine sous l'étiquette `brand-projected`, jamais dans le bac client.
+
+**5. Une partie de ce langage projeté est faussement attribuée à des clients, et l'équipe le sait.** Verified sur ses propres documents. Le brief du 2026-09-03 écrit : « Les créas 16, 17, 27 utilisent des prénoms fictifs de témoignage (Hervé D., Catherine) : à remplacer par de vrais avis clients dès que possible ». La créa 16 fait dire à « Hervé D. · Achat vérifié ★★★★★ » la phrase « Franchement, je retenais mon souffle à chaque passage. Là, zéro coupure, zéro rougeur. J'aurais dû le faire il y a 20 ans. » Cette phrase est de la copie publicitaire. Elle a la forme exacte d'une pépite de mining et elle en a la séduction. Elle n'entre dans aucun bac de ce système, sous aucune condition.
+
+**Le levier créatif le plus important que ce corpus révèle.** Un homme a répondu à une publicité de tondeuse intime par une blague sur la virilité qu'on taille, et personne n'a repris la balle. C'est le seul signal client réel de la marque et il pointe vers une résistance culturelle que ni la landing, ni l'advertorial, ni les 30 créas ne traitent : le poil comme quelque chose qu'on perd et pas seulement comme un problème qu'on règle. Sur un enregistrement, c'est une piste, pas une conclusion.
+
+**La plus grosse limite du document.** Un dénominateur de 2. Tout ce qui suit décrit un presque-vide avec précision au lieu de décrire des clients.
 
 ## Source and data profile
 
-**Enregistrements bruts reçus : 0. Enregistrements normalisés : 0. Doublons retirés : 0.** Il n'y a pas de plage de dates, parce qu'il n'y a pas de dates.
+**Enregistrements bruts reçus : 2. Enregistrements normalisés : 2. Doublons retirés : 0. Plage de dates : 2026-08-31 au 2026-09-01, soit deux jours.**
 
-Le tableau ci-dessous est le vrai résultat de la passe. Chaque ligne dit ce qui a été visé, ce qui a été trouvé, et le motif exact de l'absence, parce que « non tiré » et « n'existe pas » appellent deux actions différentes.
+Le tableau ci-dessous est le vrai résultat de la passe. Chaque ligne dit ce qui a été visé, ce qui a été trouvé, et le motif exact de l'absence, parce que « non tiré », « n'existe pas » et « existe mais est illisible » appellent trois actions différentes.
 
 | Surface visée | Enregistrements obtenus | Statut | Motif exact, au 2026-09-06 |
 |---|---|---|---|
-| Avis boutique (Shopify) | 0 | N'existe pas | Aucune application d'avis installée, aucun métachamp d'avis sur le produit `gid://shopify/Product/15882947854667`. Verified sur l'export. |
-| Avis plateforme tierce | 0 | N'existe pas | Aucune fiche Raselio sur un agrégateur trouvée par 6 requêtes de marque. |
-| Avis marketplace et retail | 0 | N'existe pas et illisible | Amazon.fr et Cdiscount refusés par le proxy réseau. Aucune fiche trouvée par recherche. |
-| Sondages post-achat | 0 | N'existe pas | Aucun outil de sondage branché sur la boutique. Parker MCP ne couvre pas la marque. |
-| NPS | 0 | N'existe pas | Idem. |
-| Commentaires publicitaires Meta | 0 | **NON TIRÉS** | 163 annonces Raselio, 43 270 impressions, 1 084 clics. Parker MCP n'a pas de brand_id pour Raselio ; `get_available_brands` renvoie une liste d'organisations vide. Les commentaires existent probablement et n'ont jamais été ouverts. |
-| Commentaires organiques | 0 | Non tirés | Aucun handle Instagram, TikTok ou YouTube nommé dans une source. Seule une page Facebook id 1234695553067195 est connue. |
-| Reddit et forums | 0 | Lecture refusée | 13 lectures directes refusées le 2026-09-06 par la passe `community-and-forums`. 4 tentatives de plus aujourd'hui, 4 refus. |
-| Tickets support | 0 | N'existe pas | Aucun outil de support. La boîte fondateur ne porte aucun ticket. |
-| Formulaire de contact | 0 | Existe mais n'est pas client | 46 fils Gmail lus sur `raselio OR cutlab`. Un seul message de formulaire, du 2026-08-26, signé « Sodiq ». La passe Gmail l'a classé démarchage d'agence, et les 4 messages suivants du même fil sont une offre de « Emprofit Solution » à faire croître la boutique pour 2 % de commission. Ce n'est pas un client. |
+| Commentaires publicitaires Meta | **2** | **Tirés** | Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, `search_facebook_ad_comments_sql` renvoie `total: 2`, confirmé par le pass sémantique qui déclare `totalCommentsAnalyzed: 2`. Corpus complet, pas un échantillon. |
+| Avis boutique (Shopify) | 0 | N'existe pas | Confirmé par l'outil : `search_customer_reviews_sql` répond que la base ne contient aucun avis et que ce n'est pas un problème d'accès. Aucune application d'avis installée, aucun métachamp d'avis sur le produit. |
+| Sondages post-achat | 0 | N'existe pas | Confirmé par l'outil : `totalResponsesForBrand: 0`. Aucun outil de sondage branché. |
+| NPS | 0 | N'existe pas | Idem, aucun sondage. |
+| Avis plateforme tierce | 0 | N'existe pas et illisible | Aucune fiche Raselio trouvée par 6 requêtes de marque. Trustpilot, Avis Vérifiés, Signal Arnaques refusés par le proxy. |
+| Avis marketplace et retail | 0 | N'existe pas et illisible | Amazon.fr, Cdiscount, Best Buy, Walmart refusés par le proxy. |
+| Commentaires organiques | 0 | N'existe pas | Aucune publication organique observable sur la page Facebook. Aucun compte Instagram rattaché au compte publicitaire, `ads_get_ig_accounts` renvoie une liste vide. `search_and_manage_organic_social` n'existe pas dans cette installation Parker. |
+| Reddit et forums | 0 | Lecture refusée | 13 lectures directes refusées le 2026-09-06 par la passe `community-and-forums`. 4 tentatives de plus pour cette passe, 4 refus. |
+| Tickets support | 0 | N'existe pas | Aucun outil de support. |
+| Formulaire de contact | 0 | Existe mais n'est pas client | 46 fils Gmail lus. Un seul message de formulaire, du 2026-08-26, signé « Sodiq ». Les 4 messages suivants du même fil sont une offre commerciale de « Emprofit Solution » à faire croître la boutique contre 2 % de commission. Ce n'est pas un client. |
+| Reddit via Parker | 0 | Outil inexistant | Aucun outil Reddit n'existe dans cette installation Parker. Une recherche d'outil sur le mot reddit ne renvoie aucune correspondance. Ce n'est pas un accès refusé, c'est une capacité absente. |
+| Historique de conversations Parker | 0 | Vide | `search_chat_history` en mode listThreads renvoie 0 fil pour cette marque. Personne n'a encore parlé de Raselio à Parker, donc aucun contexte de conversation ne peut corriger ou compléter ce document. |
+| Document de contexte de marque Parker | 1 document | Lu | `get_brand_persona` renvoie un document complet généré par Parker : positionnement, 5 profils clients types, langage de catégorie, paysage concurrentiel, voix de marque. Ce document contient des citations, et leur provenance est traitée plus bas. **Ce n'est pas une source de langage client de Raselio.** |
 
-**Le contrôle réseau, refait aujourd'hui, parce qu'il conditionne tout le reste.** Quatre lectures directes tentées le 2026-09-06 pour cette passe : `www.bestbuy.com` (page d'avis Manscaped Lawn Mower 5.0), `shavercheck.com`, `www.walmart.com` (page d'avis Manscaped), `en.wikipedia.org`. Les quatre renvoient `EGRESS_BLOCKED`. Le fait que Wikipédia soit refusé au même titre qu'Amazon dit que le blocage est global et non ciblé sur les surfaces d'avis. Le statut du proxy le confirme en clair : `gateway answered 403 to CONNECT (policy denial or upstream failure)`. Aucune lecture directe du web n'est possible dans cette session, donc aucun verbatim de catégorie n'est atteignable non plus.
+### Les deux enregistrements, en entier
 
-**Ce que WebSearch peut et ne peut pas.** Six requêtes lancées le 2026-09-06 sur les avis de produits comparables : Manscaped Lawn Mower 5.0, Philips OneBlade Intimate, Meridian Trimmer, plus deux requêtes de vocabulaire français et une sur les plaintes récurrentes de la catégorie. L'outil répond. Il rend des résumés écrits par un petit modèle, jamais le texte source. La passe `community-and-forums` avait déjà posé la règle sur ce point et ce document la garde : une citation qui apparaît dans un résumé WebSearch est une paraphrase de l'outil tant qu'elle n'a pas été relue à la source, et la source est ici inatteignable. Résultat : le corpus de catégorie contient des thèmes, pas des verbatims.
+| row_id | source | plateforme | date | annonce | texte verbatim | likes | réponses | longueur |
+|---|---|---|---|---|---|---|---|---|
+| `3c2ca5a3-6d53-5564-6fd8-f33d60753d83` | ad-comment | Facebook, page 1234695553067195 | 2026-08-31T15:46:58Z | `52505820194591` « RASELIO \| IMPECCABLE \| BOXER » | « Plus rien de la bête sauvage qui sommeille en nous. » | 0 | 0 | 51 |
+| `b86f8833-cadf-bad9-8cfc-1f0c6893a98f` | ad-comment | Facebook, page 1234695553067195 | 2026-09-01T15:37:47Z | `52505897035991` « EMOTION 3 - Barbe soignee et tes boules » | « Lol » | 0 | 0 | 3 |
+
+Les deux sont des commentaires de premier niveau, `parent_comment_ids` vide. Aucun des deux n'a reçu de réponse, `comment_count: 0` sur les deux. Les champs `author_id` et `author_name` sont vides sur les deux, donc rien n'est connu de qui a écrit, ni l'âge, ni le sexe, ni la région.
+
+### Le taux de commentaire, mesuré
+
+| Compteur | Valeur | Fenêtre |
+|---|---|---|
+| Annonces Raselio ayant tourné | 163 | 2026-08-10 → 2026-09-06 |
+| Impressions Raselio | 43 270 | idem |
+| Clics Raselio | 1 084 | idem |
+| Commentaires reçus | 2 | idem |
+| Commentaires par millier d'impressions | 0,046 | idem |
+| Likes reçus | 0 | idem |
+| Réponses de la marque | 0 sur 2 | idem |
+
+Les totaux Raselio excluent la campagne `52505344998791`, qui appartient à la marque sœur Trael. Les lectures de compte qui portent 47 484 impressions ou 1 234 clics incluent Trael et ne doivent pas être mélangées à ces lignes.
+
+**Le blocage réseau, refait aujourd'hui, parce qu'il conditionne l'axe de secours.** Quatre lectures directes tentées le 2026-09-06 pour cette passe : `www.bestbuy.com`, `shavercheck.com`, `www.walmart.com`, `en.wikipedia.org`. Les quatre renvoient `EGRESS_BLOCKED`. Le fait que Wikipédia soit refusé au même titre qu'Amazon dit que le blocage est global et non ciblé sur les surfaces d'avis. Le statut du proxy le confirme en clair : `gateway answered 403 to CONNECT`. Aucun verbatim de catégorie n'est atteignable.
+
+**Ce que WebSearch peut et ne peut pas.** Six requêtes lancées le 2026-09-06 sur les avis de produits comparables, Manscaped Lawn Mower 5.0, Philips OneBlade Intimate, Meridian Trimmer, plus deux requêtes de vocabulaire français et une sur les plaintes récurrentes. L'outil répond. Il rend des résumés écrits par un petit modèle, jamais le texte source. La règle posée par la passe `community-and-forums` tient : une citation qui apparaît dans un résumé WebSearch est une paraphrase de l'outil tant qu'elle n'a pas été relue à la source, et la source est inatteignable. Le corpus de catégorie contient donc des thèmes, pas des verbatims.
 
 ### Le corpus de langage projeté par la marque, mesuré
 
-Cette matière n'est pas du langage client et n'entre dans aucun compte ci-dessus. Elle est mesurée ici parce qu'elle est la seule matière textuelle réelle du périmètre et parce que les passes d'extraction en ont besoin, en quarantaine.
+Cette matière n'est pas du langage client et n'entre dans aucun compte ci-dessus.
 
 | Surface | Enregistrements | Fenêtre | Statut de lecture |
 |---|---|---|---|
 | Description produit Shopify | 1 | à jour au 2026-09-06 | Verbatim complet, verified |
 | Page « Notre Histoire » | 1, 4 paragraphes | à jour au 2026-09-06 | Verbatim complet, verified |
-| Advertorial « 7 raisons pour lesquelles votre tondeuse à barbe n'a rien à faire sous la ceinture » | 1, 7 sections + encart offre | daté « Mis à jour le 31 août 2026 » dans le corps | Verbatim complet, verified |
+| Advertorial « 7 raisons pour lesquelles votre tondeuse à barbe n'a rien à faire sous la ceinture » | 1, 7 sections + encart offre | daté « Mis à jour le 31 août 2026 » | Verbatim complet, verified |
 | Landing « 7 raisons de choisir Raselio » | 1, hero + 7 raisons + FAQ 8 questions | à jour au 2026-09-06 | Verbatim complet, verified |
-| Fiches créa du lot du 2026-09-03 | 30, chacune avec titre, texte principal et texte présent sur l'image | 2026-09-03 | Verbatim complet via le manifeste de l'équipe, stated |
-| Concepts créa du lot du 2026-08-23 | 9, avec headlines et textes visibles | 2026-08-23 | Verbatim complet, stated |
-| Annonces Raselio dans le compte Meta | 163 | 2026-08-10 → 2026-09-06 | Copie lisible pour les 30 fiches du 2026-09-03 seulement. Les 133 autres ne portent qu'un nom d'annonce, donc `creative read unavailable` |
+| Fiches créa du lot du 2026-09-03 | 30, titre + texte principal + texte à l'image | 2026-09-03 | Verbatim complet via le manifeste de l'équipe, stated |
+| Concepts créa du lot du 2026-08-23 | 9, headlines et textes visibles | 2026-08-23 | Verbatim complet, stated |
+| Annonces Raselio dans le compte Meta | 163 | 2026-08-10 → 2026-09-06 | Copie lisible pour 30 fiches. Les 133 autres ne portent qu'un nom d'annonce, donc `creative read unavailable` |
 
-**Le point sur les 133 annonces.** Un nom d'annonce est une poignée d'inventaire, pas une lecture créative. « R07 Anti coupure 50 ans et plus » localise une annonce, il ne prouve pas ce qu'elle dit ni ce qu'elle montre. Ces 133 lignes sont comptées, jamais citées.
+Un nom d'annonce est une poignée d'inventaire, pas une lecture créative. « R07 Anti coupure 50 ans et plus » localise une annonce, il ne prouve pas ce qu'elle dit. Ces 133 lignes sont comptées, jamais citées.
 
 ### Ce que portent les 11 commandes
 
-Verified sur `shopify-orders-and-customers.md` : 11 commandes entre le 2026-08-26 et le 2026-09-04, 14 fiches clients, 0 client récurrent sur 11, 0 retour demandé, 0 réclamation. Une commande à 39,90 €, les dix suivantes à 34,99 €. Ces enregistrements portent un prénom, une initiale, une ville, un montant et un SKU. Aucun ne porte une ligne de texte écrite par l'acheteur. Onze acheteurs et zéro mot d'eux, c'est la phrase qui résume le corpus.
+Verified : 11 commandes entre le 2026-08-26 et le 2026-09-04, 14 fiches clients, 0 client récurrent sur 11, 0 retour demandé, 0 réclamation. Une commande à 39,90 €, dix à 34,99 €. Ces enregistrements portent un prénom, une initiale, une ville, un montant et un SKU. Aucun ne porte une ligne de texte écrite par l'acheteur. Onze acheteurs et zéro mot d'eux : les deux seuls mots que la marque possède viennent de gens qui n'ont pas acheté.
 
 ### Distribution des notes
 
-Impossible. Il n'y a aucune note, sur aucune surface. La marque affiche pourtant « 4,7/5 » et « (1 734 avis) » sur sa landing et « Noté 4,7/5 sur 1 734 avis » sur son bloc produit, verified sur l'export Shopify du 2026-09-06. Le dénominateur affiché est 1 734, le dénominateur réel est 0. Cet écart est traité dans `sub-context-docs/reputation-analysis.md` ; ici il compte pour une seule raison : il ne doit jamais être confondu avec une distribution de notes disponible.
+Impossible. Il n'y a aucune note, sur aucune surface, et les commentaires publicitaires n'en portent pas par nature. La marque affiche pourtant « 4,7/5 » et « (1 734 avis) » sur sa landing et « Noté 4,7/5 sur 1 734 avis » sur son bloc produit, verified sur l'export Shopify du 2026-09-06. Le dénominateur affiché est 1 734, le dénominateur réel est 0. Cet écart est traité dans `sub-context-docs/reputation-analysis.md` ; ici il compte pour une seule raison : il ne doit jamais être confondu avec une distribution de notes disponible.
 
 ## Normalized schema
 
-Aucun enregistrement n'a été normalisé, donc le modèle ci-dessous est un schéma vide plutôt qu'un schéma peuplé. Il est écrit quand même, parce que le prochain run doit savoir dans quelle forme verser ce qu'il collectera, et parce qu'il montre exactement quels champs manqueront encore quand la première source arrivera.
+Deux enregistrements ont été normalisés. Le modèle ci-dessous montre ce qu'ils portent et, surtout, ce qu'ils ne portent pas, parce que la liste des champs vides est ce qui limite toute analyse aval.
 
-| Champ normalisé | Statut aujourd'hui | Ce qui l'alimentera quand une source arrivera |
-|---|---|---|
-| `row_id` | vide | Généré à l'ingestion |
-| `source_type` | vide | review, ad-comment, post-purchase-survey, brand-reputation, reddit, other-review, ad-account |
-| `platform` | vide | Nom exact de la surface |
-| `source_native_id` | vide | Id d'avis ou de commentaire rendu par la plateforme. Fait structuré |
-| `date` | vide | Fait structuré. Sans lui, la méthode de mining impose de baisser la confiance de toute lecture de coupe, de peau ou de prix |
-| `rating` | vide | Fait structuré quand la surface en porte un. Les commentaires publicitaires n'en portent pas |
-| `product_sku` | vide | Trivial ici : la marque n'a qu'un SKU, `Electric intimate hair removal device`, donc le champ sera constant et ne portera aucune information de segmentation |
-| `text` | vide | Le champ qui manque le plus. Sans lui, il n'y a pas de passe VoC |
-| `url` | vide | Lien direct vers l'artefact source |
-| `age`, `gender`, `region` | vide côté client | Existe côté Meta au niveau agrégé, jamais au niveau d'un texte. Ne jamais joindre les deux : la ventilation d'âge du compte décrit qui achète, pas qui a écrit une phrase |
-| `channel`, `device` | vide côté client | Idem |
-| `buyer_type` | vide | 0 client récurrent sur 11, donc le champ n'aurait aujourd'hui qu'une seule valeur |
+| Champ normalisé | Peuplé sur les 2 enregistrements | Nature | Note |
+|---|---|---|---|
+| `row_id` | 2 sur 2 | Fait structuré | `comment_id` renvoyé par Parker |
+| `source_type` | 2 sur 2 | Fait structuré | `ad-comment` sur les deux |
+| `platform` | 2 sur 2 | Fait structuré | Facebook, page 1234695553067195 |
+| `source_native_id` | 2 sur 2 | Fait structuré | `facebook_comment_ids` |
+| `date` | 2 sur 2 | Fait structuré | Précision à la seconde, ce qui est le meilleur champ du corpus |
+| `text` | 2 sur 2 | Fait structuré | Le champ qui porte tout, et il porte 54 caractères en tout |
+| `url` | 2 sur 2 | Fait structuré | Permaliens Facebook complets |
+| `rating` | 0 sur 2 | Inexistant | Un commentaire publicitaire ne porte pas de note |
+| `product_sku` | 0 sur 2 | Inexistant sur la source | Trivial par ailleurs : la marque n'a qu'un SKU, donc le champ serait constant et sans valeur de segmentation |
+| `age`, `gender`, `region` | 0 sur 2 | Inexistant | `author_id` et `author_name` sont vides sur les deux. Rien n'est connu des auteurs. La ventilation d'âge du compte publicitaire décrit qui achète, jamais qui a écrit, et les deux ne doivent pas être joints |
+| `channel`, `device` | 0 sur 2 | Inexistant | Idem |
+| `buyer_type` | 0 sur 2 | Inexistant | Rien ne dit si l'un des deux auteurs a acheté |
+| `ad_id`, `ad_name` | 2 sur 2 | Fait structuré | Le seul champ de contexte utile : il dit sous quelle créa la réaction est arrivée |
 
-**Un mot sur les champs déduits du texte.** Aucun champ n'a été déduit, puisqu'il n'y a pas de texte client. Quand il y en aura, la règle de la méthode s'applique : un champ déduit d'une phrase se marque model-inferred et ne se présente jamais comme un champ que le client a rempli.
+**Champs déduits du texte : aucun.** Sur deux enregistrements dont l'un fait trois caractères, aucune déduction de champ structuré n'est défendable. Les seuls jugements posés sont des tags de catégorie VoC, listés dans la section suivante et marqués comme jugements de modèle.
 
 ## Classification method
 
-**Aucun tag n'a été appliqué à un enregistrement client, parce qu'il n'y en a aucun.** Les vingt lentilles que cette passe devait poser sur chaque ligne, sentiment, motivation d'achat, cadeau ou achat pour soi, occasion d'usage, barrière, expérience produit, résultat, transformation, émotion, preuve sociale, fidélité, mention de publicité ou d'influenceur, recommandation, comparaison, confusion produit, inquiétude de prix, incident de livraison ou de service, suggestion d'amélioration, citation remarquable, signal persona et écho de marque, sont toutes non appliquées. Aucune n'est disponible en aval.
+Quatre tags ont été posés à la main sur les deux enregistrements. Aucun n'est un champ structuré. L'échantillon est de 2, donc chaque tag est indicatif et ne peut porter aucun taux.
 
-Les seuls tags que ce document pose portent sur du texte écrit par la marque, et ils sont préfixés pour qu'aucune passe ultérieure ne puisse les confondre avec une lecture client :
+| row_id | Sentiment | Langage exploitable | Catégories VoC | Écho de marque |
+|---|---|---|---|---|
+| `3c2ca5a3…` « Plus rien de la bête sauvage qui sommeille en nous. » | Ambivalent, ni éloge ni plainte. Ironie affectueuse | Oui | Image et objection | false, aucune formulation approchante n'existe dans la copie de la marque |
+| `b86f8833…` « Lol » | Neutre | Non | Aucune | false |
 
-| Tag | Ce qu'il marque | Nature |
-|---|---|---|
-| `brand-projected-pain` | La marque nomme une douleur qu'elle prête au client | Jugement de modèle sur de la copie de marque |
-| `brand-projected-outcome` | La marque nomme un résultat qu'elle promet | Idem |
-| `brand-projected-metaphor` | La marque construit une image ou une comparaison | Idem |
-| `brand-projected-objection` | La marque met en scène un doute d'achat | Idem |
-| `brand-projected-aspiration` | La marque nomme un soi désiré | Idem |
-| `brand-projected-trigger` | La marque met en scène un moment déclencheur | Idem |
-| `brand-projected-jargon` | Vocabulaire de catégorie employé par la marque | Idem |
-| `brand-projected-anti-language` | La marque se positionne contre un discours de catégorie | Idem |
-| `era` | Registre de rédaction : tutoiement, lot du 2026-08-23 ; vouvoiement, lot du 2026-09-03 | Fait structuré, la date de chaque document est connue |
-| `fabricated-testimonial` | Copie qui se présente comme la parole d'un client identifié qui n'existe pas | Fait, la marque le documente elle-même |
+Les vingt lentilles que cette passe devait poser sur chaque ligne, motivation d'achat, cadeau ou achat pour soi, occasion d'usage, barrière, expérience produit, résultat, transformation, preuve sociale, fidélité, mention de publicité ou d'influenceur, recommandation, comparaison, confusion produit, inquiétude de prix, incident de livraison, suggestion d'amélioration, signal persona et les autres, sont toutes non renseignées : deux commentaires publicitaires ne contiennent aucune de ces informations.
 
-**Ce qu'une passe aval peut faire confiance à ce document.** Trois choses seulement : les comptes de surfaces et leurs motifs d'absence, les dénominateurs du compte publicitaire et de la boutique, et la liste verbatim du langage projeté avec sa date et sa surface. Rien d'autre. En particulier, ce document ne fournit aucun dénominateur de récurrence de langage client, donc toute récurrence calculée en aval sur du langage client est à marquer data-limited.
+Sur le texte écrit par la marque, les tags sont préfixés pour qu'aucune passe ultérieure ne puisse les confondre avec une lecture client : `brand-projected-pain`, `brand-projected-outcome`, `brand-projected-metaphor`, `brand-projected-objection`, `brand-projected-aspiration`, `brand-projected-trigger`, `brand-projected-jargon`, `brand-projected-anti-language`, plus `era` pour le registre de rédaction et `fabricated-testimonial` pour la copie qui se présente comme la parole d'un client identifié qui n'existe pas.
+
+**Ce à quoi une passe aval peut faire confiance dans ce document.** Quatre choses : les deux verbatims et leurs métadonnées, tirés en direct de Parker ; les comptes de surfaces et leurs motifs d'absence ; les dénominateurs du compte publicitaire et de la boutique ; la liste verbatim du langage projeté avec sa date et sa surface. Rien d'autre. Le dénominateur de récurrence pour le langage client est de 2, ce qui veut dire qu'aucune récurrence supérieure à 1 n'est possible et qu'aucun motif ne peut être établi.
 
 ## Sentiment and rating profile
 
-**Data-limited de bout en bout. Aucune de ces mesures n'existe.**
+**Non calculable. L'échantillon est de 2 et l'un des deux enregistrements fait trois caractères.**
 
-Sentiment global : non calculable, 0 enregistrement. Distribution des notes : non calculable, 0 note. Sentiment par source : non calculable. Sentiment par SKU : sans objet, un seul SKU, et de toute façon 0 enregistrement. Sentiment dans le temps : non calculable, première version du document et aucune ligne à suivre. Thèmes positifs et négatifs les plus forts : aucun, il n'y a aucun thème parce qu'il n'y a aucun texte.
+Sentiment global : non calculable. Distribution des notes : inexistante, la source ne porte pas de note. Sentiment par source : un seul type de source. Sentiment par SKU : un seul SKU. Sentiment dans le temps : deux jours consécutifs, aucune tendance. Thèmes positifs et négatifs les plus forts : aucun thème ne peut recurrer sur deux lignes.
 
-La méthode de mining demande de traiter la taille d'échantillon comme un gouverneur de confiance et de marquer thin tout ce qui repose sur moins de dix enregistrements. Ici il faut aller plus loin que thin : il n'y a pas d'échantillon du tout, donc il n'y a rien à marquer.
+La méthode demande de marquer thin tout ce qui repose sur moins de dix enregistrements. Ici tout repose sur deux, donc tout est thin, sans exception et par construction.
 
-**Le seul point zéro qu'on peut poser.** Il n'est pas un sentiment, c'est un jeu de compteurs, tous verified au 2026-09-06, contre lesquels le prochain run mesurera un mouvement.
+**Le point zéro, avec les seuls compteurs qui existent, tous verified au 2026-09-06.** C'est contre ce tableau que le prochain run mesurera un mouvement.
 
 | Compteur | Valeur | Fenêtre |
 |---|---|---|
-| Enregistrements de langage client, toutes surfaces | 0 | depuis l'ouverture, 2026-07-23 |
-| Avis | 0 | idem |
+| Enregistrements de langage client, toutes surfaces | 2 | 2026-08-31 → 2026-09-01 |
+| Dont porteurs de langage exploitable | 1 | idem |
+| Avis | 0 | depuis l'ouverture, 2026-07-23 |
+| Sondages post-achat | 0 | idem |
 | Note moyenne | inexistante | idem |
 | Commandes | 11 | 2026-08-26 → 2026-09-04 |
 | Clients récurrents | 0 sur 11 | 90 jours |
 | Retours demandés | 0 | depuis l'ouverture |
 | Réclamations | 0 | 46 fils Gmail lus |
-| Messages entrants classés client | 0 sur 1 message de formulaire reçu | 46 jours |
 | Annonces Raselio ayant tourné | 163 | 2026-08-10 → 2026-09-06 |
 | Impressions Raselio | 43 270 | idem |
 | Clics Raselio | 1 084 | idem |
 | Achats attribués Meta | 6 | idem |
 | Sessions boutique | 2 431 | 90 jours |
-| Commentaires publicitaires lus | 0 sur un nombre inconnu | idem |
+| Réponses de la marque aux commentaires | 0 sur 2 | idem |
 
 ## Motivation and trigger profile
 
-**Data-limited. Aucune motivation d'achat et aucun déclencheur ne sont observés, parce qu'aucun acheteur n'a écrit un mot.**
+**Data-limited. Aucune motivation d'achat et aucun déclencheur ne sont observés.** Les deux enregistrements du corpus sont des réactions à une publicité, pas des récits d'achat, et rien ne dit que leurs auteurs aient acheté quoi que ce soit.
 
-Ce que la méthode voudrait compter ici, motivations, tâches à accomplir, moments de bascule, mentions de publicité ou d'influenceur, recommandations, comparaisons, urgence, remise, mauvaise expérience antérieure, appelle un corpus de texte. Il n'y en a pas. Aucun de ces compteurs n'est produit et aucun ne doit être inventé en aval.
+Ce que la méthode voudrait compter ici, motivations, tâches à accomplir, moments de bascule, mentions de publicité ou d'influenceur, recommandations, comparaisons, urgence, remise, mauvaise expérience antérieure, appelle un corpus de récits d'achat. Il n'y en a pas.
 
-**Ce qui existe à la place, et qui n'est pas la même chose.** Deux signaux structurés, tous deux utiles et tous deux muets sur le pourquoi.
+**Ce qui existe à la place, et qui n'est pas la même chose.** Deux signaux structurés, utiles et muets sur le pourquoi. Le premier est la ventilation d'âge du compte : sur l'intégralité de l'historique, les achats attribués viennent d'hommes de 45 ans et plus, cœur 55 à 64 ans, stated d'après la lecture de l'équipe du 2026-09-03, et le pull du 2026-09-06 en compte 6 sur le périmètre Raselio. C'est une lecture de qui achète, pas de pourquoi. Le second est la structure de la demande côté site : 2 431 sessions sur 90 jours, 11 commandes, aucun panier récurrent. Là encore, un comportement, pas une raison.
 
-Le premier est la ventilation d'âge du compte publicitaire, stated d'après la lecture de l'équipe du 2026-09-03 : sur l'intégralité de l'historique Meta, 5 achats attribués sur 5 venaient d'hommes de 45 ans et plus, cœur 55 à 64 ans, et le pull du 2026-09-06 en compte 6 sur le périmètre Raselio. Les hommes de 18 à 44 ans cliquent et n'achètent pas. C'est une lecture de qui achète. Ce n'est pas une lecture de pourquoi, et la confondre avec une motivation serait exactement l'erreur que ce document existe pour empêcher.
-
-Le second est la structure de la demande côté site, verified : 2 431 sessions sur 90 jours, 11 commandes, aucun panier récurrent. Là encore, un comportement, pas une raison.
-
-**Le déclencheur que la marque suppose, et qu'il faut ranger comme hypothèse.** L'advertorial met en scène un moment précis : « Vous connaissez ce moment. La tondeuse approche, vous retenez votre souffle, et chaque passage se fait les dents serrées. » C'est un déclencheur écrit par la marque. Il est classé `brand-projected-trigger` et il attend d'être confirmé ou démenti par un client.
+**Le déclencheur que la marque suppose, à ranger comme hypothèse.** L'advertorial met en scène un moment précis : « Vous connaissez ce moment. La tondeuse approche, vous retenez votre souffle, et chaque passage se fait les dents serrées. » C'est un déclencheur écrit par la marque, classé `brand-projected-trigger`, et il attend toujours d'être confirmé ou démenti.
 
 ## Gifting, usage, and occasion profile
 
 **Data-limited. Aucune part de cadeau, aucune relation de destinataire, aucune occasion et aucun usage familial ne sont observés.**
 
-Le champ « acheté pour offrir » n'existe sur aucune surface de la boutique et aucun acheteur n'a écrit une phrase où il aurait pu le dire. La part de cadeau est donc inconnue, pas nulle, et la distinction compte : écrire 0 % serait une invention.
+Le champ « acheté pour offrir » n'existe sur aucune surface de la boutique, aucun acheteur n'a écrit, et les deux commentaires ne parlent ni d'usage ni d'occasion. La part de cadeau est inconnue, pas nulle, et la distinction compte : écrire 0 % serait une invention.
 
-**Ce que la marque a misé sur ce terrain, en quarantaine.** Deux créas du lot du 2026-09-03 posent explicitement l'hypothèse cadeau, et l'équipe la nomme comme une initiative issue de sa lecture des données plutôt que d'un signal client : la créa 28, « Le cadeau qu'il ne s'offrira jamais lui-même. », dont le texte principal dit « Il n'osera jamais se l'acheter. Vous, si. », et le plan prévoit pour elle un ad set femmes 45 à 60 ans. C'est un pari de ciblage, pas une part de marché observée. Tant que le corpus est vide, la part réelle de cadeau reste un blanc nommé.
+**Ce que la marque a misé sur ce terrain, en quarantaine.** Deux créas du lot du 2026-09-03 posent l'hypothèse cadeau, et l'équipe la nomme comme une initiative issue de sa lecture des données plutôt que d'un signal client : la créa 28, « Le cadeau qu'il ne s'offrira jamais lui-même. », dont le texte principal dit « Il n'osera jamais se l'acheter. Vous, si. », avec un ad set femmes 45 à 60 ans prévu. C'est un pari de ciblage, pas une part de marché observée.
 
 ## Objections and barriers profile
 
-**Data-limited. Aucune objection client n'est observée.** Aucune inquiétude de prix, aucune confusion produit, aucun scepticisme, aucun incident de livraison, aucun problème de service, aucune rupture, aucune question de compatibilité, aucune réaction à un avis négatif ne peut être comptée, parce qu'aucun client n'a écrit.
+**Une objection observée, sur un dénominateur de 2. Aucune inquiétude de prix, aucune confusion produit, aucun incident de livraison ou de service n'est observé.**
 
-Trois observations structurées valent quand même d'être posées, chacune avec son étiquette exacte.
+**L'objection observée, verbatim et datée.** « Plus rien de la bête sauvage qui sommeille en nous. », le 2026-08-31 à 15h46 UTC, sous l'annonce « RASELIO | IMPECCABLE | BOXER ». Ce n'est pas un doute sur le fonctionnement du produit. C'est une résistance à sa proposition même : l'idée que se raser cette zone revient à perdre quelque chose. Elle est formulée par la blague, ce qui est la façon dont ce genre de réticence se dit en public. Recurrence 1 sur un corpus de 2, confiance thin, écho de marque false. Aucune surface de la marque, ni la landing, ni l'advertorial, ni les 30 créas, ne traite cette résistance.
 
-**Le seul message entrant du périmètre n'est pas un client.** Verified. Un message de formulaire de contact reçu le 2026-08-26, signé « Sodiq », demande « Hello, can i know when you will ship if a customer should order today? ». La passe Gmail a lu les six messages du fil et a établi que les quatre suivants sont une offre commerciale de « Emprofit Solution ». Ce message est donc du démarchage, pas une objection client, et il ne rentre pas dans le corpus. Il est nommé ici pour que personne ne le repêche plus tard comme le premier verbatim de la marque.
+**Ce que ce document ne fait pas.** Il ne promeut pas ce commentaire au rang de motif. Un enregistrement est un candidat, jamais un patron, et la méthode est nette là-dessus. Il est enregistré, daté, et il attend d'être corroboré ou démenti quand le corpus grandira.
 
-**Zéro réclamation et zéro retour ne veulent pas dire zéro objection.** Verified sur 46 fils Gmail et sur les 11 commandes. Avec onze acheteurs et un délai de livraison de 48 à 72 heures annoncé, l'absence de plainte est le résultat attendu du volume, pas une preuve de satisfaction.
-
-**La barrière la plus lourde est visible dans le compte et pas dans une phrase.** Stated d'après l'équipe : CTR de 3,02 % sur la campagne principale, taux de conversion site autour de 0,2 %, CPA d'environ 86 € pour un point mort à 21 €. L'écart entre le clic et l'achat est le lieu où vivent les objections de cette marque. Personne ne peut dire lesquelles, parce que personne n'a lu un mot des gens qui ont cliqué et ne sont pas allés au bout.
+**La barrière la plus lourde reste visible dans le compte et pas dans une phrase.** Stated d'après l'équipe : CTR de 3,02 % sur la campagne principale, taux de conversion site autour de 0,2 %, CPA d'environ 86 € pour un point mort à 21 €, et sa conclusion écrite, « Le vrai problème est post-clic ». Environ 1 073 personnes ont cliqué et ne sont pas allées au bout. Deux d'entre elles ont commenté. Les autres n'ont rien dit.
 
 ## Product experience and outcome profile
 
-**Data-limited. Aucune expérience produit rapportée par un client n'existe.**
+**Data-limited. Aucune expérience produit rapportée par un utilisateur n'existe.**
 
-Aucune fonctionnalité louée, aucune fonctionnalité critiquée, aucune première impression, aucune lecture de facilité d'usage, de durabilité, de design ou de performance, aucune attente dépassée ou déçue, aucune confusion après achat, aucun signal de problème résolu. Onze appareils ont été livrés et pas un retour d'usage n'est écrit nulle part.
+Aucune fonctionnalité louée, aucune fonctionnalité critiquée, aucune première impression, aucune lecture de facilité d'usage, de durabilité, de design ou de performance, aucune attente dépassée ou déçue, aucun signal de problème résolu. Onze appareils ont été livrés et pas un retour d'usage n'est écrit nulle part. Les deux commentaires du corpus sont des réactions à une publicité et rien ne dit que leurs auteurs aient tenu l'objet dans la main.
 
-**Ce qui est vérifié sur le produit, et qui n'est pas une expérience.** Verified sur la fiche Shopify : tête arrondie, lames céramique, éclairage LED intégré, sabot réglable 3 hauteurs, 100 % étanche, sans fil sur socle, garantie 2 ans, satisfait ou remboursé 30 jours. Deux specs sont marquées « à confirmer » par l'équipe elle-même dans son document Grümwise, le régime moteur et l'autonomie exacte, alors que le site annonce environ 90 minutes. Ce sont des caractéristiques déclarées, pas des résultats constatés par des utilisateurs.
+**Ce qui est vérifié sur le produit, et qui n'est pas une expérience.** Verified sur la fiche Shopify : tête arrondie, lames céramique, éclairage LED intégré, sabot réglable 3 hauteurs, 100 % étanche, sans fil sur socle, garantie 2 ans, satisfait ou remboursé 30 jours. Deux specs sont marquées « à confirmer » par l'équipe elle-même dans son document Grümwise, le régime moteur et l'autonomie exacte, alors que le site annonce environ 90 minutes.
 
-**Le risque que ce vide crée.** La méthode impose un gouverneur de conformité de revendication sur chaque bout de langage avant qu'il n'entre en copie. Ce gouverneur se règle normalement contre ce que les clients rapportent vraiment. Ici il ne peut se régler que contre la fiche produit, donc toute promesse de résultat que la marque écrit aujourd'hui est non substantiée par l'usage, et devra être marquée `gated` par défaut dans la bibliothèque assemblée.
+**Le risque que ce vide crée.** Le gouverneur de conformité de revendication se règle normalement contre ce que les clients rapportent. Ici il ne peut se régler que contre la fiche produit, donc toute promesse de résultat que la marque écrit est non substantiée par l'usage et doit être marquée `gated` par défaut dans la bibliothèque assemblée.
 
 ## Transformation and impact profile
 
 **Data-limited. Aucune transformation rapportée n'existe.**
 
-Aucun récit avant et après écrit par un client, aucun changement de routine, aucun changement de comportement, aucun gain de confiance, aucun effet sur une relation, aucune habitude prise, aucun résultat chiffré, aucune recommandation, aucun réachat, aucun abandon. Zéro sur les onze acheteurs, sur zéro texte disponible.
+Aucun récit avant et après écrit par un client, aucun changement de routine, aucun changement de comportement, aucun gain de confiance, aucun effet sur une relation, aucun résultat chiffré, aucune recommandation, aucun réachat, aucun abandon.
 
-**La transformation existe pourtant, écrite en entier, par la marque.** Et c'est précisément là que le risque est le plus grand pour un run futur, parce que la matière est belle. L'advertorial construit un arc complet : l'état de départ, « chaque passage se fait les dents serrées » ; le mécanisme, « une lame en acier qui chauffe tire le poil avant de le couper » ; l'état d'arrivée, « Résultat : vous respirez normalement. La routine redevient une routine, pas une épreuve. » ; et même la scène de couple, portée par les attributs alt des images, « Lui au bout du lit, elle sous la couette » puis « Le couple réconcilié, câlin sur le lit ».
+**La transformation existe pourtant, écrite en entier, par la marque.** Et c'est là que le risque est le plus grand pour un run futur, parce que la matière est belle. L'advertorial construit un arc complet : l'état de départ, « chaque passage se fait les dents serrées » ; le mécanisme, « une lame en acier qui chauffe tire le poil avant de le couper » ; l'état d'arrivée, « Résultat : vous respirez normalement. La routine redevient une routine, pas une épreuve. » ; et la scène de couple, portée par les attributs alt des images, « Lui au bout du lit, elle sous la couette » puis « Le couple réconcilié, câlin sur le lit ».
 
-C'est un arc de transformation de qualité professionnelle. Il est entièrement `brand-projected`. Aucun client ne l'a raconté. La méthode appelle « concept de revue entière » une revue dont l'arc complet devient l'actif publicitaire, et prévient que ces pièces sont rares et à haut levier. Le piège ici est symétrique : un arc parfaitement écrit qui n'a jamais eu de narrateur réel ressemble exactement à la pièce rare que le système cherche. Il ne l'est pas.
+C'est un arc de qualité professionnelle et il est entièrement `brand-projected`. La méthode appelle « concept de revue entière » une revue dont l'arc complet devient l'actif publicitaire, et prévient que ces pièces sont rares et à haut levier. Le piège est symétrique : un arc parfaitement écrit qui n'a jamais eu de narrateur réel ressemble exactement à la pièce rare que le système cherche. Il ne l'est pas.
 
 ## Language and creative-asset index
 
-**Index de citations client : vide.** Zéro pépite, zéro phrase de titre, zéro phrase de douleur, zéro phrase de résultat, zéro objection, zéro moment déclencheur, zéro métaphore, zéro jargon, zéro contre-langage, zéro valeur aberrante, zéro concept de revue entière. Aucune de ces catégories ne contient un seul enregistrement, et aucune ne doit être remplie en aval sans une source nouvelle.
+**Index de citations client : une entrée.**
 
-**Index de langage projeté par la marque : peuplé, et mis en quarantaine.** Ce qui suit est du texte écrit par Raselio pour Raselio. Ce n'est pas du langage client, ce n'est pas une preuve de ce que dit un client, et aucun élément d'ici n'a le droit d'être présenté comme une citation. Chaque ligne porte sa surface et sa date. Les neuf passes d'extraction lisent ce tableau comme une hypothèse à tester, jamais comme du matériau à lever.
+| Type de citation | Verbatim | row_id | Surface | Date | Note |
+|---|---|---|---|---|---|
+| Pépite, image, objection | « Plus rien de la bête sauvage qui sommeille en nous. » | `3c2ca5a3-6d53-5564-6fd8-f33d60753d83` | Commentaire publicitaire Facebook, annonce `52505820194591` « RASELIO \| IMPECCABLE \| BOXER » | 2026-08-31 | Le seul verbatim client de la marque. Construit une image, la pilosité comme bête sauvage endormie, et porte une résistance à la proposition. Récurrence 1 sur 2. Confiance thin. Écho de marque false |
+| Sans langage exploitable | « Lol » | `b86f8833-cadf-bad9-8cfc-1f0c6893a98f` | Commentaire publicitaire Facebook, annonce `52505897035991` « EMOTION 3 - Barbe soignee et tes boules » | 2026-09-01 | Trois caractères. Compté dans le corpus, ne produit aucune entrée |
+
+Zéro phrase de douleur, zéro phrase de résultat, zéro déclencheur, zéro jargon, zéro contre-langage, zéro valeur aberrante, zéro concept de revue entière écrits par un client.
+
+**Index de langage projeté par la marque : peuplé, et mis en quarantaine.** Ce qui suit est du texte écrit par Raselio pour Raselio. Ce n'est pas du langage client et aucun élément d'ici n'a le droit d'être présenté comme une citation. Chaque ligne porte sa surface et sa date.
 
 | Type projeté | Verbatim de la marque | Surface | Date |
 |---|---|---|---|
@@ -227,10 +256,10 @@ C'est un arc de transformation de qualité professionnelle. Il est entièrement 
 | Résultat | « Fini le jugé. Vous voyez, donc vous maîtrisez. » | Advertorial, section 4 | 2026-08-31 |
 | Résultat | « C'est exactement la différence entre « je me suis rasé » et « je suis entretenu ». » | Advertorial, section 5 | 2026-08-31 |
 | Résultat | « 0 coupure. 0 stress. 100 % contrôle. » | Créa 06, titre Meta | 2026-09-03 |
-| Métaphore | « Utiliser le même outil pour les deux, c'est découper au cutter ce qui demande un scalpel. » | Advertorial, section 1 | 2026-08-31 |
-| Métaphore | « Cette séance qui ressemble plus à du déminage qu'à de l'entretien. » | Advertorial, section 2 | 2026-08-31 |
-| Métaphore | « Vous ne feriez pas ça à un kiwi. » puis « Alors pourquoi à vous ? » | Créa 05, titre Meta et texte image | 2026-09-03 |
-| Métaphore | « Elle épouse les reliefs au lieu de les attaquer. » | Advertorial, section 2 | 2026-08-31 |
+| Image | « Utiliser le même outil pour les deux, c'est découper au cutter ce qui demande un scalpel. » | Advertorial, section 1 | 2026-08-31 |
+| Image | « Cette séance qui ressemble plus à du déminage qu'à de l'entretien. » | Advertorial, section 2 | 2026-08-31 |
+| Image | « Vous ne feriez pas ça à un kiwi. » puis « Alors pourquoi à vous ? » | Créa 05, titre Meta et texte image | 2026-09-03 |
+| Image | « Elle épouse les reliefs au lieu de les attaquer. » | Advertorial, section 2 | 2026-08-31 |
 | Objection | « Ma tondeuse à barbe ne suffit-elle pas ? » | Landing « 7 raisons », FAQ question 1 | 2026-09-06 |
 | Objection | « Est-elle adaptée aux testicules et aux zones sensibles ? » | Landing « 7 raisons », FAQ question 2 | 2026-09-06 |
 | Objection | « La confiance en soi ne devrait pas être un pari à 75 €. » | Advertorial, section 7 | 2026-08-31 |
@@ -253,40 +282,63 @@ C'est un arc de transformation de qualité professionnelle. Il est entièrement 
 | « Bernard L. » et « Bernard, 61 ans » avec citation inventée | W12, N08 | « Remplace par un avis réel » |
 | Advertorial signé « Par Julien M. », « Mis à jour le 31 août 2026 » | page advertorial | aucune personne de ce nom n'existe dans une source |
 
-Aucune de ces cinq lignes n'entre dans une passe d'extraction, sous aucune étiquette, y compris `brand-projected`. Elles constituent une catégorie à part, `fabricated-testimonial`, dont la seule fonction est d'être reconnue et écartée.
+Aucune de ces lignes n'entre dans une passe d'extraction, y compris sous l'étiquette `brand-projected`. Elles constituent une catégorie à part, `fabricated-testimonial`, dont la seule fonction est d'être reconnue et écartée.
 
-**Langage de catégorie tiré des clients d'autres marques : thèmes seulement, aucun verbatim.** Six requêtes WebSearch le 2026-09-06, quatre lectures directes tentées, quatre refusées. Ce qui suit est un résumé produit par l'outil de recherche, pas une citation, et il est marqué comme tel partout où il apparaît en aval.
+**Langage de catégorie, deuxième source, et il faut être précis sur ce qu'elle est.** `get_brand_persona` renvoie un document de contexte de marque généré par Parker, et sa section « Customer Language » contient des phrases entre guillemets. Le document dit lui-même d'où elles viennent : « Based on competitive review analysis and category-level customer language ». Autrement dit ce sont des avis de clients d'autres marques, en anglais, rassemblés par une passe de recherche antérieure.
+
+**Ce qui leur manque, et c'est décisif pour leur poids.** Aucune ne porte le nom de la marque dont elle vient. Aucune ne porte de date. Aucune ne porte de lien. La méthode de mining est nette sur ce point : une citation sans date est une preuve affaiblie, surtout pour tout ce qui touche la coupe, la peau, la qualité ou le prix. Ici il manque la date **et** la marque **et** la source. Je les enregistre parce qu'elles sont du vrai langage de catégorie et qu'elles valent mieux qu'un résumé de moteur de recherche. Je les marque `stated`, `thin`, provenance incomplète, et elles ne peuvent servir ni de preuve, ni de citation attribuable, ni de langage de client de Raselio.
+
+| Verbatim, tel qu'écrit dans le document Parker | Ce qu'il porte | Provenance |
+|---|---|---|
+| « Taking any type of razor or trimmer to your nether regions can be daunting and time consuming. » | Douleur d'appréhension et de temps | Document de contexte Parker, section Customer Language, tiré le 2026-09-06. Marque, date et lien inconnus |
+| « I'm sure many men can relate to finishing a trim session with a few nicks and cuts. » | Douleur de coupure, formulée comme une expérience partagée | Idem |
+| « The small head moved in and out of crevices easily, and felt very safe with no risk of pain. » | Résultat de sécurité et de maniabilité | Idem |
+| « No pulling or tugging of hair. » | Résultat, absence de tirage | Idem |
+| « It is handy for obscure places and so far it has not nicked me. » | Résultat, prudence dans la formulation, « so far » | Idem |
+| « I feel more clean, cool, and confident — plus the wife likes it. » | Résultat, lie le ressenti personnel au regard de la partenaire | Idem. C'est la ligne qui converge le plus avec ce que Raselio met en scène |
+| « Game changer » | Expression de conversion, désignée comme la plus courante de la catégorie | Idem |
+| « Bought this less than a year ago and never used it under the water. When I finally did it broke. It is not waterproof at all. » | Plainte de durabilité et d'étanchéité non tenue | Idem. Objection directe pour un produit qui vend le 100 % étanche |
+| « Not a very robust trimmer » | Plainte de qualité de fabrication à bas prix | Idem |
+| « This shaver is bulky and does not have the same feel and closeness as the One-Blade. » | Comparaison intra-catégorie | Idem |
+| « Better than expected — great for sensitive areas » | Attente basse dépassée | Idem |
+| « For a man who grooms occasionally, the Meridian delivers 80% of the result at less than half the price. » | Comparaison de valeur | Idem. La seule qui nomme une marque |
+
+**Langage de catégorie, première source : thèmes seulement, aucun verbatim.** Six requêtes WebSearch le 2026-09-06, quatre lectures directes tentées, quatre refusées.
 
 | Thème de catégorie | Marque concernée | Source | Statut |
 |---|---|---|---|
-| La peur de la coupure et de l'accroc est le premier critère de choix rapporté | Manscaped Lawn Mower 5.0 | résumé WebSearch de pages d'avis Best Buy et Walmart | Paraphrase d'outil, source non ouverte, EGRESS_BLOCKED |
-| Les lames émoussées sont désignées comme la vraie cause des coupures, plus que la technique | Philips OneBlade, Manscaped | résumé WebSearch de tests et de comparatifs | Paraphrase d'outil |
+| La peur de la coupure et de l'accroc est le premier critère de choix rapporté | Manscaped Lawn Mower 5.0 | résumé WebSearch de pages d'avis Best Buy et Walmart | Paraphrase d'outil, source non ouverte |
+| Les lames émoussées sont désignées comme la vraie cause des coupures, plus que la technique | Philips OneBlade, Manscaped | résumé WebSearch de tests et comparatifs | Paraphrase d'outil |
 | Le compromis rasage de près contre sécurité est le débat central de la catégorie | Philips OneBlade Intimate | résumé WebSearch d'un comparatif français | Paraphrase d'outil |
-| Les démangeaisons apparaissent 24 à 72 heures après le rasage, au moment de la repousse | catégorie, contenus de marque Braun et Gillette | résumé WebSearch | Paraphrase d'outil. À noter : la fenêtre de 3 jours que Raselio met en avant existe bien comme repère de catégorie |
+| Les démangeaisons apparaissent 24 à 72 heures après le rasage, au moment de la repousse | catégorie, contenus Braun et Gillette | résumé WebSearch | Paraphrase d'outil. Converge avec la fenêtre de 3 jours mise en avant par Raselio |
 | Le modèle par abonnement et le prix sont le point de friction dominant des plaintes | Manscaped | résumé WebSearch de Trustpilot et PissedConsumer | Paraphrase d'outil |
-| Des fragments entre guillemets attribués à des acheteurs vérifiés remontent dans un résumé | Meridian Grooming | résumé WebSearch | **Non confirmés à la source, sans date, sur une page marchande contrôlée par la marque. Traités comme non vérifiés et non repris comme citations.** |
+| Des fragments entre guillemets attribués à des acheteurs vérifiés remontent dans un résumé | Meridian Grooming | résumé WebSearch | **Non confirmés à la source, sans date, sur une page marchande contrôlée par la marque. Traités comme non vérifiés et non repris comme citations** |
 
 ## Data limitations
 
-**La limite principale, redite en une phrase : il n'y a pas de corpus.** 0 enregistrement brut, 0 enregistrement normalisé, 0 doublon retiré, aucune plage de dates. Tout ce qui suit détaille cette limite plutôt que de la compléter.
+**La limite principale, en une phrase : le dénominateur est 2, et un seul des deux enregistrements porte du langage.** Tout ce qui suit détaille cette limite.
 
-**Sources manquantes, par nature de manque.** Deux natures, qui appellent deux actions différentes. Celles qui n'existent pas : avis, sondages post-achat, NPS, tickets de support. La boucle se ferme en installant une collecte. Celles qui existent et n'ont pas été lues : commentaires publicitaires sous 163 annonces, commentaires organiques, fils Reddit et forums, avis marketplace de la catégorie. La boucle se ferme en ouvrant un accès.
+**Sources manquantes, par nature de manque.** Deux natures qui appellent deux actions différentes. Celles qui n'existent pas, confirmé par l'outil et non déduit : avis, sondages post-achat, NPS, tickets de support. La boucle se ferme en installant une collecte. Celles qui existent et n'ont pas pu être lues : fils Reddit et forums, avis marketplace de la catégorie, publications organiques. La boucle se ferme en ouvrant un accès réseau ou en publiant.
 
-**Le blocage réseau est total et vérifié aujourd'hui.** Quatre lectures directes tentées le 2026-09-06 pour cette passe, quatre `EGRESS_BLOCKED`, dont Wikipédia. Le statut du proxy renvoie `gateway answered 403 to CONNECT`. Aucun verbatim de catégorie n'est atteignable, donc l'axe de secours prévu, lire les clients des concurrents, ne donne que des thèmes résumés par un outil.
+**Ce qui a changé aujourd'hui et qui doit être noté pour le prochain run.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, org « Dylan's Org ». Les passes antérieures de ce build, notamment `reputation-analysis` et `community-and-forums`, ont été écrites quand ce n'était pas le cas et portent la mention « la marque n'existe pas dans Parker ». Cette mention est périmée depuis le 2026-09-06 et leurs blancs sur les commentaires publicitaires sont désormais fermés par ce document.
 
-**Parker MCP ne couvre pas cette marque.** `get_available_brands` renvoie une liste d'organisations vide au 2026-09-06. Conséquence directe : ni `search_customer_reviews_semantic`, ni `search_facebook_ad_comments_semantic`, ni `lookup_post_purchase_survey` ne peuvent être appelés. Les trois outils qui alimentent normalement cette passe sont hors service pour Raselio.
+**Ce que l'ouverture de Parker n'a pas débloqué.** Trois choses, et il faut les nommer pour que personne ne relance ces pistes en croyant qu'elles sont maintenant ouvertes. Les avis et les sondages restent à zéro, et l'outil dit lui-même que ce n'est pas un problème d'accès mais une base vide. Aucun outil Reddit n'existe dans cette installation Parker, ce qui est une capacité absente et non un accès refusé. L'historique de conversations Parker pour cette marque est vide, 0 fil, donc aucun échange antérieur ne peut compléter ce document.
 
-**Champs peuplés : aucun, côté client.** Aucun champ d'âge, de sexe, de région, de statut de premier achat, de note, de SKU ou de date ne porte de valeur liée à un texte client, parce qu'il n'y a pas de texte client. La ventilation d'âge du compte publicitaire existe mais décrit des achats, pas des phrases, et les deux ne doivent jamais être joints.
+**Le document de contexte de marque Parker, et le piège qu'il porte.** `get_brand_persona` renvoie un document riche et bien écrit qui contient une section « Customer Language » avec une douzaine de phrases entre guillemets. Ces phrases ne sont pas des clients de Raselio, le document le dit lui-même, et elles n'ont ni marque d'origine, ni date, ni lien. Le risque est le même que pour les faux témoignages de l'équipe : une phrase entre guillemets dans un document d'apparence officielle ressemble à une preuve. Elle ne l'est pas ici, et ce document les range en langage de catégorie à provenance incomplète, jamais en langage client. Le même document propose aussi cinq profils clients types nommés, Thomas, Nabil, Sandrine, Damien et Lucas. Ce sont des personas écrits par Parker, pas des slugs canoniques, et la bibliothèque VoC n'a pas le droit d'inventer de slug, donc aucun tag d'identité n'a été posé à partir d'eux.
 
-**Taille d'échantillon.** Le seuil habituel, marquer thin en dessous de dix enregistrements, ne s'applique pas ici parce qu'il n'y a aucun enregistrement. Toute la matière disponible est en dessous du seuil par construction. Les 11 commandes et les 6 achats attribués sont des échantillons minuscules et sont écrits comme tels partout.
+**Le blocage réseau reste total.** Quatre lectures directes tentées le 2026-09-06 pour cette passe, quatre `EGRESS_BLOCKED`, dont Wikipédia. Le statut du proxy renvoie `gateway answered 403 to CONNECT`. Aucun verbatim de catégorie n'est atteignable, donc l'axe de secours ne donne que des thèmes résumés par un outil.
 
-**Biais de source, dans les deux sens.** Le seul corpus textuel disponible est écrit par la marque, donc il est biaisé à 100 % vers ce que la marque croit. Le corpus de catégorie disponible est un résumé d'index américain, donc il est biaisé vers l'anglophone et vers les grandes marques américaines. Aucun des deux ne représente le client français de Raselio.
+**Champs peuplés, côté client.** Six champs sur douze : identifiant, type de source, plateforme, date, texte, lien, plus l'annonce d'origine. Six champs absents et importants : note, SKU, âge, sexe, région, statut d'acheteur. Les auteurs des deux commentaires sont anonymes, `author_id` et `author_name` vides sur les deux, donc rien n'est connu d'eux.
 
-**Ère produit.** La marque a connu trois configurations en six semaines, kit Cutlab, kit Raselio Pro™, puis tondeuse seule, et deux prix, 39,90 € puis 34,99 €. Aucune de ces ères ne porte d'avis, donc le calcul de sentiment par ère est impossible et le restera pour les deux premières.
+**Taille d'échantillon.** Le seuil de la méthode, marquer thin en dessous de dix enregistrements, s'applique à la totalité du corpus. Aucune récurrence supérieure à 1 n'est possible sur deux lignes, donc aucun motif ne peut être établi. Les 11 commandes et les 6 achats attribués sont eux aussi des échantillons minuscules et sont écrits comme tels.
 
-**Pas de visibilité LTV ni réachat.** 0 client récurrent sur 11, SKU unique, aucun abonnement. Aucune lecture de valeur vie ni de rachat n'est possible.
+**Biais de source, dans les deux sens.** Les deux enregistrements clients viennent d'une seule surface, les commentaires publicitaires, où les gens réagissent à une publicité et pas à un produit qu'ils ont utilisé. Le corpus textuel volumineux est écrit par la marque, donc biaisé à 100 % vers ce qu'elle croit. Le corpus de catégorie est un résumé d'index américain, biaisé vers l'anglophone et vers les grandes marques américaines.
 
-**Aucune trajectoire.** Première version de ce document. Le tableau de compteurs de la section sentiment est le point zéro contre lequel le prochain run mesurera un mouvement.
+**Ère produit.** La marque a connu trois configurations en six semaines, kit Cutlab, kit Raselio Pro™, puis tondeuse seule, et deux prix, 39,90 € puis 34,99 €. Les deux commentaires datent de l'ère actuelle, fin août et début septembre, donc l'ère est propre pour eux. Les deux ères antérieures n'ont aucun enregistrement.
+
+**Pas de visibilité LTV ni réachat.** 0 client récurrent sur 11, SKU unique, aucun abonnement.
+
+**Aucune trajectoire.** Première version de ce document. Le tableau de compteurs de la section sentiment est le point zéro.
 
 ---
 

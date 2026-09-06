@@ -7,12 +7,12 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 0
 category_theme_entries: 1
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu ; 11 colis livrés et 0 réaction écrite
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/shopify-orders-and-customers.md, source-pulls/gmail-brand-signals.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun des deux ne rapporte une surprise. 11 colis livrés et 0 réaction écrite
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/shopify-orders-and-customers.md, source-pulls/gmail-brand-signals.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md]
-data_limitations: [Aucune surprise agréable rapportée par un client n'existe. Cette catégorie est structurellement impossible à remplir sans langage client, plus encore que les autres, parce que sa définition même repose sur l'écart entre ce que le client attendait et ce qu'il a obtenu, et que seul le client peut dire ce qu'il attendait. Elle est aussi la seule des neuf où l'annexe de langage projeté est vide, et c'est délibéré : une surprise que la marque met en avant cesse d'être une surprise et devient une promesse, donc elle appartient au bac des résultats.]
+data_limitations: [Aucune surprise agréable rapportée par un client n'existe, et l'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires, dont aucun ne rapporte un usage et donc aucun ne peut rapporter une surprise. Cette catégorie est structurellement impossible à remplir sans langage client, plus encore que les autres, parce que sa définition même repose sur l'écart entre ce que le client attendait et ce qu'il a obtenu, et que seul le client peut dire ce qu'il attendait. Elle est aussi la seule des neuf où l'annexe de langage projeté est vide, et c'est délibéré : une surprise que la marque met en avant cesse d'être une surprise et devient une promesse, donc elle appartient au bac des résultats.]
 ---
 
 # VoC surprise/delight - Raselio
@@ -29,15 +29,18 @@ C'est pour cette raison que les entrées candidates ont toutes été renvoyées 
 
 **La conséquence, qui est un vrai constat et pas un vide.** Raselio ne connaît aujourd'hui aucun bénéfice de son produit qu'elle ne vende pas déjà. Ce n'est pas rassurant, c'est simplement l'état d'une marque qui n'a jamais entendu ses clients : la valeur non exploitée est précisément celle que seuls les utilisateurs découvrent, et onze utilisateurs n'ont rien écrit.
 
-**La piste de recherche.** Onze colis livrés entre le 2026-08-26 et le 2026-09-04, verified. 46 fils Gmail lus, 0 message de réaction. 0 avis, aucune application d'avis installée. 0 commentaire publicitaire lu sur 163 annonces et 1 084 clics. 0 verbatim de forum, toutes les lectures directes refusées, quatre tentatives de plus aujourd'hui, quatre `EGRESS_BLOCKED`. Aucune plateforme de suivi de colis ne porte de commentaire client : le rapport mensuel ParcelPanel du 2026-09-01 compte 6 expéditions et aucune interaction textuelle.
+**La piste de recherche, interrogée et pas déduite.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, et les outils ont été appelés le 2026-09-06. Avis : 0, avec un message de l'outil disant que la base est vide et que ce n'est pas un problème d'accès. Sondages post-achat : `totalResponsesForBrand: 0`, et c'est précisément l'outil qui remplirait cette catégorie le mieux. Commentaires publicitaires : `total: 2`, corpus complet, et ni « Plus rien de la bête sauvage qui sommeille en nous. » ni « Lol » ne rapporte un usage, donc aucun ne peut rapporter une surprise. Aucun outil Reddit dans cette installation. Historique de conversations Parker : 0 fil.
+
+À côté : onze colis livrés entre le 2026-08-26 et le 2026-09-04, verified, 46 fils Gmail lus, 0 message de réaction. 0 verbatim de forum, toutes les lectures directes refusées, quatre tentatives de plus le 2026-09-06, quatre `EGRESS_BLOCKED`. Aucune plateforme de suivi de colis ne porte de commentaire client : le rapport mensuel ParcelPanel du 2026-09-01 compte 6 expéditions et aucune interaction textuelle.
 
 ## Surprise/delight phrases
 
-**Aucune. 0 surprise capturée sur 0 enregistrement de langage client disponible.**
+**Aucune. 0 surprise capturée sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucune surprise agréable rapportée par un client de Raselio n'existe au 2026-09-06.
+# Corpus client interrogé le 2026-09-06 via Parker : 2 commentaires publicitaires au total,
+# 0 avis, 0 sondage post-achat. Aucun des deux ne rapporte un usage du produit.
 # Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: surprise_delight.
 ```
 

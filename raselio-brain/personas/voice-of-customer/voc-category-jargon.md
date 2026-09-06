@@ -7,21 +7,23 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 10
 category_theme_entries: 6
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/drive-9-ads-statiques-prompts-2026-08-23.md, sub-context-docs/community-and-forums.md, sub-context-docs/brand-identity-analysis.md, sub-context-docs/category-and-market-research.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun n'emploie un terme de catégorie
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/drive-9-ads-statiques-prompts-2026-08-23.md, sub-context-docs/community-and-forums.md, sub-context-docs/brand-identity-analysis.md, sub-context-docs/category-and-market-research.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md]
-data_limitations: [Aucun usage de vocabulaire par un client de Raselio n'a été observé, donc le bac reste vide. Le vocabulaire de la catégorie est attesté par des pages de marques et de blogs, jamais par des clients qui parlent entre eux, parce que toutes les surfaces de conversation entre pairs sont refusées par le proxy réseau : Reddit, Doctissimo, Au Féminin, jeuxvideo.com, Galaxus, Amazon.fr, treize refus le 2026-09-06 et quatre de plus aujourd'hui. Le risque de méthode est donc particulier ici : ce qui ressemble au vocabulaire de la catégorie est peut-être le vocabulaire des vendeurs de la catégorie, ce qui n'est pas la même chose et ne signale pas la même appartenance.]
+data_limitations: [Aucun usage de vocabulaire de catégorie par un client de Raselio n'a été observé, donc le bac reste vide. L'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires, dont le seul porteur de langage n'emploie aucun terme de catégorie mais construit une image, « la bête sauvage qui sommeille en nous », capturée dans voc-metaphor.md. C'est une observation en soi : le seul Français qui ait parlé à cette marque n'a pas parlé technique. Le vocabulaire de la catégorie est attesté par des pages de marques et de blogs, jamais par des clients qui parlent entre eux, parce que toutes les surfaces de conversation entre pairs sont refusées par le proxy réseau : Reddit, Doctissimo, Au Féminin, jeuxvideo.com, Galaxus, Amazon.fr, treize refus le 2026-09-06 et quatre de plus aujourd'hui. Le risque de méthode est donc particulier ici : ce qui ressemble au vocabulaire de la catégorie est peut-être le vocabulaire des vendeurs de la catégorie, ce qui n'est pas la même chose et ne signale pas la même appartenance.]
 ---
 
 # VoC category jargon - Raselio
 
 ## Ce que cette passe a trouvé
 
-**Zéro terme employé par un client de Raselio, et un vrai constat de méthode derrière ce vide : le vocabulaire français de cette catégorie est tenu par les vendeurs.**
+**Zéro terme de catégorie employé par un client de Raselio, et deux constats derrière ce vide.**
 
-C'est la conclusion la plus utile de cette passe et elle mérite d'être posée avant le reste.
+**Le premier constat vient du corpus, interrogé et pas déduit.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`. Les outils appelés le 2026-09-06 renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires. Le seul des deux qui porte du langage est « Plus rien de la bête sauvage qui sommeille en nous. » Aucun terme technique dedans. Ni sabot, ni repousse, ni poil incarné, ni rasage à blanc. Le seul Français qui ait parlé à cette marque a construit une image plutôt qu'employé un vocabulaire. Sur un enregistrement c'est anecdotique, mais ça pointe la même chose que la recherche : la fluence technique de cette catégorie n'est peut-être pas où on la cherche.
+
+**Le second constat vient de la recherche, et il est plus solide : le vocabulaire français de cette catégorie est tenu par les vendeurs.** C'est la conclusion la plus utile de cette passe et elle mérite d'être posée avant le reste.
 
 **Ce que la recherche a rendu.** Six requêtes WebSearch le 2026-09-06, dont deux en français sur le vocabulaire du rasage intime masculin. La quasi-totalité des résultats francophones sont des comparatifs, des blogs de marque et des pages d'instituts : Gillette France, Braun France, Le Mâle Français, Club Cooper, Billy Trimmer, Barbier Privé, Mamie Réglisse. Plusieurs de ces domaines appartiennent à des concurrents directs déjà listés dans le set concurrentiel. Aucune page de conversation entre pairs n'a été rendue lisible.
 
@@ -35,11 +37,12 @@ C'est la conclusion la plus utile de cette passe et elle mérite d'être posée 
 
 ## Category jargon
 
-**Aucun. 0 terme capturé sur 0 enregistrement de langage client disponible.**
+**Aucun. 0 terme capturé sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucun usage de vocabulaire par un client de Raselio n'existe au 2026-09-06.
+# Corpus client interrogé le 2026-09-06 via Parker : 2 commentaires publicitaires au total,
+# 0 avis, 0 sondage post-achat. Le seul porteur de langage n'emploie aucun terme technique.
 # Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: category_jargon.
 # Rappel de méthode : sur cette passe, le champ notes doit porter le sens du terme
 # ET les conditions d'usage observées. Sans usage observé, aucun terme ne peut être
@@ -75,7 +78,8 @@ C'est la conclusion la plus utile de cette passe et elle mérite d'être posée 
 | « démangeaisons après rasage » | La gêne qui apparaît 24 à 72 heures après, au moment de la repousse | Braun France, Mamie Réglisse | Idem. Converge avec la fenêtre de 3 jours que Raselio met en avant |
 | « style intégral », « brésilien » | L'épilation complète de la zone | Le Mâle Français, guides français | Idem. Vocabulaire que Raselio n'emploie jamais |
 | « sabot ajustable », « tonte maîtrisée » | Couper à longueur choisie plutôt que raser | Guides français de la catégorie | Idem. Très proche du vocabulaire de Raselio |
-| « manscaping », « ball trimmer », « below the belt », « groin groomer » | Le vocabulaire anglophone installé de la catégorie | Manscaped, Meridian, guides américains | **Anglophone, hors marché.** Aucun équivalent français installé, ce qui est le vrai constat de cette passe |
+| « manscaping », « ball trimmer », « below the belt », « groin groomer », « nether regions » | Le vocabulaire anglophone installé de la catégorie | Manscaped, Meridian, guides américains, plus le document de contexte de marque Parker qui cite « Taking any type of razor or trimmer to your nether regions can be daunting » | **Anglophone, hors marché.** Aucun équivalent français installé, ce qui est le vrai constat de cette passe. La citation Parker n'a ni marque, ni date, ni lien, donc stated et thin |
+| « la bête sauvage qui sommeille en nous » | La pilosité comme puissance en réserve | **Un client français, sous une annonce Raselio, le 2026-08-31.** Verified via Parker | Ce n'est pas du jargon, c'est une image, et elle est capturée dans voc-metaphor.md. Elle figure ici parce qu'elle est le seul mot français d'un vrai client sur ce sujet dans tout le coffre, et qu'il n'est pas technique |
 | « tondeuse » sans qualificatif | Lu comme un outil de jardin par l'index web francophone | 9 forums de tondeuses à gazon sur la requête de marque | Verified par la passe community-and-forums du 2026-09-06 |
 
 ## Open loops

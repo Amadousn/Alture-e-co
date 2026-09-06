@@ -7,12 +7,12 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 6
 category_theme_entries: 0
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, sub-context-docs/customer-journey-and-persona-discovery.md, sub-context-docs/brand-identity-analysis.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun des deux ne formule une aspiration
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, sub-context-docs/customer-journey-and-persona-discovery.md, sub-context-docs/brand-identity-analysis.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/advertising-to-older-audiences.md]
-data_limitations: [Aucune aspiration exprimée par un client n'existe. Cette catégorie porte un risque particulier que le prompt nomme lui-même : une aspiration projetée par la marque que les clients ne formulent jamais est le cas où la marque admire son propre reflet. Ici il n'y a que des aspirations projetées, donc le risque est intégral et non mesurable. Le langage de catégorie n'a rien donné sur ce terrain : les résumés WebSearch rendent des thèmes de performance produit, jamais de projet de soi.]
+data_limitations: [Aucune aspiration exprimée par un client n'existe, et l'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires dont aucun ne formule un projet de soi. Le seul commentaire porteur de langage, « Plus rien de la bête sauvage qui sommeille en nous. », est l'inverse d'une aspiration : il nomme une perte, pas un devenir souhaité, et il est capturé dans voc-metaphor.md et voc-objection.md. Cette catégorie porte un risque particulier que le prompt nomme lui-même : une aspiration projetée par la marque que les clients ne formulent jamais est le cas où la marque admire son propre reflet. Ici il n'y a que des aspirations projetées, donc le risque est intégral et non mesurable. Le langage de catégorie n'a rien donné sur ce terrain : les résumés WebSearch rendent des thèmes de performance produit, jamais de projet de soi.]
 ---
 
 # VoC aspirational - Raselio
@@ -27,17 +27,20 @@ Le prompt de cette passe nomme lui-même le danger : une aspiration que la marqu
 
 **Ce qui est intéressant, et qui est une lecture de moi et pas une observation.** Inferred. L'aspiration que Raselio construit n'est pas une aspiration de séduction, elle est une aspiration de non-gêne. Le client visé ne cherche pas à être remarqué, il cherche à ne pas être surpris. « Le facteur ne saura rien. Elle, si. » « Personne n'a besoin de savoir, tout le monde finira par remarquer. » C'est une aspiration défensive, et c'est cohérent avec une audience de 55 ans et plus pour qui l'enjeu est de rester à niveau plutôt que de se transformer. Cette lecture repose sur le texte de la marque et sur la ventilation d'âge du compte, pas sur une parole de client, et elle doit être testée avant d'être crue.
 
-**La piste de recherche.** Identique aux autres passes et détaillée dans `voc-corpus-profile.md` : 0 avis, 0 sondage, 0 commentaire publicitaire lu sur 163 annonces, 0 verbatim de forum, 0 message client dans 46 fils Gmail, aucune lecture directe du web possible, quatre tentatives refusées le 2026-09-06.
+**La piste de recherche, interrogée et pas déduite.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, et les outils ont été appelés le 2026-09-06. Avis : 0, avec un message de l'outil précisant que la base est vide et que ce n'est pas un problème d'accès. Sondages post-achat : 0. Commentaires publicitaires : `total: 2`, corpus complet. Aucun des deux ne formule une aspiration, et le seul porteur de langage dit exactement le contraire, il nomme une perte. Aucun outil Reddit dans cette installation. Historique de conversations Parker : 0 fil. Gmail : 0 message client sur 46 fils. Forums et avis tiers : aucune lecture directe possible, quatre tentatives refusées le 2026-09-06 s'ajoutant aux treize d'une passe antérieure.
+
+**Un fait qui vaut d'être mis en face du corpus projeté.** La marque écrit six aspirations positives, sérénité, présentabilité, confiance. La seule voix française qu'elle ait reçue parle d'une perte. Un enregistrement contre six lignes de copie, ce n'est pas un verdict, mais c'est la seule fois où le réel a répondu, et il a répondu à côté.
 
 **Ce que le langage de catégorie n'a pas donné.** Six requêtes WebSearch le 2026-09-06 sur les avis de produits comparables ont rendu des thèmes de performance, sécurité, coupures, repousse, abonnement. Rien sur ce que les hommes de cette catégorie veulent devenir. C'est un vide de plus, et il est peut-être significatif : la conversation publique de cette catégorie parle d'outils et de peau, pas de projet de soi. Marqué inferred, confiance faible, parce que six requêtes sur un index américain ne sont pas une lecture de catégorie.
 
 ## Aspirational phrases
 
-**Aucune. 0 aspiration capturée sur 0 enregistrement de langage client disponible.**
+**Aucune. 0 aspiration capturée sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucune aspiration formulée par un client de Raselio n'existe au 2026-09-06.
+# Corpus client interrogé le 2026-09-06 via Parker : 2 commentaires publicitaires au total,
+# 0 avis, 0 sondage post-achat. Aucun des deux commentaires ne formule un projet de soi.
 # Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: aspirational.
 ```
 
@@ -159,7 +162,11 @@ Le prompt de cette passe nomme lui-même le danger : une aspiration que la marqu
 
 ## Annexe B — Aspirations de catégorie, clients d'autres marques
 
-**Vide. Aucune aspiration de catégorie n'a pu être obtenue.** Six requêtes WebSearch le 2026-09-06 rendent des thèmes de performance et de sécurité produit. Quatre lectures directes tentées, quatre `EGRESS_BLOCKED`. Rien sur ce que les hommes de cette catégorie veulent devenir.
+**Presque vide, et l'absence est elle-même le résultat.** Six requêtes WebSearch le 2026-09-06 rendent des thèmes de performance et de sécurité produit. Quatre lectures directes tentées, quatre `EGRESS_BLOCKED`.
+
+Une seule ligne du document de contexte de marque Parker approche d'une aspiration, et elle est mince : « I feel more clean, cool, and confident — plus the wife likes it. » Le document l'attribue à une analyse d'avis de concurrents, sans nommer la marque, sans date et sans lien, donc `stated`, `thin`, provenance incomplète. Ce n'est d'ailleurs pas vraiment une aspiration mais un résultat déjà obtenu, et elle est rangée dans `voc-outcome-phrase.md`.
+
+**Ce que ce vide dit, marqué inferred et à confiance faible.** La conversation publique de cette catégorie parle d'outils, de peau et de sécurité, pas de projet de soi. Si cela se confirme quand les surfaces s'ouvriront, alors l'aspiration est un terrain que personne n'occupe, ce qui est autant une opportunité qu'un avertissement.
 
 ## Open loops
 

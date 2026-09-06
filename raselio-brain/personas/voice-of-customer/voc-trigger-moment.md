@@ -7,12 +7,12 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 6
 category_theme_entries: 1
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu ; 11 achats datés dont aucun n'est expliqué par son acheteur
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-orders-and-customers.md, source-pulls/shopify-analytics.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/meta-account-breakdowns.md, sub-context-docs/customer-journey-and-persona-discovery.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun des deux ne raconte un moment d'achat. 11 achats datés dont aucun n'est expliqué par son acheteur
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-orders-and-customers.md, source-pulls/shopify-analytics.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/meta-account-breakdowns.md, sub-context-docs/customer-journey-and-persona-discovery.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06, donc le champ behavioral_signal_tag, que ce prompt désigne comme porteur et rarement nul, est nul partout par obligation
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/emotional-delivery-and-timing.md]
-data_limitations: [Aucun moment déclencheur raconté par un client n'existe. Onze achats sont datés au jour près, du 2026-08-26 au 2026-09-04, et aucun ne porte la moindre indication de ce qui se passait dans la vie de l'acheteur. Le champ behavioral_signal_tag, que ce prompt désigne comme porteur et devant rarement être nul, est nul partout, faute de slugs persona et faute d'enregistrements. Les données d'horaire et de saisonnalité de la boutique décrivent quand on achète, jamais pourquoi maintenant, et les deux ne doivent pas être confondues.]
+data_limitations: [Aucun moment déclencheur raconté par un client n'existe, et l'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires, dont ni l'un ni l'autre ne raconte un moment d'achat et dont rien ne dit que les auteurs aient acheté. Onze achats sont datés au jour près, du 2026-08-26 au 2026-09-04, et aucun ne porte la moindre indication de ce qui se passait dans la vie de l'acheteur. Le champ behavioral_signal_tag, que ce prompt désigne comme porteur et devant rarement être nul, est nul partout, faute de slugs persona et faute d'enregistrements. Les données d'horaire et de saisonnalité de la boutique décrivent quand on achète, jamais pourquoi maintenant, et les deux ne doivent pas être confondues.]
 ---
 
 # VoC trigger moment - Raselio
@@ -22,6 +22,8 @@ data_limitations: [Aucun moment déclencheur raconté par un client n'existe. On
 **Zéro moment déclencheur raconté par un client. Onze achats datés et pas une raison.**
 
 Cette passe est celle où la différence entre une donnée de comportement et une parole de client est la plus facile à confondre, donc je la pose d'entrée.
+
+**Ce que les outils ont rendu, interrogés le 2026-09-06.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`. Avis : 0, l'outil précisant que la base est vide et que ce n'est pas un problème d'accès. Sondages post-achat : 0. Commentaires publicitaires : `total: 2`, corpus complet, et aucun des deux ne raconte un moment. Rien ne dit d'ailleurs que leurs auteurs aient acheté quoi que ce soit. Aucun outil Reddit dans cette installation. Historique de conversations Parker : 0 fil. Un sondage post-achat est, de très loin, l'outil qui remplirait cette catégorie le plus vite, et il n'existe pas.
 
 **Ce que je sais, et qui n'est pas un déclencheur.** Verified sur Shopify : onze commandes entre le 2026-08-26 et le 2026-09-04, une à 39,90 € puis dix à 34,99 €. Le résumé hebdomadaire Shopify du 2026-08-31 montre la répartition de la semaine du 24 au 30 août : lundi 0, mardi 0, mercredi 2, jeudi 1, vendredi 1, samedi 0, dimanche 2. Verified sur Meta : les 6 achats attribués du périmètre Raselio, dont l'équipe note que 100 % viennent d'hommes de 45 ans et plus avec un cœur à 55-64 ans, et 100 % sur mobile pour les achats tracés, stated. Toutes ces lignes disent quand et par qui. Aucune ne dit ce qui se passait ce jour-là dans la vie de l'homme qui a payé.
 
@@ -33,12 +35,14 @@ Cette passe est celle où la différence entre une donnée de comportement et un
 
 ## Trigger moments
 
-**Aucun. 0 moment capturé sur 0 enregistrement de langage client disponible.**
+**Aucun. 0 moment capturé sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucun récit de moment d'achat par un client de Raselio n'existe au 2026-09-06.
-# 11 achats datés, 0 raison connue.
+# Corpus client interrogé le 2026-09-06 via Parker : 2 commentaires publicitaires au total,
+# 0 avis, 0 sondage post-achat. Aucun des deux ne raconte un moment d'achat et rien ne dit
+# que leurs auteurs aient acheté.
+# 11 achats datés à la minute, 0 raison connue.
 # Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: trigger_moment.
 # Rappel : behavioral_signal_tag devrait rarement être nul sur cette passe. Il l'est ici
 # par double obligation, aucun enregistrement et aucun slug persona disponible.

@@ -7,12 +7,12 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 4
 category_theme_entries: 2
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/brandsearch-competitors.md, sub-context-docs/competitive-landscape.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun ne rejette un discours de catégorie
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0), semantic_search_post_purchase_survey (0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/brandsearch-competitors.md, sub-context-docs/competitive-landscape.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/advertising-to-older-audiences.md]
-data_limitations: [Aucun rejet formulé par un client de Raselio n'existe. Cette catégorie a une particularité : la marque a elle-même écrit une posture de rejet, « Vous ne payez pas la pub. Vous payez la lame. », et le prompt prévient qu'une posture de rejet semée par la marque et renvoyée par le client ne compte pas. Ici il n'y a que la posture semée, sans personne pour la renvoyer. Le seul contre-langage attesté ailleurs concerne un concurrent américain, Manscaped, sur son modèle d'abonnement, ce qui est sans objet direct pour une marque française en paiement unique.]
+data_limitations: [Aucun rejet de discours formulé par un client de Raselio n'existe, et l'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires. Le seul porteur de langage, « Plus rien de la bête sauvage qui sommeille en nous. », rejette la proposition du produit et non la façon dont on la lui vend, donc il est capturé en objection et en image, pas ici. Cette catégorie a une particularité : la marque a elle-même écrit une posture de rejet, « Vous ne payez pas la pub. Vous payez la lame. », et le prompt prévient qu'une posture de rejet semée par la marque et renvoyée par le client ne compte pas. Ici il n'y a que la posture semée, sans personne pour la renvoyer. Le seul contre-langage attesté ailleurs concerne un concurrent américain, Manscaped, sur son modèle d'abonnement, ce qui est sans objet direct pour une marque française en paiement unique.]
 ---
 
 # VoC anti-language - Raselio
@@ -31,15 +31,19 @@ C'est un contre-langage bien construit et il vise juste sur le papier : il nomme
 
 **La note de méthode qui rend ce risque plus lourd.** La lecture des audiences plus âgées dit que pour cette tranche d'âge, un nombre élevé d'avis lit comme une preuve réelle, et que l'autorité est le raccourci de confiance. Les 6 achats attribués du compte portent tous sur des hommes de 45 ans et plus, verified. La fausse preuve est donc placée exactement devant le public qui y accorde le plus de poids.
 
-**La piste de recherche.** Identique aux autres passes, détaillée dans `voc-corpus-profile.md`. Aucune surface où un client pourrait exprimer un rejet n'a été lue : 0 avis, 0 commentaire publicitaire sur 163 annonces, 0 verbatim de forum, treize lectures refusées le 2026-09-06 et quatre de plus aujourd'hui.
+**La piste de recherche, interrogée et pas déduite.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, et les outils ont été appelés le 2026-09-06. Avis : 0, l'outil précisant que la base est vide et que ce n'est pas un problème d'accès. Sondages post-achat : 0. Commentaires publicitaires : `total: 2`, corpus complet. Le seul porteur de langage, « Plus rien de la bête sauvage qui sommeille en nous. », ne rejette pas la façon dont on lui parle, il rejette ce qu'on lui propose de faire. C'est une objection, pas un contre-langage, et elle est capturée dans `voc-objection.md` et `voc-metaphor.md`. Aucun outil Reddit dans cette installation. Historique de conversations Parker : 0 fil. Forums et avis tiers : treize lectures refusées le 2026-09-06 par une passe antérieure et quatre de plus pour cette passe.
+
+**La distinction vaut d'être tenue, parce qu'elle est facile à laisser filer.** Un homme qui se moque de ce qu'on lui demande de raser n'est pas en train de critiquer la publicité. Il critique l'idée. Les ranger ensemble donnerait à cette marque une règle de ne-pas-dire qui n'existe pas.
 
 ## Anti-language
 
-**Aucun. 0 rejet capturé sur 0 enregistrement de langage client disponible.**
+**Aucun. 0 rejet capturé sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucun rejet de discours formulé par un client de Raselio n'existe au 2026-09-06.
+# Corpus client interrogé le 2026-09-06 via Parker : 2 commentaires publicitaires au total,
+# 0 avis, 0 sondage post-achat. Le seul porteur de langage rejette la proposition du produit,
+# pas la façon dont on la vend : il est capturé dans voc-objection.md et voc-metaphor.md.
 # Schéma en attente : voir voc-pain-phrase.md, même structure, avec category: anti_language.
 # Rappel de méthode : sur cette passe, le champ notes doit nommer les mots, revendications
 # ou tons précis à éviter. Sans rejet observé, aucune règle de ne-pas-dire n'est produite,
@@ -127,6 +131,17 @@ C'est un contre-langage bien construit et il vise juste sur le papier : il nomme
 **Le contre-langage que la marque s'expose à recevoir.** Inferred, à confiance mixte. Les surfaces qui l'exposent, toutes verified : « 4,7/5 » et « (1 734 avis) » en haut de la landing pour 0 avis réel, « +17 000 clients satisfaits » dans la barre de confiance pour 11 commandes, « Approuvée par plus de 17 000 hommes » sur 8 des 30 créas du lot du 2026-09-03 dont une version antérieure disait 35 000, un advertorial signé « Par Julien M. » qui n'identifie personne, et des témoignages attribués à « Hervé D. », « Catherine » et « Bernard L. » que l'équipe documente elle-même comme inventés. Le même « 1 734 avis » figure sur la marque sœur Trael, ce qui pointe un gabarit recopié. Rien de tout cela n'est un rejet observé. C'est la surface de risque, listée pour que la question soit posée avant qu'un client ne la pose.
 
 ## Annexe B — Rejets de catégorie, clients d'autres marques
+
+**B1. Citations tirées du document de contexte de marque Parker.** `get_brand_persona`, appelé le 2026-09-06, contient des phrases entre guillemets que le document attribue lui-même à une analyse d'avis de concurrents, sans nommer la marque, sans date et sans lien. `stated`, `thin`, provenance incomplète.
+
+| Verbatim | Ce qui est rejeté | Convergence avec la posture de Raselio |
+|---|---|---|
+| « The trimmer is priced higher than some competitors » et « replacement blades can be expensive » | Le coût récurrent d'un modèle à lames de remplacement | Directe avec « Pas d'abonnement » et « Vous ne payez pas la pub. Vous payez la lame. » |
+| « For a man who grooms occasionally, the Meridian delivers 80% of the result at less than half the price. » | Le prix premium qui ne se justifie pas par l'usage réel | Directe avec le positionnement à 34,99 €. C'est aussi la seule citation du lot qui nomme une marque |
+
+**Ce que ces deux lignes ne disent pas.** Elles rejettent des prix et des modèles économiques, pas des façons de parler. Aucune citation disponible ne rejette un ton, un mot ou une posture de marketing, ce qui est exactement ce qu'une passe de contre-langage cherche. Sur ce terrain précis, le corpus reste muet.
+
+**B2. Thèmes résumés par WebSearch, aucun verbatim.**
 
 | Rejet de catégorie | Marque dont les clients sont concernés | Source | Statut |
 |---|---|---|---|

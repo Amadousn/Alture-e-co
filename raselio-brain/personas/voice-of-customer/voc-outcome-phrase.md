@@ -7,12 +7,12 @@ corpus_profile: personas/voice-of-customer/voc-corpus-profile.md
 customer_snippets_captured: 0
 brand_projected_entries_quarantined: 7
 category_theme_entries: 2
-corpus_denominator: 0 enregistrement de langage client sur 0 reçu ; 11 acheteurs et 0 retour d'usage écrit
-sources_read: [personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/shopify-orders-and-customers.md, source-pulls/gmail-brand-signals.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
+corpus_denominator: 2 enregistrements de langage client lus sur 2 existants, tirés de Parker le 2026-09-06 ; aucun des deux ne rapporte un usage. 11 acheteurs et 0 retour d'usage écrit
+sources_read: [Parker MCP brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — search_facebook_ad_comments_sql et semantic (2 lignes, total 2), search_customer_reviews_sql et semantic (0, message explicite de base vide), semantic_search_post_purchase_survey (totalResponsesForBrand 0), get_brand_persona, appelés le 2026-09-06, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/shopify-store-and-product.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md, source-pulls/drive-30-creas-json-2026-09-03.md, source-pulls/shopify-orders-and-customers.md, source-pulls/gmail-brand-signals.md, sub-context-docs/reputation-analysis.md, WebSearch 2026-09-06]
 sources_missing: [customer-reviews, ad-comments, post-purchase-surveys, reddit, other-reviews, organic-social]
 persona_slugs_available: aucun. `personas/personas-profile.md` n'existe pas au 2026-09-06
 methods_loaded: [creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/persona-research-and-creative-strategy-process.md]
-data_limitations: [Aucun résultat rapporté par un client n'existe. 11 appareils ont été livrés entre le 2026-08-26 et le 2026-09-04 et pas un acheteur n'a écrit un mot sur ce qu'il a obtenu. Conséquence directe et la plus lourde de tout le système VoC : le gouverneur de conformité de revendication ne peut se régler contre rien d'autre que la fiche produit, donc toute promesse de résultat écrite par la marque est non substantiée par l'usage et doit être marquée gated par défaut dans la bibliothèque assemblée. Deux specs de la fiche sont elles-mêmes marquées « à confirmer » par l'équipe, le régime moteur et l'autonomie exacte.]
+data_limitations: [Aucun résultat rapporté par un utilisateur n'existe, et cette fois l'absence a été interrogée et non déduite : les outils Parker renvoient 0 avis, 0 sondage post-achat et 2 commentaires publicitaires dont aucun ne parle d'un usage. 11 appareils ont été livrés entre le 2026-08-26 et le 2026-09-04 et pas un acheteur n'a écrit un mot sur ce qu'il a obtenu. Conséquence directe et la plus lourde de tout le système VoC : le gouverneur de conformité de revendication ne peut se régler contre rien d'autre que la fiche produit, donc toute promesse de résultat écrite par la marque est non substantiée par l'usage et doit être marquée gated par défaut dans la bibliothèque assemblée. Deux specs de la fiche sont elles-mêmes marquées « à confirmer » par l'équipe, le régime moteur et l'autonomie exacte.]
 ---
 
 # VoC outcome phrase - Raselio
@@ -27,18 +27,21 @@ Une phrase de résultat est la seule chose qui prouve qu'un produit fait ce qu'i
 
 **La conséquence pratique, écrite clairement pour la passe d'assemblage :** toute promesse de résultat de cette marque est aujourd'hui `gated`, pas `clear`. Pas parce qu'elle est fausse. Parce que rien ne permet de dire qu'elle est vraie.
 
-**La piste de recherche.** Onze commandes entre le 2026-08-26 et le 2026-09-04, verified sur Shopify, 14 fiches clients, 0 client récurrent sur 11, 0 retour demandé, 0 réclamation sur 46 fils Gmail lus. Aucune application d'avis n'est installée, donc aucun acheteur n'a même eu l'occasion d'écrire. Les commentaires publicitaires sous 163 annonces et 1 084 clics n'ont jamais été ouverts. Toutes les surfaces tierces sont refusées par le proxy réseau, y compris aujourd'hui, quatre tentatives, quatre `EGRESS_BLOCKED`.
+**La piste de recherche, et cette fois elle passe par les outils.** La marque existe désormais dans Parker MCP, brand_id `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, donc les sources ont été interrogées le 2026-09-06 et pas déduites. Avis : 0, et l'outil répond en toutes lettres que la base ne contient aucun avis et que ce n'est pas un problème d'accès. Sondages post-achat : `totalResponsesForBrand: 0`. Commentaires publicitaires : `total: 2`, corpus complet, et aucun des deux ne parle d'un usage du produit. « Plus rien de la bête sauvage qui sommeille en nous. » est une réaction à une publicité, pas un retour d'utilisateur, et « Lol » fait trois caractères. Aucun outil Reddit n'existe dans cette installation. Historique de conversations Parker : 0 fil.
+
+À côté, ce que la boutique montre : onze commandes entre le 2026-08-26 et le 2026-09-04, verified, 14 fiches clients, 0 client récurrent sur 11, 0 retour demandé, 0 réclamation sur 46 fils Gmail lus. Aucune application d'avis n'est installée, donc aucun acheteur n'a même eu l'occasion d'écrire. Toutes les surfaces tierces restent refusées par le proxy réseau, quatre tentatives de plus le 2026-09-06, quatre `EGRESS_BLOCKED`.
 
 **Une note sur le zéro réachat.** 0 client récurrent sur 11 n'est pas un signal de mécontentement. Le produit est un appareil à 34,99 € garanti 2 ans, avec un seul SKU au catalogue. Il n'y a rien à racheter. Le champ est donc muet par construction, et le lire comme un résultat négatif serait une erreur.
 
 ## Outcome phrases
 
-**Aucune. 0 phrase capturée sur 0 enregistrement de langage client disponible.**
+**Aucune. 0 phrase capturée sur 2 enregistrements de langage client lus.**
 
 ```yaml
 # 0 entrée.
-# Aucun résultat rapporté par un client de Raselio n'existe au 2026-09-06.
-# 11 acheteurs, 0 retour écrit, 0 avis, 0 sondage, 0 commentaire publicitaire lu.
+# Corpus client interrogé le 2026-09-06 via Parker : 0 avis, 0 sondage post-achat,
+# 2 commentaires publicitaires dont aucun ne rapporte un usage du produit.
+# 11 acheteurs, 0 retour écrit.
 # Schéma en attente de la première source réelle : voir voc-pain-phrase.md, même structure,
 # avec category: outcome_phrase.
 ```
@@ -184,7 +187,22 @@ Une phrase de résultat est la seule chose qui prouve qu'un produit fait ce qu'i
 
 **Une revendication à part, qui n'est pas une promesse de résultat mais une affirmation de preuve.** La FAQ de la landing écrit : « La majorité de nos clients constatent nettement moins de rougeurs et de démangeaisons qu'avec un rasoir. » Verified sur l'export du 2026-09-06. Il y a onze clients et aucun n'a constaté quoi que ce soit par écrit. Cette phrase n'est pas un résultat projeté, c'est une affirmation sur des clients qui n'ont pas parlé. Elle est classée `unusable` et elle doit être corrigée sur le site avant d'être discutée comme matériau créatif.
 
-## Annexe B — Thèmes de résultat de la catégorie, clients d'autres marques
+## Annexe B — Résultats de la catégorie, clients d'autres marques
+
+**B1. Citations tirées du document de contexte de marque Parker.** `get_brand_persona`, appelé le 2026-09-06, contient des phrases entre guillemets que le document attribue lui-même à une analyse d'avis de concurrents. Aucune ne porte le nom de sa marque, de date ni de lien. `stated`, `thin`, provenance incomplète, jamais des clients de Raselio.
+
+| Verbatim | Résultat qu'il porte | Convergence avec ce que Raselio promet |
+|---|---|---|
+| « The small head moved in and out of crevices easily, and felt very safe with no risk of pain. » | Maniabilité dans les plis et sensation de sécurité | Forte. C'est mot pour mot l'argument de la tête arrondie |
+| « No pulling or tugging of hair. » | Absence de tirage | Forte. C'est l'argument des lames céramique |
+| « It is handy for obscure places and so far it has not nicked me. » | Zones difficiles, et prudence dans la formulation, « so far » | Forte sur le fond. **La prudence de la formulation est instructive : un vrai client dit « pas encore », la marque dit « 0 coupure »** |
+| « I feel more clean, cool, and confident — plus the wife likes it. » | Propreté, confiance, et regard de la partenaire dans la même phrase | Très forte. C'est exactement la structure que Raselio met en scène avec « Elle a remarqué. » |
+| « Game changer » | Expression de conversion, désignée comme la plus courante de la catégorie | Aucune. Raselio n'emploie jamais ce registre, et c'est cohérent avec sa voix sobre |
+| « Better than expected — great for sensitive areas » | Attente basse dépassée | Aucune. Raselio ne joue jamais sur l'attente basse, elle promet haut d'emblée |
+
+**Ce que j'en retire, marqué inferred.** Le langage de résultat de cette catégorie est prudent, relatif et concret. « So far it has not nicked me » est plus crédible que « 0 coupure », et « more clean, cool, and confident » est plus modeste que « vous respirez normalement ». Sur ce point, une phrase de client sonne moins fort et plus vrai que ce que la marque écrit. Une piste, pas une conclusion : six citations sans marque et sans date ne font pas une lecture de catégorie.
+
+**B2. Thèmes résumés par WebSearch, aucun verbatim.**
 
 | Thème de résultat | Marque dont les clients sont concernés | Source | Statut |
 |---|---|---|---|
