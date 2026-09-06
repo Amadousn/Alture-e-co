@@ -1,18 +1,19 @@
 # BUILD-STATUS — Raselio brand brain
 
-**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 (sources presque complètes ; branche 1A démarrée) · dernière mise à jour 2026-09-06 08:05 UTC
+**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 — branche A (fondation marque) en cours, sources quasi complètes · dernière mise à jour 2026-09-06 08:30 UTC
 
 **En attente de vous : rien pour l'instant.** Le build tourne sans intervention. Les questions que seul vous pouvez trancher sont consignées dans `running-notes/missing-context.md` et vous seront présentées à la fin, avec la roadmap stratégique à valider.
 
-Ce qui se passe maintenant : les sources Shopify, Gmail et une partie de Drive sont dans `source-pulls/` (sauvegardées sur la branche). Deux extractions (compte Meta ; reste de Drive + concurrents Brandsearch) avaient été coupées par la limite d'usage de la session à 07:00 UTC et ont été relancées à 08:02 UTC. La branche 1A (identité, site, opérations, calendrier) tourne en parallèle.
+Ce qui se passe maintenant : les sources Shopify, Gmail, Google Drive et Brandsearch sont complètes ; les extractions Meta (campagnes, ad sets, 183 annonces, ventilations, tendances) sont écrites. Reste le corpus de copy des créatives et la bibliothèque publicitaire, en cours. Trois agents écrivent en parallèle les tranches de fondation. La session avait atteint sa limite d'usage à 07:00 puis 08:10 UTC, ce qui a coupé plusieurs agents en vol ; leur travail déjà écrit a été conservé et poussé, et ils ont été relancés.
 
 ## Tableau de bord
 
 | Bloc | Fait / Total |
 |---|---|
-| Phase 0 — dossier, méthode montée (v15), skills, hooks, notes | 6 / 7 (reste : sources brutes) |
+| Phase 0 — dossier, méthode montée (v15), skills, hooks, notes | 7 / 7 |
+| Sources brutes | 5 / 6 surfaces |
 | Phase 1E — audits de référence (interne + externe) | 0 / 17 |
-| Phase 1A — fondation marque (13 tranches + synthèse) | 0 / 14 |
+| Phase 1A — fondation marque (13 tranches + synthèse) | 2 / 14 (6 en cours) |
 | Phase 1B — concurrents (3 × 10 + thèse) | 0 / 31 |
 | Phase 1C — sources personas + synthèses | 0 / 12 |
 | Phase 1D — voix du client | 0 / 12 |
@@ -32,7 +33,12 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [done] `parker_config.json`, `running-notes/standard-sync.md`
 - [done] Intake (à partir des documents de l'équipe) → `running-notes/brand-rules.md`, `success-definition.md`, `missing-context.md`
 - [done] `BUILD-STATUS.md`
-- [running] Sources brutes → `source-pulls/` (Shopify ✓, Gmail ✓, Drive 7/10, Meta en cours, Brandsearch en cours)
+- [done] Sources Shopify (boutique, produit, pages, politiques, commandes, clients, 8 requêtes analytics)
+- [done] Sources Gmail (46 fils, corps complets des signaux clés)
+- [done] Sources Google Drive (11 documents équipe + inventaire)
+- [done] Sources Brandsearch (concurrents, corpus publicitaire Thomyle)
+- [done] Sources Meta (5 campagnes, 16 ad sets, 183 annonces, ventilations âge/genre et placements, série quotidienne, tendances)
+- [running] Corpus copy des créatives Meta + bibliothèque publicitaire FR
 
 ### Phase 1E — audits de référence
 - [pending] audits-quarterly/90-day-creative-strategy-audit → `audits/2026-Q3/90-day-creative-strategy-audit.md`
@@ -54,8 +60,11 @@ Statuts : `pending` · `running` · `done` · `blocked (raison)`.
 - [pending] audits-monthly-external/monthly-top-impressions-report → `audits/2026-09/external/…`
 
 ### Phase 1A — fondation marque
-- [running] brand-identity-analysis · operations-and-team · website-and-product-audit · marketing-calendar-and-campaigns
-- [pending] category-and-market-research · competitive-landscape · customer-journey-and-persona-discovery · community-and-forums · reputation-analysis · visual-vocabulary → `sub-context-docs/`
+- [done] brand-identity-analysis → `sub-context-docs/brand-identity-analysis.md`
+- [done] website-and-product-audit → `sub-context-docs/website-and-product-audit.md`
+- [running] operations-and-team · marketing-calendar-and-campaigns · category-and-market-research
+- [running] competitive-landscape · customer-journey-and-persona-discovery · community-and-forums
+- [pending] reputation-analysis · visual-vocabulary → `sub-context-docs/`
 - [pending] ad-account-evaluation · performance-targets-and-metrics · organic-channels-inventory (bloqués sur 1E) → `sub-context-docs/`
 - [pending] brand-profile-narrative → `sub-context-docs/brand-profile-narrative.md`
 
