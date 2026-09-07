@@ -145,6 +145,44 @@ Ce repère est vrai contre Billy et contre Manscaped. **Il est faux contre le ra
 
 **Nuance d'attention sur l'âge, inferred, confiance mixed :** l'âge de l'acheteur pourrait être un artefact d'emplacement. Aucun ad set n'a jamais restreint l'âge et 70,7 % de la dépense a fini sur le fil Facebook, l'emplacement le plus âgé de la plateforme. Le test qui trancherait n'a jamais été fait.
 
+## Ce que la semaine du 2026-09-07 a appris
+
+Ajouté par `/self-improve` le 2026-09-07 à 18h. Première conversation réelle entre Dylan et Parker : tout ce bloc vient de ses messages ou de pulls faits pendant cette conversation.
+
+### La première journée rentable, et la leçon de lecture qui va avec
+
+**Le 2026-09-07 : 4 commandes, 139,96 € pour 32,94 € de publicité, environ +56 € net. Meilleure journée de la boutique**, verified sur Shopify et sur le pull Meta direct. Les trois semaines d'avant faisaient 6, 6 et 4 commandes par semaine.
+
+**Et la leçon de méthode, qui vaut plus que la journée elle-même.** Le compte affichait ce jour-là un ROAS de 4,25 et un CPA de 8,24 €. Faux tous les deux : 4 achats sur **38 clics**, soit 10,5 % de conversion, contre 1 à 2 % la semaine précédente. Meta date la dépense au jour de l'impression et l'achat au jour du paiement, jusqu'à sept jours après le clic. Les acheteurs de ce jour-là avaient cliqué les jours où le ROAS affichait 0,52 et 0,66.
+
+**Règle posée : sur ce compte, le CPA du jour ne veut rien dire. On lit le CPA glissant sur 7 jours, toujours.** Cumul du 31/08 au 07/09 : 384,29 € de publicité, 10 commandes, résultat net environ −148 €.
+
+**Règle de montée en budget, posée le même jour :** ne jamais monter sur une seule bonne journée. Attendre trois jours. Si le CPA glissant passe sous 25 €, monter de 20 à 30 %, jamais tripler — au-delà de 30 % Meta remet la campagne en apprentissage et on perd le réglage qui vient de produire le résultat.
+
+### Le chiffre de marge de Dylan est meilleur que celui de Parker
+
+Verified le 2026-09-07 : sa marge unitaire annoncée est plus juste que les 23,58 € `inferred` du coffre, parce qu'il connaît son port et ses frais de paiement réels et que Parker ne les a pas. **Le coût produit n'est renseigné nulle part dans Shopify** (`inventoryItem.unitCost` est `null`, verified). Tant qu'il ne l'est pas, tout calcul de rentabilité de ce cerveau porte une estimation. Quand Dylan donne un chiffre de marge ou de bénéfice, c'est lui qui fait foi.
+
+### Ce que les concurrents apprennent, et le plus utile est contre-intuitif
+
+Trois pulls du 2026-09-07, détaillés dans `competitors/_mecanismes-a-decliner.md`.
+
+**Le petit chiffre bat le gros.** Les dix dernières annonces de Grümwise portent toutes le même titre de lien : « **Trusted by 1000+ guys** », verified. Mille, pas quatorze millions comme Manscaped. Une marque qui fait tourner 484 annonces choisit de revendiquer mille clients, parce qu'un chiffre modeste et plausible n'active pas le soupçon chez un homme de soixante ans dont la première crainte est l'arnaque. **C'est l'argument le plus solide contre les « 35 000 hommes » qui tournent aujourd'hui, et il est commercial avant d'être réglementaire.**
+
+**Le whitespace est un niveau de conscience, pas un angle.** Manscaped consacre **4,9 % de ses 611 annonces indexées** à un homme qui n'a pas encore identifié son problème ; 69,9 % s'adressent à quelqu'un qui compare déjà des solutions. Michel, 61 ans, n'est pas là. Le leader mondial laisse ce terrain quasiment vide, et c'est le seul endroit où Raselio a un avantage de structure et pas un désavantage de budget.
+
+**Le format que Raselio a trouvé par accident est celui de la catégorie.** « Headline Only » pèse 22,1 % du corpus Manscaped et porte 4 des 6 achats de Raselio pour 31,2 % de sa dépense. Convergence, pas coïncidence.
+
+**Le registre promotionnel n'est pas ce que fait le leader.** 86,1 % de son corpus est evergreen, 71,8 % sans promotion. Raselio a mis 38,8 % d'une dépense de quinzaine en créative d'offre pour zéro achat.
+
+**Et la statique qui gagne chez Grümwise n'a pas de photo produit.** Son annonce numéro un en dépense européenne est un manifeste en texte seul, à 2,4 fois la deuxième, `stated` sur le relevé d'équipe du 2026-08-13. Attention en la déclinant : son argument s'écrit contre les tondeuses à 80-100 €, alors que Raselio à 34,99 € est **au-dessus** du rayon (Gillette 29,70 €, Philips à partir de 24,95 €). Reprise telle quelle, elle déplace l'objection vers « ça vient de Chine ». La version qui tient garde la structure et l'écrit contre la tondeuse à barbe que l'homme possède déjà.
+
+### La règle de reprise concurrentielle, acceptée par Dylan
+
+Posée deux fois le 2026-09-07 et acceptée sans discussion : **on décortique le mécanisme, on rebâtit avec le produit, la copie et les images de Raselio. Jamais un visuel concurrent, jamais son packaging, jamais sa marque, jamais sa copie mot pour mot.**
+
+Ce n'est pas théorique. Le document d'équipe du 2026-08-13 écrit lui-même « ne pas réutiliser les fichiers Grümwise », et **trois annonces montrant une boîte Grümwise sont parties quand même et sont toujours actives** (10,84 €, exposition BR-6). L'écart entre la règle écrite et ce qui est diffusé vient de la vitesse, pas d'un désaccord. C'est pour ça que le contrôle visuel se fait avant la livraison, jamais après.
+
 ## Named preferences and standing instructions
 
 - **Une seule personne décide, et elle fait tout.** Dylan Ulry, entrepreneur individuel, opérateur unique, qui mène trois boutiques en parallèle (Raselio, Trael en chaussures barefoot pour un test Canada, Aerozya en purificateur d'air). Stated, `running-notes/brand-notes-from-org.md`, 2026-09-06. Une idée qui tient dans cette capacité vaut trois qui l'ignorent. Toute recommandation dit combien de temps elle coûte.
