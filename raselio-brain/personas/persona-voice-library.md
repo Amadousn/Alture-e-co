@@ -62,8 +62,8 @@ Ce document est le compagnon de langage émotionnel de `personas/personas-profil
 
 Les personas canoniques sont définis dans `personas/personas-profile.md` et ne sont ni renommés ni redéfinis ici.
 
-- **`meticuleux-discret` — flagship, confiance mixed.** Un homme qui tient les choses en ordre sans en faire un sujet, qui s'occupe déjà de cette zone avec un outil qui n'a pas été conçu pour elle, et qui veut que la routine cesse d'être une épreuve.
-- **`partenaire-qui-commande` — emerging, confiance hypothesis.** Une femme en couple avec lui, qui commande à sa place parce qu'il ne le fera pas. Zéro achat à ce jour.
+- **`soigne-discret` — flagship, confiance mixed.** Un homme qui tient les choses en ordre sans en faire un sujet, qui s'occupe déjà de cette zone avec un outil qui n'a pas été conçu pour elle, et qui veut que la routine cesse d'être une épreuve.
+- **`partenaire-prescriptrice` — emerging, confiance hypothesis.** Une femme en couple avec lui, qui commande à sa place parce qu'il ne le fera pas. Zéro achat à ce jour.
 
 **Note d'attribution obligatoire pour ce document.** Aucun des deux personas ne peut recevoir d'étiquette de langage : l'unique verbatim est anonyme, donc `identity_tag: null`. Toute expression par persona écrite ci-dessous est une inférence sur du comportement d'achat, jamais une observation de registre.
 
@@ -81,7 +81,7 @@ Le classement qui suit n'est pas un classement de fréquence, et il faut le dire
 
 **Où elle se situe dans le parcours.** Avant tout. C'est une émotion de pré-Trigger : elle empêche le besoin de devenir conscient, parce qu'elle nie qu'il y ait un besoin.
 
-**Alignement persona.** Aucun. L'auteur est anonyme et rien ne dit qu'il corresponde à `meticuleux-discret`. C'est peut-être exactement l'inverse : l'homme qui n'achètera jamais.
+**Alignement persona.** Aucun. L'auteur est anonyme et rien ne dit qu'il corresponde à `soigne-discret`. C'est peut-être exactement l'inverse : l'homme qui n'achètera jamais.
 
 **Déclencheurs de contexte.** Une publicité montrant un homme d'environ trente ans, torse nu, en boxer gris, avec le titre « Soyez impeccable partout. » et un texte qui tutoie.
 
@@ -110,7 +110,7 @@ Le classement qui suit n'est pas un classement de fréquence, et il faut le dire
 
 **Où elle se situe dans le parcours.** Purchase, et un peu Evaluation. C'est l'émotion de la décision, pas celle du déclenchement.
 
-**Alignement persona.** `meticuleux-discret`, par construction : c'est le persona bâti sur ce comportement.
+**Alignement persona.** `soigne-discret`, par construction : c'est le persona bâti sur ce comportement.
 
 **Preuve verbatim.** Aucune de client. La seule formulation qui approche est de la marque et porte `brand_self_echo: true`, `brand-copy`, advertorial : « **Résultat : vous respirez normalement. La routine redevient une routine, pas une épreuve.** » Elle est excellente. Elle n'est pas une preuve d'émotion client.
 
@@ -133,7 +133,7 @@ Le classement qui suit n'est pas un classement de fréquence, et il faut le dire
 
 Un message sur quarante-six jours n'est pas un motif. Ce qui est notable est que ce message unique porte sur la livraison, c'est-à-dire précisément sur le sujet que la FAQ du site ne traite pas et que le compte publicitaire ne finance pas.
 
-**Alignement persona.** `meticuleux-discret`, dans son identité contextuelle de vérificateur.
+**Alignement persona.** `soigne-discret`, dans son identité contextuelle de vérificateur.
 
 ### Ce que ce classement ne contient pas, et pourquoi
 
