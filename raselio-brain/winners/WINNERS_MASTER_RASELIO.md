@@ -2,7 +2,7 @@
 brand: RASELIO
 file: base winners — mémoire permanente du run créatif quotidien
 seeded_on: 2026-09-07
-last_run: 2026-09-07
+last_run: 2026-09-07 (mis à jour 14h40 CEST : première journée rentable)
 sources: Meta API compte 1573950771030463 (pull direct 2026-09-07, date_preset maximum, niveau ad) · Shopify 8piiys-jj (analytics 90 j, 2026-09-07) · Drive RASELIO_30_STATIQUES_WINNERS.md (2026-09-07) · brand-lens.md
 claim_status: verified sauf mention contraire
 ---
@@ -32,6 +32,33 @@ Une annonce à 1 achat n'est pas un winner, c'est un tirage. **L'unité de preuv
 **Le fait qui commande la stratégie, pas la créative :** au meilleur segment le CPA est de 38 € pour un panier de 34,99 €. **Aucune créative ne rend ce compte rentable à ce panier.** Un bundle deux unités ou un upsell post-achat déplace le ROAS plus que n'importe quel lot de 30. À porter à Dylan à chaque rapport tant que ce n'est pas réglé.
 
 ---
+
+## 2026-09-07 — la première journée rentable, et comment la lire
+
+**Dylan annonce +56 € de bénéfice sur la journée. C'est juste.** 4 commandes, 139,96 € (Shopify, verified), pour 32,94 € de publicité (Meta, verified, campagne `RASELIO | FR | CAMPAGNE STATIQUE | CBO 30 | V2`, seule campagne active du jour). Marge brute 4 × 23,58 = 94,32 €, moins la pub, moins le port et les frais de paiement : environ +56 €. **Meilleure journée de l'histoire de la boutique**, alors que les trois semaines précédentes faisaient 6, 6 et 4 commandes par semaine.
+
+**Ce qu'il ne faut pas en conclure, et c'est une leçon de méthode à garder.** Le ROAS du jour affiche 4,25 et le CPA 8,24 €. Ce sont des chiffres de calendrier, pas de performance : 4 achats sur **38 clics** font 10,5 % de conversion, contre 1 à 2 % la semaine d'avant. Meta date la dépense au jour de l'impression et l'achat au jour du paiement, jusqu'à sept jours après le clic. Les acheteurs d'aujourd'hui ont cliqué les jours où le ROAS affichait 0,52 et 0,66.
+
+**Le CPA du jour ne veut rien dire sur ce compte. Lire le CPA glissant sur 7 jours, toujours.**
+
+### Les huit jours, campagne V2
+
+| Jour | Dépense | Clics | CTR | Achats Meta | ROAS |
+|---|---|---|---|---|---|
+| 31/08 | 48,04 € | 84 | 3,01 % | 0 | — |
+| 01/09 | 54,49 € | 74 | 2,92 % | 1 | 0,64 |
+| 02/09 | 40,73 € | 64 | 3,03 % | 0 | — |
+| 03/09 | 44,80 € | 61 | 2,17 % | 1 | 0,78 |
+| 04/09 | 52,96 € | 74 | 2,24 % | 1 | 0,66 |
+| 05/09 | 43,23 € | 46 | 1,65 % | 0 | — |
+| 06/09 | 67,10 € | 90 | 2,05 % | 1 | 0,52 |
+| 07/09 | 32,94 € | 38 | 1,88 % | **4** | 4,25 |
+
+**Cumul 31/08 au 07/09 :** 384,29 € de publicité · 10 commandes Shopify · 349,90 € de ventes · marge brute ~235,80 € · **résultat net ~−148 €**. CPA glissant ~38 €. La pente va dans le bon sens et le seuil n'est pas encore franchi : il faut le CPA glissant sous 23,58 €, et plutôt sous 20 € après port et frais.
+
+**Signal de fatigue à surveiller.** Le CTR passe de 3,01 % à 1,88 % en huit jours et les clics de 84 à 38, sur une campagne qui tourne sans renouvellement depuis le 30 août. C'est précisément ce que le run quotidien existe pour corriger.
+
+**Règle de scaling posée ce jour :** ne pas monter le budget sur une seule bonne journée. Attendre trois jours. Si le CPA glissant sur 7 jours passe sous 25 €, monter le budget de 20 à 30 %, jamais le tripler.
 
 ## TIER 1 — WINNERS
 
