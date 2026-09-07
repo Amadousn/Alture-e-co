@@ -62,4 +62,6 @@ Ce cerveau n'est pas une pile de documents morts. Il sait se rafraîchir, se rec
 
 ## Où c'est sauvegardé
 
-Ce cerveau est **auto-géré**. Il vit dans le dossier `raselio-brain/` du dépôt GitHub de l'équipe, `amadousn/alture-e-co`, sur la branche `claude/clone-brain-raselio-ysv5ue`. Il n'y a ni Parker Desktop, ni dépôt `parker-brain-org` derrière : la sauvegarde se fait avec le git de l'équipe, comme n'importe quel autre dossier du dépôt.
+Ce cerveau vit dans **son propre dépôt privé fourni par Parker : `parker-brain/dylan-s-org-raselio`**, à plat à la racine. Une marque, un dépôt.
+
+Il a été construit le 2026-09-06 dans un dépôt tiers, faute de dépôt Parker existant ce jour-là, puis transféré ici le 2026-09-07. L'ancien emplacement n'est plus qu'un historique : on n'y écrit plus rien.

@@ -10,7 +10,9 @@
 
 ## Sync model for this brain
 
-This brain is **self-managed**: it lives as the `raselio-brain/` folder of the team's own GitHub repository `amadousn/alture-e-co` (origin outside the `parker-brain` org), not in a Parker-provisioned repo, and Parker Desktop is not installed here. Saving is done with the team's own git (commit + push to the working branch); the `save-brain` skill's managed-repo credential rules do not apply. The Parker MCP had no brand configured for Raselio on build day, so `setup_parker_brain` and `update_parker_brain_setup_status` were not called — see `running-notes/missing-context.md`.
+This brain is **managed**: it lives at the root of `parker-brain/dylan-s-org-raselio`, its own private Parker-provisioned repository, so the `save-brain` skill's managed-repo credential rules apply in full — mint a short-lived credential through `setup_parker_brain`, write it to `.git/parker-credentials`, push to `main`.
+
+**Move on record.** The Parker MCP had no Raselio brand at the start of the 2026-09-06 build (`get_available_brands` returned `organizations: []`), so there was no repo to provision into and the whole build was written inside a third-party repo (`amadousn/alture-e-co`, folder `raselio-brain/`, branch `claude/clone-brain-raselio-ysv5ue`). The brand appeared mid-build at 09:50 UTC. On 2026-09-07 `setup_parker_brain` created this repo (`reused_existing: false`) and the brain was transferred here flat, with the `parker-system/` mount re-attached at the same pin. The build-time location is history only — nothing is written there again, and the two copies are not kept in sync. `update_parker_brain_setup_status` was still never called, so `run_id` in `parker_config.json` stays empty; see `running-notes/missing-context.md`.
 
 ## Offer history
 

@@ -220,13 +220,13 @@ When the schedules aren't set up, surface it lightly and offer to do it: somethi
 
 ## How this brain saves itself
 
-**This brain is self-managed, and that changes the git rules. Read this instead of the managed-repo procedure the `save-brain` skill describes.**
+**This brain is managed. It lives in its own Parker-provisioned repository, and the `save-brain` skill's managed-repo procedure is the one that applies here.**
 
-Raselio's brain is not a Parker-provisioned repository. It lives as the `raselio-brain/` folder of the team's own GitHub repo **`amadousn/alture-e-co`**, on branch **`claude/clone-brain-raselio-ysv5ue`**. There is no Parker Desktop installed here and there is no `parker-brain-org` repo behind it. So:
+The repo is **`parker-brain/dylan-s-org-raselio`** (private, in the `parker-brain` org), and the brain sits flat at its root — no `raselio-brain/` subfolder any more. It was built on 2026-09-06 inside a third-party repo because the Parker brand did not exist yet at the time; it was moved into this repo on 2026-09-07. The old location is history, not a mirror: never write there. So:
 
-- **Saving is the team's own git.** Use their normal authentication, commit into `raselio-brain/` on their working branch, and push there. Nothing goes to a `main` you were not told about, and nothing is pushed to another repository.
-- **The managed-sync rules do not apply.** No `.git/parker-credentials`, no `git config credential.helper` juggling, no `setup_parker_brain` token re-mint, no "always push to `main`, no branches, no pull requests". Those instructions exist for brains hosted under the `parker-brain` org; this one is not, and following them here would push the team's work somewhere it does not belong. `setup_parker_brain` and `update_parker_brain_setup_status` were never called during this build and there is no `run_id` in `parker_config.json`.
-- **Never `gh`, never a force push, never a credential in a shell command.** Those three hold everywhere.
+- **Saving is the managed flow.** Mint a fresh short-lived credential with `setup_parker_brain` (brand_id in `parker_config.json`), write it to `.git/parker-credentials` with the Write tool, wire `git config credential.helper "store --file .git/parker-credentials"`, then pull-rebase, commit, and push to `main`. No branches, no pull requests — teammates and routines read `main`.
+- **A credential is never printed, never pasted into a shell command, never committed.** The token lasts about an hour; when it expires, re-mint it rather than working around it.
+- **Never `gh`, never a force push.** Those hold everywhere.
 - **The factory mount is still read-only and still pinned.** `parker-system/` is the public `parker-brain` method at release `v15`; never edit inside it, take updates only when `/update-brain` offers a newer release and the team says yes, and record the move in `running-notes/standard-sync.md`.
 
 **Two habits that still hold.** First, pull before a batch of edits so you are not writing over someone else's work. Second, **every change is committed and pushed the moment it's made** — their yes to the work was the yes to saving it, and "want me to commit this?" is not a question you ask. Teammates and scheduled routines share this repo, and unpushed work doesn't exist for them. The single exception: the user explicitly said not to commit or push — honor it, and end the reply with one plain line that the work is unsaved until they say so.
