@@ -207,6 +207,70 @@ Blancs nommés propres à l'audit de diversité de format t0. **Note de révisio
 8. **Le nombre d'entités distinctes que Meta reconnaît reste inconnu et non mesurable** depuis les outils disponibles. C'est la question centrale de la boucle 1 de cet audit. Ce qui est désormais vérifié, c'est qu'au moins deux annonces du compte partagent le même fichier image pour 100,56 € cumulés ; ce qui reste inconnu, c'est combien d'autres.
 9. **À demander à la marque :** qu'est-ce qui décide qu'un lot de créas reçoit du budget ou pas ? 105 annonces sur 163 ont été produites en quatre jours pour 68,91 € au total, et dix sous-formats distincts se partagent moins de trente-deux euros.
 
+
+### audits/2026-09/monthly-hook-audit.md (généré 2026-09-06)
+
+Blancs nommés de l'audit d'accroches mensuel :
+
+1. **Le prompt exclut les statiques, et le compte n'a que ça.** Sur 173 annonces indexées par Parker, 5 sont des vidéos, dont 3 seulement sont Raselio, pour 10,84 € de dépense cumulée. L'audit lit donc les accroches statiques comme des accroches spatiales et le déclare. Écart de périmètre assumé, à re-décider si la marque se remet à la vidéo.
+2. **Taux d'accroche disponible pour 3 annonces sur 173.** Le standard de jugement du prompt, dépense plus hook rate, est remplacé par dépense plus CTR lien plus ajouts panier pour les 168 statiques. C'est une approximation plus faible et elle le restera tant que le compte ne diffusera pas de vidéo.
+3. **Aucun champ ne relie le corpus copy aux annonces.** `meta-creatives-copy.md` est indexé par `creative_id`, `meta-ads-all.md` par `ad_id`, et aucun pull ne porte les deux. Les liens accroche-dépense restent inferred sauf pour les 28 annonces dont Parker renvoie copy et métriques ensemble.
+4. **Deux comptages du même compte ne se réconcilient pas.** Parker indexe 173 annonces et 771,64 € de dépense, l'API Meta 183 et 850,79 €. Les 6 achats sont identiques. La ventilation par emplacement diverge fortement sur Audience Network, 8,32 € chez Parker contre 46,85 € dans le pull API. Personne n'a arbitré.
+5. **Aucun concurrent n'est suivi dans Parker.** `search_competitor_facebook_ads` mode `brands` ne renvoie que Raselio, avec 0 annonce analysée. Toutes les accroches concurrentes sont lues sans visuel, sans transcription et sans analyse IA : `creative read unavailable` partout dans cette section.
+6. **Le corpus de commentaires publicitaires tient en 2 lignes**, sur 173 annonces et 47 484 impressions. C'est le corpus entier, pas un échantillon. Rien ne permet de savoir si l'engagement est nul parce que le sujet est tabou ou parce que la créative n'appelle pas de réaction.
+7. **Aucun set de marques d'affinité n'existe**, ni dans le brain ni dans Parker. Un set de départ est inféré et nommé comme tel, il attend l'accord de Dylan.
+8. **Le corpus organique de niche est entièrement anglophone et jeune.** Aucune accroche française reconstructible n'a pu être capturée ce cycle.
+9. **La fatigue d'accroche est illisible.** Aucune annonce du compte n'a l'âge nécessaire, la plus ancienne encore listée date du 2026-08-14. Ce blanc restera ouvert tant que le rythme sera de onze lots en trois semaines.
+
+### audits/2026-09/monthly-performance-report.md (généré 2026-09-06)
+
+Blancs nommés du rapport de performance mensuel :
+
+1. **Aucun rapport du mois précédent n'existe.** Ce document est le point zéro ; la trajectoire compare deux moitiés du même lancement, pas deux mois. Le premier vrai mois contre mois sera possible en octobre.
+2. **Septembre a six jours au moment du pull**, arrêté le 2026-09-06 à 08:00 UTC. Tous les chiffres de septembre sont partiels.
+3. **Taux d'accroche et taux de rétention indisponibles** pour tout sauf les 3 vidéos du 14 août, qui n'ont pas dépensé dans la fenêtre lue. Le prompt les demande en source obligatoire.
+4. **Meta attribue 6 achats, Shopify en compte 11** sur la même fenêtre, et Northbeam n'est pas connecté, vérifié le 2026-09-06. Rien ne vient arbitrer l'écart, donc le coût par achat réel du compte se situe quelque part entre 62 € et 94 € sans qu'on puisse trancher.
+5. **Les ventilations sont au niveau compte et incluent Trael**, environ 116 € sur 850,79 €. Aucune ventilation Raselio seule n'a pu être tirée depuis l'API ; Parker en fournit une, mais sur un périmètre d'annonces différent.
+6. **Les deux classeurs comptables de l'équipe se contredisent sur août** et ne sont réconciliés ni entre eux ni avec Shopify. Le coût unitaire produit change de 11,41 € à 12,71 € entre les deux sans note d'explication.
+7. **Le plan de test est arrivé après vingt-quatre jours de dépense.** Les onze lots antérieurs n'ont ni hypothèse écrite ni critère de succès, donc la section « ce qu'on a testé » reconstruit des intentions plutôt qu'elle ne lit des tests.
+8. **La cause de la coupure de huit jours, du 17 au 24 août, n'est écrite nulle part.** Routé à la marque.
+
+### audits/2026-09/weekly-performance-snapshot.md (généré 2026-09-06)
+
+Blancs nommés de l'instantané hebdomadaire :
+
+1. **Semaine partielle.** Le dimanche 6 septembre ne compte que huit heures. Toute comparaison avec la semaine complète précédente sous-estime la semaine 36.
+2. **Aucun instantané de la semaine précédente n'existe.** La comparaison est reconstruite à la main, pas lue dans un document antérieur.
+3. **Parker se contredit sur la dépense d'une même annonce selon la table lue** : `RASELIO | IMPECCABLE | CROP TAILLE` affiche 68,17 € en vue période, 54,56 € en vue vie entière, et 54,79 € dans le pull Meta du matin. L'écart n'est expliqué par aucune source.
+4. **Même désaccord sur le compte d'achats de la semaine** : la vue période en attribue 4, la vue vie entière n'en connaît que 6 au total sur toute la vie du compte. Le dénominateur de référence retenu reste 6.
+5. **Les sessions Shopify montent de 53 à 58 % pendant que les clics payés baissent de 44 %**, sans qu'aucune source n'explique d'où vient le trafic supplémentaire. Une seule journée porte l'écart, le 3 septembre. À revérifier la semaine prochaine.
+6. **Aucun calendrier de marque n'a été fourni.** Le seul repère daté de la semaine est la rentrée, et le lot qui porte ce nom ne parle de rentrée que dans une créa sur quatre.
+7. **Aucune mémoire de marque ni mémoire utilisateur** : `search_chat_history` renvoie zéro fil.
+
+### audits/2026-09/biweekly-iterations-report.md (généré 2026-09-06)
+
+Blancs nommés du rapport d'itérations bi-hebdomadaire :
+
+1. **Aucun journal d'itérations n'existe**, ni côté équipe ni côté Parker. L'historique de chaque entrée est reconstruit depuis les dates de création, les identifiants d'image et les briefs. **Aucune itération du compte ne porte de verdict écrit par la marque après test.** C'est le blanc le plus coûteux du document : sans verdict, chaque nouvelle ronde risque de refaire un test déjà fait.
+2. **Aucun rapport bi-hebdomadaire précédent.** Point zéro de la cadence.
+3. **Aucune dépense par annonce et par jour.** Le pull donne le cumul à vie, jamais la trajectoire. Les lectures de tendance par annonce sont donc reconstruites depuis les dates de création et la série quotidienne du compte.
+4. **`RASELIO | STATIQUE S9 | V1` porte un statut `WITH_ISSUES` sans motif renvoyé.** Sur une marque dont le compte professionnel a déjà été restreint une fois le 2026-07-26, l'annonce qui affiche une censure pixelisée mérite une explication que rien ne fournit. Routé à la marque.
+5. **Les deux plus grosses dépenses du compte partagent le même fichier image.** `POSTIT | GAGNANTE` et `STATIQUE POSTIT | GAGNANTE`, 100,56 € cumulés. Combien d'autres annonces sont dans ce cas n'a pas été audité : le contrôle demanderait de comparer les identifiants d'image des 173 annonces une à une.
+6. **Aucune image n'a été ouverte visuellement.** Parker renvoie le chemin du fichier et le texte présent sur l'image ; la composition est reconstruite avec les briefs, jamais vue.
+
+### audits/2026-09/monthly-organic-tiktok-audit.md (généré 2026-09-06)
+
+Blancs nommés de l'audit organique TikTok :
+
+1. **La marque n'a aucun compte TikTok.** Aucun identifiant dans une source, et la fiche de suivi Parker porte `organicTt: false`, `organicIg: false`, `organicFb: true`. Ce document lit donc le fil de niche et pas l'organique de la marque, qui n'existe pas.
+2. **Le corpus de niche est entièrement anglophone.** Vingt vidéos, vingt en anglais, zéro en français. Aucun mot du corpus n'est dans la langue des clients de la marque.
+3. **Le corpus est entièrement jeune.** Les vingt créateurs sont estimés entre vingt et quarante ans. Aucun n'a l'âge du coeur de cible, 55 à 64 ans. Le fil est donc une bibliothèque de mécanismes, jamais une bibliothèque de castings.
+4. **Aucune vidéo n'a été visionnée.** Les reconstructions viennent des rapports d'analyse de l'outil, qui portent le script audio, les textes à l'écran avec minutages, le créateur et le décor. Lecture fidèle mais de seconde main.
+5. **Aucune mémoire de marque ni mémoire utilisateur.** `search_chat_history` renvoie zéro fil le 2026-09-06 : l'équipe n'a jamais parlé à Parker. La section des liens avec la mémoire est reconstruite depuis les documents de travail, pas depuis des conversations.
+6. **Aucun coût de production vidéo n'existe dans les sources.** Le seul chiffre disponible est « 60 crédits Higgsfield » pour trente statiques. Toute estimation d'un budget de tournage serait une fabrication, donc la question du coût d'un démarrage TikTok reste ouverte, chiffrable seulement par la marque.
+7. **Le fil organique francophone reste invisible.** Une requête WebSearch lancée le 2026-09-06 ne rend aucune vidéo française reconstructible. On ne sait toujours pas si ce fil existe et n'est pas atteint, ou s'il n'existe pas.
+8. **Où l'acheteur cherche vraiment n'est pas su.** Le fil Facebook porte 4 des 6 achats et 70,7 % de la dépense ; rien ne dit si un homme français de plus de 50 ans irait chercher une réponse à ce problème sur TikTok, sur Google, ou dans un comparatif.
+
 ## Resolved — with date and where the answer lives
 
 - 2026-09-06 — Ad naming convention: read directly from the account → `running-notes/brand-rules.md`.
