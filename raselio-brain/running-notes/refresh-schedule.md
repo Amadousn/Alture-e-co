@@ -43,13 +43,15 @@ The full correction note is in `running-notes/missing-context.md` under "Note tr
 | `sub-context-docs/organic-channels-inventory.md` | 2026-09-06 | 2026-12-06 |
 | `sub-context-docs/visual-vocabulary.md` | 2026-09-06 | 2026-10-06 (30d, tightened) |
 | `sub-context-docs/marketing-calendar-and-campaigns.md` | 2026-09-06 | 2026-11-01 |
-| `strategy/persona-strategy-input.md` | not yet run | on first run |
-| `strategy/product-priority.md` | not yet run | on first run |
-| `strategy/messaging-strategy-input.md` | not yet run | on first run |
-| `strategy/creator-talent-strategy-input.md` | not yet run | on first run |
-| `strategy/strategic-roadmap.md` | not yet run | on first run |
+| `strategy/persona-strategy-input.md` | 2026-09-07 | 2026-10-07 (30d, tightened) |
+| `strategy/product-priority.md` | 2026-09-07 | 2026-10-07 (30d, tightened) |
+| `strategy/messaging-strategy-input.md` | 2026-09-07 | 2026-10-07 (30d, tightened) |
+| `strategy/creator-talent-strategy-input.md` | 2026-09-07 | 2026-10-07 (30d, tightened) |
+| `strategy/strategic-roadmap.md` | 2026-09-07 | 2026-10-07 (30d, tightened) — **status: drafted, not approved** |
 
-The five `strategy/` lines are stamped as soon as the Phase-2 prompts write their files; the folder is empty at the time this schedule was aggregated. Whoever writes them fills the line in the same pass.
+The five `strategy/` lines were stamped on 2026-09-07 when the Phase-2 prompts wrote their files. All five carry a 30-day rather than a 90-day cadence, and each names its own trigger in its `refresh_note`. Three reasons recur across them: every call rests on six attributed purchases and one customer sentence, so the next purchase or the first review moves the numbers underneath; the four Tier-1 loops in `open-loops/2026-09-07-roll-up.md` are promoted and will resolve inside the window; and the targeting decision the team wrote twice had still not landed in the account on 2026-09-06, which is the gate under two of the five docs.
+
+**The roadmap is drafted, not approved.** `strategy/strategic-roadmap.md` carries `status: drafted — awaiting the founder's approve / adjust / reject` and `approved_by:` is empty — the founder was not available during the build. Everything Phase 3 produces from it (the idea bank's grading, the sprint plan, the briefs) is provisional and re-ranks on the first arbitration. Two consequences for this schedule. First, an approval or an adjustment is itself a refresh trigger for the roadmap, independent of the date above. Second, the dependency spine still applies: if any of the four strategy inputs is re-run and its read materially changes, the roadmap is stale-by-dependency, and when the roadmap changes, `idea-bank/evaluation-[YYYY-MM-DD].md` is re-graded against the new version.
 
 ### Semi-annual — roughly 180 days
 
