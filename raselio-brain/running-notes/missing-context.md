@@ -1,7 +1,7 @@
 ---
 brand: Raselio
 doc: missing-context
-last_updated: 2026-09-06
+last_updated: 2026-09-07
 sources: build-day intake gaps + data_limitations across all docs + the brand-routed section of the latest open-loops roll-up
 ---
 
@@ -455,6 +455,41 @@ Les entrées existantes pour `persona-voice-library.md`, `lifecycle-journey-maps
 8. **Aucune version antérieure de cette synthèse n'existe : c'est le point zéro.** Aucune trajectoire de lecture de marché n'est calculable, aucune boucle n'a pu être notée comme fermée depuis la dernière fois, et la reclassification des menaces ne pourra commencer qu'au prochain passage.
 9. **Le set concurrentiel reste celui de Parker et non celui du fondateur**, question 4 de ce fichier. Toute la classification par type de menace est à confirmer ou à remplacer avant d'être utilisée pour arbitrer une dépense.
 10. **La cadence est ramenée de 90 à 30 jours** parce qu'un rival a changé d'état pendant la fenêtre et parce que le comptage des lignes Gillette dans la bibliothèque publicitaire française est désigné en amont comme la seule métrique à suivre chaque mois.
+
+### open-loops/2026-09-07-roll-up.md (généré 2026-09-07)
+
+Le roll-up consolidé des boucles ouvertes a lu les 58 documents porteurs d'une section de boucles, en a récolté 233, en a tué 23 et en a expédié 23. Voici ses propres blancs, puis la réconciliation avec les questions d'intake déjà posées plus haut dans ce fichier.
+
+**Blancs nommés du roll-up lui-même.**
+
+1. **`working-thesis-synthesis.md` n'existe pas.** Aucune boucle de la synthèse concurrentielle de Phase 1B n'a pu être récoltée. La lecture concurrente de ce roll-up repose sur les snapshots et les huit sous-documents Thomyle, sans la thèse qui les relie.
+2. **`audits/2026-09/external/` est vide.** Aucun `monthly-creative-landscape`, aucun `monthly-top-impressions-report`, pour aucun compte. Ce roll-up ne mesure donc **aucun mouvement de rival dans le mois**, alors que le rival le plus dépensier vient de changer d'état.
+3. **`audits/2026-Q3/customer-review-audit.md` et `audits/2026-Q3/quarterly-whitespace-analysis.md` n'existent pas.** Deux familles d'audit trimestriel n'ont émis aucune boucle. L'audit de performance externe désigne pourtant explicitement la tension d'âge comme « la tension centrale que l'analyse de whitespace reprend ».
+4. **Aucun historique de boucles.** `open-loops/promoted/`, `open-loops/archived/`, `hypotheses/` et `validations/` étaient tous vides au 2026-09-07. L'étape de dédup contre l'historique n'a rien eu à comparer, aucune boucle n'a pu être notée comme ranimée ou fermée, et la section mouvement du roll-up n'a pas de trajectoire à décrire. C'est le point zéro.
+5. **`brand-profile.md` n'existe pas.** Le contrôle de nouveauté, que la méthode fait tourner contre le profil de marque, a tourné contre `sub-context-docs/brand-profile-narrative.md` et les 58 documents récoltés à la place.
+6. **`brand-lens.md` n'existe pas.** Aucune surcouche de savoir propre à cette marque n'a pu corriger les méthodes générales. Toutes les notes de ce roll-up sont donc portées par les priors génériques et par les données du compte, jamais par une règle que l'équipe aurait posée.
+7. **Aucun `single-competitor-ad-analysis`, aucun profil Billy Trimmer.** La moitié concurrente du jeu de boucles repose sur Thomyle et Gillette seuls. Billy Trimmer est un concurrent français direct nommé par l'équipe, avec 26 792 visites mensuelles, et il n'a aucune boucle dans ce roll-up.
+8. **Le territoire Creators and talent est sous-lu, pas propre.** Il ne porte que deux boucles survivantes, et c'est un effet de source : **zéro visuel lu chez Thomyle sur 790 vidéos et 273 images**, et aucun créateur au-dessus de quarante ans dans le corpus organique. À relire en priorité au prochain rafraîchissement.
+9. **Onze fichiers dans `personas/voice-of-customer/`, pas douze.** Dix portent une section de boucles ; `voc-corpus-profile.md` n'en porte aucune, et c'est normal pour un profil de corpus.
+10. **Aucune conversation Parker antérieure.** `search_chat_history` en mode `listThreads` sur le brand `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37` renvoie **zéro fil**, web comme Slack, le 2026-09-07. Cette source n'a rien apporté et le roll-up a tourné normalement sans elle.
+11. **Les 23 boucles archivées vivent dans le roll-up, pas dans `open-loops/archived/2026-09/`.** Le contrat de ce run limitait les fichiers écrits aux chemins nommés. Une passe future qui ferait remonter l'une de ces questions doit chercher son verdict dans la section « Archived this pass » du roll-up avant de la relancer.
+12. **Trois totaux de dépense Raselio coexistent et ne sont toujours pas arbitrés :** 684,82 € en somme de campagnes, 677,81 € en somme des 163 lignes d'annonces, 676,91 € sur le périmètre Parker. Chaque chiffre cité dans le roll-up porte sa source, mais l'écart reste inexpliqué.
+
+**Quatre nouvelles questions à poser à Dylan, issues des boucles brand-routed du roll-up.** Elles ne figuraient dans aucune des onze questions d'intake ci-dessus.
+
+13. **BR-3 — le remboursement d'une tondeuse utilisée.** « Si un client te renvoie la tondeuse après l'avoir utilisée trois semaines, tu le rembourses ou pas, et qu'est-ce que tu fais de l'appareil ? » Le site promet « Satisfait ou remboursé 30 jours » et « sans poser de questions » sur 25 textes de créa sur 30, et la politique écrite n'accepte que les produits non utilisés en excluant les scellés ouverts. **La fenêtre du premier acheteur se ferme vers le 2026-09-25.** Débloque : le pilier de renversement de risque, et le coût réel qui s'ajoute à la contribution unitaire. Fichier : `open-loops/promoted/2026-09/br-3-product-remboursement-dune-tondeuse-utilisee.md`.
+14. **BR-4 — parler aux onze premiers acheteurs.** « Acceptes-tu qu'on écrive aux onze premiers acheteurs cette semaine, avec trois questions et rien d'autre : qu'est-ce que tu utilisais avant, qu'est-ce qui t'a décidé ce jour-là, et qu'est-ce que tu as pensé en ouvrant le colis ? » Onze appareils livrés entre le 2026-08-26 et le 2026-09-04, aucun questionné, aucune application d'avis, aucun sondage, page Contact au corps vide. Débloque : la persona principale passerait de `thin` à `mixed`, le gouverneur de conformité de revendication, et une part de trois des quatre boucles de Tier 1. Fichier : `open-loops/promoted/2026-09/br-4-personas-parler-aux-onze-acheteurs.md`.
+15. **BR-6 — l'origine des trois vidéos du 14 août.** « Les trois vidéos du 14 août montrent une boîte Grümwise et prononcent le nom : elles viennent d'où, qui les a montées, et est-ce qu'on peut les couper aujourd'hui ? » Ce sont les trois seules vidéos que le compte ait jamais diffusées, elles sont encore au statut actif dans une campagne en pause, elles annoncent 44,90 € et renvoient vers la page produit de l'ancienne marque. Débloque : le vocabulaire vidéo de la marque, et une exposition de marque qui court tant que les annonces restent actives. Fichier : `open-loops/promoted/2026-09/br-6-creators-origine-des-trois-videos-du-14-aout.md`.
+16. **BR-9 — la deuxième vente.** « Qu'est-ce que ton fournisseur peut t'envoyer en plus de la MS-810, à quel coût, et est-ce que tu veux vendre autre chose à un client qui a déjà acheté ? » Un seul SKU, 11 clients, 0 rachat, aucun outil d'e-mail, alors que le document du 2026-08-13 mentionne « tête rasoir à grille, embout nez, set 7 coupe-ongles, trousse cuir » chez le fournisseur. Débloque : le coût d'acquisition tolérable, qui bouge plus vite par le panier que par la créative. Fichier : `open-loops/promoted/2026-09/br-9-product-valeur-au-dela-de-la-premiere-commande.md`.
+
+**Réconciliation avec les questions d'intake déjà posées. Ces quatre-là ne sont pas dupliquées, elles sont renvoyées.**
+
+17. **BR-1 (l'origine des « 17 000 », « 35 000 » et « 1 734 avis ») est la question d'intake numéro 3 de ce fichier.** Le roll-up la promeut en boucle brand-routed avec Stakes 5 et Researchability 1, fichier `open-loops/promoted/2026-09/br-1-messaging-origine-des-chiffres-de-preuve.md`. Ce qu'il ajoute à la formulation d'intake : le nombre apparaît dans au moins six paires de copy et 49 identifiants de creative, un troisième nombre circule (« 35,000+ men » comme angle de `RASELIO | IMPECCABLE | BOXER`), et le compteur « 1 734 avis » est identique sur la marque sœur Trael.
+18. **BR-2 (le coût réel d'une commande livrée) est la question d'intake numéro 2 de ce fichier.** Fichier `open-loops/promoted/2026-09/br-2-product-cout-reel-dune-commande-livree.md`. Ce qu'il ajoute : les deux feuilles de l'équipe donnent 11,41 € et 12,71 € pour la même ligne sans note d'explication, et le seuil de 21 € ne laisse que 2,58 € pour un Colissimo offert et des frais de paiement.
+19. **BR-7 (les heures que Raselio reçoit face à Trael et Aerozya) est le blanc 3 de `operations-and-team.md`**, déjà consigné plus haut. Fichier `open-loops/promoted/2026-09/br-7-product-heures-disponibles-face-a-trael.md`. Le roll-up y absorbe aussi la question « qu'est-ce qui empêche aujourd'hui Raselio de produire une vidéo », posée par deux audits trimestriels.
+20. **BR-8 (la décision de ciblage écrite deux fois et jamais appliquée) est le blanc 9 de `operations-and-team.md`**, déjà consigné plus haut. Fichier `open-loops/promoted/2026-09/br-8-personas-decision-de-ciblage-non-appliquee.md`. Le roll-up en fait un bloquant nommé : **tant qu'elle n'est pas répondue, la boucle T1-1 ne peut pas être testée proprement**, parce que les treize ad sets restent en 18-65 avec Advantage+ activé.
+
+**Un blanc de méthode, pas de donnée, qui vaut d'être noté.** La question de savoir si les chiffres d'avis non sourcés diffusés en publicité payée constituent une exposition **n'est pas une boucle ouverte** : le savoir de domaine la résout et le roll-up l'archive comme telle. Ce qui reste ouvert se sépare en deux, l'origine des nombres (BR-1, brand-routed) et la preuve de remplacement (T2-7, en backlog). Un lecteur qui chercherait ici une question de conformité ne la trouvera pas, et c'est délibéré.
 
 ## Resolved — with date and where the answer lives
 
