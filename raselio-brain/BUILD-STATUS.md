@@ -1,10 +1,10 @@
 # BUILD-STATUS — Raselio brand brain
 
-**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 1 — **BUILD EN PAUSE**, blocage de compte · dernière mise à jour 2026-09-06 08:40 UTC
+**Marque :** Raselio · **Début du build :** 2026-09-06 06:00 UTC · **Phase en cours :** Phase 2 (stratégie) en cours · contrat d'exploitation posé · dernière mise à jour 2026-09-07 05:30 UTC
 
-**EN ATTENTE DE VOUS — le build est bloqué.** Le compte a atteint sa **limite de dépense mensuelle** ; la limite de session se réinitialise à **13h00 UTC**. Aucun agent ne peut plus tourner. Deux façons de repartir : relever la limite sur https://claude.ai/settings/usage, ou attendre 13h00 UTC et relancer en disant simplement « reprends le build ». Tout ce qui est écrit est sauvegardé sur la branche, rien n'est perdu.
+**En attente de vous : une seule chose, et pas tout de suite.** La roadmap stratégique sera livrée en **brouillon**, à valider, ajuster ou rejeter. Vous n'étiez pas là pour la trancher pendant le build, et personne d'autre ne peut le faire à votre place. Le reste tourne sans intervention.
 
-Reprise après blocage : le ledger ci-dessous dit exactement quel prompt reste à lancer. La reprise recommence à la première ligne `pending`, dans l'ordre des dépendances.
+Autorisation donnée le 2026-09-07 : le build ne s'arrête plus pour demander. Il enchaîne Phase 2, Phase 3, vérification et sauvegarde, et ne revient vers vous que pour la validation de la roadmap et les questions que seul vous pouvez trancher (`running-notes/missing-context.md`).
 
 ## Tableau de bord
 
