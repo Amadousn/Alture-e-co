@@ -1,7 +1,9 @@
 ---
 brand: raselio
-last_updated: 2026-09-06
+doc: voice-of-customer
+generated_on: 2026-09-06
 refresh_by: 2026-12-06
+frontmatter_note: Ce document portait `last_updated: 2026-09-06` jusqu'à la passe de correction du 2026-09-07. La clé a été changée en `generated_on` sans changer la date, parce que c'est une synthèse permanente listée dans le tableau semestriel de `running-notes/refresh-schedule.md` et qu'un balayage de fraîcheur indexé sur `generated_on` ne la voyait pas.
 sources_synced:
   - customer-reviews: 2026-09-06   # interrogé, 0 avis. L'outil répond que la base est vide et que ce n'est pas un problème d'accès
   - ad-comments: 2026-09-06        # interrogé, 2 commentaires au total. Corpus complet, pas un échantillon

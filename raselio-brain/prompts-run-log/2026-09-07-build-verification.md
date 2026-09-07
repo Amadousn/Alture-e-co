@@ -333,3 +333,95 @@ Ordered by blast radius. The first three are what make the brain misdescribe its
 9. **Small stamps and one number.** Add `refresh_by` to `sprints/2026-09-07-sprint-1/retro.md`; convert `personas/voice-of-customer/voice-of-customer.md` from `last_updated` to `generated_on` so freshness walks see it; reconcile Instagram share at 28,2 % vs 28,1 % or state the re-pull; confirm against their generating prompts that `voc-corpus-profile.md`, `running-notes-on-competitor.md` and `_competitive-set.md` are genuinely exempt from the open-loops tail.
 
 **Do not "fix":** the `parker-system (v14)` string from `git submodule status` — `v14` and `v15` are the same commit `b55c441`, both configured pins say `v15`, and the identity is documented in `running-notes/standard-sync.md`. And do not treat the pre-09:50-UTC "unreachable" notes as errors; they are a known recorded state with a priority re-run queue already written for them.
+
+---
+
+# Fixer pass — 2026-09-07
+
+Run after the verification above, against the same filesystem. **Every number written below was counted on disk in this pass, not carried over from the verification report.** Where the verification's own count differed from what the walk found, the walk wins and the difference is named.
+
+## What changed, file by file
+
+### 1. `sub-context-docs/brand-profile-narrative.md` — the always-loaded first read
+
+- **`foundation_gaps` frontmatter rewritten.** It named `working-thesis-synthesis.md`, five branch-E audits including `customer-review-audit` and `quarterly-whitespace-analysis`, and the open-loops roll-up as absent. All are on disk. The field now splits into what is genuinely missing (the nine Gillette and Philips slices, `briefs/_brief-template.md`, the four empty pipeline folders, the three empty scaffolds) and what is no longer missing, each with its date.
+- **Vault index, four rows rewritten.** `competitors/INDEX.md` and `audits/INDEX.md` now read as written rather than "Pas encore générée", with what each actually covers. `open-loops/` now names the roll-up, the 12 promoted loops and the **2026-09-21** date. `strategy/` now names its five files and the `status: drafted` gate instead of "Vide au 2026-09-07".
+- **Two further rows in the same table were also false and were fixed.** `idea-bank/`, `sprints/`, `briefs/` read "Vides au 2026-09-07"; the first two are not. That row is now split, one line for the Phase-3 artifacts as they exist and one for `briefs/`, which really is empty and never got a template. The `hypotheses/` row said those folders were empty "tant que le roll-up n'a pas tourné" — the roll-up has tourné, so the reason was corrected while keeping the true fact that the folders are empty.
+- **One more stale claim found outside the passage named in the work order.** Line 55, under "Les vraies questions", said the canonical roll-up file "n'est pas encore écrit au 2026-09-07". Rewritten with the roll-up's own accounting read off its frontmatter: 233 collected, 23 killed, 210 consolidated, 12 promoted.
+- **`working-thesis-synthesis.md` added to the vault index**, which had no line for it at all.
+
+Every other claim and every piece of evidence in the doc was left untouched.
+
+### 2. `CLAUDE.md`
+
+- **"What is not yet built" rewritten and split in two.** The first paragraph is what is genuinely absent, checked in this pass. The second names what the old paragraph called missing and is on disk: `working-thesis-synthesis.md`, both branch-E audits, the 26 idea-bank entries, `strategy/`, the roll-up and its 12 loops.
+- **"## The map" expanded.** `audits/` now names all four sub-folders and the 18-document count and points at the ad-count disagreement instead of implying one number. `competitors/` names the Thomyle-only teardown. `open-loops/` names the roll-up, the 12 loops and the 2026-09-21 date. `idea-bank/` names the 26 entries. `sprints/` names `2026-09-07-sprint-1/` and its contents. `strategy/` names its five files and the approval gate. `working-thesis-synthesis.md` got its own line; it had none.
+
+### 3. `running-notes/refresh-schedule.md`
+
+- **New section at the top, "The next three dates".** 2026-09-13 weekly snapshot, 2026-09-20 biweekly iterations, **2026-09-21 roll-up plus 12 loops**, each read off the file.
+- **`working-thesis-synthesis.md` added** to the semi-annual table at its real dates, 2026-09-07 → 2026-10-07, with a paragraph on why it carries 30 days rather than the semi-annual default of its inputs.
+- **Four external audits added** to the audit cadence table at the dates on their own frontmatter: `2026-Q3/external/90-day-diversity-audit-external.md` and `2026-Q3/external/single-competitor-ad-analysis-thomyle.md` (2026-09-07 → 2026-12-06), `2026-09/external/monthly-creative-landscape.md` and `2026-09/external/monthly-top-impressions-report.md` (2026-09-07 → **2026-10-07**).
+- **The two "never generated" rows flipped** to 2026-09-07 → 2026-12-06, and the paragraph below the table, which repeated the error at length, was replaced with what each doc actually contains and why its emptiness is handled rather than hidden.
+- **The open-loops row replaced.** "not yet run" became three rows: the roll-up at 2026-09-07 → 2026-09-21, the 12 promoted loops at the same dates, and a separate row for `hypotheses/`, `validations/`, `re-validations/` and `open-loops/archived/`, which are genuinely still empty and wait on the first `/research-loops` pass. A paragraph below the event-driven table explains why 2026-09-21 matters and is honest that 09-13 and 09-20 fall earlier on the calendar while being self-repeating cadence cuts.
+- **A count line added** stating that eighteen documents live in `audits/` and all eighteen are now in the table.
+
+### 4. `audits/INDEX.md` — regenerated from the folder
+
+- **"Twelve audits exist" became eighteen**, counted as 6 + 4 + 6 + 2 across `2026-Q3/`, `2026-Q3/external/`, `2026-09/` and `2026-09/external/`. `INDEX.md` and `README.md` are excluded and said to be excluded.
+- **The two audits under "Not generated, and why" moved into the real list** with real one-line reads taken from their own executive summaries. The "Not generated" heading now says the folder is complete and records that the earlier claim was wrong.
+- **The four external cuts that had no line got one**, plus a new "2026-09 — monthly, external" section that did not exist.
+- **The header's flat "163 Raselio ads, 6 Meta-attributed purchases" was replaced with the disagreement**, not a pick. Three ad totals with their scopes and their unexplained gaps (183/850,79 € Meta API account-wide, 173/771,64 € Parker, 163/684,82 € Raselio-only, with 677,81 € as the sum of the 163 ad lines and a 7,01 € gap the sources do not explain). Purchases are given as 6 Raselio-scope against 7 at Parker's account scope, since `quarterly-whitespace-analysis.md` works at that scope and reads 7. The 28,2 % vs 28,1 % Instagram split is stated as a disagreement and left unreconciled, as instructed.
+
+### 5. `prompts-run-log/2026-09-06-full-buildout.md` — reconstructed
+
+Was 15 lines and stopped at Phase 0. Now 208 lines.
+
+- **The honesty statement is first, before the table.** It says plainly that the per-prompt fidelity review the runner specifies was not run on most documents, that the build ran through repeated session interruptions and a container restart, and that no contemporaneous review verdict exists for any document. It names what carried quality instead — the fidelity contract embedded in each prompt, and each doc's own `built_from` / `sources_read` / `data_limitations` frontmatter — and says the 2026-09-07 verification spot-checked twelve documents on a base of 116, which is a sample and not a review pass.
+- **116 rows, one per document**, grouped into the eight phase branches: output path, generating prompt, `generated_on` date, review status. The review column reads **none logged** on every row, and the header says that is the honest value rather than a placeholder.
+- **How the prompt column was resolved is stated.** No document in this brain carries a `prompt:` or `generated_by:` key, so the prompt is resolved from the runner's path convention; the two rows that do not follow it (`competitors/_competitive-set.md`, seeded by the runner's intake step, and `retro.md`, scaffolded by the sprint-plan prompt) are flagged in place. A note recommends stamping the prompt path into frontmatter so a future build never has to infer it.
+- **The outputs with no `generated_on` are named rather than left invisible**: the 25 raw source pulls on `pulled_on`, `running-notes-on-competitor.md` on `log_started`, the 4 sprint briefs on `last_updated`, the two running notes on `last_updated`, and the contract and map files that carry no date key.
+- **"20 craft skills" corrected to 21** in the Phase 0 block, with the correction shown rather than silently swapped, and the arithmetic that closes it: 21 mount skills + 5 routine-only = the 26 in `.claude/skills/`.
+
+### 6. Empty directories
+
+`.gitkeep` created in **15 directories**, every one confirmed empty first with `ls -A`:
+
+`briefs/`, `expert-insights/inbox/`, `expert-insights/curation/`, `expert-insights/context-update-candidates/`, `hypotheses/tested/`, `hypotheses/awaiting-user/`, `hypotheses/denied/`, `validations/validated/`, `validations/invalidated/`, `validations/inconclusive/`, `validations/insufficient-evidence/`, `re-validations/scheduled/`, `re-validations/results/`, `open-loops/archived/`, `sprints/_unplanned/briefs/`.
+
+`hypotheses/`, `validations/`, `re-validations/`, `dreaming/`, `workflows/` and `expert-insights/` were **not** empty at their own level — each holds a `README.md` — so the placeholder went into their empty children instead. After the pass, `find -type d -empty` outside `parker-system/` returns **nothing**.
+
+### 7. The minor items
+
+- **`sprints/2026-09-07-sprint-1/retro.md`** now carries `refresh_by: 2026-10-05` plus a `refresh_note` saying that date is a shipping estimate, not a calendar deadline, and that the real trigger stays the `due_when` field. The field exists so a freshness walk sees the document at all.
+- **`personas/voice-of-customer/voice-of-customer.md`** changed from `last_updated: 2026-09-06` to `generated_on: 2026-09-06`, date unchanged, with a `frontmatter_note` recording the change and why. It is a standing synthesis listed in the semi-annual table and a walk keyed on `generated_on` did not see it. The `generated_on` document count therefore moved from 115 to **116**.
+- **The three docs with no open-loops tail were checked against their generating prompts, and all three are exempt.** A note saying so, with the evidence, was added to each:
+  - `personas/voice-of-customer/voc-corpus-profile.md` — its prompt is the only one of the eleven voice-of-customer prompts that does not embed `_open-loops-core-block.md`, and its output template ends at "Data limitations" with no loops section. Exempt by construction.
+  - `competitors/thomyle/sub-context-docs/running-notes-on-competitor.md` — its prompt embeds the block but changes its form: loops belong "inline on the entry as the `Open loop, if any` field". The doc carries that field on eight entries, three with a live question and five pointing at the loop already held elsewhere rather than duplicating it. Conforming, not amputated.
+  - `competitors/_competitive-set.md` — has no dedicated prompt in `parker-system/prompts/` at all. The roster is seeded by the founder intake at step 4 of `onboarding-runner.md`, which names it three times as a destination and never as a context doc. Exempt by nature; its one open question is question 4 of `running-notes/missing-context.md`.
+
+## What was verified after the changes
+
+Each of these was re-run against the filesystem after the edits, not assumed:
+
+| Check | Result |
+|---|---|
+| Stale-state grep across `brand-profile-narrative.md` and `CLAUDE.md` ("pas encore générée", "vide au", "pas encore écrit", "does not exist", "are missing") | **clean** — the one remaining hit is `CLAUDE.md` correctly calling `retro.md` a deliberate empty scaffold |
+| Every audit on disk has a row in `running-notes/refresh-schedule.md` | **18 / 18** |
+| Every audit on disk has a line in `audits/INDEX.md` | **18 / 18** |
+| Every prompt path written into the reconstructed build log resolves to a real file in the mount | **75 distinct prompt paths, all resolve** |
+| Rows in the reconstructed build log | **116**, one per document carrying `generated_on`, none unmapped |
+| Documents outside `parker-system/` carrying `generated_on` | **116** (115 before, plus `voice-of-customer.md` after the key change) |
+| `.gitkeep` files created | **15** |
+| Empty directories remaining outside `parker-system/` | **0** |
+| `refresh_by` on `retro.md` | present, 2026-10-05 |
+| Open-loops exemption note on the three docs | **3 / 3** |
+| Skills in the mount, counted by name | **21** — the log's "20" was the error, the shipment was complete |
+
+## Deliberately not touched
+
+- **The 28,2 % vs 28,1 % Instagram split.** Both figures are carried, and `audits/INDEX.md` now states the disagreement where it used to be silent. Neither was changed to match the other.
+- **The 183 / 173 / 163 ad-count disagreement.** Stated with its three scopes and its two unexplained gaps wherever a doc used to pick one silently. No number was reconciled, averaged or dropped.
+- **The `parker-system (v14)` submodule string.** `v14` and `v15` are the same commit and both configured pins say `v15`, as the verification records.
+- **`BUILD-STATUS.md`.** Item 5 of the verification's fixer list (close it out against disk, archive it into `prompts-run-log/`, clear the stale `[blocked]` lines) was **not in this pass's scope** and was not done. It is still frozen at 2026-09-07 05:30 UTC and still at the repo root, and every row of its dashboard is still wrong against disk. **This is the largest remaining known-false surface in the brain.**
+- **`/setup-routines`.** Still not run; the six schedules are still un-armed, and all six recipes still say so honestly. It needs the account owner.

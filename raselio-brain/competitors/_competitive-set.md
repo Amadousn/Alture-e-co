@@ -28,3 +28,7 @@ Build-day roster. The founder was not available to name rivals (unattended build
 ## How the set was chosen
 
 `brand_discovery` (Parker MCP) could not run — no Raselio brand in Parker on build day. Selection used: the team's Grümwise doc, Meta Ad Library search "tondeuse intime homme" (FR, active), Brandsearch lookups. Marked **inferred** where it is Parker's judgement.
+
+---
+
+**Pourquoi ce document ne porte pas de section « Boucles ouvertes ».** Vérifié le 2026-09-07 contre le jeu de prompts de la fabrique. `_competitive-set.md` **n'a pas de prompt générateur dédié** dans `parker-system/prompts/` : le registre est semé par l'intake du fondateur au pas 4 de `parker-system/prompts/onboarding-runner.md`, qui le cite trois fois comme destination et jamais comme document de contexte. Aucun bloc `_open-loops-core-block.md` ne s'y applique, et rien dans le runner ne demande de boucles sur ce fichier. C'est un roster, pas une analyse : il est **exempt par nature**. La seule question ouverte qu'il porte est portée ailleurs et nommément, la question 4 de `running-notes/missing-context.md`, à savoir la confirmation du set par Dylan.

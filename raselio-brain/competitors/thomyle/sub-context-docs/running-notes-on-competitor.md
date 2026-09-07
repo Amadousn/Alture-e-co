@@ -142,3 +142,7 @@ last_appended: 2026-09-06
 - competitors/thomyle/sub-context-docs/ad-account-evaluation.md · website-and-product-audit.md · brand-identity.md · public-perception.md · customer-and-persona-discovery.md
 - source-pulls/brandsearch-competitors.md · source-pulls/meta-ad-library-competitors.md
 - sub-context-docs/ad-account-evaluation.md · sub-context-docs/category-and-market-research.md · sub-context-docs/competitive-landscape.md
+
+---
+
+**Pourquoi ce document ne porte pas de section « Boucles ouvertes » en fin de texte.** Vérifié le 2026-09-07 contre son prompt générateur, `parker-system/prompts/competitor-profile/running-notes-on-competitor.md`. Ce prompt embarque bien le bloc `_open-loops-core-block.md`, mais il en change explicitement la forme : « Most entries will not raise an open loop... those belong inline on the entry as the `Open loop, if any` field. » Les boucles sont donc **par entrée et non en queue de document**, et elles sont bien là : huit entrées portent le champ `Open loop, if any`, trois avec une vraie question ouverte, cinq qui renvoient nommément à la boucle déjà portée ailleurs plutôt que de la dupliquer. Ce document est **conforme à son prompt**, pas amputé.

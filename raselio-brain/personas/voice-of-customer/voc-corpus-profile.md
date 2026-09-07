@@ -345,3 +345,7 @@ Aucune de ces lignes n'entre dans une passe d'extraction, y compris sous l'étiq
 **Méthodes chargées pour cette passe :** `parker-system/creative-strategy-context/customer-review-mining-method.md` et `parker-system/creative-strategy-context/persona-research-and-creative-strategy-process.md`, lues avant l'analyse et appliquées de bout en bout : les trois détecteurs séparés, la règle qu'un compte n'est pas une significativité sans dénominateur, la règle qu'une citation sans date est une preuve affaiblie, la liste d'exclusion, le repérage de l'écho de marque, le marquage d'ère, la discipline de couverture de sources et la discipline d'intégrité des données.
 
 This is everything I know about mining customer reviews for creative material.
+
+---
+
+**Pourquoi ce document ne porte pas de section « Boucles ouvertes ».** Vérifié le 2026-09-07 contre son prompt générateur, `parker-system/prompts/voice-of-customer/voc-corpus-profile.md`. Ce prompt est le seul des onze de la branche voix du client à ne pas embarquer le bloc `_open-loops-core-block.md`, et son gabarit de sortie ne prévoit aucune section de boucles : il s'arrête à « Data limitations ». Les dix autres tranches `voc-*` portent bien la section et le bloc. Ce document est donc **exempt par construction**, pas incomplet. Les questions que le corpus vide soulève sont portées ailleurs, dans les dix tranches et dans `open-loops/2026-09-07-roll-up.md`.

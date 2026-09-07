@@ -4,6 +4,18 @@ This is the one place that tracks when every standing doc was last run and when 
 
 Aggregated on **2026-09-07** from the frontmatter of every standing doc the 2026-09-06 / 2026-09-07 build produced. Every date below was read off a file, not assumed.
 
+## The next three dates, so nobody has to scroll for them
+
+Read off the files on 2026-09-07, in order:
+
+| Date | What comes due | Where |
+|---|---|---|
+| **2026-09-13** | `audits/2026-09/weekly-performance-snapshot.md` | audit cadence table below |
+| **2026-09-20** | `audits/2026-09/biweekly-iterations-report.md` | audit cadence table below |
+| **2026-09-21** | `open-loops/2026-09-07-roll-up.md` **plus the 12 graded loops** in `open-loops/promoted/2026-09/` | event-driven table below |
+
+The first two are cadence cuts that re-run themselves. The 2026-09-21 date is the only strategic appointment in the month, it lands on thirteen documents at once, and until the fixer pass of 2026-09-07 nothing in this ledger surfaced it, because the open-loops row read "not yet run".
+
 ## How Parker uses this
 
 - When you load this brain or consult a standing doc, read this schedule and compare each `due` date to today. A doc whose due date has passed is overdue; one inside roughly two weeks of its due date is due soon.
@@ -74,6 +86,9 @@ The five `strategy/` lines were stamped on 2026-09-07 when the Phase-2 prompts w
 | `competitors/philips-oneblade-intimate/competitor-snapshot.md` | 2026-09-06 | 2026-12-06 |
 | `competitors/thomyle/sub-context-docs/` (9 docs) | 2026-09-06 | 2027-03-06 |
 | `competitors/_competitive-set.md` | 2026-09-06 | 2027-03-06 — **but overdue now, see priority queue** |
+| `working-thesis-synthesis.md` (racine) | **2026-09-07** | **2026-10-07** (30d, tightened) |
+
+**`working-thesis-synthesis.md` is the cross-competitor synthesis and it sits at the root, not under `competitors/`.** Its own frontmatter reads `generated_on: 2026-09-07`, `refresh_by: 2026-10-07`, so it carries 30 days rather than the semi-annual default of its inputs. Two reasons sit in the doc itself: none of the three rivals is subscribed in Parker, so the corpus behind it can move without any movement tracking firing, and the most-spending French rival changed state inside the window it was written on. It is also stale-by-dependency whenever two or more of the three competitor snapshots are re-run, since it is a synthesis of them.
 
 The ten voice-of-customer category files are `voc-anti-language`, `voc-aspirational`, `voc-category-jargon`, `voc-corpus-profile`, `voc-metaphor`, `voc-objection`, `voc-outcome-phrase`, `voc-pain-phrase`, `voc-surprise-delight`, `voc-trigger-moment`. All ten carry the same dates. The nine Thomyle sub-context docs are `ad-account-evaluation`, `brand-identity`, `community-and-forums`, `customer-and-persona-discovery`, `organic-channels-audit`, `public-perception`, `reviews-and-customer-language`, `running-notes-on-competitor`, `website-and-product-audit`.
 
@@ -96,12 +111,16 @@ Both carry a tighter date than the annual default. The brand is 46 days old at b
 | `sprints/2026-09-07-sprint-1/sprint-plan.md` | **2026-09-07** | artefact par round, pas de date. On en écrit un nouveau au prochain sprint. Se re-planifie seulement si la feuille de route est approuvée avec des priorités déplacées avant l'expédition, ou si une lecture fraîche de dépense change la taille portable. |
 | `sprints/2026-09-07-sprint-1/briefs/` (4 briefs) | **2026-09-07** | vivants jusqu'à l'expédition. Le statut passe de `drafted` à `in-production`, `shipped` ou `shelved` au fil du round, et ce qu'ils apprennent remonte dans `idea-bank/`, `personas/`, `validations/` et `brand-lens.md`. |
 | `sprints/2026-09-07-sprint-1/retro.md` | **2026-09-07**, scaffold vide | à la cadence du rétro créatif, c'est-à-dire **à l'expédition du round**, environ le 2026-10-05 si la vague A part la semaine du 2026-09-08. Ce n'est pas une date de calendrier. |
-| Open-loops roll-up (`open-loops/`) | not yet run | after the first `/research-loops` run |
+| `open-loops/2026-09-07-roll-up.md` | **2026-09-07** | **2026-09-21** |
+| `open-loops/promoted/2026-09/` (12 boucles gradées) | **2026-09-07** | **2026-09-21** |
+| `hypotheses/`, `validations/`, `re-validations/`, `open-loops/archived/` | jamais écrits | après la première passe `/research-loops` qui avance une boucle promue en hypothèse |
 
 `brand-profile-narrative.md` is normally event-driven with a 90-day floor. Its own frontmatter tightens it to 30 days and names the two triggers that already fired: the Parker brand appearing at 09:50 UTC on 2026-09-06, which makes every pre-09:50 slice's data-limitation block stale, and the most-spending French rival nearly switching its media off, which changes the map several slices were written on. It is also due automatically whenever two or more of its input slices are re-run, and the three docs in the priority queue above are all input slices, so a priority re-run pass drags this doc with it.
 
 
 **La Phase 3 a tourné le 2026-09-07, et tout ce qu'elle a produit est provisoire.** Les cinq lignes ci-dessus, la banque d'idées, sa notation, le plan de sprint, les quatre briefs et le gabarit de rétro, descendent de `strategy/strategic-roadmap.md`, qui porte `status: drafted — awaiting the founder's approve / adjust / reject`. La règle de dépendance du modèle en trois phases s'applique en entier : **quand la feuille de route est approuvée, ajustée ou rejetée, `idea-bank/evaluation-2026-09-07.md` est périmé le jour même**, et le plan de sprint et les quatre briefs le sont avec lui s'ils n'ont pas encore été expédiés. La capture elle-même, les 26 entrées, survit à un changement de direction : elle est non notée par construction, c'est son classement qui bouge.
+
+**Le roll-up des boucles ouvertes a tourné, et il porte la date la plus proche du cerveau.** `open-loops/2026-09-07-roll-up.md` a été écrit le 2026-09-07, et `open-loops/promoted/2026-09/` porte **12 boucles gradées**, `t1-1` à `t1-4` et `br-1` à `br-9` moins `br-5`, chacune stampée `generated_on: 2026-09-07` et `refresh_by: 2026-09-21`. Une version antérieure de ce fichier disait que le roll-up n'avait pas tourné, ce qui rendait invisibles treize documents et leur échéance. Trois dates seulement tombent avant la fin septembre, et les voici dans l'ordre relevé sur les fichiers : **2026-09-13** pour `weekly-performance-snapshot.md`, **2026-09-20** pour `biweekly-iterations-report.md`, **2026-09-21** pour le roll-up et ses douze boucles. Les deux premières sont des coupes de cadence qui se refont d'elles-mêmes. La troisième est la seule échéance stratégique du mois, elle porte treize documents d'un coup, et c'est celle qu'aucune version antérieure de ce fichier ne montrait : à cette date, soit les boucles Tier 1 sont avancées en hypothèses, soit le roll-up est re-gradé parce que le terrain a bougé. `archived/` reste vide, aucune boucle n'a été tuée après promotion.
 
 **Deux échéances datées à surveiller, toutes deux hors calendrier de refresh.** **BR-3** ferme sa fenêtre du premier acheteur vers le **2026-09-25** : tant qu'elle est ouverte, une variation de `RS-S1-02` et l'entrée « L'essai chez soi de l'audioprothèse » restent bloquées. Et **BR-8**, le ciblage écrit deux fois et jamais appliqué, verrouille la lisibilité de deux concepts sur quatre du round : sans elle, `RS-S1-01` et `RS-S1-03` sont produisibles mais illisibles.
 
@@ -118,9 +137,13 @@ Generated once at the cold start and re-run from each audit's own `generated_on`
 | `audits/2026-Q3/90-day-diversity-audit.md` | 2026-09-06 | 2026-12-05 |
 | `audits/2026-Q3/external/90-day-creative-strategy-audit-external.md` (Gillette) | 2026-09-06 | 2026-12-05 |
 | `audits/2026-Q3/external/90-day-performance-audit-external.md` (Gillette) | 2026-09-06 | 2026-12-05 |
+| `audits/2026-Q3/external/90-day-diversity-audit-external.md` (Gillette) | **2026-09-07** | **2026-12-06** |
+| `audits/2026-Q3/external/single-competitor-ad-analysis-thomyle.md` | **2026-09-07** | **2026-12-06** |
 | `audits/2026-Q3/gaps-opportunities-inspo.md` | 2026-09-07 | 2026-10-07 (30d, tightened) |
-| `audits/2026-Q3/customer-review-audit.md` | never generated | when the store has reviews |
-| `audits/2026-Q3/quarterly-whitespace-analysis.md` | never generated | next quarterly pass |
+| `audits/2026-Q3/customer-review-audit.md` | **2026-09-07** | **2026-12-06** |
+| `audits/2026-Q3/quarterly-whitespace-analysis.md` | **2026-09-07** | **2026-12-06** |
+| `audits/2026-09/external/monthly-creative-landscape.md` | **2026-09-07** | **2026-10-07** |
+| `audits/2026-09/external/monthly-top-impressions-report.md` | **2026-09-07** | **2026-10-07** |
 | `audits/2026-09/monthly-hook-audit.md` | 2026-09-06 | 2026-10-06 |
 | `audits/2026-09/monthly-performance-report.md` | 2026-09-06 | 2026-10-06 |
 | `audits/2026-09/monthly-organic-tiktok-audit.md` | 2026-09-06 | 2026-10-06 |
@@ -128,7 +151,13 @@ Generated once at the cold start and re-run from each audit's own `generated_on`
 | `audits/2026-09/biweekly-iterations-report.md` | 2026-09-06 | 2026-09-20 |
 | `audits/2026-09/weekly-performance-snapshot.md` | 2026-09-06 | **2026-09-13** |
 
-`customer-review-audit.md` was not generated because the review pool is empty, verified by four independent queries returning N = 0 on 2026-09-06. It is not a skipped step, it is a blocked one, and the block lifts the day the brand collects its first reviews. `quarterly-whitespace-analysis.md` was not reached in the cold start; `gaps-opportunities-inspo.md` covers part of the same ground in the meantime. Both are logged in `running-notes/missing-context.md`.
+**Eighteen documents live in `audits/` and all eighteen are in the table above.** Counted on disk on 2026-09-07: six in `2026-Q3/`, four in `2026-Q3/external/`, six in `2026-09/`, two in `2026-09/external/`. `audits/INDEX.md` and `audits/README.md` are not audits and are not counted.
+
+`customer-review-audit.md` **was written on 2026-09-07**, and the earlier line here saying it was never generated was wrong. It ran against an empty pool rather than skipping: four independent queries return N = 0, the tool says in plain words that access is not the problem, and the doc records `0 avis, 0 réponses de sondage post-achat, 2 commentaires publicitaires` and refuses to pass the brand's own copy off as customer language. It is due again on 2026-12-06, and the day the brand collects its first real reviews is a trigger that pulls it forward.
+
+`quarterly-whitespace-analysis.md` **was also written on 2026-09-07**, 353 lines, due 2026-12-06. It reads 581,16 € of 830,16 € of spend, 70,0 %, treats the roughly 155 ad lines under 14,33 € in aggregate, and declares that aggregation as a knowing breach of the method's counting rule rather than hiding it. `gaps-opportunities-inspo.md` covers adjacent ground on a 30-day cadence; the two are complementary, not substitutes.
+
+The four external audits added to the table above were absent from every earlier version of this ledger. Two of them, `monthly-creative-landscape.md` and `monthly-top-impressions-report.md`, come due on **2026-10-07**, and nothing surfaced them before this pass.
 
 `gaps-opportunities-inspo.md` carries a 30-day rather than 90-day cadence for a stated reason: a rival changed state inside the window, and the monthly count of Gillette lines in the French ad library is named as the one metric to track each month.
 
