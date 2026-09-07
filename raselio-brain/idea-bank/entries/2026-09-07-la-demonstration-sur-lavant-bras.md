@@ -48,7 +48,7 @@ Problem aware et Product aware : c'est une preuve, pas une accroche.
 
 ## brand_fit
 
-Parfait sur la contrainte : le proxy n'est plus un objet posé sur le corps, c'est une autre partie du corps. Il s'ajoute au vocabulaire existant — kiwis, ballon, mosaïque de pixels, serviette, boxer, post-it, pancarte — sans le contredire.
+Parfait sur la contrainte : le proxy n'est plus un objet posé sur le corps, c'est une autre partie du corps. Il s'ajoute au vocabulaire existant, kiwis, ballon, mosaïque de pixels, serviette, boxer, post-it, pancarte, sans le contredire.
 
 ## notes
 

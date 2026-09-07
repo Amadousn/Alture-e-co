@@ -91,10 +91,19 @@ Both carry a tighter date than the annual default. The brand is 46 days old at b
 | Doc | Last run | Due |
 |---|---|---|
 | `sub-context-docs/brand-profile-narrative.md` | 2026-09-07 | 2026-10-07 |
-| `idea-bank/evaluation-[YYYY-MM-DD].md` | not yet run | after the first `/harvest-ideas` run |
+| `idea-bank/evaluation-2026-09-07.md` | **2026-09-07** | événementiel. Se re-fait quand la feuille de route est approuvée ou ajustée, quand le bac grossit assez pour changer le classement, ou quand une idée expédiée revient comme hypothèse validée. **L'approbation du fondateur est à elle seule un déclencheur, et elle re-classe les 26 entrées.** |
+| `idea-bank/index.md` et `idea-bank/entries/` (26 entrées) | **2026-09-07** | capture continue, jamais périmée en bloc. **Curation mensuelle due le 2026-10-07** : fusionner les doublons, marquer les idées éventées, promouvoir en `worth testing`, marquer en `used` celles devenues concepts. |
+| `sprints/2026-09-07-sprint-1/sprint-plan.md` | **2026-09-07** | artefact par round, pas de date. On en écrit un nouveau au prochain sprint. Se re-planifie seulement si la feuille de route est approuvée avec des priorités déplacées avant l'expédition, ou si une lecture fraîche de dépense change la taille portable. |
+| `sprints/2026-09-07-sprint-1/briefs/` (4 briefs) | **2026-09-07** | vivants jusqu'à l'expédition. Le statut passe de `drafted` à `in-production`, `shipped` ou `shelved` au fil du round, et ce qu'ils apprennent remonte dans `idea-bank/`, `personas/`, `validations/` et `brand-lens.md`. |
+| `sprints/2026-09-07-sprint-1/retro.md` | **2026-09-07**, scaffold vide | à la cadence du rétro créatif, c'est-à-dire **à l'expédition du round**, environ le 2026-10-05 si la vague A part la semaine du 2026-09-08. Ce n'est pas une date de calendrier. |
 | Open-loops roll-up (`open-loops/`) | not yet run | after the first `/research-loops` run |
 
 `brand-profile-narrative.md` is normally event-driven with a 90-day floor. Its own frontmatter tightens it to 30 days and names the two triggers that already fired: the Parker brand appearing at 09:50 UTC on 2026-09-06, which makes every pre-09:50 slice's data-limitation block stale, and the most-spending French rival nearly switching its media off, which changes the map several slices were written on. It is also due automatically whenever two or more of its input slices are re-run, and the three docs in the priority queue above are all input slices, so a priority re-run pass drags this doc with it.
+
+
+**La Phase 3 a tourné le 2026-09-07, et tout ce qu'elle a produit est provisoire.** Les cinq lignes ci-dessus, la banque d'idées, sa notation, le plan de sprint, les quatre briefs et le gabarit de rétro, descendent de `strategy/strategic-roadmap.md`, qui porte `status: drafted — awaiting the founder's approve / adjust / reject`. La règle de dépendance du modèle en trois phases s'applique en entier : **quand la feuille de route est approuvée, ajustée ou rejetée, `idea-bank/evaluation-2026-09-07.md` est périmé le jour même**, et le plan de sprint et les quatre briefs le sont avec lui s'ils n'ont pas encore été expédiés. La capture elle-même, les 26 entrées, survit à un changement de direction : elle est non notée par construction, c'est son classement qui bouge.
+
+**Deux échéances datées à surveiller, toutes deux hors calendrier de refresh.** **BR-3** ferme sa fenêtre du premier acheteur vers le **2026-09-25** : tant qu'elle est ouverte, une variation de `RS-S1-02` et l'entrée « L'essai chez soi de l'audioprothèse » restent bloquées. Et **BR-8**, le ciblage écrit deux fois et jamais appliqué, verrouille la lisibilité de deux concepts sur quatre du round : sans elle, `RS-S1-01` et `RS-S1-03` sont produisibles mais illisibles.
 
 Competitor rotation: the constant set (Thomyle, Gillette, Philips) refreshes on the semi-annual cadence; affinity and inspiration rivals rotate each audit cycle rather than being re-run.
 
@@ -129,4 +138,4 @@ Generated once at the cold start and re-run from each audit's own `generated_on`
 - `brand-lens.md` — grows by accretion. The refresh and self-improve routines add to it; it is never re-run wholesale.
 - `source-pulls/` — dated evidence captures. They are never refreshed, they are superseded by a newer pull with a newer date.
 - `audits/INDEX.md` and `competitors/INDEX.md` — regenerated when their folder's contents change, not on a date.
-- `idea-bank/entries/` — captured continuously. `briefs/` and `sprints/` are per-campaign artifacts, not refreshed.
+- `idea-bank/entries/` — captured continuously. `briefs/` and `sprints/` are per-campaign artifacts, not refreshed. **Mise à jour du 2026-09-07 :** ces dossiers ne sont plus vides. `idea-bank/entries/` porte 26 entrées, `idea-bank/` porte son index et sa première notation, et `sprints/2026-09-07-sprint-1/` porte un plan, quatre briefs et un gabarit de rétro. Ils restent exempts de cadence calendaire, puisqu'un artefact par round ne se rafraîchit pas mais se remplace, et ils sont désormais listés dans le tableau événementiel ci-dessus avec leur déclencheur, parce qu'ils ont un déclencheur réel : l'arbitrage du fondateur sur la feuille de route.

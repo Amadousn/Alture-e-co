@@ -621,6 +621,60 @@ Le roll-up consolidé des boucles ouvertes a lu les 58 documents porteurs d'une 
 3. **`audits/INDEX.md` est désormais périmé sur deux lignes.** Il classe `customer-review-audit.md` et `quarterly-whitespace-analysis.md` dans « Not generated, and why » ; les deux existent depuis le 2026-09-07. Il ignore aussi les quatre nouveaux audits externes. **À régénérer.**
 4. **Les deux index du cerveau ne sont pas dans la même langue.** `audits/INDEX.md` est en anglais, `competitors/INDEX.md` est en français conformément à la règle de langue de ce cerveau. À harmoniser au prochain passage, dans un sens ou dans l'autre.
 
+### idea-bank/index.md et idea-bank/entries/ (26 entrées, généré 2026-09-07)
+
+1. **CETTE CAPTURE EST PROVISOIRE.** Elle a tourné contre `strategy/strategic-roadmap.md` au statut `drafted — awaiting the founder's approve / adjust / reject`. La capture elle-même est ungraded et ne dépend pas de l'approbation ; tout ce qui la note et en descend s'y re-classe au premier arbitrage.
+2. **Le corpus d'annonces anciennes de la méthode est vide.** `parker-system/creative-strategy-context/old-ads/entries/` ne contient aucune entrée, et son `INDEX.md` porte « none yet — corpus scaffolded 2026-07-09 ». La lentille historienne de la chasse n'a donc produit **zéro entrée** sur une marque qui est à 100 % en images fixes sur 163 annonces, alors que la méthode place les vieilles annonces en première source pour les statiques. C'est le plus gros trou de cette chasse et il se comble en alimentant le corpus, pas en cherchant ailleurs.
+3. **Le Swipe File Parker de l'organisation est vide.** `search_swipe_file` mode `list_boards`, interrogé le 2026-09-07 : un seul board, « My First Board », **0 idée**. Or trois concepts du lot du 3 septembre citent un « Parker board » comme source, verbatim : « lettre d'excuses "We're so sorry" (Grüns) », « photo pancarte manuscrite "I lost 11 lbs" », « carte "Hello Europe" ». Ces sources ont existé et ne sont plus lisibles.
+4. **Aucun set de marques d'affinité n'existe** ni dans le coffre ni dans Parker. Deux entrées d'affinité ont pu être tirées ce jour uniquement parce que MANSCAPED se trouve dans la base Parker avec 1 339 annonces. Thomyle, Grümwise et Meridian n'y sont pas : `search_brand_by_name` renvoie `found: false` pour les trois le 2026-09-07.
+5. **creative read unavailable sur 100 % des visuels de Thomyle**, 790 vidéos et 273 images. Les deux entrées tirées de son corpus sont capturées sur le texte seul.
+6. **Le corpus TikTok est entièrement anglophone**, vingt vidéos, seize mots-clés de collecte tous en anglais, aucun créateur au-dessus de quarante ans. Sept entrées en viennent : ce sont des mécanismes, jamais des visages, et chaque entrée le dit.
+7. **Deux entrées de transfert lointain ne portent aucune source et aucune métrique**, délibérément. Ce sont des transferts de mécanisme faits par Parker, écrits comme tels pour être gradés comme des paris. Rotation notée pour ne pas revenir la semaine prochaine : audioprothèse en direct, optique de presbytie.
+8. **Le bac ne contient aucune idée de page, de tunnel ou de courrier post-achat**, alors que la priorité 1 de la feuille de route dit que le levier le plus fort du trimestre n'est pas dans le gestionnaire de publicités. La chasse aux idées est une chasse créative, et cette limite est structurelle.
+9. **Le levier Creators and talent est représenté et inexécutable.** Quatre entrées le tirent, les quatre butent sur le même mur : aucune relation créateur, aucune relation d'autorité, aucun compte organique, et tous les visages du répertoire sont synthétiques.
+
+### idea-bank/evaluation-2026-09-07.md (généré 2026-09-07)
+
+1. **TOUT CE CLASSEMENT EST PROVISOIRE.** Il grade contre une feuille de route rédigée et non approuvée. Un changement d'ordre entre ses trois priorités le re-classe intégralement ; un changement de diagnostic le réécrit.
+2. **Aucune bande de preuve ne peut citer une hypothèse validée**, parce qu'il n'en existe aucune : `validations/`, `hypotheses/` et `re-validations/` sont vides au 2026-09-07. Chaque bande repose sur une donnée de compte ou une donnée de source, jamais sur un test tranché.
+3. **Le dénominateur écrase tout : 6 achats attribués, 11 commandes, 1 phrase de client, environ 685 € de dépense.** Une seule idée sur 26 obtient une bande HIGH, et elle l'obtient parce qu'elle redéploie un ad set de 112,39 € et quatre achats. Ce n'est pas de la sévérité, c'est le dénominateur.
+4. **Le meilleur élément du bac n'est pas une publicité et n'appartient pas à Parker.** L'e-mail de trois questions aux onze acheteurs est **BR-4**, Stakes 5, Researchability 1, et il est en tête du classement sans consommer de créneau de production. Tant qu'il n'est pas parti, trois formats du bac restent bloqués : l'autorité, la réponse à un commentaire et le témoignage.
+5. **Deux idées sont bloquées par une contradiction de politique non résolue.** Le site promet un remboursement « sans poser de questions » et la politique de retour n'accepte que les produits « dans son état d'origine, non utilisé ». C'est **BR-3**, dont la fenêtre du premier acheteur se ferme vers le **2026-09-25**.
+6. **La priorité 1 est la moins bien servie par le bac, et c'est la priorité classée première.** Cinq idées la servent et les cinq sont des idées de publicité, alors que la feuille de route dit que le levier se joue sur une page web et dans une boîte mail.
+7. **Le bac penche vers le message.** Sur 26 entrées, levier primaire : Messaging 13, Creators and talent 5, Personas 4, Product 4. Une marque qui écrit beaucoup plus vite qu'elle ne mesure produit un bac à son image.
+8. **Une seule entrée redéploie la gagnante nommée par la feuille de route.** Vingt-cinq idées cherchent du nouveau, une seule cultive ce qui a marché.
+
+### sprints/2026-09-07-sprint-1/sprint-plan.md (généré 2026-09-07)
+
+1. **LE ROUND EST PROVISOIRE.** Il descend d'une feuille de route non approuvée. Un déplacement de priorités le re-taille et le re-répartit entièrement.
+2. **LA RE-LECTURE LIVE DE LA DÉPENSE A ÉTÉ TENTÉE ET REFUSÉE.** `search_facebook_ads_sql` a été appelé le 2026-09-07 sur le `brand_id a81e7c77-ca41-4cbd-acf8-ec27ea58eb37` et l'appel a été **refusé à la couche de permission**. Les deux lectures vives du plan viennent donc des pulls sauvegardés du 2026-09-06. Deux autres pulls Parker ont en revanche abouti ce jour et nourrissent le round : le corpus TikTok et le corpus d'annonces MANSCAPED.
+3. **Aucun contexte annuel n'existe.** Le compte a commencé à dépenser le 2026-08-10 : trente jours glissants et vie entière sont presque le même objet. La méthode demande la dépense de l'année pour le contexte ; il n'y a pas d'année.
+4. **Le round ne pourra pas rendre de verdict propre, et le plan le dit.** Financer un seul concept jusqu'aux trente ajouts au panier que la feuille de route pose comme seuil coûte environ **723 €**, soit plus de deux semaines de la totalité du budget à 50 €/jour. Quatre concepts partagent environ 700 € sur quatre semaines.
+5. **La cadence recommandée est une coupe d'environ 95 %** : de quelque 45 paires de copy neuves par semaine à deux ou trois concepts neufs, et un à deux en pratique. Elle repose sur trois appuis dont un est `inferred` à confiance mixed, l'empreinte de diffusion, **et ce nombre d'empreintes n'est lisible dans aucun champ de l'API**.
+6. **Combien d'heures Raselio reçoit réellement est inconnu.** C'est **BR-7**. Dylan Ulry est opérateur unique sur trois boutiques. Parker dimensionne à l'aveugle sur la capacité humaine et le dit.
+7. **Aucun outil de suivi créatif n'est branché.** Ni Airtable, ni feuille, ni Notion. La carte de concepts vit donc dans ce document plutôt que dans le tracker de l'équipe, ce qui est le contraire de ce que la méthode recommande. À brancher.
+8. **La persona `partenaire-prescriptrice` est écartée du round**, avec sa raison et sa date de retour : 0 achat, 91,80 € livrés à des femmes pour zéro achat attribué, aucun ad set femmes jamais créé, et une fenêtre calendaire au Black Friday du **2026-11-27**.
+9. **BR-8 verrouille la lisibilité de deux concepts sur quatre.** Tant que les treize ad sets restent en 18-65 avec Advantage+, RS-S1-01 et RS-S1-03 sont produisibles mais pas lisibles.
+
+### sprints/2026-09-07-sprint-1/briefs/ (4 briefs, généré 2026-09-07)
+
+1. **AUCUN GABARIT DE BRIEF N'EXISTE.** `briefs/_brief-template.md` est absent, `verified` le 2026-09-07. Les quatre briefs suivent la structure du prompt de la méthode, `parker-system/prompts/ideas-and-briefs/brief-creation.md`. **Quand Dylan fournit son format, il remplace celle-ci** et se range verbatim dans `briefs/_brief-template.md`. Chaque brief porte cette note dans son frontmatter.
+2. **Aucun brief ne peut citer une hypothèse validée.** Les quatre posent leur hypothèse ; aucun ne s'appuie sur un test tranché, parce qu'aucun n'existe.
+3. **Il n'y a pas de créateur, et il n'y en aura pas dans ce round.** Aucun visage réel n'existe pour cette marque : tous les visages, mains et décors du répertoire sont synthétiques, l'équipe l'écrit elle-même. La direction de talent des quatre briefs est une direction de prompt de génération, jamais un casting.
+4. **Le générateur rajeunit, et c'est un défaut connu et non corrigé.** `verified` : le prompt de la créa 01 demandait « un homme français de 55-60 ans » et la lecture de l'image rendue estime 45-55 ans. RS-S1-01 doit sur-corriger explicitement et faire relire l'image rendue avant diffusion.
+5. **Une variation a été retirée de RS-S1-02 par blocage de politique.** « Et si je l'ai déjà utilisée ? » n'existe pas tant que **BR-3** n'est pas tranchée. Fenêtre du premier acheteur vers le 2026-09-25.
+6. **Le format réponse à un commentaire est interdit dans RS-S1-04 et il faut que ça reste écrit.** La marque a deux commentaires réels sur tout le compte ; fabriquer une bulle serait un sixième faux témoignage sur une marque qui en porte déjà cinq documentés comme inventés par sa propre équipe.
+7. **Chaque brief retire des chaînes de preuve sociale existantes, et cette suppression est elle-même une variable non contrôlée.** RS-S1-01 change trois choses au lieu d'une parce que « Approuvée par plus de 17 000 hommes » doit sauter du visuel. Le brief le porte au lieu de prétendre à un test à variable unique.
+8. **Aucun brief ne répare la page.** Cinq politiques sur six portent encore « Cutlab », les conditions générales portent « Nom du médiateur : [À COMPLÉTER OBLIGATOIREMENT] », la page « Contactez-nous » a un corps vide, et le site affiche « 4,7/5 sur 1 734 avis » sur onze commandes et zéro avis. Le chantier court en parallèle et il n'appartient pas à ces briefs.
+9. **La cadence de rythme des références organiques est ajustée consciemment.** Les références montent à un plan toutes les une à deux secondes, ce qui est trop rapide pour un acheteur de cinquante-huit ans. C'est la seule dérive assumée par rapport à la méthode d'adaptation.
+
+### sprints/2026-09-07-sprint-1/retro.md (scaffold, généré 2026-09-07)
+
+1. **C'EST UN GABARIT VIDE.** Rien n'a été expédié au 2026-09-07 et aucune ligne ne doit être remplie par anticipation.
+2. **Il ne pourra pas rendre de verdict propre**, pour la raison arithmétique écrite dans le plan : environ 700 € sur quatre semaines contre environ 723 € pour trente ajouts au panier sur **un seul** concept.
+3. **Trois vérifications doivent précéder sa première ligne** : le ciblage a-t-il été tenu (**BR-8**), la destination unique a-t-elle été tenue, et combien chaque concept a-t-il réellement reçu. Un concept sous 90 € n'a pas été testé.
+4. **Sa date d'échéance est une date d'expédition, pas une date de calendrier.** Environ le 2026-10-05 si la vague A part la semaine du 2026-09-08.
+
 ## Resolved — with date and where the answer lives
 
 - 2026-09-06 — Ad naming convention: read directly from the account → `running-notes/brand-rules.md`.

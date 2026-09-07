@@ -22,9 +22,9 @@ Ce compte n'est pas un compte sans vidéo. C'est un compte qui en a fait trois, 
 
 Trois annonces créées le même jour, le 2026-08-14, dans la campagne aujourd'hui en pause, ad set `TEST CREATIVES | H 18-55 | ADV+ PLACEMENTS`. **10,84 € de dépense cumulée**, `verified` via Parker.
 
-- `RAZELIO | CREATIVE 03 | DEMONSTRATION` — **taux d'accroche 25,55 %**, taux de rétention 8,79 %, sur 728 impressions.
-- `RAZELIO | CREATIVE 10 | UGC TEMOIGNAGE` — **taux d'accroche 34,38 %**, sur 32 impressions.
-- `RAZELIO | CREATIVE 09 | UGC UNBOXING` — **taux d'accroche 18,92 %**, taux de rétention 16,22 %, durée moyenne de lecture 9 secondes, sur 37 impressions.
+- `RAZELIO | CREATIVE 03 | DEMONSTRATION` : **taux d'accroche 25,55 %**, taux de rétention 8,79 %, sur 728 impressions.
+- `RAZELIO | CREATIVE 10 | UGC TEMOIGNAGE` : **taux d'accroche 34,38 %**, sur 32 impressions.
+- `RAZELIO | CREATIVE 09 | UGC UNBOXING` : **taux d'accroche 18,92 %**, taux de rétention 16,22 %, durée moyenne de lecture 9 secondes, sur 37 impressions.
 
 Le repère de la méthode est 30 % minimum sur l'accroche et 12 à 15 % de plancher sur la rétention. Une seule passe l'accroche, une seule passe la rétention, aucune ne fait les deux, sur des dénominateurs de 32 à 728 impressions qui n'autorisent aucune conclusion.
 
@@ -56,7 +56,7 @@ Ces trois unités ne sont **pas réutilisables telles quelles**, et l'entrée le
 
 ## notes
 
-Ce qui se garde ici est un fait de gestion, pas un asset. Toute proposition de vidéo dans cette marque doit dire combien de budget l'attend, sinon elle produit de l'invisible — la même règle que pour les statiques, où 105 annonces neuves se partagent 68,91 €.
+Ce qui se garde ici est un fait de gestion, pas un asset. Toute proposition de vidéo dans cette marque doit dire combien de budget l'attend, sinon elle produit de l'invisible, la même règle que pour les statiques, où 105 annonces neuves se partagent 68,91 €.
 
 ## parker_media_links
 

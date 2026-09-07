@@ -9,7 +9,7 @@ methods_loaded: [creative-strategy-context/ideation-and-brainstorming.md, creati
 data_limitations: [TOUT CE CLASSEMENT EST PROVISOIRE. La feuille de route contre laquelle il grade est rédigée et non approuvée : le fondateur n'était pas disponible pendant le build. Un changement d'ordre entre ses trois priorités re-classe intégralement ce document, et un changement de diagnostic le réécrit. | LE DÉNOMINATEUR DE TOUT : 6 achats attribués, 11 commandes Shopify, 1 phrase de client, environ 685 € de dépense Raselio depuis le 2026-08-10. Aucune bande de preuve de ce document ne peut être solide, et aucune ne prétend l'être. | `validations/`, `hypotheses/` et `re-validations/` sont vides au 2026-09-07 : aucune bande ne peut citer une hypothèse validée, parce qu'il n'en existe aucune. | creative read unavailable sur 100 % des visuels de Thomyle, 790 vidéos et 273 images. Les deux idées tirées de son corpus sont gradées sur le texte seul. | Deux idées de transfert lointain ne portent aucune source et aucune métrique. Elles sont bandées LOW pour cette raison exacte, pas par sévérité. | Trois totaux de dépense Raselio coexistent et ne se réconcilient pas : 684,82 € en somme des campagnes, 677,81 € en somme des 163 lignes d'annonces, 676,91 € sur le périmètre Parker. Les trois sont portés. | Meta attribue 6 achats, Shopify en compte 11 : cinq commandes ne sont vues par aucun rapport publicitaire, et Northbeam n'est pas connecté.]
 ---
 
-# Idea evaluation — Raselio — 2026-09-07
+# Idea evaluation, Raselio, 2026-09-07
 
 ## The call
 
@@ -31,11 +31,11 @@ Ensuite, dans l'ordre, les quatre idées qui méritent un créneau de production
 
 ## Ranked shortlist, by priority
 
-### Priority 1 — Réparer la marche après le clic, et n'ouvrir qu'une seule porte
+### Priority 1, Réparer la marche après le clic, et n'ouvrir qu'une seule porte
 
 Cinq idées servent cette priorité. Rappel du terrain qu'elles travaillent, `verified` sur l'entonnoir Parker : 775 clics sur lien, 597 vues de page, **32 ajouts au panier**, 12 paiements initiés, 6 achats. La marche page vers panier est à **5,4 %**, et le coût par ajout au panier est de **24,11 €** pour une contribution unitaire d'environ **23,58 €** avant port et frais.
 
-**1. La FAQ qui retourne le risque** — `entries/2026-09-07-la-faq-qui-retourne-le-risque.md`
+**1. La FAQ qui retourne le risque** : `entries/2026-09-07-la-faq-qui-retourne-le-risque.md`
 
 Priorité 1 et 3, persona `soigne-discret`, signal `doute-sur-le-vendeur`. Levier primaire **Messaging**, secondaire **Product** puisqu'elle travaille l'étape d'évaluation avant le clic.
 
@@ -43,7 +43,7 @@ Bande de preuve : **MEDIUM**, et elle frôle le haut de la bande. La preuve est 
 
 Palier de production et verdict : premier créneau de production. Elle existe, elle est écrite, elle a un chiffre, et elle a été arrêtée sans raison consignée. Deux corrections sont obligatoires avant de la relancer : la garantie annoncée est de **12 mois** alors que la marque en promet **2 ans** partout ailleurs, et sa page d'arrivée était `raselio.com/products/cutlab-essentials-bundle`, à l'ancien nom de la boutique.
 
-**2. La preuve d'existence** — `entries/2026-09-07-la-preuve-dexistence.md`
+**2. La preuve d'existence** : `entries/2026-09-07-la-preuve-dexistence.md`
 
 Priorité 1, persona `soigne-discret`, signal `doute-sur-le-vendeur`. Levier primaire **Messaging**, secondaire **Product**.
 
@@ -51,7 +51,7 @@ Bande de preuve : **MEDIUM**. Trois appuis, chacun avec sa mesure. Un, la lacune
 
 Palier et verdict : deuxième créneau. Elle est la seule idée du bac qui répare la couche de preuve au lieu de l'étendre, et c'est décisif quand les chaînes « 4,7/5 », « 1 734 avis », « +17 000 hommes » et « 35 000 hommes » tournent sur **11 commandes et 0 avis**. Elle a un verrou amont hors du gestionnaire de publicités : cinq politiques sur six portent encore « Cutlab », les conditions générales portent « Nom du médiateur : [À COMPLÉTER OBLIGATOIREMENT] », et la page « Contactez-nous » a un corps vide. Une annonce qui promet la transparence et renvoie vers une page au nom d'une autre marque fait l'inverse de ce qu'elle dit.
 
-**3. La garantie comme titre** — `entries/2026-09-07-la-garantie-comme-titre.md`
+**3. La garantie comme titre** : `entries/2026-09-07-la-garantie-comme-titre.md`
 
 Priorité 1, persona `soigne-discret`. Levier primaire **Messaging**, secondaire **Product**.
 
@@ -59,7 +59,7 @@ Bande de preuve : **MEDIUM**, et la méthode impose de la ranger **sous** les de
 
 Palier et verdict : elle fusionne naturellement avec les deux précédentes plutôt que d'occuper un créneau à elle. Raselio porte « Garantie 2 ans · Satisfait ou remboursé 30 jours » dans presque toutes ses 224 paires de copy et **jamais en position de titre**.
 
-**4. Un corps fort derrière une porte faible** — `entries/2026-09-07-un-corps-fort-derriere-une-porte-faible.md`
+**4. Un corps fort derrière une porte faible** : `entries/2026-09-07-un-corps-fort-derriere-une-porte-faible.md`
 
 Priorité 1, persona `soigne-discret`. Levier primaire **Messaging**.
 
@@ -67,7 +67,7 @@ Bande de preuve : **MEDIUM basse**. Le fait est net : la paire « Colis discret.
 
 Palier et verdict : c'est une itération, pas un concept neuf, et elle est presque gratuite. Elle mérite d'être portée **à l'intérieur** des variations des concepts 1 à 3 plutôt qu'en créneau propre. Avertissement de diffusion, `inferred`, confiance mixed : 44 creatives à charte identique sont probablement regroupés sous très peu d'empreintes, donc un simple changement de titre pourrait ne recevoir aucune portée neuve.
 
-**5. L'essai chez soi de l'audioprothèse** — `entries/2026-09-07-lessai-chez-soi-de-laudioprothese.md`
+**5. L'essai chez soi de l'audioprothèse** : `entries/2026-09-07-lessai-chez-soi-de-laudioprothese.md`
 
 Priorité 1, phase Evaluation. Levier primaire **Messaging**, secondaire **Product**.
 
@@ -77,11 +77,11 @@ Palier et verdict : **bloquée en amont, et pas par le budget.** Le site promet 
 
 ---
 
-### Priority 2 — Obtenir une phrase de client, et cesser d'écrire à sa place
+### Priority 2, Obtenir une phrase de client, et cesser d'écrire à sa place
 
 Six idées servent cette priorité, et le rapport qu'elles travaillent est **224 paires de copy de marque contre une phrase de client**.
 
-**1. La question posée aux onze** — `entries/2026-09-07-la-question-posee-aux-onze.md`
+**1. La question posée aux onze** : `entries/2026-09-07-la-question-posee-aux-onze.md`
 
 Priorité 2, persona `soigne-discret`, et elle tranche aussi le pari borné sur `partenaire-prescriptrice`. Levier primaire **Personas**, secondaire **Messaging**.
 
@@ -89,7 +89,7 @@ Bande de preuve : **MEDIUM sur le manque, sans objet sur le rendement**, et c'es
 
 Palier et verdict : **elle est en tête du bac entier et elle ne prend aucun créneau de production.** Elle n'appartient pas à Parker : c'est **BR-4**, Stakes 5, Researchability 1, routée au fondateur. Les trois questions sont déjà écrites. Huit des onze acheteurs ont reçu leur colis.
 
-**2. La bête sauvage qui sommeille** — `entries/2026-09-07-la-bete-sauvage-qui-sommeille.md`
+**2. La bête sauvage qui sommeille** : `entries/2026-09-07-la-bete-sauvage-qui-sommeille.md`
 
 Priorité 2, persona `soigne-discret` avec un ajustement contesté. Levier primaire **Messaging**, secondaire **Personas**.
 
@@ -97,7 +97,7 @@ Bande de preuve : **LOW**, et la méthode ne permet pas mieux. Récurrence de 1 
 
 Palier et verdict : c'est la seule parole de client que cette marque possède, donc elle mérite d'être servie quelque part dans le round, mais **pas comme concept porteur**. Un dénominateur de un ne finance pas un créneau. Sa place est une variation à l'intérieur d'un concept, ou une réponse publique à ce commentaire, qui coûte zéro euro et n'a jamais été faite.
 
-**3. La réponse au commentaire du frère aîné** — `entries/2026-09-07-la-reponse-au-commentaire-du-frere-aine.md`
+**3. La réponse au commentaire du frère aîné** : `entries/2026-09-07-la-reponse-au-commentaire-du-frere-aine.md`
 
 Priorité 2, l'homme qui n'ose pas demander. Levier primaire **Creators and talent**, secondaire **Messaging**.
 
@@ -105,7 +105,7 @@ Bande de preuve : **LOW**. La vidéo source fait 11 500 vues, 917 mentions j'aim
 
 Palier et verdict : **inexécutable aujourd'hui**, et le verrou n'est pas créatif. Raselio a deux commentaires sur tout le compte, donc aucune bulle authentique n'existe, et en fabriquer une serait un sixième faux témoignage sur une marque qui en porte déjà cinq documentés comme inventés par sa propre équipe. Elle reste au bac comme une raison de plus d'ouvrir **T1-4**.
 
-**4. Sans appuyer trop fort** — `entries/2026-09-07-sans-appuyer-trop-fort.md`
+**4. Sans appuyer trop fort** : `entries/2026-09-07-sans-appuyer-trop-fort.md`
 
 Priorité 2 et 3. Levier primaire **Messaging**, secondaire **Creators and talent**.
 
@@ -113,7 +113,7 @@ Bande de preuve : **LOW**. Un avis, `stated`, jamais lu à la source, chez un co
 
 Palier et verdict : direction de mise en scène, pas concept. Elle s'incorpore dans la direction visuelle des concepts qui montent, elle n'en porte pas un.
 
-**5. Les grandes zones à traiter** — `entries/2026-09-07-les-grandes-zones-a-traiter.md`
+**5. Les grandes zones à traiter** : `entries/2026-09-07-les-grandes-zones-a-traiter.md`
 
 Priorité 2 et 3. Levier primaire **Product**, secondaire **Messaging**.
 
@@ -121,21 +121,21 @@ Bande de preuve : **LOW à MEDIUM**, et le partage est réel. LOW côté langage
 
 Palier et verdict : elle chevauche fortement le concept d'âge de la priorité 3 et se fusionne avec lui. Réserve ferme : l'autonomie exacte est marquée « à confirmer » par l'équipe dans son propre document, donc on écrit « à confirmer », jamais un chiffre comblé.
 
-**6. Un outil, un rôle** — `entries/2026-09-07-un-outil-un-role.md`
+**6. Un outil, un rôle** : `entries/2026-09-07-un-outil-un-role.md`
 
 Priorité 2 et 3. Levier primaire **Messaging**, secondaire **Product**.
 
-Bande de preuve : **LOW**. La source est solide en organique — 711 300 vues, **taux d'enregistrement 1,37 %**, le deuxième du corpus, pour un taux de partage de 0,10 % — mais rien dans le compte ne l'appuie : `ad_format: Listicle` porte **2 annonces et 0,41 €** sur la quinzaine.
+Bande de preuve : **LOW**. La source est solide en organique, 711 300 vues, **taux d'enregistrement 1,37 %**, le deuxième du corpus, pour un taux de partage de 0,10 %, mais rien dans le compte ne l'appuie : `ad_format: Listicle` porte **2 annonces et 0,41 €** sur la quinzaine.
 
 Palier et verdict : format sans message attaché, donc pas un concept au sens de la méthode. Il reste au bac jusqu'à ce qu'un message vienne s'y accrocher. La variante conforme est l'axe des zones, jamais l'axe des marques : nommer trois marques en publicité payante touche le droit français de la publicité comparative.
 
 ---
 
-### Priority 3 — Faire descendre le ciblage, puis opposer deux âges à variable unique
+### Priority 3, Faire descendre le ciblage, puis opposer deux âges à variable unique
 
 Onze idées servent cette priorité. C'est la priorité la plus fournie du bac, et c'est en partie un artefact : c'est là que le compte a le plus de matière et le plus de lacunes visibles.
 
-**1. L'Impeccable tout en vouvoiement** — `entries/2026-09-07-limpeccable-tout-en-vouvoiement.md`
+**1. L'Impeccable tout en vouvoiement** : `entries/2026-09-07-limpeccable-tout-en-vouvoiement.md`
 
 Priorité 3, persona `soigne-discret`, cœur 50-65. Levier primaire **Messaging**, secondaire **Personas**.
 
@@ -143,15 +143,15 @@ Bande de preuve : **HIGH**, et c'est la seule du bac. La preuve est un redéploi
 
 Palier et verdict : **premier de tout le classement côté production.** Confiance d'abord, vitesse ensuite, et cette idée gagne sur les deux : elle redéploie ce qui a converti et elle ne demande aucune production nouvelle sauf le texte. Deux réserves à porter dans le brief plutôt qu'à cacher. Un, la ligne « Approuvée par plus de 17 000 hommes » doit sauter du visuel, donc le test change **deux** choses et pas une. Deux, `inferred`, confiance mixed : changer seulement le registre à charte constante sera très probablement lu comme la même empreinte de diffusion, donc le test doit casser la charte quelque part ou il ne recevra aucune portée neuve.
 
-**2. Le registre aîné de la marque sœur** — `entries/2026-09-07-le-registre-aine-de-la-marque-soeur.md`
+**2. Le registre aîné de la marque sœur** : `entries/2026-09-07-le-registre-aine-de-la-marque-soeur.md`
 
 Priorité 3, persona `soigne-discret`. Levier primaire **Personas**, secondaire **Messaging**.
 
-Bande de preuve : **MEDIUM**. La preuve est dans le même compte publicitaire, avec la même main aux commandes : les campagnes `Trael — …` font **4,68 % et 4,72 % de taux de clic** contre **2,60 %** au niveau du compte Raselio, `verified` via Parker, avec les accroches verbatim « SPÉCIAL AÎNÉS », « Elle ne pouvait plus marcher sans douleur. C'est fini. » et « MARCHEZ SANS DOULEUR AVEC STYLE ». Ce qui la retient sous HIGH : ce sont des chaussures vendues au Canada, et un taux de clic n'est pas un achat — la démonstration la plus nette de ce compte est `EMOTION 1 - Elle remarquera tout`, **CTR 3,65 %, le meilleur du compte, zéro ajout au panier, zéro achat**.
+Bande de preuve : **MEDIUM**. La preuve est dans le même compte publicitaire, avec la même main aux commandes : les campagnes `Trael — …` font **4,68 % et 4,72 % de taux de clic** contre **2,60 %** au niveau du compte Raselio, `verified` via Parker, avec les accroches verbatim « SPÉCIAL AÎNÉS », « Elle ne pouvait plus marcher sans douleur. C'est fini. » et « MARCHEZ SANS DOULEUR AVEC STYLE ». Ce qui la retient sous HIGH : ce sont des chaussures vendues au Canada, et un taux de clic n'est pas un achat, la démonstration la plus nette de ce compte est `EMOTION 1 - Elle remarquera tout`, **CTR 3,65 %, le meilleur du compte, zéro ajout au panier, zéro achat**.
 
 Palier et verdict : elle se fusionne avec l'idée numéro 1 plutôt que d'occuper un créneau. L'appui interne existe : `RS30-7R 04 - Postit zones apres 50 ans` porte le titre verbatim « La tondeuse indispensable après 50 ans. » et **1 achat, ROAS 2,80**. Un élément ne se transporte pas : le témoignage à la première personne de Trael, parce que Raselio n'a aucune parole de client.
 
-**3. On devine au lieu de voir** — `entries/2026-09-07-on-devine-au-lieu-de-voir.md`
+**3. On devine au lieu de voir** : `entries/2026-09-07-on-devine-au-lieu-de-voir.md`
 
 Priorité 3 et 2, persona `soigne-discret`, signal `vue-de-pres-qui-baisse`. Levier primaire **Messaging**, secondaire **Product**.
 
@@ -159,15 +159,15 @@ Bande de preuve : **MEDIUM**, et c'est la seule MEDIUM du bac qui repose sur une
 
 Palier et verdict : troisième créneau de production. C'est l'angle avec le meilleur rapport entre lacune concurrentielle et corroboration extérieure de tout le dossier, et il porte un plan visuel qui existe déjà, la créa 14, où la LED est la seule source de lumière et où aucun corps n'apparaît.
 
-**4. La démonstration sur l'avant-bras** — `entries/2026-09-07-la-demonstration-sur-lavant-bras.md`
+**4. La démonstration sur l'avant-bras** : `entries/2026-09-07-la-demonstration-sur-lavant-bras.md`
 
 Priorité 3, persona `soigne-discret`. Levier primaire **Creators and talent**, secondaire **Product**.
 
 Bande de preuve : **MEDIUM**. Trois acteurs indépendants ont inventé la même réponse à la même contrainte : un créateur organique à 4,5 millions de vues qui passe l'appareil sur son avant-bras à la vingt-deuxième seconde, Gillette avec un modèle en mousse et un prop en fourrure brune `verified` sur deux annonces, et Grümwise avec de la pâte à modeler, 89 € et 7 701 de portée, `stated`. Quand trois sources qui ne se connaissent pas convergent, c'est la grammaire de la catégorie. Ce qui la retient : aucune de ces trois preuves n'est une preuve de vente.
 
-Palier et verdict : direction de production incorporée aux concepts qui montent, pas créneau à part. Elle ajoute un proxy au vocabulaire existant — kiwis, ballon, mosaïque de pixels, serviette, boxer, post-it, pancarte — sans le contredire.
+Palier et verdict : direction de production incorporée aux concepts qui montent, pas créneau à part. Elle ajoute un proxy au vocabulaire existant (kiwis, ballon, mosaïque de pixels, serviette, boxer, post-it, pancarte) sans le contredire.
 
-**5. La douleur d'abord, l'autorité ensuite** — `entries/2026-09-07-la-douleur-dabord-lautorite-ensuite.md`
+**5. La douleur d'abord, l'autorité ensuite** : `entries/2026-09-07-la-douleur-dabord-lautorite-ensuite.md`
 
 Priorité 3 et 2. Levier primaire **Creators and talent**, secondaire **Messaging**.
 
@@ -175,15 +175,15 @@ Bande de preuve : **MEDIUM sur la lacune, LOW sur l'exécutabilité.** La lacune
 
 Palier et verdict : **flaggée, pas classée.** Deux verrous. Aucune revendication dermatologique n'est autorisée tant qu'aucun test ne l'appuie, règle écrite de la marque. Et Raselio n'a aucun praticien réel ; habiller un visage synthétique d'une blouse serait une autorité fabriquée sur une marque qui porte déjà cinq témoignages inventés. Ce qui reste utilisable est le schéma anatomique, qui ne demande aucun visage : c'est un dessin, et le compte a déjà écrit le paragraphe qui va avec dans `RS30-7R 25`.
 
-**6. Trois gestes, trois douleurs** — `entries/2026-09-07-trois-gestes-trois-douleurs.md`
+**6. Trois gestes, trois douleurs** : `entries/2026-09-07-trois-gestes-trois-douleurs.md`
 
 Priorité 3 et 2. Levier primaire **Messaging**, secondaire **Creators and talent**.
 
 Bande de preuve : **MEDIUM en organique, LOW dans le compte.** La source est la vidéo la plus vue du corpus, **4 500 000 vues, 25 721 enregistrements**, sur exactement le sujet de la marque. Le fait de compte qui l'appuie : `awareness_level: Unaware` porte **4 annonces et 12,21 €** sur la quinzaine contre 70 annonces et 507,97 € pour `Solution Aware`, donc la marque ne construit pas de demande neuve. Le fait qui l'empêche de monter : Raselio a testé le registre de la douleur avec le lot EMOTION, marqué Shame, pour **85,04 € et zéro achat**, `verified`.
 
-Palier et verdict : **soft pull vers une route écartée.** La feuille de route provisoire écarte la vidéo pour ce trimestre. La version statique de cette ouverture — trois lignes empilées, gros texte, contraste fort — est produisible demain matin et ne trippe rien. Reclassée sous cette forme, elle est une variation forte à l'intérieur d'un concept, pas un concept.
+Palier et verdict : **soft pull vers une route écartée.** La feuille de route provisoire écarte la vidéo pour ce trimestre. La version statique de cette ouverture, trois lignes empilées, gros texte, contraste fort, est produisible demain matin et ne trippe rien. Reclassée sous cette forme, elle est une variation forte à l'intérieur d'un concept, pas un concept.
 
-**7. Le substitut dans le texte** — `entries/2026-09-07-le-substitut-dans-le-texte.md`
+**7. Le substitut dans le texte** : `entries/2026-09-07-le-substitut-dans-le-texte.md`
 
 Priorité 3 et 1. Levier primaire **Product**, secondaire **Messaging**.
 
@@ -191,7 +191,7 @@ Bande de preuve : **LOW à MEDIUM**. La source est modeste, 100 800 vues, mais e
 
 Palier et verdict : mécanisme de conformité à incorporer, pas concept. Réserve dure : le signe utilisé par la référence relève d'un registre que la charte de ton de la marque exclut. Le mécanisme se garde, le signe se remplace.
 
-**8. Celui qui explique à celui qui n'ose pas demander** — `entries/2026-09-07-celui-qui-explique-a-celui-qui-nose-pas-demander.md`
+**8. Celui qui explique à celui qui n'ose pas demander** : `entries/2026-09-07-celui-qui-explique-a-celui-qui-nose-pas-demander.md`
 
 Priorité 3, levier primaire **Creators and talent**.
 
@@ -199,7 +199,7 @@ Bande de preuve : **LOW à MEDIUM**. **1 700 000 vues, taux d'enregistrement 1,7
 
 Palier et verdict : **flaggée.** Elle trippe doucement la route « passer à la vidéo maintenant », et la marque n'a jamais filmé personne sur 163 annonces. Elle reste au bac comme le meilleur candidat du jour où la priorité 1 se ferme bien, ce que la feuille de route provisoire désigne nommément comme le moment de reclasser la vidéo.
 
-**9. La ligne de test de l'opticien** — `entries/2026-09-07-la-ligne-de-test-de-loptcien.md`
+**9. La ligne de test de l'opticien** : `entries/2026-09-07-la-ligne-de-test-de-loptcien.md`
 
 Priorité 3, levier primaire **Messaging**.
 
@@ -207,7 +207,7 @@ Bande de preuve : **LOW**, sans source ni métrique, transfert de mécanisme ass
 
 Palier et verdict : mécanisme sans message, gardé au bac. Il croise directement « On devine au lieu de voir » et pourrait devenir une variation de ce concept plutôt qu'un concept.
 
-**10. L'homme qui ne se rase pas encore là** — `entries/2026-09-07-lhomme-qui-ne-se-rase-pas-encore-la.md`
+**10. L'homme qui ne se rase pas encore là** : `entries/2026-09-07-lhomme-qui-ne-se-rase-pas-encore-la.md`
 
 Priorité 3, levier primaire **Personas**, secondaire **Messaging**.
 
@@ -215,7 +215,7 @@ Bande de preuve : **LOW**. C'est une passe à froid, sans source. Le fait de com
 
 Palier et verdict : gardée, pas classée pour ce round. Elle demande un budget de découverte que le compte n'a pas pendant que le coût par ajout au panier dépasse la marge.
 
-**11. La tondeuse comme personnage** — `entries/2026-09-07-la-tondeuse-comme-personnage.md`
+**11. La tondeuse comme personnage** : `entries/2026-09-07-la-tondeuse-comme-personnage.md`
 
 Priorité 3, levier primaire **Creators and talent**, secondaire **Messaging**.
 
@@ -231,7 +231,7 @@ Quatre manques, du plus grave au moins grave.
 
 **1. Le bac n'a presque rien qui serve la priorité 1 à l'endroit où elle se joue vraiment.** Cinq idées la servent, et les cinq sont des idées de **publicité**. Or la priorité 1 dit noir sur blanc que le coup de levier le plus fort de ce trimestre n'est **pas dans le gestionnaire de publicités** : il est sur une page web et dans une boîte mail. Le bac ne contient aucune idée de page, aucune idée de tunnel, aucune idée de courrier post-achat, parce que la chasse aux idées est une chasse créative. C'est une limite du bac, pas de la marque, et il faut la dire pour que personne ne prenne ce classement pour la totalité du travail à faire.
 
-**2. Le levier Creators and talent est représenté et inexécutable.** Quatre idées le tirent, et les quatre butent sur le même mur : la marque n'a **aucune relation créateur, aucune relation d'autorité, aucun compte organique**, et tous ses visages sont synthétiques. Le bac ne contient aucune idée qui produise un visage réel. C'est le levier le plus important selon la méthode — qui est à l'écran décide l'annonce plus que le script — et c'est celui que la marque ne peut pas actionner aujourd'hui.
+**2. Le levier Creators and talent est représenté et inexécutable.** Quatre idées le tirent, et les quatre butent sur le même mur : la marque n'a **aucune relation créateur, aucune relation d'autorité, aucun compte organique**, et tous ses visages sont synthétiques. Le bac ne contient aucune idée qui produise un visage réel. C'est le levier le plus important selon la méthode, qui est à l'écran décide l'annonce plus que le script, et c'est celui que la marque ne peut pas actionner aujourd'hui.
 
 **3. Le bac ne contient aucune idée de la lentille historienne.** Zéro entrée depuis le corpus d'annonces anciennes, parce que `parker-system/creative-strategy-context/old-ads/entries/` est vide, son INDEX portant « none yet — corpus scaffolded 2026-07-09 ». C'est la source que la méthode place en premier pour les statiques, et cette marque est à 100 % en statiques sur 163 annonces. C'est le manque le plus facile à combler et le plus rentable pour la prochaine chasse.
 
@@ -243,19 +243,19 @@ Quatre manques, du plus grave au moins grave.
 
 ## Cut and folded
 
-**Coupée, franchement. Les trois vidéos abandonnées du 14 août comme asset réutilisable** — `entries/2026-09-07-les-trois-videos-abandonnees.md`. Elles portent la marque d'un concurrent à l'image et dans la voix, hook texte verbatim « Tu crois que **Grümwise** est juste une tondeuse de plus regarde ça », un prix qui n'existe plus, 44,90 €, et une page morte, `/products/cutlab-essentials-bundle`. Elles trippent aussi la route écartée numéro 2 de la feuille de route, qui dit, verbatim : « Passer à la vidéo maintenant. […] Écartée pour ce trimestre, et c'est le renoncement le plus coûteux de cette feuille de route. » **Ce qui n'est pas coupé, c'est le fait de gestion** : elles sont **encore au statut actif** dans une campagne en pause, ce qui est une exposition qui court, et c'est **BR-6**. Éteindre trois annonces coûte deux minutes.
+**Coupée, franchement. Les trois vidéos abandonnées du 14 août comme asset réutilisable** : `entries/2026-09-07-les-trois-videos-abandonnees.md`. Elles portent la marque d'un concurrent à l'image et dans la voix, hook texte verbatim « Tu crois que **Grümwise** est juste une tondeuse de plus regarde ça », un prix qui n'existe plus, 44,90 €, et une page morte, `/products/cutlab-essentials-bundle`. Elles trippent aussi la route écartée numéro 2 de la feuille de route, qui dit, verbatim : « Passer à la vidéo maintenant. […] Écartée pour ce trimestre, et c'est le renoncement le plus coûteux de cette feuille de route. » **Ce qui n'est pas coupé, c'est le fait de gestion** : elles sont **encore au statut actif** dans une campagne en pause, ce qui est une exposition qui court, et c'est **BR-6**. Éteindre trois annonces coûte deux minutes.
 
-**Flaggée, pas coupée. Écrit du point de vue de la partenaire** — `entries/2026-09-07-ecrit-du-point-de-vue-de-la-partenaire.md`. Elle tire vers une persona que la feuille de route déprioritise pour ce round, et le contre-signal est franc : **91,80 € livrés à des femmes pour zéro achat attribué**, `verified`, sans qu'aucun ad set femmes n'ait jamais existé. Mais la feuille de route ne ferme pas la question, elle la garde comme pari borné avec une fenêtre datée, le Black Friday du 2026-11-27. Elle est donc différée avec sa date, pas tuée. La créa 28 existe déjà et n'a jamais eu d'ad set.
+**Flaggée, pas coupée. Écrit du point de vue de la partenaire** : `entries/2026-09-07-ecrit-du-point-de-vue-de-la-partenaire.md`. Elle tire vers une persona que la feuille de route déprioritise pour ce round, et le contre-signal est franc : **91,80 € livrés à des femmes pour zéro achat attribué**, `verified`, sans qu'aucun ad set femmes n'ait jamais existé. Mais la feuille de route ne ferme pas la question, elle la garde comme pari borné avec une fenêtre datée, le Black Friday du 2026-11-27. Elle est donc différée avec sa date, pas tuée. La créa 28 existe déjà et n'a jamais eu d'ad set.
 
-**Flaggée, pas coupée. Ce que coûte le rayon du samedi** — `entries/2026-09-07-ce-que-coute-le-rayon-du-samedi.md`. Elle frôle la route écartée numéro 4, « Un mouvement de prix », écartée dans les deux sens. Elle ne la trippe pas : ce n'est pas un mouvement de prix, c'est une question de message, et la feuille de route le dit elle-même, verbatim : « Le vrai sujet du prix est l'ancre affichée, "au lieu de 75 €", et c'est un sujet de message. » Ce qui en sort et qui vaut au-delà de cette entrée est une **règle permanente** : ne jamais écrire un argument de prix construit contre 80-100 € sans dire, dans la même phrase, ce que le rayon coûte, `stated` à 24,95 € chez Philips et 29,70 € chez Gillette.
+**Flaggée, pas coupée. Ce que coûte le rayon du samedi** : `entries/2026-09-07-ce-que-coute-le-rayon-du-samedi.md`. Elle frôle la route écartée numéro 4, « Un mouvement de prix », écartée dans les deux sens. Elle ne la trippe pas : ce n'est pas un mouvement de prix, c'est une question de message, et la feuille de route le dit elle-même, verbatim : « Le vrai sujet du prix est l'ancre affichée, "au lieu de 75 €", et c'est un sujet de message. » Ce qui en sort et qui vaut au-delà de cette entrée est une **règle permanente** : ne jamais écrire un argument de prix construit contre 80-100 € sans dire, dans la même phrase, ce que le rayon coûte, `stated` à 24,95 € chez Philips et 29,70 € chez Gillette.
 
-**Flaggées sur la vidéo, reclassables en statique.** Trois entrées organiques — « Trois gestes, trois douleurs », « Celui qui explique à celui qui n'ose pas demander », « La réponse au commentaire du frère aîné » — tirent doucement vers la route vidéo écartée. Aucune n'est coupée, parce que deux d'entre elles ont une version statique immédiate et que la feuille de route désigne la vidéo comme **la première chose à reclasser si la priorité 1 se ferme bien**.
+**Flaggées sur la vidéo, reclassables en statique.** Trois entrées organiques, « Trois gestes, trois douleurs », « Celui qui explique à celui qui n'ose pas demander », « La réponse au commentaire du frère aîné », tirent doucement vers la route vidéo écartée. Aucune n'est coupée, parce que deux d'entre elles ont une version statique immédiate et que la feuille de route désigne la vidéo comme **la première chose à reclasser si la priorité 1 se ferme bien**.
 
 **Bloquée en amont, pas coupée. L'essai chez soi de l'audioprothèse** : verrouillée par **BR-3**, fenêtre du premier acheteur vers le 2026-09-25.
 
 **Repliée dans d'autres idées, pas classée à part.** « La garantie comme titre » et « Un corps fort derrière une porte faible » se replient dans les concepts de la priorité 1. « Le registre aîné de la marque sœur », « Les grandes zones à traiter » et « La démonstration sur l'avant-bras » se replient dans les concepts de la priorité 3. « Sans appuyer trop fort », « Le substitut dans le texte » et « La ligne de test de l'opticien » sont des mécanismes de production, pas des concepts, et ils s'incorporent aux briefs.
 
-**Aucune idée n'a été coupée pour cause de mauvaise revendication**, et il faut le noter comme un résultat : la passe de capture a écarté à la source tout ce qui aurait demandé un nouveau chiffre de preuve sociale. Ce qui reste à surveiller est l'inverse — trois entrées portent des chaînes existantes à **retirer** avant production : « Approuvée par plus de 17 000 hommes », « 17 000 hommes ont déjà sauté le pas », et les cinq témoignages signés de prénoms.
+**Aucune idée n'a été coupée pour cause de mauvaise revendication**, et il faut le noter comme un résultat : la passe de capture a écarté à la source tout ce qui aurait demandé un nouveau chiffre de preuve sociale. Ce qui reste à surveiller est l'inverse, trois entrées portent des chaînes existantes à **retirer** avant production : « Approuvée par plus de 17 000 hommes », « 17 000 hommes ont déjà sauté le pas », et les cinq témoignages signés de prénoms.
 
 ---
 

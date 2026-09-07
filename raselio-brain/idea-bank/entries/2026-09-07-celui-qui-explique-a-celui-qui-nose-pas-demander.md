@@ -60,4 +60,4 @@ Variante moins chère et qui garde tout : un homme de soixante ans seul face cam
 
 - https://www.tiktok.com/@dadandtel/video/7406272010344598827
 - https://auth.heyparker.ai/storage/v1/object/public/tiktok-videos/7406272010344598827_1788672481/7406272010344598827_the_best_manscaping_essentials_for_teen_guys.mp4
-- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Corpus élargi — 1 »
+- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Corpus élargi, 1 »

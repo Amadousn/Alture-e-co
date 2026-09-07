@@ -38,7 +38,7 @@ Raselio garantit deux ans et l'écrit en pied de page. Le même mot en tête d'a
 
 ## justification
 
-Deux évidences se croisent. Côté source : deux annonces montent de dix-huit et trente-trois places en douze jours dans le compte d'un acteur qui pousse 1 339 annonces, ce qui est le meilleur signal d'impression disponible. Côté compte : Raselio a exactement le même actif — « Garantie 2 ans · Satisfait ou remboursé 30 jours » figure dans presque toutes ses 224 paires de copy — et **il n'est jamais en position de titre**. Sa famille la plus proche, la sécurité de l'achat, porte le meilleur taux de clic du compte, **14,06 % sur `RS · C11 garantie-colis`**, pour **1,33 € de dépense et 64 impressions**, `verified`. Le brief d'équipe l'écrit lui-même, `stated` : « les objections garantie/discrétion n'ont jamais eu de budget alors qu'elles font cliquer très fort ».
+Deux évidences se croisent. Côté source : deux annonces montent de dix-huit et trente-trois places en douze jours dans le compte d'un acteur qui pousse 1 339 annonces, ce qui est le meilleur signal d'impression disponible. Côté compte : Raselio a exactement le même actif, « Garantie 2 ans · Satisfait ou remboursé 30 jours » figure dans presque toutes ses 224 paires de copy, et **il n'est jamais en position de titre**. Sa famille la plus proche, la sécurité de l'achat, porte le meilleur taux de clic du compte, **14,06 % sur `RS · C11 garantie-colis`**, pour **1,33 € de dépense et 64 impressions**, `verified`. Le brief d'équipe l'écrit lui-même, `stated` : « les objections garantie/discrétion n'ont jamais eu de budget alors qu'elles font cliquer très fort ».
 
 ## stage_of_awareness
 

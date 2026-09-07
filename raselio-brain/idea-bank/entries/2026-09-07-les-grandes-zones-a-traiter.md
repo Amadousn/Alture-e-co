@@ -34,7 +34,7 @@ Trois zones, un seul outil, une seule charge : la même grammaire de rôle que l
 
 ## justification
 
-Evidence thin : un reproche, `stated`, sur un concurrent, jamais lu à la source. Le fait qui la rend intéressante est interne : le compte a la spécification, la ligne d'annonce et la page produit, et n'a jamais mis les trois ensemble. `RS30-7R 04 - Postit zones apres 50 ans` a d'ailleurs vendu — 12,48 € dépensés, CTR 2,52 %, 3 ajouts panier, **1 achat attribué, ROAS 2,80**, du 2026-09-03 au 2026-09-06, `verified` — et c'est la première créa hors famille « Impeccable » à convertir.
+Evidence thin : un reproche, `stated`, sur un concurrent, jamais lu à la source. Le fait qui la rend intéressante est interne : le compte a la spécification, la ligne d'annonce et la page produit, et n'a jamais mis les trois ensemble. `RS30-7R 04 - Postit zones apres 50 ans` a d'ailleurs vendu, 12,48 € dépensés, CTR 2,52 %, 3 ajouts panier, **1 achat attribué, ROAS 2,80**, du 2026-09-03 au 2026-09-06, `verified`, et c'est la première créa hors famille « Impeccable » à convertir.
 
 ## stage_of_awareness
 

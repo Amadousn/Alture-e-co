@@ -60,5 +60,5 @@ Le risque est de vendre une lampe. Le prior sur les publics plus âgés dit que 
 
 - https://www.tiktok.com/@pierredalati/video/7657623579109969170
 - https://auth.heyparker.ai/storage/v1/object/public/tiktok-videos/7657623579109969170_1788672651/7657623579109969170_grab_the_chairmanr_pro_essentials_kit_by_manscaped.mp4
-- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Base de marque — 4 »
+- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Base de marque, 4 »
 - `sub-context-docs/visual-vocabulary.md`, créa 14

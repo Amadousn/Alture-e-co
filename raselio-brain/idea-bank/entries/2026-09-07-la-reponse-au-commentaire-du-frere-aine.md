@@ -24,7 +24,7 @@ Tirée en direct de Parker le 2026-09-07 avec `search_tiktok_videos` sur le `bra
 
 Le classement de curation Parker la donne Relevant avec un score de 1, et sa justification verbatim, `verified` sur le champ `relevancy_reasoning` : « The video's 'older brother' tutorial format directly addresses the embarrassment and pain of grooming injuries, which perfectly aligns with Raselio's mission to educate younger men on using the right tool for sensitive areas. »
 
-Le rapport média complet n'a pas été tiré dans ce run, donc **creative read unavailable** sur le détail plan par plan. Ce qui est établi et suffit à capturer : le format d'ouverture est une bulle de commentaire reprise, le ton est celui d'un aîné qui rend service, et le taux de commentaires est élevé pour la taille — 98 commentaires pour 11 500 vues, soit 0,85 %, contre 0,032 % sur la vidéo la plus vue du corpus.
+Le rapport média complet n'a pas été tiré dans ce run, donc **creative read unavailable** sur le détail plan par plan. Ce qui est établi et suffit à capturer : le format d'ouverture est une bulle de commentaire reprise, le ton est celui d'un aîné qui rend service, et le taux de commentaires est élevé pour la taille, 98 commentaires pour 11 500 vues, soit 0,85 %, contre 0,032 % sur la vidéo la plus vue du corpus.
 
 ## winning_elements
 

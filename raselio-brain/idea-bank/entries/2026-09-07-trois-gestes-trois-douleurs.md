@@ -54,10 +54,10 @@ La structure est transportable, la matière ne l'est pas entièrement : les phot
 
 ## notes
 
-La marque n'a jamais produit une vidéo qu'elle ait écrite elle-même. Ce format est donc un pari de production autant que de message, et la feuille de route provisoire écarte la vidéo pour ce trimestre. La version statique de cette ouverture — trois lignes empilées, gros texte, contraste fort — est produisible demain matin.
+La marque n'a jamais produit une vidéo qu'elle ait écrite elle-même. Ce format est donc un pari de production autant que de message, et la feuille de route provisoire écarte la vidéo pour ce trimestre. La version statique de cette ouverture, trois lignes empilées, gros texte, contraste fort, est produisible demain matin.
 
 ## parker_media_links
 
 - https://www.tiktok.com/@themrnav/video/7663517457486859542
 - https://auth.heyparker.ai/storage/v1/object/public/tiktok-videos/7663517457486859542_1786244557/7663517457486859542_4_steps_to_shaving_down_there_the_right_way_lads_i.mp4
-- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Base de marque — 1 »
+- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Base de marque, 1 »

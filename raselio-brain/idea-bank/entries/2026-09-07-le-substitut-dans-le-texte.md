@@ -36,7 +36,7 @@ Un pictogramme discret à la place du post-it : le même service de conformité 
 
 ## justification
 
-Trois arguments, tous internes. Un, c'est le format le plus proche de ce que Raselio sait déjà faire : la marque produit du texte sur image à un rythme de trente unités par jour, et ce format ne demande ni voix, ni acteur qui parle, ni écriture nouvelle. Deux, il donne à la marque **trois sujets qu'elle n'a jamais abordés** — l'odeur, la hauteur de sabot, et l'autorisation de faire à moitié : aucun des trois n'existe dans les 224 paires de copy, alors que le produit a un sabot trois hauteurs, `stated`. Trois, il désamorce un risque réel : l'annonce `STATIQUE S9` porte un statut `WITH_ISSUES` chez Meta, et déplacer le substitut de l'image vers le texte retire l'objet litigieux du visuel.
+Trois arguments, tous internes. Un, c'est le format le plus proche de ce que Raselio sait déjà faire : la marque produit du texte sur image à un rythme de trente unités par jour, et ce format ne demande ni voix, ni acteur qui parle, ni écriture nouvelle. Deux, il donne à la marque **trois sujets qu'elle n'a jamais abordés** : l'odeur, la hauteur de sabot, et l'autorisation de faire à moitié : aucun des trois n'existe dans les 224 paires de copy, alors que le produit a un sabot trois hauteurs, `stated`. Trois, il désamorce un risque réel : l'annonce `STATIQUE S9` porte un statut `WITH_ISSUES` chez Meta, et déplacer le substitut de l'image vers le texte retire l'objet litigieux du visuel.
 
 ## stage_of_awareness
 
@@ -48,7 +48,7 @@ Unaware et Problem aware. « it doesn't have to be completely shaved » parle à
 
 ## brand_fit
 
-Attention nette : l'emoji cacahuète relève d'un registre que la charte de ton de la marque exclut, puisqu'elle interdit la vulgarité et le clin d'œil de vestiaire. Le mécanisme se garde, le signe se remplace — un pictogramme neutre, ou le mot « là » comme la marque l'écrit déjà dans « Ta tondeuse à barbe n'a rien à faire là en bas. »
+Attention nette : l'emoji cacahuète relève d'un registre que la charte de ton de la marque exclut, puisqu'elle interdit la vulgarité et le clin d'œil de vestiaire. Le mécanisme se garde, le signe se remplace, un pictogramme neutre, ou le mot « là » comme la marque l'écrit déjà dans « Ta tondeuse à barbe n'a rien à faire là en bas. »
 
 ## notes
 
@@ -58,4 +58,4 @@ Ne pas confondre transporter un mécanisme et copier un signe. C'est exactement 
 
 - https://www.tiktok.com/@hdsnubbs/video/7497361701831068971
 - https://auth.heyparker.ai/storage/v1/object/public/tiktok-videos/7497361701831068971_1779591882/7497361701831068971_fyp_hygiene_menshygiene_menshygienetips_hygienetip.mp4
-- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Corpus élargi — 5 »
+- `audits/2026-09/monthly-tiktok-mining.md`, entrée « Corpus élargi, 5 »

@@ -4,14 +4,14 @@ doc: brief
 sprint: 2026-09-07-sprint-1
 concept_id: RS-S1-01
 idea_bank_source: idea-bank/entries/2026-09-07-limpeccable-tout-en-vouvoiement.md, avec 2026-09-07-le-registre-aine-de-la-marque-soeur.md et 2026-09-07-les-grandes-zones-a-traiter.md repliées dedans
-roadmap_priority: Priorité 3 — faire descendre le ciblage, puis opposer deux âges à variable unique. Sert aussi la priorité 1 en pointant vers une destination unique.
+roadmap_priority: Priorité 3, faire descendre le ciblage, puis opposer deux âges à variable unique. Sert aussi la priorité 1 en pointant vers une destination unique.
 last_updated: 2026-09-07
 status: drafted
 brief_format_note: LA MARQUE N'A FOURNI AUCUN GABARIT DE BRIEF. `briefs/_brief-template.md` n'existe pas. Ce brief suit la structure du prompt de la méthode, `parker-system/prompts/ideas-and-briefs/brief-creation.md`. Quand Dylan fournit son format, il remplace celui-ci et se range dans `briefs/_brief-template.md`.
-provisional_note: PROVISOIRE. Bâti sur `strategy/strategic-roadmap.md` au statut `drafted — awaiting the founder's approve / adjust / reject`. Un changement d'ordre entre les trois priorités réécrit ce brief.
+provisional_note: PROVISOIRE. Bâti sur `strategy/strategic-roadmap.md` au statut `drafted, awaiting the founder's approve / adjust / reject`. Un changement d'ordre entre les trois priorités réécrit ce brief.
 ---
 
-# Brief — Impeccable, à mon âge
+# Brief, Impeccable, à mon âge
 
 ## The concept
 
@@ -35,13 +35,13 @@ Ce ne sont pas des consignes de copy et il ne faut pas les donner telles quelles
 
 ## Variations
 
-Trois. C'est le concept du round sur lequel la conviction est la plus forte, donc il reçoit le plus de variations, et elles divergent réellement — pas trois cadrages du même plan.
+Trois. C'est le concept du round sur lequel la conviction est la plus forte, donc il reçoit le plus de variations, et elles divergent réellement, pas trois cadrages du même plan.
 
-**V1 · Le peignoir, hors studio.** Un homme de cinquante-cinq à soixante-cinq ans, cheveux gris courts, barbe grise courte, en peignoir blanc, **regard vers l'objectif**. Décor : une vraie salle de bain domestique claire, carrelage blanc, plan en marbre, miroir, profondeur de champ courte — **pas le fond crème uni**. C'est là que la charte casse. Produit debout dans son socle sur le plan, LED allumée. Titre : la promesse de la famille, seule, en très gros, en noir. Corps en vouvoiement intégral. Aucune ligne de preuve chiffrée.
+**V1 · Le peignoir, hors studio.** Un homme de cinquante-cinq à soixante-cinq ans, cheveux gris courts, barbe grise courte, en peignoir blanc, **regard vers l'objectif**. Décor : une vraie salle de bain domestique claire, carrelage blanc, plan en marbre, miroir, profondeur de champ courte, **pas le fond crème uni**. C'est là que la charte casse. Produit debout dans son socle sur le plan, LED allumée. Titre : la promesse de la famille, seule, en très gros, en noir. Corps en vouvoiement intégral. Aucune ligne de preuve chiffrée.
 
-**V2 · Les mains seules, fond crème conservé.** Aucun visage. Une main d'homme d'environ soixante ans, peau marquée, poils gris sur le dos de la main, **alliance en or**, qui tient la tondeuse verticalement, centrée dans la moitié basse. Fond crème `#F7F3EC`, la charte intacte. C'est la variation témoin : elle sert à voir si le visage compte, puisque le compte n'a **aucune preuve que ce soit l'image qui vende** — dans l'ad set qui convertit, cinq annonces partagent titre, corps et page, et les trois qui ont vendu sont les trois qui ont dépensé le plus.
+**V2 · Les mains seules, fond crème conservé.** Aucun visage. Une main d'homme d'environ soixante ans, peau marquée, poils gris sur le dos de la main, **alliance en or**, qui tient la tondeuse verticalement, centrée dans la moitié basse. Fond crème `#F7F3EC`, la charte intacte. C'est la variation témoin : elle sert à voir si le visage compte, puisque le compte n'a **aucune preuve que ce soit l'image qui vende** : dans l'ad set qui convertit, cinq annonces partagent titre, corps et page, et les trois qui ont vendu sont les trois qui ont dépensé le plus.
 
-**V3 · Le pied de page, format cassé.** Le même homme que V1, cadré en plan large, dans une chambre ou un couloir domestique, **format 1:1 au lieu de 4:5**. Le produit est petit dans le cadre, posé sur une commode. Le texte occupe le tiers haut. C'est la variation qui casse le plus de paramètres à la fois — décor, cadrage, format, échelle du produit — et c'est celle qui a le plus de chances de recevoir une portée neuve.
+**V3 · Le pied de page, format cassé.** Le même homme que V1, cadré en plan large, dans une chambre ou un couloir domestique, **format 1:1 au lieu de 4:5**. Le produit est petit dans le cadre, posé sur une commode. Le texte occupe le tiers haut. C'est la variation qui casse le plus de paramètres à la fois, décor, cadrage, format, échelle du produit, et c'est celle qui a le plus de chances de recevoir une portée neuve.
 
 **Le proxy, dans les trois.** Aucune anatomie n'apparaît, jamais. Le peignoir et le plan de mains font le travail dans V1, V2 et V3. Si un plan devait descendre plus bas, le vocabulaire autorisé est celui que la marque a déjà : kiwis, ballon, mosaïque de pixels, serviette, boxer, post-it, pancarte. Rien d'autre, et le proxy ne se retire jamais.
 
@@ -65,7 +65,7 @@ Réglages associés, `verified` : modèle `nano_banana_pro`, `aspect_ratio` 4:5 
 
 **Ce que la direction interdit.** Aucune ligne de preuve chiffrée, sous aucune forme : ni « 17 000 », ni « 35 000 », ni « 4,7/5 », ni « 1 734 avis », ni un prénom avec un âge. Aucun torse nu. Aucun tatouage. Aucune spécification chiffrée non publiée : les tours-minute et l'autonomie exacte sont marqués « à confirmer » par l'équipe, et on écrit « à confirmer ».
 
-## Validation — data
+## Validation, data
 
 L'ad set `IMPECCABLE x5 | BATCH V5`, cinq annonces créées le 2026-08-30, **112,39 € de dépense, 4 des 6 achats du compte, coût par achat 28,10 €, ROAS 1,245**, plus **10 des 32 ajouts au panier du compte**, `verified` sur Parker et sur le pull Meta du 2026-09-06. Aucun autre ad set ne porte plus de deux achats. Sur la semaine du 2026-08-31 au 2026-09-06, `CROP TAILLE` fait 68,17 € contre 0,71 € la semaine d'avant, 5 227 impressions, 8 ajouts panier, **2 achats, coût par achat 34,09 €**.
 
@@ -75,7 +75,7 @@ L'appui sur l'âge : **82,4 % de la dépense servie et six achats sur six chez l
 
 **Le dénominateur, répété parce qu'il gouverne tout : 6 achats attribués, 11 commandes, environ 685 € de dépense.** Rien de ce qui précède n'est un gagnant prouvé.
 
-## Validation — inspo
+## Validation, inspo
 
 Ce concept est d'abord un remix des gagnantes du compte, ce qui est la matière première la plus solide qui existe pour cette marque. Trois sources s'y ajoutent, chacune avec son signal.
 
@@ -85,7 +85,7 @@ Ce concept est d'abord un remix des gagnantes du compte, ce qui est la matière 
 
 **Le brief de l'équipe, `stated`, verbatim :** « Aucun concurrent FR ne parle à l'homme de 50 ans et plus, ne vouvoie, ni n'exploite la LED comme réponse à la presbytie. C'est l'espace libre. »
 
-## Validation — strategy
+## Validation, strategy
 
 Ce brief sert la **priorité 3** de la feuille de route, « opposer deux âges une seule fois, à variable unique », et il sert au passage la **priorité 1** en pointant vers une destination unique.
 
@@ -114,7 +114,7 @@ Rien de ce qui suit ne s'écrit à partir de ce document seul. Chaque sortie rep
 
 **Ce qu'il ne peut pas prouver.** Il ne dira pas si c'est le registre, l'âge ou la rupture de charte qui a produit l'effet, puisque les trois bougent ensemble. Il ne dira rien du tout si le ciblage reste en 18-65 avec Advantage+. Et à environ 350 € de budget partagé sur deux semaines, il n'atteindra pas les trente ajouts au panier que la feuille de route pose comme seuil de lecture, qui coûteraient à eux seuls environ 723 €.
 
-**Ce qu'il faut regarder, et dans cet ordre :** le coût par ajout au panier de la variation, contre 24,11 €. Puis le taux de passage de la vue de page vers le panier, contre 5,4 %. Le taux de clic est le dernier de la liste et il ne décide rien — `EMOTION 1 - Elle remarquera tout` porte le meilleur CTR du compte, **3,65 %, avec zéro ajout au panier**.
+**Ce qu'il faut regarder, et dans cet ordre :** le coût par ajout au panier de la variation, contre 24,11 €. Puis le taux de passage de la vue de page vers le panier, contre 5,4 %. Le taux de clic est le dernier de la liste et il ne décide rien, `EMOTION 1 - Elle remarquera tout` porte le meilleur CTR du compte, **3,65 %, avec zéro ajout au panier**.
 
 ## Appendix - Parker media links
 
@@ -133,8 +133,8 @@ Rien de ce qui suit ne s'écrit à partir de ce document seul. Chaque sortie rep
 - https://app.heyparker.ai/dashboard/facebook-ads/performance?adId=52505897029591&brandId=a81e7c77-ca41-4cbd-acf8-ec27ea58eb37
 
 **Le référentiel de génération**
-- `source-pulls/drive-higgsfield-prompts-final-2026-09-03.md` — bloc de fidélité produit et réglages, media `8f86e875-a8fa-4024-aec2-cedfb22fc165`
-- `sub-context-docs/visual-vocabulary.md` — cadrages `in play`, créas 01, 02, 03, 18
+- `source-pulls/drive-higgsfield-prompts-final-2026-09-03.md` : bloc de fidélité produit et réglages, media `8f86e875-a8fa-4024-aec2-cedfb22fc165`
+- `sub-context-docs/visual-vocabulary.md` : cadrages `in play`, créas 01, 02, 03, 18
 
 **La destination du round**
 - https://www.raselio.com/pages/pourquoi-pas-votre-tondeuse-a-barbe
