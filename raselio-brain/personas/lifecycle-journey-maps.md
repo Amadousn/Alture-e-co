@@ -2,250 +2,267 @@
 brand: raselio
 doc: lifecycle-journey-maps
 generated_on: 2026-09-07
-refresh_by: 2026-10-07
+refresh_by: 2026-12-07
 personas_profile: personas/personas-profile.md
 persona_voice_library: personas/persona-voice-library.md
-sources_read: [personas/personas-profile.md, personas/persona-voice-library.md, personas/voice-of-customer/voice-of-customer.md, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/personas/ad-account.md, source-pulls/personas/ad-comments.md, source-pulls/personas/customer-reviews.md, source-pulls/personas/post-purchase-surveys.md, source-pulls/personas/brand-reputation.md, source-pulls/personas/other-reviews.md, source-pulls/personas/reddit.md, source-pulls/shopify-analytics.md, source-pulls/shopify-orders-and-customers.md, source-pulls/shopify-store-and-product.md, source-pulls/meta-ads-all.md, source-pulls/meta-account-campaigns-adsets.md, source-pulls/gmail-brand-signals.md, source-pulls/drive-politiques-boutique-cutlab-to-raselio-2026-07-26.md, sub-context-docs/website-and-product-audit.md, sub-context-docs/customer-journey-and-persona-discovery.md, running-notes/brand-rules.md, Parker MCP brand a81e7c77-ca41-4cbd-acf8-ec27ea58eb37 — entonnoir lifetime au niveau annonce, clics sortants, vues de page d'atterrissage, ajouts au panier, initiations de paiement et achats]
-measured_lifecycle_fields: [entonnoir publicitaire lifetime au niveau annonce — 775 clics sortants, 597 vues de page d'atterrissage, 32 ajouts au panier, 12 initiations de paiement, 6 achats, 209,94 € de valeur d'achat, source Parker, fenêtre 2026-08-10 → 2026-09-06 ; entonnoir de site sur 61 jours — 2 431 sessions, 42 sessions avec ajout au panier, 19 sessions arrivées au paiement, 3 sessions comptées comme paiement terminé, source ShopifyQL, fenêtre 2026-07-08 → 2026-09-06 ; commandes — 11 au total, 11 nouveaux clients, 0 client récurrent, taux de client récurrent 0,0 sur 90 jours, 100 % France, panier moyen 34,99 € sauf la première commande à 39,90 €, 1 article par commande sur 11, 0 remise appliquée, 0 annulation de vente ; statut d'exécution — 8 commandes FULFILLED et 3 UNFULFILLED au 2026-09-06 ; référents de commande — facebook 8, instagram 2, vide 1 ; pages d'entrée sur 90 jours — 30 lignes, la page d'accueil à 1 171 sessions, la fiche produit à 363, la landing « 7 raisons » à 312, l'advertorial à 195, l'ancienne page Cutlab à 97 ; horodatages des 11 commandes]
-directional_lifecycle_fields: [durée de chaque étape, entièrement inférée ; délai entre la première exposition et l'achat, inconnu ; valeur vie client, inconnue et probablement plafonnée à une commande ; comportement de rachat, non observable, 0 rachat sur 11 clients et 12 jours d'ancienneté maximale ; cohortes, impossibles sur 11 commandes ; abonnement, sans objet, le modèle est un achat unique ; parrainage et bouche-à-oreille, non observés, 0 session venue d'un lien d'affiliation, d'un média, d'un forum ou d'un e-mail sur 2 431 ; cheminement par canal après le premier clic, non traçable, aucun outil d'attribution tiers n'est connecté ; satisfaction produit, inconnue, 0 avis et 0 réponse de sondage ; taux de retour, inconnu, la fenêtre de rétractation court encore sur les 11 commandes]
-data_limitations: [Ce document est directionnel sur tout ce qui vient après le premier achat, et il faut le dire en tête. Raselio a onze commandes, zéro client récurrent, et la commande la plus ancienne a douze jours au moment de l'écriture : il n'existe aucune donnée de rétention, aucune cohorte, aucun rachat, aucune valeur vie client. Les étapes au-delà du premier achat sont donc décrites par ce que le modèle économique rend possible et par ce que le site permet, jamais par un comportement observé. Deux compteurs se contredisent sur la même fenêtre et les deux sont portés tels quels : la série ShopifyQL compte 3 sessions ayant terminé un paiement sur 61 jours alors que 11 commandes existent sur la même période, écart non résolu, et l'entonnoir Parker au niveau annonce compte 6 achats attribués sur la fenêtre publicitaire. Aucune lecture de ce document ne repose sur le seul compteur de sessions. Les analytics Shopify ne relient pas une commande à sa page d'entrée ni à son appareil : les lectures par page et par appareil portent sur des sessions, jamais sur des acheteurs. Le trafic est pollué : sur 2 404 sessions réparties, 989 sont des sessions ordinateur depuis les États-Unis et 265 des sessions mobiles depuis les États-Unis, alors que 100 % des commandes sont facturées en France, donc tout taux de conversion calculé sur le dénominateur brut est faux vers le bas. raselio.com est bloqué par le proxy réseau : le rendu réel du site, le panier et le paiement n'ont jamais été vus, seules les pages exportées par l'API Shopify l'ont été. Aucune donnée d'e-mail, aucune séquence de relance, aucune donnée de panier abandonné en dehors du compteur de sessions. Aucune parole d'acheteur nulle part : 0 avis, 0 réponse de sondage, 2 commentaires publicitaires, 1 message client entrant. Le persona secondaire est en confiance hypothesis et n'a produit aucun achat, donc son parcours est écrit comme une hypothèse de bout en bout.]
-methods_loaded: [creative-strategy-context/emotional-delivery-and-timing.md, creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/advertising-to-older-audiences.md, creative-strategy-context/ad-account-analysis.md, creative-strategy-context/creative-strategy-fundamentals.md]
+sources_read: [personas/personas-profile.md, personas/persona-voice-library.md, personas/voice-of-customer/voice-of-customer.md, personas/voice-of-customer/voc-corpus-profile.md, source-pulls/personas/ad-account.md, source-pulls/personas/ad-comments.md, source-pulls/personas/customer-reviews.md, source-pulls/personas/post-purchase-surveys.md, source-pulls/personas/other-reviews.md, source-pulls/personas/reddit.md, source-pulls/personas/brand-reputation.md, source-pulls/personas/brand-self-echo-detection.md, sub-context-docs/customer-journey-and-persona-discovery.md, sub-context-docs/performance-targets-and-metrics.md, sub-context-docs/website-and-product-audit.md, sub-context-docs/ad-account-evaluation.md, audits/2026-Q3/90-day-performance-audit.md, source-pulls/shopify-orders-and-customers.md (11 commandes, 14 fiches clients, tout l'historique), source-pulls/shopify-analytics.md (2 431 sessions sur 61 jours, entonnoir de session, référents de commande sur 90 jours), source-pulls/shopify-store-and-product.md (fiche produit, 4 pages, 6 politiques dont remboursement et expédition), source-pulls/gmail-brand-signals.md (46 fils, aucun e-mail sortant vers un client), running-notes/brand-rules.md, running-notes/success-definition.md, Parker MCP appelé le 2026-09-07 : search_facebook_ads_sql en lookup et en lifetime, search_facebook_ad_comments_sql, search_customer_reviews_sql, semantic_search_post_purchase_survey, lookup_post_purchase_survey]
+measured_lifecycle_fields: [nombre de commandes (11, tout l'historique), valeur de commande (34,99 € sur 10 commandes, 39,90 € sur la première), nombre d'articles par commande (1 sur 11), statut de paiement (PAID sur 11), statut d'expédition (8 FULFILLED, 3 UNFULFILLED au 2026-09-06), clients récurrents (0 sur 11), pays de facturation (France sur 11), horodatage de commande à la minute (11), référent de commande sur 90 jours (facebook 8, instagram 2, vide 1), entonnoir publicitaire complet au niveau compte (775 clics sur lien, 597 vues de page, 32 ajouts au panier, 12 paiements initiés, 6 achats), entonnoir de session Shopify sur 61 jours (2 431 sessions, 42 sessions avec ajout au panier, 19 arrivées au paiement, 3 paiements terminés), achats attribués par annonce et par tranche d'âge, dépense par tranche d'âge]
+directional_lifecycle_fields: [durée de chaque étape, délai entre première exposition et achat, valeur à vie, comportement de cohorte, taux de rachat, taux de retour, taux de parrainage, motif de départ, tout état émotionnel à chaque étape, tout ce qui concerne les étapes 3 à 5. Aucun de ces champs n'existe dans une source. Les lectures qui les concernent sont inférées depuis l'économie du produit, la copie de la marque et la donnée d'acquisition, et elles portent toutes la mention inférée]
+data_limitations: [CETTE CARTE EST DIRECTIONNELLE SUR TOUT CE QUI SUIT LE PREMIER ACHAT, ET MESURÉE UNIQUEMENT SUR CE QUI LE PRÉCÈDE. Aucune donnée de rachat, de cohorte, de valeur à vie, de rétention, de désabonnement, de parrainage ni de délai jusqu'à l'achat n'existe pour cette marque, et ce n'est pas un problème d'outil : la boutique a 46 jours de vie commerciale, 11 commandes, la plus ancienne a douze jours au 2026-09-07, et zéro client récurrent. Il n'existe donc aucune cohorte à suivre. Aucun canal de cycle de vie n'existe non plus : aucun e-mail sortant vers un client dans les 46 fils Gmail lus, aucun SMS, aucun programme de fidélité, aucun parrainage, aucune application d'avis, aucun sondage post-achat. La marque n'a aucun moyen de reparler à un acheteur autrement qu'en le repayant en publicité. Les deux sources de premier rang de la méthode persona sont vides, interrogées le 2026-09-07 et pas supposées : 0 avis, 0 réponse de sondage. Le corpus de langage client fait un verbatim, donc aucune transition ne peut être éclairée par une citation d'acheteur Raselio. Un écart de mesure non résolu est porté tel quel : le compteur de sessions Shopify montre 3 paiements terminés sur 61 jours alors que 11 commandes existent sur la même fenêtre. Un second écart est porté tel quel : Meta attribue 6 achats, Shopify en compte 11, et cinq commandes ne sont vues par aucun rapport publicitaire ; aucun outil d'attribution tiers n'est branché, check_northbeam_connection renvoie connected false. Le trafic du site est contaminé : sur 2 404 sessions réparties, 1 254 viennent des États-Unis alors que les 11 commandes sont facturées en France à 100 %, donc les taux de conversion par session sont calculés sur un dénominateur gonflé.]
+methods_loaded: [creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/emotional-delivery-and-timing.md, creative-strategy-context/ad-account-analysis.md, creative-strategy-context/advertising-to-older-audiences.md, creative-strategy-context/creative-strategy-fundamentals.md]
 ---
 
 # Lifecycle journey maps - Raselio
 
 ## Purpose and how to use
 
-Trois documents se composent. `personas/personas-profile.md` dit **à qui** parler. `personas/persona-voice-library.md` dit **avec quels mots**. Celui-ci dit **quand**, et surtout quelle transition le message essaie de faire franchir.
+Trois documents se composent. `personas/personas-profile.md` dit **à qui** parler. `personas/persona-voice-library.md` dit **avec quels mots**. Celui-ci dit **quand le dire et quelle transition le message essaie de faire bouger**.
 
-**La façon de l'utiliser pour cette marque en particulier.** Presque tout le poids est sur une seule transition, celle du prospect froid au premier achat, et ce n'est pas un choix de rédaction, c'est le modèle économique. Raselio vend un objet durable, à l'unité, sans abonnement, sans lame à racheter, avec deux ans de garantie. Elle le vend même explicitement comme un avantage, page « Notre Histoire », verbatim, verified : « Chaque commande est un achat unique, sans abonnement caché ni engagement. » La conséquence est arithmétique : la valeur vie client est aujourd'hui égale à une commande, 34,99 €, et le coût par achat sur la campagne principale est de 94,16 €. Tant que cette transition-là n'est pas réglée, aucune autre étape ne compte.
+**À lire avant de s'en servir.** Cette carte est mesurée sur tout ce qui précède le premier achat et directionnelle sur tout ce qui le suit. La raison est simple et elle n'est pas un défaut d'outil : la boutique a 46 jours de vie commerciale, onze commandes, et la plus ancienne a douze jours. Il n'existe aucune cohorte à suivre, aucun rachat à mesurer, aucun retour à compter. Toute lecture d'étape 3, 4 ou 5 dans ce document est une inférence depuis l'économie du produit et depuis la copie de la marque, jamais une observation.
 
-Donc, avant d'ouvrir la section d'une étape aval, il faut savoir qu'elle est directionnelle. Zéro client récurrent sur onze, et douze jours d'ancienneté maximale. Ce document ne prétend pas mesurer une rétention qui n'a pas encore eu le temps d'exister.
+**Ce que la carte est bonne à faire aujourd'hui.** Nommer précisément où l'argent se perd avant le premier achat, ce qui est mesuré et net. Nommer ce qui n'existe pas encore et qui devrait exister pour qu'une deuxième étape soit seulement possible. Et poser le point zéro contre lequel le prochain passage mesurera un mouvement.
 
 ## Lifecycle framework
 
-Les étapes standard sont conservées, avec deux adaptations que la preuve impose.
+La lentille standard a cinq étapes : prospect froid, premier acheteur, acheteur récurrent, abonné ou client fidèle, ambassadeur. **Elle ne s'applique pas telle quelle à cette marque, et la forcer produirait de la fiction.** Voici l'adaptation, avec la raison.
 
-**Étape 1 — Prospect froid.** Il croise la marque dans un fil Facebook. Mesuré : 8 des 11 commandes portent facebook comme référent, 2 instagram, 1 aucun ; 70,7 % de la dépense part sur Facebook et 93,4 % sur mobile.
+**Le modèle économique interdit les étapes 3 et 4 dans leur forme habituelle.** Raselio vend un SKU unique, la Tondeuse Intime Homme Raselio™ MS-810, à 34,99 €, en achat unique. Pas d'abonnement, pas de lames de rechange, pas de consommable, pas de gamme. La marque en fait un argument de vente, page « Notre Histoire », verified, verbatim : « Chaque commande est un achat unique, sans abonnement caché ni engagement. » C'est une bonne promesse commerciale et c'est, mécaniquement, l'absence de deuxième achat. **Il n'y a pas de chemin de rachat parce que le produit n'en propose aucun.** Zéro client récurrent sur onze le confirme, sur une fenêtre trop courte pour conclure quoi que ce soit.
 
-**Étape 2 — Évaluation, et c'est la première adaptation.** Le prix, 34,99 €, annonce un achat d'impulsion. Le comportement dit l'inverse : 597 vues de page d'atterrissage produisent 32 ajouts au panier, soit 5,4 %, et 2 431 sessions produisent 42 ajouts au panier sur 61 jours, soit 1,7 %. Cette étape n'est pas une formalité, c'est là que la marque perd presque tout le monde, et elle mérite d'être traitée comme une étape à part entière avec ses propres sous-moments.
+**L'étape 5 est bloquée par la promesse du produit.** L'ambassadeur est celui qui parle. Raselio vend la discrétion comme un bénéfice, advertorial, verified, verbatim : « Le colis arrive dans un emballage neutre et discret : personne n'a besoin de savoir, tout le monde finira par remarquer. » Un produit dont le bénéfice central est que personne ne sache ne se recommande pas à voix haute. Le fait le confirme de l'extérieur : zéro mention de la marque dans l'index atteignable, zéro défenseur, zéro détracteur, deux commentaires publicitaires sur 43 270 impressions.
 
-**Étape 3 — Premier achat.** Mesuré : 11 commandes, toutes d'un article, toutes en France, 0 remise appliquée sur 61 jours.
+**Le cadre retenu, donc, en quatre étapes dont deux presque vides.**
 
-**Étape 4 — Première expérience.** Non mesurée du tout. 8 commandes livrées, 0 avis, 0 réponse de sondage, 0 retour demandé dans les sources. C'est le trou noir du parcours.
+**1. Prospect froid.** Mesuré. C'est là que vit tout le budget et toute la donnée.
 
-**Étape 5 — Rachat, et c'est la deuxième adaptation. Cette étape n'existe pas dans le modèle actuel.** Le produit est unique, durable, garanti deux ans, sans consommable à racheter. Il n'y a rien à racheter avant plusieurs années. La question n'est donc pas « comment améliorer le taux de rachat », elle est « qu'est-ce qu'on vend à un homme qui a déjà tout ». Mesuré : 0 client récurrent sur 11, taux de client récurrent 0,0 sur 90 jours.
+**2. Premier acheteur.** Mesuré à l'entrée, aveugle ensuite. Onze hommes ont payé et personne ne sait ce qui leur est arrivé après.
 
-**Étape 6 — Fidélité et recommandation.** Structurellement difficile ici, et il faut le dire plutôt que de le traiter comme un chantier ordinaire. La marque vend la discrétion comme un bénéfice, advertorial verbatim, verified : « Le colis arrive dans un emballage neutre et discret : personne n'a besoin de savoir, tout le monde finira par remarquer. » Un produit dont la promesse est que personne ne sache ne se recommande pas à voix haute. Mesuré : 0 session venue d'un lien d'affiliation, d'un média, d'un forum ou d'un e-mail sur 2 431 ; 2 commentaires publicitaires pour 44 672 impressions ; 0 avis.
+**3. Deuxième achat.** **Structurellement absent** aujourd'hui, et c'est un choix de produit et pas un échec d'exécution. Ce qui pourrait le remplacer est nommé plus bas.
+
+**4. Ambassadeur silencieux.** L'étape existe probablement dans la réalité et elle est invisible par nature. La recommandation de cette catégorie se fait probablement de bouche à oreille discret, entre deux hommes, sans trace mesurable.
+
+**Une étape qui manque au cadre standard et qui compte énormément ici.** Entre le prospect froid et le premier acheteur, cette marque a une étape supplémentaire que la plupart des marques n'ont pas : **la vérification**. Un homme qui découvre une marque inconnue sur un fil Facebook et qui doit lui confier une lame et une adresse cherche à savoir à qui il achète. Et il ne trouve rien : zéro mention de Raselio dans l'index, zéro avis, zéro comparatif, zéro presse. Cette étape est traitée comme une étape à part entière dans la carte de la persona 1, parce que c'est là que la donnée montre que tout le monde s'en va.
 
 ## Data limitations
 
-Le résumé exécutable, source par source.
+**Mesuré, et solide.**
 
-**Mesuré.** L'entonnoir publicitaire lifetime au niveau annonce, source Parker : 775 clics sortants, 597 vues de page d'atterrissage, 32 ajouts au panier, 12 initiations de paiement, 6 achats, 209,94 € de valeur. L'entonnoir de site sur 61 jours, source ShopifyQL : 2 431 sessions, 42 avec ajout au panier, 19 arrivées au paiement, 3 comptées comme paiement terminé. Les 11 commandes avec leur horodatage, leur référent, leur pays et leur statut d'exécution. Les 30 pages d'entrée sur 90 jours.
+L'entonnoir publicitaire complet au niveau compte, verified sur Parker : 775 clics sur lien, 597 vues de page de destination, 32 ajouts au panier, 12 paiements initiés, 6 achats. Étape par étape : 77,0 % du clic à la page, **5,4 % de la page au panier**, 37,5 % du panier au paiement, 50,0 % du paiement à l'achat.
 
-**Inféré et directionnel.** Toutes les durées d'étape. Le délai entre la première exposition et l'achat. La valeur vie client. Le comportement de rachat. Les cohortes. Le parrainage. La satisfaction produit. Le taux de retour. Le cheminement par canal après le premier clic.
+L'entonnoir de session Shopify sur 61 jours, verified : 2 431 sessions, 42 sessions avec ajout au panier soit 1,7 %, 19 arrivées au paiement soit 0,8 %, 3 paiements terminés.
 
-**Deux compteurs qui ne se réconcilient pas, portés tels quels.** ShopifyQL compte 3 sessions ayant terminé un paiement sur 61 jours quand 11 commandes existent sur la même fenêtre. L'écart n'est pas résolu. Aucune lecture de ce document ne repose sur le seul compteur de sessions ; là où j'ai besoin d'un taux de conversion, j'utilise l'entonnoir publicitaire au niveau annonce, qui est cohérent de bout en bout.
+Les onze commandes, verified : toutes payées, toutes d'un seul article, toutes facturées en France, huit expédiées et trois non expédiées au 2026-09-06, zéro client récurrent, du 2026-08-26 au 2026-09-04.
 
-**Un dénominateur pollué, à connaître avant de lire un pourcentage.** Sur 2 404 sessions réparties par appareil et par pays, 989 sont des sessions ordinateur depuis les États-Unis et 265 des sessions mobiles depuis les États-Unis, contre 791 mobiles depuis la France et 119 ordinateur depuis la France. Les 11 commandes sont facturées à 100 % en France. Une part importante du trafic américain sur ordinateur n'est probablement pas un acheteur humain, et elle gonfle le dénominateur de tout taux calculé sur les sessions brutes.
+**Directionnel, et il faut le dire à chaque fois.**
+
+La durée de chaque étape. Le délai entre la première exposition et l'achat. La valeur à vie. Le comportement de cohorte. Le taux de rachat. Le taux de retour. Le taux de parrainage. Le motif de départ. L'état émotionnel à chaque étape. **Aucun de ces champs n'existe dans une source.**
+
+**Deux écarts de mesure, portés tels quels et non résolus.**
+
+Le compteur de sessions Shopify voit 3 paiements terminés sur 61 jours, alors que 11 commandes existent sur la même fenêtre. Il ne voit donc pas huit achats sur onze. L'écart n'est expliqué nulle part.
+
+Meta attribue 6 achats, Shopify en compte 11, dont 8 marqués facebook et 2 instagram par son propre référent. **Cinq commandes réelles n'apparaissent dans aucun rapport publicitaire**, et la vérification est faite : aucun outil d'attribution tiers n'est branché, `check_northbeam_connection` renvoie `connected: false`, aucun e-mail, aucun SMS, aucun canal organique identifié.
+
+**Un dénominateur contaminé.** Sur 2 404 sessions réparties par appareil et par pays, 989 sont des sessions ordinateur depuis les États-Unis et 265 des sessions mobiles depuis les États-Unis, contre 791 mobiles depuis la France et 119 ordinateur depuis la France. Les onze commandes sont facturées en France à 100 %. Une part importante du trafic américain n'est probablement ni humaine ni acheteuse, et elle gonfle le dénominateur de tous les taux de conversion par session.
 
 ## Cross-persona summary
 
-**`soigne-discret`, flagship, confiance mixed.** Il franchit sans difficulté l'étape du clic et il meurt à l'évaluation. Sur 597 vues de page d'atterrissage, 565 repartent sans rien mettre au panier. Ce qu'il lui manque n'est pas de l'information sur le produit, c'est une raison de faire confiance à un vendeur qu'il ne trouve nulle part ailleurs. C'est là qu'il faut investir en premier, et de loin.
+Deux personas, et elles n'ont pas le même problème de cycle de vie.
 
-**`partenaire-prescriptrice`, emerging, confiance hypothesis.** Elle n'a jamais franchi une seule étape. Trois ajouts au panier et une initiation de paiement, zéro achat, sur une audience qui n'a jamais reçu ni ciblage ni message. Son parcours entier est une hypothèse et il ne doit pas recevoir de budget de production avant un test plafonné.
+**`soigne-discret`, flagship, six achats sur six.** Toute sa difficulté est concentrée dans une seule transition, et elle est mesurée : entre la page qui s'affiche et l'ajout au panier, 94,6 % des gens partent. Ce n'est plus une hypothèse sur la publicité, c'est une mesure sur la page. Après l'achat, la marque est aveugle et muette : elle n'a aucun canal pour reparler à cet homme, aucun moyen de savoir s'il est content, et aucun deuxième produit à lui vendre.
 
-**Où investir en premier, et la réponse est unique.** L'étape 2, l'évaluation, pour le persona flagship. C'est la seule étape où les chiffres montrent une hémorragie mesurée, c'est celle que la marque n'a jamais financée, et c'est celle où sa meilleure créa dort à 1,33 €.
+**`partenaire-prescriptrice`, émergente, zéro achat.** Elle n'a pas de parcours parce qu'elle n'a jamais commencé. La créa écrite pour elle n'a jamais été mise en ligne et aucun ad set femmes n'existe. Sa carte est donc une carte de ce qu'il faudrait observer, pas de ce qui a été observé.
 
----
+**Où investir en premier, et la réponse ne se discute pas.** La transition du clic à l'ajout au panier de `soigne-discret`. C'est la seule étape de tout l'entonnoir qui sort de la normale, elle concerne la seule persona qui achète, elle coûte aujourd'hui l'intégralité du budget, et elle se règle sur la page plutôt qu'en produisant trente créas de plus. Les trois annonces les plus dépensières envoient d'ailleurs vers **trois destinations différentes**, la fiche produit, `/pages/7-raisons` et l'advertorial, et aucune source ne dit laquelle perd le plus de monde.
 
-## Persona 1 - Le soigné discret
+## Persona 1 - `soigne-discret`
 
-`soigne-discret`
+**Le cadrage, en un paragraphe.** Cet homme n'a pas de parcours long au sens habituel. Il croise la marque dans un fil Facebook, sur mobile, et il n'ira nulle part ailleurs : zéro session d'affiliation, de média, de forum ou d'e-mail sur 90 jours, et la marque n'existe dans aucun résultat de recherche. Tout son parcours tient donc entre une publicité et une page. Le prix, 34,99 €, laisse croire à un achat d'impulsion, et son comportement dit le contraire : entre 1 116 et 4 154 sessions par commande selon le compteur retenu, et un coût par achat de 94,16 € sur la campagne principale pour un produit à 35 €. Mon interprétation, inférée, confiance mixed : **ce qui coûte cher ici n'est pas l'argent, c'est la permission.**
 
-**Le cadrage du parcours, en un paragraphe.** Cet homme voit la publicité dans un fil Facebook, sur son téléphone, le matin ou tard le soir. Il clique facilement, parce que le sujet le concerne et parce que la créa est bien faite. Puis il arrive sur un site qui lui explique encore le produit alors que ce qu'il veut savoir, c'est à qui il achète. Il cherche à vérifier et il ne trouve rien : la marque n'existe nulle part en dehors de son propre site. Il repart. Ceux qui restent, très peu, achètent vite et sans remise. Et après l'achat, le parcours s'arrête : il n'a rien à racheter, rien à dire, et personne ne lui demande rien.
+### L'arc complet, en prose
 
-**L'arc complet, chiffré.** Sur 775 clics sortants, 597 chargent la page, soit 77 %. Sur ces 597, 32 ajoutent au panier, soit 5,4 %, ce qui veut dire que 565 hommes lisent la page et repartent. Sur ces 32, 12 lancent un paiement, soit 37,5 %. Sur ces 12, 6 achètent, soit 50 %. Le point d'effondrement n'est pas le paiement, il est franchement en amont : **94,6 % de la perte se produit sur la page, entre la lecture et le panier.** Mesuré, source Parker, fenêtre 2026-08-10 → 2026-09-06.
+Il voit une image fixe dans son fil Facebook. Il a plus de 45 ans, à 82,4 % de la dépense, et 93,4 % de chances d'être sur son téléphone. L'image lui montre un homme d'environ trente ans, torse nu, tatoué, glabre, avec des flèches qui désignent ce qu'il faut raser, et un texte qui le tutoie. Il clique quand même : le taux de clic de la famille gagnante est de 1,63 à 3,69 %.
 
-L'équipe est arrivée au même endroit indépendamment, stated, brief du 3 septembre, verbatim : « **Le vrai problème est post-clic** : CTR 3 % mais CVR site ≈ 0,2 % et CPA 86 € pour un break-even à 21 €. »
+Il arrive sur une page. 77,0 % des clics sur lien atteignent bien une page, ce qui est normal. Et là, presque tout s'arrête : sur 597 vues de page, 32 ajouts au panier. **5,4 %.**
+
+Ce qui se passe entre les deux n'est mesuré nulle part, et c'est le trou central de tout ce document. Ce que les sources permettent de dire, inféré, tient en trois points. La page lui demande d'acheter à une marque qu'il n'a jamais vue. S'il vérifie, il ne trouve rien : la marque n'est nulle part dans l'index français. Et la seule chose que la page lui offre en guise de garantie est un compteur d'avis que la marque ne peut pas défendre.
+
+S'il franchit ça, le reste se comporte normalement. 37,5 % des paniers vont jusqu'à un paiement initié, 50,0 % des paiements aboutissent. Il paie 34,99 €, un seul article, souvent tôt le matin ou tard le soir.
+
+Puis le silence. Aucun e-mail de la marque ne part vers lui, verified sur 46 fils Gmail. Aucun sondage. Aucune demande d'avis. Aucun deuxième produit. **La marque n'a plus aucun moyen de lui parler.**
 
 ### Étape 1 — Prospect froid
 
-**État d'esprit.** Il navigue, il ne cherche rien. `ad-account-analysis.md` lit une dépense lourde sur le fil Facebook comme une navigation posée, plus proche d'une phase de considération que d'une découverte impulsive. Mesuré : 70,7 % de la dépense sur Facebook, 26 143 impressions sur le fil Facebook contre 6 490 sur le fil Instagram.
+**État d'esprit.** Il ne cherche pas. `ad-account-analysis.md` note que le fil Facebook met l'utilisateur en mode de navigation posée, plus lent et plus délibéré que sur Instagram, et que la dépense y est un indicateur d'audience plus âgée. Le compte confirme dans les deux sens : Facebook porte 70,7 % de la dépense et 5 des 6 achats.
 
-**Déclencheurs d'entrée.** Un seul est observé et ce n'est pas un déclencheur d'acheteur, c'est un déclencheur de canal : la première commande de la boutique tombe le 2026-08-26, le lendemain du jour où le compte publicitaire quitte le régime Audience Network pour le régime fil Facebook. Verified. Les six déclencheurs humains qui circulent dans le coffre sont écrits par la marque et non confirmés ; ils sont listés dans la bibliothèque des portes d'entrée de `personas-profile.md`.
+**Déclencheurs d'entrée.** Six sont nommés dans `personas-profile.md` et **aucun n'est confirmé par un acheteur**. Tous sont écrits par la marque.
 
-**Ce qui le fait avancer.** Une accroche qui le qualifie. `advertising-to-older-audiences.md` est net sur ce point : pour ce public, le rappel d'identité explicite, du type « si vous avez plus de cinquante ans, ceci vous concerne », lève la pertinence de façon fiable, et la subtilité sous-performe. La marque vient de commencer à le faire, avec « La tondeuse indispensable après 50 ans. » et « 58 ans. Fini de retenir ma respiration. », sur 57,37 € et trois jours.
+**Ce qui le fait avancer.** La seule chose prouvée sur l'achat : la famille visuelle « Impeccable », fond crème, titre en très gros, un humain calme, produit héros net. Quatre achats sur six, coût par achat 28,10 € contre 94,16 € sur la campagne principale.
 
-**Risques de décrochage.** Il ne se reconnaît pas. Les annonces qui portent tous les achats montrent des hommes d'environ trente ans, torse nu et tatoués, et tutoient. Combien d'hommes de son âge ont scrollé sans se sentir concernés est inconnu et non mesurable.
+**Risques de décrochage.** Le premier est un problème de format que la méthode nomme précisément. `ad-account-analysis.md` pose que **les statiques penchent vers le bas de l'entonnoir** et qu'un compte lourd en statiques fait surtout de la capture de demande. Raselio est à 168 statiques sur 173 annonces indexées, zéro vidéo qui vende son produit. **Elle fait donc de la capture de demande pour une marque dont personne n'a jamais entendu parler.** C'est la contradiction structurelle de ce parcours : il n'y a pas de demande à capturer, il faudrait la créer, et le format employé n'est pas fait pour ça.
 
-**Meilleur contenu à ce stade.** Une créa qui nomme l'âge et le geste, dans un registre calme. C'est ce que fait la famille « Impeccable », qui produit quatre des six achats à 28,10 € de coût par achat contre 94,16 € sur la campagne.
+Le second risque est mesuré : environ 19,8 % de la dépense part dans des emplacements verticaux, Reels et Stories, où une image 4:5 est recadrée et se bat contre de la vidéo en mouvement.
 
-**Émotion clé.** Le soulagement d'être reconnu. Pas l'excitation.
+**Meilleur contenu ou point de contact.** Le fil Facebook, où la créa est chez elle.
 
-### Étape 2 — Évaluation
+**Émotion clé.** L'appréhension au moment du geste, en basse intensité. Voir `persona-voice-library.md`, moteur 2.
 
-**C'est l'étape qui décide de tout, et c'est celle que la marque n'a jamais financée.**
+### Étape 1 bis — Vérification. L'étape que le cadre standard n'a pas et qui décide de tout ici
 
-**État d'esprit.** Il est convaincu par l'idée et pas par le vendeur. `emotional-delivery-and-timing.md` décrit exactement cette phase : il ne cherche plus d'information, il gère un risque, et ajouter de la pression ou du volume à ce moment le fait décider que ce n'est pas la bonne marque.
+**État d'esprit.** Il vient de cliquer et il veut savoir à qui il a affaire. C'est la phase Evaluation de `emotional-delivery-and-timing.md` : il ne cherche pas plus d'information, il gère un risque et attend qu'on nomme son hésitation exacte. Le document prévient qu'appliquer de la pression ou sur-expliquer sa valeur à ce moment le fait décrocher.
 
-**Ce qu'il cherche, et ce qu'il trouve.** Il cherche à savoir à qui il achète. Il trouve : une note de 4,7/5 sur 1 734 avis qu'il ne peut ouvrir nulle part, parce qu'il n'y a aucun avis ; huit requêtes de marque qui ne remontent aucune trace de Raselio ; des conditions de vente dont cinq sur six portent encore le nom d'une autre marque, Cutlab, et dont les CGV affichent « Nom du médiateur : [À COMPLÉTER OBLIGATOIREMENT] » ; une page Contact vide. Tout cela est verified.
+**Ce que la marque lui donne.** Un compteur d'avis inventé, « 4,7/5 sur 1 734 avis », face à 0 avis existants, et « +17 000 clients satisfaits », face à 11 commandes. Plus trois destinations différentes selon l'annonce cliquée.
 
-**Ce qui le ferait avancer, avec la preuve que ça marche déjà.** L'annonce `52506457654991` « RS · C11 garantie-colis », qui traite la garantie et le colis neutre, affiche 14,06 % de taux de clic, le meilleur du compte, sur 64 impressions et 1,33 € dépensés. Toute cette famille de messages tient sous cinq euros cumulés sur 677,81 € de dépense. Et l'annonce éditoriale du 14 août, `7001074469987`, qui traite une objection en quatre paragraphes et se termine par « On les garantit 12 mois. Si elles s'ébrèchent, on les remplace », affiche 0,378 € de coût par clic sortant contre 0,99 € et 1,27 € pour les deux plus gros dépensiers. Elle a été arrêtée et jamais rejouée au prix actuel.
+**Ce qu'il trouve s'il vérifie.** Rien. Six requêtes de marque lancées le 2026-09-06 ne rendent aucune page qui parle de Raselio. « Raselio avis » remonte un théoricien de la musique du seizième siècle et la page Wikipédia du loueur de voitures Avis.
 
-**Risques de décrochage, par ordre de taille.** Il ne trouve rien en cherchant la marque. La FAQ traite le produit et pas l'achat : ses sept questions portent sur la tondeuse à barbe, les testicules, la douche, les irritations, la hauteur de coupe, le sans-fil et l'entretien, et aucune sur la livraison, le retour, le remboursement, la garantie ou la provenance. La page d'atterrissage n'est pas la même selon l'annonce : les quatre annonces les plus dépensières qui portent des achats renvoient vers l'advertorial, les post-it vers la fiche produit, et trois vidéos encore actives vers l'ancienne page Cutlab à 44,90 €, un prix qui n'existe plus.
+**Ce que la marque a et ne finance pas.** La créa `52506457654991` « RS · C11 garantie-colis » affiche **14,06 % de taux de clic, le meilleur du compte**, sur 1,33 € de dépense. Toute la famille de la sécurité d'achat tient sous cinq euros sur 677,81 €.
 
-**Meilleur contenu à ce stade.** Une preuve qu'il reconnaît. `advertising-to-older-audiences.md` classe en tête l'autorité et la source d'apparence établie, et note qu'un compteur d'avis élevé lit comme une preuve réelle pour ce public. La marque a mis un compteur sans avis derrière.
+**Risque de décrochage, chiffré.** **94,6 % des vues de page ne produisent pas d'ajout au panier.** C'est la seule étape de tout l'entonnoir qui sort de la normale.
 
-**Émotion clé.** Le besoin d'un appui, pas d'un argument.
+**Pourquoi ça coûte plus cher ici qu'ailleurs.** `advertising-to-older-audiences.md` pose que pour un public de 50 à 70 ans l'autorité est le raccourci de confiance, que la preuve doit venir d'une source déjà reconnue, et qu'un compteur d'avis élevé lit comme une preuve réelle. **La marque a donc placé sa preuve la plus fragile exactement devant le public le plus sensible à la preuve.**
 
-### Étape 3 — Premier achat
+### Étape 2 — Premier acheteur
 
-**État d'esprit.** Décidé. Ce qui reste à faire est de ne pas le gêner.
+**État d'esprit.** Inconnu. Personne ne lui a jamais rien demandé.
 
-**Ce qui est mesuré.** Onze commandes, un article chacune, 34,99 € sauf la première à 39,90 €, zéro remise appliquée sur 61 jours de série, livraison offerte. Quatre commandes tombent entre 07:23 et 09:20 heure locale et trois entre 21:33 et 22:48. Sur onze, c'est une piste et pas un motif, et ce sont les deux moments où un homme est dans sa salle de bain.
+**Ce qui est mesuré.** Onze commandes, toutes d'un seul article, à 34,99 € sauf la première à 39,90 €, toutes facturées en France. Quatre tombent entre 05:23 et 09:07 UTC, trois entre 19:33 et 20:48 UTC. Huit expédiées, trois non expédiées au 2026-09-06.
 
-**Risques de décrochage.** Douze initiations de paiement pour six achats : la moitié de ceux qui lancent un paiement ne finissent pas. Sur un dénominateur de douze, ce n'est pas un motif ; c'est le seul endroit du parcours où l'on peut chiffrer une perte tardive et il vaut la peine d'être regardé au prochain refresh.
+**Ce qui pourrait rendre la première expérience meilleure que prévu.** Non observable, et c'est un vrai manque. La passe d'extraction de la surprise le note : **Raselio ne connaît aujourd'hui aucun bénéfice de son produit qu'elle ne vende pas déjà.** Elle a promis le colis neutre, la boîte complète, le socle, l'étanchéité et la durabilité des lames. Une promesse annoncée n'est plus une surprise.
 
-**Meilleur contenu à ce stade.** Retirer, pas ajouter. La marque le fait déjà : prix unique, un bouton, livraison offerte.
+**Risques de décrochage, deux, et les deux sont datés.**
 
-**Émotion clé.** Le calme.
+Le premier est une contradiction de politique, verified sur les deux textes. Le site promet « nous vous remboursons intégralement, sans poser de questions » et la politique de remboursement n'accepte que les produits « dans son état d'origine, non utilisé » en excluant les scellés ouverts. **Un homme qui essaie la tondeuse pendant trente jours ne peut pas la rendre non utilisée.** La fenêtre de trente jours du premier acheteur se ferme vers le 2026-09-25.
 
-### Étape 4 — Première expérience
+Le second est un écart de promesse sur le délai : la créa 29 annonce « Livré en 48-72 h partout en France » quand la politique parle de « 1 à 3 jours ouvrés » de préparation et de délais « à titre estimatif ». Le seul message client jamais reçu par cette marque portait précisément sur la date d'expédition.
 
-**Non mesurée, entièrement. C'est le trou noir du parcours et il faut le nommer comme tel.**
+**Meilleur point de contact.** Aucun n'existe. Aucun e-mail sortant vers un client dans 46 fils Gmail, aucun SMS, aucune application d'avis, aucun sondage.
 
-Huit commandes sur onze sont marquées FULFILLED au 2026-09-06, trois UNFULFILLED. Aucun retour demandé dans les 46 fils Gmail lus. Zéro avis. Zéro réponse de sondage. La commande la plus ancienne a douze jours.
+### Étape 3 — Deuxième achat
 
-**Ce qu'on ne sait pas, et qui compte.** Si l'objet tient ses promesses. Si l'autonomie annoncée est la bonne, l'équipe ayant elle-même marqué « à confirmer » l'autonomie, les RPM et la durée de garantie. Si l'étanchéité tient, ce qui est la déception différée la plus courante de la catégorie d'après les fragments non vérifiés en annexe de `persona-voice-library.md`. Et si un homme qui a ouvert la boîte peut encore se faire rembourser : le site promet un remboursement « sans poser de questions » et la politique n'accepte que les produits « dans son état d'origine, non utilisé », verified sur les deux textes. Ces deux phrases ne peuvent pas être vraies ensemble pour un homme qui a essayé la tondeuse.
+**Elle n'existe pas, et c'est un choix de produit.** Un SKU, un achat unique, aucun consommable, aucune gamme. Zéro client récurrent sur onze, sur une fenêtre de neuf jours qui ne permet de conclure à rien.
 
-**Ce qui remplirait cette étape pour presque rien.** Un e-mail à onze personnes, dont huit ont reçu leur colis. C'est la chose la moins chère de tout le coffre et personne ne l'a faite.
+**Ce que ça fait à l'économie, et c'est la contrainte la plus dure de cette marque.** La marge brute est d'environ 23,58 € par unité avant frais de port et frais de paiement, sur un coût produit stated de 11,41 € à 12,71 € selon la feuille de l'équipe consultée. Le seuil de rentabilité qui en découle est d'environ 21 € de coût par achat, et il est optimiste d'un montant inconnu parce qu'aucun coût de port réel ni frais Shopify Payments n'est documenté. **Le coût d'acquisition doit donc être récupéré sur une seule transaction de 34,99 €.** Le coût par achat mesuré est de 94,16 € sur la campagne principale et de 128,61 € en lifetime. Le coût par ajout au panier est de 24,11 €, c'est-à-dire **au-dessus de la marge supposée**.
 
-**Émotion clé.** Inconnue. C'est le point.
+**Les trois chemins qui pourraient remplacer un deuxième achat, posés comme options et pas comme recommandations.** Une lame de rechange, ce que fait Meridian et ce que la marque exclut aujourd'hui par positionnement. Un deuxième SKU. Ou un prix de première vente plus élevé, ce que la marque a fait dans l'autre sens en passant de 39,90 € à 34,99 € le jour de sa première commande. Aucun de ces chemins n'est documenté comme envisagé.
 
-### Étape 5 — Rachat
+### Étape 4 — Ambassadeur silencieux
 
-**Cette étape n'existe pas dans le modèle actuel, et ce n'est pas un échec, c'est une conséquence.**
+**Directionnelle en entier.**
 
-Mesuré : 0 client récurrent sur 11, taux de client récurrent 0,0 sur 90 jours. Le produit est unique, durable, garanti deux ans, et la marque vend explicitement le fait qu'il n'y a rien à racheter. Il n'y a donc rien à optimiser ici tant que le catalogue ne bouge pas.
+**Ce qui est observé, et c'est un vide.** Zéro mention de la marque dans l'index, zéro défenseur, zéro détracteur, deux commentaires publicitaires sur 43 270 impressions, zéro avis, zéro session d'affiliation ou de bouche à oreille sur 90 jours.
 
-**Ce que ça implique, arithmétiquement.** La valeur vie client est aujourd'hui de 34,99 € au maximum. Le coût par achat de la campagne principale est de 94,16 €. Le coût par achat de la meilleure famille de créas est de 28,10 €. La marge brute par unité est d'environ 23,58 € d'après la fiche de marge de l'équipe, avant frais d'expédition et de paiement. Autrement dit, même la meilleure créa du compte ne dégage pas de marge sur une seule vente. Le modèle ne tient que si le coût d'acquisition descend nettement, ou si un deuxième achat existe.
+**Ce qui explique probablement ce vide, inféré, confiance mixed.** Le produit vend le secret. Un homme qui achète pour que personne ne sache ne poste pas, ne déballe pas devant une caméra et ne laisse pas d'avis sous son nom. La catégorie fonctionne probablement à la recommandation chuchotée, entre deux hommes, sans trace.
 
-**Ce que la marque a déjà, sans l'utiliser.** Le kit contient un peigne, un socle, un câble, une brosse et une huile d'entretien, d'après le document de contexte de marque. Rien de tout ça n'est vendu séparément, et aucune lame de rechange n'est proposée. Ce n'est pas une recommandation de lancer un abonnement, ce que la marque a explicitement écarté ; c'est le constat qu'il n'existe aujourd'hui aucun deuxième achat possible, pas même un consommable à quelques euros.
-
-### Étape 6 — Fidélité et recommandation
-
-**Structurellement difficile, et pas seulement précoce.**
-
-Mesuré : 0 session venue d'un lien d'affiliation, d'un média, d'un forum ou d'un e-mail sur 2 431 et 90 jours. 2 commentaires publicitaires pour 44 672 impressions, soit un pour 22 336. 0 avis. 0 mention de la marque sur huit requêtes.
-
-La cause n'est pas seulement l'âge de la marque. Un homme qui recommande publiquement une tondeuse intime déclare du même coup qu'il l'utilise, et la marque vend la discrétion comme un bénéfice. Inféré, confiance mixte : cette catégorie fabrique peu de défenseurs, et une stratégie de preuve qui compte sur eux attendra longtemps.
-
-**Le seul vecteur que les données laissent entrevoir n'est pas un homme qui parle, c'est une femme qui achète.** Il est traité au persona 2, en hypothèse.
-
-### T-E-E-P decomposition — du prospect froid au premier achat
-
-Les quatre phases viennent de `emotional-delivery-and-timing.md`.
-
-**Trigger.** Ce qu'il faut : lui renvoyer son état avec précision, sans solution immédiate. Ce que la marque fait : bien, c'est ce que l'advertorial fait de mieux. Ce qu'elle rate : elle ouvre souvent sur la blague, qui fait rire quelqu'un qui n'était pas concerné.
-
-**Exploration.** Ce qu'il faut : une texture de marque, un point de vue, une idée de ce que c'est que d'être client ici. Ce que la marque fait : presque rien. Sur 163 annonces, une seule dit qui elle est, l'éditoriale du 14 août, arrêtée. C'est la phase la plus vide du parcours.
-
-**Evaluation.** Ce qu'il faut : nommer l'hésitation précise, garantie, remboursement, colis, provenance, service en français. Ce que la marque fait : moins de cinq euros sur 677,81 €, alors que c'est là qu'elle affiche son meilleur taux de clic. C'est le trou le plus rattrapable du parcours.
-
-**Purchase.** Ce qu'il faut : retirer. Ce que la marque fait : correctement.
-
-**La lecture d'ensemble.** Le compte écrit presque tout en Trigger et en Purchase et laisse Exploration et Evaluation quasi vides. C'est l'inverse de ce dont un homme de cinquante-huit ans a besoin devant une marque qu'il n'a jamais vue.
+**Le seul vecteur que les données laissent entrevoir n'est pas un acheteur qui parle**, c'est un second acheteur pour le même homme : la partenaire. C'est le sujet de la persona 2.
 
 ### Transition critique
 
-**Du clic à l'ajout au panier.** 597 vues de page pour 32 ajouts, soit 5,4 %. Mesuré. C'est là que 94,6 % de la perte se produit et c'est la seule transition dont la correction change le modèle économique. Toutes les autres transitions du parcours de ce persona sont soit correctes, soit hors de portée aujourd'hui.
+**Du clic à l'ajout au panier.** 597 vues de page, 32 ajouts au panier, 5,4 %. Trois des quatre étapes de l'entonnoir sont normales ou bonnes ; celle-ci est catastrophique. Elle concerne la seule persona qui achète, elle consomme tout le budget, et elle se règle sur la page plutôt qu'en produisant plus de créas.
 
-### Motif de décrochage et geste de rattrapage
+### Motif de départ et geste de reconquête
 
-**Le motif.** Il lit, il ne trouve pas de raison de faire confiance, il repart. Non observé directement, faute de parole d'acheteur, mais soutenu par trois faits mesurés : le taux de clic record de la créa garantie-colis, l'absence totale de la marque dans les résultats de recherche, et l'incohérence des documents juridiques.
+**Motif de départ, inféré :** il ne franchit pas la vérification. Il ne trouve rien sur la marque, la preuve qu'on lui montre est un chiffre, et il ferme l'onglet.
 
-**Le geste de rattrapage adapté à ce persona.** Pas une relance de panier abandonné avec une remise. `advertising-to-older-audiences.md` dit que ce public est sensible à la valeur mais réagit mal aux jeux de rareté, et `emotional-delivery-and-timing.md` dit qu'ajouter de la pression en phase Evaluation le fait décider contre la marque. Le geste qui correspond est de lever l'hésitation nommée : la garantie, le colis neutre, le remboursement, le service en français. Aucune relance de ce type n'existe aujourd'hui, aucune séquence e-mail n'apparaissant dans les 46 fils lus.
+**Geste de reconquête approprié à cette persona, et il n'est pas un e-mail :** la marque n'a aucun canal de reconquête. Elle n'a ni e-mail, ni SMS, ni audience de retargeting documentée. Le seul geste disponible aujourd'hui est de repayer l'impression, ce qui est le geste le plus cher de tous.
 
-### Citations qui éclairent la transition
+### Citations qui éclairent une transition
 
-Deux, et ce sont les seules qui existent.
+**Aucune ne vient d'un acheteur Raselio.** La seule voix extérieure existante, « Plus rien de la bête sauvage qui sommeille en nous », le 2026-08-31, éclaire une transition qui n'est même pas dans cette carte : celle qui précède le prospect froid, celle où un homme décide que ce geste n'est pas pour lui. Aucune annonce du compte ne s'adresse à cet homme.
 
-> « Hello, can i know when you will ship if a customer should order today? » — formulaire de contact Shopify, fil Gmail `1a03dccaf7935d33`, 2026-08-26 à 11:20 UTC. Réponse de la marque deux minutes plus tard, en entier : « Hello sure ». Un message client sur 46 jours, et il porte sur la livraison, c'est-à-dire sur le sujet que la FAQ ne traite pas.
+## Persona 2 - `partenaire-prescriptrice`
 
-> « Plus rien de la bête sauvage qui sommeille en nous. » — commentaire publicitaire, 2026-08-31 à 15:46:58 UTC, sous l'annonce `52505820194591`. Cette phrase n'éclaire pas une transition, elle éclaire un refus d'entrer dans le parcours.
+**Avertissement de statut.** Zéro achat. Confiance `hypothesis`. Cette carte décrit ce qu'il faudrait observer et pas ce qui a été observé. Aucune ligne ne doit être citée comme un fait.
 
----
+**Le cadrage.** Elle n'a pas de parcours parce qu'il n'a jamais commencé. La ligne femmes 45-54 a reçu 28,45 € pour 15 547 impressions, 63 clics, 0,41 % de taux de clic et **zéro achat**. La dépense féminine totale du compte, 91,80 € soit 11,9 %, est du débordement de diffusion et pas un ciblage : aucun ad set femmes n'existait au 2026-09-06. La créa écrite pour elle, la 28, texte à l'image `stated`, « Le cadeau qu'il ne s'offrira jamais lui-même. / Et dont vous profiterez aussi. / Colis neutre · Livraison offerte », **n'a jamais été mise en ligne**.
 
-## Persona 2 - La partenaire qui commande à sa place
+**Étape 1, prospect froid.** Elle croise la publicité sans chercher. Le taux de clic mesuré sur sa ligne, 0,41 %, est le plus bas des lignes servies : **la créa actuelle ne lui parle pas**, ce qui est attendu puisqu'elle n'a pas été écrite pour elle.
 
-`partenaire-prescriptrice`
+**Étape 1 bis, vérification.** La sienne est probablement plus lourde que celle de l'homme, inféré : elle achète un objet intime pour quelqu'un d'autre et elle doit être sûre que ça ne blesse pas et que ça n'humilie pas. Le seul extrait de catégorie qui décrit ce moment, sur une autre marque, montre une enquête sociale, `categorie`, `stated`, page non ouverte : « I bought this for my husband after asking a few men in my life who said this product was worth looking into for grooming 'down there'. »
 
-**Statut, à lire avant le reste.** Confiance `hypothesis`. **Zéro achat.** Ce parcours est écrit de bout en bout comme une hypothèse et il ne doit pas financer de production.
+**Étape 2, premier achat.** Jamais observée. Zéro achat sur toute la vie du compte.
 
-**Le cadrage du parcours.** Elle reçoit la publicité sans être ciblée, parce qu'Advantage+ élargit hors du ciblage saisi. Elle voit une créa écrite au masculin, avec un homme torse nu, et un texte qui tutoie un autre homme. Rien sur la page ne lui dit que ce cadeau est une bonne idée, ni comment l'offrir sans que ce soit une critique.
+**Étape 3, deuxième achat.** Elle n'en fera pas, et pour une raison différente de celle de l'homme : elle n'est pas l'utilisatrice. Son cycle est occasionnel et il suit le calendrier des cadeaux plutôt que l'usure d'un produit.
 
-**Ce qui est mesuré.** La ligne femmes 45-54 a reçu 28,45 € pour 15 547 impressions, 63 clics, 0,41 % de taux de clic et zéro achat. L'ensemble des lignes femmes a reçu 91,80 € au niveau annonce, soit 11,9 % de la dépense, pour zéro achat. Le seul signal d'intention est stated par l'équipe, brief du 3 septembre, verbatim : « Les femmes 45-54 montrent un signal faible mais réel d'achat-cadeau (3 ATC, 1 paiement initié) ».
+**Étape 4, ambassadrice.** C'est **la seule des deux personas qui pourrait parler à voix haute**, inféré, parce qu'elle n'a pas le sujet sur elle. Les quatre extraits d'avis Manscaped du corpus de catégorie sont tous écrits par des femmes qui racontent l'achat pour leur conjoint. Aucune de leurs équivalentes n'a jamais rien écrit sur Raselio, faute d'être passée à l'achat.
 
-**Étapes 1 à 3, en hypothèse.** Prospect froid : elle voit la publicité, sans ciblage et sans message pour elle. Évaluation : son risque n'est pas de se blesser, c'est de vexer, et aucune créa de la marque n'a jamais traité cette objection. Premier achat : jamais franchi.
+**Transition critique.** De la publicité au premier achat, parce que rien après n'a jamais eu lieu. Elle n'a jamais été testée : la créa existe, l'ad set n'existe pas, le budget n'a jamais été alloué.
 
-**Étapes 4 à 6.** Sans objet, faute de premier achat.
-
-**Transition critique.** De la vue au clic. 15 547 impressions pour 63 clics, soit 0,41 % de taux de clic contre 2,73 % sur la campagne principale. Elle ne clique pas, et la raison la plus simple est qu'elle voit une publicité qui ne s'adresse pas à elle.
-
-**Motif de décrochage et geste de rattrapage.** Trois ajouts au panier et une initiation de paiement sans achat, stated. Le geste qui correspond, s'il devait être testé, est une créa qui lui parle et une page qui lui dit comment offrir sans critiquer. La créa 28 existe, texte à l'image stated : « Le cadeau qu'il ne s'offrira jamais lui-même. / Et dont vous profiterez aussi. / Colis neutre · Livraison offerte ». Elle n'a jamais été mise en ligne dans un ad set.
-
-**Citations.** Aucune. Aucune femme n'a jamais écrit un mot à cette marque.
-
----
+**Motif de départ.** Non observable.
 
 ## Cross-persona patterns
 
-**Un — La marque a un problème d'entonnoir, pas d'audience.** 775 clics sortants pour 6 achats. Le clic n'est pas cher et il est abondant. La perte se produit sur la page, à 94,6 %. Tant que ce chiffre ne bouge pas, produire trente créas de plus tous les deux jours n'améliore rien : quatre lots de 19, 30, 27 et 29 annonces ont été chargés en quatre jours consécutifs pour 68,91 € au total, soit 0,66 € par annonce.
+**Motif 1. Les deux parcours meurent au même endroit, et personne ne regarde cet endroit.** Pour l'homme, c'est mesuré à 5,4 %. Pour la partenaire, c'est encore en amont. Dans les deux cas, la marque n'a aucune mesure de ce qui se passe sur la page, et les annonces envoient vers trois destinations différentes sans qu'aucune source dise laquelle perd le plus de monde. C'est le blanc le plus actionnable de tout le cerveau et il se comble avec un outil d'analyse de page.
 
-**Deux — La phase d'évaluation est la phase la moins financée et la plus prometteuse, pour les deux personas.** Chez l'homme, elle porte le meilleur taux de clic du compte pour 1,33 €. Chez la femme, elle n'a jamais été écrite du tout. C'est le même trou vu de deux côtés.
+**Motif 2. La marque n'a aucun moyen de reparler à qui que ce soit.** Ni e-mail, ni SMS, ni fidélité, ni parrainage, ni avis, ni sondage. Onze hommes ont reçu un colis et la marque ne peut plus les atteindre autrement qu'en repayant une impression. Ça a une conséquence directe sur la stratégie : **tant qu'aucun canal propriétaire n'existe, chaque euro de marge doit être gagné à la première tentative**, et le coût par achat mesuré est quatre à six fois le seuil de rentabilité.
 
-**Trois — Le modèle économique n'a pas d'aval.** Un produit durable, sans consommable, sans abonnement, sans deuxième référence. La valeur vie client plafonne à 34,99 € et le coût par achat de la campagne principale est de 94,16 €. Aucune amélioration de rétention n'est possible parce qu'il n'y a rien à retenir. La seule variable est le coût d'acquisition.
+**Motif 3. Le format employé ne correspond pas au travail à faire.** `ad-account-analysis.md` pose que les statiques penchent vers le bas de l'entonnoir et qu'un compte lourd en statiques fait de la capture de demande. Raselio est à 168 statiques sur 173, et elle n'a aucune demande à capturer : zéro notoriété, zéro mention, zéro recherche de marque. Elle utilise donc un outil de fermeture pour un travail d'ouverture. `advertising-to-older-audiences.md` va dans le même sens depuis l'autre bout : ce public tolère un récit plus long et convertit volontiers depuis un état conscient et même inconscient du problème, ce qui rend le format long pertinent plutôt que gaspillé.
 
-**Quatre — La marque n'a jamais parlé à ses clients après l'achat.** Zéro e-mail de suivi sur 46 fils lus, zéro sondage, zéro demande d'avis. Ce n'est pas une lacune de rétention, c'est une lacune de connaissance : c'est ce silence qui prive tout le système persona de sa source de premier rang.
+**Motif 4. L'étape la plus servie est celle qui compte le moins.** Le compte écrit presque tout en Trigger et en Purchase. La phase Evaluation, celle qui décide, est servie par une famille de créas qui tient sous cinq euros et qui affiche le meilleur taux de clic du compte.
 
-**Cinq — Le produit combat sa propre recommandation.** La discrétion est vendue comme un bénéfice et elle empêche le bouche-à-oreille. Toute stratégie de preuve qui repose sur des clients qui parlent doit tenir compte de ça, et probablement chercher sa preuve ailleurs : un expert, un comparatif, une démonstration.
+**Motif 5. Après le premier achat, la marque est aveugle des deux yeux.** Elle ne sait pas si l'appareil marche, si l'homme est content, s'il l'a offert, s'il le recommanderait. Et la première échéance arrive : la fenêtre de trente jours du premier acheteur se ferme vers le 2026-09-25, avec une politique de retour qui se contredit elle-même.
 
 ## Critical-transition map
 
-| persona | transition la plus importante | pourquoi elle compte | mesurée ou inférée |
+| Persona | Transition la plus importante | Pourquoi elle compte | Mesurée ou inférée |
 |---|---|---|---|
-| `soigne-discret` | vue de page d'atterrissage → ajout au panier, 32 sur 597, soit 5,4 % | 94,6 % de la perte totale du parcours se produit là, et c'est la seule transition dont la correction change le modèle économique | **mesurée**, entonnoir Parker lifetime |
-| `soigne-discret` | initiation de paiement → achat, 6 sur 12, soit 50 % | la moitié de ceux qui commencent à payer ne finissent pas, sur un dénominateur de douze | **mesurée**, à surveiller, dénominateur trop petit pour conclure |
-| `soigne-discret` | premier achat → deuxième achat | il n'existe pas de deuxième achat possible dans le catalogue actuel | **mesurée**, 0 sur 11 |
-| `soigne-discret` | achat → parole publique | 0 avis et 2 commentaires pour 44 672 impressions, alors que c'est la seule source qui débloquerait tout le système persona | **mesurée** |
-| `partenaire-prescriptrice` | impression → clic, 63 sur 15 547, soit 0,41 % | elle n'a jamais reçu un message écrit pour elle, donc rien ne dit si l'audience est mauvaise ou seulement mal servie | **mesurée** pour le chiffre, **inférée** pour la cause |
+| `soigne-discret` | vue de page → ajout au panier | 5,4 %, la seule étape hors norme de tout l'entonnoir, et elle concerne la seule persona qui achète | **mesurée** sur 597 vues de page et 32 ajouts au panier |
+| `soigne-discret` | premier achat → retour d'usage | aucun canal n'existe pour l'obtenir, et sans lui la persona reste bloquée à confiance thin | **mesurée en creux** : 0 avis, 0 réponse de sondage, 0 e-mail sortant |
+| `soigne-discret` | premier achat → deuxième achat | structurellement absente, un SKU en achat unique, ce qui force toute la rentabilité sur une seule transaction de 34,99 € | **inférée** depuis l'économie du produit, 0 rachat sur 11 mais fenêtre de 9 jours |
+| `partenaire-prescriptrice` | publicité → premier achat | jamais testée, la créa existe et l'ad set n'existe pas | **mesurée en creux** : 28,45 €, 63 clics, 0 achat |
 
 ## Recommendations
 
-Chaque recommandation nomme son persona, son étape, l'action, la preuve, et sa limite de donnée. Aucune n'est proposée sans preuve dans les sources.
+Chaque recommandation nomme la persona, l'étape, l'action, la base de preuve et sa limite. Aucune n'est proposée si les sources ne la portent pas.
 
-**Un — Demander un avis aux onze acheteurs par e-mail.** Persona : `soigne-discret`. Étape : première expérience. Action : un e-mail, une question ouverte, aux huit acheteurs livrés en priorité. Preuve : 0 avis existant confirmé par l'outil, 8 commandes FULFILLED, 0 e-mail de suivi sur 46 fils lus, et une landing qui affiche 1 734 avis inexistants. Limite : onze réponses au maximum, donc jamais un échantillon, mais onze fois plus que ce qui existe aujourd'hui. C'est la seule action du document qui débloque simultanément la preuve sociale, la voix client et la validation du persona.
+**1. Mesurer ce qui se passe sur la page avant de produire une créa de plus.** Persona `soigne-discret`, étape 1 bis. Base de preuve : 597 vues de page pour 32 ajouts au panier, et trois destinations différentes selon l'annonce cliquée. Limite : aucun outil d'analyse de page n'est branché, donc cette recommandation demande un outil et pas un pull. C'est la première de la liste parce que c'est la seule étape hors norme de tout l'entonnoir.
 
-**Deux — Financer l'étape d'évaluation.** Persona : `soigne-discret`. Étape : évaluation. Action : mettre un budget réel derrière la famille garantie, colis neutre et remboursement, et remettre en ligne le format éditorial du 14 août au prix actuel. Preuve : 14,06 % de taux de clic sur `52506457654991` pour 1,33 € dépensés ; 0,378 € de coût par clic sortant sur `7001074469987` contre 0,99 € et 1,27 € pour les deux plus gros dépensiers. Limite : les deux chiffres reposent sur de petits volumes, 64 impressions pour la première et 6 229 pour la seconde, et le format éditorial pointe encore vers une page produit qui n'existe plus au bon prix.
+**2. Financer la famille de la sécurité d'achat au-delà de cinq euros.** Persona `soigne-discret`, étape 1 bis. Base de preuve : 14,06 % de taux de clic sur `52506457654991`, le meilleur du compte, pour 1,33 € de dépense, et une phase Evaluation qui n'est servie par presque rien. Limite : 64 impressions de dénominateur, donc ce taux de clic n'est pas fiable et l'action est un test, pas une certitude.
 
-**Trois — Réparer ce que l'homme trouve quand il vérifie.** Persona : `soigne-discret`. Étape : évaluation. Action : sortir « Cutlab » des six politiques, remplir le champ médiateur des CGV, remplir la page Contact, et harmoniser la page d'atterrissage des annonces. Preuve : cinq politiques sur six portent encore l'ancien nom, les CGV portent « Nom du médiateur : [À COMPLÉTER OBLIGATOIREMENT] », la page Contact est vide, et trois annonces vidéo actives renvoient vers `/products/cutlab-essentials-bundle` à 44,90 €. Limite : aucune donnée ne prouve que ces pages sont lues avant l'achat ; ce sont celles qu'un acheteur méfiant ouvre, et la méfiance est un frein que l'équipe s'attribue elle-même.
+**3. Demander un retour aux onze premiers acheteurs.** Persona `soigne-discret`, étape 2. Base de preuve : 0 avis et 0 réponse de sondage confirmés par l'outil, et une persona flagship bloquée à confiance thin faute d'une seule parole d'acheteur. Limite : onze personnes, donc au mieux une poignée de réponses. C'est quand même le geste le moins cher du document, et il ferait passer la persona de thin à mixed.
 
-**Quatre — Traiter la livraison et le retour dans la FAQ.** Persona : `soigne-discret`. Étape : évaluation. Action : ajouter les questions de livraison, de retour, de remboursement et de provenance à la FAQ de la landing. Preuve : les sept questions actuelles portent toutes sur le produit ; la seule question qu'un client ait posée à la marque portait sur la date d'expédition ; et la contradiction entre « sans poser de questions » et « non utilisé » n'est traitée nulle part. Limite : un message client sur 46 jours n'est pas un motif.
+**4. Régler la contradiction de la politique de retour avant le 2026-09-25.** Persona `soigne-discret`, étape 2. Base de preuve : « nous vous remboursons intégralement, sans poser de questions » sur le site contre « dans son état d'origine, non utilisé » dans la politique, les deux verified. Limite : c'est une question juridique et commerciale, pas créative, et seule la marque peut trancher.
 
-**Cinq — Tester la partenaire à budget plafonné, avant d'y croire.** Persona : `partenaire-prescriptrice`. Étape : prospect froid. Action : un ad set femmes 45-60 plafonné à 10 % du budget, avec la créa 28 qui existe déjà. Preuve : 91,80 € déjà dépensés sur des femmes sans message ni ciblage, pour zéro achat, et un signal d'intention de 3 ajouts au panier stated par l'équipe. Limite : trois ajouts au panier sans achat ne justifient pas un ad set permanent ; ils justifient un test avec un seuil d'arrêt écrit d'avance.
+**5. Tester la partenaire une fois, proprement, avec la créa qui existe déjà.** Persona `partenaire-prescriptrice`, étape 1. Base de preuve : la créa 28 est écrite et n'a jamais été mise en ligne, aucun ad set femmes n'existe, et 91,80 € sont déjà partis en débordement de diffusion vers des femmes sans qu'une seule créa leur soit adressée. Limite : zéro achat aujourd'hui, donc l'attente raisonnable est un apprentissage et pas un canal.
 
-**Six — Ne rien changer à l'étape du paiement pour l'instant.** Persona : `soigne-discret`. Étape : premier achat. Action : aucune. Preuve : 6 achats sur 12 initiations de paiement, sur un dénominateur de douze, et zéro remise appliquée sur 61 jours sans que ça empêche les achats. Limite : le compteur de sessions ShopifyQL et le compteur d'achats ne se réconcilient pas sur cette fenêtre, et il faut une base plus large avant de toucher à cette étape.
+**6. Essayer un format long une fois.** Persona `soigne-discret`, étape 1. Base de preuve : 168 statiques sur 173, zéro vidéo qui vende ce produit, `ad-account-analysis.md` qui pose que les statiques penchent vers le bas de l'entonnoir alors que cette marque n'a aucune demande à capturer, et `advertising-to-older-audiences.md` qui place le témoignage long avec validation d'expert et la démonstration façon téléachat en tête des formats qui portent chez ce public. Limite : la marque n'a jamais produit de vidéo et n'a aucun visage à mettre à l'écran. C'est une décision de production, pas une itération.
+
+**Ce que je ne recommande pas, et pourquoi.** Aucun programme de fidélité, aucun parrainage, aucune séquence de rachat. Le produit n'a pas de deuxième achat et la marque a onze clients. Construire un cycle de vie aval avant d'avoir un cycle de vie amont qui tient serait exactement l'inverse de l'ordre utile.
 
 ## Open loops
 
-**Boucle 1.** Observation : 597 hommes chargent la page d'atterrissage et 565 repartent sans rien mettre au panier, alors que le clic coûte moins d'un euro et que la marque produit trente créas nouvelles tous les deux jours. Pull : Surprise, elle a tiré en voyant que la perte du parcours ne se produit pas là où toute la production est concentrée. Question : que cherche un homme sur cette page qu'il n'y trouve pas ? Justification : tant que ce chiffre ne bouge pas, chaque euro supplémentaire en publicité achète le même départ, et le modèle économique ne tient pas. Territoire : Product.
+**1. Personne ne sait quelle page perd les gens.**
 
-**Boucle 2.** Observation : le produit est durable, garanti deux ans, sans consommable ni abonnement, et la marque vend ça comme un avantage ; la valeur vie client plafonne donc à 34,99 € face à un coût par achat de 94,16 € sur la campagne principale. Pull : Tension, elle a tiré en mettant la marge par unité en face du coût d'acquisition. Question : qu'est-ce qu'un homme qui possède déjà cette tondeuse pourrait vouloir acheter ensuite ? Justification : sans deuxième achat, la marque n'a qu'un levier, faire baisser le coût d'acquisition, et elle n'a pas de marge d'erreur. Territoire : Product. Seule la marque peut répondre.
+Observation. L'entonnoir montre que 94,6 % des vues de page ne produisent pas d'ajout au panier, et les annonces envoient vers trois destinations différentes, la fiche produit, `/pages/7-raisons` et l'advertorial `/pages/pourquoi-pas-votre-tondeuse-a-barbe`. Aucune source ne dit laquelle perd le plus de monde.
 
-**Boucle 3.** Observation : la moitié de ceux qui lancent un paiement ne finissent pas, six achats pour douze initiations de paiement, et personne ne sait ce qui se passe entre les deux. Pull : Curiosité, elle a tiré parce que c'est la seule perte tardive chiffrable du parcours. Question : que se passe-t-il entre le moment où un homme lance son paiement et le moment où il abandonne ? Justification : c'est la moitié d'un achat sur deux, sur une marque qui en a onze, et la cause peut être technique autant que psychologique. Territoire : Product. Seule la marque peut répondre.
+Question. Laquelle des trois pages de destination de Raselio perd le plus de visiteurs ?
 
-**Boucle 4.** Observation : huit hommes ont reçu leur colis, aucun n'a été recontacté, aucun n'a écrit un mot, et la marque affiche 1 734 avis sur sa page d'accueil. Pull : Gap, elle a tiré en voyant que l'étape de première expérience est totalement non mesurée alors qu'un e-mail à huit personnes la remplirait. Question : que s'est-il passé pour les huit hommes qui ont ouvert la boîte ? Justification : c'est la seule étape du parcours où la marque peut encore agir sur des clients existants, et c'est aussi la source qui débloquerait tout le système persona. Territoire : Product. Seule la marque peut répondre.
+Territoire. Product.
 
-**Boucle 5.** Observation : la marque vend explicitement le fait que personne ne saura, et elle n'a ni avis, ni recommandation, ni bouche-à-oreille, avec zéro session venue d'un forum, d'un média ou d'un e-mail sur 2 431. Pull : Pattern, elle a tiré parce que la promesse de discrétion et l'absence totale de conversation pointent dans la même direction sur trois sources différentes. Question : comment une marque de cette catégorie fabrique-t-elle de la preuve quand ses clients ne veulent pas parler ? Justification : toute la stratégie de preuve de la marque suppose des clients qui s'expriment, et si la catégorie l'interdit, il faut construire la preuve ailleurs avant de dépenser plus. Territoire : Messaging.
+**2. La marge doit être gagnée en une transaction et personne n'a écrit le vrai coût d'une commande livrée.**
+
+Observation. Le produit n'a pas de deuxième achat, donc le coût d'acquisition doit être récupéré sur une seule vente de 34,99 €. La marge de 23,58 € utilisée partout est une marge avant frais : aucun coût de port Colissimo réel, aucun frais Shopify Payments, aucun abonnement, et le coût produit varie de 11,41 € à 12,71 € entre deux feuilles de l'équipe sans note d'explication.
+
+Question. Combien coûte réellement une commande Raselio livrée, tout compris ?
+
+Territoire. Product. **Seule la marque peut répondre.**
+
+**3. Cinq commandes sur onze ne sont vues par personne.**
+
+Observation. Meta attribue 6 achats, Shopify en compte 11 dont 8 marqués facebook et 2 instagram, aucun outil d'attribution tiers n'est branché, aucun e-mail, aucun SMS, aucun canal organique identifié.
+
+Question. Par quel chemin les cinq commandes que la publicité ne voit pas sont-elles arrivées ?
+
+Territoire. Product.
+
+**4. La première fenêtre de retour se ferme dans deux semaines et la politique se contredit.**
+
+Observation. Le site promet un remboursement « sans poser de questions » et la politique n'accepte que les produits non utilisés en excluant les scellés ouverts. Un homme qui essaie la tondeuse trente jours ne peut pas la rendre non utilisée. La fenêtre du premier acheteur se ferme vers le 2026-09-25.
+
+Question. Que se passe-t-il quand un acheteur de cette catégorie demande à être remboursé ?
+
+Territoire. Product. **Seule la marque peut répondre.**
+
+---
+
+**Sign-off des méthodes chargées qui en portent une.**
+
+This is everything I know about advertising to older audiences.

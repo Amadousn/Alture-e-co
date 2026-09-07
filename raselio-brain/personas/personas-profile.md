@@ -266,9 +266,9 @@ Ce qui existe côté catégorie, `stated` et sur une autre marque : quatre extra
 
 Deux signaux, tous deux `stated` et jamais observés chez Raselio.
 
-**`cadeau-pour-lui`** — Elle achète pour un homme, à une occasion ou sans occasion. Part : sans objet, zéro acheteuse. Base : la mise en scène de la marque et le corpus de catégorie. Implication : le message doit se lire comme une attention et jamais comme une critique, ce que la marque a déjà compris, créa 28, texte à l'image `stated`, verbatim, « Le cadeau qu'il ne s'offrira jamais lui-même. / Et dont vous profiterez aussi. / Colis neutre · Livraison offerte ».
+**`cadeau-pour-lui`.** Elle achète pour un homme, à une occasion ou sans occasion. Part : sans objet, zéro acheteuse. Base : la mise en scène de la marque et le corpus de catégorie. Implication : le message doit se lire comme une attention et jamais comme une critique, ce que la marque a déjà compris, créa 28, texte à l'image `stated`, verbatim, « Le cadeau qu'il ne s'offrira jamais lui-même. / Et dont vous profiterez aussi. / Colis neutre · Livraison offerte ».
 
-**`regard-de-lautre-dans-la-piece`** — Elle remarque et ne dit rien. Base : les titres de créas de la marque, `stated`, « Elle ne dira rien. Mais elle remarquera tout. », « Elle a remarqué. », « Ce matin, elle n'a rien dit. Son sourire, si. » Ce calque traverse les deux personas et il est inscrit au registre commun.
+**`regard-de-lautre-dans-la-piece`.** Elle remarque et ne dit rien. Base : les titres de créas de la marque, `stated`, « Elle ne dira rien. Mais elle remarquera tout. », « Elle a remarqué. », « Ce matin, elle n'a rien dit. Son sourire, si. » Ce calque traverse les deux personas et il est inscrit au registre commun.
 
 ### Voice signature
 

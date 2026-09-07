@@ -119,9 +119,9 @@ Aucune récurrence n'est calculable, parce qu'aucune occurrence n'existe. Aucune
 
 C'est le constat le plus lourd de ce document et il tient en une phrase : il n'y a pas de voix client à faire résonner, il n'y a que la voix de la marque, et la marque l'a habillée en voix client.
 
-**Étage 1 — les compteurs sans source.** Traité dans la section précédente. « 4,7/5 », « 1 734 avis », « +17 000 hommes », « 35 000 hommes ». Aucun n'a de source. Le même « 1 734 avis » figure sur la marque soeur Trael, stated, ce qui indique un gabarit recopié plutôt qu'un chiffre choisi pour Raselio. Ça rend la chose plus banale et pas moins exposée.
+**Étage 1, les compteurs sans source.** Traité dans la section précédente. « 4,7/5 », « 1 734 avis », « +17 000 hommes », « 35 000 hommes ». Aucun n'a de source. Le même « 1 734 avis » figure sur la marque soeur Trael, stated, ce qui indique un gabarit recopié plutôt qu'un chiffre choisi pour Raselio. Ça rend la chose plus banale et pas moins exposée.
 
-**Étage 2 — les témoignages attribués à des clients qui n'existent pas.** Verified sur les documents de production de l'équipe, qui les documente elle-même. Cinq lignes sont concernées et elles sont bannies de tout usage aval, sans dérogation.
+**Étage 2, les témoignages attribués à des clients qui n'existent pas.** Verified sur les documents de production de l'équipe, qui les documente elle-même. Cinq lignes sont concernées et elles sont bannies de tout usage aval, sans dérogation.
 
 | Copie, verbatim | Créa | Ce que l'équipe en écrit, stated |
 |---|---|---|
@@ -133,7 +133,7 @@ C'est le constat le plus lourd de ce document et il tient en une phrase : il n'y
 
 Le danger est précis et il vise ce document en particulier. Ces lignes ont exactement la forme d'un avis client. La première, celle attribuée à « Hervé D. », est même meilleure que la plupart des vrais avis : elle porte une sensation physique, une comparaison avant-après, un regret temporel et une note. C'est de la bonne copie. Ce n'est pas un client. Un run futur qui lirait les créas sans ce document la classerait en pépite de mining.
 
-**Étage 3 — la coïncidence de prénom, notée et non conclue.** Le persona principal du brief du 2026-09-03 s'appelle « Hervé », 58 ans. Un des onze acheteurs de la boutique s'appelle Hervé F., commande #1007 du 2026-09-01, verified. Le brief est daté du 3 septembre, donc postérieur à la commande. Le faux témoignage de la créa 16 est signé « Hervé D. ». Je ne peux pas prouver que le nom du persona vient de ce client et je ne l'affirme pas. Ce que je signale est le risque de circularité : un persona nommé d'après un vrai client, illustré par un faux témoignage portant le même prénom, peut ensuite être traité comme validé par ce client. À surveiller dans le travail de synthèse.
+**Étage 3, la coïncidence de prénom, notée et non conclue.** Le persona principal du brief du 2026-09-03 s'appelle « Hervé », 58 ans. Un des onze acheteurs de la boutique s'appelle Hervé F., commande #1007 du 2026-09-01, verified. Le brief est daté du 3 septembre, donc postérieur à la commande. Le faux témoignage de la créa 16 est signé « Hervé D. ». Je ne peux pas prouver que le nom du persona vient de ce client et je ne l'affirme pas. Ce que je signale est le risque de circularité : un persona nommé d'après un vrai client, illustré par un faux témoignage portant le même prénom, peut ensuite être traité comme validé par ce client. À surveiller dans le travail de synthèse.
 
 **La lecture, entre les deux que la méthode propose.** La méthode demande de trancher : soit la marque a construit un discours si fort que les clients l'ont adopté, soit elle s'entend elle-même en écho. Ici ce n'est ni l'un ni l'autre, c'est un troisième cas. **Il n'y a aucun client dans la boucle.** La preuve sociale n'a pas été empruntée aux clients puis renvoyée, elle a été fabriquée avant qu'un seul client existe. Conséquence de règle pour toute lecture future : avant de traiter une phrase comme un avis Raselio, il faut d'abord vérifier qu'elle n'a pas été écrite par la marque ou héritée d'un gabarit.
 
