@@ -271,6 +271,36 @@ Blancs nommés de l'audit organique TikTok :
 7. **Le fil organique francophone reste invisible.** Une requête WebSearch lancée le 2026-09-06 ne rend aucune vidéo française reconstructible. On ne sait toujours pas si ce fil existe et n'est pas atteint, ou s'il n'existe pas.
 8. **Où l'acheteur cherche vraiment n'est pas su.** Le fil Facebook porte 4 des 6 achats et 70,7 % de la dépense ; rien ne dit si un homme français de plus de 50 ans irait chercher une réponse à ce problème sur TikTok, sur Google, ou dans un comparatif.
 
+### audits/2026-09/monthly-tiktok-mining.md (généré 2026-09-06)
+
+Blancs nommés du minage TikTok mensuel :
+
+1. **Le partage cinq et cinq exigé par le gabarit n'est pas réalisable dans cette installation.** Parker n'expose qu'un seul outil TikTok, `search_tiktok_videos`, et il est obligatoirement porté par un `brandId` : il n'existe pas de base globale interrogeable à côté de la base de marque. Le document tient dix entrées en deux moitiés de cinq, mais les deux moitiés sortent de la même bibliothèque de 20 vidéos, la première moitié étant le noyau classé `Relevant` avec un score de 1 et la seconde l'anneau extérieur classé `Potentially Relevant` ou visant un autre public. À rouvrir le jour où une base globale devient interrogeable.
+2. **Le ratio vues sur abonnés, exigé pour chaque vidéo, n'existe pas.** L'outil renvoie `global_author_id` mais aucun compteur d'abonnés, et tiktok.com est refusé par le proxy réseau. Aucun ratio n'a été estimé ; il est remplacé par trois taux calculés sur les chiffres réellement renvoyés, mentions j'aime, partages et enregistrements rapportés aux vues. **Conséquence directe : impossible de dire si une vidéo dépasse ou non la ligne de base de son créateur**, ce qui est pourtant le critère de sélection que la méthode demande.
+3. **Aucun avis client, donc aucun ancrage en avis.** La boutique n'a aucun outil d'avis branché, `search_customer_reviews_sql` n'a rien à lire pour cette marque, et le corpus de commentaires publicitaires tient en deux lignes. La justification de chaque vidéo est ancrée sur le compte publicitaire, les briefs de l'équipe et le document de contexte de marque, jamais sur la parole d'un client réel.
+4. **Le corpus a été constitué avec seize mots-clés anglophones, tous listés dans chaque ligne renvoyée.** Aucune requête française n'a jamais été lancée à sa constitution. Les 20 vidéos sont anglophones, et on ne sait pas si le fil français de cette niche existe et n'est pas atteint, ou s'il n'existe pas. C'est le blanc dont dépend le plus la valeur de ce document pour une marque qui vend en France.
+5. **Quatre des vingt vidéos du corpus n'ont pas de rapport média tiré dans ce run** et ne sont donc pas retenues comme entrées, faute de lecture créative. À compléter au prochain refresh.
+6. **Aucun rapport du mois précédent.** Point zéro de la cadence : aucune vidéo adaptée le mois dernier, aucune issue à noter.
+7. **Aucune mémoire de marque ni mémoire utilisateur** : `search_chat_history` renvoie zéro fil.
+8. **À demander à la marque :** parmi les seize mots-clés anglophones qui ont servi à constituer ce corpus, aucun ne correspond à ce qu'un homme français taperait. Quels mots la marque entend-elle réellement de ses clients ? Personne d'autre qu'elle ne peut fournir la liste française qui rendrait ce corpus utilisable.
+
+### Compléments 2026-09-06 (seconde passe, mêmes documents)
+
+Ajouts aux blancs déjà consignés plus haut pour l'instantané hebdomadaire et le rapport d'itérations, relevés dans la seconde passe et non redondants avec ce qui précède.
+
+**Sur `audits/2026-09/weekly-performance-snapshot.md` :**
+
+8. **Le compteur de sessions Shopify affiche 0 paiement terminé sur les sept jours du 2026-08-31 au 2026-09-06**, alors que 5 commandes existent sur la même fenêtre. Ce compteur ne voit pas les ventes de cette boutique et aucun taux de conversion lu sur lui n'est fiable. Même écart, non résolu, que celui déjà consigné entre les 11 commandes Shopify et les 3 paiements terminés comptés sur 61 jours.
+9. **Deux sources ne s'accordent pas sur le nombre d'annonces créées dans la semaine.** Les dates de création de `source-pulls/meta-ads-all.md` donnent 114 annonces Raselio créées du 2026-08-31 au 2026-09-05, marque soeur exclue. Parker, filtré sur `created_time >= 2026-08-31`, ne compte que 102 lignes, marque soeur incluse. Le corpus Parker porte 173 annonces là où le pull Meta en porte 183. L'écart n'est expliqué par aucune source.
+10. **Les ventilations par âge, genre, plateforme et appareil sont pour la première fois propres à Raselio seule**, grâce au filtre par nom de campagne dans Parker. Tous les documents amont portent des ventilations de niveau compte mêlant la marque soeur Trael. **Les pourcentages démographiques des documents antérieurs et ceux de celui-ci ne sont donc pas comparables**, et il faudra le dire à chaque relecture croisée tant que les anciens ne sont pas refaits.
+
+**Sur `audits/2026-09/biweekly-iterations-report.md` :**
+
+7. **Parker se contredit entre sa vue période et sa vue vie entière sur au moins trois annonces retenues.** `RS30-7R 04 - Postit zones apres 50 ans` affiche 12,48 € et 1 achat en vue période sur la semaine, et 6,04 € et 0 achat en vue vie entière. `RASELIO | IMPECCABLE | CROP TAILLE` affiche 68,88 € en vue période sur la quinzaine et 54,56 € en vue vie entière. Les achats de la quinzaine sont de 7 en vue période et de 6 en vue vie entière. Le document tient 6, chiffre du dossier, et porte les deux valeurs partout où l'écart existe. **Tant que ce désaccord n'est pas expliqué, aucun verdict d'itération ne peut être rendu sur une seule table.**
+8. **28 annonces classées `Promotions` par Parker portent 262,95 € sur les 677,33 € de la quinzaine, soit 38,8 %, pour zéro achat attribué.** Les trois plus grosses portent la même mention verbatim, « 🎁 -30€ + livraison offerte aujourd'hui ». Aucune source ne dit si cette remise est encore active, ni ce qu'elle coûte réellement à la marge unitaire d'environ 23,58 €. **À demander à la marque avant toute recommandation d'offre.**
+9. **La lecture média de Parker est désormais disponible et elle contredit un pilier de casting du dossier.** Les champs `ad_summary`, `ad_analysis` et `creator_demographic` décrivent, pour les trois annonces converties de la famille « Impeccable », le même mannequin athlétique et tatoué de la fin de la vingtaine au milieu de la trentaine, pendant que 84,9 % de la dépense et la totalité des six achats vont à des hommes de 45 ans et plus. **Ce n'est plus une inférence, c'est vérifié**, et les documents écrits avant l'ouverture de l'accès Parker qui portaient « lecture créative indisponible » sur ces annonces sont à re-run en priorité.
+10. **Le conflit de registre reste ouvert et il bloque une itération recommandée.** La greffe qui poserait la copie crue de `RASELIO | STATIQUE S2 | V1`, meilleur coût par clic sur lien de la quinzaine à 0,53 €, sous le visuel de `CROP TAILLE`, est interdite par la charte de ton écrite le 3 septembre. Déjà consigné plus haut au titre de l'audit de stratégie créative ; il devient ici une décision à prendre, pas une observation. Routé à la marque.
+
 ## Resolved — with date and where the answer lives
 
 - 2026-09-06 — Ad naming convention: read directly from the account → `running-notes/brand-rules.md`.

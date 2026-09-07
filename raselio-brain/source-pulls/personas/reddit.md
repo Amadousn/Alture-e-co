@@ -2,139 +2,178 @@
 brand: raselio
 doc: reddit
 generated_on: 2026-09-07
-refresh_by: 2026-10-07
-sources_read: [Aucune communauté lue. Ce qui a été fait, et qui a échoué : recherche d'outil dans l'installation Parker de cette session le 2026-09-06 puis le 2026-09-07, aucun outil Reddit n'existe — l'inventaire Parker couvre les annonces Facebook, les commentaires publicitaires, les avis clients, les sondages post-achat, TikTok, le swipe file, l'attribution Northbeam et la découverte de marque, et rien qui touche Reddit ; `mcp__Parker__get_available_brands` confirme que la marque existe désormais sous `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37`, ce qui a débloqué les commentaires publicitaires et les avis mais pas Reddit, qui n'est pas dans l'inventaire ; WebFetch sur `old.reddit.com` le 2026-09-07, refusé, « Claude Code is unable to fetch from old.reddit.com », ce qui reproduit le refus déjà enregistré sur www.reddit.com et old.reddit.com le 2026-09-06 ; WebSearch, une requête de plus le 2026-09-07, « reddit manscaping first time "down there" trimmer recommendation men over 50 thread », qui ne rend aucun fil Reddit et renvoie neuf résultats dont trois communiqués de presse businesswire, deux pages marchandes et quatre comparatifs, sub-context-docs/community-and-forums.md (8 requêtes et 13 lectures directes tentées le 2026-09-06, 13 refusées, annexe de 13 adresses conservées), sub-context-docs/category-and-market-research.md, sub-context-docs/reputation-analysis.md, source-pulls/drive-30-statiques-meta-plan-2026-09-03.md (les sept objections écrites par l'équipe), running-notes/missing-context.md]
-threads_read: 0 fil lu, sur 0 communauté lue. Ce n'est pas un échantillon, c'est une couverture nulle. Neuf adresses de fils sont identifiées et non lues, couvrant six discussions distinctes : une francophone sur Galaxus, une sur NeoGAF, deux fils anandtech représentés par cinq URL, et deux posts teamblind. Quatre sources de catégorie supplémentaires sont identifiées et non lues. Toutes sont conservées en annexe de ce document, à l'identique, pour qu'un run disposant d'un accès réseau les ouvre sans avoir à les redécouvrir.
-data_limitations: [Ce document ne contient aucun verbatim de communauté, et l'absence est totale, pas partielle. Trois voies ont été essayées et les trois sont fermées, pour trois raisons différentes qu'il faut distinguer. Première voie, l'outil : il n'existe aucun outil Reddit dans cette installation Parker, vérifié par recherche d'outils les 2026-09-06 et 2026-09-07. Ce n'est pas une question de droits ni de marque manquante — la marque existe désormais dans Parker et les commentaires publicitaires, les avis et les sondages ont bien été interrogés depuis le même identifiant. Reddit n'est simplement pas couvert par cette installation. Deuxième voie, la lecture directe : www.reddit.com et old.reddit.com sont refusés par le proxy réseau avec le message « Claude Code is unable to fetch », le 2026-09-06 comme le 2026-09-07. Les douze autres surfaces communautaires visées le 2026-09-06 sont refusées elles aussi, avec le code EGRESS_BLOCKED pour dix d'entre elles : forum.doctissimo.fr, www.aufeminin.com, www.jeuxvideo.com, www.amazon.fr, fr.trustpilot.com, www.neogaf.com, forums.anandtech.com, www.teamblind.com, www.galaxus.ch, billy-trimmer.com, www.gillette.fr, www.europe1.fr. Troisième voie, la recherche : WebSearch répond mais ne rend que des résumés écrits par un petit modèle, jamais le texte source, et son index est américain. Neuf requêtes au total sur les deux jours, aucune n'a rendu un fil de discussion lisible. Les fragments entre guillemets que ses résumés produisent ne sont pas des verbatims vérifiés et ne sont utilisés nulle part ici comme preuve. Conséquence sur les sections : « Identity signals observed », « Behavioral-signal states observed », « How the community frames the problem » et « Trusted voices and recommendation paths » sont vides et écrites comme des blancs nommés. « Corroboration and contradiction », qui est la valeur propre de ce document pour la synthèse, ne peut rien corroborer ni contredire. Une conséquence méthodologique en découle et elle est lourde : la méthode désigne la conversation non sollicitée entre pairs comme la source la plus fiable pour détecter l'écho de marque, et c'est précisément la source qui manque à une marque qui a fabriqué sa preuve sociale avant d'avoir des clients. `mcp__Parker__search_chat_history` a été refusé par le classifieur de permissions de la session le 2026-09-06.]
-methods_loaded: [creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/advertising-to-older-audiences.md, creative-strategy-context/analyzing-public-ad-accounts.md, creative-strategy-context/creative-strategy-fundamentals.md]
+refresh_by: 2026-12-06
+sources_read: [AUCUNE COMMUNAUTÉ LUE. Recherche d'outil Parker le 2026-09-07 : `search_reddit_posts_and_comments` n'existe pas dans cette installation, la requête de sélection directe renvoie « No matching deferred tools found », et aucun outil de la surface Parker ne couvre Reddit ni aucun forum. Lecture directe retentée le 2026-09-07 sur www.reddit.com : refusée, « Claude Code is unable to fetch ». Ce document reprend donc et consigne les adresses de fils que sub-context-docs/community-and-forums.md avait identifiées le 2026-09-06 par WebSearch sans jamais pouvoir les ouvrir, ainsi que la carte des surfaces visées et le détail des treize refus réseau de cette passe antérieure. Docs amont lus : sub-context-docs/community-and-forums.md, sub-context-docs/reputation-analysis.md, sub-context-docs/category-and-market-research.md, personas/voice-of-customer/voc-corpus-profile.md, personas/voice-of-customer/voice-of-customer.md, source-pulls/personas/ad-comments.md, source-pulls/personas/customer-reviews.md, source-pulls/personas/other-reviews.md, source-pulls/personas/ad-account.md, competitors/_competitive-set.md]
+threads_read: 0 fils lus, 0 verbatim capturé. Adresses de fils identifiées et non ouvertes : 9 URL, portant sur 5 fils de discussion distincts, répartis sur 4 domaines. Communautés Reddit visées et jamais atteintes : 6, dont 2 confirmées existantes par l'index et 4 non confirmées. Dénominateur honnête : zéro sur zéro.
+data_limitations: [CE DOCUMENT NE CONTIENT AUCUN VERBATIM DE COMMUNAUTÉ, ET LA LIMITE EST TOTALE, PAS PARTIELLE. Deux causes indépendantes, toutes deux vérifiées le 2026-09-07. Première cause, l'outil : `search_reddit_posts_and_comments` n'existe pas dans cette installation Parker. La recherche d'outil par sélection directe sur ce nom renvoie « No matching deferred tools found », et aucun autre outil Parker ne couvre Reddit, les forums ou la conversation communautaire. Ce n'est pas un outil en panne, c'est un outil absent. Deuxième cause, le réseau : la lecture directe de Reddit est refusée par le proxy de la session, retentée le 2026-09-07 sur www.reddit.com et refusée avec « Claude Code is unable to fetch ». La passe `community-and-forums.md` du 2026-09-06 avait déjà essuyé treize refus sur treize surfaces communautaires : www.reddit.com et old.reddit.com, forum.doctissimo.fr et www.aufeminin.com en « unable to fetch » ; www.jeuxvideo.com, www.amazon.fr, fr.trustpilot.com, www.neogaf.com, forums.anandtech.com, www.teamblind.com, www.galaxus.ch, billy-trimmer.com, www.gillette.fr et www.europe1.fr en EGRESS_BLOCKED. Un contrôle en ligne de commande sur quinze domaines supplémentaires, dont quora.com, commentcamarche.net et signal-arnaques.com, renvoyait un code 000 sur les quinze. CONSÉQUENCE : les sections identités, états, cadrage du problème, voix de confiance et corroboration sont vides ou réduites à des pistes nommées, et elles le resteront jusqu'à ce qu'un accès réseau ou un outil Reddit existe. WebSearch fonctionne mais son index est américain, il ne rend que des résumés écrits par un petit modèle et jamais le texte source, et sur les huit requêtes de la passe antérieure aucune n'a ramené un fil francophone lisible. La requête française « reddit r/france rasage parties intimes homme tondeuse pubis » a renvoyé trois pages Wikipédia sans rapport dont une sur le mouvement politique « Ras l'Front ». AVERTISSEMENT DE DÉNOMBREMENT : la consigne de tâche annonçait onze adresses de fils déjà identifiées. Le décompte réel de l'annexe de `community-and-forums.md` est de 9 URL de discussion, portant sur 5 fils distincts, sur 4 domaines. Les quatre adresses supplémentaires de cette annexe sont des sources de catégorie et de statistique, charles.co, gillette.fr, europe1.fr et gentlemanmoderne.com, qui ne sont pas des fils de discussion et sont routées vers `category-and-market-research.md`. Je reporte le chiffre exact plutôt que le chiffre annoncé.]
+methods_loaded: [creative-strategy-context/persona-research-and-creative-strategy-process.md, creative-strategy-context/customer-review-mining-method.md, creative-strategy-context/advertising-to-older-audiences.md, creative-strategy-context/creative-strategy-fundamentals.md]
 ---
 
 # Reddit — persona signal — Raselio
 
-## Identity signals observed
+## La piste de recherche, qui est le résultat
 
-**Aucun. Aucune communauté n'a été lue, donc aucune identité n'a été observée.**
+**Ce document ne peut pas vous dire ce que la communauté raconte, et le détail du pourquoi vaut plus qu'un remplissage plausible.**
 
-Il faut séparer deux choses que ce document pourrait facilement confondre, et la distinction gouverne tout ce qui suit. Le vide de ce document n'est pas le même que celui des documents avis et sondage. Là-bas, les surfaces ont été interrogées et sont réellement vides : Raselio n'a pas d'avis et pas de réponses de sondage, et les outils le disent. Ici, la conversation existe presque certainement — des hommes parlent de tonte intime sur Reddit et sur des forums, plusieurs fils sont même identifiés par leur adresse — et c'est l'accès qui manque. Le premier vide se comble en demandant à onze clients. Le second se comble en ouvrant une porte réseau ou en branchant une source.
+Deux choses ont été vérifiées le 2026-09-07, et elles se cumulent.
 
-**Ce qui a été tenté, précisément, pour qu'un run futur ne recommence pas.** Trois voies, trois échecs de nature différente.
-La voie outil : il n'existe aucun outil Reddit dans cette installation Parker. Je l'ai vérifié les deux jours, et ce n'est pas un problème de droits ni de marque manquante, puisque la marque est apparue dans Parker le 2026-09-06 sous l'identifiant `a81e7c77-ca41-4cbd-acf8-ec27ea58eb37` et que les commentaires publicitaires, les avis et les sondages ont bien pu être interrogés depuis ce même identifiant. Reddit n'est pas couvert par cette installation, point.
-La voie lecture directe : `old.reddit.com` refusé le 2026-09-07 avec « Claude Code is unable to fetch from old.reddit.com », ce qui reproduit à l'identique le refus du 2026-09-06 sur les deux domaines Reddit. Douze autres surfaces communautaires ont été refusées le 2026-09-06.
-La voie recherche : neuf requêtes sur deux jours, zéro fil lisible. La dernière, lancée le 2026-09-07 et construite exprès pour trouver un fil Reddit sur les hommes de plus de cinquante ans, renvoie neuf résultats dont trois communiqués de presse Manscaped sur businesswire, deux pages marchandes et quatre comparatifs d'affiliation. Le moteur conclut lui-même, verbatim : « my search didn't locate the specific Reddit thread you mentioned ».
+**L'outil n'existe pas.** La consigne de ce travail prévoyait d'interroger `search_reddit_posts_and_comments` si cet outil est présent dans l'installation Parker. Il ne l'est pas. Une recherche d'outil par sélection directe sur ce nom exact renvoie « No matching deferred tools found ». J'ai passé en revue la surface Parker disponible : les outils couvrent les publicités Facebook et leurs commentaires, les avis clients, les sondages post-achat, les publicités concurrentes, la bibliothèque TikTok, l'historique de conversation, le contexte de marque et l'attribution Northbeam. Aucun ne couvre Reddit, aucun ne couvre un forum. Ce n'est pas un outil en panne, c'est un outil absent de cette installation.
 
-**Les méthodes chargées avant l'analyse.** `persona-research-and-creative-strategy-process.md` pour l'échelle de force de preuve, où le commentaire de communauté vient après les données de commande et avant le signal concurrent, et pour la règle qui interdit de fabriquer un persona à partir d'un commentaire. `customer-review-mining-method.md` pour la discipline du dénominateur, pour l'obligation de déclarer une passe partielle quand des sources matérielles manquent, et pour le repérage de l'écho de marque. `advertising-to-older-audiences.md` parce que les acheteurs observés de cette marque ont tous plus de 45 ans et que ce doc décrit où ce public accorde sa confiance. `analyzing-public-ad-accounts.md` pour l'absence lue comme un résultat. `creative-strategy-fundamentals.md` pour la posture des boucles.
+**Le réseau est fermé.** J'ai retenté la lecture directe pour ne pas me fier au constat de la veille. `https://www.reddit.com/r/france/search/?q=tondeuse+intime&restrict_sr=1` renvoie « Claude Code is unable to fetch ». La passe `community-and-forums.md` du 2026-09-06 avait déjà essuyé treize refus sur treize surfaces communautaires, six en « unable to fetch » et sept en EGRESS_BLOCKED, plus quinze codes 000 sur un contrôle en ligne de commande. Le blocage est global et pas ciblé : même en.wikipedia.org a été refusé lors de la passe voix-client.
 
-**Ce que la méthode interdit ici, et qui serait tentant.** Elle interdit de deviner un âge à partir d'un commentaire, d'assembler un profil, de donner un nom. Elle interdit aussi, et c'est plus pertinent aujourd'hui, de remplir cette section avec les identités que d'autres sources ont déjà produites. La marque a trois jeux de personas écrits — « Kevin, 27 ans » le 23 août, « Hervé, 58 ans », « Catherine, 54 ans » et « Marc, 47 ans » le 3 septembre, et les cinq ICP du document de contexte stocké dans Parker. Aucun ne vient d'une communauté. Les répéter ici sous couvert de signal Reddit reviendrait exactement à ce que ce document est censé empêcher.
+**Ce que la méthode impose dans cette situation.** `customer-review-mining-method.md` pose une règle simple et je l'applique jusqu'au bout : un corpus vide se nomme comme vide et ne se comble jamais par une invention plausible. Il n'y a donc pas un seul verbatim de communauté dans ce document, parce qu'il n'y en a pas un seul qui ait été lu à la source. Les résumés que WebSearch produit sont écrits par un petit modèle et ne sont pas des citations vérifiées : ils sont rangés en pistes et jamais utilisés comme preuve.
 
-## Behavioral-signal states observed
+**Ce que ce document fait à la place, et c'est sa seule fonction utile aujourd'hui.** Il consigne les adresses exactes que la passe antérieure a identifiées et n'a pas pu ouvrir, avec ce qu'un run futur devra y chercher, pour qu'aucune minute ne soit reperdue à les retrouver. Et il tient la carte des surfaces visées avec leur statut d'accès.
 
-Aucun. Blanc nommé.
+**Les méthodes chargées avant l'analyse.** `persona-research-and-creative-strategy-process.md` pour la règle qui dit qu'un membre de communauté n'est pas un acheteur et pour l'échelle de preuve, qui place la communauté au cinquième rang, derrière les avis de détaillant. `customer-review-mining-method.md` pour la règle du corpus vide, pour la règle du dénominateur, et pour la discipline de couverture de source qui demande de déclarer la passe partielle quand des surfaces majeures manquent. Cette passe est déclarée vide, ce qui est plus fort que partielle. `advertising-to-older-audiences.md` parce que les six achats attribués de la marque sont tous chez des hommes de 45 ans et plus, et parce que ce document pose que ce public fait confiance à des sources qu'il reconnaît déjà, ce qui rend la question « où parlent-ils » directement opérationnelle. `creative-strategy-fundamentals.md` pour la posture des boucles ouvertes et pour la règle qui dit qu'un blanc bat une lecture inventée.
 
-Aucun état situationnel n'a été observé dans une conversation entre pairs, parce qu'aucune conversation n'a été lue. Les six déclencheurs qui circulent dans le coffre viennent tous de l'advertorial de la marque et sont déjà portés comme parole de marque par `customer-journey-and-persona-discovery.md`. Ils ne sont pas repris ici.
+## Les adresses identifiées, consignées pour le prochain run
 
-Ce qui existe, et qui est une piste et pas un état, ce sont les thèmes que l'index a laissé deviner dans les titres des fils identifiés sans les ouvrir. Trois d'entre eux valent d'être notés parce qu'ils orientent la lecture du prochain run.
-La coupure pendant la tonte, dans le titre du fil NeoGAF de 2014, qui décrit une entaille et un saignement. Ancien, à pondérer à la baisse même une fois lu.
-La démangeaison de repousse, dans le titre des deux posts teamblind, dont l'un dit en substance de ne pas se raser parce que ça démange. C'est l'objection que la marque travaille le plus sur son site, ce qui la rend prioritaire à vérifier.
-Le choix entre rasoir et tondeuse, dans le titre du fil Galaxus francophone et dans celui du fil anandtech.
-Ce sont des titres, pas des états. Un titre localise une conversation, il ne prouve pas ce qui s'y dit. `analyzing-public-ad-accounts.md` pose la même règle pour les noms d'annonces et elle vaut ici : un libellé est un identifiant, jamais une preuve de contenu.
+C'est le contenu principal de ce document. Neuf adresses, cinq fils de discussion distincts, quatre domaines. Aucune n'a été ouverte. Elles ont été identifiées par WebSearch le 2026-09-06 et le statut d'accès a été revérifié le 2026-09-07.
 
-## How the community frames the problem
+**Un avertissement de dénombrement, posé franchement.** La consigne de ce travail annonçait onze adresses de fils déjà identifiées. Le décompte réel de l'annexe de `community-and-forums.md` est de neuf URL de discussion. Les quatre adresses supplémentaires de cette annexe, charles.co pour le sondage IFOP, gillette.fr, europe1.fr et gentlemanmoderne.com, sont des pages de catégorie et de statistique, pas des fils de discussion, et elles sont routées vers `category-and-market-research.md`. Je reporte le chiffre que je peux vérifier.
 
-Blanc nommé, et c'est le blanc le plus coûteux du document.
+### Fil 1 — Le seul fil de discussion francophone identifié. Non lu.
 
-Cette section est censée livrer le modèle mental natif de la catégorie et les mots que les gens emploient quand aucune marque n'écoute. C'est exactement ce que les sources contrôlées par la marque ne peuvent pas donner. Or Raselio possède un discours très travaillé sur ce problème, écrit par son copywriter, et personne ne sait s'il ressemble à ce que les hommes disent.
-
-Les deux métaphores centrales du site sont, verbatim, verified sur l'export Shopify : « Utiliser le même outil pour les deux, c'est découper au cutter ce qui demande un scalpel. » et « Cette séance qui ressemble plus à du déminage qu'à de l'entretien. » Elles sont fortes. Elles sont aussi entièrement invérifiées : aucune source ne dit si un homme a jamais parlé de déminage ou de cutter à propos de ce geste. Si ces images viennent du client, la marque tient une pépite. Si elles viennent du copywriter, elle tient une belle phrase qui ne résonne chez personne. Le seul endroit où trancher est une conversation entre pairs, et c'est l'endroit fermé.
-
-Un seul élément de langue extérieure existe dans tout le coffre et il est figuré, ce qui est notable pour cette section précise. Commentaire publicitaire Facebook, 2026-08-31 à 15:46:58 UTC, sous l'annonce « RASELIO | IMPECCABLE | BOXER », verbatim : « Plus rien de la bête sauvage qui sommeille en nous. » Ce n'est pas de la communauté, c'est un commentaire publicitaire, et il appartient à `ad-comments.md`. Il est cité ici pour une seule raison : c'est le seul cadrage du problème qu'un extérieur ait produit, et il ne ressemble à aucune des deux métaphores de la marque. La marque cadre le problème comme un risque technique ; cet homme le cadre comme une perte d'identité. Dénominateur d'un, donc thin, et à confirmer précisément là où l'accès manque.
-
-## Trusted voices and recommendation paths
-
-Blanc nommé.
-
-Aucun chemin de recommandation n'a été observé, parce qu'aucun fil n'a été lu. Ce que les sources internes disent du sujet est indirect et vaut d'être posé pour cadrer la question.
-
-Le bouche-à-oreille n'existe pas encore et il est structurellement difficile pour ce produit. Zéro client récurrent sur 11, verified. Aucune session ne vient d'un lien d'affiliation, d'un média, d'un forum ou d'un e-mail sur 2 431 sessions et 90 jours, verified. Et la marque vend la discrétion comme un bénéfice, advertorial verbatim, verified : « Le colis arrive dans un emballage neutre et discret : personne n'a besoin de savoir, tout le monde finira par remarquer. » Un produit dont la promesse est que personne ne sache ne se recommande pas facilement à voix haute. Inferred, confiance mixte.
-
-Ce que la méthode sur les audiences plus âgées ajoute et qui rend cette section importante : pour un public de plus de cinquante ans, l'autorité est le raccourci de confiance, la preuve doit venir d'une source déjà reconnue, et un créateur inconnu ne porte rien. Savoir qui ce public écoute réellement — un pharmacien, un médecin, un comparatif de presse, un ami — décide de la forme de preuve que la marque doit construire en premier. Aucune source du coffre ne le sait.
-
-Une seule chose est établie sur la présence de la marque dans ces espaces, verified : aucune trace d'une présence Raselio dans une communauté n'a été trouvée, et rien dans les sources internes ne suggère qu'elle en tienne une. Le seul canal social connu est une page Facebook, id 1234695553067195. Le risque que la méthode signale, celui d'une marque qui poste dans une communauté en se faisant passer pour un consommateur neutre, ne peut pas être évalué faute d'accès.
-
-## Corroboration and contradiction
-
-C'est la valeur propre de ce document pour la synthèse, et elle est nulle aujourd'hui. Il faut dire pourquoi précisément, parce que la raison est plus grave que l'absence.
-
-La méthode pose que la conversation non sollicitée entre pairs est la source la plus fiable dont dispose le système persona, justement parce que personne n'y vend rien, et qu'un signal de communauté qui contredit une source contrôlée par la marque pèse plus lourd que l'inverse. C'est aussi la signature la plus nette d'un écho de marque : quand une chose est forte sur les surfaces que la marque contrôle et absente là où personne ne l'écoute, c'est que la marque s'entend elle-même.
-
-Raselio est le cas d'école de ce test, et le test ne peut pas être passé. Voici ce qui attend d'être vérifié, chaque ligne avec son dénominateur du côté marque.
-
-| ce que la marque affirme | dénominateur côté marque | ce qu'une communauté dirait |
-|---|---|---|
-| « 4,7/5 » et « 1 734 avis » sur les deux landings | 11 commandes, 0 avis, verified | si quelqu'un a déjà relevé l'incohérence en public |
-| « +17 000 hommes » sur le site, « plus de 35 000 hommes » sur les créas qui portent 4 des 6 achats | aucune source pour l'un ni pour l'autre, verified | si le chiffre est cru, ignoré, ou moqué |
-| « ma tondeuse à barbe suffit » comme objection numéro un | écrite par l'équipe, jamais mesurée | combien d'hommes la formulent réellement |
-| « arnaque / ça vient de Chine » comme frein | écrit par l'équipe, jamais mesuré | si la méfiance porte sur l'origine ou sur autre chose |
-| « colis pas discret » comme frein | écrit par l'équipe, jamais mesuré | si la discrétion compte autant que la marque le pense |
-| « c'est pour les jeunes » comme croyance à renverser | écrite par l'équipe, jamais mesurée | si des hommes de plus de cinquante ans le disent d'eux-mêmes |
-| le cadrage « cutter contre scalpel » et « déminage » | écrit par le copywriter | si un homme a jamais parlé comme ça |
-| la peur de la coupure comme moteur central | portée par presque toute la créa | ce qui vient en premier dans la bouche des gens |
-
-Sept des huit lignes de ce tableau viennent d'une liste que l'équipe s'est écrite le 3 septembre. Aucune n'a jamais rencontré une conversation réelle. La marque prépare son prochain lot créatif sur cette liste. Si trois des sept objections sont des inventions d'équipe, une part du budget créatif répond à des freins qui n'existent pas.
-
-**Une seule contradiction est disponible aujourd'hui et elle vient d'ailleurs.** Le commentaire publicitaire du 31 août nomme un frein d'identité qui ne figure dans aucune des sept objections de la marque. Un exemplaire, dénominateur de deux commentaires sur tout le compte, donc thin. Mais il pointe dans la direction que ce document devrait explorer : la marque a écrit les objections d'un homme qui veut déjà se raser, et la seule voix extérieure disponible est celle d'un homme qui ne le veut pas.
-
-## Recurrence and spread
-
-| mesure | valeur | date |
-|---|---|---|
-| communautés lues | 0 | 2026-09-06 et 2026-09-07 |
-| fils lus | 0 | idem |
-| verbatims de communauté capturés | 0 | idem |
-| outils Reddit disponibles dans cette installation Parker | 0, vérifié deux jours de suite | 2026-09-06, 2026-09-07 |
-| lectures directes de Reddit tentées | 3, sur www.reddit.com, old.reddit.com et une recherche interne à old.reddit.com | 2026-09-06, 2026-09-07 |
-| lectures directes de Reddit refusées | 3 sur 3, « Claude Code is unable to fetch » | idem |
-| autres surfaces communautaires refusées | 12, dont 10 en EGRESS_BLOCKED | 2026-09-06 |
-| requêtes WebSearch lancées, tous runs | 9 | 2026-09-06, 2026-09-07 |
-| fils lisibles rendus par ces requêtes | 0 | idem |
-| adresses de fils identifiées et non lues | 9 URL couvrant 6 discussions distinctes, dont 1 francophone | 2026-09-06 |
-| sources de catégorie identifiées et non lues | 4 | 2026-09-06 |
-| communauté francophone dédiée à l'entretien intime masculin identifiée | 0 | 2026-09-06, 2026-09-07 |
-
-**Récurrence par signal : sans objet.** Rien n'a été observé, donc rien ne récurre. La méthode demande une répétition indépendante avant de promouvoir un descripteur ; ici il n'y a pas même une première occurrence.
-
-**Une chose que ce comptage établit quand même, et qui est un résultat.** Deux jours de recherche, neuf requêtes, quinze surfaces visées, et pas une seule communauté francophone dédiée à l'entretien intime masculin n'a été identifiée. Ce n'est pas la preuve qu'elle n'existe pas — l'index est américain et Reddit est fermé — mais c'est la deuxième fois que le constat tombe, et il est cohérent avec ce que la marque dit elle-même de son sujet, « personne n'en parle ». La première chose à trancher au prochain run est de savoir si cette communauté n'existe pas ou si l'outil ne la voit pas, parce que les deux réponses mènent à des stratégies opposées : si elle n'existe pas, la marque doit fabriquer sa propre conversation ; si elle existe et qu'on ne la voit pas, elle doit aller la lire.
-
-## Annexe — adresses identifiées et non lues, conservées à l'identique
-
-Ces adresses viennent de `sub-context-docs/community-and-forums.md`, où elles ont été identifiées par WebSearch le 2026-09-06 sans qu'aucune n'ait pu être ouverte. Elles sont recopiées ici sans modification pour qu'un run disposant d'un accès réseau les ouvre directement. Neuf adresses de fils couvrant six discussions distinctes, plus quatre sources de catégorie.
-
-**Fil de discussion consommateurs francophone, identifié, non lu. Le seul de tout le corpus.**
 - https://www.galaxus.ch/fr/producttype/showdiscussion/meilleure-tondeuse-electrique-ou-rasoir-pour-les-parties-intimes-masculines--32035
 
-**Fils de forum anglophones, identifiés, non lus, à marquer non francophones et à pondérer à la baisse pour un travail persona français.**
+Discussion de consommateurs, en français, hébergée par un détaillant suisse. Titre, verified sur l'index : « Meilleure tondeuse électrique ou rasoir pour les parties intimes masculines ? » Statut d'accès au 2026-09-07 : EGRESS_BLOCKED. C'est la seule conversation francophone entre pairs que huit requêtes ont fait remonter sur toute la catégorie, et c'est la première chose qu'un run avec accès doit ouvrir. Ce qu'il faut y chercher : comment des francophones formulent le choix entre tondeuse et rasoir, quel vocabulaire ils emploient, et si l'âge ou la vue apparaissent.
+
+### Fil 2 — Le récit de la coupure. Non lu, ancien.
+
 - https://www.neogaf.com/threads/so-im-trimming-my-ball-hair-and-i-clip-a-chunk-and-it-gets-a-little-bloody-pics.670857/
+
+Forum anglophone, fil daté de 2014. Statut d'accès : EGRESS_BLOCKED. Le titre décrit exactement la peur que la marque vend, et il faut le pondérer à la baisse même une fois lu : il a douze ans et il est anglophone. Non francophone, à marquer comme tel dans toute réutilisation.
+
+### Fil 3 — La démangeaison de repousse, fil long. Non lu.
+
 - https://forums.anandtech.com/threads/to-men-who-shave-down-there.1135387/post-8707521
 - https://forums.anandtech.com/threads/to-men-who-shave-down-there.1135387/post-8707638
 - https://forums.anandtech.com/threads/to-men-who-shave-down-there.1135387/post-8719777
 - https://forums.anandtech.com/threads/to-men-who-shave-down-there.1135387/post-8802510
+
+Quatre messages d'un même fil anglophone intitulé « to men who shave "down there" », plusieurs pages. Statut d'accès : EGRESS_BLOCKED. Non francophone. Ce qu'il faut y chercher : la démangeaison de repousse et l'arbitrage entre rasoir et tondeuse, qui sont les deux thèmes que le résumé de l'index a effleurés.
+
+### Fil 4 — La pilosité comme sujet, fil long. Non lu.
+
 - https://forums.anandtech.com/threads/your-hair-down-there.1571471/page-10
+
+Même forum, autre fil, page 10. Statut d'accès : EGRESS_BLOCKED. Non francophone.
+
+### Fil 5 — Deux messages courts sur la repousse. Non lus.
+
 - https://www.teamblind.com/post/shaved-down-there-and-now-its-itchy-and-have-red-spots-6qkqwlwm
 - https://www.teamblind.com/post/dont-shave-down-there-itll-itch-like-crazy-dy6dgwsm
 
-**Sources de catégorie et de statistique, identifiées, non lues, routées vers `category-and-market-research.md` et rappelées ici pour la complétude de l'annexe.**
-- https://www.charles.co/blog/etudes-et-sondages/sondage-ifop-pratiques-depilatoires/
-- https://www.gillette.fr/fr-fr/astuces-rasage/rasage-corps/choses-a-faire-et-a-ne-pas-faire-pour-le-rasage-intime-masculin
-- https://www.europe1.fr/societe/tondeuse-intime-pour-homme
-- https://gentlemanmoderne.com/entretien-du-maillot-quelles-sont-les-habitudes-des-hommes/
+Forum anglophone professionnel. Statut d'accès : EGRESS_BLOCKED. Non francophones. Les deux titres portent la même objection, la repousse qui gratte, qui est aussi celle que la marque travaille le plus sur son site. C'est la piste la plus prioritaire à vérifier après le fil francophone, parce qu'elle teste directement une promesse de Raselio.
 
-**Ordre de lecture recommandé au prochain run, et pourquoi.** Le fil Galaxus en premier, parce que c'est la seule conversation francophone identifiée et que la langue compte pour un travail persona français. Les deux posts teamblind ensuite, parce qu'ils portent l'objection que la marque travaille le plus, la repousse qui démange, et qu'ils sont courts. Le fil anandtech « to men who shave down there » en troisième, parce qu'il compte plusieurs pages et donc plusieurs voix. Le fil NeoGAF en dernier : il date de 2014, et `customer-review-mining-method.md` demande de pondérer à la baisse toute lecture d'une ère produit ancienne, surtout sur une catégorie dont les outils ont changé depuis.
+## La carte des surfaces, avec leur statut d'accès
+
+Aucune ligne ne porte de niveau d'activité mesuré, parce qu'aucune n'a été ouverte.
+
+| Surface | Type | Existence confirmée ? | Statut d'accès au 2026-09-07 | Ce qu'un run futur doit y chercher |
+|---|---|---|---|---|
+| r/france | Reddit généraliste FR | oui, nommée par l'index | lecture refusée, « unable to fetch » | fils sur l'entretien intime masculin, ton et objections |
+| r/AskFrance | Reddit questions FR | oui, nommée par l'index | lecture refusée | questions posées sans marque autour |
+| r/rasage | Reddit rasage FR | **non confirmée** | lecture refusée | vérifier d'abord si cette communauté existe et si elle est active |
+| r/Wetshaving | Reddit rasage EN | non confirmée par ce run | lecture refusée | culture du rasage, probablement centrée visage, sans doute hors sujet |
+| r/malegrooming | Reddit grooming EN | non confirmée par ce run | lecture refusée | objections et vocabulaire, **non francophone** |
+| r/manscaping | Reddit grooming EN | non confirmée par ce run | lecture refusée | comparaisons entre appareils, **non francophone** |
+| forum.doctissimo.fr | forum santé FR | oui, domaine actif | lecture refusée | irritations, poils incarnés, douleur, questions de peau |
+| aufeminin.com | forum FR | oui, domaine actif | lecture refusée | point de vue de la partenaire, signal cadeau |
+| jeuxvideo.com forums | forum masculin FR à gros volume | oui, domaine actif | EGRESS_BLOCKED | parole masculine crue, objections, moqueries |
+| galaxus.ch, fil identifié | discussion consommateurs FR | **oui, URL exacte ci-dessus** | EGRESS_BLOCKED | le seul fil francophone identifié |
+| neogaf.com, fil identifié | forum EN, 2014 | **oui, URL exacte** | EGRESS_BLOCKED | le récit de la coupure, ancien |
+| forums.anandtech.com, deux fils | forum EN, plusieurs pages | **oui, URL exactes** | EGRESS_BLOCKED | repousse, arbitrage rasoir contre tondeuse |
+| teamblind.com, deux messages | forum EN | **oui, URL exactes** | EGRESS_BLOCKED | repousse qui gratte |
+
+**L'absence la plus parlante de cette carte, et elle est un résultat.** Aucune communauté francophone dédiée à l'entretien intime masculin n'a été identifiée. Ni sur Reddit, ni ailleurs. Ce que l'index rend en français sur cette catégorie, ce sont des comparatifs marchands et des pages d'instituts d'épilation, dont plusieurs appartiennent à des concurrents directs déjà listés dans le set concurrentiel, Billy Trimmer et Club Cooper. Je ne peux pas conclure que la communauté n'existe pas, parce que je n'ai pas pu chercher correctement. Mais si elle n'existe pas, la conséquence pour Raselio est lourde : il n'y a nulle part où aller écouter son marché parler.
+
+## Identity signals observed
+
+**Aucun. Zéro identité observée sur zéro fil lu.**
+
+La discipline mérite d'être rappelée pour le prochain run, parce que c'est elle qui rendra cette section utile le jour où elle se remplira : ce qui se note ici, ce sont des marqueurs récurrents dans les mots de la communauté, jamais un persona. Pas d'âge deviné à partir d'un message, pas de profil assemblé, pas de nom inventé.
+
+**Ce qui existe ailleurs et qu'il ne faut pas rapatrier ici.** Les signaux persona réels de cette marque existent, mais ils viennent du compte publicitaire et des commandes, et ils vivent dans `source-pulls/personas/ad-account.md` et dans `sub-context-docs/customer-journey-and-persona-discovery.md`. Le principal, pour mémoire et sans le redéployer : les six achats attribués du compte sont tous chez des hommes de 45 ans et plus, contre un ICP écrit par l'équipe le 2026-08-23 à « Homme FR, 18-34 ans ». Le rôle de ce document dans cette histoire aurait été de dire si les hommes de 55 ans parlent de ce sujet quelque part, et avec quels mots. Il ne peut pas le dire.
+
+## Behavioral-signal states observed
+
+**Aucun. Zéro état observé sur zéro fil lu.**
+
+Aucune conversation lue, donc aucun état situationnel n'est observable. La seule chose que l'index a effleurée, et qui reste une piste et pas une observation, est que la démangeaison de repousse apparaît dans les titres de trois des cinq fils identifiés, deux sur teamblind et un sur anandtech. Trois titres ne sont pas trois occurrences de langage, et je ne les compte pas comme telles.
+
+## How the community frames the problem
+
+**Vide. Aucun mot de communauté n'a été lu.**
+
+C'est la perte la plus coûteuse de cette passe, parce que c'est exactement ce que ce document est censé produire. La méthode range la métaphore et l'allitération parmi les deux signaux les plus forts et les plus souvent manqués, et elle rappelle que le langage qu'une communauté choisit toute seule est la fenêtre sur le modèle mental qu'elle utilise. Ici, aucune fenêtre.
+
+**Ce qui rend l'absence plus gênante encore, et c'est une question que ce document devait trancher.** La marque, elle, a des images très marquées, et personne n'a pu vérifier si ce sont les siennes ou celles de ses clients. Trois exemples verified sur l'advertorial du 2026-08-31 : « Utiliser le même outil pour les deux, c'est découper au cutter ce qui demande un scalpel. » Puis : « Cette séance qui ressemble plus à du déminage qu'à de l'entretien. » Puis : « Deviner, au-dessus d'une lame, sur la peau la plus fine du corps. » Le cutter contre le scalpel, le déminage. Ces images sont fortes. La question que ce document devait trancher est de savoir si un homme parle comme ça de son propre rasage, ou si c'est un copywriter. **Non tranchée, data-limited.**
+
+**Le seul point de vocabulaire que cette passe peut livrer, et il est modeste mais vérifié.** Le mot « tondeuse » employé seul, en français, dans l'index atteignable, désigne d'abord une tondeuse à gazon. La requête « Raselio tondeuse avis forum » a renvoyé neuf résultats et neuf forums de motoculture. Pour toute recherche future, les expressions utiles sont « tondeuse intime » et « tondeuse parties intimes », qui ramènent bien la catégorie. C'est un détail d'outil, pas une lecture de communauté, et il fait gagner du temps au prochain run.
+
+## Trusted voices and recommendation paths
+
+**Vide. Aucune voix de confiance observée.**
+
+Ce que ce document devait produire ici est précisément ce qui manque le plus au travail créatif de cette marque, et il faut le dire pour que le manque soit visible. `advertising-to-older-audiences.md` pose que pour un public de 50 à 70 ans l'autorité est le raccourci de confiance, que la preuve doit venir d'une source qu'ils reconnaissent déjà, et qu'un témoignage ne transfère que s'il a leur âge. Savoir où un homme de 58 ans pose ce genre de question en ligne, et à qui il croit quand on lui répond, est exactement ce qui manque pour caster la première vidéo de Raselio. Le compte n'a jamais diffusé une seule vidéo, zéro sur 163 annonces, et n'a jamais montré un visage identifié par un vrai nom.
+
+**Ce que l'index laisse voir, et ce n'est pas une voix de confiance.** Les seules pages françaises qui remontent sur les requêtes de catégorie sont des comparatifs et des blogs tenus par les concurrents eux-mêmes, Billy Trimmer et Club Cooper, plus des agrégateurs comme lemeilleuravis.fr et barbierprive.fr. Inferred, confiance mixed : le terrain éditorial de cette catégorie en France est tenu par les vendeurs, pas par les pairs. Si ça se confirme, la parole libre est ailleurs, probablement sur Reddit et dans les commentaires de contenus tiers, et personne n'a pu y aller.
+
+## Corroboration and contradiction
+
+**C'est la section qui coûte le plus cher à ce cerveau, et il faut expliquer pourquoi.**
+
+La méthode désigne Reddit comme le test le plus fort de la différence entre une vraie traction et un écho de marque, précisément parce que la parole y est spontanée et entre pairs. Une phrase qui apparaît partout sauf dans une communauté non contrôlée est un candidat à l'écho de marque.
+
+Raselio est le cas où ce test importerait le plus, et il ne peut pas être fait. Voici l'état des sources de cette marque, tel qu'il ressort des quatre documents amont.
+
+| Source | Contrôlée par la marque ? | État |
+|---|---|---|
+| Site et landings | oui, entièrement | dense, et porte des chiffres sans source |
+| Créas publicitaires | oui, entièrement | 163 annonces, langage entièrement écrit par la marque |
+| Avis clients | serait non contrôlée | **0**, interrogé le 2026-09-07 |
+| Sondages post-achat | serait non contrôlée | **0**, interrogé le 2026-09-07 |
+| Commentaires publicitaires | non contrôlée | **2**, dont un de trois caractères |
+| Avis tiers | non contrôlée | **0**, aucune surface tierce n'existe |
+| Reddit et forums | non contrôlée | **0**, aucun outil, aucun accès |
+
+Autrement dit : **cette marque possède un volume de langage important et il est écrit à 100 % par elle-même, sauf une phrase.** La seule corroboration extérieure disponible dans tout le coffre est le commentaire du 2026-08-31, « Plus rien de la bête sauvage qui sommeille en nous », et il n'est corroboré par rien puisqu'il est unique.
+
+**Ce que ce document ne peut donc pas faire, et qu'il faut nommer pour que personne ne croie que le travail a été fait.** Il ne peut confirmer aucun des signaux venus des surfaces contrôlées. Il ne peut en contredire aucun. Il ne peut pas dire si les sept objections que l'équipe s'est écrites sont réelles. Il ne peut pas dire si les images du cutter et du déminage viennent des hommes ou d'un copywriter. Il ne peut pas dire si la résistance exprimée dans le seul commentaire reçu est répandue ou isolée. Toutes ces questions attendent une surface non contrôlée, et aucune n'est ouverte.
+
+## Recurrence and spread
+
+**Le décompte, honnête.**
+
+| Élément | Valeur |
+|---|---|
+| Communautés lues | **0** |
+| Fils lus | **0** |
+| Verbatims capturés | **0** |
+| Outils Parker couvrant Reddit | **0**, vérifié par recherche d'outil le 2026-09-07 |
+| Lectures directes tentées, cette passe | 1, refusée |
+| Lectures directes tentées, passe du 2026-09-06 | 13, refusées |
+| Domaines contrôlés en ligne de commande, passe antérieure | 15, code 000 sur 15 |
+| Adresses de fils identifiées et consignées | **9 URL, 5 fils distincts, 4 domaines** |
+| Communautés Reddit visées | 6, dont 2 confirmées existantes et 4 non confirmées |
+| Mentions de Raselio trouvées | **0** |
+
+**Le zéro mention, et comment le lire sans le surinterpréter.** La requête « Raselio tondeuse avis forum » a renvoyé neuf résultats et zéro mention de la marque. Il faut poser deux chiffres à côté. La marque a onze commandes depuis l'ouverture. Son site affiche « +17 000 hommes » et « 4,7/5 · 1 734 avis ». Le zéro de mention est parfaitement cohérent avec le premier chiffre et parfaitement incohérent avec le second. Onze clients ne produisent pas de conversation ; dix-sept mille en produiraient. C'est une confirmation indépendante, obtenue depuis une source extérieure au site, que le second chiffre est faux. Ce point est traité en entier dans `sub-context-docs/reputation-analysis.md` et il n'est rappelé ici que comme corroboration.
+
+**Ce que je ne dis pas.** Je ne dis pas que personne ne parle de Raselio. Reddit, Doctissimo et jeuxvideo.com n'ont pas pu être lus, et un fil pourrait exister sans que l'index américain le voie. Data-limited.
 
 ## Open loops
 
-**Boucle 1.** Observation : deux jours de recherche, neuf requêtes et quinze surfaces visées n'ont identifié aucune communauté francophone dédiée à l'entretien intime masculin, alors que la catégorie compte au moins quatre marques françaises actives en publicité. Pull : Gap, elle a tiré parce que toutes les requêtes ne ramènent que des comparatifs marchands et zéro conversation entre pairs. Question : où les hommes français parlent-ils réellement entre eux de l'entretien de leurs zones intimes ? Justification : sans cet endroit, la marque n'a aucune source de langage client et continuera d'écrire chaque ligne depuis l'intuition de son équipe. Territoire : Messaging.
+**Boucle 1.** Observation : huit requêtes en français n'ont ramené aucune conversation entre pairs sur l'entretien intime masculin, seulement des comparatifs marchands et des blogs de marque, alors que la catégorie compte au moins quatre marques françaises actives en publicité et que Raselio décrit elle-même le sujet comme un sujet dont « personne n'en parle ». Pull : Gap, elle a tiré en constatant que l'index français ne rend que du contenu de vendeur sur un sujet qui devrait produire de la conversation. Question : où les hommes français parlent-ils réellement entre eux de l'entretien de leurs zones intimes ? Justification : sans cet endroit, la marque n'a aucune source de langage client et continuera d'écrire chaque ligne depuis l'intuition de son équipe. Territoire : Messaging.
 
-**Boucle 2.** Observation : la marque possède une liste de sept objections écrite par son équipe le 3 septembre, elle construit son prochain lot créatif dessus, et aucune des sept n'a jamais été confrontée à ce que des hommes disent spontanément. Pull : Tension, elle a tiré en voyant une liste très assurée sans une seule source derrière. Question : parmi les objections que la marque s'est écrites, lesquelles des hommes formulent-ils vraiment quand aucune marque n'écoute ? Justification : si trois des sept sont des inventions d'équipe, une part du budget créatif répond à des freins qui n'existent pas. Territoire : Messaging.
+**Boucle 2.** Observation : les images les plus fortes de cette marque, le cutter contre le scalpel et la séance qui ressemble à du déminage, viennent toutes de son advertorial, et aucune source non contrôlée par la marque n'a jamais pu être lue pour savoir si un homme parle comme ça. Pull : Curiosité, elle a tiré parce que ces images sont excellentes et que personne ne sait de qui elles sont. Question : avec quelles images un homme décrit-il lui-même le fait de se raser cette zone ? Justification : si la marque a inventé une langue que personne ne parle, ses meilleures accroches passent à côté ; si elle a deviné juste, elle tient un patrimoine de langage et doit le pousser plus loin. Territoire : Messaging.
 
-**Boucle 3.** Observation : les deux images les plus fortes du site, le cutter contre le scalpel et le déminage, n'ont jamais été comparées au langage réel des hommes, et le seul cadrage extérieur connu de tout le coffre parle de « la bête sauvage qui sommeille en nous », ce qui n'y ressemble en rien. Pull : Curiosité, elle a tiré en mettant côte à côte la métaphore du copywriter et la seule métaphore qu'un extérieur ait produite. Question : avec quels mots un homme décrit-il ce geste quand il en parle à un autre homme ? Justification : c'est la différence entre une marque qui parle la langue de son client et une marque qui parle celle de son rédacteur, et elle décide de chaque accroche du prochain lot. Territoire : Messaging.
+**Boucle 3.** Observation : trois des cinq fils de discussion identifiés portent dans leur titre la même objection, la repousse qui gratte, et c'est aussi celle que Raselio travaille le plus sur son site avec sa raison numéro cinq et sa FAQ. Pull : Pattern, elle a tiré parce que la même objection revient dans des titres de fils indépendants sur deux forums différents. Question : combien d'hommes arrêtent de se raser cette zone à cause de la repousse plutôt qu'à cause de la coupure ? Justification : la marque vend d'abord la sécurité et ensuite le confort de repousse ; si la repousse est la vraie raison d'abandon, l'ordre de ses arguments est inversé. Territoire : Messaging.
 
-**Boucle 4.** Observation : les hommes qui achètent chez Raselio ont tous plus de 45 ans, et la méthode dit que pour ce public la preuve doit venir d'une source qu'il reconnaît déjà, or personne ne sait qui ce public écoute. Pull : Gap, elle a tiré en cherchant un chemin de recommandation dans les sources et en n'en trouvant aucun, ni média, ni affiliation, ni forum, ni e-mail sur 2 431 sessions. Question : qui un homme de cinquante-huit ans croit-il quand il choisit un objet qui va toucher une zone fragile ? Justification : la réponse décide de la première preuve que la marque doit construire, et elle n'a aujourd'hui aucune preuve authentique à montrer. Territoire : Creators and talent.
+---
+
+**Sign-off des méthodes chargées qui en portent une.**
+
+This is everything I know about advertising to older audiences.
