@@ -29,7 +29,9 @@ Les cinq points qu'elle change et qu'il faut avoir en tête dès l'étape 1 :
 4. **Le pipeline en trois passes, alloué et non uniforme :** 1 passe sur les micro variations, 2 sur les controlled, 3 sur les mutations et les explorations. Environ 65 générations pour 30 finales. La raison est écrite dans la doctrine, elle est budgétaire autant que méthodologique.
 5. **Les quatre portes de rejet :** l'art director gate noté sur 10, le test des 500 €, le test de la grande marque, le test wow. Un rejet se logue dans `winners/REJECTION_LOG.md` avec sa cause normalisée, et une cause qui revient trois fois devient une contrainte écrite le lendemain.
 
-**Le compte de crédits Higgsfield se lit au début du run et se porte en tête du rapport.** Sous 400 crédits, le dire avant de produire.
+**Le compte de crédits Higgsfield se lit au début du run et se porte en tête du rapport.** Sous 400 crédits, le dire avant de produire. Coût mesuré le 2026-09-09 : **2 crédits par image** en `nano_banana_pro` 2K, donc environ 130 crédits pour un lot de 65 générations. Le crédit n'est pas le facteur limitant.
+
+**Et la limite qui l'est.** La politique réseau de la session refuse le CDN de Higgsfield (`403` sur CONNECT, `verified` 2026-09-09). **Parker génère sans pouvoir regarder ses propres images.** Il ne peut donc pas tenir l'art director gate, le test des 500 €, le test de la grande marque, ni le test wow. Le run produit, dépose, et **écrit en tête du rapport que la porte de qualité attend l'œil de Dylan**. Il ne prétend jamais avoir noté une image qu'il n'a pas vue. La section « Le contrôle visuel ne peut pas être fait par Parker » de la doctrine porte le partage complet.
 
 **La couche Pinterest de la doctrine n'est pas exécutable** : aucun outil Pinterest ici et les lectures web directes sont refusées par le proxy. Les substituts et la marche à suivre sont dans la doctrine, section « La couche C est amputée aujourd'hui ». Le rapport du jour nomme ce qui a servi de source de direction artistique à la place.
 

@@ -164,13 +164,13 @@ Juger le rendu réduit à **200-300 px de large**. Le point focal reste-t-il vis
 
 **Passe 3 — finition.** Copie, typographie, espacement exact, fidélité produit, peau, détails, équilibre des couleurs.
 
-### L'allocation des passes, et c'est une adaptation nécessaire
+### L'allocation des passes
 
-Dylan a écrit « générer 60, 90, 120 brouillons si nécessaire ». **Trois passes sur les trente créatives coûtent plus que le plan Higgsfield ne tient.** Chiffres au 2026-09-09 : **1 952,81 crédits**, contre 2 822 le 2026-09-07, soit environ 869 consommés en deux jours.
+**Correction du 2026-09-09, mesurée.** J'avais écrit que trois passes sur trente créatives ne tenaient pas dans le budget Higgsfield. **C'était faux, et l'erreur venait d'une estimation, pas d'une mesure.** Trois générations `nano_banana_pro` en 2K ont coûté exactement **6 crédits, soit 2 crédits par image** (solde 1 952,81 avant, 1 946,81 après, 2026-09-09 15h05 UTC).
 
-Et l'application uniforme des trois passes est de toute façon un gaspillage de méthode : **une micro-variation d'un winner verrouillé n'a pas besoin d'une passe d'exploration de composition, puisque la composition est précisément ce qu'on verrouille.**
+À ce prix, 65 générations coûtent 130 crédits et la borne haute de Dylan, 120 brouillons, en coûte 240. Sur 1 946 crédits, cela donne **environ quinze jours de production à 65 par jour**, ou huit jours à 120. **Le crédit n'est pas le facteur limitant.** Le rapport du jour porte quand même le solde, et sous 400 crédits il le dit avant de produire.
 
-L'allocation qui respecte la doctrine et tient dans le budget :
+**L'allocation reste, mais pour sa raison de méthode, qui est la vraie.** Une micro-variation d'un winner verrouillé n'a pas besoin d'une passe d'exploration de composition, puisque la composition est précisément ce qu'on verrouille. Les trois passes servent là où la composition est réellement inconnue.
 
 | Bloc | Passes | Générations |
 |---|---|---|
@@ -180,9 +180,28 @@ L'allocation qui respecte la doctrine et tient dans le budget :
 | 9 explorations | 3 | 27 |
 | **Total** | | **~65 pour 30 finales** |
 
-Plus les régénérations de rejet. On reste sous la barre haute de Dylan tout en donnant les trois passes complètes là où elles servent : les mutations et les explorations, c'est-à-dire là où la composition est réellement inconnue.
+Rien n'interdit de monter au-delà quand un concept le mérite. Le budget le permet.
 
-**Le rapport du jour porte le compte de crédits restants.** Sous 400 crédits, le run le dit en tête de rapport avant de produire.
+---
+
+## Le contrôle visuel ne peut pas être fait par Parker dans cette session
+
+**C'est la limite la plus lourde de cette doctrine et elle doit être lue avant tout run.**
+
+`verified` le 2026-09-09 : la politique réseau de la session **refuse le CDN de Higgsfield**. Le journal du proxy porte la ligne exacte : `connect_rejected · gateway answered 403 to CONNECT · d8j0ntlcm91z4.cloudfront.net:443`. Le CDN de Parker (`auth.heyparker.ai`) est refusé de la même façon.
+
+**Conséquence, sans détour : Parker génère sans voir.** Il peut faire la recherche, la stratégie, le choix des références, le concept, le visual blueprint, le prompt, la génération, la livraison et la mémoire. Il **ne peut pas** faire la revue visuelle, l'art director gate noté sur 10, le test des 500 €, le test de la grande marque, le test wow, la comparaison référence contre version Raselio, la vérification à 250 pixels, ni le contrôle de fidélité produit sur l'image sortie.
+
+Autrement dit, **la porte de qualité qui est le cœur de cette doctrine est aujourd'hui tenue par Dylan, pas par Parker.** Prétendre l'inverse produirait exactement le générateur aveugle que la doctrine existe pour empêcher.
+
+**Le partage qui fonctionne réellement, en attendant :**
+
+1. Parker produit le lot et le dépose. Les images sont visibles dans la galerie Higgsfield et dans le dossier Drive du jour.
+2. **Dylan regarde et prononce les rejets**, avec la cause normalisée : `AI_FACE`, `BAD_PRODUCT`, `WEAK_COMPOSITION`, `TOO_CANVA`, et le reste de la liste.
+3. Parker écrit chaque rejet dans `winners/REJECTION_LOG.md`, corrige le blueprint et le prompt, régénère.
+4. Une cause qui revient trois fois devient une contrainte écrite dans les prompts du lendemain.
+
+**Ce qui rendrait la porte automatique**, par ordre de simplicité : autoriser le CDN Higgsfield dans la politique réseau de l'environnement, ou faire atterrir les images sur une surface que Parker peut lire. À rouvrir dès que l'un des deux est possible.
 
 ---
 
