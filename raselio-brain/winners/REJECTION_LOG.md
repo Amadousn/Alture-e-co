@@ -30,3 +30,7 @@ Une cause qui manque s'ajoute, en majuscules avec des underscores, et se documen
 1. Lire les causes des sept derniers jours et compter les récurrences.
 2. Toute cause qui revient **trois fois ou plus** devient une contrainte écrite dans le prompt du lendemain, pas un espoir.
 3. Une cause qui disparaît pendant deux semaines sort de la liste des contraintes actives et reste dans l'historique.
+
+## Lot du 2026-09-09 — test 3 concepts, 6 exécutions
+
+Six images générées (jobs `f49596ff`, `52cf0128`, `3d81ab00`, `1601003a`, `f71916ae`, `410f18b3`). Aucune notée : le CDN d'images est bloqué depuis cette session, `connect_rejected` sur `d8j0ntlcm91z4.cloudfront.net:443`, re-vérifié le 2026-09-09. Les causes de rejet sont à remplir par Dylan après lecture à l'écran. Points de contrôle prioritaires posés dans `sprints/2026-09-09-test-statiques/briefs.md` : orthographe et accents français, fidélité produit MS-810, et sur C1 la distinction visuelle entre la tondeuse générique et le produit héros.
