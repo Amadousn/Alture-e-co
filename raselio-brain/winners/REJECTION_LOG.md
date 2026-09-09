@@ -34,3 +34,11 @@ Une cause qui manque s'ajoute, en majuscules avec des underscores, et se documen
 ## Lot du 2026-09-09 — test 3 concepts, 6 exécutions
 
 Six images générées (jobs `f49596ff`, `52cf0128`, `3d81ab00`, `1601003a`, `f71916ae`, `410f18b3`). Aucune notée : le CDN d'images est bloqué depuis cette session, `connect_rejected` sur `d8j0ntlcm91z4.cloudfront.net:443`, re-vérifié le 2026-09-09. Les causes de rejet sont à remplir par Dylan après lecture à l'écran. Points de contrôle prioritaires posés dans `sprints/2026-09-09-test-statiques/briefs.md` : orthographe et accents français, fidélité produit MS-810, et sur C1 la distinction visuelle entre la tondeuse générique et le produit héros.
+
+## Nouvelle cause normalisée — 2026-09-09
+
+`WRONG_BRAND_FEEL` — l'image échoue au test du logo masqué de `brand-dna-lock.md` : moins de quatre des six éléments de marque présents. À distinguer de `TOO_CANVA` (défaut d'exécution) et de `WRONG_PERSONA` (mauvais modèle). Celle-ci dit : belle image, mais ce n'est pas Raselio.
+
+## Autocritique du lot du 2026-09-09, avant retour de Dylan
+
+Sur les 16 images produites aujourd'hui, **une seule** (C11 variante B, salle de bain annotée) casse le squelette crème-studio-éditorial. Les quinze autres partagent fond, lumière, typographie et densité. C'est cohérent et c'est monotone, et c'est exactement l'empreinte que Meta regroupe : le compte a déjà payé ce défaut, 105 annonces neuves pour 3 707 impressions cumulées. La règle des trois registres de `brand-dna-lock.md` existe pour corriger ça — un lot de 30 ne peut pas être à 94 % dans un seul registre.
