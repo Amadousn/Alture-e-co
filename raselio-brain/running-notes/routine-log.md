@@ -51,3 +51,8 @@ Each entry is one dated block. Keep it short — the routine's own deliverable h
 - **Surfaced:** un fait qui change une des trois. `_competitive-set.md` dit que `brand_discovery` ne pouvait pas tourner faute de marque Parker. Il tourne, il a tourné aujourd'hui, et il a révélé que **la bibliothèque concurrente était vide**. Le rejeu de ce document est maintenant le plus urgent des trois.
 
 
+
+## 2026-09-09 — Bibliothèque d'architectures (sur instruction Dylan, « PARKER MASTER SWIPE FILE »)
+
+- **Ran:** lecture du corpus concurrent global via Parker MCP `search_competitor_facebook_ads` (mode `discover`), sept marques, ~31 000 annonces scrapées dont 10 725 analysées par l'IA. Écriture de `competitors/_bibliotheque-architectures.md` : 16 familles d'architecture, bloc de verrouillage, ordre de priorité des familles manquantes. Enregistré dans `CLAUDE.md`, `visual-quality-doctrine.md` et `competitors/INDEX.md`.
+- **Left:** le board `YT_Statics_All` d'Alex Cooper reste illisible — `search_swipe_file` ne voit que les 8 boards vides de l'org de Dylan, et `app.heyparker.ai` est bloqué par le proxy de sortie (`EGRESS_BLOCKED`, deux tentatives). Grüns n'a aucune annonce scrapée dans Parker, donc aucune donnée. Aucune image n'a pu être vue (`auth.heyparker.ai` bloqué), donc la notation visuelle /10 des §2 et §3 de Dylan n'est pas faite et reste à lui.

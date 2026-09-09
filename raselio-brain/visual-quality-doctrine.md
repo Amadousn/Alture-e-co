@@ -268,5 +268,6 @@ Trois points, pour que personne n'ait à trancher seul en cours de run.
 - L'exécution quotidienne : `.claude/skills/daily-creative-run/SKILL.md`.
 - La construction d'une publicité au cas par cas, du persona jusqu'au prompt : `.claude/skills/madvera-image-ads/SKILL.md`, installée le 2026-09-09.
 - Les mécanismes concurrents décodés : `competitors/_mecanismes-a-decliner.md`.
+- **La bibliothèque d'architectures : `competitors/_bibliotheque-architectures.md`.** Seize familles lues sur ~31 000 annonces (Mars Men, Happy Mammoth, Jones Road, O Positiv, Hollow, PetLab, Wild Roman). C'est la couche « 1 PARKER ARCHITECTURE » de la règle absolue du 2026-09-09 : aucune grosse créative ne part sans qu'une famille y soit nommée, avec son bloc de verrouillage rempli. Une créative = une architecture, jamais une moyenne de quinze.
 - La mémoire des winners : `winners/WINNERS_MASTER_RASELIO.md`.
 - Le savoir tribal de la marque, palette, voix, fidélité produit : `brand-lens.md`.
