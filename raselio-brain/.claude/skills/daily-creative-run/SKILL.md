@@ -17,6 +17,24 @@ Premier geste de chaque exécution : vérifier qu'ils répondent. **S'ils manque
 
 Point d'attention connu : une routine planifiée créée depuis une session sans droits de connecteur démarre **sans aucun outil MCP**. Les connecteurs s'attachent alors depuis l'écran Routines de claude.ai, sur la routine elle-même.
 
+## La doctrine de qualité visuelle gouverne ce run
+
+**Lire `visual-quality-doctrine.md` à la racine du cerveau avant d'écrire un seul prompt.** C'est la parole de Dylan, posée le 2026-09-09, et elle gouverne toute production de statique. Ce SKILL décrit la mécanique du run ; la doctrine décide de ce qui a le droit de sortir.
+
+Les cinq points qu'elle change et qu'il faut avoir en tête dès l'étape 1 :
+
+1. **Le problème numéro un est la qualité visuelle, pas le volume.** Une excellente idée marketing mal exécutée reste une mauvaise publicité. Le dossier final est **une sélection, pas un dépotoir de générations**.
+2. **La répartition est fixée : 21 dérivées de winners et 9 explorations.** Dans les 21 : 9 micro variations, 7 controlled variations, 5 mutations. Le « parent winner » est toujours une **famille**, jamais une image.
+3. **Aucune image sans visual blueprint.** Canvas, cadrage, sujet, échelles, lumière, points focaux, pattern interrupt. Le générateur n'invente jamais la direction artistique.
+4. **Le pipeline en trois passes, alloué et non uniforme :** 1 passe sur les micro variations, 2 sur les controlled, 3 sur les mutations et les explorations. Environ 65 générations pour 30 finales. La raison est écrite dans la doctrine, elle est budgétaire autant que méthodologique.
+5. **Les quatre portes de rejet :** l'art director gate noté sur 10, le test des 500 €, le test de la grande marque, le test wow. Un rejet se logue dans `winners/REJECTION_LOG.md` avec sa cause normalisée, et une cause qui revient trois fois devient une contrainte écrite le lendemain.
+
+**Le compte de crédits Higgsfield se lit au début du run et se porte en tête du rapport.** Sous 400 crédits, le dire avant de produire.
+
+**La couche Pinterest de la doctrine n'est pas exécutable** : aucun outil Pinterest ici et les lectures web directes sont refusées par le proxy. Les substituts et la marche à suivre sont dans la doctrine, section « La couche C est amputée aujourd'hui ». Le rapport du jour nomme ce qui a servi de source de direction artistique à la place.
+
+**Pour construire une publicité au cas par cas** — persona, angle, format, copie, design, puis le prompt structuré — la compétence `madvera-image-ads` est installée dans `.claude/skills/`. Elle est complémentaire : la doctrine dit le standard, ce SKILL dit le run, Madvera dit comment se construit une annonce.
+
 ## Périmètre — une seule marque
 
 **RASELIO uniquement.** Jamais Aerozya, jamais Trael, jamais une autre boutique : ni leurs données, ni leurs créas, ni leurs concurrents, ni leurs personas.
