@@ -46,3 +46,20 @@ Décision marchand : « je vais faire le harnais et la laisse ». Appliqué comm
 - **Menu principal** : Harness · Lead · Size Guide · Fitting · FAQ · 60-Day Guarantee.
 - **Collection** « Leads & Accessories » renommée « Leads » (handle inchangé).
 - La homepage (thème brouillon) n'affiche que ces deux produits dans la grille « Walk ».
+
+## Identité visuelle du thème (brouillon « Horizon AU homepage draft »)
+
+Appliqué dans `config/settings_data.json`, `sections/header-group.json`, `sections/footer-group.json`, `templates/product.json` :
+
+| Élément | Valeur |
+|---|---|
+| Palette | fond #F2F5F4 (sea-fog), texte #13262B (ink), accent #0E6F8C (ocean), bordures #C9D4D3 ; badge promo #B9773A (red dirt) |
+| Typo | titres Archivo Bold, corps IBM Plex Sans 16 px, accent/annonces IBM Plex Mono ; H1 56, H2 40, H6 en capitales |
+| Boutons | primaire fond ocean / texte blanc, rayon 6 ; secondaire contour ocean |
+| Sélecteur de variantes | boutons rayon 6, sélection fond ink ; swatches activés (les pastilles couleur s'afficheront une fois les valeurs « Colour » liées à la taxonomie couleur Shopify) |
+| Bandeau d'annonce | fond ink, texte clair mono : « Free shipping Australia-wide · 60-Day Loose-Lead Guarantee · Matching lead included » |
+| En-tête | recherche, sélecteur pays et langue masqués (AU uniquement), menu sticky |
+| Pied de page | capture email « The First 10 Walks, free », réseaux sociaux vides (à remplir), « Powered by Shopify » retiré |
+| Page produit | titre en H2, ligne de promesse ocean sous le prix, aide à la taille sous le sélecteur, bloc « Shipping, returns and guarantee » |
+
+Produits (photos, mesures réelles, coloris définitifs) : laissés au marchand pour la fin.
