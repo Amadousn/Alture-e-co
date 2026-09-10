@@ -38,3 +38,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Le cerveau Raselio embarque sa couche exécutable (skills, hooks, réglages) dans
+# raselio-brain/.claude/. La règle ".claude/" ci-dessus la faisait disparaître du dépôt :
+# un clone arrivait sans aucune compétence. On la réintègre explicitement.
+!raselio-brain/.claude/
