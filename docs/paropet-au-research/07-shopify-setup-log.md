@@ -93,3 +93,24 @@ Aucun fichier n'est encore dans Shopify (Contenu → Fichiers vide). Les emplace
 | Photo 3 (flat-lay harnais + laisse) | Image du produit Matching Classic Lead, et 3e image du harnais | Produits → Matching Classic Lead → Médias |
 
 Ordre conseillé des médias produit : photo 1, vidéo 1, photo 2, vidéo 3, vidéo 4, photo 3. Les vignettes vidéo se règlent dans Médias → « Modifier la miniature ».
+
+## Bilan CRO : tableau `01` §9 → boutique (10 sept. 2026, soir)
+
+| Ligne CRO | Statut sur le thème beauty |
+|---|---|
+| Hero vidéo + promesse liberté | ✅ emplacement vidéo créé, titre et CTA en place (vidéo à choisir) |
+| Angle vélos/joggeurs, chaleur, plage | ✅ sections « If this sounds like your walks », « Built for how Australians walk », vidéo plage/piste |
+| Prix A$59 sans faux barré | ✅ (devise AUD à activer dans Settings) |
+| Promotion : aucune fausse urgence | ✅ compte à rebours, « Offer end tonight », barre de progression USD, faux avis et « Only X left » désactivés |
+| Cadeau identique partout | ✅ remise auto BXGY + ligne de promesse hero/PDP + message panier « Your matching Classic Lead is added free » |
+| Personnalisation patch | ⏸ produit en brouillon (décision : harnais + laisse) |
+| Preuve sociale réelle | ⏳ aucune app d'avis installée (non faisable par API) : installer Judge.me ou Loox, relier à l'email J+30 |
+| Mécanisme + démo multi-morphologies | ✅ vidéo mécanisme + comparatif 2 colonnes ; ⏳ démos petit/large/profond nécessitent des vidéos supplémentaires |
+| Guide des tailles cm + races AU | ✅ page + lien depuis le sélecteur (icône règle) + note sous le sélecteur |
+| Objections (desserrage, rotation, mastication, poitrail, dressage) | ✅ FAQ homepage + FAQ PDP + onglets Sizing / Shipping / What it does |
+| Garantie 60 j retour prépayé | ✅ page, section sombre, onglet PDP ; ⏳ texte à coller dans Settings → Policies |
+| Livraison gratuite AU + Express | ✅ tarifs + textes |
+| Produit complémentaire | ✅ laisse de rechange en upsell panier (« Add a spare »), collection leads |
+| Panier | ✅ drawer : message cadeau, ligne « Included free », « You save », upsell laisse, icônes paiement ; pas de minuteur |
+| Mobile | ✅ barre sticky « add to cart » aux couleurs de marque, titre + prix visibles, vidéos verticales à charger |
+| Swatches couleur | ✅ pastilles Charcoal / Ocean / Red Dirt / Gum définies dans les réglages du thème |
