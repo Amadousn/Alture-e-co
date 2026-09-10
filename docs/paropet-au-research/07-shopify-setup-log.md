@@ -63,3 +63,17 @@ Appliqué dans `config/settings_data.json`, `sections/header-group.json`, `secti
 | Page produit | titre en H2, ligne de promesse ocean sous le prix, aide à la taille sous le sélecteur, bloc « Shipping, returns and guarantee » |
 
 Produits (photos, mesures réelles, coloris définitifs) : laissés au marchand pour la fin.
+
+## Thème « beauty-16-5-1-2 » (Lumin, base Dawn) : portage complet (10 sept. 2026, soir)
+
+Le marchand a installé ce thème (non publié, `OnlineStoreTheme/198428983680`). Fichiers réécrits par API :
+
+| Fichier | Contenu |
+|---|---|
+| `templates/index.json` | 12 sections : hero (image-banner, scheme sombre), ligne de promesse, bandeau confiance (trust-badges ×4), « If this sounds like your walks », mécanisme (image-with-text), « Built for how Australians walk » (multicolumn ×4), produit vedette harnais (featured-product : titre, prix, promesse, sélecteur avec lien guide des tailles, note taille, achat, description), does/doesn't, comparatif collier / dorsal / licol / frontal (multicolumn), garantie 60 jours (fond ink), FAQ accordéon ×6, collection Walk |
+| `templates/product.json` | Tous les blocs de démo à fausse urgence **désactivés** (« 4.8 From 136 Reviews », « 758 people purchased », « Hurry up! Only X in stock », compte à rebours « Order in », paliers « Bundle & Save », cross-sells « Save up to 50% », badges « 24/7 Support / Free Shipping Globally »). Ajoutés : ligne de promesse sous le prix, 4 pictos honnêtes, note taille sous le sélecteur, onglets Sizing / Shipping & returns / What it does and what it doesn't. Sections de démo (hero Lumin, sliders, méga-menus, faux avis, « Offer End Soon ») supprimées ; comparatif 2 colonnes « Front-clip vs Back-clip », FAQ, garantie, produits liés conservés |
+| `sections/header-group.json` | Bandeau : « Free shipping Australia-wide · 60-Day Loose-Lead Guarantee · Matching lead included » (fond ink, texte clair), bandeau défilant « Theme Created by Lumintheme » désactivé, menu main-menu, sélecteurs pays/langue coupés, en-tête non transparent |
+| `sections/footer-group.json` | Newsletter « The First 10 Walks, free », 4 tuiles confiance, bandeau Lumin supprimé, menus Help (footer) et Shop, bloc « Need a hand? », crédit Lumin et « Powered by Shopify » retirés |
+| `config/settings_data.json` | Schémas de couleurs : background-1 #F2F5F4/#13262B/bouton #0E6F8C, background-2 sombre, accent-1 blanc, accent-2 #C9D4D3 ; titres Archivo, corps IBM Plex Sans ; rayons 6 ; barre de progression panier (seuils USD) coupée, message « Limited-Time Offer » et minuteur panier retirés ; bloc marque « [BRAND] » |
+
+Reste à faire dans l'éditeur de thème : images (hero, image-with-text, produit), logo, activer le thème, vérifier les couleurs de la barre sticky « add to cart » (encore blanc/noir) et le type de menu desktop (« mega »).
