@@ -102,3 +102,15 @@ Ne pas s'y limiter : les combiner avec les 17 familles de la bibliothèque Parke
 **Les images du fichier Winning Statics ne sont pas lisibles.** Le document fait 11,8 Mo et ses statiques sont des images intégrées ; `docs.google.com` et `lh7-rt.googleusercontent.com` sont refusés par le proxy de sortie (code 000, testé le 2026-09-09) et le doc en base64 représenterait ~16 Mo. Le teardown en treize points du §3 de Dylan — composition, densité de texte, position produit, contraste, typographie — **ne peut donc pas être fait sur ces images**. Il est fait sur les architectures et leur preuve chiffrée, ce qui n'est pas la même chose et ne doit pas être présenté comme tel.
 
 **La route qui fonctionne, vérifiée le 2026-09-09.** Le connecteur Google Drive lit les fichiers `image/png` et `image/jpeg` un par un et renvoie l'intégralité du texte présent sur la créative plus une liste d'étiquettes de sujet. Donc : **des statiques déposées en fichiers image séparés dans un dossier Drive sont exploitables. Des images collées dans un document ne le sont pas.** Et des images collées directement dans la conversation sont vues pleinement, ce qui est la seule route permettant la notation /10 du §3 de la doctrine.
+
+## Coût réel de génération — mesuré le 2026-09-09, et il corrige un chiffre faux
+
+**Higgsfield, modèle `nano_banana_pro`** (le service le résout en interne en `nano_banana_2`), ratio 4:5, résolution 2k, sortie 1856 × 2304, avec les vraies photos produit attelées en `image_references`.
+
+**Mesure directe.** Solde avant le premier lot : **1 946,81 crédits**. Solde après 19 images : **1 588,81**. Soit **358 crédits pour 19 images, ≈ 19 crédits par image.**
+
+**Le chiffre de 2 crédits par image écrit précédemment dans la doctrine est faux pour ces réglages.** Il venait d'une mesure faite sur un lot de test à réglages plus légers et il a été généralisé à tort. Ce qui suit remplace cette ligne partout où elle apparaît.
+
+**Ce que ça change concrètement pour la routine quotidienne.** À 19 crédits l'image, le pipeline en trois passes de `visual-quality-doctrine.md` — environ 65 générations pour 30 finales — coûte **~1 235 crédits par jour**. Le solde de 1 588 crédits représente donc **un peu plus d'une journée**, pas quinze.
+
+**La correction de méthode qui en découle.** La résolution 2k ne se justifie que sur les images livrées. Les passes 1 et 2, qui servent à trier des idées et des compositions, se génèrent en résolution basse ; seules les finalistes retenues après le gate sont régénérées en 2k. C'est le même travail pour une fraction du coût, et ça rend la routine des 30 par jour tenable. Réglage à appliquer dans `.claude/skills/daily-creative-run/`.

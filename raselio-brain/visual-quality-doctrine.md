@@ -271,3 +271,8 @@ Trois points, pour que personne n'ait à trancher seul en cours de run.
 - **La bibliothèque d'architectures : `competitors/_bibliotheque-architectures.md`.** Seize familles lues sur ~31 000 annonces (Mars Men, Happy Mammoth, Jones Road, O Positiv, Hollow, PetLab, Wild Roman). C'est la couche « 1 PARKER ARCHITECTURE » de la règle absolue du 2026-09-09 : aucune grosse créative ne part sans qu'une famille y soit nommée, avec son bloc de verrouillage rempli. Une créative = une architecture, jamais une moyenne de quinze.
 - La mémoire des winners : `winners/WINNERS_MASTER_RASELIO.md`.
 - Le savoir tribal de la marque, palette, voix, fidélité produit : `brand-lens.md`.
+
+
+## Correction du coût, 2026-09-09
+
+Le chiffre de **2 crédits par image** inscrit plus haut dans ce document est **faux** pour les réglages réellement utilisés (`nano_banana_pro`, 4:5, 2k, références produit attelées). Mesure directe du 2026-09-09 : **358 crédits pour 19 images, soit ≈ 19 crédits l'image.** Le détail, et la correction de méthode qui en découle — passes 1 et 2 en résolution basse, 2k réservé aux finalistes — sont dans `production-system.md`. L'allocation en trois passes reste valable ; c'est son coût qui était mal chiffré, deux fois et dans les deux sens.
