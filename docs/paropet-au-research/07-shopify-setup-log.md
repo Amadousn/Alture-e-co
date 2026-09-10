@@ -35,3 +35,14 @@ Boutique cible : **My Store 10** (`crms7m-ss.myshopify.com`), marché principal 
 9. **Avis** : installer une app d'avis (Judge.me/Loox) reliée à l'email J+30 ; aucune note factice.
 10. **Bundle** : convertir « Beach & Track Bundle » en bundle réel (Shopify Bundles ou Moonbundle) pour la gestion de stock des composants.
 11. Vérifier la checklist `04` avant de mettre en ligne les affirmations produit.
+
+## Mise à jour du 10 sept. 2026 (soir) : catalogue réduit au harnais + laisse
+
+Décision marchand : « je vais faire le harnais et la laisse ». Appliqué comme suit (réversible, rien n'est supprimé) :
+
+- **Actifs** : Front-Clip No-Pull Harness (59) et **Matching Classic Lead** (19, renommée ; offerte automatiquement avec chaque harnais).
+- **Passés en brouillon** : Shock-Absorbing Bungee Lead, Name + Phone Patch, Poo Bag Holder, Beach & Track Bundle. Réactivables en un clic si l'offre s'élargit.
+- **Textes nettoyés** de toute mention laisse élastique / patch / bundle : description harnais (nouveau bloc « What's in the box »), description laisse, Fitting Guide, FAQ, The First 10 Walks.
+- **Menu principal** : Harness · Lead · Size Guide · Fitting · FAQ · 60-Day Guarantee.
+- **Collection** « Leads & Accessories » renommée « Leads » (handle inchangé).
+- La homepage (thème brouillon) n'affiche que ces deux produits dans la grille « Walk ».
