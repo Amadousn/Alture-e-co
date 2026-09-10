@@ -1,0 +1,432 @@
+<title>Loose-Lead Australia Store</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F2F5F4;
+    --bg-2: #E6ECEB;
+    --ink: #13262B;
+    --ink-2: #4A5F65;
+    --line: #C9D4D3;
+    --ocean: #0E6F8C;
+    --ocean-ink: #FFFFFF;
+    --kelpie: #B9773A;
+    --ok: #2E7D4F;
+    --warn-bg: #FBF1DC;
+    --warn-ink: #6B4A0B;
+    --card: #FFFFFF;
+    --disp: "Bricolage Grotesque", "Arial Narrow", Arial, sans-serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1C20; --bg-2: #16272C; --ink: #E4ECEE; --ink-2: #9FB4B9; --line: #2B3F45;
+      --ocean: #3FA6C4; --ocean-ink: #071418; --kelpie: #D8965A; --ok: #6CC391;
+      --warn-bg: #2E2712; --warn-ink: #EAC97A; --card: #142428;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1C20; --bg-2: #16272C; --ink: #E4ECEE; --ink-2: #9FB4B9; --line: #2B3F45;
+    --ocean: #3FA6C4; --ocean-ink: #071418; --kelpie: #D8965A; --ok: #6CC391;
+    --warn-bg: #2E2712; --warn-ink: #EAC97A; --card: #142428;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+  h1, h2, h3 { font-family: var(--disp); line-height: 1.05; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 700; letter-spacing: -0.015em; }
+  h3 { font-size: 1.15rem; font-weight: 700; }
+  p { margin: 0; max-width: 62ch; }
+  .eyebrow { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-2); }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  a { color: var(--ocean); }
+  :focus-visible { outline: 3px solid var(--ocean); outline-offset: 2px; }
+
+  /* mockup frame */
+  .note { background: var(--warn-bg); color: var(--warn-ink); font-size: 0.85rem; padding: 10px 20px; }
+  .note b { font-weight: 600; }
+  .verify { color: var(--kelpie); font-family: var(--mono); font-size: 0.75em; vertical-align: super; }
+  .pagebreak { display: flex; align-items: center; gap: 14px; margin-block: 56px 24px; }
+  .pagebreak span { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
+  .pagebreak::before, .pagebreak::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* store chrome */
+  .announce { background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: 0.78rem; text-align: center; padding: 8px 20px; letter-spacing: 0.02em; }
+  :root[data-theme="dark"] .announce { background: var(--ocean); color: var(--ocean-ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .announce { background: var(--ocean); color: var(--ocean-ink); } }
+  header.nav { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; border-bottom: 1px solid var(--line); gap: 16px; flex-wrap: wrap; }
+  .brand { font-family: var(--disp); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
+  .brand small { font-family: var(--mono); font-weight: 400; font-size: 0.7rem; color: var(--ink-2); margin-left: 8px; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; font-size: 0.9rem; flex-wrap: wrap; }
+  nav a { color: var(--ink); text-decoration: none; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr; gap: 28px; padding-block: 40px 32px; align-items: center; }
+  @media (min-width: 820px) { .hero { grid-template-columns: 1.05fr 1fr; gap: 48px; padding-block: 56px 48px; } }
+  .hero-copy { display: flex; flex-direction: column; gap: 18px; }
+  .lede { font-size: 1.1rem; color: var(--ink-2); }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: var(--body); font-weight: 600; font-size: 1rem; padding: 14px 22px; border-radius: 6px; border: 1.5px solid var(--ocean); text-decoration: none; cursor: pointer; display: inline-block; }
+  .btn.primary { background: var(--ocean); color: var(--ocean-ink); }
+  .btn.ghost { background: transparent; color: var(--ocean); }
+  .under { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-2); display: flex; gap: 14px; flex-wrap: wrap; }
+  .under span::before { content: "✓ "; color: var(--ok); }
+
+  /* photo placeholders = shot list */
+  .shot { background: var(--bg-2); border: 1px dashed var(--line); border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; aspect-ratio: 4 / 3; max-width: 100%; position: relative; overflow: hidden; }
+  .shot.tall { aspect-ratio: 4 / 5; }
+  .shot.wide { aspect-ratio: 16 / 9; }
+  .shot .tag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+  .shot .desc { font-size: 0.9rem; font-weight: 500; }
+  .shot::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 80% 0%, color-mix(in oklab, var(--ocean) 18%, transparent), transparent 60%); }
+
+  /* trust strip */
+  .strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-block: 8px 48px; }
+  @media (min-width: 720px) { .strip { grid-template-columns: repeat(4, 1fr); } }
+  .strip div { background: var(--card); padding: 14px 16px; font-size: 0.85rem; }
+  .strip div b { display: block; font-family: var(--disp); font-size: 1rem; font-weight: 700; }
+
+  section.block { padding-block: 40px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
+  .two { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 820px) { .two { grid-template-columns: 1fr 1fr; align-items: start; } }
+  ul.plain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  ul.plain li { padding-left: 22px; position: relative; max-width: 62ch; }
+  ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; border-radius: 50%; background: var(--ocean); }
+
+  /* mechanism figure */
+  figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+  figure svg { width: 100%; height: auto; display: block; max-width: 100%; }
+  figcaption { font-size: 0.85rem; color: var(--ink-2); margin-top: 8px; }
+
+  .grid3 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 720px) { .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .tile { display: flex; flex-direction: column; gap: 10px; }
+  .tile h3 { margin-top: 4px; }
+  .tile p { font-size: 0.95rem; color: var(--ink-2); }
+
+  .split { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split > div { padding: 22px; }
+  .split > div + div { border-top: 1px solid var(--line); }
+  @media (min-width: 720px) { .split > div + div { border-top: 0; border-left: 1px solid var(--line); } }
+  .split h3 { margin-bottom: 8px; }
+
+  .guarantee { background: var(--ink); color: var(--bg); border-radius: 8px; padding: 28px 24px; display: grid; gap: 14px; }
+  .guarantee h2 { color: var(--bg); }
+  .guarantee p { color: color-mix(in oklab, var(--bg) 80%, var(--ink)); }
+  .guarantee .big { font-family: var(--disp); font-size: clamp(2.6rem, 8vw, 4.2rem); font-weight: 800; line-height: 1; color: var(--kelpie); }
+
+  /* PDP */
+  .pdp { display: grid; grid-template-columns: 1fr; gap: 28px; padding-block: 24px; }
+  @media (min-width: 820px) { .pdp { grid-template-columns: 1.1fr 1fr; gap: 44px; } }
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .gallery .shot:first-child { grid-column: 1 / -1; }
+  .gallery .shot { aspect-ratio: 1; }
+  .gallery .shot:first-child { aspect-ratio: 4 / 3; }
+  .buy { display: flex; flex-direction: column; gap: 16px; }
+  .price { font-family: var(--mono); font-size: 1.6rem; font-weight: 500; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .price small { font-size: 0.8rem; color: var(--ink-2); font-family: var(--body); }
+  .promise { display: flex; flex-direction: column; gap: 6px; font-size: 0.95rem; }
+  .promise span::before { content: "— "; color: var(--ocean); }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label { font-size: 0.85rem; font-weight: 600; display: flex; justify-content: space-between; }
+  .field label a { font-weight: 400; font-size: 0.8rem; }
+  .sizes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sizes button, .swatches button { font-family: var(--mono); font-size: 0.9rem; padding: 10px 14px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 6px; cursor: pointer; }
+  .sizes button[aria-pressed="true"], .swatches button[aria-pressed="true"] { border-color: var(--ocean); box-shadow: inset 0 0 0 1px var(--ocean); }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .swatches button { display: flex; align-items: center; gap: 8px; font-family: var(--body); }
+  .swatches i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid var(--line); }
+  .addon { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; background: var(--card); font-size: 0.92rem; }
+  .addon input { margin-top: 4px; }
+  .addon .mono { margin-left: auto; white-space: nowrap; }
+  .sticky { position: sticky; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 12px 0; display: flex; gap: 12px; align-items: center; }
+  .sticky .btn { flex: 1; text-align: center; }
+  details { border-top: 1px solid var(--line); }
+  details summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; }
+  details summary::after { content: "+"; font-family: var(--mono); color: var(--ink-2); }
+  details[open] summary::after { content: "–"; }
+  details p, details ol { margin: 0 0 14px; color: var(--ink-2); font-size: 0.95rem; max-width: 62ch; }
+  details ol { padding-left: 20px; }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 560px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); font-weight: 500; }
+  td.mono { white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  td strong { color: var(--ocean); }
+
+  .cart { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 12px; max-width: 420px; }
+  .cart .row { display: flex; justify-content: space-between; gap: 12px; font-size: 0.95rem; }
+  .cart .row.included { color: var(--ink-2); }
+  .cart .bar { height: 6px; background: var(--bg-2); border-radius: 3px; overflow: hidden; }
+  .cart .bar i { display: block; width: 100%; height: 100%; background: var(--ok); }
+  .cart .msg { font-size: 0.85rem; color: var(--ok); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 28px 40px; font-size: 0.85rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; }
+  @media (prefers-reduced-motion: no-preference) { .btn { transition: transform .15s ease; } .btn:hover { transform: translateY(-1px); } }
+</style>
+
+<div class="note wrap-note"><b>Mockup, not a live store.</b> Placeholder brand: [BRAND]. Photo boxes are the shot list. Anything marked <span class="verify">verify</span> must be confirmed on our real product before publishing. No ParoPet reviews, ratings or counts appear here.</div>
+
+<div class="announce">Free shipping Australia-wide &nbsp;·&nbsp; 60-Day Loose-Lead Guarantee &nbsp;·&nbsp; Matching lead included</div>
+
+<div class="wrap">
+  <header class="nav">
+    <div class="brand">[BRAND]<small>AU</small></div>
+    <nav aria-label="Store"><ul><li><a href="#pdp">Harness</a></li><li><a href="#size">Size guide</a></li><li><a href="#fit">Fitting</a></li><li><a href="#faq">FAQ</a></li><li><a href="#guarantee">Guarantee</a></li></ul></nav>
+  </header>
+
+  <div class="pagebreak"><span>Homepage</span></div>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Front-clip no-pull harness · made for Australian walks</span>
+      <h1>Walks you actually look forward to.</h1>
+      <p class="lede">The [BRAND] Front-Clip Harness turns your dog back towards you the moment they pull. No pressure on the throat, no wrestling at the door, and you're in control from the first walk, whether it's the beach at six or the oval after work.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#pdp">Shop the harness · A$59</a>
+        <a class="btn ghost" href="#how">See how the front clip works (20 sec)</a>
+      </div>
+      <div class="under"><span>Matching lead included</span><span>Free shipping Australia-wide</span><span>60 days to change your mind</span></div>
+    </div>
+    <div class="shot tall"><span class="tag">Hero video · 6 s loop</span><span class="desc">Kelpie cross on a coastal track at dawn. Lead goes tight, dog swings back to the owner's knee. Owner holds a coffee in the other hand.</span></div>
+  </section>
+
+  <div class="strip">
+    <div><b>Ships from [city] <span class="verify">verify</span></b>Australia Post tracked, 1 business day dispatch</div>
+    <div><b>Prepaid returns</b>Label emailed, drop at any post office</div>
+    <div><b>Free size swap</b>Wrong size costs you nothing</div>
+    <div><b>Australian-owned <span class="verify">verify</span></b>Email answered within one business day, Sydney time</div>
+  </div>
+
+  <section class="block">
+    <h2>If this sounds like your walks</h2>
+    <div class="two">
+      <ul class="plain">
+        <li>Your dog pulls like a freight train the second the front door opens.</li>
+        <li>You've stopped taking them to the dog beach because you can't hold them near other dogs.</li>
+        <li>Your shoulder or lower back hurts after every walk.</li>
+        <li>You've tried a back-clip harness, a slip lead, maybe a head halter. Nothing stuck.</li>
+        <li>Bikes and runners on the shared path make you tense up before they even get close.</li>
+      </ul>
+      <div class="shot"><span class="tag">Photo</span><span class="desc">Owner braced on a footpath, 30-kilo staffy leaning into a back-clip harness. The "before".</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <h2>Why the clip position changes everything</h2>
+    <div class="two">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p>Most harnesses clip on the back. That gives your dog a full-body brace to lean into, which is exactly how a sled dog is set up to pull.</p>
+        <p>Clip the lead at the chest instead and their own momentum swings them sideways, back towards you. The pull stops working. There's nothing on the neck and nothing on the face.</p>
+        <p class="eyebrow">Top-down view</p>
+      </div>
+      <figure>
+        <svg viewBox="0 0 520 260" role="img" aria-label="Top-down diagram: back clip lets the dog drive forward; front clip swings the dog sideways towards the owner">
+          <g font-family="IBM Plex Mono, monospace" font-size="12" fill="currentColor" style="color:var(--ink-2)">
+            <text x="20" y="24">BACK CLIP</text>
+            <text x="280" y="24">FRONT CLIP</text>
+          </g>
+          <!-- back clip -->
+          <ellipse cx="110" cy="120" rx="70" ry="28" fill="var(--bg-2)" stroke="var(--line)"/>
+          <circle cx="188" cy="120" r="12" fill="var(--bg-2)" stroke="var(--line)"/>
+          <circle cx="100" cy="120" r="5" fill="var(--ink)"/>
+          <line x1="100" y1="120" x2="40" y2="200" stroke="var(--ink)" stroke-width="2"/>
+          <circle cx="36" cy="206" r="8" fill="var(--ink)"/>
+          <path d="M205 120 L245 120" stroke="var(--kelpie)" stroke-width="4" fill="none"/>
+          <path d="M240 112 L252 120 L240 128 Z" fill="var(--kelpie)"/>
+          <text x="22" y="240" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-2)">Full body weight drives forward</text>
+          <!-- front clip -->
+          <ellipse cx="370" cy="120" rx="70" ry="28" fill="var(--bg-2)" stroke="var(--line)"/>
+          <circle cx="448" cy="120" r="12" fill="var(--bg-2)" stroke="var(--line)"/>
+          <circle cx="436" cy="120" r="5" fill="var(--ocean)"/>
+          <line x1="436" y1="120" x2="330" y2="200" stroke="var(--ocean)" stroke-width="2"/>
+          <circle cx="326" cy="206" r="8" fill="var(--ocean)"/>
+          <path d="M448 100 C 470 80, 470 60, 440 60" stroke="var(--ocean)" stroke-width="4" fill="none"/>
+          <path d="M448 54 L436 62 L448 70 Z" fill="var(--ocean)"/>
+          <text x="282" y="240" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-2)">Momentum swings the chest back to you</text>
+        </svg>
+        <figcaption>Replace with the 20-second vertical video for the live site. The diagram stays as the still frame.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Built for how Australians walk</h2>
+    <div class="grid3">
+      <div class="tile"><div class="shot"><span class="tag">Photo</span><span class="desc">Pre-dawn suburban lap, reflective trim catching a streetlight</span></div><h3>Early mornings, hot evenings</h3><p>Lightweight, breathable webbing and a padded chest plate that doesn't hold heat.<span class="verify">verify</span> Reflective trim for the walk before the footpath cooks.</p></div>
+      <div class="tile"><div class="shot"><span class="tag">Photo</span><span class="desc">Wet harness rinsed under a beach tap, sand on the concrete</span></div><h3>Beach, sand and salt</h3><p>Rinse it under the tap, hang it in the shade, it's dry by the next walk.<span class="verify">verify</span></p></div>
+      <div class="tile"><div class="shot"><span class="tag">Photo</span><span class="desc">Shared path: bike passing, owner's hand on the top handle</span></div><h3>Bush tracks and shared paths</h3><p>Back clip when the track's quiet. Front clip when the bikes come through. Top grab handle for a quick hold at a crossing.</p></div>
+    </div>
+    <div class="grid3">
+      <div class="tile"><div class="shot"><span class="tag">Fit video 10 s</span><span class="desc">Staffy, barrel chest, belly strap fully tightened</span></div><h3>Big, strong dogs</h3><p>Staffies, kelpies, labs, shepherds, cattle dogs and greyhounds all fit.<span class="verify">verify</span></p></div>
+      <div class="tile"><div class="shot"><span class="tag">Fit video 10 s</span><span class="desc">Greyhound, deep chest, neck straps at their loosest</span></div><h3>Deep-chested dogs</h3><p>Fitted by chest, not by weight, so it doesn't twist on a sighthound.</p></div>
+      <div class="tile"><div class="shot"><span class="tag">Fit video 10 s</span><span class="desc">Cavoodle in XS, step-in or over-head shown honestly</span></div><h3>Small dogs too</h3><p>XS to XL,<span class="verify">verify</span> with a size guide that tells you which size to pick, not just a chart.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="split">
+      <div><h3>What it does</h3><p>Gives you immediate mechanical control. Less leverage for your dog, less strain on your arm and back. Most owners feel it on the first walk.</p></div>
+      <div><h3>What it doesn't</h3><p>Train your dog by itself. Ten minutes of loose-lead practice on a quiet street in the first week turns "easier to hold" into "walks nicely". We send you exactly how, in <em>The First 10 Walks</em>.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="guarantee">
+    <div class="guarantee">
+      <span class="big">60 days</span>
+      <h2>Loose-Lead Guarantee</h2>
+      <p>Walk your dog in it. Take it to the beach. If after 60 days it hasn't changed your walks, email us. We send a prepaid Australia Post label and refund you in full once it's scanned in. Wrong size? We swap it, no charge.</p>
+    </div>
+  </section>
+
+  <div class="pagebreak"><span>Product page · mobile-first order</span></div>
+
+  <section class="pdp" id="pdp">
+    <div class="gallery">
+      <div class="shot"><span class="tag">1 · Hero</span><span class="desc">Kelpie cross, harness on, front clip engaged, coastal track</span></div>
+      <div class="shot"><span class="tag">2 · Mechanism</span><span class="desc">Top-down, dog mid-turn</span></div>
+      <div class="shot"><span class="tag">3 · Fit</span><span class="desc">Staffy, barrel chest</span></div>
+      <div class="shot"><span class="tag">4 · Fit</span><span class="desc">Greyhound, deep chest</span></div>
+      <div class="shot"><span class="tag">5 · Detail</span><span class="desc">Sliders, steel D-rings, handle</span></div>
+      <div class="shot"><span class="tag">6 · Flat-lay</span><span class="desc">Harness + included Classic Lead</span></div>
+      <div class="shot"><span class="tag">7 · Colours</span><span class="desc">All colourways on sand</span></div>
+    </div>
+
+    <div class="buy">
+      <span class="eyebrow">[BRAND] · Front-clip no-pull harness</span>
+      <h2>Front-Clip No-Pull Harness</h2>
+      <div class="price">A$59 <small>GST included · Matching Classic Lead included · Free shipping Australia-wide</small></div>
+      <div class="promise"><span>Front clip redirects the pull</span><span>Nothing on the throat</span><span>60 days to test it on real walks</span></div>
+
+      <div class="field">
+        <label for="size-xs">Size <a href="#size">Not sure? Measure here (30 sec)</a></label>
+        <div class="sizes" role="group" aria-label="Size">
+          <button id="size-xs" type="button" aria-pressed="false">XS</button>
+          <button id="size-s" type="button" aria-pressed="false">S</button>
+          <button id="size-m" type="button" aria-pressed="true">M</button>
+          <button id="size-l" type="button" aria-pressed="false">L</button>
+          <button id="size-xl" type="button" aria-pressed="false">XL</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="col-1">Colour <span class="verify">verify stock</span></label>
+        <div class="swatches" role="group" aria-label="Colour">
+          <button id="col-1" type="button" aria-pressed="true"><i style="background:#13262B"></i>Charcoal</button>
+          <button id="col-2" type="button" aria-pressed="false"><i style="background:#0E6F8C"></i>Ocean</button>
+          <button id="col-3" type="button" aria-pressed="false"><i style="background:#B9773A"></i>Red dirt</button>
+          <button id="col-4" type="button" aria-pressed="false"><i style="background:#7A8C3B"></i>Gum</button>
+        </div>
+      </div>
+
+      <label class="addon"><input id="addon-patch" type="checkbox"><span>Add a name + phone patch. Handy if your dog ever takes off at the dog beach.<span class="verify">verify supply</span></span><span class="mono">+ A$12</span></label>
+      <label class="addon"><input id="addon-bungee" type="checkbox"><span>Add the Shock-Absorbing Bungee Lead for runs and tracks (use on the back clip).</span><span class="mono">+ A$22</span></label>
+
+      <div class="sticky"><span class="mono">A$59 · M · Charcoal</span><a class="btn primary" href="#cart">Add to cart</a></div>
+
+      <details open><summary>Specs</summary>
+        <ol>
+          <li>4 adjustment points, both sides <span class="verify">verify</span></li>
+          <li>Front and back steel D-rings <span class="verify">verify</span></li>
+          <li>Padded chest plate, top grab handle, reflective trim <span class="verify">verify</span></li>
+          <li>Quick-release buckles, breathable webbing, machine wash cold <span class="verify">verify</span></li>
+          <li>Weight per size: XS __ g · S __ g · M __ g · L __ g · XL __ g <span class="verify">verify</span></li>
+        </ol>
+      </details>
+      <details><summary>Shipping and returns</summary>
+        <p>Dispatched from [city] within one business day. Australia Post standard: 2–4 business days metro, 3–6 regional, longer for remote WA and NT. Express Post A$9.95, 1–3 business days. Returns within 60 days with a prepaid label; size swaps are free.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="block" id="size">
+    <h2>Size guide</h2>
+    <p class="lede">Chest first: wrap a soft tape around the widest part of the ribcage, just behind the front legs. Between sizes? Go up. Thick double coat? Go up.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Size</th><th>Chest (cm) <span class="verify">verify</span></th><th>Neck (cm) <span class="verify">verify</span></th><th>Typical Australian dogs (guide only, measure anyway)</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">XS</td><td class="mono">35–45</td><td class="mono">25–33</td><td>Mini dachshund, Maltese, Chihuahua, small Cavoodle</td></tr>
+          <tr><td class="mono">S</td><td class="mono">44–58</td><td class="mono">30–40</td><td>Cavoodle, Frenchie, Jack Russell, Mini Schnauzer, Cocker</td></tr>
+          <tr><td class="mono">M</td><td class="mono">56–72</td><td class="mono">38–50</td><td>Staffy, Kelpie, Border Collie, Spoodle, Whippet, Beagle</td></tr>
+          <tr><td class="mono">L</td><td class="mono">70–88</td><td class="mono">46–60</td><td>Labrador, Golden Retriever, Cattle Dog, Boxer, Greyhound, Groodle</td></tr>
+          <tr><td class="mono">XL</td><td class="mono">86–105</td><td class="mono">55–70</td><td>German Shepherd, Rottweiler, Bernese, large Groodle</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="plain">
+      <li>Staffies and bulldogs: wide chest, narrow waist. Pick by chest, then tighten the belly strap fully.</li>
+      <li>Greyhounds and whippets: deep chest. Pick by chest, expect the neck straps at their loosest.</li>
+      <li>Puppies: buy for today, not for later. A loose harness twists. Free size swap when they grow.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="fit">
+    <h2>Fitting, in the order that stops twisting</h2>
+    <div class="two">
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;max-width:62ch">
+        <li>Loosen all four sliders before the first fit.</li>
+        <li>Put it on, clip both buckles. <span class="verify">verify step-in or over-head</span></li>
+        <li>Tighten neck straps first, then chest, then belly. <strong>Adjust both sides evenly</strong> or it sits crooked and twists.</li>
+        <li>Two fingers flat under every strap. Tighter rubs; looser twists and can slip.</li>
+        <li><strong>Lock check:</strong> after five minutes of walking, re-check the belly strap. Sliders settle on the first walk. <span class="verify">verify</span></li>
+        <li>Front clip for training and busy paths. Back clip for the quiet stretch, running and the bungee lead.</li>
+        <li>Take it off at home. It's walking gear, not a chew toy.</li>
+      </ol>
+      <div class="shot"><span class="tag">Video 45 s</span><span class="desc">Hands-only fitting on a border collie, slider by slider, ending with the two-finger check</span></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Collar, back-clip, head halter or front-clip?</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Flat collar</th><th>Back-clip harness</th><th>Head halter</th><th>Front-clip harness</th></tr></thead>
+        <tbody>
+          <tr><td>Where the force goes</td><td>Throat</td><td>Chest and shoulders, straight forward</td><td>Muzzle and neck</td><td><strong>Chest, redirected sideways</strong></td></tr>
+          <tr><td>When the dog pulls</td><td>Coughing, strain</td><td>Dog can brace and pull harder</td><td>Head turns; many dogs paw it off</td><td><strong>Dog swings back towards you</strong></td></tr>
+          <tr><td>Comfort in heat</td><td>Fine</td><td>Depends on padding</td><td>Often disliked</td><td>Fine with breathable webbing</td></tr>
+          <tr><td>Learning curve</td><td>None</td><td>None</td><td>Days to weeks</td><td><strong>First walk</strong></td></tr>
+          <tr><td>Best for</td><td>ID tags</td><td>Dogs that already walk nicely, running</td><td>Some very strong dogs, with a trainer</td><td>Pullers, reactive dogs, strong dogs, sore owners</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <h2>Straight answers</h2>
+    <div>
+      <details><summary>Will it stop my dog pulling on the first walk?</summary><p>Most dogs pull noticeably less on the first walk because pulling stops getting them anywhere. Some determined dogs take a few walks. That's why you get 60 days, not 60 minutes.</p></details>
+      <details><summary>Is this a replacement for training?</summary><p>No. It's a control tool that removes the leverage while you teach loose-lead walking. We send you The First 10 Walks so the two work together.</p></details>
+      <details><summary>Can the straps loosen while walking?</summary><p>Sliders on any harness can settle on the first few walks. Do the five-minute re-check in the fitting guide. If a strap keeps slipping after that, contact us; that's a fault and we'll replace it.</p></details>
+      <details><summary>Does it twist to the side?</summary><p>Twisting almost always means a size too big or two sides tightened unevenly. Fit by chest, adjust both sides, two fingers under each strap. Deep-chested dogs: watch the greyhound fitting video.</p></details>
+      <details><summary>My dog chews everything. Will it survive?</summary><p>It's tough walking gear, not a chew toy. Take it off at home. Chew damage isn't covered, but we'll tell you honestly what is.</p></details>
+      <details><summary>My staffy is all chest. Will it fit?</summary><p>Pick by chest measurement and tighten the belly strap fully. If it doesn't sit right, swap sizes for free.</p></details>
+      <details><summary>Should I use the bungee lead on the front clip?</summary><p>For teaching loose-lead walking, use the included Classic Lead on the front clip: the redirection is immediate. Use the bungee on the back clip for running and tracks.</p></details>
+      <details><summary>Is it OK in the heat?</summary><p>The webbing is lightweight and breathable. Still, walk early or late in summer and do the ten-second hand test on the footpath.</p></details>
+      <details><summary>How do returns work?</summary><p>Email us within 60 days. We send a prepaid Australia Post label, you drop it at any post office, we refund the full amount once it's scanned in. Size swaps are free.</p></details>
+    </div>
+  </section>
+
+  <section class="block" id="cart">
+    <h2>Cart drawer</h2>
+    <div class="cart">
+      <div class="row"><span>Front-Clip No-Pull Harness · M · Charcoal</span><span class="mono">A$59.00</span></div>
+      <div class="row included"><span>Matching Classic Lead · included</span><span class="mono">A$0.00</span></div>
+      <div class="bar"><i></i></div>
+      <div class="msg">Free standard shipping Australia-wide. Express available at checkout.</div>
+      <div class="row" style="border-top:1px solid var(--line);padding-top:10px"><span>Heading for the beach or a track? Bungee Lead</span><span class="mono">+ A$22</span></div>
+      <div class="row"><span>Name + phone patch</span><span class="mono">+ A$12</span></div>
+      <a class="btn primary" href="#cart" style="text-align:center">Checkout · A$59.00</a>
+      <span class="eyebrow">No countdown. No stock counter. No "people viewing".</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>[BRAND] Pty Ltd · ABN [number] · hello@[brand].com.au</span>
+    <span>Size guide · Fitting · Shipping &amp; returns · FAQ · Privacy</span>
+  </footer>
+</div>
