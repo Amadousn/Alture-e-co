@@ -213,3 +213,13 @@ Les 1★ Trustpilot portent sur : **livraison lente / colis non reçu, absence d
 | Produit complémentaire | Bungee, rope lead, colliers, 2e harnais, ebook | Identique, plus cher | Laisse élastique = upsell logique | Bundle US mal calibré | Bundle « Beach & Trail » : harnais + bungee + porte-sacs |
 | Panier | Cadeau à 0, seuil, upsell | Identique | Cadeau visible, barre de progression | — | Barre « free shipping » + upsell bungee A$22 + patch |
 | Mobile | Trafic 100 % social → mobile | Identique | PDP = LP mobile | Non observable | PDP mobile-first : ATC sticky, guide taille en drawer, vidéos verticales |
+
+## 10. Complément : compte publicitaire, chronologie de l'offre, créas (ajout 10 sept. 2026)
+
+Voir `05-ad-system-and-creative-playbook.md` pour le détail. Points qui modifient la lecture des sections 3 et 8 :
+
+- **Volume réel** : 490 annonces Meta indexées sur paropet.co.uk, ≈ €368 k de dépense UE, 32 M de reach ; ciblage déclaré GB uniquement. theparopet.com n'a aucun ciblage US indexé : la « version US » n'a, à ce jour, **aucune publicité propre**.
+- **L'offre a bougé 4 fois en 5 mois** : 30 % + 30 j + livraison gratuite (avril) → 20 % + 40 j (mi-avril) → 20 % + **60 j** testé sur deux annonces UGC (≈ €31 k, mai–juin) → retour à 40 j → abandon du « 20 % » dans les titres début septembre au profit de « 40-day Money-Back Guarantee » et « Thousands Of UK Dog Owners Have Made The Switch ».
+- **Annonce n° 1 (€80 643)** : « The pulling isn't your fault. » en green-screen TikTok, présentateur récurrent, sur-titre « Most pulling dogs never stop pulling ». Le mécanisme, pas la promo, est ce qui a scalé.
+- **Claims supplémentaires non sourcés** : « the one trainers actually use » (≈ €44 k de dépense cumulée), « Free UK delivery » sans seuil (avril), et une erreur factuelle « Collars clip on the back » diffusée à €10 k.
+- **Contradiction C16** : garantie 30 → 40 → 60 → 40 jours selon la période ; un client qui a vu l'annonce « 60-day return » et lit « 40 days » sur la PDP a une réclamation ACL-like légitime au Royaume-Uni (Consumer Protection from Unfair Trading Regulations). Notre garantie doit être identique partout, tout le temps.
