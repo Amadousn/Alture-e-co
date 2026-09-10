@@ -1,0 +1,281 @@
+{%- comment -%}
+  AU hero: one looping, muted, inline video with a static poster underneath.
+  The video source is only attached after the page is idle so it never blocks
+  first paint. On phones an optional 9:16 cut is used instead of the 16:9 master.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign hd = ''
+  assign sd = ''
+  assign mob = ''
+  if section.settings.video != blank
+    for source in section.settings.video.sources
+      if source.format == 'mp4'
+        if source.height == 1080
+          assign hd = source.url
+        elsif source.height == 720
+          assign sd = source.url
+        elsif sd == '' and source.height == 480
+          assign sd = source.url
+        endif
+      endif
+    endfor
+    if sd == ''
+      assign sd = hd
+    endif
+  endif
+  if section.settings.video_mobile != blank
+    for source in section.settings.video_mobile.sources
+      if source.format == 'mp4' and source.height == 720
+        assign mob = source.url
+      endif
+    endfor
+    if mob == ''
+      for source in section.settings.video_mobile.sources
+        if source.format == 'mp4' and source.height == 1080
+          assign mob = source.url
+        endif
+      endfor
+    endif
+  endif
+  assign poster = section.settings.poster
+  if poster == blank and section.settings.video != blank
+    assign poster = section.settings.video.preview_image
+  endif
+  assign poster_mobile = section.settings.poster_mobile
+  if poster_mobile == blank and section.settings.video_mobile != blank
+    assign poster_mobile = section.settings.video_mobile.preview_image
+  endif
+-%}
+<style>
+  #AuHero-{{ sid }} {
+    position: relative;
+    overflow: hidden;
+    background: {{ section.settings.fallback_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #AuHero-{{ sid }} .au-hero__frame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 560px;
+    height: min(84vh, 880px);
+  }
+  #AuHero-{{ sid }} .au-hero__media,
+  #AuHero-{{ sid }} .au-hero__media img,
+  #AuHero-{{ sid }} .au-hero__media video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #AuHero-{{ sid }} .au-hero__media img,
+  #AuHero-{{ sid }} .au-hero__media video {
+    display: block;
+    object-fit: cover;
+    object-position: 62% center;
+  }
+  #AuHero-{{ sid }} .au-hero__media video {
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+  #AuHero-{{ sid }} .au-hero__media video.is-playing {
+    opacity: 1;
+  }
+  #AuHero-{{ sid }} .au-hero__poster--mobile { display: none; }
+  #AuHero-{{ sid }} .au-hero__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(19,38,43,.62) 0%, rgba(19,38,43,.38) 34%, rgba(19,38,43,0) 62%);
+  }
+  #AuHero-{{ sid }} .au-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 640px;
+    padding: 4rem 5rem;
+    text-shadow: 0 1px 12px rgba(0,0,0,.28);
+  }
+  #AuHero-{{ sid }} .au-hero__eyebrow {
+    font-family: var(--font-heading-family);
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    opacity: .92;
+  }
+  #AuHero-{{ sid }} .au-hero__heading {
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 4.4vw, 4.1rem);
+    line-height: 1.04;
+    letter-spacing: -.01em;
+    margin: 0 0 1.1rem;
+    color: inherit;
+  }
+  #AuHero-{{ sid }} .au-hero__sub {
+    font-family: var(--font-body-family);
+    font-size: clamp(1.02rem, 1.25vw, 1.22rem);
+    line-height: 1.5;
+    max-width: 50ch;
+    margin: 0 0 1.7rem;
+    opacity: .96;
+  }
+  #AuHero-{{ sid }} .au-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.2rem;
+    padding: 0 1.9rem;
+    border-radius: var(--buttons-radius, 6px);
+    background: {{ section.settings.button_color }};
+    color: {{ section.settings.button_text_color }};
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  #AuHero-{{ sid }} .au-hero__cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  #AuHero-{{ sid }} .au-hero__micro {
+    margin: 1.1rem 0 0;
+    font-size: .86rem;
+    line-height: 1.5;
+    opacity: .9;
+  }
+  @media screen and (max-width: 749px) {
+    #AuHero-{{ sid }} .au-hero__frame {
+      align-items: flex-end;
+      min-height: 520px;
+      height: min(80svh, 700px);
+    }
+    #AuHero-{{ sid }} .au-hero__media img,
+    #AuHero-{{ sid }} .au-hero__media video { object-position: center 35%; }
+    #AuHero-{{ sid }} .au-hero__poster--mobile.has-image { display: block; }
+    #AuHero-{{ sid }} .au-hero__poster--mobile.has-image + .au-hero__poster--desktop { display: none; }
+    #AuHero-{{ sid }} .au-hero__overlay {
+      background: linear-gradient(180deg, rgba(19,38,43,0) 30%, rgba(19,38,43,.28) 52%, rgba(19,38,43,.78) 100%);
+    }
+    #AuHero-{{ sid }} .au-hero__content { padding: 1.5rem 1.5rem 2rem; max-width: 100%; }
+    #AuHero-{{ sid }} .au-hero__eyebrow { margin-bottom: .6rem; font-size: .7rem; }
+    #AuHero-{{ sid }} .au-hero__heading { font-size: clamp(1.9rem, 8.2vw, 2.5rem); margin-bottom: .75rem; }
+    #AuHero-{{ sid }} .au-hero__sub { font-size: .98rem; margin-bottom: 1.15rem; }
+    #AuHero-{{ sid }} .au-hero__cta { width: 100%; min-height: 3.1rem; font-size: .9rem; }
+    #AuHero-{{ sid }} .au-hero__micro { font-size: .78rem; margin-top: .8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #AuHero-{{ sid }} .au-hero__media video { display: none; }
+  }
+</style>
+
+<section id="AuHero-{{ sid }}" class="au-hero" aria-label="{{ section.settings.heading | strip_html | escape }}">
+  <div class="au-hero__frame">
+    <div class="au-hero__media" aria-hidden="true">
+      <div class="au-hero__poster--mobile{% if poster_mobile != blank %} has-image{% endif %}">
+        {%- if poster_mobile != blank -%}
+          {{ poster_mobile | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '450, 640, 828, 1080, 1200', alt: '' }}
+        {%- endif -%}
+      </div>
+      <div class="au-hero__poster--desktop">
+        {%- if poster != blank -%}
+          {{ poster | image_url: width: 2200 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 1800, 2200', alt: '' }}
+        {%- endif -%}
+      </div>
+      {%- if sd != blank or hd != blank -%}
+        <video
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="none"
+          disablepictureinpicture
+          disableremoteplayback
+          {% if poster != blank %}poster="{{ poster | image_url: width: 1500 }}"{% endif %}
+          data-hd="{{ hd }}"
+          data-sd="{{ sd }}"
+          data-mobile="{{ mob }}"
+          tabindex="-1"
+        ></video>
+      {%- endif -%}
+    </div>
+    <div class="au-hero__overlay"></div>
+    <div class="au-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="au-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="au-hero__heading">{{ section.settings.heading }}</h1>
+      {%- if section.settings.subheading != blank -%}
+        <p class="au-hero__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="au-hero__cta" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.micro != blank -%}
+        <p class="au-hero__micro">{{ section.settings.micro }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('AuHero-{{ sid }}');
+    if (!root) return;
+    var v = root.querySelector('video');
+    if (!v) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var w = window.innerWidth || document.documentElement.clientWidth;
+    var src = (w < 750 && v.dataset.mobile) ? v.dataset.mobile : ((w > 1500 && v.dataset.hd) ? v.dataset.hd : (v.dataset.sd || v.dataset.hd));
+    if (!src) return;
+    var started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      v.muted = true;
+      v.setAttribute('src', src);
+      v.load();
+      v.addEventListener('playing', function () { v.classList.add('is-playing'); }, { once: true });
+      var p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    }
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(start, { timeout: 1200 });
+    } else {
+      window.setTimeout(start, 250);
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (!started) return;
+      if (document.hidden) { v.pause(); } else { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "AU hero video",
+  "tag": "section",
+  "class": "section section-au-hero",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Hero video (16:9 master)" },
+    { "type": "video", "id": "video_mobile", "label": "Mobile video (9:16, optional)" },
+    { "type": "image_picker", "id": "poster", "label": "Poster image (shown before the video loads)" },
+    { "type": "image_picker", "id": "poster_mobile", "label": "Mobile poster (optional)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Front-clip no-pull harness" },
+    { "type": "text", "id": "heading", "label": "Headline", "default": "Walks you actually look forward to." },
+    { "type": "textarea", "id": "subheading", "label": "Subtitle", "default": "The front-clip harness that redirects pulling, protects your dog's neck and gives you more control from the very first walk." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the harness — A$59" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "micro", "label": "Reassurance line", "default": "Matching lead included · Free Australia-wide shipping · 60-day guarantee" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_color", "label": "Button colour", "default": "#0E6F8C" },
+    { "type": "color", "id": "button_text_color", "label": "Button text colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "fallback_color", "label": "Background while loading", "default": "#13262B" }
+  ],
+  "presets": [ { "name": "AU hero video" } ]
+}
+{% endschema %}

@@ -1,0 +1,100 @@
+{%- comment -%} Honest "what it does / what it doesn't" two-column section. {%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign does_items = section.settings.does_items | newline_to_br | split: '<br />'
+  assign doesnt_items = section.settings.doesnt_items | newline_to_br | split: '<br />'
+-%}
+<style>
+  #AuDD-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
+  #AuDD-{{ sid }} .au-dd__inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuDD-{{ sid }} .au-dd__head { max-width: 62ch; margin: 0 auto 2.2rem; text-align: center; }
+  #AuDD-{{ sid }} .au-dd__caption {
+    font-family: var(--font-heading-family);
+    font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .8rem; opacity: .75;
+  }
+  #AuDD-{{ sid }} h2 { margin: 0 0 1rem; }
+  #AuDD-{{ sid }} .au-dd__intro { font-size: 1.05rem; line-height: 1.55; margin: 0; }
+  #AuDD-{{ sid }} .au-dd__grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  #AuDD-{{ sid }} .au-dd__card {
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), .14);
+    border-radius: 10px;
+    padding: 1.6rem 1.6rem 1.4rem;
+  }
+  #AuDD-{{ sid }} .au-dd__title {
+    font-family: var(--font-heading-family);
+    font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 1rem;
+  }
+  #AuDD-{{ sid }} ul { list-style: none; margin: 0; padding: 0; }
+  #AuDD-{{ sid }} li { display: flex; gap: .75rem; align-items: flex-start; padding: .5rem 0; font-size: 1rem; line-height: 1.45; }
+  #AuDD-{{ sid }} li + li { border-top: 1px solid rgba(var(--color-foreground), .08); }
+  #AuDD-{{ sid }} li svg { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-top: .1rem; }
+  #AuDD-{{ sid }} .au-dd__yes svg { color: #1F8A5B; }
+  #AuDD-{{ sid }} .au-dd__no svg { color: #B4442F; }
+  #AuDD-{{ sid }} .au-dd__link { text-align: center; margin: 1.8rem 0 0; font-size: .95rem; }
+  #AuDD-{{ sid }} .au-dd__link a { color: inherit; text-underline-offset: .2em; }
+  @media screen and (min-width: 750px) {
+    #AuDD-{{ sid }} .au-dd__inner { padding: 0 5rem; }
+    #AuDD-{{ sid }} .au-dd__grid { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+    #AuDD-{{ sid }} .au-dd__card { padding: 2rem 2.1rem 1.8rem; }
+  }
+</style>
+<div id="AuDD-{{ sid }}" class="au-dd color-{{ section.settings.color_scheme }} gradient">
+  <div class="au-dd__inner">
+    <div class="au-dd__head">
+      {%- if section.settings.caption != blank -%}<p class="au-dd__caption">{{ section.settings.caption }}</p>{%- endif -%}
+      <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="au-dd__intro rte">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+    <div class="au-dd__grid">
+      <div class="au-dd__card au-dd__yes">
+        <p class="au-dd__title">{{ section.settings.does_title }}</p>
+        <ul>
+          {%- for item in does_items -%}
+            {%- assign clean = item | strip -%}
+            {%- if clean != blank -%}
+              <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.3l2.6 2.6L14 7.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{{ clean }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="au-dd__card au-dd__no">
+        <p class="au-dd__title">{{ section.settings.doesnt_title }}</p>
+        <ul>
+          {%- for item in doesnt_items -%}
+            {%- assign clean = item | strip -%}
+            {%- if clean != blank -%}
+              <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M7 7l6 6M13 7l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>{{ clean }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+    {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+      <p class="au-dd__link"><a href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a></p>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "AU does / doesn't",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Straight answer" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What it does — and what it doesn't." },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
+    { "type": "richtext", "id": "text", "label": "Intro", "default": "<p>It gives you more control by redirecting your dog's forward momentum. It doesn't replace loose-lead training — it makes that training easier to practise safely.</p>" },
+    { "type": "text", "id": "does_title", "label": "Left column title", "default": "What it does" },
+    { "type": "textarea", "id": "does_items", "label": "Left column items (one per line)", "default": "Redirects forward pulling\nGives you greater control\nReduces pressure on the neck\nSupports loose-lead practice" },
+    { "type": "text", "id": "doesnt_title", "label": "Right column title", "default": "What it doesn't" },
+    { "type": "textarea", "id": "doesnt_items", "label": "Right column items (one per line)", "default": "Train your dog automatically\nReplace supervision\nResist unsupervised chewing" },
+    { "type": "text", "id": "link_label", "label": "Secondary link label", "default": "Read the first 10 walks" },
+    { "type": "url", "id": "link_url", "label": "Secondary link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "presets": [ { "name": "AU does / doesn't" } ]
+}
+{% endschema %}

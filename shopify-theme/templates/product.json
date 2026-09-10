@@ -1,0 +1,521 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "breadcrumbs_MW6ytk": {
+          "type": "breadcrumbs",
+          "disabled": true,
+          "settings": {
+            "title_home": "Home",
+            "text_transform": "none",
+            "text_size": 14,
+            "spacing": 0,
+            "padding_top": 0,
+            "padding_top_mb": 0,
+            "padding_bottom": 0,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "title_Fnnnm3": {
+          "type": "title",
+          "settings": {
+            "title_size_dt": 26,
+            "title_size_mb": 26,
+            "title_line_height": 1.1,
+            "title_text_transform": "none",
+            "title_letter_spacing": 0,
+            "title_font_weight": 400
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "hide_tax_shipping": true,
+            "reverse_price": false,
+            "save_text_size": 12,
+            "price_weight": "bold",
+            "price_text_size": 18,
+            "price_text_size_mb": 18,
+            "compare_price": "#808080",
+            "original_price": "#13262B",
+            "show_save_price": false,
+            "save_text": "#13262B",
+            "save_bg": "#F2F5F4",
+            "save_border": "#F2F5F4",
+            "save_border_thickness": 1,
+            "save_corner_radius": 6,
+            "save_shadow_opacity": 0,
+            "save_shadow_horizontal_offset": 0,
+            "save_shadow_vertical_offset": 0,
+            "save_shadow_blur": 0
+          }
+        },
+        "promo_zgdCLT": {
+          "type": "promo",
+          "settings": {
+            "icon": "paw_print",
+            "icon_width": 20,
+            "content": "<p>Front clip redirects the pull</p>",
+            "font_size": 80
+          }
+        },
+        "promo_43xPXL": {
+          "type": "promo",
+          "settings": {
+            "icon": "heart",
+            "icon_width": 20,
+            "content": "<p>Nothing on the throat</p>",
+            "font_size": 80
+          }
+        },
+        "promo_Eedrfp": {
+          "type": "promo",
+          "settings": {
+            "icon": "return",
+            "icon_width": 20,
+            "content": "<p>60 days to test it on real walks</p>",
+            "font_size": 80
+          }
+        },
+        "promo_g8kgAg": {
+          "type": "promo",
+          "settings": {
+            "icon": "chat_bubble",
+            "icon_width": 20,
+            "content": "<p>Matching Classic Lead included</p>",
+            "font_size": 80
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "label_style": "body",
+            "font_size": 14,
+            "font_style": "unset",
+            "swatch_type": "color",
+            "swatch_shape": "slightly_round",
+            "swatch_size": 2.8,
+            "swatch_image_height": "square",
+            "swatch_image_custom_radius_value": 6,
+            "size_trigger": "Size",
+            "chart_id": "Size Guide",
+            "size_page": "size-guide",
+            "size_icon": "ruller",
+            "spaced_size": false
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false,
+            "skip_cart": false,
+            "button_padding_top": 20,
+            "button_padding_bottom": 20,
+            "button_custom_style": false,
+            "button_font_size": 20,
+            "button_height": 45,
+            "lm_main_button": "#0E6F8C",
+            "lm_main_button_gr": "",
+            "lm_main_text": "#ffffff",
+            "lm_main_text_hover": "#0E6F8C",
+            "lm_main_button_hover": "#ffffff",
+            "lm_main_button_gr_hover": "",
+            "lm_main_button_border_width": 0,
+            "lm_main_button_border_color": "#0E6F8C"
+          }
+        },
+        "payment_pcDBqV": {
+          "type": "payment",
+          "settings": {
+            "original": "custom",
+            "payment_icon": "visa,master,paypal,apple_pay,shopify-pay,google-pay",
+            "payment_content_alignment": "center",
+            "custom_icon_1_width": 34,
+            "custom_icon_2_width": 34,
+            "custom_icon_3_width": 34
+          }
+        },
+        "collapsible_tab_ptCdTk": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Sizing",
+            "icon": "none",
+            "content": "<p>Measure the chest at the widest part of the ribcage, just behind the front legs. Snug, not tight.</p><p>Between sizes, or a thick double coat? Go up. Staffies and bulldogs: pick by chest, then tighten the belly strap fully.</p><p>Full chart, breed examples and fitting steps in the <a href=\"/pages/size-guide\">Size Guide</a> and <a href=\"/pages/fitting-guide\">Fitting Guide</a>. Wrong size? Free swap within 60 days.</p>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        },
+        "collapsible_tab_EBKNVc": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Shipping & returns",
+            "icon": "none",
+            "content": "<p>Free standard shipping Australia-wide on every harness order (Australia Post, tracked). Express Post A$9.95. We ship within one business day.</p><p>60-Day Loose-Lead Guarantee: if it hasn't changed your walks, email us within 60 days. We send a prepaid Australia Post return label and refund you in full once it's scanned in. Size swaps are free.</p><p><a href=\"/pages/shipping-returns\">Shipping &amp; returns</a> · <a href=\"/pages/guarantee\">The guarantee</a></p>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "collapsible_tab_does": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What it does — and what it doesn't",
+            "content": "<p>It gives you more control by redirecting your dog's forward momentum. It doesn't replace loose-lead training — it makes that training easier to practise safely.</p><p><strong>What it does:</strong> redirects forward pulling, gives you greater control, reduces pressure on the neck, supports loose-lead practice.</p><p><strong>What it doesn't:</strong> train your dog automatically, replace supervision, or resist unsupervised chewing.</p><p><a href=\"/pages/first-10-walks\">Read the first 10 walks</a>.</p>",
+            "page": "",
+            "open_by_default": false,
+            "show_product_description": false
+          }
+        },
+        "promise_line": {
+          "type": "text",
+          "settings": {
+            "text": "✓ Matching Classic Lead included · ✓ Free shipping Australia-wide · ✓ 60-Day Loose-Lead Guarantee",
+            "text_style": "body",
+            "text_alignment": "left",
+            "text_size_dt": 15,
+            "use_custom_color": false,
+            "text_color": "#13262B",
+            "padding_top": 4,
+            "padding_bottom": 4
+          }
+        },
+        "sizing_note": {
+          "type": "text",
+          "settings": {
+            "text": "Not sure on size? Measure the chest just behind the front legs and check the <a href=\"/pages/size-guide\">size guide</a>. Between sizes, go up. Wrong size? Free swap within 60 days. <a href=\"/pages/fitting-guide\">Fitting guide</a> · <a href=\"/pages/guarantee\">60-day guarantee</a>.",
+            "text_style": "body",
+            "text_alignment": "left",
+            "text_size_dt": 14,
+            "use_custom_color": false,
+            "text_color": "#13262B",
+            "padding_top": 4,
+            "padding_bottom": 8
+          }
+        }
+      },
+      "block_order": [
+        "breadcrumbs_MW6ytk",
+        "title_Fnnnm3",
+        "price",
+        "promise_line",
+        "promo_zgdCLT",
+        "promo_43xPXL",
+        "promo_Eedrfp",
+        "promo_g8kgAg",
+        "variant_picker",
+        "sizing_note",
+        "buy_buttons",
+        "payment_pcDBqV",
+        "description",
+        "collapsible_tab_ptCdTk",
+        "collapsible_tab_EBKNVc",
+        "collapsible_tab_does"
+      ],
+      "custom_css": [],
+      "settings": {
+        "enable_sticky_info": true,
+        "no_scroll": false,
+        "show_feature_image_first": true,
+        "color_scheme": "background-1",
+        "block_padding": 1.5,
+        "media_size": "large",
+        "constrain_to_viewport": false,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail",
+        "hide_slider_buttons": false,
+        "thumbnail_layout": "medium",
+        "thumbnail_size": 54,
+        "thumbnail_radius": 6,
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "variant_image_filtering": "none",
+        "filtering_products": [],
+        "mobile_thumbnails": "dots",
+        "mobile_slider_height": "adapt",
+        "show_full_image": true,
+        "first_image_size": 92,
+        "second_image_size": 0,
+        "show_container": false,
+        "container_bg": "#ffffff",
+        "container_radius": 10,
+        "container_padding": 20,
+        "container_border_color": "#C9D4D3",
+        "show_container_mb": false,
+        "container_bg_mb": "#ffffff",
+        "container_padding_mb": 20,
+        "container_radius_mb": 8,
+        "container_border_color_mb": "#C9D4D3",
+        "container_text": "",
+        "container_text_size": 13,
+        "container_text_bg": "#F2F5F4",
+        "container_text_txt": "#13262B",
+        "container_text_animation": false,
+        "container_text_speed": 20,
+        "padding_top": 24,
+        "padding_top_mb": 16,
+        "padding_bottom": 64
+      }
+    },
+    "comparison_table_pAMhAV": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_EcyaNq": {
+          "type": "row",
+          "settings": {
+            "benefit": "Lead attaches at the chest, so the pull swings the dog back towards you",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_TKDWRX": {
+          "type": "row",
+          "settings": {
+            "benefit": "No full-body brace for the dog to lean into",
+            "us": true,
+            "others": false
+          }
+        },
+        "row_pN3qAQ": {
+          "type": "row",
+          "settings": {
+            "benefit": "Nothing on the throat or the face",
+            "us": true,
+            "others": true
+          }
+        },
+        "row_h9g3LP": {
+          "type": "row",
+          "settings": {
+            "benefit": "Works from the first walk, no desensitising",
+            "us": true,
+            "others": true
+          }
+        },
+        "row_KzLqjn": {
+          "type": "row",
+          "settings": {
+            "benefit": "Suited to pullers, reactive dogs and strong dogs",
+            "us": true,
+            "others": false
+          }
+        }
+      },
+      "block_order": [
+        "row_EcyaNq",
+        "row_TKDWRX",
+        "row_pN3qAQ",
+        "row_h9g3LP",
+        "row_KzLqjn"
+      ],
+      "settings": {
+        "title": "Why the clip position changes everything",
+        "heading_size": "h1",
+        "text": "<p>Most harnesses clip on the back. That gives your dog a full-body brace to lean into, which is exactly how a sled dog is set up to pull. Clip the lead at the chest instead and their own momentum swings them sideways, back towards you. The pull stops working. There's nothing on the neck and nothing on the face.</p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "layout": "table_second",
+        "color_scheme": "background-1",
+        "logo_width": 90,
+        "mobile_logo_width": 60,
+        "us_label": "Front-clip harness",
+        "others_label": "Back-clip harness",
+        "benefit_color_scheme": "background-1",
+        "icon_cells_color_scheme": "accent-1",
+        "checkmark_color": "#0E6F8C",
+        "x_color": "#13262B",
+        "checkmark_active_color": "#ffffff",
+        "x_active_color": "#ffffff",
+        "active_color": "#0E6F8C",
+        "active_text_color": "#ffffff",
+        "active_border_color": "#0E6F8C",
+        "table_corner_radius": 6,
+        "font_size": 16,
+        "table_shadow_opacity": 0,
+        "table_shadow_horizontal_offset": 0,
+        "table_shadow_vertical_offset": 0,
+        "table_shadow_blur": 0,
+        "table_border_thickness": 1,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "collapsible_content_kdacf9": {
+      "type": "collapsible-content",
+      "blocks": {
+        "pdp_faq_row_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will it stop my dog pulling on the first walk?",
+            "icon": "none",
+            "row_content": "<p>Most dogs pull noticeably less on the first walk because pulling stops getting them anywhere. Some determined dogs take a few walks. That's why you get 60 days, not 60 minutes.</p>",
+            "page": ""
+          }
+        },
+        "pdp_faq_row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a replacement for training?",
+            "icon": "none",
+            "row_content": "<p>No. It's a control tool that removes the leverage while you teach loose-lead walking. We send you \"The First 10 Walks\" so the two work together.</p>",
+            "page": ""
+          }
+        },
+        "pdp_faq_row_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it twist to the side?",
+            "icon": "none",
+            "row_content": "<p>Twisting almost always means the harness is a size too big or the two sides aren't tightened evenly. Fit by chest, adjust both sides, two fingers under each strap. Deep-chested dogs: see the <a href=\"/pages/fitting-guide\">fitting guide</a>.</p>",
+            "page": ""
+          }
+        },
+        "pdp_faq_row_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "My staffy is all chest. Will it fit?",
+            "icon": "none",
+            "row_content": "<p>Yes, pick by chest measurement and tighten the belly strap fully. If it doesn't sit right, swap sizes for free.</p>",
+            "page": ""
+          }
+        },
+        "pdp_faq_row_5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do returns work?",
+            "icon": "none",
+            "row_content": "<p>Email us within 60 days. We send a prepaid Australia Post label, you drop it at any post office, we refund the full amount once it's scanned in. Size swaps are free.</p>",
+            "page": ""
+          }
+        },
+        "pdp_faq_row_6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Delivery times?",
+            "icon": "none",
+            "row_content": "<p>We ship within one business day. Australia Post standard: 2–4 business days metro, 3–6 regional, longer for remote WA/NT. Express (A$9.95): 1–3 business days.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "pdp_faq_row_1",
+        "pdp_faq_row_2",
+        "pdp_faq_row_3",
+        "pdp_faq_row_4",
+        "pdp_faq_row_5",
+        "pdp_faq_row_6"
+      ],
+      "settings": {
+        "caption": "FAQ",
+        "heading": "Questions, answered honestly",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "section",
+        "color_scheme": "background-1",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "guarantee_60_days": {
+      "type": "rich-text",
+      "blocks": {
+        "pg_caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "60 days",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "pg_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "60-Day Loose-Lead Guarantee",
+            "heading_size": "h1"
+          }
+        },
+        "pg_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Walk your dog in it. Take it to the beach. If after 60 days it hasn't changed your walks, email us, we'll send a prepaid Australia Post label and refund you in full. Wrong size? We'll swap it, no charge.</p>"
+          }
+        },
+        "pg_button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Read the guarantee",
+            "button_link": "/pages/guarantee",
+            "button_style_secondary": false,
+            "button_label_2": "Shop the harness — A$59",
+            "button_link_2": "/products/front-clip-no-pull-harness",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "pg_caption",
+        "pg_heading",
+        "pg_text",
+        "pg_button"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-2",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "accent-1",
+        "image_ratio": "adapt",
+        "image_no_crop": true,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_scroll_tags": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      },
+      "disabled": true
+    },
+    "174300570336aa0ded": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "comparison_table_pAMhAV",
+    "collapsible_content_kdacf9",
+    "guarantee_60_days",
+    "related-products",
+    "174300570336aa0ded"
+  ]
+}
