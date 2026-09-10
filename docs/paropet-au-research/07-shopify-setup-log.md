@@ -141,3 +141,23 @@ Thème modifié : **beauty-16-5-1-2** (`gid://shopify/OnlineStoreTheme/198428983
 3. **Politiques légales** : Paramètres → Politiques (textes prêts dans `06-post-purchase-and-policies.md`) ; l'API refuse `write_legal_policies`.
 4. **Publier le thème** beauty-16-5-1-2 quand les médias seront en place (l'API bloque la publication).
 5. **Aperçu** : le proxy de cette session bloque `crms7m-ss.myshopify.com`, donc le rendu 390 px n'a pas pu être vérifié ici. À contrôler dans l'éditeur de thème (Aperçu mobile) : header compact, hero ≤ 3 lignes, cartes lifestyle en colonne, sticky ATC.
+
+## Médias générés avec Higgsfield (10 sept. 2026, nuit) — sur demande « génère-les »
+
+Aucune photo réelle n'existait. Sur instruction de l'utilisateur, le harnais de référence a été **créé** en packshot studio (Charcoal, 1:1), puis cette image a servi de référence unique à toutes les autres générations pour garder le même design (plastron en Y rembourré, anneau D acier au centre du poitrail, anneau D + poignée + barrette bleu Ocean sur le dos, boucles noires mates, liseré réfléchissant, aucun logo). Modèle image : Nano Banana Pro 2K ; vidéo : Seedance 2.5, 8 s, 1080p, sans audio ; recadrage 9:16 fait au ffmpeg. **Contrôle visuel non effectué** (le proxy de la session bloque les URLs de rendu) : vérifier chaque image dans Contenu → Fichiers et régénérer celles qui présentent un défaut (pattes, laisse, boucles).
+
+| Fichier Shopify (Contenu → Fichiers) | Usage | Ratio |
+|---|---|---|
+| harness-charcoal-front / -profile / -back, harness-front-clip-macro, harness-buckle-macro, harness-ocean-front, harness-red-dirt-front, harness-gum-front, harness-and-lead-flatlay | Médias produit harnais (11 médias, l'image de mécanisme et la photo « fitting » incluses) ; flat-lay + macro clip sur la laisse | 1:1 |
+| au-problem-pulling.png | Section « If this sounds like your walks » (image-with-text) | 4:5 |
+| au-mechanism-front-clip.png | « Why the clip position changes everything » | 1:1 |
+| au-early-morning.png, au-beach-rinse.png, au-bush-track.png | 3 cartes « Built for how Australians walk » | 4:5, 4:5, 3:2 |
+| au-big-and-small-dogs.png | « Big, strong dogs. Small dogs too. » | 16:9 |
+| au-product-macro-on-dog.png | Intro « What it does — and what it doesn't » | 1:1 |
+| au-fitting-hands.png | « Two fingers under every strap » | 4:3 |
+| au-final-cta-beach.png | Bannière finale « Enjoy the walk again. » | 16:9 |
+| au-hero-poster.png | Image de départ de la vidéo hero / poster | 16:9 |
+| au-hero-sunrise.mp4 | Hero vidéo (section « Video Text Overlay », autoplay muet en boucle, lazy) | 16:9 1920×1080 |
+| au-hero-sunrise-9x16.mp4 | Recadrage mobile / pubs | 9:16 1080×1920 |
+
+Homepage réécrite (`templates/index.json`) : hero vidéo avec texte à gauche + dégradé uniquement derrière le texte, micro-ligne sous le hero, puis alternance texte/photo sur toutes les sections. Coût Higgsfield : 19 images + 1 vidéo.
