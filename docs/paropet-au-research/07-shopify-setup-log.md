@@ -77,3 +77,19 @@ Le marchand a installé ce thème (non publié, `OnlineStoreTheme/198428983680`)
 | `config/settings_data.json` | Schémas de couleurs : background-1 #F2F5F4/#13262B/bouton #0E6F8C, background-2 sombre, accent-1 blanc, accent-2 #C9D4D3 ; titres Archivo, corps IBM Plex Sans ; rayons 6 ; barre de progression panier (seuils USD) coupée, message « Limited-Time Offer » et minuteur panier retirés ; bloc marque « [BRAND] » |
 
 Reste à faire dans l'éditeur de thème : images (hero, image-with-text, produit), logo, activer le thème, vérifier les couleurs de la barre sticky « add to cart » (encore blanc/noir) et le type de menu desktop (« mega »).
+
+## Emplacements médias sur le thème beauty (4 vidéos, 3 photos)
+
+Aucun fichier n'est encore dans Shopify (Contenu → Fichiers vide). Les emplacements sont créés et vides ; il suffit de choisir le fichier dans l'éditeur de thème.
+
+| Média | Emplacement | Où le choisir |
+|---|---|---|
+| Vidéo 1 (chien qui pivote vers le maître) | Hero homepage, section « Video Text Overlay » | Éditeur → page d'accueil → 1re section → Video |
+| Vidéo 2 (mécanisme clip avant vs arrière) | Section « Video with Text » « Why the clip position changes everything » | Éditeur → page d'accueil → 5e section → Video |
+| Vidéo 3 (fitting, mains et curseurs) | Section « Video » « Fitting it in two minutes » sur la page produit, et section « Watch the fit first » sur la page Fitting Guide (nouveau modèle `page.fitting-guide`, assigné) | Éditeur → Produits → Défaut ; Éditeur → Pages → Fitting Guide |
+| Vidéo 4 (plage, piste) | Section « Video » « Beach, sand, bush track… » après « Built for how Australians walk » | Éditeur → page d'accueil → 7e section → Video |
+| Photo 1 (harnais porté, côté) | 1re image du produit harnais | Produits → Front-Clip No-Pull Harness → Médias |
+| Photo 2 (détail anneau D, poignée) | 2e image du produit harnais | idem |
+| Photo 3 (flat-lay harnais + laisse) | Image du produit Matching Classic Lead, et 3e image du harnais | Produits → Matching Classic Lead → Médias |
+
+Ordre conseillé des médias produit : photo 1, vidéo 1, photo 2, vidéo 3, vidéo 4, photo 3. Les vignettes vidéo se règlent dans Médias → « Modifier la miniature ».
