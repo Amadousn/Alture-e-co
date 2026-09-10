@@ -114,3 +114,30 @@ Ordre conseillé des médias produit : photo 1, vidéo 1, photo 2, vidéo 3, vid
 | Panier | ✅ drawer : message cadeau, ligne « Included free », « You save », upsell laisse, icônes paiement ; pas de minuteur |
 | Mobile | ✅ barre sticky « add to cart » aux couleurs de marque, titre + prix visibles, vidéos verticales à charger |
 | Swatches couleur | ✅ pastilles Charcoal / Ocean / Red Dirt / Gum définies dans les réglages du thème |
+
+## Correction directe du thème brouillon (10 sept. 2026, nuit) — brief « Corrige maintenant la boutique »
+
+Thème modifié : **beauty-16-5-1-2** (`gid://shopify/OnlineStoreTheme/198428983680`, non publié). Rien n'a été touché sur le thème actif Horizon.
+
+### Fait via l'API
+
+| Point du brief | Action | Fichier / objet |
+|---|---|---|
+| 1. Header | Menu principal = Home · Harness · FAQ · Our Story (menu `main-menu` 332986581376). Lead, Size Guide, Fitting, Guarantee retirés du header. Icônes Search et Account masquées (CSS `custom_css` de la section header + `disable_search` / `predictive_search_enabled:false`). Mobile : logo à gauche (`mobile_logo_position:left`), hamburger, panier à droite, header compact (padding 4/4). Menu desktop en dropdown (plus de méga-menu). Barre d'annonce : « Free shipping Australia-wide · 60-Day Loose-Lead Guarantee · Matching lead included ». | `sections/header-group.json`, `config/settings_data.json` |
+| 2. Langue | Tout en anglais australien : « [BRAND] » retiré du bloc marque (« Made for Australian walks »), des pages et de la fiche produit ; vendor « [BRAND] » supprimé sur les deux produits et le vendor masqué partout (`show_vendor*`:false) car Shopify remplace un vendor vide par le nom de boutique « My Store 10 ». Seuils de barre de progression panier passés en AUD (barre désactivée de toute façon). | pages, produits, `config/settings_data.json` |
+| 3. Illustrations génériques | Aucune section avec image/vidéo vide (donc plus de placeholder Dawn). Séparateur « vagues » du footer désactivé. Les sections média seront réintroduites quand les vraies photos existeront (voir Bloqué). | `templates/index.json`, `sections/footer-group.json` |
+| 6. Hero | Texte exact du brief : « Walks you actually look forward to. » / sous-titre / bouton « SHOP THE HARNESS — A$59 » / micro-ligne « Matching lead included · Free Australia-wide shipping · 60-day guarantee ». Texte à gauche sur desktop. Fond sombre en attendant la vidéo. | `templates/index.json` › `hero` |
+| 9. Structure | Ordre : hero → bandeau confiance → douleur → mécanisme → 3 cartes lifestyle → produit vedette → « What it does — and what it doesn't » → taille (« Big, strong dogs. Small dogs too. ») → comparatif → garantie → FAQ → « Enjoy the walk again. » | `templates/index.json` |
+| 10. Lifestyle | 3 cartes uniquement : Early mornings and hot evenings / Beach, sand and salt / Bush tracks and coastal walks. | `lifestyle` |
+| 11. Does / doesn't | Titre et intro exacts, deux colonnes avec les 4 + 3 puces du brief ; « Read the first 10 walks » en simple lien secondaire vers `/pages/first-10-walks`. | `does_intro`, `does_cols` |
+| 12. Produit vedette | Section `featured-product` reliée au vrai harnais (`front-clip-no-pull-harness`) : 5 tailles × 4 couleurs, A$59, stock réel (25/variante, 500 au total), sélecteur avec lien Size Guide, note de taille, bouton Add to cart (produit et collections publiés sur le canal Online Store, donc plus de « Sold out »). Pas de photo générée du produit. | `featured_harness` |
+| 13. Footer | SHOP (Harness) · HELP (FAQ, Size Guide, Fitting Guide, Track My Order, Contact) · ABOUT (Our Story) · LEGAL (Shipping, Returns, Privacy Policy, Terms of Service, Legal Notice). Pages Track My Order, Terms of Service, Legal Notice créées. Mention « Powered by Shopify » masquée. | `sections/footer-group.json`, menus footer-shop/help/about/legal |
+| 15. PDP | Sticky add-to-cart actif (couleurs de marque, vendor masqué) ; section vidéo vide retirée ; blocs d'urgence de démo toujours désactivés. | `templates/product.json` |
+
+### Bloqué (à faire par vous avant que je puisse continuer)
+
+1. **Aucune vraie photo du harnais n'existe dans Shopify** (Contenu → Fichiers vide, produit sans média). Le brief impose d'utiliser les vraies images du produit comme références Higgsfield et de préserver exactement le design ; sans elles, la vidéo hero et les 9 photos ne peuvent pas être générées sans inventer un harnais. Déposez 3 à 6 photos nettes du vrai produit (face, profil, dos, détail clip avant, détail boucles) dans Contenu → Fichiers ou sur la fiche produit, puis je lance : vidéo hero 6–8 s (16:9 + recadrage 9:16, poster), les 9 photos du brief, upload dans Files, et je bascule les sections en `video-with-text-overlay`, `image-with-text`, `multicolumn` avec images, `image-banner`.
+2. **Nom de boutique** « My Store 10 » : Paramètres → Détails de la boutique (non modifiable par API).
+3. **Politiques légales** : Paramètres → Politiques (textes prêts dans `06-post-purchase-and-policies.md`) ; l'API refuse `write_legal_policies`.
+4. **Publier le thème** beauty-16-5-1-2 quand les médias seront en place (l'API bloque la publication).
+5. **Aperçu** : le proxy de cette session bloque `crms7m-ss.myshopify.com`, donc le rendu 390 px n'a pas pu être vérifié ici. À contrôler dans l'éditeur de thème (Aperçu mobile) : header compact, hero ≤ 3 lignes, cartes lifestyle en colonne, sticky ATC.
