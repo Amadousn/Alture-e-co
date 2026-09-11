@@ -481,7 +481,7 @@
           "settings": {
             "admin_label": "Product photo 1",
             "enabled": true,
-            "image": "",
+            "image": "shopify://shop_images/harness-lifestyle-labrador-front-clip.png",
             "alt": "Yellow Labrador on a suburban footpath, lead clipped to the front ring of the charcoal harness",
             "focal": "center center",
             "label": "Closer look",
@@ -507,7 +507,7 @@
           "settings": {
             "admin_label": "Product photo 2",
             "enabled": true,
-            "image": "",
+            "image": "shopify://shop_images/harness-lifestyle-kelpie-coastal.png",
             "alt": "Australian Kelpie walking beside its owner on a coastal track at sunrise, wearing the charcoal harness",
             "focal": "center center",
             "label": "Closer look",
@@ -533,7 +533,7 @@
           "settings": {
             "admin_label": "Product photo 3",
             "enabled": true,
-            "image": "",
+            "image": "shopify://shop_images/harness-lifestyle-staffy-bush-track.png",
             "alt": "Staffordshire Bull Terrier on a dry bush track wearing the charcoal harness",
             "focal": "center center",
             "label": "Closer look",
@@ -559,7 +559,7 @@
           "settings": {
             "admin_label": "Product photo 4",
             "enabled": true,
-            "image": "",
+            "image": "shopify://shop_images/harness-lifestyle-golden-fitting.png",
             "alt": "Golden Retriever in profile while the owner adjusts a side strap of the charcoal harness",
             "focal": "center center",
             "label": "Closer look",
