@@ -60,3 +60,9 @@ Not found anywhere: `aerozya-avis-slider.liquid`. Not reusable: `custom_liquid_4
 - Brand name: `settings.brand_name` (Theme settings → Brand information, default `[BRAND NAME]`) feeds the header wordmark, footer copyright, title suffix and `og:site_name` (`config/settings_schema.json`). The Shopify store name "My Store 10" is not used by the theme; rename it in Settings → Store details for checkout and emails.
 - `first_10_walks` — Lumin `newsletter` section ("The First 10 Walks, free", one email field) after the final CTA, before the footer.
 - Mixed media carousel: videos labelled "Customer walk", photos "Closer look"; posters only until a video is clicked, photos lazy-loaded with responsive sizes.
+
+## Homepage v6 (a CTA in every section, offer card, announcement link)
+
+- Every main content section ends with one filled primary CTA, all distinct: hero "See the harness", problem "Take back your walks", mechanism "See the front-clip harness", benefits "Choose your harness", media "See it for your dog", lifestyle "Built for your next walk", offer "Choose your size — A$59", size & fit "Find your dog's size" (→ `/pages/size-guide`), guarantee "Try it for 60 days" (cream on the dark scheme), FAQ "See all questions" (→ `/pages/faq`), final "Make walks easier — A$59". Commercial CTAs go to `/products/front-clip-no-pull-harness`. Announcement bar, header, trust strip, newsletter and footer stay structural (no extra button).
+- `sections/au-offer-card.liquid` — the single harness + lead photo is shown whole (`object-fit: contain`, padded white media box), larger price (2.6rem) and price note, larger reassurance chips, tighter paddings (24/32 px section, smaller inner padding). Mobile: photo first, content, full-width CTA. Benefits checked against the product: 4 adjustment points, XS–XL, four colours (Charcoal, Ocean, Red Dirt, Gum), lead included.
+- `sections/header-group.json` — the announcement bar text links to the product page.

@@ -174,7 +174,7 @@
     {%- endfor -%}
   </div>
   {%- if section.settings.link_label != blank -%}
-    <p class="pc-foot"><a class="button button--secondary" href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label | escape }}</a></p>
+    <p class="pc-foot"><a class="button button--primary" href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label | escape }}</a></p>
   {%- endif -%}
 </div>
 

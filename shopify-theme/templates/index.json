@@ -131,12 +131,21 @@
             "text": "<ul><li><strong>Pulls the second the door opens.</strong></li><li><strong>Your shoulder aches after every walk.</strong></li><li><strong>Dogs, bikes, runners: instant lunge.</strong></li></ul><p>None of that is a bad dog. It's a lead attached to the wrong spot.</p>",
             "text_style": "body"
           }
+        },
+        "pain_b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Take back your walks",
+            "button_link": "/products/front-clip-no-pull-harness",
+            "button_style_secondary": false
+          }
         }
       },
       "block_order": [
         "pain_cap",
         "pain_h",
-        "pain_t"
+        "pain_t",
+        "pain_b"
       ],
       "settings": {
         "image": "shopify://shop_images/photo-01-problem-front-door.png",
@@ -175,15 +184,24 @@
         "mech_t": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>Back clip:</strong> the lead pulls from behind the shoulders, so leaning forward is easy and every step rewards it.</p><p><strong>Front clip:</strong> the lead attaches at the chest. When your dog surges, the tension turns their shoulders back towards you.</p><p>Less leverage, less pulling, and your arm stops taking the load. <a href=\"/products/front-clip-no-pull-harness\">See how it works</a></p>",
+            "text": "<p><strong>Back clip:</strong> the lead pulls from behind the shoulders, so leaning forward is easy and every step rewards it.</p><p><strong>Front clip:</strong> the lead attaches at the chest. When your dog surges, the tension turns their shoulders back towards you.</p><p>Less leverage, less pulling, and your arm stops taking the load.</p>",
             "text_style": "body"
+          }
+        },
+        "mech_b": {
+          "type": "button",
+          "settings": {
+            "button_label": "See the front-clip harness",
+            "button_link": "/products/front-clip-no-pull-harness",
+            "button_style_secondary": false
           }
         }
       },
       "block_order": [
         "mech_cap",
         "mech_h",
-        "mech_t"
+        "mech_t",
+        "mech_b"
       ],
       "settings": {
         "image": "shopify://shop_images/photo-02-front-clip-mechanism.png",
@@ -290,12 +308,21 @@
             "text": "<p>Coastal paths, bush tracks, warm mornings and the cyclists that come past. Breathable webbing, a padded chest plate that doesn't hold heat, reflective piping for early starts, and a front clip that keeps you in control when something fast goes by.</p>",
             "text_style": "body"
           }
+        },
+        "aus_b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Built for your next walk",
+            "button_link": "/products/front-clip-no-pull-harness",
+            "button_style_secondary": false
+          }
         }
       },
       "block_order": [
         "aus_cap",
         "aus_h",
-        "aus_t"
+        "aus_t",
+        "aus_b"
       ],
       "settings": {
         "image": "shopify://shop_images/photo-05-bush-track.png",
@@ -331,7 +358,7 @@
         "step3_title": "Between sizes? Go up",
         "step3_text": "Thick double coat? Go up too. Two fingers flat under every strap once fitted.",
         "micro": "Wrong size? One free swap, prepaid both ways.",
-        "primary_label": "View the size guide",
+        "primary_label": "Find your dog's size",
         "open_mode": "link",
         "size_guide_page": "size-guide",
         "size_guide_link": "",
@@ -371,7 +398,7 @@
           "settings": {
             "button_label": "Try it for 60 days",
             "button_link": "/products/front-clip-no-pull-harness",
-            "button_style_secondary": true,
+            "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": true
@@ -565,8 +592,8 @@
         "heading_size": "h1",
         "subheading": "Real customer videos and a closer look at how the harness fits, moves and performs.",
         "card_height": 480,
-        "button_label": "",
-        "button_link": "",
+        "button_label": "See it for your dog",
+        "button_link": "/products/front-clip-no-pull-harness",
         "color_scheme": "background-1",
         "padding_top": 40,
         "padding_bottom": 40
@@ -594,8 +621,8 @@
         "legal": "",
         "anchor": "offer",
         "color_scheme": "background-1",
-        "padding_top": 32,
-        "padding_bottom": 40
+        "padding_top": 24,
+        "padding_bottom": 32
       }
     },
     "pc_tabs_faq": {

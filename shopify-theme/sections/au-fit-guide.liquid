@@ -79,10 +79,10 @@
       {%- if section.settings.micro != blank -%}<p class="au-fit__micro">{{ section.settings.micro }}</p>{%- endif -%}
       <div class="au-fit__ctas">
         {%- if use_modal -%}
-          <button type="button" class="button button--secondary au-fit__open">{{ section.settings.primary_label }}</button>
-          <noscript><a class="button button--secondary" href="{{ guide_url }}">{{ section.settings.primary_label }}</a></noscript>
+          <button type="button" class="button button--primary au-fit__open">{{ section.settings.primary_label }}</button>
+          <noscript><a class="button button--primary" href="{{ guide_url }}">{{ section.settings.primary_label }}</a></noscript>
         {%- else -%}
-          <a class="button button--secondary au-fit__link" href="{{ guide_url }}">{{ section.settings.primary_label }}</a>
+          <a class="button button--primary au-fit__link" href="{{ guide_url }}">{{ section.settings.primary_label }}</a>
         {%- endif -%}
         {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
           <a class="au-fit__secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
