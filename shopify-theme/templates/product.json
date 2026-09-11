@@ -52,33 +52,6 @@
             "save_shadow_blur": 0
           }
         },
-        "promo_zgdCLT": {
-          "type": "promo",
-          "settings": {
-            "icon": "paw_print",
-            "icon_width": 20,
-            "content": "<p>Front clip redirects the pull, back clip for relaxed walks</p>",
-            "font_size": 80
-          }
-        },
-        "promo_43xPXL": {
-          "type": "promo",
-          "settings": {
-            "icon": "heart",
-            "icon_width": 20,
-            "content": "<p>Nothing on the throat: the load sits on the padded chest plate</p>",
-            "font_size": 80
-          }
-        },
-        "promo_Eedrfp": {
-          "type": "promo",
-          "settings": {
-            "icon": "return",
-            "icon_width": 20,
-            "content": "<p>Matching Classic Lead included in the box</p>",
-            "font_size": 80
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -166,19 +139,6 @@
             "show_product_description": false
           }
         },
-        "promise_line": {
-          "type": "text",
-          "settings": {
-            "text": "✓ Matching Classic Lead included · ✓ Free Australia-wide shipping · ✓ 60-day guarantee",
-            "text_style": "body",
-            "text_alignment": "left",
-            "text_size_dt": 15,
-            "use_custom_color": false,
-            "text_color": "#13262B",
-            "padding_top": 4,
-            "padding_bottom": 4
-          }
-        },
         "sizing_note": {
           "type": "text",
           "settings": {
@@ -192,41 +152,50 @@
             "padding_bottom": 8
           }
         },
-        "review_rating": {
-          "type": "review",
-          "disabled": true,
-          "settings": {
-            "lrw_text": "",
-            "text_size": 14,
-            "star_style": "star",
-            "star_size": 1,
-            "star_rating": 5,
-            "lrw_star_color": "#B9773A",
-            "lrw_star_color_disable": "#C9D4D3",
-            "lrw_color": "#13262B",
-            "margin_top": 0,
-            "margin_bottom": 8
-          }
-        },
         "fit_accordion": {
           "type": "custom_liquid",
           "settings": {
             "custom_liquid": "{%- assign fit_img = 'photo-08-fitting-check.png' | file_img_url: '900x' -%}\n<details class=\"au-fit\" style=\"border:1px solid rgba(var(--color-foreground),.14);border-radius:10px;padding:0;margin:1rem 0;\">\n  <summary style=\"list-style:none;cursor:pointer;display:grid;grid-template-columns:72px 1fr auto;gap:.9rem;align-items:center;padding:.8rem 1rem;\">\n    <span style=\"position:relative;display:block;width:72px;height:54px;border-radius:6px;overflow:hidden;background:#dfe6e5;\">\n      <img src=\"{{ fit_img }}\" alt=\"Checking two fingers of space under the belly strap\" width=\"72\" height=\"54\" loading=\"lazy\" style=\"width:100%;height:100%;object-fit:cover;display:block;\">\n    </span>\n    <span><strong style=\"font-family:var(--font-heading-family);font-size:1rem;display:block;\">How to fit it</strong><span style=\"font-size:.9rem;opacity:.8;\">Two minutes the first time, thirty seconds after that.</span></span>\n    <span aria-hidden=\"true\" style=\"font-size:1.4rem;line-height:1;\">+</span>\n  </summary>\n  <div style=\"padding:0 1rem 1rem;\">\n    <img src=\"{{ fit_img }}\" alt=\"Owner's hands checking two fingers of space under the belly strap of the harness\" loading=\"lazy\" style=\"width:100%;height:auto;border-radius:8px;display:block;margin:.2rem 0 .9rem;\">\n    <ol style=\"margin:0 0 .8rem 1.1rem;padding:0;font-size:.95rem;line-height:1.5;\">\n      <li>Loosen all four sliders before the first fit.</li>\n      <li>Put it on and clip both buckles.</li>\n      <li>Tighten the neck straps first, then chest, then belly. Both sides evenly.</li>\n      <li>Two fingers flat under every strap. Tighter rubs, looser twists.</li>\n      <li>After five minutes of walking, re-check the belly strap.</li>\n    </ol>\n    <a href=\"/pages/fitting-guide\" style=\"font-size:.95rem;text-underline-offset:.2em;\">Read the full fitting guide</a>\n  </div>\n</details>\n<style>.au-fit summary::-webkit-details-marker{display:none}.au-fit[open] summary span[aria-hidden]{transform:rotate(45deg);display:inline-block}</style>"
           }
+        },
+        "au_review_stars": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "{%- comment -%} Recovered from Raselio custom_liquid_review_stars. Enable only with a real rating and count. {%- endcomment -%}\n{%- assign au_rating = '' -%}{%- assign au_count = '' -%}\n{%- if au_rating != blank and au_count != blank -%}\n<style>.product-reviews{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer;margin:0 0 8px;color:inherit}.review-stars{display:inline-flex;gap:2px}.review-stars svg{width:16px;height:16px;fill:#B9773A}.review-summary{font-size:14px;font-weight:500}</style>\n<a href=\"#reviews\" class=\"product-reviews\" aria-label=\"Read the {{ au_count }} customer reviews\">\n  <span class=\"review-stars\" aria-hidden=\"true\">{%- for i in (1..5) -%}<svg viewBox=\"0 0 24 24\"><path d=\"M12 2l3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z\"/></svg>{%- endfor -%}</span>\n  <span class=\"review-summary\">Rated <strong>{{ au_rating }}/5</strong> · {{ au_count }} reviews</span>\n</a>\n{%- endif -%}"
+          }
+        },
+        "au_benefits": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- comment -%} Recovered from Raselio custom_liquid_benefits. {%- endcomment -%}\n<ul style=\"list-style:none;padding:0;margin:2px 0 14px;display:flex;flex-direction:column;gap:8px;\"><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#13262B;\"><span aria-hidden=\"true\" style=\"color:#0E6F8C;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>Front clip redirects the pull:</strong> their own momentum turns them back towards you.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#13262B;\"><span aria-hidden=\"true\" style=\"color:#0E6F8C;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>Nothing on the throat:</strong> the load sits on the padded chest plate.</span></li><li style=\"display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;color:#13262B;\"><span aria-hidden=\"true\" style=\"color:#0E6F8C;font-weight:800;flex:none;line-height:1.45;\">&#10003;</span><span><strong>Two walking modes:</strong> front clip for control, back clip for relaxed walks.</span></li></ul>"
+          }
+        },
+        "au_reassurance": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- comment -%} Recovered from Raselio custom_liquid_garantie_ligne. Three true promises only. {%- endcomment -%}\n<p style=\"display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px;font-size:13px;line-height:1.4;color:#3f4f52;text-align:center;\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#0E6F8C\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5z\"/><path d=\"M9 12l2 2 4-4\"/></svg><span>Matching lead included &middot; Free Australia-wide shipping &middot; 60-day guarantee</span></p>"
+          }
+        },
+        "au_reviews_carousel": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "{%- comment -%}\n  Recovered from Raselio custom_liquid_reviews_carousel (Trustpilot-style, swipe, auto-rotate).\n  Add REAL reviews only, one per line: Name|Suburb|Review text|image filename in Files (optional).\n{%- endcomment -%}\n{%- assign au_reviews_raw = '' -%}\n{%- assign au_reviews = au_reviews_raw | strip | newline_to_br | split: '<br />' -%}\n{%- if au_reviews_raw != blank -%}\n<style>\n.carousel-container-{{block.id}}{width:100%;overflow:hidden;min-height:110px;position:relative;touch-action:pan-y;margin-top:14px}\n.carousel-wrapper-{{block.id}}{display:flex;transition:transform .5s ease-in-out}\n.review-box-{{block.id}}{flex:0 0 100%;box-sizing:border-box;padding:10px 26px;display:flex;align-items:center;text-align:left;margin:0;gap:10px}\n.product-image-{{block.id}}{width:70px;height:70px;border-radius:12px;object-fit:cover;flex:none}\n.review-text-{{block.id}}{font-size:13px;color:#13262B;margin:0;line-height:1.35;font-style:italic}\n.trustpilot-container-{{block.id}}{display:flex;align-items:center;gap:6px;font-size:12px;margin-top:4px}\n.trustpilot-name-{{block.id}}{color:#3f4f52}\n.trustpilot-stars-{{block.id}} svg{width:13px;height:13px;fill:#B9773A}\n.arrow-{{block.id}}{position:absolute;top:50%;transform:translateY(-50%);cursor:pointer;font-size:22px;color:#0E6F8C;z-index:2;background:none;border:0;padding:0 4px}\n.arrow-{{block.id}}.left{left:0}.arrow-{{block.id}}.right{right:0}\n</style>\n<div class=\"carousel-container-{{block.id}}\" id=\"carousel{{block.id}}\">\n  <button type=\"button\" class=\"arrow-{{block.id}} left\" aria-label=\"Previous review\">&lsaquo;</button>\n  <div class=\"carousel-wrapper-{{block.id}}\" id=\"carouselWrapper{{block.id}}\">\n    {%- for r in au_reviews -%}{%- assign f = r | strip | split: '|' -%}{%- if f.size >= 3 -%}\n    <div class=\"review-box-{{block.id}}\">\n      {%- if f[3] != blank -%}<img src=\"{{ f[3] | strip | file_img_url: '220x' }}\" alt=\"\" loading=\"lazy\" width=\"70\" height=\"70\" class=\"product-image-{{block.id}}\">{%- endif -%}\n      <div>\n        <p class=\"review-text-{{block.id}}\">&ldquo;{{ f[2] | strip }}&rdquo;</p>\n        <div class=\"trustpilot-container-{{block.id}}\"><span class=\"trustpilot-name-{{block.id}}\">{{ f[0] | strip }}{% if f[1] != blank %}, {{ f[1] | strip }}{% endif %}</span><span class=\"trustpilot-stars-{{block.id}}\" aria-label=\"5 stars\">{%- for i in (1..5) -%}<svg viewBox=\"0 0 24 24\"><path d=\"M12 2l3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z\"/></svg>{%- endfor -%}</span></div>\n      </div>\n    </div>\n    {%- endif -%}{%- endfor -%}\n  </div>\n  <button type=\"button\" class=\"arrow-{{block.id}} right\" aria-label=\"Next review\">&rsaquo;</button>\n</div>\n<script>\n(function(){\n  var root=document.getElementById('carousel{{block.id}}');if(!root)return;\n  var wrap=document.getElementById('carouselWrapper{{block.id}}');var boxes=wrap.querySelectorAll('.review-box-{{block.id}}');var total=boxes.length;if(!total)return;\n  var idx=0,startX=0,endX=0;function update(){wrap.style.transform='translateX('+(-idx*100)+'%)';}\n  function next(){idx=(idx+1)%total;update();}function prev(){idx=(idx-1+total)%total;update();}\n  root.querySelector('.left').addEventListener('click',prev);root.querySelector('.right').addEventListener('click',next);\n  root.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;},{passive:true});\n  root.addEventListener('touchmove',function(e){endX=e.touches[0].clientX;},{passive:true});\n  root.addEventListener('touchend',function(){if(startX-endX>50)next();else if(endX-startX>50)prev();startX=endX=0;});\n  if(total>1)setInterval(next,6000);\n})();\n</script>\n{%- endif -%}"
+          }
         }
       },
       "block_order": [
         "breadcrumbs_MW6ytk",
-        "review_rating",
+        "au_review_stars",
         "title_Fnnnm3",
-        "promo_zgdCLT",
-        "promo_43xPXL",
-        "promo_Eedrfp",
+        "au_benefits",
         "price",
         "variant_picker",
         "sizing_note",
         "buy_buttons",
-        "promise_line",
+        "au_reassurance",
+        "au_reviews_carousel",
         "payment_pcDBqV",
         "description",
         "collapsible_tab_ptCdTk",
@@ -545,54 +514,9 @@
       }
     },
     "pdp_guarantee": {
-      "type": "rich-text",
-      "blocks": {
-        "pg_cap": {
-          "type": "caption",
-          "settings": {
-            "caption": "60 days",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "pg_h": {
-          "type": "heading",
-          "settings": {
-            "heading": "60-Day Loose-Lead Guarantee",
-            "heading_size": "h1"
-          }
-        },
-        "pg_t": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Walk your dog in it. Take it to the beach. If after 60 days it hasn't changed your walks, email us, we'll send a prepaid Australia Post label and refund you in full. Wrong size? We'll swap it, no charge.</p>"
-          }
-        },
-        "pg_b": {
-          "type": "button",
-          "settings": {
-            "button_label": "Read the guarantee",
-            "button_link": "/pages/guarantee",
-            "button_style_secondary": false,
-            "button_label_2": "Shop the harness — A$59",
-            "button_link_2": "/products/front-clip-no-pull-harness",
-            "button_style_secondary_2": true
-          }
-        }
-      },
-      "block_order": [
-        "pg_cap",
-        "pg_h",
-        "pg_t",
-        "pg_b"
-      ],
+      "type": "custom-liquid",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-2",
-        "full_width": true,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "custom_liquid": "{%- comment -%} Recovered from Raselio g_garantie / g_portraits (rs-* pattern), adapted to the AU harness. {%- endcomment -%}\n<style>.rs{max-width:1280px;margin:0 auto;padding:0 24px;color:#13262B}.rs-hd{text-align:center;max-width:26ch;margin:0 auto 34px}.rs-hd h2{margin:0;font-family:var(--font-heading-family);font-size:clamp(28px,3.4vw,38px);line-height:1.14;font-weight:700;letter-spacing:-.015em}.rs-rows{max-width:520px;margin:0 auto}.rs-rows div{padding:15px 0;border-top:1px solid rgba(19,38,43,.12);font-size:17px}.rs-rows b{font-weight:700}.rs-cta{display:inline-block;margin-top:30px;background:#0E6F8C;color:#fff;text-decoration:none;font-family:var(--font-heading-family);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:17px 44px;border-radius:6px;border:0;cursor:pointer}.rs-cta:hover{opacity:.9}.rs-ctaw{text-align:center}.rs-img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block}@media(max-width:749px){.rs{padding:0 18px}.rs-hd{margin-bottom:24px}.rs-cta{display:block;text-align:center;padding:17px 20px}.rs-img{aspect-ratio:4/3}}</style>\n<script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.rs-cta');if(!a)return;e.preventDefault();var f=document.querySelector('form[action*=\"/cart/add\"]');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});});</script>\n<div class=\"rs\" style=\"padding-top:56px;padding-bottom:56px\">\n  <div class=\"rs-hd\"><h2>You decide in sixty days, not today.</h2></div>\n  <img class=\"rs-img\" src=\"{{ 'harness-and-lead-flatlay.png' | file_img_url: '1800x' }}\" alt=\"Front-clip harness and the matching Classic Lead laid flat\" loading=\"lazy\">\n  <div class=\"rs-rows\" style=\"margin-top:30px\">\n    <div><b>60 days</b> to change your mind. Prepaid Australia Post return, full refund.</div>\n    <div><b>Free size swap</b> within 60 days, one per order, prepaid both ways.</div>\n    <div><b>Matching Classic Lead</b> in the box, free Australia-wide shipping.</div>\n  </div>\n  <div class=\"rs-ctaw\"><a href=\"#\" class=\"rs-cta\">Shop the harness — A$59</a></div>\n</div>"
       }
     },
     "pdp_faq_pull": {
