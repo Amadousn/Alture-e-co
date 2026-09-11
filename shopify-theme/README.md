@@ -37,3 +37,7 @@ Not found anywhere: `aerozya-avis-slider.liquid`. Not reusable: `custom_liquid_4
 - `sections/au-fit-guide.liquid` — rebuilt on the `lisance-focus` layout (centred head, one visual with ratio/focal, CTA + note) plus three fitting steps; primary button links to the size guide page (modal optional).
 - `sections/au-benefits-tabs.liquid` — rebuilt on `lisance-benefices` (tab bar with icons, progress bar autoplay that stops on click, keyboard, editor block select); block setting ids kept (`title`, `text`, `image`) plus `tab` and `icon`.
 - `au-real-walks` and `au-walk-kit` stay in the theme but are no longer used by `templates/index.json`.
+
+- `sections/au-faq.liquid` — compact CRO FAQ adapted from `lisance-faq` (one answer open at a time, animated height, aria) without the category tabs; six questions as blocks, footer link to the full FAQ page. Replaces the collapsible-content FAQ on the homepage (placed after the guarantee, before the final CTA).
+- `templates/page.contact.json` — contact page: page body (email, reply time) + Lumin contact form; the demo image banner and placeholder rich text were removed.
+- Menus: main menu = Home, Harness, Our Story, Contact Us; footer help menu = FAQ, Contact Us, Size Guide, Fitting Guide, Track My Order.

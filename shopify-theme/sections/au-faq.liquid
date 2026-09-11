@@ -1,0 +1,106 @@
+{%- comment -%}
+  Compact CRO FAQ, adapted from the CRO library "lisance-faq": one question open at a time,
+  answer height animated with grid-template-rows, aria-expanded on the buttons, footer link.
+  The three category tabs of the original are dropped (six questions, one list). Colours and
+  type come from the theme colour scheme.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+-%}
+<style>
+  #AuFaq-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
+  #AuFaq-{{ sid }} .au-faq__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuFaq-{{ sid }} .au-faq__head { text-align: center; max-width: 60ch; margin: 0 auto 1.4rem; }
+  #AuFaq-{{ sid }} .au-faq__caption { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .7rem; opacity: .75; }
+  #AuFaq-{{ sid }} h2 { margin: 0 0 .5rem; }
+  #AuFaq-{{ sid }} .au-faq__sub { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+  #AuFaq-{{ sid }} .au-faq__item { border: 1px solid rgba(var(--color-foreground), .14); border-radius: 12px; background: rgb(var(--color-background)); margin: 0 0 .6rem; overflow: hidden; }
+  #AuFaq-{{ sid }} .au-faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: .9rem; padding: .95rem 1.1rem; background: none; border: 0; cursor: pointer; text-align: left; font: inherit; font-family: var(--font-heading-family); font-weight: 700; font-size: 1rem; line-height: 1.35; color: rgb(var(--color-foreground)); }
+  #AuFaq-{{ sid }} .au-faq__q:hover { color: rgb(var(--color-button)); }
+  #AuFaq-{{ sid }} .au-faq__q:focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: -4px; border-radius: 12px; }
+  #AuFaq-{{ sid }} .au-faq__q svg { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; color: rgb(var(--color-button)); transition: transform .25s; }
+  #AuFaq-{{ sid }} .au-faq__item.is-open .au-faq__q svg { transform: rotate(45deg); }
+  #AuFaq-{{ sid }} .au-faq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+  #AuFaq-{{ sid }} .au-faq__item.is-open .au-faq__a { grid-template-rows: 1fr; }
+  #AuFaq-{{ sid }} .au-faq__a > div { overflow: hidden; }
+  #AuFaq-{{ sid }} .au-faq__a-in { padding: 0 1.1rem 1rem; font-size: .96rem; line-height: 1.55; }
+  #AuFaq-{{ sid }} .au-faq__a-in p { margin: 0 0 .6rem; }
+  #AuFaq-{{ sid }} .au-faq__a-in p:last-child { margin: 0; }
+  #AuFaq-{{ sid }} .au-faq__a-in a { color: rgb(var(--color-button)); }
+  #AuFaq-{{ sid }} .au-faq__foot { margin: 1.2rem 0 0; text-align: center; font-size: .92rem; }
+  #AuFaq-{{ sid }} .au-faq__foot a { color: rgb(var(--color-foreground)); text-underline-offset: .2em; }
+  #AuFaq-{{ sid }} .au-faq__foot a:hover { color: rgb(var(--color-button)); }
+  @media (prefers-reduced-motion: reduce) { #AuFaq-{{ sid }} .au-faq__a, #AuFaq-{{ sid }} .au-faq__q svg { transition: none; } }
+  @media screen and (max-width: 749px) {
+    #AuFaq-{{ sid }} .au-faq__q { font-size: .95rem; padding: .85rem .95rem; }
+    #AuFaq-{{ sid }} .au-faq__a-in { padding: 0 .95rem .9rem; font-size: .93rem; }
+  }
+</style>
+<div id="AuFaq-{{ sid }}" class="au-faq color-{{ section.settings.color_scheme }} gradient">
+  <div class="au-faq__inner">
+    <div class="au-faq__head">
+      {%- if section.settings.caption != blank -%}<p class="au-faq__caption">{{ section.settings.caption }}</p>{%- endif -%}
+      <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p class="au-faq__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="au-faq__list">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.question != blank -%}
+          <div class="au-faq__item{% if section.settings.open_first and forloop.first %} is-open{% endif %}" {{ block.shopify_attributes }}>
+            <h3 style="margin:0;font-size:inherit;">
+              <button type="button" class="au-faq__q" aria-expanded="{% if section.settings.open_first and forloop.first %}true{% else %}false{% endif %}" aria-controls="au-faq-a-{{ block.id }}" id="au-faq-q-{{ block.id }}">
+                <span>{{ block.settings.question | escape }}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              </button>
+            </h3>
+            <div class="au-faq__a" id="au-faq-a-{{ block.id }}" role="region" aria-labelledby="au-faq-q-{{ block.id }}"><div><div class="au-faq__a-in rte">{{ block.settings.answer }}</div></div></div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.link_label != blank -%}
+      <p class="au-faq__foot"><a href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label }}</a></p>
+    {%- endif -%}
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.getElementById('AuFaq-{{ sid }}'); if (!root || root.dataset.init) return; root.dataset.init = '1';
+    function closeAll() { root.querySelectorAll('.au-faq__item.is-open').forEach(function (it) { it.classList.remove('is-open'); it.querySelector('.au-faq__q').setAttribute('aria-expanded', 'false'); }); }
+    root.addEventListener('click', function (e) {
+      var q = e.target.closest('.au-faq__q'); if (!q) return;
+      var item = q.closest('.au-faq__item'), open = item.classList.contains('is-open');
+      closeAll();
+      if (!open) { item.classList.add('is-open'); q.setAttribute('aria-expanded', 'true'); }
+    });
+    if (window.Shopify && Shopify.designMode) { document.addEventListener('shopify:block:select', function (e) { var it = root.querySelector('[data-shopify-editor-block*="' + e.detail.blockId + '"]'); if (it) { closeAll(); it.classList.add('is-open'); it.querySelector('.au-faq__q').setAttribute('aria-expanded', 'true'); } }); }
+  })();
+</script>
+{% schema %}
+{
+  "name": "AU FAQ",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Caption", "default": "FAQ" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered honestly" },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" } ], "default": "h1" },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": false },
+    { "type": "text", "id": "link_label", "label": "Footer link label", "default": "See all frequently asked questions" },
+    { "type": "url", "id": "link_url", "label": "Footer link (full FAQ page)" },
+    { "type": "range", "id": "max_width", "min": 600, "max": 1000, "step": 20, "unit": "px", "label": "Max width", "default": 780 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "blocks": [
+    { "type": "q", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "richtext", "id": "answer", "label": "Answer (short, one objection)" }
+    ] }
+  ],
+  "presets": [ { "name": "AU FAQ", "blocks": [ { "type": "q" }, { "type": "q" }, { "type": "q" }, { "type": "q" }, { "type": "q" }, { "type": "q" } ] } ]
+}
+{% endschema %}

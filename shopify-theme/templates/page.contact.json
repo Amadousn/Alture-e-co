@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 16
+      }
+    },
+    "contact_form": {
+      "type": "contact-form",
+      "blocks": {
+        "name": {
+          "type": "name",
+          "settings": {}
+        },
+        "email": {
+          "type": "email",
+          "settings": {}
+        },
+        "tel": {
+          "type": "tel",
+          "settings": {}
+        },
+        "textarea": {
+          "type": "textarea",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "name",
+        "email",
+        "tel",
+        "textarea"
+      ],
+      "settings": {
+        "heading": "Send us a message",
+        "heading_size": "h1",
+        "heading_align": "center",
+        "heading_align_mobile": "center",
+        "sub_heading": "<p>Sizing, delivery, a swap or the guarantee: write to us here and we reply within one business day, Sydney time.</p>",
+        "sub_heading_align": "left",
+        "sub_heading_align_mobile": "left",
+        "color_scheme": "background-1",
+        "padding_top": 16,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact_form"
+  ]
+}
