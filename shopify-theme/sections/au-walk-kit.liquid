@@ -1,0 +1,83 @@
+{%- comment -%} Compact offer card. Price is read live from the product, no selectors on the homepage. {%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign prod = section.settings.product
+  assign items = section.settings.items | newline_to_br | split: '<br />'
+  assign link = section.settings.button_link
+  if link == blank and prod != blank
+    assign link = prod.url
+  endif
+-%}
+<style>
+  #AuKit-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
+  #AuKit-{{ sid }} .au-kit__inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuKit-{{ sid }} .au-kit__card { display: grid; grid-template-columns: 1fr; border-radius: 14px; overflow: hidden; background: rgb(var(--color-background)); border: 1px solid rgba(var(--color-foreground), .12); }
+  #AuKit-{{ sid }} .au-kit__media { aspect-ratio: 1 / 1; background: #fff; }
+  #AuKit-{{ sid }} .au-kit__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #AuKit-{{ sid }} .au-kit__body { padding: 1.5rem; }
+  #AuKit-{{ sid }} .au-kit__caption { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .6rem; opacity: .75; }
+  #AuKit-{{ sid }} h2 { margin: 0 0 1rem; }
+  #AuKit-{{ sid }} ul { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; gap: .5rem; }
+  #AuKit-{{ sid }} li { display: flex; gap: .6rem; align-items: flex-start; font-size: 1rem; line-height: 1.4; }
+  #AuKit-{{ sid }} li svg { flex: 0 0 auto; width: 1.15rem; height: 1.15rem; margin-top: .15rem; color: rgb(var(--color-button)); }
+  #AuKit-{{ sid }} .au-kit__price { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 1.1rem; }
+  #AuKit-{{ sid }} .au-kit__amount { font-family: var(--font-heading-family); font-weight: 700; font-size: 2rem; line-height: 1; }
+  #AuKit-{{ sid }} .au-kit__note { font-size: .9rem; opacity: .8; }
+  #AuKit-{{ sid }} .au-kit__cta .button { width: 100%; }
+  @media screen and (min-width: 750px) {
+    #AuKit-{{ sid }} .au-kit__inner { padding: 0 5rem; }
+    #AuKit-{{ sid }} .au-kit__card { grid-template-columns: 5fr 6fr; }
+    #AuKit-{{ sid }} .au-kit__media { aspect-ratio: auto; min-height: 100%; }
+    #AuKit-{{ sid }} .au-kit__body { padding: 2.2rem 2.4rem; }
+    #AuKit-{{ sid }} .au-kit__cta .button { width: auto; }
+  }
+</style>
+<div id="AuKit-{{ sid }}" class="au-kit color-{{ section.settings.color_scheme }} gradient">
+  <div class="au-kit__inner">
+    <div class="au-kit__card">
+      <div class="au-kit__media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200', alt: section.settings.image.alt | default: section.settings.heading }}
+        {%- elsif prod != blank and prod.featured_image != blank -%}
+          {{ prod.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200' }}
+        {%- endif -%}
+      </div>
+      <div class="au-kit__body">
+        {%- if section.settings.caption != blank -%}<p class="au-kit__caption">{{ section.settings.caption }}</p>{%- endif -%}
+        <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        <ul>
+          {%- for item in items -%}{%- assign clean = item | strip -%}{%- if clean != blank -%}
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.3l2.6 2.6L14 7.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{{ clean }}</span></li>
+          {%- endif -%}{%- endfor -%}
+        </ul>
+        <p class="au-kit__price">
+          {%- if prod != blank -%}<span class="au-kit__amount">{{ prod.price | money_with_currency | replace: 'AUD', '' | strip }}</span>{%- endif -%}
+          {%- if section.settings.price_note != blank -%}<span class="au-kit__note">{{ section.settings.price_note }}</span>{%- endif -%}
+        </p>
+        <div class="au-kit__cta"><a class="button button--primary" href="{{ link }}">{{ section.settings.button_label }}</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "AU walk kit offer",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product (price and link)" },
+    { "type": "image_picker", "id": "image", "label": "Photo (harness and lead together)" },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "The complete walk kit" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything you need for a calmer first walk." },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" } ], "default": "h2" },
+    { "type": "textarea", "id": "items", "label": "What's included (one per line)", "default": "Front-Clip No-Pull Harness\nMatching Classic Lead included\nThe First 10 Walks fitting and training guide\nFree Australia-wide shipping\n60-day guarantee" },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "harness + lead, shipping included" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Choose size & colour" },
+    { "type": "url", "id": "button_link", "label": "Button link (defaults to the product page)" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "accent-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "presets": [ { "name": "AU walk kit offer" } ]
+}
+{% endschema %}

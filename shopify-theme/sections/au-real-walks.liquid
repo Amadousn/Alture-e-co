@@ -1,0 +1,166 @@
+{%- comment -%}
+  "See it on real walks" video carousel. Slider architecture (index/next/prev, swipe, arrows)
+  reused from the recovered Raselio custom_liquid_reviews_carousel, stripped of stars, names and
+  testimonials. Click-to-play only: no autoplay, poster + play button, muted at start, lazy.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign count = 0
+  for block in section.blocks
+    if block.settings.video != blank
+      assign count = count | plus: 1
+    endif
+  endfor
+-%}
+<style>
+  #AuRW-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
+  #AuRW-{{ sid }} .au-rw__inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuRW-{{ sid }} .au-rw__head { max-width: 62ch; margin: 0 auto 1.8rem; text-align: center; }
+  #AuRW-{{ sid }} .au-rw__caption { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .7rem; opacity: .75; }
+  #AuRW-{{ sid }} h2 { margin: 0 0 .6rem; }
+  #AuRW-{{ sid }} .au-rw__intro { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+  #AuRW-{{ sid }} .au-rw__wrap { position: relative; }
+  #AuRW-{{ sid }} .au-rw__track {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 82%; gap: .9rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+    padding: 0 0 .4rem; scrollbar-width: none; touch-action: pan-x pan-y;
+  }
+  #AuRW-{{ sid }} .au-rw__track::-webkit-scrollbar { display: none; }
+  #AuRW-{{ sid }} .au-rw__card { scroll-snap-align: start; position: relative; border-radius: 12px; overflow: hidden; background: #13262B; aspect-ratio: 4 / 5; }
+  #AuRW-{{ sid }} .au-rw__card img, #AuRW-{{ sid }} .au-rw__card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  #AuRW-{{ sid }} .au-rw__play {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: linear-gradient(180deg, rgba(19,38,43,0) 40%, rgba(19,38,43,.72) 100%);
+    cursor: pointer; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; padding: 1.1rem; text-align: left; font: inherit;
+  }
+  #AuRW-{{ sid }} .au-rw__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+  #AuRW-{{ sid }} .au-rw__icon { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: rgba(255,255,255,.92); display: inline-flex; align-items: center; justify-content: center; margin-bottom: .8rem; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  #AuRW-{{ sid }} .au-rw__icon svg { width: 1.3rem; height: 1.3rem; margin-left: 3px; fill: #13262B; }
+  #AuRW-{{ sid }} .au-rw__title { font-family: var(--font-heading-family); font-weight: 700; font-size: 1.05rem; line-height: 1.25; text-shadow: 0 1px 8px rgba(0,0,0,.35); }
+  #AuRW-{{ sid }} .au-rw__card.is-playing .au-rw__play { display: none; }
+  #AuRW-{{ sid }} .au-rw__arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid rgba(19,38,43,.15);
+    background: rgb(var(--color-background)); color: rgb(var(--color-foreground)); cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  }
+  #AuRW-{{ sid }} .au-rw__arrow.left { left: -1.3rem; } #AuRW-{{ sid }} .au-rw__arrow.right { right: -1.3rem; }
+  #AuRW-{{ sid }} .au-rw__arrow svg { width: 1rem; height: 1rem; }
+  #AuRW-{{ sid }} .au-rw__dots { display: flex; justify-content: center; gap: .45rem; margin-top: .9rem; }
+  #AuRW-{{ sid }} .au-rw__dot { width: .5rem; height: .5rem; border-radius: 50%; border: 0; padding: 0; background: rgba(var(--color-foreground), .25); cursor: pointer; }
+  #AuRW-{{ sid }} .au-rw__dot.is-active { background: rgb(var(--color-button)); }
+  #AuRW-{{ sid }} .au-rw__cta { text-align: center; margin-top: 1.6rem; }
+  @media screen and (min-width: 750px) {
+    #AuRW-{{ sid }} .au-rw__inner { padding: 0 5rem; }
+    #AuRW-{{ sid }} .au-rw__track { grid-auto-columns: calc((100% - 2.4rem) / 3); gap: 1.2rem; }
+    #AuRW-{{ sid }} .au-rw__arrow { display: inline-flex; }
+    #AuRW-{{ sid }}[data-count="3"] .au-rw__arrow, #AuRW-{{ sid }}[data-count="2"] .au-rw__arrow, #AuRW-{{ sid }}[data-count="1"] .au-rw__arrow,
+    #AuRW-{{ sid }}[data-count="3"] .au-rw__dots, #AuRW-{{ sid }}[data-count="2"] .au-rw__dots, #AuRW-{{ sid }}[data-count="1"] .au-rw__dots { display: none; }
+  }
+</style>
+<div id="AuRW-{{ sid }}" class="au-rw color-{{ section.settings.color_scheme }} gradient" data-count="{{ count }}">
+  <div class="au-rw__inner">
+    <div class="au-rw__head">
+      {%- if section.settings.caption != blank -%}<p class="au-rw__caption">{{ section.settings.caption }}</p>{%- endif -%}
+      <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="au-rw__intro rte">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+    {%- if count > 0 -%}
+    <div class="au-rw__wrap">
+      <button type="button" class="au-rw__arrow left" aria-label="Previous video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="au-rw__track" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.video != blank -%}
+            {%- liquid
+              assign src = ''
+              assign hd = ''
+              for source in block.settings.video.sources
+                if source.format == 'mp4' and source.height == 720
+                  assign src = source.url
+                elsif source.format == 'mp4' and source.height == 1080
+                  assign hd = source.url
+                elsif source.format == 'mp4' and src == ''
+                  assign src = source.url
+                endif
+              endfor
+              if src == ''
+                assign src = hd
+              endif
+              assign poster = block.settings.poster | default: block.settings.video.preview_image
+            -%}
+            <div class="au-rw__card" role="listitem" data-src="{{ src }}" {{ block.shopify_attributes }}>
+              {%- if poster != blank -%}
+                {{ poster | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 82vw', widths: '400, 600, 900', alt: block.settings.title | escape }}
+              {%- endif -%}
+              <button type="button" class="au-rw__play" aria-label="Play: {{ block.settings.title | escape }}">
+                <span class="au-rw__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+                <span class="au-rw__title">{{ block.settings.title }}</span>
+              </button>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <button type="button" class="au-rw__arrow right" aria-label="Next video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="au-rw__dots" role="tablist" aria-label="Videos"></div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div class="au-rw__cta"><a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a></div>
+    {%- endif -%}
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.getElementById('AuRW-{{ sid }}'); if (!root) return;
+    var track = root.querySelector('.au-rw__track'); if (!track) return;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.au-rw__card'));
+    var dotsWrap = root.querySelector('.au-rw__dots'); var idx = 0;
+    var dots = cards.map(function (c, i) {
+      var d = document.createElement('button'); d.type = 'button'; d.className = 'au-rw__dot'; d.setAttribute('aria-label', 'Go to video ' + (i + 1));
+      d.addEventListener('click', function () { go(i); }); dotsWrap.appendChild(d); return d;
+    });
+    function paint() { dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); }); }
+    function go(i) { idx = Math.max(0, Math.min(cards.length - 1, i)); track.scrollTo({ left: cards[idx].offsetLeft - track.offsetLeft, behavior: 'smooth' }); paint(); }
+    root.querySelector('.au-rw__arrow.left').addEventListener('click', function () { go(idx - 1); });
+    root.querySelector('.au-rw__arrow.right').addEventListener('click', function () { go(idx + 1); });
+    var t; track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(function () {
+      var best = 0, bd = Infinity; cards.forEach(function (c, i) { var d = Math.abs((c.offsetLeft - track.offsetLeft) - track.scrollLeft); if (d < bd) { bd = d; best = i; } }); idx = best; paint();
+    }, 80); });
+    function pauseOthers(except) { cards.forEach(function (c) { var v = c.querySelector('video'); if (v && v !== except) { v.pause(); } }); }
+    cards.forEach(function (card) {
+      card.querySelector('.au-rw__play').addEventListener('click', function () {
+        var v = card.querySelector('video');
+        if (!v) {
+          v = document.createElement('video'); v.setAttribute('playsinline', ''); v.setAttribute('controls', ''); v.muted = true; v.preload = 'metadata'; v.src = card.dataset.src; card.appendChild(v);
+          v.addEventListener('ended', function () { card.classList.remove('is-playing'); });
+        }
+        pauseOthers(v); card.classList.add('is-playing'); var p = v.play(); if (p && p.catch) p.catch(function () {});
+      });
+    });
+    paint();
+  })();
+</script>
+{% schema %}
+{
+  "name": "AU real walks videos",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Real walks" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "See it on real walks." },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
+    { "type": "richtext", "id": "text", "label": "Intro" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "See the harness" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "blocks": [
+    { "type": "clip", "name": "Video card", "settings": [
+      { "type": "video", "id": "video", "label": "Video (click to play, muted at start)" },
+      { "type": "image_picker", "id": "poster", "label": "Poster (optional, defaults to the video thumbnail)" },
+      { "type": "text", "id": "title", "label": "Short title", "default": "When the lead goes tight" }
+    ] }
+  ],
+  "presets": [ { "name": "AU real walks videos", "blocks": [ { "type": "clip" }, { "type": "clip" }, { "type": "clip" } ] } ]
+}
+{% endschema %}
