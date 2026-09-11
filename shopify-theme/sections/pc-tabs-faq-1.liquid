@@ -1,0 +1,298 @@
+<!--
+  ⚠️ ATTENTION : Cette section est la propriété exclusive de PeakConversion.
+  Elle est protégée par la loi sur la propriété intellectuelle en vertu de l'article L122-4 du Code de la Propriété Intellectuelle en France.
+  Vous n'avez pas le droit de copier, vendre ou redistribuer cette section sous quelque forme que ce soit sans autorisation.
+  Pour accéder légalement à ces sections personnalisables, visitez notre site : https://peakconversion.fr/pages/sections-personnalisables
+-->
+{%- comment -%}
+  PC - Tabs FAQ #1 (PeakConversion), cleaned and hardened for this store:
+  real <button> questions with aria-expanded / aria-controls, block.shopify_attributes on tabs and
+  questions, answers animated with grid-template-rows (no fixed max-height cut-off), tab bar no longer
+  sticky (no overlap with the theme's sticky header) and horizontally scrollable on mobile, safe default
+  category (falls back to the first tab), init on load and on shopify:section:load, theme fonts.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign default_cat = section.settings.default_category | handleize
+  assign first_cat = ''
+  assign has_default = false
+  for block in section.blocks
+    if block.type == 'menu_item'
+      assign c = block.settings.category | handleize
+      if first_cat == ''
+        assign first_cat = c
+      endif
+      if c == default_cat
+        assign has_default = true
+      endif
+    endif
+  endfor
+  if has_default == false
+    assign default_cat = first_cat
+  endif
+-%}
+<style>
+  .container-{{ sid }} {
+    position: relative;
+    line-height: 1.5;
+    color: {{ section.settings.answer_color }};
+    margin: 0 auto;
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    padding: 10px 1.5rem;
+    box-sizing: border-box;
+    {% if section.settings.full_width %}width: 100%;{% else %}max-width: 1200px;{% endif %}
+    background-color: {{ section.settings.background }};
+    border-radius: {{ section.settings.border_radius }}px;
+    border: {{ section.settings.border_width }}px {{ section.settings.border_style }} {{ section.settings.border_color }};
+  }
+  .container-{{ sid }} .menu-container { padding: 6px 0; }
+  .container-{{ sid }} .menu-container .pc-caption { margin: 0 0 .6rem; text-align: center; font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; color: {{ section.settings.title_color }}; }
+  .container-{{ sid }} .menu-container h2 {
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.section_title_font_size }}px;
+    font-family: var(--font-heading-family);
+    margin: 0 0 20px;
+    text-align: center;
+  }
+  .container-{{ sid }} .menu-container .menu {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0 6px;
+  }
+  .container-{{ sid }} .menu-container .menu::-webkit-scrollbar { display: none; }
+  @media (min-width: 750px) { .container-{{ sid }} .menu-container .menu { justify-content: center; } }
+  .container-{{ sid }} .menu-item-{{ sid }} {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 16px;
+    border: 1px solid {{ section.settings.tab_inactive_border_color }};
+    border-radius: {{ section.settings.tab_inactive_border_radius }}px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font: inherit;
+    font-family: var(--font-heading-family);
+    font-size: {{ section.settings.tab_title_font_size }}px;
+    font-weight: {{ section.settings.tab_title_font_weight }};
+    background: {{ section.settings.tab_inactive_background_color }};
+    color: {{ section.settings.tab_title_color }};
+  }
+  .container-{{ sid }} .menu-item-{{ sid }}[aria-selected="true"] {
+    border: 1px solid {{ section.settings.tab_active_border_color }};
+    border-radius: {{ section.settings.tab_active_border_radius }}px;
+    color: {{ section.settings.tab_title_active_color }};
+    background: {{ section.settings.tab_active_background_color }};
+  }
+  .container-{{ sid }} .menu-item-{{ sid }}:focus-visible { outline: 2px solid {{ section.settings.tab_active_border_color }}; outline-offset: 2px; }
+  .container-{{ sid }} .faq-container { display: flex; flex-direction: column; gap: 4px; width: 90%; max-width: 820px; margin: 1em auto 0; }
+  .container-{{ sid }} .faq-item-{{ sid }} { border-bottom: 1px solid {{ section.settings.tab_inactive_border_color }}; }
+  .container-{{ sid }} .faq-item-{{ sid }}[hidden] { display: none; }
+  .container-{{ sid }} .faq-item-{{ sid }} h3 { margin: 0; font-size: inherit; }
+  .container-{{ sid }} .faq-question-{{ sid }} {
+    width: 100%;
+    text-align: left;
+    padding: 18px 40px 18px 0;
+    position: relative;
+    border: none;
+    font: inherit;
+    font-family: var(--font-heading-family);
+    font-weight: {{ section.settings.question_font_weight }};
+    background: none;
+    cursor: pointer;
+    color: {{ section.settings.question_color }};
+    font-size: {{ section.settings.question_font_size }}px;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+  }
+  .container-{{ sid }} .faq-question-{{ sid }}:hover { color: {{ section.settings.tab_active_border_color }}; }
+  .container-{{ sid }} .faq-question-{{ sid }}:focus-visible { outline: 2px solid {{ section.settings.tab_active_border_color }}; outline-offset: -2px; border-radius: 6px; }
+  .container-{{ sid }} .faq-question-{{ sid }} .icon-plus-minus {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+    color: {{ section.settings.question_icon_color }};
+  }
+  .container-{{ sid }} .faq-question-{{ sid }} .icon-plus-minus::before,
+  .container-{{ sid }} .faq-question-{{ sid }} .icon-plus-minus::after {
+    content: ''; position: absolute; background-color: {{ section.settings.question_icon_color }}; transition: all 0.2s ease;
+  }
+  .container-{{ sid }} .faq-question-{{ sid }} .icon-plus-minus::before { width: 16px; height: 2px; }
+  .container-{{ sid }} .faq-question-{{ sid }} .icon-plus-minus::after { width: 2px; height: 16px; }
+  .container-{{ sid }} .faq-question-{{ sid }}[aria-expanded="true"] .icon-plus-minus::after { transform: rotate(90deg) scale(0); }
+  .container-{{ sid }} .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease, opacity 0.3s ease; opacity: 0; }
+  .container-{{ sid }} .faq-answer > div { overflow: hidden; }
+  .container-{{ sid }} .faq-answer-inner { padding: 0 40px 20px 0; color: {{ section.settings.answer_color }}; font-size: {{ section.settings.answer_font_size }}px; line-height: 1.55; }
+  .container-{{ sid }} .faq-answer-inner p { margin: 0 0 .6em; }
+  .container-{{ sid }} .faq-answer-inner p:last-child { margin: 0; }
+  .container-{{ sid }} .faq-item-{{ sid }}.active-{{ sid }} .faq-answer { grid-template-rows: 1fr; opacity: 1; }
+  .container-{{ sid }} .faq-answer a { color: {{ section.settings.tab_active_border_color }}; }
+  .container-{{ sid }} .pc-foot { margin: 1.2rem 0 .4rem; text-align: center; font-size: .92rem; }
+  .container-{{ sid }} .pc-foot a { color: {{ section.settings.question_color }}; text-underline-offset: .2em; }
+  @media (prefers-reduced-motion: reduce) { .container-{{ sid }} .faq-answer, .container-{{ sid }} .icon-plus-minus::after { transition: none; } }
+  @media (max-width: 768px) {
+    .container-{{ sid }} .menu-container h2 { font-size: {{ section.settings.tab_header_font_size_mobile }}px !important; }
+    .container-{{ sid }} .menu-item-{{ sid }} { font-size: {{ section.settings.tab_font_size_mobile }}px !important; }
+    .container-{{ sid }} .menu-container .menu { padding-bottom: 1em; }
+    .container-{{ sid }} .faq-container { width: 100%; }
+    .container-{{ sid }} .faq-question-{{ sid }} { font-size: {{ section.settings.tab_text_font_size_mobile }}px; padding-right: 34px; }
+    .container-{{ sid }} .faq-answer-inner { font-size: {{ section.settings.tab_text_font_size_mobile }}px; padding-right: 0; }
+  }
+</style>
+
+<div id="peakconversion-{{ sid }}" class="container-{{ sid }}" data-default="{{ default_cat }}">
+  <div class="menu-container">
+    {%- if section.settings.caption != blank -%}<p class="pc-caption">{{ section.settings.caption | escape }}</p>{%- endif -%}
+    <h2>{{ section.settings.title }}</h2>
+    <div class="menu" role="tablist" aria-label="{{ section.settings.title | escape }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu_item' -%}
+          {%- assign category_id = block.settings.category | handleize -%}
+          <button type="button" class="menu-item-{{ sid }}" role="tab" data-category="{{ category_id }}" id="pc-tab-{{ block.id }}" aria-selected="{% if category_id == default_cat %}true{% else %}false{% endif %}" aria-controls="pc-panel-{{ sid }}" {{ block.shopify_attributes }}>{{ block.settings.category }}</button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="faq-container" id="pc-panel-{{ sid }}" role="tabpanel">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'faq_item' -%}
+        {%- assign category_id = block.settings.category | handleize -%}
+        <div class="faq-item-{{ sid }}" data-category="{{ category_id }}" {% unless category_id == default_cat %}hidden{% endunless %} {{ block.shopify_attributes }}>
+          <h3>
+            <button type="button" class="faq-question-{{ sid }}" aria-expanded="false" aria-controls="pc-answer-{{ block.id }}" id="pc-question-{{ block.id }}">
+              {{ block.settings.question | escape }}
+              <span class="icon-plus-minus" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-answer" id="pc-answer-{{ block.id }}" role="region" aria-labelledby="pc-question-{{ block.id }}"><div><div class="faq-answer-inner rte">{{ block.settings.answer | newline_to_br }}</div></div></div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.link_label != blank -%}
+    <p class="pc-foot"><a href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label | escape }}</a></p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "PC - Tabs FAQ #1",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "This section is a property of PeakConversion",
+      "info": "Do not sell or reproduce. contact us at franklinjounda@gmail.com for more info - please save to see all changes"
+    },
+    { "type": "text", "id": "default_category", "label": "Default Category", "default": "Category 1", "info": "Falls back to the first tab when it does not match a Menu Item." },
+    { "type": "header", "content": "Layout Settings" },
+    { "type": "color", "id": "background", "label": "Background Color", "default": "#ffffff" },
+    { "type": "text", "id": "caption", "label": "Caption above the title" },
+    { "type": "text", "id": "title", "label": "FAQ Title", "default": "FAQ" },
+    { "type": "range", "id": "section_title_font_size", "label": "Section Title Font Size", "min": 10, "max": 50, "step": 1, "default": 30 },
+    { "type": "color", "id": "title_color", "label": "Title Color", "default": "#000000" },
+    { "type": "text", "id": "link_label", "label": "Footer link label" },
+    { "type": "url", "id": "link_url", "label": "Footer link (full FAQ page)" },
+    { "type": "checkbox", "id": "full_width", "label": "Full Width", "default": false },
+    { "type": "range", "id": "border_radius", "label": "Border Radius", "min": 0, "max": 50, "step": 1, "default": 0 },
+    { "type": "color", "id": "border_color", "label": "Border Color", "default": "#e7dae2" },
+    { "type": "range", "id": "border_width", "label": "Border Width", "min": 0, "max": 10, "step": 1, "default": 1 },
+    { "type": "select", "id": "border_style", "label": "Border Style", "options": [ { "value": "none", "label": "None" }, { "value": "solid", "label": "Solid" }, { "value": "dashed", "label": "Dashed" }, { "value": "dotted", "label": "Dotted" } ], "default": "solid" },
+    { "type": "range", "id": "margin_top", "label": "Margin Top", "min": 0, "max": 100, "step": 1, "default": 20 },
+    { "type": "range", "id": "margin_bottom", "label": "Margin Bottom", "min": 0, "max": 100, "step": 1, "default": 20 },
+    { "type": "header", "content": "Tab Title Settings" },
+    { "type": "color", "id": "tab_title_color", "label": "Tab Title Color", "default": "#000000" },
+    { "type": "color", "id": "tab_title_active_color", "label": "Tab Title active Color", "default": "#000000" },
+    { "type": "range", "id": "tab_title_font_size", "label": "Tab Title Font Size", "min": 10, "max": 30, "step": 1, "default": 16 },
+    { "type": "select", "id": "tab_title_font_weight", "label": "Tab Title Font Weight", "options": [ { "value": "normal", "label": "Normal" }, { "value": "bold", "label": "Bold" } ], "default": "normal" },
+    { "type": "color", "id": "tab_active_border_color", "label": "Tab active Border Color", "default": "#000000" },
+    { "type": "color", "id": "tab_active_background_color", "label": "Tab active Background Color", "default": "#ffffff" },
+    { "type": "range", "id": "tab_active_border_radius", "label": "Tab active Border Radius", "min": 0, "max": 50, "step": 1, "default": 0 },
+    { "type": "color", "id": "tab_inactive_border_color", "label": "Tab Inactive Border Color", "default": "#e7dae2" },
+    { "type": "color", "id": "tab_inactive_background_color", "label": "Tab Inactive Background Color", "default": "#ffffff" },
+    { "type": "range", "id": "tab_inactive_border_radius", "label": "Tab Inactive Border Radius", "min": 0, "max": 50, "step": 1, "default": 0 },
+    { "type": "header", "content": "Question Settings" },
+    { "type": "color", "id": "question_color", "label": "Question Color", "default": "#000000" },
+    { "type": "range", "id": "question_font_size", "label": "Question Font Size", "min": 10, "max": 30, "step": 1, "default": 16 },
+    { "type": "select", "id": "question_font_weight", "label": "Question Font Weight", "options": [ { "value": "normal", "label": "Normal" }, { "value": "bold", "label": "Bold" } ], "default": "normal" },
+    { "type": "color", "id": "question_icon_color", "label": "Question Icon Color", "default": "#000000" },
+    { "type": "header", "content": "Answer Settings" },
+    { "type": "color", "id": "answer_color", "label": "Answer Color", "default": "#000000" },
+    { "type": "range", "id": "answer_font_size", "label": "Answer Font Size", "min": 10, "max": 30, "step": 1, "default": 16 },
+    { "type": "header", "content": "Mobile text size Settings" },
+    { "type": "range", "id": "tab_header_font_size_mobile", "label": "Section header font size mobile", "min": 10, "max": 30, "step": 1, "default": 24 },
+    { "type": "range", "id": "tab_font_size_mobile", "label": "Tabs font size mobile", "min": 10, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "tab_text_font_size_mobile", "label": "Text font size mobile", "min": 10, "max": 40, "step": 1, "default": 16 }
+  ],
+  "blocks": [
+    { "type": "menu_item", "name": "Menu Item", "settings": [ { "type": "text", "id": "category", "label": "Category" } ] },
+    { "type": "faq_item", "name": "FAQ Item", "settings": [
+      { "type": "text", "id": "category", "label": "Category", "info": "Must match a Menu Item category exactly." },
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "textarea", "id": "answer", "label": "Answer" }
+    ] }
+  ],
+  "presets": [
+    { "name": "PC - Tabs FAQ #1", "category": "Custom", "blocks": [
+      { "type": "menu_item", "settings": { "category": "Category 1" } },
+      { "type": "faq_item", "settings": { "category": "Category 1", "question": "Question 1 in Category 1", "answer": "Answer to question 1 in Category 1." } },
+      { "type": "faq_item", "settings": { "category": "Category 1", "question": "Question 2 in Category 1", "answer": "Answer to question 2 in Category 1." } },
+      { "type": "menu_item", "settings": { "category": "Category 2" } },
+      { "type": "faq_item", "settings": { "category": "Category 2", "question": "Question 1 in Category 2", "answer": "Answer to question 1 in Category 2." } },
+      { "type": "faq_item", "settings": { "category": "Category 2", "question": "Question 2 in Category 2", "answer": "Answer to question 2 in Category 2." } }
+    ] }
+  ]
+}
+{% endschema %}
+
+<script>
+  (function () {
+    function initPcTabsFaq(root) {
+      if (!root || root.dataset.pcInit) return; root.dataset.pcInit = '1';
+      var sid = root.id.replace('peakconversion-', '');
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('.menu-item-' + sid));
+      var items = Array.prototype.slice.call(root.querySelectorAll('.faq-item-' + sid));
+      function closeAll() { items.forEach(function (it) { it.classList.remove('active-' + sid); var q = it.querySelector('.faq-question-' + sid); if (q) q.setAttribute('aria-expanded', 'false'); }); }
+      function filter(category) {
+        items.forEach(function (it) { var show = it.dataset.category === category || category === 'all'; it.hidden = !show; });
+        closeAll();
+      }
+      function select(tab) {
+        tabs.forEach(function (t) { t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+        filter(tab.dataset.category);
+        if (window.innerWidth < 750) { try { tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); } catch (e) {} }
+      }
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab); });
+        tab.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { var n = tabs[(i + 1) % tabs.length]; n.focus(); select(n); } if (e.key === 'ArrowLeft') { var p = tabs[(i - 1 + tabs.length) % tabs.length]; p.focus(); select(p); } });
+      });
+      items.forEach(function (item) {
+        var q = item.querySelector('.faq-question-' + sid); if (!q) return;
+        q.addEventListener('click', function () {
+          var open = item.classList.contains('active-' + sid);
+          closeAll();
+          if (!open) { item.classList.add('active-' + sid); q.setAttribute('aria-expanded', 'true'); }
+        });
+      });
+      var def = root.dataset.default;
+      var start = tabs.filter(function (t) { return t.dataset.category === def; })[0] || tabs[0];
+      if (start) { select(start); } else { items.forEach(function (it) { it.hidden = false; }); }
+      if (window.Shopify && Shopify.designMode) {
+        document.addEventListener('shopify:block:select', function (e) {
+          var el = root.querySelector('[data-shopify-editor-block*="' + e.detail.blockId + '"]'); if (!el) return;
+          if (el.classList.contains('menu-item-' + sid)) { select(el); }
+          else if (el.classList.contains('faq-item-' + sid)) { var t = tabs.filter(function (x) { return x.dataset.category === el.dataset.category; })[0]; if (t) select(t); closeAll(); el.classList.add('active-' + sid); el.querySelector('.faq-question-' + sid).setAttribute('aria-expanded', 'true'); }
+        });
+      }
+    }
+    function boot() { document.querySelectorAll('[id^="peakconversion-"].container-{{ sid }}').forEach(initPcTabsFaq); }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+    document.addEventListener('shopify:section:load', function (e) { var r = e.target && e.target.querySelector && e.target.querySelector('[id^="peakconversion-"]'); if (r) { delete r.dataset.pcInit; initPcTabsFaq(r); } });
+  })();
+</script>

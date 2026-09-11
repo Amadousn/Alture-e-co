@@ -15,7 +15,9 @@
         "text_color": "#FFFFFF",
         "button_color": "#0E6F8C",
         "button_text_color": "#FFFFFF",
-        "fallback_color": "#13262B"
+        "fallback_color": "#13262B",
+        "focal_desktop": "62% center",
+        "focal_mobile": "center 28%"
       }
     },
     "trust_strip": {
@@ -469,20 +471,21 @@
             "dog": "",
             "caption": "",
             "quote": "",
-            "video": "",
-            "poster": ""
+            "video": "shopify://files/videos/paropet-1-a43e73ed.mp4",
+            "poster": "",
+            "label": "Customer video"
           }
         },
         "cm_photo_1": {
           "type": "photo",
           "settings": {
-            "admin_label": "Customer photo 1",
+            "admin_label": "Product photo 1",
             "enabled": true,
-            "first_name": "",
-            "dog": "",
-            "caption": "",
-            "quote": "",
-            "image": ""
+            "image": "",
+            "alt": "Yellow Labrador on a suburban footpath, lead clipped to the front ring of the charcoal harness",
+            "focal": "center center",
+            "label": "Closer look",
+            "caption": "Lead clipped to the front chest ring"
           }
         },
         "cm_video_2": {
@@ -494,20 +497,21 @@
             "dog": "",
             "caption": "",
             "quote": "",
-            "video": "",
-            "poster": ""
+            "video": "shopify://files/videos/paropet-3-3e3c0c9a.mp4",
+            "poster": "",
+            "label": "Customer video"
           }
         },
         "cm_photo_2": {
           "type": "photo",
           "settings": {
-            "admin_label": "Customer photo 2",
+            "admin_label": "Product photo 2",
             "enabled": true,
-            "first_name": "",
-            "dog": "",
-            "caption": "",
-            "quote": "",
-            "image": ""
+            "image": "",
+            "alt": "Australian Kelpie walking beside its owner on a coastal track at sunrise, wearing the charcoal harness",
+            "focal": "center center",
+            "label": "Closer look",
+            "caption": "Loose lead on a coastal track"
           }
         },
         "cm_video_3": {
@@ -519,20 +523,21 @@
             "dog": "",
             "caption": "",
             "quote": "",
-            "video": "",
-            "poster": ""
+            "video": "shopify://files/videos/paropet-2-4fb59344.mp4",
+            "poster": "",
+            "label": "Customer video"
           }
         },
         "cm_photo_3": {
           "type": "photo",
           "settings": {
-            "admin_label": "Customer photo 3",
+            "admin_label": "Product photo 3",
             "enabled": true,
-            "first_name": "",
-            "dog": "",
-            "caption": "",
-            "quote": "",
-            "image": ""
+            "image": "",
+            "alt": "Staffordshire Bull Terrier on a dry bush track wearing the charcoal harness",
+            "focal": "center center",
+            "label": "Closer look",
+            "caption": "Bush track, late afternoon"
           }
         },
         "cm_video_4": {
@@ -544,8 +549,21 @@
             "dog": "",
             "caption": "",
             "quote": "",
-            "video": "",
-            "poster": ""
+            "video": "shopify://files/videos/paropet-4-d200cb8b.mp4",
+            "poster": "",
+            "label": "Customer video"
+          }
+        },
+        "cm_photo_4": {
+          "type": "photo",
+          "settings": {
+            "admin_label": "Product photo 4",
+            "enabled": true,
+            "image": "",
+            "alt": "Golden Retriever in profile while the owner adjusts a side strap of the charcoal harness",
+            "focal": "center center",
+            "label": "Closer look",
+            "caption": "Adjusting the side strap"
           }
         }
       },
@@ -556,13 +574,14 @@
         "cm_photo_2",
         "cm_video_3",
         "cm_photo_3",
-        "cm_video_4"
+        "cm_video_4",
+        "cm_photo_4"
       ],
       "settings": {
-        "caption": "Customer walks",
-        "heading": "Real dogs. Real walks.",
+        "caption": "In action",
+        "heading": "See the harness in action",
         "heading_size": "h1",
-        "subheading": "See how the harness fits and moves on everyday Australian walks.",
+        "subheading": "Real customer videos and a closer look at how the harness fits, moves and performs.",
         "card_height": 400,
         "button_label": "",
         "button_link": "",
@@ -597,72 +616,122 @@
         "padding_bottom": 56
       }
     },
-    "au_faq": {
-      "type": "au-faq",
+    "pc_tabs_faq": {
+      "type": "pc-tabs-faq-1",
       "blocks": {
-        "faq_q1": {
-          "type": "q",
+        "tab_harness": {
+          "type": "menu_item",
           "settings": {
+            "category": "Harness & pulling"
+          }
+        },
+        "tab_size": {
+          "type": "menu_item",
+          "settings": {
+            "category": "Size & fit"
+          }
+        },
+        "tab_delivery": {
+          "type": "menu_item",
+          "settings": {
+            "category": "Delivery & guarantee"
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Harness & pulling",
             "question": "Will it really stop my dog from pulling?",
-            "answer": "<p>It stops pulling from working. The lead sits on the chest, so a surge turns your dog back towards you instead of dragging you forward. Most dogs ease off on the first walk; determined pullers take a few. You have 60 days to find out.</p>"
+            "answer": "It stops pulling from working. The lead sits on the chest, so a surge turns your dog back towards you instead of dragging you forward. Most dogs ease off on the first walk; determined pullers take a few. You have 60 days to find out."
           }
         },
-        "faq_q2": {
-          "type": "q",
+        "faq_2": {
+          "type": "faq_item",
           "settings": {
-            "question": "Is it comfortable around the neck?",
-            "answer": "<p>Nothing sits on the throat. The load goes onto the padded chest plate, and the neck straps are adjustable and sit low on the shoulders. No coughing, no gagging, even on a hard lunge.</p>"
+            "category": "Harness & pulling",
+            "question": "What is the difference between the front and back clips?",
+            "answer": "The front (chest) clip redirects a pull sideways, back towards you: use it on busy paths and for training. The back clip lets your dog walk freely once the lead stays slack. Same harness, one click to switch."
           }
         },
-        "faq_q3": {
-          "type": "q",
+        "faq_3": {
+          "type": "faq_item",
           "settings": {
+            "category": "Size & fit",
             "question": "How do I choose the right size?",
-            "answer": "<p>Measure the chest at its widest point, just behind the front legs, and match it to the size chart (XS to XL, 35 to 105 cm). Between sizes or thick double coat? Go up. Four adjustment points do the rest.</p>"
+            "answer": "Measure the chest at its widest point, just behind the front legs, and match it to the size chart (XS to XL, 35 to 105 cm). Between sizes or thick double coat? Go up. Four adjustment points do the rest."
           }
         },
-        "faq_q4": {
-          "type": "q",
+        "faq_4": {
+          "type": "faq_item",
           "settings": {
+            "category": "Size & fit",
             "question": "What happens if the size is wrong?",
-            "answer": "<p>We swap it free within 60 days, one swap per order, prepaid both ways. Send us a side photo of your dog and the chest measurement and we'll confirm the size before you post it back.</p>"
+            "answer": "We swap it free within 60 days, one swap per order, prepaid both ways. Send us a side photo of your dog and the chest measurement and we'll confirm the size before you post it back."
           }
         },
-        "faq_q5": {
-          "type": "q",
+        "faq_5": {
+          "type": "faq_item",
           "settings": {
+            "category": "Delivery & guarantee",
             "question": "Is the matching lead included?",
-            "answer": "<p>Yes. The matching Classic Lead is added to every harness order automatically at checkout, at no cost. Clip it to the front ring for the first ten walks.</p>"
+            "answer": "Yes. The matching Classic Lead is added to every harness order automatically at checkout, at no cost. Clip it to the front ring for the first ten walks."
           }
         },
-        "faq_q6": {
-          "type": "q",
+        "faq_6": {
+          "type": "faq_item",
           "settings": {
+            "category": "Delivery & guarantee",
             "question": "How does the 60-day guarantee work?",
-            "answer": "<p>Walk your dog in it for up to 60 days from delivery. If it hasn't changed your walks, contact us with your order number: we email a prepaid Australia Post label, you drop it at any post office, and the full price is refunded within 5 business days of the scan. You keep the lead.</p>"
+            "answer": "Walk your dog in it for up to 60 days from delivery. If it hasn't changed your walks, contact us with your order number: we email a prepaid Australia Post label, you drop it at any post office, and the full price is refunded within 5 business days of the scan. You keep the lead."
           }
         }
       },
       "block_order": [
-        "faq_q1",
-        "faq_q2",
-        "faq_q3",
-        "faq_q4",
-        "faq_q5",
-        "faq_q6"
+        "tab_harness",
+        "tab_size",
+        "tab_delivery",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
       ],
       "settings": {
+        "default_category": "Harness & pulling",
+        "background": "#f2f5f4",
         "caption": "FAQ",
-        "heading": "Questions, answered honestly",
-        "heading_size": "h1",
-        "subheading": "",
-        "open_first": false,
+        "title": "Questions, answered honestly",
+        "section_title_font_size": 30,
+        "title_color": "#13262b",
         "link_label": "See all frequently asked questions",
         "link_url": "/pages/faq",
-        "max_width": 780,
-        "color_scheme": "background-1",
-        "padding_top": 56,
-        "padding_bottom": 56
+        "full_width": false,
+        "border_radius": 0,
+        "border_color": "#f2f5f4",
+        "border_width": 0,
+        "border_style": "none",
+        "margin_top": 40,
+        "margin_bottom": 40,
+        "tab_title_color": "#13262b",
+        "tab_title_active_color": "#ffffff",
+        "tab_title_font_size": 14,
+        "tab_title_font_weight": "bold",
+        "tab_active_border_color": "#0e6f8c",
+        "tab_active_background_color": "#0e6f8c",
+        "tab_active_border_radius": 50,
+        "tab_inactive_border_color": "#c9d4d3",
+        "tab_inactive_background_color": "#ffffff",
+        "tab_inactive_border_radius": 50,
+        "question_color": "#13262b",
+        "question_font_size": 16,
+        "question_font_weight": "bold",
+        "question_icon_color": "#0e6f8c",
+        "answer_color": "#13262b",
+        "answer_font_size": 15,
+        "tab_header_font_size_mobile": 24,
+        "tab_font_size_mobile": 13,
+        "tab_text_font_size_mobile": 15
       }
     }
   },
@@ -677,7 +746,7 @@
     "offer_card",
     "fit_guide",
     "guarantee_60_days",
-    "au_faq",
+    "pc_tabs_faq",
     "final_cta"
   ]
 }

@@ -73,7 +73,7 @@
   #AuHero-{{ sid }} .au-hero__media video {
     display: block;
     object-fit: cover;
-    object-position: 62% center;
+    object-position: {{ section.settings.focal_desktop | default: '62% center' }};
   }
   #AuHero-{{ sid }} .au-hero__media video {
     opacity: 0;
@@ -156,7 +156,7 @@
       height: min(74svh, 600px);
     }
     #AuHero-{{ sid }} .au-hero__media img,
-    #AuHero-{{ sid }} .au-hero__media video { object-position: center 28%; }
+    #AuHero-{{ sid }} .au-hero__media video { object-position: {{ section.settings.focal_mobile | default: 'center 28%' }}; }
     #AuHero-{{ sid }} .au-hero__poster--mobile.has-image { display: block; }
     #AuHero-{{ sid }} .au-hero__poster--mobile.has-image + .au-hero__poster--desktop { display: none; }
     #AuHero-{{ sid }} .au-hero__overlay {
@@ -262,21 +262,138 @@
   "tag": "section",
   "class": "section section-au-hero",
   "settings": [
-    { "type": "video", "id": "video", "label": "Hero video (16:9 master)" },
-    { "type": "video", "id": "video_mobile", "label": "Mobile video (9:16, optional)" },
-    { "type": "image_picker", "id": "poster", "label": "Poster image (shown before the video loads)" },
-    { "type": "image_picker", "id": "poster_mobile", "label": "Mobile poster (optional)" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Front-clip no-pull harness" },
-    { "type": "text", "id": "heading", "label": "Headline", "default": "Walks you actually look forward to." },
-    { "type": "textarea", "id": "subheading", "label": "Subtitle", "default": "The front-clip harness that redirects pulling, protects your dog's neck and gives you more control from the very first walk." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the harness — A$59" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "text", "id": "micro", "label": "Reassurance line", "default": "Matching lead included · Free Australia-wide shipping · 60-day guarantee" },
-    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
-    { "type": "color", "id": "button_color", "label": "Button colour", "default": "#0E6F8C" },
-    { "type": "color", "id": "button_text_color", "label": "Button text colour", "default": "#FFFFFF" },
-    { "type": "color", "id": "fallback_color", "label": "Background while loading", "default": "#13262B" }
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hero video (16:9 master)"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video (9:16, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster image (shown before the video loads)"
+    },
+    {
+      "type": "select",
+      "id": "focal_desktop",
+      "label": "Framing (desktop)",
+      "default": "62% center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Centre"
+        },
+        {
+          "value": "62% center",
+          "label": "Right of centre"
+        },
+        {
+          "value": "75% center",
+          "label": "Right"
+        },
+        {
+          "value": "center 30%",
+          "label": "Upper"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "focal_mobile",
+      "label": "Framing (mobile)",
+      "default": "center 28%",
+      "options": [
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center 28%",
+          "label": "Upper third"
+        },
+        {
+          "value": "center center",
+          "label": "Centre"
+        },
+        {
+          "value": "center 65%",
+          "label": "Lower third"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_mobile",
+      "label": "Mobile poster (optional)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Front-clip no-pull harness"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "Walks you actually look forward to."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtitle",
+      "default": "The front-clip harness that redirects pulling, protects your dog's neck and gives you more control from the very first walk."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the harness — A$59"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "micro",
+      "label": "Reassurance line",
+      "default": "Matching lead included · Free Australia-wide shipping · 60-day guarantee"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button colour",
+      "default": "#0E6F8C"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "fallback_color",
+      "label": "Background while loading",
+      "default": "#13262B"
+    }
   ],
-  "presets": [ { "name": "AU hero video" } ]
+  "presets": [
+    {
+      "name": "AU hero video"
+    }
+  ]
 }
 {% endschema %}

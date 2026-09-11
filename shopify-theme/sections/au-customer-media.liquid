@@ -44,6 +44,7 @@
   #AuCM-{{ sid }} .au-cm__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
   #AuCM-{{ sid }} .au-cm__icon { width: 3.2rem; height: 3.2rem; border-radius: 50%; background: rgba(255,255,255,.94); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); }
   #AuCM-{{ sid }} .au-cm__icon svg { width: 1.2rem; height: 1.2rem; margin-left: 3px; fill: #13262B; }
+  #AuCM-{{ sid }} .au-cm__tag--photo { background: rgba(19,38,43,.85); color: #fff; }
   #AuCM-{{ sid }} .au-cm__tag { position: absolute; left: .7rem; top: .7rem; padding: .3rem .6rem; border-radius: 999px; background: rgba(255,255,255,.92); color: #13262B; font-family: var(--font-heading-family); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; z-index: 1; }
   #AuCM-{{ sid }} .au-cm__ctrls { position: absolute; right: .6rem; bottom: .6rem; display: none; gap: .4rem; z-index: 2; }
   #AuCM-{{ sid }} .au-cm__ctrl { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.92); color: #13262B; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
@@ -139,7 +140,7 @@
               <div class="au-cm__media">
                 {%- if has_media -%}
                   {%- if is_video -%}
-                    <span class="au-cm__tag">Video</span>
+                    <span class="au-cm__tag">{{ bs.label | default: 'Customer video' | escape }}</span>
                     {%- if poster != blank -%}
                       {%- assign m_alt = bs.caption | default: who | escape -%}
                       {{ poster | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 260px, 60vw', widths: '300, 450, 700', alt: m_alt }}
@@ -153,14 +154,17 @@
                       <button type="button" class="au-cm__ctrl" data-pause aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
                     </div>
                   {%- else -%}
-                    {%- assign m_alt = bs.image.alt | default: who | escape -%}
-                    {{ bs.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 360px, 85vw', widths: '400, 600, 900', alt: m_alt }}
+                    {%- if bs.label != blank -%}<span class="au-cm__tag au-cm__tag--photo">{{ bs.label | escape }}</span>{%- endif -%}
+                    {%- assign m_alt = bs.alt | default: bs.image.alt | default: bs.caption | escape -%}
+                    {{ bs.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 360px, 85vw', widths: '400, 600, 900', alt: m_alt, style: 'object-position: ' | append: bs.focal | append: ';' }}
                   {%- endif -%}
                 {%- else -%}
                   <div class="au-cm__ph">{{ bs.admin_label | default: block.type }}<br>Add a {% if is_video %}video (9:16){% else %}photo (4:5){% endif %} in the theme editor. Hidden on the storefront until then.</div>
                 {%- endif -%}
               </div>
-              {%- if who != blank or bs.caption != blank or bs.quote != blank -%}
+              {%- if is_video == false -%}
+                {%- if bs.caption != blank -%}<div class="au-cm__body"><p class="au-cm__cap">{{ bs.caption | escape }}</p></div>{%- endif -%}
+              {%- elsif who != blank or bs.caption != blank or bs.quote != blank -%}
                 <div class="au-cm__body">
                   {%- if who != blank -%}<p class="au-cm__who">{{ bs.first_name | escape }}{% if bs.dog != blank %} <span>{% if bs.first_name != blank %}&amp; {% endif %}{{ bs.dog | escape }}</span>{% endif %}</p>{%- endif -%}
                   {%- if bs.caption != blank -%}<p class="au-cm__cap">{{ bs.caption | escape }}</p>{%- endif -%}
@@ -237,11 +241,11 @@
   "class": "section",
   "max_blocks": 12,
   "settings": [
-    { "type": "paragraph", "content": "One carousel mixing real customer videos (9:16) and photos (4:5). Videos never autoplay: poster first, play on click, one at a time, sound on demand. Only real customers." },
-    { "type": "text", "id": "caption", "label": "Caption", "default": "Customer walks" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Real dogs. Real walks." },
+    { "type": "paragraph", "content": "One carousel mixing real customer videos (9:16) and product / lifestyle photos (4:5). Videos never autoplay: poster first, play on click, one at a time, sound on demand. Only real customers in the video cards." },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "In action" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "See the harness in action" },
     { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "See how the harness fits and moves on everyday Australian walks." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Real customer videos and a closer look at how the harness fits, moves and performs." },
     { "type": "range", "id": "card_height", "min": 320, "max": 560, "step": 10, "unit": "px", "label": "Media height (desktop)", "default": 400 },
     { "type": "text", "id": "button_label", "label": "Button label (optional)" },
     { "type": "url", "id": "button_link", "label": "Button link" },
@@ -254,30 +258,33 @@
       { "type": "text", "id": "admin_label", "label": "Internal label", "default": "Customer video" },
       { "type": "checkbox", "id": "enabled", "label": "Show this card", "default": true },
       { "type": "video", "id": "video", "label": "Customer video (9:16, real customer)" },
+      { "type": "text", "id": "label", "label": "Card label", "default": "Customer video" },
       { "type": "image_picker", "id": "poster", "label": "Poster (optional, defaults to the video thumbnail)" },
       { "type": "text", "id": "first_name", "label": "Owner first name" },
       { "type": "text", "id": "dog", "label": "Dog's name or breed" },
       { "type": "text", "id": "caption", "label": "Caption (where / what we see)" },
       { "type": "textarea", "id": "quote", "label": "Testimonial (optional, their own words)" }
     ] },
-    { "type": "photo", "name": "Customer photo", "settings": [
-      { "type": "text", "id": "admin_label", "label": "Internal label", "default": "Customer photo" },
+    { "type": "photo", "name": "Product photo", "settings": [
+      { "type": "paragraph", "content": "Product / lifestyle visual (4:5). Shown as a closer look at the harness, never as a customer testimonial." },
+      { "type": "text", "id": "admin_label", "label": "Internal label", "default": "Product photo" },
       { "type": "checkbox", "id": "enabled", "label": "Show this card", "default": true },
-      { "type": "image_picker", "id": "image", "label": "Customer photo (4:5, real customer)" },
-      { "type": "text", "id": "first_name", "label": "Owner first name" },
-      { "type": "text", "id": "dog", "label": "Dog's name or breed" },
-      { "type": "text", "id": "caption", "label": "Caption (where / what we see)" },
-      { "type": "textarea", "id": "quote", "label": "Testimonial (optional, their own words)" }
+      { "type": "image_picker", "id": "image", "label": "Photo (4:5)" },
+      { "type": "text", "id": "alt", "label": "Alt text (describe the photo)" },
+      { "type": "select", "id": "focal", "label": "Focal point", "default": "center center", "options": [ { "value": "center top", "label": "Top" }, { "value": "center center", "label": "Centre" }, { "value": "center bottom", "label": "Bottom" } ] },
+      { "type": "text", "id": "label", "label": "Card label", "default": "Closer look" },
+      { "type": "text", "id": "caption", "label": "Caption (what the photo shows)" }
     ] }
   ],
   "presets": [ { "name": "AU customer media", "blocks": [
     { "type": "video", "settings": { "admin_label": "Customer video 1" } },
-    { "type": "photo", "settings": { "admin_label": "Customer photo 1" } },
+    { "type": "photo", "settings": { "admin_label": "Product photo 1" } },
     { "type": "video", "settings": { "admin_label": "Customer video 2" } },
-    { "type": "photo", "settings": { "admin_label": "Customer photo 2" } },
+    { "type": "photo", "settings": { "admin_label": "Product photo 2" } },
     { "type": "video", "settings": { "admin_label": "Customer video 3" } },
-    { "type": "photo", "settings": { "admin_label": "Customer photo 3" } },
-    { "type": "video", "settings": { "admin_label": "Customer video 4" } }
+    { "type": "photo", "settings": { "admin_label": "Product photo 3" } },
+    { "type": "video", "settings": { "admin_label": "Customer video 4" } },
+    { "type": "photo", "settings": { "admin_label": "Product photo 4" } }
   ] } ]
 }
 {% endschema %}
