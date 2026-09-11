@@ -274,7 +274,8 @@
         "heading": "Four things the harness does on every walk",
         "heading_size": "h1",
         "text": "",
-        "badge": "number",
+        "autoplay_seconds": 0,
+        "image_position": "right",
         "button_label": "Choose your harness",
         "button_link": "/products/front-clip-no-pull-harness",
         "color_scheme": "accent-1",
@@ -533,8 +534,8 @@
         "cm_video_4"
       ],
       "settings": {
-        "caption": "Real walks",
-        "heading": "See it on real walks",
+        "caption": "Real customer walks",
+        "heading": "See the harness in action",
         "heading_size": "h1",
         "subheading": "Real customer walks with dogs of different sizes, strengths and personalities.",
         "card_height": 480,

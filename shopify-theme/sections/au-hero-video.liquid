@@ -58,8 +58,13 @@
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 520px;
-    height: min(72vh, 720px);
+    /* Container follows the video ratio (16:9 desktop, 9:16 mobile) so the whole frame stays visible;
+       only capped by the viewport height, as in the original design. */
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: 540px;
+    max-height: min(80vh, 800px);
   }
   #AuHero-{{ sid }} .au-hero__media,
   #AuHero-{{ sid }} .au-hero__media img,
@@ -152,8 +157,10 @@
   @media screen and (max-width: 749px) {
     #AuHero-{{ sid }} .au-hero__frame {
       align-items: flex-end;
-      min-height: 440px;
-      height: min(66svh, 560px);
+      aspect-ratio: {% if section.settings.video_mobile != blank or poster_mobile != blank %}9 / 16{% else %}4 / 5{% endif %};
+      height: auto;
+      min-height: 480px;
+      max-height: min(84svh, 720px);
     }
     #AuHero-{{ sid }} .au-hero__media img,
     #AuHero-{{ sid }} .au-hero__media video { object-position: {{ section.settings.focal_mobile | default: 'center 28%' }}; }
