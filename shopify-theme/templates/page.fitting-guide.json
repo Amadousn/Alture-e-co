@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "fitting_photo": {
+      "type": "image-with-text",
+      "blocks": {
+        "fg_cap": {
+          "type": "caption",
+          "settings": {
+            "caption": "Fitting",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "fg_h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Two fingers under every strap",
+            "heading_size": "h1"
+          }
+        },
+        "fg_t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sit the chest plate flat on the breastbone, tighten both sides evenly and check you can slide two fingers under each strap. Snug, not tight. The steps below take two minutes the first time and thirty seconds after that.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "fg_cap",
+        "fg_h",
+        "fg_t"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/photo-08-fitting-check.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "background-1",
+        "color_scheme": "background-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 28,
+        "padding_bottom": 8
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "color_scheme": "background-1",
+        "padding_top": 8,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "fitting_photo",
+    "main"
+  ]
+}

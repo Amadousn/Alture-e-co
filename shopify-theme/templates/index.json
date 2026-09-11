@@ -24,8 +24,8 @@
         "trust_1": {
           "type": "image",
           "settings": {
-            "feature_title": "<strong>Front clip redirects the pull</strong>",
-            "feature_text": "<p>Their own momentum turns them back towards you. Nothing on the throat, nothing on the face.</p>",
+            "feature_title": "<strong>Matching lead included</strong>",
+            "feature_text": "<p>A matching Classic Lead comes with every harness.</p>",
             "feature_url": "",
             "hide_image": true
           }
@@ -33,8 +33,8 @@
         "trust_2": {
           "type": "image",
           "settings": {
-            "feature_title": "<strong>Free shipping Australia-wide</strong>",
-            "feature_text": "<p>Australia Post tracked, on every harness order. Express A$9.95.</p>",
+            "feature_title": "<strong>Free Australia-wide shipping</strong>",
+            "feature_text": "<p>Australia Post tracked, on every harness order.</p>",
             "feature_url": "",
             "hide_image": true
           }
@@ -42,17 +42,8 @@
         "trust_3": {
           "type": "image",
           "settings": {
-            "feature_title": "<strong>60-Day Loose-Lead Guarantee</strong>",
+            "feature_title": "<strong>60-day guarantee</strong>",
             "feature_text": "<p>Hasn't changed your walks? Prepaid return, full refund.</p>",
-            "feature_url": "",
-            "hide_image": true
-          }
-        },
-        "trust_4": {
-          "type": "image",
-          "settings": {
-            "feature_title": "<strong>Matching lead included</strong>",
-            "feature_text": "<p>A matching Classic Lead comes with every harness. Free size swaps too.</p>",
             "feature_url": "",
             "hide_image": true
           }
@@ -61,12 +52,11 @@
       "block_order": [
         "trust_1",
         "trust_2",
-        "trust_3",
-        "trust_4"
+        "trust_3"
       ],
       "settings": {
-        "feature_row": 4,
-        "feature_row_mobile": 2,
+        "feature_row": 3,
+        "feature_row_mobile": 1,
         "feature_gap": 16,
         "feature_gap_mobile": 12,
         "feature_padding_horizontal": 16,
@@ -80,7 +70,7 @@
         "feature_heading_mt": 0,
         "feature_text_size": 14,
         "feature_text_size_mobile": 12,
-        "feature_text_height": 140,
+        "feature_text_height": 130,
         "feature_text_mt": 6,
         "feature_icon_size": 42,
         "feature_icon_size_mobile": 42,
@@ -126,7 +116,7 @@
         "pain_t": {
           "type": "text",
           "settings": {
-            "text": "<ul><li>Your dog pulls like a freight train the second the front door opens.</li><li>You've stopped taking them to the beach because you can't hold them near other dogs.</li><li>Your shoulder or lower back hurts after every walk.</li><li>You've tried a back-clip harness, a slip lead, maybe a head halter. Nothing stuck.</li><li>Bikes and runners on the shared path make you tense up before they even get close.</li></ul><p>That isn't a bad dog. It's gear that gives them something to lean into.</p>",
+            "text": "<ul><li>Your dog pulls like a freight train the second the front door opens.</li><li>Your shoulder or lower back hurts after every walk.</li><li>You've tried a back-clip harness, a slip lead, maybe a head halter. Nothing stuck.</li><li>Bikes and runners on the shared path make you tense up before they even get close.</li></ul><p>That isn't a bad dog. It's gear that gives them something to lean into.</p>",
             "text_style": "body"
           }
         }
@@ -166,14 +156,14 @@
         "mech_h": {
           "type": "heading",
           "settings": {
-            "heading": "Why the clip position changes everything",
+            "heading": "Why the clip position changes everything.",
             "heading_size": "h1"
           }
         },
         "mech_t": {
           "type": "text",
           "settings": {
-            "text": "<p>Most harnesses clip on the back. That gives your dog a full-body brace to lean into, which is exactly how a sled dog is set up to pull.</p><p>Clip the lead to the chest ring instead and their own momentum swings them sideways, back towards you. The pull stops working. There's nothing on the neck and nothing on the face, so you can practise a calm, loose lead instead of bracing against a tight one.</p>",
+            "text": "<p>Most harnesses clip on the back, which gives your dog a full-body brace to lean into. Clip the lead to the chest ring instead and their own momentum swings them sideways, back towards you.</p><ol><li><strong>Lead on the chest ring.</strong> The matching Classic Lead clips at the front.</li><li><strong>The pull becomes a turn.</strong> Forward force is redirected to the side, so pulling stops working.</li><li><strong>Nothing on the throat.</strong> The load sits on the padded chest plate.</li></ol>",
             "text_style": "body"
           }
         },
@@ -208,59 +198,113 @@
         "padding_bottom": 48
       }
     },
-    "built_for_australia": {
-      "type": "multicolumn",
+    "benefits_tabs": {
+      "type": "au-benefits-tabs",
       "blocks": {
-        "aus_col_1": {
-          "type": "column",
+        "hb_b1": {
+          "type": "benefit",
           "settings": {
-            "image": "shopify://shop_images/photo-03-early-morning.png",
-            "title": "Early mornings and hot evenings",
-            "text": "<p>Lightweight, breathable webbing and a padded chest plate that doesn't hold heat. Reflective trim for the pre-dawn lap of the oval.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Front-clip redirection",
+            "text": "The lead clips to the chest ring. When your dog surges forward, their own momentum turns them sideways and back towards you. Pulling stops paying off.",
+            "image": "shopify://shop_images/photo-11-front-clip-detail.png"
           }
         },
-        "aus_col_2": {
-          "type": "column",
+        "hb_b2": {
+          "type": "benefit",
           "settings": {
-            "image": "shopify://shop_images/photo-04-beach-rinse.png",
-            "title": "Beach, sand and salt",
-            "text": "<p>Rinse it under the beach shower, hang it in the shade. It's dry by the next walk.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Less pressure on the neck",
+            "text": "The load sits on the padded chest plate, not the throat. No coughing, no gagging, no strain on the trachea when the lead goes tight.",
+            "image": "shopify://shop_images/photo-03-early-morning.png"
           }
         },
-        "aus_col_3": {
-          "type": "column",
+        "hb_b3": {
+          "type": "benefit",
           "settings": {
-            "image": "shopify://shop_images/photo-05-bush-track.png",
-            "title": "Bush tracks and coastal walks",
-            "text": "<p>Back clip for a free-moving walk when the track's quiet. Front clip the moment the bikes come through.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Adjustable everyday comfort",
+            "text": "Four adjustment points and quick-release buckles for an even, twist-free fit. Two fingers under every strap and it's set for the day.",
+            "image": "shopify://shop_images/photo-08-fitting-check.png"
+          }
+        },
+        "hb_b4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Front and back walking modes",
+            "text": "Front clip for control on busy paths. Back clip for a relaxed walk once the lead stays slack. Same harness, two modes.",
+            "image": "shopify://shop_images/photo-05-bush-track.png"
           }
         }
       },
       "block_order": [
-        "aus_col_1",
-        "aus_col_2",
-        "aus_col_3"
+        "hb_b1",
+        "hb_b2",
+        "hb_b3",
+        "hb_b4"
       ],
       "settings": {
-        "title": "Built for how Australians walk",
+        "caption": "Why it works",
+        "heading": "Four things the harness does on every walk",
         "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
+        "text": "",
+        "image_position": "left",
+        "button_label": "Shop the harness — A$59",
+        "button_link": "/products/front-clip-no-pull-harness",
+        "color_scheme": "accent-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "built_for_australia": {
+      "type": "image-with-text",
+      "blocks": {
+        "aus_cap": {
+          "type": "caption",
+          "settings": {
+            "caption": "Built for Australian walks",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "aus_h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Coastal tracks, bush trails and the bikes that come through",
+            "heading_size": "h1"
+          }
+        },
+        "aus_t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lightweight, breathable webbing and a padded chest plate that doesn't hold heat. Back clip for a free-moving walk when the track's quiet, front clip the moment a bike or a runner comes through. Sand, salt and mud rinse off under the tap.</p>",
+            "text_style": "body"
+          }
+        },
+        "aus_b": {
+          "type": "button",
+          "settings": {
+            "button_label": "See it on the harness",
+            "button_link": "/products/front-clip-no-pull-harness",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "aus_cap",
+        "aus_h",
+        "aus_t",
+        "aus_b"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/photo-05-bush-track.png",
+        "height": "adapt",
+        "desktop_image_width": "large",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "background-1",
         "color_scheme": "background-1",
-        "color_scheme_2": "background-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
         "padding_top": 48,
         "padding_bottom": 48
       }
@@ -299,7 +343,7 @@
         "fp_promise": {
           "type": "text",
           "settings": {
-            "text": "✓ Matching Classic Lead included · ✓ Free shipping Australia-wide · ✓ 60-Day Loose-Lead Guarantee",
+            "text": "✓ Matching Classic Lead included · ✓ Free Australia-wide shipping · ✓ 60-day guarantee",
             "text_style": "body"
           }
         },
@@ -376,252 +420,120 @@
         "padding_bottom": 48
       }
     },
-    "product_details": {
-      "type": "image-with-text",
+    "compare_table": {
+      "type": "table-compare-pro",
       "blocks": {
-        "det_cap": {
-          "type": "caption",
+        "hdr": {
+          "type": "header",
           "settings": {
-            "caption": "Built to last",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
+            "cell_1_text": "",
+            "cell_2_text": "Front-clip harness",
+            "cell_3_text": "Back-clip harness",
+            "cell_4_text": "Collar / head halter"
           }
         },
-        "det_h": {
-          "type": "heading",
+        "r1": {
+          "type": "row",
           "settings": {
-            "heading": "The details that matter on the 300th walk",
-            "heading_size": "h1"
+            "title": "Pull redirection",
+            "cell_2_checkbox": "checked-circle",
+            "cell_2_text": "",
+            "cell_3_checkbox": "unchecked",
+            "cell_3_text": "",
+            "cell_4_checkbox": "",
+            "cell_4_text": "Head halter only"
           }
         },
-        "det_t": {
-          "type": "text",
+        "r2": {
+          "type": "row",
           "settings": {
-            "text": "<ul><li><strong>Front and back D-rings</strong> — front clip for control, back clip for a relaxed walk.</li><li><strong>Padded, breathable chest plate</strong> that spreads the load and doesn't hold heat.</li><li><strong>Top grab handle</strong> for a quick hold at a road crossing.</li><li><strong>Quick-release buckles</strong> and four adjustment points for an even, twist-free fit.</li><li><strong>Reflective piping</strong> for the pre-dawn and after-dark laps.</li><li><strong>Matching Classic Lead</strong> in the box, with every harness.</li></ul>",
-            "text_style": "body"
+            "title": "Pressure on the neck",
+            "cell_2_checkbox": "",
+            "cell_2_text": "None",
+            "cell_3_checkbox": "",
+            "cell_3_text": "None",
+            "cell_4_checkbox": "",
+            "cell_4_text": "Collar: yes"
           }
         },
-        "det_b": {
-          "type": "button",
+        "r3": {
+          "type": "row",
           "settings": {
-            "button_label": "Shop the harness — A$59",
-            "button_link": "/products/front-clip-no-pull-harness",
-            "button_style_secondary": false
+            "title": "Everyday comfort",
+            "cell_2_checkbox": "checked-circle",
+            "cell_2_text": "",
+            "cell_3_checkbox": "checked",
+            "cell_3_text": "",
+            "cell_4_checkbox": "",
+            "cell_4_text": "Halter often disliked"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "title": "Two walking modes (front + back clip)",
+            "cell_2_checkbox": "checked-circle",
+            "cell_2_text": "",
+            "cell_3_checkbox": "unchecked",
+            "cell_3_text": "",
+            "cell_4_checkbox": "unchecked",
+            "cell_4_text": ""
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "title": "Adjustment",
+            "cell_2_checkbox": "",
+            "cell_2_text": "4 points",
+            "cell_3_checkbox": "",
+            "cell_3_text": "Varies",
+            "cell_4_checkbox": "",
+            "cell_4_text": "1–2 points"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "title": "Ease of use",
+            "cell_2_checkbox": "",
+            "cell_2_text": "Works from the first walk",
+            "cell_3_checkbox": "",
+            "cell_3_text": "Works from the first walk",
+            "cell_4_checkbox": "",
+            "cell_4_text": "Halter: days of getting used to"
           }
         }
       },
       "block_order": [
-        "det_cap",
-        "det_h",
-        "det_t",
-        "det_b"
+        "hdr",
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
       ],
       "settings": {
-        "image": "shopify://shop_images/photo-07-product-detail.png",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "section_color_scheme": "background-1",
         "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "sizes_big_small": {
-      "type": "image-with-text",
-      "blocks": {
-        "sz_cap": {
-          "type": "caption",
-          "settings": {
-            "caption": "Sizes XS to XL",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "sz_h": {
-          "type": "heading",
-          "settings": {
-            "heading": "Big, strong dogs. Small dogs too.",
-            "heading_size": "h1"
-          }
-        },
-        "sz_t": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Staffies, kelpies, labs, shepherds, cattle dogs, greyhounds and cavoodles all fit, from XS to XL. Pick by chest measurement, not by breed, and the size guide tells you which size to choose rather than just showing a chart. Between sizes? Go up. Wrong size? We swap it free within 60 days.</p>",
-            "text_style": "body"
-          }
-        },
-        "sz_b": {
-          "type": "button",
-          "settings": {
-            "button_label": "Find your size",
-            "button_link": "/pages/size-guide",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": [
-        "sz_cap",
-        "sz_h",
-        "sz_t",
-        "sz_b"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/photo-06-big-and-small-dogs.png",
-        "height": "adapt",
-        "desktop_image_width": "large",
-        "layout": "text_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "section_color_scheme": "background-1",
-        "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "fitting_check": {
-      "type": "image-with-text",
-      "blocks": {
-        "fit_cap": {
-          "type": "caption",
-          "settings": {
-            "caption": "Fitting",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "fit_h": {
-          "type": "heading",
-          "settings": {
-            "heading": "Two fingers under every strap",
-            "heading_size": "h1"
-          }
-        },
-        "fit_t": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Sit the chest plate flat on the breastbone, tighten both sides evenly and check you can slide two fingers under each strap. Snug, not tight. A harness that twists to the side is almost always a size too big or tightened on one side only. The fitting guide walks you through it with photos, breed by breed.</p>",
-            "text_style": "body"
-          }
-        },
-        "fit_b": {
-          "type": "button",
-          "settings": {
-            "button_label": "Read the fitting guide",
-            "button_link": "/pages/fitting-guide",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": [
-        "fit_cap",
-        "fit_h",
-        "fit_t",
-        "fit_b"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/photo-08-fitting-check.png",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "section_color_scheme": "background-1",
-        "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "does_and_doesnt": {
-      "type": "au-does-doesnt",
-      "settings": {
-        "caption": "Straight answer",
-        "heading": "What it does — and what it doesn't.",
+        "container": true,
+        "container_max_width": "1100",
+        "heading": "Front clip, back clip, collar or head halter?",
         "heading_size": "h1",
-        "text": "<p>It gives you more control by redirecting your dog's forward momentum. It doesn't replace loose-lead training — it makes that training easier to practise safely.</p>",
-        "does_title": "What it does",
-        "does_items": "Redirects forward pulling\nGives you greater control\nReduces pressure on the neck\nSupports loose-lead practice",
-        "doesnt_title": "What it doesn't",
-        "doesnt_items": "Train your dog automatically\nReplace supervision\nResist unsupervised chewing",
-        "link_label": "Read the first 10 walks",
-        "link_url": "/pages/first-10-walks",
-        "color_scheme": "accent-2",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
-    "compare_walking_gear": {
-      "type": "multicolumn",
-      "blocks": {
-        "compare_col_1": {
-          "type": "column",
-          "settings": {
-            "title": "Flat collar",
-            "text": "<p><strong>Where the force goes:</strong> throat.</p><p><strong>When the dog pulls:</strong> coughing, strain.</p><p><strong>In the heat:</strong> fine.</p><p><strong>Learning curve:</strong> none.</p><p><strong>Best for:</strong> ID tags.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "compare_col_2": {
-          "type": "column",
-          "settings": {
-            "title": "Back-clip harness",
-            "text": "<p><strong>Where the force goes:</strong> chest and shoulders, straight forward.</p><p><strong>When the dog pulls:</strong> dog can brace and pull harder.</p><p><strong>In the heat:</strong> depends on padding.</p><p><strong>Learning curve:</strong> none.</p><p><strong>Best for:</strong> dogs that already walk nicely, running.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "compare_col_3": {
-          "type": "column",
-          "settings": {
-            "title": "Head halter",
-            "text": "<p><strong>Where the force goes:</strong> muzzle and neck.</p><p><strong>When the dog pulls:</strong> head turns; many dogs paw it off.</p><p><strong>In the heat:</strong> often disliked.</p><p><strong>Learning curve:</strong> days to weeks of desensitising.</p><p><strong>Best for:</strong> some very strong dogs under a trainer.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "compare_col_4": {
-          "type": "column",
-          "settings": {
-            "title": "Front-clip harness",
-            "text": "<p><strong>Where the force goes:</strong> chest, redirected sideways.</p><p><strong>When the dog pulls:</strong> dog swings back towards you.</p><p><strong>In the heat:</strong> fine with breathable webbing.</p><p><strong>Learning curve:</strong> first walk.</p><p><strong>Best for:</strong> pullers, reactive dogs, strong dogs, sore owners.</p>",
-            "link_label": "Shop the front-clip harness",
-            "link": "/products/front-clip-no-pull-harness"
-          }
-        }
-      },
-      "block_order": [
-        "compare_col_1",
-        "compare_col_2",
-        "compare_col_3",
-        "compare_col_4"
-      ],
-      "settings": {
-        "title": "Collar, back clip, head halter or front clip?",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "columns_desktop": 4,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "background-1",
-        "color_scheme_2": "accent-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
+        "description": "<p>What each option does when your dog pulls. No scores, just how the force is handled.</p>",
+        "table_min_width": "700",
+        "table_first_col_width": 34,
+        "table_image_width": 120,
+        "first_col_text_align": "left",
+        "table_caption": "",
+        "table_bg_color": "#ffffff",
+        "table_text_color": "#13262B",
+        "table_border_opacity": 100,
+        "table_border_radius": 8,
+        "table_striped_bg_opacity": 4,
+        "icon_color_checked_circle": "#1F8A5B",
+        "icon_color_checked": "#13262B",
+        "icon_color_unchecked": "#B4442F",
         "padding_top": 48,
         "padding_bottom": 48
       }
@@ -629,7 +541,7 @@
     "guarantee_60_days": {
       "type": "rich-text",
       "blocks": {
-        "g_caption": {
+        "g_cap": {
           "type": "caption",
           "settings": {
             "caption": "60 days",
@@ -637,20 +549,20 @@
             "text_size": "medium"
           }
         },
-        "g_heading": {
+        "g_h": {
           "type": "heading",
           "settings": {
             "heading": "60-Day Loose-Lead Guarantee",
             "heading_size": "h1"
           }
         },
-        "g_text": {
+        "g_t": {
           "type": "text",
           "settings": {
             "text": "<p>Walk your dog in it. Take it to the beach. If after 60 days it hasn't changed your walks, email us, we'll send a prepaid Australia Post label and refund you in full. Wrong size? We'll swap it, no charge.</p>"
           }
         },
-        "g_button": {
+        "g_b": {
           "type": "button",
           "settings": {
             "button_label": "Read the guarantee",
@@ -663,10 +575,10 @@
         }
       },
       "block_order": [
-        "g_caption",
-        "g_heading",
-        "g_text",
-        "g_button"
+        "g_cap",
+        "g_h",
+        "g_t",
+        "g_b"
       ],
       "settings": {
         "desktop_content_position": "center",
@@ -680,68 +592,48 @@
     "faq": {
       "type": "collapsible-content",
       "blocks": {
-        "faq_row_1": {
+        "faq_1": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Will it stop my dog pulling on the first walk?",
+            "heading": "Will it stop my dog pulling?",
             "icon": "none",
             "row_content": "<p>Most dogs pull noticeably less on the first walk because pulling stops getting them anywhere. Some determined dogs take a few walks. That's why you get 60 days, not 60 minutes.</p>",
             "page": ""
           }
         },
-        "faq_row_2": {
+        "faq_2": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Is this a replacement for training?",
+            "heading": "What is the difference between the front and back clips?",
             "icon": "none",
-            "row_content": "<p>No. It's a control tool that removes the leverage while you teach loose-lead walking. We send you \"The First 10 Walks\" so the two work together. <a href=\"/pages/faq\">More questions answered here</a>.</p>",
+            "row_content": "<p>The front (chest) clip redirects a pull sideways, back towards you. Use it on busy paths and for training. The back clip lets your dog walk freely once the lead stays slack. Switch back to the front clip the moment pulling returns.</p>",
             "page": ""
           }
         },
-        "faq_row_3": {
+        "faq_3": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Does it twist to the side?",
+            "heading": "What if my dog is between sizes?",
             "icon": "none",
-            "row_content": "<p>Twisting almost always means the harness is a size too big or the two sides aren't tightened evenly. Fit by chest, adjust both sides, two fingers under each strap. Deep-chested dogs: see the <a href=\"/pages/fitting-guide\">fitting guide</a>.</p>",
+            "row_content": "<p>Go up. Thick double coat? Go up. Wrong size costs you nothing: free swap within 60 days.</p>",
             "page": ""
           }
         },
-        "faq_row_4": {
+        "faq_4": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "My staffy is all chest. Will it fit?",
+            "heading": "How long does delivery take?",
             "icon": "none",
-            "row_content": "<p>Yes, pick by chest measurement and tighten the belly strap fully. If it doesn't sit right, swap sizes for free.</p>",
-            "page": ""
-          }
-        },
-        "faq_row_5": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "How do returns work?",
-            "icon": "none",
-            "row_content": "<p>Email us within 60 days. We send a prepaid Australia Post label, you drop it at any post office, we refund the full amount once it's scanned in. Size swaps are free.</p>",
-            "page": ""
-          }
-        },
-        "faq_row_6": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Delivery times?",
-            "icon": "none",
-            "row_content": "<p>We ship within one business day. Australia Post standard: 2–4 business days metro, 3–6 regional, longer for remote WA/NT. Express (A$9.95): 1–3 business days.</p>",
+            "row_content": "<p>We ship within one business day. Australia Post standard (free): 2–4 business days metro, 3–6 regional, longer for remote WA and NT. Express (A$9.95): 1–3 business days.</p>",
             "page": ""
           }
         }
       },
       "block_order": [
-        "faq_row_1",
-        "faq_row_2",
-        "faq_row_3",
-        "faq_row_4",
-        "faq_row_5",
-        "faq_row_6"
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
       ],
       "settings": {
         "caption": "FAQ",
@@ -812,13 +704,10 @@
     "trust_strip",
     "pain_front_door",
     "mechanism",
+    "benefits_tabs",
     "built_for_australia",
     "featured_harness",
-    "product_details",
-    "sizes_big_small",
-    "fitting_check",
-    "does_and_doesnt",
-    "compare_walking_gear",
+    "compare_table",
     "guarantee_60_days",
     "faq",
     "final_cta"
