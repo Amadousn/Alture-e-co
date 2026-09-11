@@ -1,0 +1,124 @@
+{%- comment -%}
+  Compact product offer card, adapted from the CRO library "lisance-offre" (bordered box, media left,
+  body right, reassurance row, optional mobile bar). Tiers, timers and euro formatting removed:
+  one product, live price, three benefits, three reassurances, one button to the product page.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign prod = section.settings.product
+  assign link = section.settings.button_link
+  if link == blank and prod != blank
+    assign link = prod.url
+  endif
+  assign title = section.settings.title
+  if title == blank and prod != blank
+    assign title = prod.title
+  endif
+  assign img = section.settings.image
+  if img == blank and prod != blank
+    assign img = prod.featured_image
+  endif
+  assign amount = ''
+  if prod != blank
+    assign amount = prod.price | money_without_trailing_zeros | remove: 'AUD' | remove: 'A$' | remove: '$' | strip
+  endif
+-%}
+<style>
+  #AuOf-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; scroll-margin-top: 80px; }
+  #AuOf-{{ sid }} .au-of__inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuOf-{{ sid }} .au-of__box { border: 2px solid rgb(var(--color-button)); border-radius: 18px; background: rgb(var(--color-background)); overflow: hidden; box-shadow: 0 18px 44px rgba(19,38,43,.10); display: grid; grid-template-columns: 1fr; }
+  #AuOf-{{ sid }} .au-of__media { position: relative; aspect-ratio: 1 / 1; background: #fff; }
+  #AuOf-{{ sid }} .au-of__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{ section.settings.focal }}; display: block; }
+  #AuOf-{{ sid }} .au-of__tag { position: absolute; top: .9rem; left: .9rem; padding: .4rem .8rem; border-radius: 999px; background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); font-family: var(--font-heading-family); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  #AuOf-{{ sid }} .au-of__body { padding: 1.4rem 1.3rem 1.5rem; }
+  #AuOf-{{ sid }} .au-of__eyebrow { font-family: var(--font-heading-family); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .55rem; color: rgb(var(--color-button)); font-weight: 700; }
+  #AuOf-{{ sid }} h2 { margin: 0 0 .7rem; }
+  #AuOf-{{ sid }} .au-of__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem .7rem; margin: 0 0 1rem; }
+  #AuOf-{{ sid }} .au-of__amount { font-family: var(--font-heading-family); font-weight: 700; font-size: 2.1rem; line-height: 1; }
+  #AuOf-{{ sid }} .au-of__note { font-size: .9rem; opacity: .8; }
+  #AuOf-{{ sid }} ul.au-of__list { list-style: none; margin: 0 0 1.1rem; padding: 0; display: grid; gap: .5rem; }
+  #AuOf-{{ sid }} ul.au-of__list li { display: flex; gap: .6rem; align-items: flex-start; font-size: 1rem; line-height: 1.4; }
+  #AuOf-{{ sid }} ul.au-of__list svg { flex: 0 0 auto; width: 1.15rem; height: 1.15rem; margin-top: .15rem; color: rgb(var(--color-button)); }
+  #AuOf-{{ sid }} .au-of__cta .button { width: 100%; }
+  #AuOf-{{ sid }} .au-of__reassure { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  #AuOf-{{ sid }} .au-of__reassure li { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .35rem; padding: .7rem .4rem; border: 1px solid rgba(var(--color-foreground), .12); border-radius: 10px; font-size: .78rem; line-height: 1.3; }
+  #AuOf-{{ sid }} .au-of__reassure svg { width: 1.3rem; height: 1.3rem; color: rgb(var(--color-button)); }
+  #AuOf-{{ sid }} .au-of__legal { margin: .9rem 0 0; font-size: .78rem; opacity: .7; }
+  @media screen and (min-width: 750px) {
+    #AuOf-{{ sid }} .au-of__inner { padding: 0 5rem; }
+    #AuOf-{{ sid }} .au-of__box { grid-template-columns: 5fr 6fr; }
+    #AuOf-{{ sid }} .au-of__media { aspect-ratio: auto; min-height: 100%; }
+    #AuOf-{{ sid }} .au-of__body { padding: 2.2rem 2.4rem 2.3rem; }
+    #AuOf-{{ sid }} .au-of__cta .button { width: auto; min-width: 16rem; }
+    #AuOf-{{ sid }} .au-of__reassure li { font-size: .84rem; padding: .8rem .6rem; }
+  }
+</style>
+<div id="AuOf-{{ sid }}" class="au-of color-{{ section.settings.color_scheme }} gradient">
+  <div class="au-of__inner">
+    <div class="au-of__box" id="{{ section.settings.anchor | default: 'offer' }}">
+      <div class="au-of__media">
+        {%- if img != blank -%}
+          {%- assign o_alt = img.alt | default: title | escape -%}
+          {{ img | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200', alt: o_alt }}
+        {%- endif -%}
+        {%- if section.settings.tag != blank -%}<span class="au-of__tag">{{ section.settings.tag }}</span>{%- endif -%}
+      </div>
+      <div class="au-of__body">
+        {%- if section.settings.eyebrow != blank -%}<p class="au-of__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="{{ section.settings.heading_size }}">{{ title }}</h2>
+        <p class="au-of__price">
+          {%- if amount != blank -%}<span class="au-of__amount">A${{ amount }}</span>{%- endif -%}
+          {%- if section.settings.price_note != blank -%}<span class="au-of__note">{{ section.settings.price_note }}</span>{%- endif -%}
+        </p>
+        <ul class="au-of__list">
+          {%- for i in (1..3) -%}
+            {%- assign key = 'benefit_' | append: i -%}
+            {%- assign b = section.settings[key] -%}
+            {%- if b != blank -%}
+              <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.3l2.6 2.6L14 7.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{{ b }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <div class="au-of__cta"><a class="button button--primary" href="{{ link }}">{{ section.settings.button_label }}</a></div>
+        <ul class="au-of__reassure">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 8-8"/><path d="M4 4v5h5"/><path d="M12 8v4l3 2"/></svg><span>{{ section.settings.reassure_1 }}</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span>{{ section.settings.reassure_2 }}</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>{{ section.settings.reassure_3 }}</span></li>
+        </ul>
+        {%- if section.settings.legal != blank -%}<p class="au-of__legal">{{ section.settings.legal }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "AU offer card",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "paragraph", "content": "Price, title and link come from the product. No selectors here: the button sends visitors to the product page." },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image", "label": "Product photo (defaults to the product's featured image)" },
+    { "type": "select", "id": "focal", "label": "Photo focal point", "default": "center center", "options": [ { "value": "center top", "label": "Top" }, { "value": "center center", "label": "Centre" }, { "value": "center bottom", "label": "Bottom" } ] },
+    { "type": "text", "id": "tag", "label": "Badge on the photo", "default": "Lead included" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The harness" },
+    { "type": "text", "id": "title", "label": "Title (defaults to the product title)" },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" } ], "default": "h2" },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "matching lead and shipping included" },
+    { "type": "text", "id": "benefit_1", "label": "Benefit 1", "default": "Front clip redirects pulling from the first walk" },
+    { "type": "text", "id": "benefit_2", "label": "Benefit 2", "default": "Padded chest plate, nothing on the throat" },
+    { "type": "text", "id": "benefit_3", "label": "Benefit 3", "default": "Four adjustment points, XS to XL, four colours" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the harness" },
+    { "type": "url", "id": "button_link", "label": "Button link (defaults to the product page)" },
+    { "type": "text", "id": "reassure_1", "label": "Reassurance 1", "default": "Matching lead included" },
+    { "type": "text", "id": "reassure_2", "label": "Reassurance 2", "default": "Free Australia-wide shipping" },
+    { "type": "text", "id": "reassure_3", "label": "Reassurance 3", "default": "60-day guarantee" },
+    { "type": "text", "id": "legal", "label": "Small print (optional)" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "offer" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "presets": [ { "name": "AU offer card" } ]
+}
+{% endschema %}

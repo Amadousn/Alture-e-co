@@ -25,7 +25,7 @@
           "type": "image",
           "settings": {
             "feature_title": "<strong>Matching lead included</strong>",
-            "feature_text": "<p>A matching Classic Lead comes with every harness.</p>",
+            "feature_text": "<p>With every harness.</p>",
             "feature_url": "",
             "hide_image": true
           }
@@ -34,7 +34,7 @@
           "type": "image",
           "settings": {
             "feature_title": "<strong>Free Australia-wide shipping</strong>",
-            "feature_text": "<p>Australia Post tracked, on every harness order.</p>",
+            "feature_text": "<p>Australia Post, tracked.</p>",
             "feature_url": "",
             "hide_image": true
           }
@@ -43,8 +43,17 @@
           "type": "image",
           "settings": {
             "feature_title": "<strong>60-day guarantee</strong>",
-            "feature_text": "<p>Hasn't changed your walks? Prepaid return, full refund.</p>",
-            "feature_url": "",
+            "feature_text": "<p>Prepaid return, full refund.</p>",
+            "feature_url": "/pages/guarantee",
+            "hide_image": true
+          }
+        },
+        "trust_4": {
+          "type": "image",
+          "settings": {
+            "feature_title": "<strong>Free size exchange</strong>",
+            "feature_text": "<p>Wrong size? We swap it.</p>",
+            "feature_url": "/pages/size-guide",
             "hide_image": true
           }
         }
@@ -52,20 +61,21 @@
       "block_order": [
         "trust_1",
         "trust_2",
-        "trust_3"
+        "trust_3",
+        "trust_4"
       ],
       "settings": {
-        "feature_row": 3,
-        "feature_row_mobile": 1,
+        "feature_row": 4,
+        "feature_row_mobile": 2,
         "feature_gap": 16,
-        "feature_gap_mobile": 12,
-        "feature_padding_horizontal": 16,
-        "feature_padding_vertical": 16,
+        "feature_gap_mobile": 10,
+        "feature_padding_horizontal": 12,
+        "feature_padding_vertical": 14,
         "feature_radius": 6,
         "feature_border_thickness": 1,
         "feature_shadow": false,
         "feature_heading_size": 16,
-        "feature_heading_size_mobile": 14,
+        "feature_heading_size_mobile": 13,
         "feature_heading_height": 130,
         "feature_heading_mt": 0,
         "feature_text_size": 14,
@@ -85,8 +95,8 @@
         "border_color": "#13262b",
         "margin_top": 0,
         "margin_bottom": 0,
-        "padding_top": 24,
-        "padding_bottom": 24,
+        "padding_top": 20,
+        "padding_bottom": 20,
         "padding_horizontal": 5,
         "padding_horizontal_mobile": 1.5,
         "full_width": false,
@@ -116,7 +126,7 @@
         "pain_t": {
           "type": "text",
           "settings": {
-            "text": "<ul><li>Your dog pulls like a freight train the second the front door opens.</li><li>Your shoulder or lower back hurts after every walk.</li><li>You've tried a back-clip harness, a slip lead, maybe a head halter. Nothing stuck.</li><li>Bikes and runners on the shared path make you tense up before they even get close.</li></ul><p>That isn't a bad dog. It's gear that gives them something to lean into.</p>",
+            "text": "<ul><li><strong>Pulls the second the door opens.</strong></li><li><strong>Your shoulder or back aches after every walk.</strong></li><li><strong>You skip walks because they're a fight.</strong></li><li><strong>Dogs, bikes, runners: instant lunge, instant stress.</strong></li></ul><p>None of that is a bad dog. It's a lead attached to the wrong spot.</p>",
             "text_style": "body"
           }
         }
@@ -138,8 +148,8 @@
         "color_scheme": "background-1",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "mechanism": {
@@ -163,7 +173,7 @@
         "mech_t": {
           "type": "text",
           "settings": {
-            "text": "<p>Most harnesses clip on the back, which gives your dog a full-body brace to lean into. Clip the lead to the chest ring instead and their own momentum swings them sideways, back towards you.</p><ol><li><strong>Lead on the chest ring.</strong> The matching Classic Lead clips at the front.</li><li><strong>The pull becomes a turn.</strong> Forward force is redirected to the side, so pulling stops working.</li><li><strong>Nothing on the throat.</strong> The load sits on the padded chest plate.</li></ol>",
+            "text": "<p><strong>Back clip: your dog gets a full-body brace.</strong> The lead pulls from behind the shoulders, so leaning forward is easy and every step rewards it.</p><p><strong>Front clip: the pull is redirected.</strong> The lead attaches at the chest. When your dog surges, the tension turns their shoulders back towards you.</p><p><strong>Less leverage, less pulling.</strong> Your dog can't use its weight against you, so pulling stops working and your arm stops taking the load.</p>",
             "text_style": "body"
           }
         },
@@ -194,8 +204,8 @@
         "color_scheme": "background-1",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "benefits_tabs": {
@@ -205,32 +215,40 @@
           "type": "benefit",
           "settings": {
             "title": "Front-clip redirection",
-            "text": "The lead clips to the chest ring. When your dog surges forward, their own momentum turns them sideways and back towards you. Pulling stops paying off.",
-            "image": "shopify://shop_images/photo-11-front-clip-detail.png"
+            "text": "The lead clips to the chest ring. When your dog surges forward, their own momentum turns them back towards you. Pulling stops paying off, usually on the first walk.",
+            "image": "shopify://shop_images/photo-11-front-clip-detail.png",
+            "tab": "Redirects pulling",
+            "icon": "redirect"
           }
         },
         "hb_b2": {
           "type": "benefit",
           "settings": {
             "title": "Less pressure on the neck",
-            "text": "The load sits on the padded chest plate, not the throat. No coughing, no gagging, no strain on the trachea when the lead goes tight.",
-            "image": "shopify://shop_images/photo-03-early-morning.png"
+            "text": "The load sits on the padded chest plate, not the throat. No coughing, no gagging, no strain on the neck, however hard they hit the end of the lead.",
+            "image": "shopify://shop_images/photo-03-early-morning.png",
+            "tab": "Easy on the neck",
+            "icon": "neck"
           }
         },
         "hb_b3": {
           "type": "benefit",
           "settings": {
             "title": "Adjustable everyday comfort",
-            "text": "Four adjustment points and quick-release buckles for an even, twist-free fit. Two fingers under every strap and it's set for the day.",
-            "image": "shopify://shop_images/photo-08-fitting-check.png"
+            "text": "Four adjustment points and quick-release buckles for an even, twist-free fit. Two fingers under each strap and it stays put from the front door to the beach.",
+            "image": "shopify://shop_images/photo-08-fitting-check.png",
+            "tab": "Everyday comfort",
+            "icon": "comfort"
           }
         },
         "hb_b4": {
           "type": "benefit",
           "settings": {
             "title": "Front and back walking modes",
-            "text": "Front clip for control on busy paths. Back clip for a relaxed walk once the lead stays slack. Same harness, two modes.",
-            "image": "shopify://shop_images/au-bush-track.png"
+            "text": "Front clip for control on busy paths. Back clip for a relaxed walk once the lead stays slack. Same harness, one click to switch.",
+            "image": "shopify://shop_images/au-bush-track.png",
+            "tab": "Front & back modes",
+            "icon": "modes"
           }
         }
       },
@@ -245,12 +263,14 @@
         "heading": "Four things the harness does on every walk",
         "heading_size": "h1",
         "text": "",
-        "image_position": "left",
+        "image_position": "right",
         "button_label": "Shop the harness — A$59",
         "button_link": "/products/front-clip-no-pull-harness",
         "color_scheme": "accent-1",
         "padding_top": 56,
-        "padding_bottom": 56
+        "padding_bottom": 56,
+        "eyebrow": "",
+        "autoplay_seconds": 6
       }
     },
     "built_for_australia": {
@@ -267,21 +287,21 @@
         "aus_h": {
           "type": "heading",
           "settings": {
-            "heading": "Coastal tracks, bush trails and the bikes that come through",
+            "heading": "Made for the walks you actually do",
             "heading_size": "h1"
           }
         },
         "aus_t": {
           "type": "text",
           "settings": {
-            "text": "<p>Lightweight, breathable webbing and a padded chest plate that doesn't hold heat. Back clip for a free-moving walk when the track's quiet, front clip the moment a bike or a runner comes through. Sand, salt and mud rinse off under the tap.</p>",
+            "text": "<p>Coastal paths, bush tracks, warm mornings and the cyclists and runners that come past. Breathable webbing, a padded chest plate that doesn't hold heat, reflective piping for early starts, and a front clip that keeps you in control when something fast goes by.</p>",
             "text_style": "body"
           }
         },
         "aus_b": {
           "type": "button",
           "settings": {
-            "button_label": "See it on the harness",
+            "button_label": "Shop the harness",
             "button_link": "/products/front-clip-no-pull-harness",
             "button_style_secondary": true
           }
@@ -296,7 +316,7 @@
       "settings": {
         "image": "shopify://shop_images/photo-05-bush-track.png",
         "height": "adapt",
-        "desktop_image_width": "large",
+        "desktop_image_width": "medium",
         "layout": "image_first",
         "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
@@ -305,88 +325,36 @@
         "color_scheme": "background-1",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "real_walks": {
-      "type": "au-real-walks",
-      "blocks": {
-        "rw1": {
-          "type": "clip",
-          "settings": {
-            "video": "shopify://files/videos/au-hero-sunrise-9x16.mp4",
-            "title": "When the lead goes tight"
-          }
-        },
-        "rw2": {
-          "type": "clip",
-          "settings": {
-            "title": "More control without the wrestling"
-          }
-        },
-        "rw3": {
-          "type": "clip",
-          "settings": {
-            "title": "Made for everyday walks"
-          }
-        }
-      },
-      "block_order": [
-        "rw1",
-        "rw2",
-        "rw3"
-      ],
-      "settings": {
-        "caption": "Real walks",
-        "heading": "See it on real walks.",
-        "heading_size": "h1",
-        "text": "<p>From the front door to the coastal track, see how the front clip helps redirect pulling without putting pressure on your dog's throat.</p>",
-        "button_label": "See the harness",
-        "button_link": "/products/front-clip-no-pull-harness",
-        "color_scheme": "background-1",
-        "padding_top": 56,
-        "padding_bottom": 56
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "fit_guide": {
       "type": "au-fit-guide",
       "settings": {
-        "image": "shopify://shop_images/photo-06-big-and-small-dogs.png",
+        "image": "shopify://shop_images/photo-08-fitting-check.png",
+        "ratio": "4:3",
+        "focal": "center center",
+        "max_width": 560,
         "eyebrow": "The right fit",
-        "heading": "Find the right fit in 30 seconds.",
+        "heading": "Find the right fit in 30 seconds",
         "heading_size": "h1",
-        "text": "<p>A correctly fitted harness stays centred, redirects pulling properly and keeps your dog comfortable throughout the walk.</p>",
+        "text": "<p>One measurement decides the size. A snug, centred harness redirects properly and never twists.</p>",
         "step1_title": "Measure the chest",
-        "step1_text": "Wrap a soft tape around the widest part of the ribcage, just behind the front legs.",
-        "step2_title": "Choose the larger size when between sizes",
-        "step2_text": "A harness that is too small can rub. A harness that is too loose can twist.",
-        "step3_title": "Check the two-finger fit",
-        "step3_text": "You should be able to slide two fingers flat under each strap.",
-        "micro": "Wrong size? We'll swap it free within 60 days.",
-        "primary_label": "Find my dog's size",
+        "step1_text": "Soft tape around the widest part of the ribcage, just behind the front legs. Snug, not tight.",
+        "step2_title": "Where the tape sits",
+        "step2_text": "Level all the way round, over the coat, with your dog standing. Then the neck, where a collar sits.",
+        "step3_title": "Between sizes? Go up",
+        "step3_text": "Thick double coat (shepherd, husky, collie)? Go up too. Two fingers flat under every strap once fitted.",
+        "micro": "Wrong size? Free swap within 60 days, prepaid both ways.",
+        "primary_label": "View the size guide",
+        "open_mode": "link",
         "size_guide_page": "size-guide",
+        "size_guide_link": "",
         "secondary_label": "Read the fitting guide",
         "secondary_link": "/pages/fitting-guide",
         "color_scheme": "accent-1",
         "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "walk_kit": {
-      "type": "au-walk-kit",
-      "settings": {
-        "product": "front-clip-no-pull-harness",
-        "image": "shopify://shop_images/harness-and-lead-flatlay.png",
-        "caption": "The complete walk kit",
-        "heading": "Everything you need for a calmer first walk.",
-        "heading_size": "h2",
-        "items": "Front-Clip No-Pull Harness\nMatching Classic Lead included\nThe First 10 Walks fitting and training guide\nFree Australia-wide shipping\n60-day guarantee",
-        "price_note": "harness + lead, shipping included",
-        "button_label": "Choose size & colour",
-        "button_link": "/products/front-clip-no-pull-harness",
-        "color_scheme": "background-1",
-        "padding_top": 8,
         "padding_bottom": 56
       }
     },
@@ -411,7 +379,7 @@
         "g_t": {
           "type": "text",
           "settings": {
-            "text": "<p>Walk your dog in it. Take it to the beach. If after 60 days it hasn't changed your walks, email us, we'll send a prepaid Australia Post label and refund you in full. Wrong size? We'll swap it, no charge.</p>"
+            "text": "<p>Walk your dog in it for up to 60 days from delivery. Beach, bush, footpath. If it hasn't changed your walks, contact us with your order number: we email a prepaid Australia Post label, you drop the harness at any post office, and the full price is refunded within 5 business days of it being scanned in. Keep the lead. Wrong size? One free swap, prepaid both ways.</p>"
           }
         },
         "g_b": {
@@ -437,8 +405,8 @@
         "content_alignment": "center",
         "color_scheme": "background-2",
         "full_width": true,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "faq": {
@@ -498,8 +466,8 @@
         "open_first_collapsible_row": false,
         "image_ratio": "adapt",
         "desktop_layout": "image_second",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 40,
+        "padding_bottom": 24
       }
     },
     "final_cta": {
@@ -549,6 +517,173 @@
         "stack_images_on_mobile": false,
         "show_text_below": false
       }
+    },
+    "customer_media": {
+      "type": "au-customer-media",
+      "blocks": {
+        "cm_video_1": {
+          "type": "video",
+          "settings": {
+            "admin_label": "Customer video 1",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "video": "",
+            "poster": ""
+          }
+        },
+        "cm_photo_1": {
+          "type": "photo",
+          "settings": {
+            "admin_label": "Customer photo 1",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "image": ""
+          }
+        },
+        "cm_video_2": {
+          "type": "video",
+          "settings": {
+            "admin_label": "Customer video 2",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "video": "",
+            "poster": ""
+          }
+        },
+        "cm_photo_2": {
+          "type": "photo",
+          "settings": {
+            "admin_label": "Customer photo 2",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "image": ""
+          }
+        },
+        "cm_video_3": {
+          "type": "video",
+          "settings": {
+            "admin_label": "Customer video 3",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "video": "",
+            "poster": ""
+          }
+        },
+        "cm_photo_3": {
+          "type": "photo",
+          "settings": {
+            "admin_label": "Customer photo 3",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "image": ""
+          }
+        },
+        "cm_video_4": {
+          "type": "video",
+          "settings": {
+            "admin_label": "Customer video 4",
+            "enabled": true,
+            "first_name": "",
+            "dog": "",
+            "caption": "",
+            "quote": "",
+            "video": "",
+            "poster": ""
+          }
+        }
+      },
+      "block_order": [
+        "cm_video_1",
+        "cm_photo_1",
+        "cm_video_2",
+        "cm_photo_2",
+        "cm_video_3",
+        "cm_photo_3",
+        "cm_video_4"
+      ],
+      "settings": {
+        "caption": "Customer walks",
+        "heading": "Real dogs. Real walks.",
+        "heading_size": "h1",
+        "subheading": "See how the harness fits and moves on everyday Australian walks.",
+        "card_height": 400,
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "offer_card": {
+      "type": "au-offer-card",
+      "settings": {
+        "product": "front-clip-no-pull-harness",
+        "image": "shopify://shop_images/harness-and-lead-flatlay.png",
+        "focal": "center center",
+        "tag": "Lead included",
+        "eyebrow": "The harness",
+        "title": "",
+        "heading_size": "h2",
+        "price_note": "matching lead and shipping included",
+        "benefit_1": "Front clip redirects pulling from the first walk",
+        "benefit_2": "Padded chest plate, nothing on the throat",
+        "benefit_3": "Four adjustment points, XS to XL, four colours",
+        "button_label": "Shop the harness",
+        "button_link": "/products/front-clip-no-pull-harness",
+        "reassure_1": "Matching lead included",
+        "reassure_2": "Free Australia-wide shipping",
+        "reassure_3": "60-day guarantee",
+        "legal": "",
+        "anchor": "offer",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
+    },
+    "faq_more": {
+      "type": "rich-text",
+      "blocks": {
+        "fm_b": {
+          "type": "button",
+          "settings": {
+            "button_label": "See all questions",
+            "button_link": "/pages/faq",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "fm_b"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
@@ -557,12 +692,13 @@
     "pain_front_door",
     "mechanism",
     "benefits_tabs",
+    "customer_media",
     "built_for_australia",
-    "real_walks",
+    "offer_card",
     "fit_guide",
-    "walk_kit",
     "guarantee_60_days",
     "faq",
+    "faq_more",
     "final_cta"
   ]
 }

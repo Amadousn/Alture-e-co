@@ -86,8 +86,9 @@
               assign poster = block.settings.poster | default: block.settings.video.preview_image
             -%}
             <div class="au-rw__card" role="listitem" data-src="{{ src }}" {{ block.shopify_attributes }}>
+              {%- assign rw_alt = block.settings.title | escape -%}
               {%- if poster != blank -%}
-                {{ poster | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 82vw', widths: '400, 600, 900', alt: block.settings.title | escape }}
+                {{ poster | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 82vw', widths: '400, 600, 900', alt: rw_alt }}
               {%- endif -%}
               <button type="button" class="au-rw__play" aria-label="Play: {{ block.settings.title | escape }}">
                 <span class="au-rw__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>

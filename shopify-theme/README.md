@@ -28,3 +28,12 @@ adapted to the harness copy and colours:
 - `custom_liquid_reviews_carousel` → block `au_reviews_carousel` (rebuilt to read a list, disabled until real reviews exist)
 - `g_garantie` / `g_portraits` (rs-* pattern) → section `pdp_guarantee`
 Not found anywhere: `aerozya-avis-slider.liquid`. Not reusable: `custom_liquid_4raisons` (a static PNG), `custom_liquid_slider_ba` (before/after skin slider).
+
+
+## Homepage v3 (customer media, compact offer, fit guide)
+
+- `sections/au-customer-media.liquid` — "Real dogs. Real walks." mixed carousel (4 video blocks 9:16 + 3 photo blocks 4:5, each switchable). Structure from the CRO library: scroll-snap track, arrows and dots from `lisance-clientes`; click-to-play, one active video, pause off-screen from `lisance-videos` (rewritten: no autoplay, file attached to the DOM on first click only, sound toggle). Media pickers are empty until the real customer files are added in the theme editor; empty cards show a placeholder in the editor only.
+- `sections/au-offer-card.liquid` — compact product offer adapted from `lisance-offre` (bordered box, image left, price from the product, 3 benefits, 3 reassurances, one button to the PDP). Tiers, timers and euro formatting removed. Replaces `au-walk-kit` on the homepage.
+- `sections/au-fit-guide.liquid` — rebuilt on the `lisance-focus` layout (centred head, one visual with ratio/focal, CTA + note) plus three fitting steps; primary button links to the size guide page (modal optional).
+- `sections/au-benefits-tabs.liquid` — rebuilt on `lisance-benefices` (tab bar with icons, progress bar autoplay that stops on click, keyboard, editor block select); block setting ids kept (`title`, `text`, `image`) plus `tab` and `icon`.
+- `au-real-walks` and `au-walk-kit` stay in the theme but are no longer used by `templates/index.json`.

@@ -1,67 +1,88 @@
-{%- comment -%} "Find the right fit in 30 seconds": photo + 3 steps, size guide opens in a modal (dialog). {%- endcomment -%}
+{%- comment -%}
+  "Find the right fit in 30 seconds." Layout adapted from the CRO library "lisance-focus"
+  (centred eyebrow + heading + text, one strong visual with ratio/focal controls, CTA + note),
+  extended with three short fitting steps and a size-exchange reminder. The size guide opens as a
+  page link (default) or in a modal reading the page content.
+{%- endcomment -%}
 {%- liquid
   assign sid = section.id
   assign sg = section.settings.size_guide_page
+  assign use_modal = false
+  if section.settings.open_mode == 'modal' and sg != blank
+    assign use_modal = true
+  endif
+  assign guide_url = section.settings.size_guide_link
+  if guide_url == blank and sg != blank
+    assign guide_url = sg.url
+  endif
+  if guide_url == blank
+    assign guide_url = '/pages/size-guide'
+  endif
+  assign ratio = section.settings.ratio
 -%}
 <style>
   #AuFit-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
-  #AuFit-{{ sid }} .au-fit__inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr; gap: 1.6rem; align-items: center; }
-  #AuFit-{{ sid }} .au-fit__media { border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 3; background: rgba(var(--color-foreground), .06); }
-  #AuFit-{{ sid }} .au-fit__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #AuFit-{{ sid }} .au-fit__inner { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuFit-{{ sid }} .au-fit__head { max-width: 62ch; margin: 0 auto; text-align: center; }
   #AuFit-{{ sid }} .au-fit__eyebrow { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .7rem; opacity: .75; }
   #AuFit-{{ sid }} h2 { margin: 0 0 .7rem; }
-  #AuFit-{{ sid }} .au-fit__intro { margin: 0 0 1.3rem; font-size: 1.02rem; line-height: 1.5; }
-  #AuFit-{{ sid }} ol { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; gap: .8rem; counter-reset: step; }
-  #AuFit-{{ sid }} li { display: grid; grid-template-columns: 2.1rem 1fr; gap: .8rem; align-items: start; }
+  #AuFit-{{ sid }} .au-fit__intro { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+  #AuFit-{{ sid }} .au-fit__fig { margin: 1.5rem auto 0; border-radius: 14px; overflow: hidden; background: rgba(var(--color-foreground), .06);
+    {%- if ratio == '16:9' -%} aspect-ratio: 16 / 9; {%- elsif ratio == '4:5' -%} aspect-ratio: 4 / 5; max-width: 520px; {%- elsif ratio == '1:1' -%} aspect-ratio: 1 / 1; max-width: 640px; {%- elsif ratio == '4:3' -%} aspect-ratio: 4 / 3; {%- else -%} aspect-ratio: 3 / 2; {%- endif -%} }
+  #AuFit-{{ sid }} .au-fit__fig img { width: 100%; height: 100%; object-fit: cover; object-position: {{ section.settings.focal }}; display: block; }
+  #AuFit-{{ sid }} ol { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: .5rem; counter-reset: step; }
+  #AuFit-{{ sid }} li { display: grid; grid-template-columns: 2.1rem 1fr; gap: .8rem; align-items: start; padding: .3rem 0; }
   #AuFit-{{ sid }} li::before { counter-increment: step; content: counter(step); width: 2.1rem; height: 2.1rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); font-family: var(--font-heading-family); font-weight: 700; font-size: .95rem; }
-  #AuFit-{{ sid }} li strong { display: block; font-family: var(--font-heading-family); font-size: 1.02rem; margin: .15rem 0 .2rem; }
-  #AuFit-{{ sid }} li p { margin: 0; font-size: .95rem; line-height: 1.45; opacity: .85; }
-  #AuFit-{{ sid }} .au-fit__micro { margin: 0 0 1.2rem; font-size: .92rem; opacity: .85; }
-  #AuFit-{{ sid }} .au-fit__ctas { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+  #AuFit-{{ sid }} li strong { display: block; font-family: var(--font-heading-family); font-size: 1rem; margin: .15rem 0 .2rem; }
+  #AuFit-{{ sid }} li p { margin: 0; font-size: .93rem; line-height: 1.45; opacity: .85; }
+  #AuFit-{{ sid }} .au-fit__foot { margin: 1.4rem auto 0; text-align: center; }
+  #AuFit-{{ sid }} .au-fit__micro { margin: 0 0 1rem; font-size: .92rem; opacity: .85; }
+  #AuFit-{{ sid }} .au-fit__ctas { display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; align-items: center; justify-content: center; }
   #AuFit-{{ sid }} .au-fit__secondary { font-size: .95rem; text-underline-offset: .2em; color: inherit; }
-  #AuFit-{{ sid }} .au-fit__extra { margin-top: 1rem; border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 3; }
-  #AuFit-{{ sid }} .au-fit__extra img { width: 100%; height: 100%; object-fit: cover; display: block; }
   #AuFit-{{ sid }} dialog.au-fit__modal { width: min(92vw, 780px); max-height: 88vh; border: 0; border-radius: 14px; padding: 0; background: #fff; color: #13262B; overflow: hidden; }
   #AuFit-{{ sid }} dialog.au-fit__modal::backdrop { background: rgba(19,38,43,.6); }
   #AuFit-{{ sid }} .au-fit__modal-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.3rem; border-bottom: 1px solid rgba(19,38,43,.12); }
   #AuFit-{{ sid }} .au-fit__modal-head h3 { margin: 0; font-size: 1.15rem; }
-  #AuFit-{{ sid }} .au-fit__close { border: 0; background: none; font-size: 1.6rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
-  #AuFit-{{ sid }} .au-fit__modal-body { padding: 1.2rem 1.3rem 1.6rem; overflow: auto; max-height: calc(88vh - 4rem); font-size: .97rem; line-height: 1.5; }
-  #AuFit-{{ sid }} .au-fit__modal-body table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: .6rem 0 1rem; }
-  #AuFit-{{ sid }} .au-fit__modal-body th, #AuFit-{{ sid }} .au-fit__modal-body td { border-bottom: 1px solid rgba(19,38,43,.12); padding: .5rem .4rem; text-align: left; vertical-align: top; }
+  #AuFit-{{ sid }} .au-fit__close { border: 0; background: none; font-size: 1.8rem; line-height: 1; cursor: pointer; color: inherit; padding: 0 .2rem; }
+  #AuFit-{{ sid }} .au-fit__modal-body { padding: 1rem 1.3rem 1.4rem; max-height: calc(88vh - 4.2rem); overflow: auto; font-size: .95rem; }
+  #AuFit-{{ sid }} .au-fit__modal-body table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  #AuFit-{{ sid }} .au-fit__modal-body th, #AuFit-{{ sid }} .au-fit__modal-body td { padding: .5rem .4rem; border-bottom: 1px solid rgba(19,38,43,.12); text-align: left; }
   @media screen and (min-width: 750px) {
-    #AuFit-{{ sid }} .au-fit__inner { padding: 0 5rem; grid-template-columns: 1fr 1fr; gap: 3rem; }
-    #AuFit-{{ sid }} .au-fit__media { aspect-ratio: 1 / 1; }
+    #AuFit-{{ sid }} .au-fit__inner { padding: 0 5rem; }
+    #AuFit-{{ sid }} .au-fit__body { display: grid; grid-template-columns: {{ section.settings.max_width }}fr 500fr; gap: 2.5rem; align-items: center; margin-top: 1.8rem; }
+    #AuFit-{{ sid }} .au-fit__fig { margin: 0; max-width: none; }
+    #AuFit-{{ sid }} ol { margin: 0; gap: .8rem; }
+    #AuFit-{{ sid }} li { padding: 1rem 1.1rem; border: 1px solid rgba(var(--color-foreground), .12); border-radius: 12px; background: rgb(var(--color-background)); }
   }
 </style>
 <div id="AuFit-{{ sid }}" class="au-fit color-{{ section.settings.color_scheme }} gradient">
   <div class="au-fit__inner">
-    <div>
-      <div class="au-fit__media">
-        {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '500, 800, 1100, 1400', alt: section.settings.image.alt | default: section.settings.heading }}
-        {%- endif -%}
-      </div>
-      {%- if section.settings.image_secondary != blank -%}
-        <div class="au-fit__extra">{{ section.settings.image_secondary | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '500, 800, 1100, 1400' }}</div>
-      {%- endif -%}
-    </div>
-    <div>
+    <div class="au-fit__head">
       {%- if section.settings.eyebrow != blank -%}<p class="au-fit__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
       {%- if section.settings.text != blank -%}<div class="au-fit__intro rte">{{ section.settings.text }}</div>{%- endif -%}
-      <ol>
-        <li><span><strong>{{ section.settings.step1_title }}</strong><p>{{ section.settings.step1_text }}</p></span></li>
-        <li><span><strong>{{ section.settings.step2_title }}</strong><p>{{ section.settings.step2_text }}</p></span></li>
-        <li><span><strong>{{ section.settings.step3_title }}</strong><p>{{ section.settings.step3_text }}</p></span></li>
-      </ol>
+    </div>
+    <div class="au-fit__body">
+    {%- if section.settings.image != blank -%}
+      {%- assign f_alt = section.settings.image.alt | default: section.settings.heading | escape -%}
+      <figure class="au-fit__fig">
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 1000px, 100vw', widths: '500, 800, 1100, 1600', alt: f_alt }}
+      </figure>
+    {%- endif -%}
+    <ol>
+      <li><span><strong>{{ section.settings.step1_title }}</strong><p>{{ section.settings.step1_text }}</p></span></li>
+      <li><span><strong>{{ section.settings.step2_title }}</strong><p>{{ section.settings.step2_text }}</p></span></li>
+      <li><span><strong>{{ section.settings.step3_title }}</strong><p>{{ section.settings.step3_text }}</p></span></li>
+    </ol>
+    </div>
+    <div class="au-fit__foot">
       {%- if section.settings.micro != blank -%}<p class="au-fit__micro">{{ section.settings.micro }}</p>{%- endif -%}
       <div class="au-fit__ctas">
-        {%- if sg != blank -%}
+        {%- if use_modal -%}
           <button type="button" class="button button--primary au-fit__open">{{ section.settings.primary_label }}</button>
-          <noscript><a class="button button--primary" href="{{ sg.url }}">{{ section.settings.primary_label }}</a></noscript>
+          <noscript><a class="button button--primary" href="{{ guide_url }}">{{ section.settings.primary_label }}</a></noscript>
         {%- else -%}
-          <a class="button button--primary" href="/pages/size-guide">{{ section.settings.primary_label }}</a>
+          <a class="button button--primary au-fit__link" href="{{ guide_url }}">{{ section.settings.primary_label }}</a>
         {%- endif -%}
         {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
           <a class="au-fit__secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
@@ -69,44 +90,48 @@
       </div>
     </div>
   </div>
-  {%- if sg != blank -%}
+  {%- if use_modal -%}
   <dialog class="au-fit__modal" aria-labelledby="AuFitTitle-{{ sid }}">
     <div class="au-fit__modal-head"><h3 id="AuFitTitle-{{ sid }}">{{ sg.title }}</h3><button type="button" class="au-fit__close" aria-label="Close">&times;</button></div>
     <div class="au-fit__modal-body rte">{{ sg.content }}<p><a href="{{ sg.url }}">Open the full size guide page</a></p></div>
   </dialog>
+  <script>
+    (function () {
+      var root = document.getElementById('AuFit-{{ sid }}'); if (!root) return;
+      var btn = root.querySelector('.au-fit__open'), dlg = root.querySelector('dialog.au-fit__modal'); if (!btn || !dlg) return;
+      if (typeof dlg.showModal !== 'function') { btn.addEventListener('click', function () { window.location.href = '{{ guide_url }}'; }); return; }
+      btn.addEventListener('click', function () { dlg.showModal(); });
+      dlg.querySelector('.au-fit__close').addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    })();
+  </script>
   {%- endif -%}
 </div>
-<script>
-  (function () {
-    var root = document.getElementById('AuFit-{{ sid }}'); if (!root) return;
-    var btn = root.querySelector('.au-fit__open'), dlg = root.querySelector('dialog.au-fit__modal'); if (!btn || !dlg) return;
-    if (typeof dlg.showModal !== 'function') { btn.addEventListener('click', function () { window.location.href = '{{ sg.url }}'; }); return; }
-    btn.addEventListener('click', function () { dlg.showModal(); });
-    dlg.querySelector('.au-fit__close').addEventListener('click', function () { dlg.close(); });
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
-  })();
-</script>
 {% schema %}
 {
   "name": "AU fit guide",
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Photo (dog wearing the harness, straps visible)" },
-    { "type": "image_picker", "id": "image_secondary", "label": "Secondary photo slot (future fitting photo, optional)" },
+    { "type": "image_picker", "id": "image", "label": "Photo (harness correctly fitted, straps visible)" },
+    { "type": "select", "id": "ratio", "label": "Photo format", "default": "3:2", "options": [ { "value": "3:2", "label": "3:2 (wide)" }, { "value": "4:3", "label": "4:3" }, { "value": "16:9", "label": "16:9 (panoramic)" }, { "value": "1:1", "label": "Square" }, { "value": "4:5", "label": "4:5 (portrait)" } ] },
+    { "type": "select", "id": "focal", "label": "Focal point", "default": "center center", "options": [ { "value": "center top", "label": "Top" }, { "value": "center 30%", "label": "Upper third" }, { "value": "center center", "label": "Centre" }, { "value": "center 70%", "label": "Lower third" } ] },
+    { "type": "range", "id": "max_width", "min": 400, "max": 700, "step": 20, "unit": "px", "label": "Photo column width (desktop, relative to the steps column)", "default": 560 },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The right fit" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Find the right fit in 30 seconds." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find the right fit in 30 seconds" },
     { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
-    { "type": "richtext", "id": "text", "label": "Introduction", "default": "<p>A correctly fitted harness stays centred, redirects pulling properly and keeps your dog comfortable throughout the walk.</p>" },
+    { "type": "richtext", "id": "text", "label": "Introduction", "default": "<p>One measurement decides the size. A snug, centred harness redirects properly and never twists.</p>" },
     { "type": "text", "id": "step1_title", "label": "Step 1 title", "default": "Measure the chest" },
-    { "type": "text", "id": "step1_text", "label": "Step 1 text", "default": "Wrap a soft tape around the widest part of the ribcage, just behind the front legs." },
-    { "type": "text", "id": "step2_title", "label": "Step 2 title", "default": "Choose the larger size when between sizes" },
-    { "type": "text", "id": "step2_text", "label": "Step 2 text", "default": "A harness that is too small can rub. A harness that is too loose can twist." },
-    { "type": "text", "id": "step3_title", "label": "Step 3 title", "default": "Check the two-finger fit" },
-    { "type": "text", "id": "step3_text", "label": "Step 3 text", "default": "You should be able to slide two fingers flat under each strap." },
-    { "type": "text", "id": "micro", "label": "Micro-reassurance", "default": "Wrong size? We'll swap it free within 60 days." },
-    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Find my dog's size" },
-    { "type": "page", "id": "size_guide_page", "label": "Size guide page (opens in a modal)" },
+    { "type": "text", "id": "step1_text", "label": "Step 1 text", "default": "Soft tape around the widest part of the ribcage, just behind the front legs. Snug, not tight." },
+    { "type": "text", "id": "step2_title", "label": "Step 2 title", "default": "Where the tape sits" },
+    { "type": "text", "id": "step2_text", "label": "Step 2 text", "default": "Level all the way round, over the coat, with your dog standing. Then the neck, where a collar sits." },
+    { "type": "text", "id": "step3_title", "label": "Step 3 title", "default": "Between sizes? Go up" },
+    { "type": "text", "id": "step3_text", "label": "Step 3 text", "default": "Thick double coat (shepherd, husky, collie)? Go up too. Two fingers flat under every strap once fitted." },
+    { "type": "text", "id": "micro", "label": "Size-exchange reminder", "default": "Wrong size? Free swap within 60 days, prepaid both ways." },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "View the size guide" },
+    { "type": "select", "id": "open_mode", "label": "Primary button opens", "default": "link", "options": [ { "value": "link", "label": "The size guide page" }, { "value": "modal", "label": "A modal with the size guide page content" } ] },
+    { "type": "page", "id": "size_guide_page", "label": "Size guide page" },
+    { "type": "url", "id": "size_guide_link", "label": "Size guide link (overrides the page URL)" },
     { "type": "text", "id": "secondary_label", "label": "Secondary link label", "default": "Read the fitting guide" },
     { "type": "url", "id": "secondary_link", "label": "Secondary link" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },

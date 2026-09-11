@@ -1,75 +1,118 @@
 {%- comment -%}
-  Four-benefit interactive tabs: one photo per benefit, manual tab switching (no autoplay).
-  Written for this store; the original Aerozya "4 benefits" section was not recoverable.
+  Four-benefit interactive tabs, structure adapted from the CRO library "lisance-benefices":
+  tab bar (icon + short label), text panel + CTA on the left, one 4:5 photo per benefit on the right,
+  optional autoplay with a progress bar (0 = off), stops on click, only runs while visible,
+  keyboard arrows, theme-editor block select. Mobile: heading → tab bar → photo → text → CTA.
+  Colours come from the theme colour scheme, not from hard-coded values.
 {%- endcomment -%}
 {%- liquid
   assign sid = section.id
-  assign first_index = 0
+  assign dur = section.settings.autoplay_seconds | default: 0
 -%}
 <style>
-  #AuBen-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
-  #AuBen-{{ sid }} .au-ben__inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  #AuBen-{{ sid }} .au-ben__head { max-width: 60ch; margin: 0 0 1.8rem; }
+  #AuBen-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; overflow: hidden; }
+  #AuBen-{{ sid }} .au-ben__inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; flex-direction: column; }
   #AuBen-{{ sid }} .au-ben__caption { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .7rem; opacity: .75; }
   #AuBen-{{ sid }} h2 { margin: 0 0 .6rem; }
-  #AuBen-{{ sid }} .au-ben__intro { margin: 0; font-size: 1.02rem; line-height: 1.5; }
-  #AuBen-{{ sid }} .au-ben__grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: stretch; }
-  #AuBen-{{ sid }} .au-ben__media { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 5; background: rgba(var(--color-foreground), .06); }
-  #AuBen-{{ sid }} .au-ben__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .35s ease; }
-  #AuBen-{{ sid }} .au-ben__media img.is-active { opacity: 1; }
-  #AuBen-{{ sid }} .au-ben__tabs { display: flex; flex-direction: column; gap: .6rem; margin: 0; padding: 0; list-style: none; }
-  #AuBen-{{ sid }} .au-ben__tab {
-    width: 100%; text-align: left; cursor: pointer; font: inherit; color: inherit;
-    background: rgb(var(--color-background)); border: 1px solid rgba(var(--color-foreground), .14);
-    border-radius: 10px; padding: 1rem 1.1rem; display: grid; grid-template-columns: 2.1rem 1fr; gap: .8rem; align-items: start;
-    transition: border-color .2s ease, box-shadow .2s ease;
-  }
-  #AuBen-{{ sid }} .au-ben__tab[aria-selected="true"] { border-color: rgb(var(--color-button)); box-shadow: 0 0 0 1px rgb(var(--color-button)) inset; }
-  #AuBen-{{ sid }} .au-ben__num { font-family: var(--font-heading-family); font-weight: 700; font-size: .95rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(var(--color-button), .12); color: rgb(var(--color-button)); }
-  #AuBen-{{ sid }} .au-ben__tab[aria-selected="true"] .au-ben__num { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); }
-  #AuBen-{{ sid }} .au-ben__title { font-family: var(--font-heading-family); font-weight: 700; font-size: 1.05rem; margin: .15rem 0 .25rem; display: block; }
-  #AuBen-{{ sid }} .au-ben__text { margin: 0; font-size: .95rem; line-height: 1.45; opacity: .85; display: none; }
-  #AuBen-{{ sid }} .au-ben__tab[aria-selected="true"] .au-ben__text { display: block; }
-  #AuBen-{{ sid }} .au-ben__cta { margin-top: 1.4rem; }
+  #AuBen-{{ sid }} .au-ben__intro { margin: 0 0 1rem; font-size: 1.02rem; line-height: 1.5; }
+  #AuBen-{{ sid }} .au-ben__head { order: 1; margin-bottom: .8rem; }
+  #AuBen-{{ sid }} .au-ben__bar { order: 2; display: flex; gap: 4px; padding: 8px; margin: 0 -1.5rem 1.1rem; border-radius: 0; background: rgb(var(--color-button)); box-shadow: 0 12px 30px rgba(var(--color-button), .18); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  #AuBen-{{ sid }} .au-ben__bar::-webkit-scrollbar { display: none; }
+  #AuBen-{{ sid }} .au-ben__tab { flex: 0 0 calc(25vw - 6px); min-width: 0; scroll-snap-align: center; appearance: none; background: none; border: 0; padding: 8px 3px 12px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(var(--color-button-text), .72); font: inherit; position: relative; transition: background .25s, color .25s; }
+  #AuBen-{{ sid }} .au-ben__tab:hover { background: rgba(var(--color-button-text), .08); color: rgb(var(--color-button-text)); }
+  #AuBen-{{ sid }} .au-ben__ico { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(var(--color-button-text), .55); display: flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .25s; }
+  #AuBen-{{ sid }} .au-ben__ico svg { width: 20px; height: 20px; color: inherit; }
+  #AuBen-{{ sid }} .au-ben__ico img { width: 20px; height: 20px; object-fit: contain; filter: brightness(0) invert(1); }
+  #AuBen-{{ sid }} .au-ben__name { font-family: var(--font-heading-family); font-size: .64rem; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; line-height: 1.25; text-align: center; }
+  #AuBen-{{ sid }} .au-ben__tab.is-on { color: rgb(var(--color-button-text)); background: rgba(var(--color-button-text), .12); }
+  #AuBen-{{ sid }} .au-ben__tab.is-on .au-ben__ico { background: rgb(var(--color-button-text)); border-color: rgb(var(--color-button-text)); color: rgb(var(--color-button)); transform: scale(1.06); }
+  #AuBen-{{ sid }} .au-ben__tab.is-on .au-ben__ico img { filter: none; }
+  #AuBen-{{ sid }} .au-ben__prog { position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; border-radius: 2px; background: rgba(var(--color-button-text), .25); overflow: hidden; opacity: 0; transition: opacity .25s; }
+  #AuBen-{{ sid }} .au-ben__prog i { display: block; height: 100%; width: 100%; background: rgb(var(--color-button-text)); transform: scaleX(0); transform-origin: left; }
+  #AuBen-{{ sid }} .au-ben__tab.is-on .au-ben__prog { opacity: 1; }
+  #AuBen-{{ sid }}.is-auto .au-ben__tab.is-on .au-ben__prog i { animation: au-ben-prog-{{ sid }} {{ dur }}s linear forwards; }
+  #AuBen-{{ sid }}:not(.is-auto) .au-ben__tab.is-on .au-ben__prog i { transform: scaleX(1); }
+  @keyframes au-ben-prog-{{ sid }} { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  #AuBen-{{ sid }} .au-ben__card { order: 3; position: relative; width: 100%; max-width: 440px; margin: 0 auto 1rem; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: rgba(var(--color-foreground), .06); }
+  #AuBen-{{ sid }} .au-ben__img { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity .5s ease, transform 1.1s ease; }
+  #AuBen-{{ sid }} .au-ben__img.is-on { opacity: 1; transform: scale(1); }
+  #AuBen-{{ sid }} .au-ben__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+  #AuBen-{{ sid }} .au-ben__badge { position: absolute; left: 14px; bottom: 14px; padding: .45rem .8rem; border-radius: 999px; background: rgba(255,255,255,.92); backdrop-filter: blur(4px); font-family: var(--font-heading-family); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #13262B; }
+  #AuBen-{{ sid }} .au-ben__panels { order: 4; display: grid; margin-bottom: 1.2rem; }
+  #AuBen-{{ sid }} .au-ben__panel { grid-area: 1 / 1; opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s ease; pointer-events: none; }
+  #AuBen-{{ sid }} .au-ben__panel.is-on { opacity: 1; transform: none; pointer-events: auto; }
+  #AuBen-{{ sid }} .au-ben__eyebrow { margin: 0 0 .5rem; font-family: var(--font-heading-family); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; color: rgb(var(--color-button)); }
+  #AuBen-{{ sid }} .au-ben__h { margin: 0 0 .6rem; font-family: var(--font-heading-family); font-size: 1.35rem; line-height: 1.2; font-weight: 700; }
+  #AuBen-{{ sid }} .au-ben__p { margin: 0; font-size: .98rem; line-height: 1.55; opacity: .9; max-width: 48ch; }
+  #AuBen-{{ sid }} .au-ben__cta { order: 5; }
+  #AuBen-{{ sid }} .au-ben__cta .button { width: 100%; }
+  @media (prefers-reduced-motion: reduce) { #AuBen-{{ sid }} .au-ben__panel, #AuBen-{{ sid }} .au-ben__img { transition: none; } }
   @media screen and (min-width: 750px) {
-    #AuBen-{{ sid }} .au-ben__inner { padding: 0 5rem; }
-    #AuBen-{{ sid }} .au-ben__grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-    #AuBen-{{ sid }} .au-ben__media { aspect-ratio: 1 / 1; align-self: start; }
-    #AuBen-{{ sid }} .au-ben__text { display: block; }
-    #AuBen-{{ sid }} .au-ben__tab { padding: 1.1rem 1.3rem; }
-    {%- if section.settings.image_position == 'right' -%}
-    #AuBen-{{ sid }} .au-ben__media { order: 2; }
+    #AuBen-{{ sid }} .au-ben__inner { padding: 0 5rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(32px, 5vw, 72px); align-items: center; }
+    #AuBen-{{ sid }} .au-ben__left { display: contents; }
+    #AuBen-{{ sid }} .au-ben__head, #AuBen-{{ sid }} .au-ben__bar, #AuBen-{{ sid }} .au-ben__panels, #AuBen-{{ sid }} .au-ben__cta { grid-column: 1; }
+    #AuBen-{{ sid }} .au-ben__card { grid-column: 2; grid-row: 1 / span 4; max-width: none; margin: 0; aspect-ratio: 4 / 5; max-height: 640px; border-radius: 20px; box-shadow: 0 22px 54px rgba(19,38,43,.12); }
+    {%- if section.settings.image_position == 'left' -%}
+    #AuBen-{{ sid }} .au-ben__head, #AuBen-{{ sid }} .au-ben__bar, #AuBen-{{ sid }} .au-ben__panels, #AuBen-{{ sid }} .au-ben__cta { grid-column: 2; }
+    #AuBen-{{ sid }} .au-ben__card { grid-column: 1; }
     {%- endif -%}
+    #AuBen-{{ sid }} .au-ben__head { margin-bottom: 1.2rem; }
+    #AuBen-{{ sid }} .au-ben__bar { margin: 0 0 1.4rem; padding: 10px; border-radius: 16px; overflow: visible; }
+    #AuBen-{{ sid }} .au-ben__tab { flex: 1 1 0; padding: 10px 6px 12px; gap: 8px; }
+    #AuBen-{{ sid }} .au-ben__ico { width: 44px; height: 44px; }
+    #AuBen-{{ sid }} .au-ben__ico svg { width: 22px; height: 22px; }
+    #AuBen-{{ sid }} .au-ben__name { font-size: .7rem; }
+    #AuBen-{{ sid }} .au-ben__h { font-size: 1.6rem; }
+    #AuBen-{{ sid }} .au-ben__cta .button { width: auto; }
   }
 </style>
-<div id="AuBen-{{ sid }}" class="au-ben color-{{ section.settings.color_scheme }} gradient">
+<div id="AuBen-{{ sid }}" class="au-ben color-{{ section.settings.color_scheme }} gradient{% if dur > 0 %} is-auto{% endif %}" data-dur="{{ dur }}">
   <div class="au-ben__inner">
     <div class="au-ben__head">
       {%- if section.settings.caption != blank -%}<p class="au-ben__caption">{{ section.settings.caption }}</p>{%- endif -%}
       <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
       {%- if section.settings.text != blank -%}<div class="au-ben__intro rte">{{ section.settings.text }}</div>{%- endif -%}
     </div>
-    <div class="au-ben__grid">
-      <div class="au-ben__media" aria-hidden="true">
-        {%- for block in section.blocks -%}
+    <div class="au-ben__bar" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+      {%- for block in section.blocks -%}
+        <button type="button" class="au-ben__tab{% if forloop.first %} is-on{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-tab" aria-controls="{{ block.id }}-panel" {{ block.shopify_attributes }}>
+          <span class="au-ben__ico" aria-hidden="true">
+            {%- if block.settings.custom_icon != blank -%}
+              <img src="{{ block.settings.custom_icon | image_url: width: 88 }}" alt="" loading="lazy" width="22" height="22">
+            {%- else -%}
+              {%- case block.settings.icon -%}
+                {%- when 'redirect' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4 0 5-3 7-6s3-6 7-6"/><path d="M15 3l3 3-3 3"/><path d="M4 6h3"/></svg>
+                {%- when 'neck' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+                {%- when 'comfort' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="8" cy="17" r="2" fill="currentColor" stroke="none"/></svg>
+                {%- when 'modes' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3"/><path d="M20 16H7l3 3"/></svg>
+                {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 12l2 2 4-4"/></svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </span>
+          <span class="au-ben__name">{{ block.settings.tab | default: block.settings.title | escape }}</span>
+          <span class="au-ben__prog" aria-hidden="true"><i></i></span>
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="au-ben__card">
+      {%- for block in section.blocks -%}
+        <div class="au-ben__img{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}">
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '400, 600, 800, 1000, 1200', class: 'au-ben__img', data-index: forloop.index0, alt: block.settings.image.alt }}
+            {%- assign b_alt = block.settings.image.alt | default: block.settings.title | escape -%}
+            {{ block.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 560px, 92vw', widths: '400, 600, 900, 1100', alt: b_alt }}
           {%- endif -%}
-        {%- endfor -%}
-      </div>
-      <ul class="au-ben__tabs" role="tablist">
-        {%- for block in section.blocks -%}
-          <li role="presentation" {{ block.shopify_attributes }}>
-            <button type="button" class="au-ben__tab" role="tab" data-index="{{ forloop.index0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
-              <span class="au-ben__num">{{ forloop.index }}</span>
-              <span>
-                <span class="au-ben__title">{{ block.settings.title }}</span>
-                <p class="au-ben__text">{{ block.settings.text }}</p>
-              </span>
-            </button>
-          </li>
-        {%- endfor -%}
-      </ul>
+          <span class="au-ben__badge">{{ block.settings.tab | default: block.settings.title | escape }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="au-ben__panels">
+      {%- for block in section.blocks -%}
+        <div class="au-ben__panel{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-panel" role="tabpanel" aria-labelledby="{{ block.id }}-tab">
+          {%- if section.settings.eyebrow != blank -%}<p class="au-ben__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+          <h3 class="au-ben__h">{{ block.settings.title | escape }}</h3>
+          <p class="au-ben__p">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
     </div>
     {%- if section.settings.button_label != blank -%}
       <div class="au-ben__cta"><a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a></div>
@@ -78,22 +121,30 @@
 </div>
 <script>
   (function () {
-    var root = document.getElementById('AuBen-{{ sid }}');
-    if (!root) return;
-    var tabs = root.querySelectorAll('.au-ben__tab');
-    var imgs = root.querySelectorAll('.au-ben__img');
+    var root = document.getElementById('AuBen-{{ sid }}'); if (!root || root.dataset.init) return; root.dataset.init = '1';
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.au-ben__tab'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.au-ben__panel'));
+    var imgs = Array.prototype.slice.call(root.querySelectorAll('.au-ben__img'));
+    var dur = parseInt(root.dataset.dur, 10) || 0, cur = 0, timer = null;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function show(i) {
-      tabs.forEach(function (t) { t.setAttribute('aria-selected', t.dataset.index == i ? 'true' : 'false'); });
-      imgs.forEach(function (im) { im.classList.toggle('is-active', im.dataset.index == i); });
+      cur = (i + tabs.length) % tabs.length;
+      tabs.forEach(function (t, k) { var on = k === cur; t.classList.toggle('is-on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      panels.forEach(function (p, k) { p.classList.toggle('is-on', k === cur); });
+      imgs.forEach(function (m, k) { m.classList.toggle('is-on', k === cur); });
+      var t = tabs[cur]; if (t && window.innerWidth < 750) { try { t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch (e) {} }
     }
-    tabs.forEach(function (t) {
-      t.addEventListener('click', function () { show(t.dataset.index); });
-      t.addEventListener('keydown', function (e) {
-        var i = parseInt(t.dataset.index, 10);
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); var n = tabs[(i + 1) % tabs.length]; n.focus(); show(n.dataset.index); }
-        if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); var p = tabs[(i - 1 + tabs.length) % tabs.length]; p.focus(); show(p.dataset.index); }
-      });
+    function restart() { var i = root.querySelector('.au-ben__tab.is-on .au-ben__prog i'); if (!i) return; i.style.animation = 'none'; void i.offsetWidth; i.style.animation = ''; }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function start() { if (dur <= 0 || reduce || tabs.length < 2) { root.classList.remove('is-auto'); return; } stop(); root.classList.add('is-auto'); restart(); timer = setInterval(function () { show(cur + 1); restart(); }, dur * 1000); }
+    function manual(i) { stop(); root.classList.remove('is-auto'); show(i); }
+    tabs.forEach(function (t, k) {
+      t.addEventListener('click', function () { manual(k); });
+      t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); manual(k + 1); tabs[cur].focus(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); manual(k - 1); tabs[cur].focus(); } });
     });
+    if ('IntersectionObserver' in window) { new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { if (!timer && root.classList.contains('is-auto')) start(); } else { stop(); } }); }, { threshold: .25 }).observe(root); } else { start(); }
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (root.classList.contains('is-auto') && !timer) start(); });
+    if (window.Shopify && Shopify.designMode) { document.addEventListener('shopify:block:select', function (e) { var i = tabs.findIndex(function (t) { return t.id === e.detail.blockId + '-tab'; }); if (i > -1) manual(i); }); }
     show(0);
   })();
 </script>
@@ -108,7 +159,9 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Four things the harness does on every walk" },
     { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
     { "type": "richtext", "id": "text", "label": "Intro" },
-    { "type": "select", "id": "image_position", "label": "Photo position (desktop)", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "text", "id": "eyebrow", "label": "Small label above each benefit title" },
+    { "type": "range", "id": "autoplay_seconds", "min": 0, "max": 12, "step": 1, "unit": "s", "label": "Auto-advance (0 = off, stops on click)", "default": 0 },
+    { "type": "select", "id": "image_position", "label": "Photo position (desktop)", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ], "default": "right" },
     { "type": "text", "id": "button_label", "label": "Button label" },
     { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
@@ -120,12 +173,15 @@
       "type": "benefit",
       "name": "Benefit",
       "settings": [
+        { "type": "text", "id": "tab", "label": "Tab label (2–3 words)", "default": "Redirects pulling" },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "redirect", "options": [ { "value": "redirect", "label": "Redirect arrow" }, { "value": "neck", "label": "Shield (neck protection)" }, { "value": "comfort", "label": "Sliders (adjustable comfort)" }, { "value": "modes", "label": "Two arrows (front / back modes)" }, { "value": "check", "label": "Check" } ] },
+        { "type": "image_picker", "id": "custom_icon", "label": "Custom icon (replaces the icon)" },
         { "type": "text", "id": "title", "label": "Title", "default": "Front-clip redirection" },
-        { "type": "textarea", "id": "text", "label": "Text" },
-        { "type": "image_picker", "id": "image", "label": "Photo" }
+        { "type": "textarea", "id": "text", "label": "Text (2 to 3 lines)" },
+        { "type": "image_picker", "id": "image", "label": "Photo (4:5)" }
       ]
     }
   ],
-  "presets": [ { "name": "AU benefits tabs", "blocks": [ { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" } ] } ]
+  "presets": [ { "name": "AU benefits tabs", "blocks": [ { "type": "benefit" }, { "type": "benefit", "settings": { "tab": "Easy on the neck", "icon": "neck" } }, { "type": "benefit", "settings": { "tab": "Everyday comfort", "icon": "comfort" } }, { "type": "benefit", "settings": { "tab": "Front & back modes", "icon": "modes" } } ] } ]
 }
 {% endschema %}

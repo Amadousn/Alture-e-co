@@ -58,8 +58,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 560px;
-    height: min(84vh, 880px);
+    min-height: 540px;
+    height: min(80vh, 800px);
   }
   #AuHero-{{ sid }} .au-hero__media,
   #AuHero-{{ sid }} .au-hero__media img,
@@ -152,17 +152,17 @@
   @media screen and (max-width: 749px) {
     #AuHero-{{ sid }} .au-hero__frame {
       align-items: flex-end;
-      min-height: 520px;
-      height: min(80svh, 700px);
+      min-height: 480px;
+      height: min(74svh, 600px);
     }
     #AuHero-{{ sid }} .au-hero__media img,
-    #AuHero-{{ sid }} .au-hero__media video { object-position: center 35%; }
+    #AuHero-{{ sid }} .au-hero__media video { object-position: center 28%; }
     #AuHero-{{ sid }} .au-hero__poster--mobile.has-image { display: block; }
     #AuHero-{{ sid }} .au-hero__poster--mobile.has-image + .au-hero__poster--desktop { display: none; }
     #AuHero-{{ sid }} .au-hero__overlay {
       background: linear-gradient(180deg, rgba(19,38,43,0) 30%, rgba(19,38,43,.28) 52%, rgba(19,38,43,.78) 100%);
     }
-    #AuHero-{{ sid }} .au-hero__content { padding: 1.5rem 1.5rem 2rem; max-width: 100%; }
+    #AuHero-{{ sid }} .au-hero__content { padding: 1.25rem 1.25rem 1.6rem; max-width: 100%; }
     #AuHero-{{ sid }} .au-hero__eyebrow { margin-bottom: .6rem; font-size: .7rem; }
     #AuHero-{{ sid }} .au-hero__heading { font-size: clamp(1.9rem, 8.2vw, 2.5rem); margin-bottom: .75rem; }
     #AuHero-{{ sid }} .au-hero__sub { font-size: .98rem; margin-bottom: 1.15rem; }

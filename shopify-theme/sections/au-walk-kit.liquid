@@ -37,7 +37,8 @@
     <div class="au-kit__card">
       <div class="au-kit__media">
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200', alt: section.settings.image.alt | default: section.settings.heading }}
+          {%- assign k_alt = section.settings.image.alt | default: section.settings.heading -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200', alt: k_alt }}
         {%- elsif prod != blank and prod.featured_image != blank -%}
           {{ prod.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 45vw, 100vw', widths: '500, 800, 1200' }}
         {%- endif -%}

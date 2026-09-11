@@ -1,0 +1,283 @@
+{%- comment -%}
+  "Real dogs. Real walks." — one mixed carousel of real customer videos (9:16) and photos (4:5).
+  Structure reused from the CRO library: scroll-snap track, cards, arrows and dots from lisance-clientes;
+  click-to-play video with poster, one active video, pause off-screen from lisance-videos (rewritten:
+  no autoplay, the video file is only attached to the DOM on the first click).
+  Blocks can be switched off individually. Empty blocks render nothing on the storefront and show a
+  dashed placeholder in the theme editor only.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign count = 0
+  for block in section.blocks
+    if block.settings.enabled
+      if block.type == 'video' and block.settings.video != blank
+        assign count = count | plus: 1
+      elsif block.type == 'photo' and block.settings.image != blank
+        assign count = count | plus: 1
+      endif
+    endif
+  endfor
+  assign h_desktop = section.settings.card_height
+-%}
+{%- if count > 0 or request.design_mode -%}
+<style>
+  #AuCM-{{ sid }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; --au-cm-h: min(104vw, 420px); }
+  #AuCM-{{ sid }} .au-cm__inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  #AuCM-{{ sid }} .au-cm__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; margin: 0 0 1.4rem; }
+  #AuCM-{{ sid }} .au-cm__caption { font-family: var(--font-heading-family); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .6rem; opacity: .75; }
+  #AuCM-{{ sid }} h2 { margin: 0 0 .5rem; }
+  #AuCM-{{ sid }} .au-cm__sub { margin: 0; font-size: 1.02rem; line-height: 1.5; max-width: 52ch; }
+  #AuCM-{{ sid }} .au-cm__nav { display: none; gap: .6rem; flex: 0 0 auto; }
+  #AuCM-{{ sid }} .au-cm__arrow { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid rgba(var(--color-foreground), .2); background: rgb(var(--color-background)); color: rgb(var(--color-foreground)); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background .2s, color .2s; }
+  #AuCM-{{ sid }} .au-cm__arrow:hover { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); border-color: rgb(var(--color-button)); }
+  #AuCM-{{ sid }} .au-cm__arrow[disabled] { opacity: .35; cursor: default; }
+  #AuCM-{{ sid }} .au-cm__arrow svg { width: 1.1rem; height: 1.1rem; }
+  #AuCM-{{ sid }} .au-cm__track { display: flex; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding: 2px 0 .5rem; scrollbar-width: none; touch-action: pan-x pan-y; }
+  #AuCM-{{ sid }} .au-cm__track::-webkit-scrollbar { display: none; }
+  #AuCM-{{ sid }} .au-cm__card { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: rgb(var(--color-background)); border: 1px solid rgba(var(--color-foreground), .12); }
+  #AuCM-{{ sid }} .au-cm__card--photo { width: calc(var(--au-cm-h) * .8); }
+  #AuCM-{{ sid }} .au-cm__card--video { width: calc(var(--au-cm-h) * .5625); }
+  #AuCM-{{ sid }} .au-cm__media { position: relative; height: var(--au-cm-h); background: #13262B; overflow: hidden; }
+  #AuCM-{{ sid }} .au-cm__media img, #AuCM-{{ sid }} .au-cm__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  #AuCM-{{ sid }} .au-cm__play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 1rem; background: linear-gradient(180deg, rgba(19,38,43,0) 55%, rgba(19,38,43,.55) 100%); cursor: pointer; color: #fff; display: flex; align-items: center; justify-content: center; font: inherit; }
+  #AuCM-{{ sid }} .au-cm__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+  #AuCM-{{ sid }} .au-cm__icon { width: 3.2rem; height: 3.2rem; border-radius: 50%; background: rgba(255,255,255,.94); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0,0,0,.28); }
+  #AuCM-{{ sid }} .au-cm__icon svg { width: 1.2rem; height: 1.2rem; margin-left: 3px; fill: #13262B; }
+  #AuCM-{{ sid }} .au-cm__tag { position: absolute; left: .7rem; top: .7rem; padding: .3rem .6rem; border-radius: 999px; background: rgba(255,255,255,.92); color: #13262B; font-family: var(--font-heading-family); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; z-index: 1; }
+  #AuCM-{{ sid }} .au-cm__ctrls { position: absolute; right: .6rem; bottom: .6rem; display: none; gap: .4rem; z-index: 2; }
+  #AuCM-{{ sid }} .au-cm__ctrl { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.92); color: #13262B; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  #AuCM-{{ sid }} .au-cm__ctrl svg { width: 1rem; height: 1rem; }
+  #AuCM-{{ sid }} .au-cm__ctrl .on, #AuCM-{{ sid }} .au-cm__card.is-sound .au-cm__ctrl .off { display: none; }
+  #AuCM-{{ sid }} .au-cm__card.is-sound .au-cm__ctrl .on { display: block; }
+  #AuCM-{{ sid }} .au-cm__card.is-playing .au-cm__play { display: none; }
+  #AuCM-{{ sid }} .au-cm__card.is-playing .au-cm__ctrls { display: flex; }
+  #AuCM-{{ sid }} .au-cm__card.is-playing .au-cm__media { cursor: pointer; }
+  #AuCM-{{ sid }} .au-cm__body { padding: .8rem .9rem .95rem; display: flex; flex-direction: column; gap: .3rem; }
+  #AuCM-{{ sid }} .au-cm__who { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: .95rem; line-height: 1.3; }
+  #AuCM-{{ sid }} .au-cm__who span { font-weight: 400; opacity: .75; }
+  #AuCM-{{ sid }} .au-cm__cap { margin: 0; font-size: .86rem; line-height: 1.4; opacity: .8; }
+  #AuCM-{{ sid }} .au-cm__quote { margin: .15rem 0 0; font-size: .9rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  #AuCM-{{ sid }} .au-cm__card.is-open .au-cm__quote { display: block; -webkit-line-clamp: unset; }
+  #AuCM-{{ sid }} .au-cm__more { align-self: flex-start; border: 0; background: none; padding: 0; margin: .1rem 0 0; font: inherit; font-size: .82rem; color: rgb(var(--color-button)); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+  #AuCM-{{ sid }} .au-cm__card.is-open .au-cm__more { display: none; }
+  #AuCM-{{ sid }} .au-cm__ph { display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; height: 100%; border: 2px dashed rgba(255,255,255,.55); color: #fff; font-size: .8rem; line-height: 1.4; box-sizing: border-box; }
+  #AuCM-{{ sid }} .au-cm__dots { display: flex; justify-content: center; gap: .4rem; margin-top: .8rem; }
+  #AuCM-{{ sid }} .au-cm__dot { width: .45rem; height: .45rem; border-radius: 50%; border: 0; padding: 0; background: rgba(var(--color-foreground), .22); cursor: pointer; transition: width .2s; }
+  #AuCM-{{ sid }} .au-cm__dot.is-active { background: rgb(var(--color-button)); width: 1.1rem; border-radius: 3px; }
+  #AuCM-{{ sid }} .au-cm__cta { text-align: center; margin-top: 1.4rem; }
+  @media screen and (min-width: 750px) {
+    #AuCM-{{ sid }} { --au-cm-h: {{ h_desktop }}px; }
+    #AuCM-{{ sid }} .au-cm__inner { padding: 0 5rem; }
+    #AuCM-{{ sid }} .au-cm__nav { display: flex; }
+    #AuCM-{{ sid }} .au-cm__track { gap: 1.1rem; }
+    #AuCM-{{ sid }}.is-static .au-cm__nav, #AuCM-{{ sid }}.is-static .au-cm__dots { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { #AuCM-{{ sid }} .au-cm__track { scroll-behavior: auto; } }
+</style>
+<div id="AuCM-{{ sid }}" class="au-cm color-{{ section.settings.color_scheme }} gradient" data-count="{{ count }}">
+  <div class="au-cm__inner">
+    <div class="au-cm__head">
+      <div>
+        {%- if section.settings.caption != blank -%}<p class="au-cm__caption">{{ section.settings.caption }}</p>{%- endif -%}
+        <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p class="au-cm__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+      <div class="au-cm__nav">
+        <button type="button" class="au-cm__arrow" data-prev aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="au-cm__arrow" data-next aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="au-cm__track" role="list" aria-label="{{ section.settings.heading | escape }}">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.enabled -%}
+          {%- liquid
+            assign bs = block.settings
+            assign is_video = false
+            if block.type == 'video'
+              assign is_video = true
+            endif
+            assign has_media = false
+            if is_video and bs.video != blank
+              assign has_media = true
+            elsif is_video == false and bs.image != blank
+              assign has_media = true
+            endif
+            assign who = bs.first_name
+            if bs.dog != blank
+              if who != blank
+                assign who = who | append: ' & ' | append: bs.dog
+              else
+                assign who = bs.dog
+              endif
+            endif
+          -%}
+          {%- if has_media or request.design_mode -%}
+            {%- liquid
+              assign src = ''
+              assign hd = ''
+              if is_video and has_media
+                for source in bs.video.sources
+                  if source.format == 'mp4' and source.height == 720
+                    assign src = source.url
+                  elsif source.format == 'mp4' and source.height == 1080
+                    assign hd = source.url
+                  elsif source.format == 'mp4' and src == ''
+                    assign src = source.url
+                  endif
+                endfor
+                if src == ''
+                  assign src = hd
+                endif
+              endif
+              assign poster = bs.poster
+              if poster == blank and is_video and has_media
+                assign poster = bs.video.preview_image
+              endif
+            -%}
+            <article class="au-cm__card au-cm__card--{% if is_video %}video{% else %}photo{% endif %}" role="listitem" {% if is_video and has_media %}data-src="{{ src }}"{% endif %} {{ block.shopify_attributes }}>
+              <div class="au-cm__media">
+                {%- if has_media -%}
+                  {%- if is_video -%}
+                    <span class="au-cm__tag">Video</span>
+                    {%- if poster != blank -%}
+                      {%- assign m_alt = bs.caption | default: who | escape -%}
+                      {{ poster | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 260px, 60vw', widths: '300, 450, 700', alt: m_alt }}
+                    {%- endif -%}
+                    <button type="button" class="au-cm__play" aria-label="Play video{% if who != blank %}: {{ who | escape }}{% endif %}"><span class="au-cm__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
+                    <div class="au-cm__ctrls">
+                      <button type="button" class="au-cm__ctrl" data-sound aria-label="Turn sound on" aria-pressed="false">
+                        <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+                        <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
+                      </button>
+                      <button type="button" class="au-cm__ctrl" data-pause aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+                    </div>
+                  {%- else -%}
+                    {%- assign m_alt = bs.image.alt | default: who | escape -%}
+                    {{ bs.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 360px, 85vw', widths: '400, 600, 900', alt: m_alt }}
+                  {%- endif -%}
+                {%- else -%}
+                  <div class="au-cm__ph">{{ bs.admin_label | default: block.type }}<br>Add a {% if is_video %}video (9:16){% else %}photo (4:5){% endif %} in the theme editor. Hidden on the storefront until then.</div>
+                {%- endif -%}
+              </div>
+              {%- if who != blank or bs.caption != blank or bs.quote != blank -%}
+                <div class="au-cm__body">
+                  {%- if who != blank -%}<p class="au-cm__who">{{ bs.first_name | escape }}{% if bs.dog != blank %} <span>{% if bs.first_name != blank %}&amp; {% endif %}{{ bs.dog | escape }}</span>{% endif %}</p>{%- endif -%}
+                  {%- if bs.caption != blank -%}<p class="au-cm__cap">{{ bs.caption | escape }}</p>{%- endif -%}
+                  {%- if bs.quote != blank -%}
+                    <p class="au-cm__quote">“{{ bs.quote | strip | escape }}”</p>
+                    <button type="button" class="au-cm__more" data-more hidden>Read more</button>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="au-cm__dots" aria-hidden="true"></div>
+    {%- if section.settings.button_label != blank -%}
+      <div class="au-cm__cta"><a class="button button--primary" href="{{ section.settings.button_link | default: '/' }}">{{ section.settings.button_label }}</a></div>
+    {%- endif -%}
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.getElementById('AuCM-{{ sid }}'); if (!root || root.dataset.init) return; root.dataset.init = '1';
+    var track = root.querySelector('.au-cm__track'); if (!track) return;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.au-cm__card'));
+    if (!cards.length) return;
+    var dotsWrap = root.querySelector('.au-cm__dots'), prev = root.querySelector('[data-prev]'), next = root.querySelector('[data-next]');
+    var idx = 0, dots = [];
+    cards.forEach(function (c, i) { var d = document.createElement('button'); d.type = 'button'; d.className = 'au-cm__dot'; d.setAttribute('aria-label', 'Go to item ' + (i + 1)); d.addEventListener('click', function () { go(i); }); dotsWrap.appendChild(d); dots.push(d); });
+    function fits() { return track.scrollWidth <= track.clientWidth + 4; }
+    function paint() { dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); }); root.classList.toggle('is-static', fits()); if (prev) prev.disabled = track.scrollLeft <= 2; if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2; }
+    function go(i) { idx = Math.max(0, Math.min(cards.length - 1, i)); track.scrollTo({ left: cards[idx].offsetLeft - track.offsetLeft, behavior: 'smooth' }); paint(); }
+    if (prev) prev.addEventListener('click', function () { go(idx - 1); });
+    if (next) next.addEventListener('click', function () { go(idx + 1); });
+    var t; track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(function () { var best = 0, bd = Infinity; cards.forEach(function (c, i) { var d = Math.abs((c.offsetLeft - track.offsetLeft) - track.scrollLeft); if (d < bd) { bd = d; best = i; } }); idx = best; paint(); }, 70); }, { passive: true });
+    window.addEventListener('resize', paint);
+
+    /* videos: click to play, one at a time, attach the file only on first click */
+    var active = null;
+    function stop(card) { var v = card.querySelector('video'); if (v && !v.paused) v.pause(); card.classList.remove('is-playing'); if (active === card) active = null; }
+    function play(card) {
+      var v = card.querySelector('video');
+      if (!v) {
+        v = document.createElement('video'); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.preload = 'metadata'; v.muted = !card.classList.contains('is-sound'); v.loop = false; v.src = card.dataset.src; card.querySelector('.au-cm__media').insertBefore(v, card.querySelector('.au-cm__play'));
+        v.addEventListener('ended', function () { stop(card); });
+        v.addEventListener('click', function () { if (v.paused) { play(card); } else { stop(card); } });
+      }
+      if (active && active !== card) stop(active);
+      active = card; card._t = Date.now(); card.classList.add('is-playing');
+      var p = v.play(); if (p && p.catch) p.catch(function () { stop(card); });
+    }
+    cards.forEach(function (card) {
+      var btn = card.querySelector('.au-cm__play'); if (!btn) return;
+      btn.addEventListener('click', function () { play(card); });
+      var snd = card.querySelector('[data-sound]'); snd.addEventListener('click', function (e) { e.stopPropagation(); var v = card.querySelector('video'); var on = !card.classList.contains('is-sound'); card.classList.toggle('is-sound', on); if (v) v.muted = !on; snd.setAttribute('aria-pressed', on ? 'true' : 'false'); snd.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on'); });
+      card.querySelector('[data-pause]').addEventListener('click', function (e) { e.stopPropagation(); stop(card); });
+    });
+    if ('IntersectionObserver' in window) {
+      /* pause when the card leaves the screen: fully out, or mostly out once the click is more than 1.5 s old */
+      var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { var c = e.target; if (!c.classList.contains('is-playing')) return; var old = Date.now() - (c._t || 0) > 1500; if (!e.isIntersecting || (old && e.intersectionRatio < .35)) stop(c); }); }, { threshold: [0, .35] });
+      cards.forEach(function (c) { if (c.dataset.src) io.observe(c); });
+    }
+    /* testimonial read more */
+    cards.forEach(function (card) { var q = card.querySelector('.au-cm__quote'), m = card.querySelector('[data-more]'); if (!q || !m) return; if (q.scrollHeight > q.clientHeight + 2) { m.hidden = false; m.addEventListener('click', function () { card.classList.add('is-open'); }); } });
+    paint();
+    if (window.Shopify && Shopify.designMode) { document.addEventListener('shopify:block:select', function (e) { var i = cards.findIndex(function (c) { return c.dataset.shopifyEditorBlock !== undefined && c.getAttribute('data-shopify-editor-block').indexOf(e.detail.blockId) > -1; }); if (i > -1) go(i); }); }
+  })();
+</script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "AU customer media",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "paragraph", "content": "One carousel mixing real customer videos (9:16) and photos (4:5). Videos never autoplay: poster first, play on click, one at a time, sound on demand. Only real customers." },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Customer walks" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Real dogs. Real walks." },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [ { "value": "h2", "label": "Small" }, { "value": "h1", "label": "Medium" }, { "value": "h0", "label": "Large" } ], "default": "h1" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "See how the harness fits and moves on everyday Australian walks." },
+    { "type": "range", "id": "card_height", "min": 320, "max": 560, "step": 10, "unit": "px", "label": "Media height (desktop)", "default": 400 },
+    { "type": "text", "id": "button_label", "label": "Button label (optional)" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "background-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 48 }
+  ],
+  "blocks": [
+    { "type": "video", "name": "Customer video", "settings": [
+      { "type": "text", "id": "admin_label", "label": "Internal label", "default": "Customer video" },
+      { "type": "checkbox", "id": "enabled", "label": "Show this card", "default": true },
+      { "type": "video", "id": "video", "label": "Customer video (9:16, real customer)" },
+      { "type": "image_picker", "id": "poster", "label": "Poster (optional, defaults to the video thumbnail)" },
+      { "type": "text", "id": "first_name", "label": "Owner first name" },
+      { "type": "text", "id": "dog", "label": "Dog's name or breed" },
+      { "type": "text", "id": "caption", "label": "Caption (where / what we see)" },
+      { "type": "textarea", "id": "quote", "label": "Testimonial (optional, their own words)" }
+    ] },
+    { "type": "photo", "name": "Customer photo", "settings": [
+      { "type": "text", "id": "admin_label", "label": "Internal label", "default": "Customer photo" },
+      { "type": "checkbox", "id": "enabled", "label": "Show this card", "default": true },
+      { "type": "image_picker", "id": "image", "label": "Customer photo (4:5, real customer)" },
+      { "type": "text", "id": "first_name", "label": "Owner first name" },
+      { "type": "text", "id": "dog", "label": "Dog's name or breed" },
+      { "type": "text", "id": "caption", "label": "Caption (where / what we see)" },
+      { "type": "textarea", "id": "quote", "label": "Testimonial (optional, their own words)" }
+    ] }
+  ],
+  "presets": [ { "name": "AU customer media", "blocks": [
+    { "type": "video", "settings": { "admin_label": "Customer video 1" } },
+    { "type": "photo", "settings": { "admin_label": "Customer photo 1" } },
+    { "type": "video", "settings": { "admin_label": "Customer video 2" } },
+    { "type": "photo", "settings": { "admin_label": "Customer photo 2" } },
+    { "type": "video", "settings": { "admin_label": "Customer video 3" } },
+    { "type": "photo", "settings": { "admin_label": "Customer photo 3" } },
+    { "type": "video", "settings": { "admin_label": "Customer video 4" } }
+  ] } ]
+}
+{% endschema %}
