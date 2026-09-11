@@ -225,41 +225,41 @@
         "hb_b1": {
           "type": "benefit",
           "settings": {
-            "title": "Front-clip redirection",
-            "text": "The lead clips to the chest ring. When your dog surges forward, their own momentum turns them back towards you. Pulling stops paying off, usually on the first walk.",
-            "image": "shopify://shop_images/photo-11-front-clip-detail.png",
             "tab": "Redirects pulling",
-            "icon": "redirect"
+            "icon": "redirect",
+            "title": "Front-clip redirection",
+            "text": "The chest attachment redirects your dog's forward momentum back towards you, giving you more control without a battle.",
+            "image": "shopify://shop_images/harness-lifestyle-labrador-front-clip.png"
           }
         },
         "hb_b2": {
           "type": "benefit",
           "settings": {
-            "title": "Less pressure on the neck",
-            "text": "The load sits on the padded chest plate, not the throat. No coughing, no gagging, no strain on the neck, however hard they hit the end of the lead.",
-            "image": "shopify://shop_images/photo-03-early-morning.png",
             "tab": "Easy on the neck",
-            "icon": "neck"
+            "icon": "neck",
+            "title": "Less pressure on the neck",
+            "text": "The padded chest plate distributes the load across the body instead of concentrating pressure around the throat.",
+            "image": "shopify://shop_images/harness-lifestyle-staffy-bush-track.png"
           }
         },
         "hb_b3": {
           "type": "benefit",
           "settings": {
-            "title": "Adjustable everyday comfort",
-            "text": "Four adjustment points and quick-release buckles for an even, twist-free fit. Two fingers under each strap and it stays put from the front door to the beach.",
-            "image": "shopify://shop_images/photo-08-fitting-check.png",
             "tab": "Everyday comfort",
-            "icon": "comfort"
+            "icon": "comfort",
+            "title": "Adjustable everyday comfort",
+            "text": "Four adjustment points create a secure, balanced fit that stays comfortable during longer walks.",
+            "image": "shopify://shop_images/harness-lifestyle-golden-fitting.png"
           }
         },
         "hb_b4": {
           "type": "benefit",
           "settings": {
+            "tab": "Two walking modes",
+            "icon": "modes",
             "title": "Front and back walking modes",
-            "text": "Front clip for control on busy paths. Back clip for a relaxed walk once the lead stays slack. Same harness, one click to switch.",
-            "image": "shopify://shop_images/au-bush-track.png",
-            "tab": "Front & back modes",
-            "icon": "modes"
+            "text": "Use the front clip when you need more control, then switch to the back clip for relaxed, free-moving walks.",
+            "image": "shopify://shop_images/harness-lifestyle-kelpie-coastal.png"
           }
         }
       },
@@ -274,14 +274,12 @@
         "heading": "Four things the harness does on every walk",
         "heading_size": "h1",
         "text": "",
-        "image_position": "right",
+        "badge": "number",
         "button_label": "Choose your harness",
         "button_link": "/products/front-clip-no-pull-harness",
         "color_scheme": "accent-1",
         "padding_top": 40,
-        "padding_bottom": 40,
-        "eyebrow": "",
-        "autoplay_seconds": 6
+        "padding_bottom": 40
       }
     },
     "built_for_australia": {
@@ -485,18 +483,6 @@
             "label": "Customer walk"
           }
         },
-        "cm_photo_1": {
-          "type": "photo",
-          "settings": {
-            "admin_label": "Product photo 1",
-            "enabled": true,
-            "image": "shopify://shop_images/harness-lifestyle-labrador-front-clip.png",
-            "alt": "Yellow Labrador on a suburban footpath, lead clipped to the front ring of the charcoal harness",
-            "focal": "center center",
-            "label": "Closer look",
-            "caption": "Lead clipped to the front chest ring"
-          }
-        },
         "cm_video_2": {
           "type": "video",
           "settings": {
@@ -509,18 +495,6 @@
             "video": "shopify://files/videos/paropet-3-3e3c0c9a.mp4",
             "poster": "",
             "label": "Customer walk"
-          }
-        },
-        "cm_photo_2": {
-          "type": "photo",
-          "settings": {
-            "admin_label": "Product photo 2",
-            "enabled": true,
-            "image": "shopify://shop_images/harness-lifestyle-kelpie-coastal.png",
-            "alt": "Australian Kelpie walking beside its owner on a coastal track at sunrise, wearing the charcoal harness",
-            "focal": "center center",
-            "label": "Closer look",
-            "caption": "Loose lead on a coastal track"
           }
         },
         "cm_video_3": {
@@ -537,18 +511,6 @@
             "label": "Customer walk"
           }
         },
-        "cm_photo_3": {
-          "type": "photo",
-          "settings": {
-            "admin_label": "Product photo 3",
-            "enabled": true,
-            "image": "shopify://shop_images/harness-lifestyle-staffy-bush-track.png",
-            "alt": "Staffordshire Bull Terrier on a dry bush track wearing the charcoal harness",
-            "focal": "center center",
-            "label": "Closer look",
-            "caption": "Bush track, late afternoon"
-          }
-        },
         "cm_video_4": {
           "type": "video",
           "settings": {
@@ -562,35 +524,19 @@
             "poster": "",
             "label": "Customer walk"
           }
-        },
-        "cm_photo_4": {
-          "type": "photo",
-          "settings": {
-            "admin_label": "Product photo 4",
-            "enabled": true,
-            "image": "shopify://shop_images/harness-lifestyle-golden-fitting.png",
-            "alt": "Golden Retriever in profile while the owner adjusts a side strap of the charcoal harness",
-            "focal": "center center",
-            "label": "Closer look",
-            "caption": "Adjusting the side strap"
-          }
         }
       },
       "block_order": [
         "cm_video_1",
-        "cm_photo_1",
         "cm_video_2",
-        "cm_photo_2",
         "cm_video_3",
-        "cm_photo_3",
-        "cm_video_4",
-        "cm_photo_4"
+        "cm_video_4"
       ],
       "settings": {
-        "caption": "In action",
-        "heading": "See the harness in action",
+        "caption": "Real walks",
+        "heading": "See it on real walks",
         "heading_size": "h1",
-        "subheading": "Real customer videos and a closer look at how the harness fits, moves and performs.",
+        "subheading": "Real customer walks with dogs of different sizes, strengths and personalities.",
         "card_height": 480,
         "button_label": "See it for your dog",
         "button_link": "/products/front-clip-no-pull-harness",
