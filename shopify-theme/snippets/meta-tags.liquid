@@ -1,4 +1,4 @@
-{%- assign au_brand = '[BRAND NAME]' -%}
+{%- assign au_brand = settings.brand_name | default: '[BRAND NAME]' -%}
 {%- liquid
   assign og_title = page_title | default: au_brand
   assign og_url = canonical_url | default: request.origin

@@ -1,4 +1,4 @@
-{%- assign au_brand = '[BRAND NAME]' -%}
+{%- assign au_brand = settings.brand_name | default: '[BRAND NAME]' -%}
   {% comment %}theme-check-disable UndefinedObject{% endcomment %}
   {{ 'section-footer.css' | asset_url | stylesheet_tag }}
   {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}

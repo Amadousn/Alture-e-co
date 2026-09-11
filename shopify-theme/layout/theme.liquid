@@ -1,4 +1,4 @@
-{%- assign au_brand = '[BRAND NAME]' -%}
+{%- assign au_brand = settings.brand_name | default: '[BRAND NAME]' -%}
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
@@ -400,6 +400,7 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'lumin-theme.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'au-cta.css' | asset_url | stylesheet_tag }}
     {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
 
     {%- if settings.cart_type == 'drawer' or settings.enable_recently_viewed -%}

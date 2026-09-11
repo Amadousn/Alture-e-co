@@ -37,16 +37,16 @@
   #AuBen-{{ sid }} .au-ben__img { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity .5s ease, transform 1.1s ease; }
   #AuBen-{{ sid }} .au-ben__img.is-on { opacity: 1; transform: scale(1); }
   #AuBen-{{ sid }} .au-ben__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
-  #AuBen-{{ sid }} .au-ben__badge { position: absolute; left: 14px; bottom: 14px; padding: .45rem .8rem; border-radius: 999px; background: rgba(255,255,255,.92); backdrop-filter: blur(4px); font-family: var(--font-heading-family); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #13262B; }
-  #AuBen-{{ sid }} .au-ben__panels { order: 4; display: grid; margin-bottom: 1.2rem; }
-  #AuBen-{{ sid }} .au-ben__panel { grid-area: 1 / 1; opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s ease; pointer-events: none; }
-  #AuBen-{{ sid }} .au-ben__panel.is-on { opacity: 1; transform: none; pointer-events: auto; }
+  #AuBen-{{ sid }} .au-ben__panels { order: 4; margin-bottom: 1.2rem; }
+  #AuBen-{{ sid }} .au-ben__panel[hidden] { display: none; }
+  #AuBen-{{ sid }} .au-ben__panel.is-on { animation: au-ben-in-{{ sid }} .35s ease; }
+  @keyframes au-ben-in-{{ sid }} { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   #AuBen-{{ sid }} .au-ben__eyebrow { margin: 0 0 .5rem; font-family: var(--font-heading-family); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; color: rgb(var(--color-button)); }
   #AuBen-{{ sid }} .au-ben__h { margin: 0 0 .6rem; font-family: var(--font-heading-family); font-size: 1.35rem; line-height: 1.2; font-weight: 700; }
   #AuBen-{{ sid }} .au-ben__p { margin: 0; font-size: .98rem; line-height: 1.55; opacity: .9; max-width: 48ch; }
   #AuBen-{{ sid }} .au-ben__cta { order: 5; }
   #AuBen-{{ sid }} .au-ben__cta .button { width: 100%; }
-  @media (prefers-reduced-motion: reduce) { #AuBen-{{ sid }} .au-ben__panel, #AuBen-{{ sid }} .au-ben__img { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { #AuBen-{{ sid }} .au-ben__panel.is-on { animation: none; } #AuBen-{{ sid }} .au-ben__img { transition: none; } }
   @media screen and (min-width: 750px) {
     #AuBen-{{ sid }} .au-ben__inner { padding: 0 5rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(32px, 5vw, 72px); align-items: center; }
     #AuBen-{{ sid }} .au-ben__left { display: contents; }
@@ -75,7 +75,7 @@
     </div>
     <div class="au-ben__bar" role="tablist" aria-label="{{ section.settings.heading | escape }}">
       {%- for block in section.blocks -%}
-        <button type="button" class="au-ben__tab{% if forloop.first %} is-on{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-tab" aria-controls="{{ block.id }}-panel" {{ block.shopify_attributes }}>
+        <button type="button" class="au-ben__tab{% if forloop.first %} is-on{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-tab" aria-controls="{{ block.id }}-panel" {{ block.shopify_attributes }}>
           <span class="au-ben__ico" aria-hidden="true">
             {%- if block.settings.custom_icon != blank -%}
               <img src="{{ block.settings.custom_icon | image_url: width: 88 }}" alt="" loading="lazy" width="22" height="22">
@@ -96,18 +96,17 @@
     </div>
     <div class="au-ben__card">
       {%- for block in section.blocks -%}
-        <div class="au-ben__img{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}">
+        <div class="au-ben__img{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
           {%- if block.settings.image != blank -%}
             {%- assign b_alt = block.settings.image.alt | default: block.settings.title | escape -%}
             {{ block.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 560px, 92vw', widths: '400, 600, 900, 1100', alt: b_alt }}
           {%- endif -%}
-          <span class="au-ben__badge">{{ block.settings.tab | default: block.settings.title | escape }}</span>
         </div>
       {%- endfor -%}
     </div>
     <div class="au-ben__panels">
       {%- for block in section.blocks -%}
-        <div class="au-ben__panel{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-panel" role="tabpanel" aria-labelledby="{{ block.id }}-tab">
+        <div class="au-ben__panel{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}" id="{{ block.id }}-panel" role="tabpanel" aria-labelledby="{{ block.id }}-tab" tabindex="0"{% unless forloop.first %} hidden{% endunless %}>
           {%- if section.settings.eyebrow != blank -%}<p class="au-ben__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
           <h3 class="au-ben__h">{{ block.settings.title | escape }}</h3>
           <p class="au-ben__p">{{ block.settings.text }}</p>
@@ -129,9 +128,9 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function show(i) {
       cur = (i + tabs.length) % tabs.length;
-      tabs.forEach(function (t, k) { var on = k === cur; t.classList.toggle('is-on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
-      panels.forEach(function (p, k) { p.classList.toggle('is-on', k === cur); });
-      imgs.forEach(function (m, k) { m.classList.toggle('is-on', k === cur); });
+      tabs.forEach(function (t, k) { var on = k === cur; t.classList.toggle('is-on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.setAttribute('tabindex', on ? '0' : '-1'); });
+      panels.forEach(function (p, k) { var on = k === cur; p.classList.toggle('is-on', on); p.hidden = !on; });
+      imgs.forEach(function (m, k) { var on = k === cur; m.classList.toggle('is-on', on); if (on) { m.removeAttribute('aria-hidden'); } else { m.setAttribute('aria-hidden', 'true'); } });
       var t = tabs[cur]; if (t && window.innerWidth < 750) { try { t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch (e) {} }
     }
     function restart() { var i = root.querySelector('.au-ben__tab.is-on .au-ben__prog i'); if (!i) return; i.style.animation = 'none'; void i.offsetWidth; i.style.animation = ''; }

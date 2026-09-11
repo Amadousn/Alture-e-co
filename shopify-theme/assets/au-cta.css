@@ -1,0 +1,64 @@
+/* AU call-to-action system. Loaded after base.css and lumin-theme.css.
+   Primary commercial CTAs: solid fill in the colour scheme's button colour, white/cream label,
+   darker hover, 52px minimum height, shared radius, visible focus, full width on phones.
+   Secondary buttons: outlined, same size, fill on hover. */
+.button,
+.au-hero__cta {
+  box-sizing: border-box;
+  min-height: 52px;
+  min-width: 0;
+  padding: 0 1.75rem;
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: var(--buttons-radius, 6px);
+}
+.button--primary {
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+}
+.button--primary:not([disabled]):hover,
+.button--primary:not([disabled]):focus-visible {
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  filter: brightness(.86);
+  overflow: visible;
+}
+.button--primary:not([disabled]):hover::before { display: none; }
+.button--secondary {
+  background-color: transparent;
+  color: rgb(var(--color-button));
+  box-shadow: inset 0 0 0 2px rgb(var(--color-button));
+}
+.button--secondary::after { box-shadow: none; }
+.button--secondary:not([disabled]):hover {
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  box-shadow: inset 0 0 0 2px rgb(var(--color-button));
+}
+.button--secondary:not([disabled]):hover::before { display: none; }
+.button:focus-visible,
+.au-hero__cta:focus-visible {
+  outline: 3px solid rgba(var(--color-foreground), .7);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgb(var(--color-background));
+}
+.au-hero__cta:focus-visible { outline-color: #ffffff; box-shadow: 0 0 0 3px rgba(19, 38, 43, .6); }
+@media screen and (max-width: 749px) {
+  .image-with-text .button,
+  .rich-text .button,
+  .banner .button,
+  .au-of__cta .button,
+  .au-ben__cta .button,
+  .au-fit__ctas .button,
+  .au-cm__cta .button,
+  .pc-foot .button {
+    width: 100%;
+  }
+  .button,
+  .au-hero__cta { font-size: .95rem; }
+}

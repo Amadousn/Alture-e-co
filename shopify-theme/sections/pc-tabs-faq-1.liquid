@@ -132,8 +132,7 @@
   .container-{{ sid }} .faq-answer-inner p:last-child { margin: 0; }
   .container-{{ sid }} .faq-item-{{ sid }}.active-{{ sid }} .faq-answer { grid-template-rows: 1fr; opacity: 1; }
   .container-{{ sid }} .faq-answer a { color: {{ section.settings.tab_active_border_color }}; }
-  .container-{{ sid }} .pc-foot { margin: 1.2rem 0 .4rem; text-align: center; font-size: .92rem; }
-  .container-{{ sid }} .pc-foot a { color: {{ section.settings.question_color }}; text-underline-offset: .2em; }
+  .container-{{ sid }} .pc-foot { margin: 1.4rem 0 .2rem; text-align: center; }
   @media (prefers-reduced-motion: reduce) { .container-{{ sid }} .faq-answer, .container-{{ sid }} .icon-plus-minus::after { transition: none; } }
   @media (max-width: 768px) {
     .container-{{ sid }} .menu-container h2 { font-size: {{ section.settings.tab_header_font_size_mobile }}px !important; }
@@ -175,7 +174,7 @@
     {%- endfor -%}
   </div>
   {%- if section.settings.link_label != blank -%}
-    <p class="pc-foot"><a href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label | escape }}</a></p>
+    <p class="pc-foot"><a class="button button--secondary" href="{{ section.settings.link_url | default: '/pages/faq' }}">{{ section.settings.link_label | escape }}</a></p>
   {%- endif -%}
 </div>
 
