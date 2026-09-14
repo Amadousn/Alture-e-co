@@ -98,12 +98,9 @@ const PriceAlerts = () => {
     };
 
     return (
-        <div className="border border-white/10 bg-black/40 p-8 md:p-10 max-w-2xl mx-auto text-left">
-            <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-4 text-center">
+        <div className="border border-white/10 bg-black/40 p-8 md:p-10 max-w-4xl mx-auto text-left">
+            <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-6 text-center">
                 WATCHLIST
-            </p>
-            <p className="text-sm font-light text-gray-400 leading-relaxed max-w-md mx-auto text-center mb-8">
-                Set a target price for an instrument and get notified when it is reached. This runs continuously in the background, independent of the checklist above.
             </p>
 
             {justTriggered && (

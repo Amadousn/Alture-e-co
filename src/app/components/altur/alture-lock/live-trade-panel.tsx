@@ -24,11 +24,11 @@ type OpenPosition = {
 const OPEN_POSITION: OpenPosition = {
     instrument: "XRPUSDT",
     direction: "Long",
-    entryPrice: 1.10,
-    currentPrice: 1.245,
-    units: 12500,
-    stopLoss: 1.045,
-    takeProfit: 1.32,
+    entryPrice: 1.3187,
+    currentPrice: 1.38,
+    units: 63500,
+    stopLoss: 1.2643,
+    takeProfit: 1.475,
     timeInTrade: "4h 12m",
 };
 
@@ -44,11 +44,11 @@ type PastTrade = {
 };
 
 const TRADE_HISTORY: PastTrade[] = [
-    { instrument: "BTCUSDT", direction: "Long", entry: 61200, exit: 63450, pnlAmount: 1012.50, pnlPct: 3.68, result: "Win", date: "Aug 18" },
-    { instrument: "ETHUSDT", direction: "Short", entry: 3120, exit: 3085, pnlAmount: 420.00, pnlPct: 1.12, result: "Win", date: "Aug 15" },
-    { instrument: "SOLUSDT", direction: "Long", entry: 142.50, exit: 138.90, pnlAmount: -630.00, pnlPct: -2.53, result: "Loss", date: "Aug 11" },
-    { instrument: "XRPUSDT", direction: "Long", entry: 1.05, exit: 1.02, pnlAmount: -255.00, pnlPct: -2.86, result: "Loss", date: "Aug 07" },
-    { instrument: "BNBUSDT", direction: "Long", entry: 580, exit: 604, pnlAmount: 960.00, pnlPct: 4.14, result: "Win", date: "Aug 03" },
+    { instrument: "BTCUSDT", direction: "Long", entry: 77800, exit: 80663, pnlAmount: 1012.50, pnlPct: 3.68, result: "Win", date: "Sep 7" },
+    { instrument: "ETHUSDT", direction: "Short", entry: 2480, exit: 2452.20, pnlAmount: 420.00, pnlPct: 1.12, result: "Win", date: "Sep 5" },
+    { instrument: "SOLUSDT", direction: "Long", entry: 106.00, exit: 103.32, pnlAmount: -630.00, pnlPct: -2.53, result: "Loss", date: "Sep 3" },
+    { instrument: "XRPUSDT", direction: "Long", entry: 1.42, exit: 1.3794, pnlAmount: -255.00, pnlPct: -2.86, result: "Loss", date: "Sep 1" },
+    { instrument: "BNBUSDT", direction: "Long", entry: 675, exit: 702.95, pnlAmount: 960.00, pnlPct: 4.14, result: "Win", date: "Aug 30" },
 ];
 
 function formatPrice(value: number): string {
@@ -106,89 +106,80 @@ const LiveTradePanel = () => {
     const totalPnl = TRADE_HISTORY.reduce((sum, t) => sum + t.pnlAmount, 0);
 
     return (
-        <div className="max-w-4xl mx-auto">
-            <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-2 text-center">
-                LIVE ACCOUNT PREVIEW
-            </p>
-            <p className="text-sm md:text-base font-light text-gray-400 leading-relaxed max-w-md mx-auto mb-10 text-center">
-                A preview of what your account view will look like once connected to your broker.
-            </p>
+        <div className="max-w-4xl mx-auto space-y-6">
+            {/* Current position */}
+            <div className="border border-white/10 bg-black/40 p-6 md:p-8">
+                <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-6">
+                    CURRENT POSITION
+                </p>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Current position */}
-                <div className="lg:col-span-5 border border-white/10 bg-black/40 p-6 md:p-8">
-                    <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-6">
-                        CURRENT POSITION
-                    </p>
-
-                    <div className="flex items-baseline justify-between mb-6">
-                        <div>
-                            <p className="text-lg md:text-xl font-light text-white font-mono">{OPEN_POSITION.instrument}</p>
-                            <p className={`text-xs font-mono tracking-[0.1em] mt-1 ${OPEN_POSITION.direction === "Long" ? "text-primary" : "text-red-400"}`}>
-                                {OPEN_POSITION.direction.toUpperCase()}
-                            </p>
-                        </div>
-                        <div className="text-right">
-                            <p className={`text-xl md:text-2xl font-mono ${pnlPositive ? "text-primary" : "text-red-400"}`}>
-                                {formatSignedDollars(unrealizedPnl)}
-                            </p>
-                            <p className={`text-xs font-mono mt-1 ${pnlPositive ? "text-primary" : "text-red-400"}`}>
-                                {formatSignedPct(unrealizedPnlPct)}
-                            </p>
-                        </div>
+                <div className="flex items-baseline justify-between mb-6">
+                    <div>
+                        <p className="text-lg md:text-xl font-light text-white font-mono">{OPEN_POSITION.instrument}</p>
+                        <p className={`text-xs font-mono tracking-[0.1em] mt-1 ${OPEN_POSITION.direction === "Long" ? "text-primary" : "text-red-400"}`}>
+                            {OPEN_POSITION.direction.toUpperCase()}
+                        </p>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-left border-t border-white/10 pt-6">
-                        <TradeStat label="Entry Price" value={`$${formatPrice(OPEN_POSITION.entryPrice)}`} />
-                        <TradeStat label="Current Price" value={`$${formatPrice(livePrice)}`} />
-                        <TradeStat label="Stop-Loss" value={`$${formatPrice(OPEN_POSITION.stopLoss)}`} warn />
-                        <TradeStat label="Take-Profit" value={`$${formatPrice(OPEN_POSITION.takeProfit)}`} accent />
-                        <TradeStat label="Time in Trade" value={OPEN_POSITION.timeInTrade} />
+                    <div className="text-right">
+                        <p className={`text-xl md:text-2xl font-mono ${pnlPositive ? "text-primary" : "text-red-400"}`}>
+                            {formatSignedDollars(unrealizedPnl)}
+                        </p>
+                        <p className={`text-xs font-mono mt-1 ${pnlPositive ? "text-primary" : "text-red-400"}`}>
+                            {formatSignedPct(unrealizedPnlPct)}
+                        </p>
                     </div>
                 </div>
 
-                {/* Trade history */}
-                <div className="lg:col-span-7 border border-white/10 bg-black/40 p-6 md:p-8">
-                    <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-6">
-                        TRADE HISTORY
-                    </p>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-6 gap-y-4 text-left border-t border-white/10 pt-6">
+                    <TradeStat label="Entry Price" value={`$${formatPrice(OPEN_POSITION.entryPrice)}`} />
+                    <TradeStat label="Current Price" value={`$${formatPrice(livePrice)}`} />
+                    <TradeStat label="Stop-Loss" value={`$${formatPrice(OPEN_POSITION.stopLoss)}`} warn />
+                    <TradeStat label="Take-Profit" value={`$${formatPrice(OPEN_POSITION.takeProfit)}`} accent />
+                    <TradeStat label="Time in Trade" value={OPEN_POSITION.timeInTrade} />
+                </div>
+            </div>
 
-                    <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-4 mb-4 text-left">
-                        <TradeStat label="Total Trades" value={String(totalTrades)} />
-                        <TradeStat label="Win Rate" value={`${winRate.toFixed(0)}%`} accent={winRate >= 50} warn={winRate < 50} />
-                        <TradeStat label="Total P and L" value={formatSignedDollars(totalPnl)} accent={totalPnl >= 0} warn={totalPnl < 0} />
-                    </div>
+            {/* Trade history */}
+            <div className="border border-white/10 bg-black/40 p-6 md:p-8">
+                <p className="text-xs font-mono tracking-[0.2em] text-primary/50 mb-6">
+                    TRADE HISTORY
+                </p>
 
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="text-xs font-light text-gray-500 uppercase tracking-[0.1em]">
-                                    <th className="pb-3 pr-4 font-normal">Instrument</th>
-                                    <th className="pb-3 pr-4 font-normal">Entry</th>
-                                    <th className="pb-3 pr-4 font-normal">Exit</th>
-                                    <th className="pb-3 pr-4 font-normal">P and L</th>
-                                    <th className="pb-3 pr-4 font-normal">Result</th>
-                                    <th className="pb-3 font-normal">Date</th>
+                <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-4 mb-4 text-left">
+                    <TradeStat label="Total Trades" value={String(totalTrades)} />
+                    <TradeStat label="Win Rate" value={`${winRate.toFixed(0)}%`} accent={winRate >= 50} warn={winRate < 50} />
+                    <TradeStat label="Total P and L" value={formatSignedDollars(totalPnl)} accent={totalPnl >= 0} warn={totalPnl < 0} />
+                </div>
+
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="text-xs font-light text-gray-500 uppercase tracking-[0.1em]">
+                                <th className="pb-3 pr-4 font-normal">Instrument</th>
+                                <th className="pb-3 pr-4 font-normal">Entry</th>
+                                <th className="pb-3 pr-4 font-normal">Exit</th>
+                                <th className="pb-3 pr-4 font-normal">P and L</th>
+                                <th className="pb-3 pr-4 font-normal">Result</th>
+                                <th className="pb-3 font-normal">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {TRADE_HISTORY.map((trade, i) => (
+                                <tr key={i} className="border-t border-white/5">
+                                    <td className="py-3 pr-4 text-sm font-mono text-white whitespace-nowrap">{trade.instrument}</td>
+                                    <td className="py-3 pr-4 text-sm font-mono text-gray-400 whitespace-nowrap">${formatPrice(trade.entry)}</td>
+                                    <td className="py-3 pr-4 text-sm font-mono text-gray-400 whitespace-nowrap">${formatPrice(trade.exit)}</td>
+                                    <td className={`py-3 pr-4 text-sm font-mono whitespace-nowrap ${trade.pnlAmount >= 0 ? "text-primary" : "text-red-400"}`}>
+                                        {formatSignedDollars(trade.pnlAmount)} ({formatSignedPct(trade.pnlPct)})
+                                    </td>
+                                    <td className="py-3 pr-4 text-sm font-light whitespace-nowrap">
+                                        <span className={trade.result === "Win" ? "text-primary" : "text-red-400"}>{trade.result}</span>
+                                    </td>
+                                    <td className="py-3 text-sm font-light text-gray-500 whitespace-nowrap">{trade.date}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {TRADE_HISTORY.map((trade, i) => (
-                                    <tr key={i} className="border-t border-white/5">
-                                        <td className="py-3 pr-4 text-sm font-mono text-white whitespace-nowrap">{trade.instrument}</td>
-                                        <td className="py-3 pr-4 text-sm font-mono text-gray-400 whitespace-nowrap">${formatPrice(trade.entry)}</td>
-                                        <td className="py-3 pr-4 text-sm font-mono text-gray-400 whitespace-nowrap">${formatPrice(trade.exit)}</td>
-                                        <td className={`py-3 pr-4 text-sm font-mono whitespace-nowrap ${trade.pnlAmount >= 0 ? "text-primary" : "text-red-400"}`}>
-                                            {formatSignedDollars(trade.pnlAmount)} ({formatSignedPct(trade.pnlPct)})
-                                        </td>
-                                        <td className="py-3 pr-4 text-sm font-light whitespace-nowrap">
-                                            <span className={trade.result === "Win" ? "text-primary" : "text-red-400"}>{trade.result}</span>
-                                        </td>
-                                        <td className="py-3 text-sm font-light text-gray-500 whitespace-nowrap">{trade.date}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

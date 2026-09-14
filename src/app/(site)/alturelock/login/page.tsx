@@ -2,9 +2,12 @@
 
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/app/i18n/language-context";
 
 const AltureLockLoginPage = () => {
     const router = useRouter();
+    const { t } = useLanguage();
+    const { alturelockLogin } = t;
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -25,10 +28,9 @@ const AltureLockLoginPage = () => {
                 router.refresh();
                 return;
             }
-            const data = await res.json().catch(() => ({}));
-            setError(data.error || "Incorrect username or password.");
+            setError(res.status === 401 ? alturelockLogin.errorDefault : alturelockLogin.errorGeneric);
         } catch {
-            setError("Something went wrong. Please try again.");
+            setError(alturelockLogin.errorGeneric);
         } finally {
             setLoading(false);
         }
@@ -45,12 +47,12 @@ const AltureLockLoginPage = () => {
                     <h1 className="text-2xl md:text-3xl font-light mb-1">
                         <span className="text-white">Alture</span><span className="text-primary">Lock</span>
                     </h1>
-                    <p className="text-sm text-gray-500">Your Co-Pilot</p>
+                    <p className="text-sm text-gray-500">{alturelockLogin.tagline}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label className="block text-xs text-gray-500 mb-2">Username</label>
+                        <label className="block text-xs text-gray-500 mb-2">{alturelockLogin.usernameLabel}</label>
                         <input
                             type="text"
                             value={username}
@@ -60,7 +62,7 @@ const AltureLockLoginPage = () => {
                         />
                     </div>
                     <div>
-                        <label className="block text-xs text-gray-500 mb-2">Password</label>
+                        <label className="block text-xs text-gray-500 mb-2">{alturelockLogin.passwordLabel}</label>
                         <input
                             type="password"
                             value={password}
@@ -77,12 +79,12 @@ const AltureLockLoginPage = () => {
                         disabled={loading}
                         className="w-full border border-primary text-primary py-3 text-xs tracking-widest uppercase hover:bg-primary hover:text-black transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                        {loading ? "Signing In..." : "Sign In"}
+                        {loading ? alturelockLogin.signingInButton : alturelockLogin.signInButton}
                     </button>
                 </form>
 
                 <p className="text-xs text-center leading-relaxed mt-8 max-w-xs mx-auto text-gray-600">
-                    Ten years of experience does not stop a broken rule. Under pressure, everyone is human, not a machine. This is not about being a beginner or being profitable. It is about staying disciplined when it matters most.
+                    {alturelockLogin.quote}
                 </p>
             </div>
         </section>

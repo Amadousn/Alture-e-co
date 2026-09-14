@@ -61,6 +61,16 @@ type Dictionary = {
         errorIncorrect: string;
         errorGeneric: string;
     };
+    alturelockLogin: {
+        tagline: string;
+        usernameLabel: string;
+        passwordLabel: string;
+        signInButton: string;
+        signingInButton: string;
+        errorDefault: string;
+        errorGeneric: string;
+        quote: string;
+    };
 };
 
 export const translations: Record<Language, Dictionary> = {
@@ -130,6 +140,16 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Incorrect username or password.",
             errorGeneric: "Something went wrong. Please try again.",
         },
+        alturelockLogin: {
+            tagline: "Your Co-Pilot",
+            usernameLabel: "Username",
+            passwordLabel: "Password",
+            signInButton: "Sign In",
+            signingInButton: "Signing In...",
+            errorDefault: "Incorrect username or password.",
+            errorGeneric: "Something went wrong. Please try again.",
+            quote: "Ten years of experience does not stop a broken rule. Under pressure, everyone is human, not a machine. This is not about being a beginner or being profitable. It is about staying disciplined when it matters most.",
+        },
     },
     fr: {
         nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", contact: "CONTACT" },
@@ -195,6 +215,16 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Nom d'utilisateur ou mot de passe incorrect.",
             errorGeneric: "Une erreur est survenue. Merci de réessayer.",
         },
+        alturelockLogin: {
+            tagline: "Votre Co-Pilote",
+            usernameLabel: "Nom d'utilisateur",
+            passwordLabel: "Mot de passe",
+            signInButton: "Se Connecter",
+            signingInButton: "Connexion...",
+            errorDefault: "Nom d'utilisateur ou mot de passe incorrect.",
+            errorGeneric: "Une erreur est survenue. Merci de réessayer.",
+            quote: "Dix ans d'expérience n'empêchent pas d'enfreindre une règle. Sous pression, on reste humain, pas une machine. Il ne s'agit pas d'être débutant, ni d'être rentable. Il s'agit de rester discipliné quand cela compte le plus.",
+        },
     },
     it: {
         nav: { home: "HOME", alturelock: "ALTURELOCK", contact: "CONTATTI" },
@@ -248,7 +278,7 @@ export const translations: Record<Language, Dictionary> = {
             headlineLine1: "Fai trading con disciplina.",
             headlinePrefix: "Impara da",
             headlineAccent: "donne che lo fanno già",
-            subtext: "Un circolo privato per donne che imparano a fare trading di crypto con metodo, non a caso. Mentorship, regole, e accesso reale, costruito da chi è già nella stanza dei bottoni.",
+            subtext: "Una community privata per donne che imparano il trading crypto con metodo, non a caso. Mentorship, regole e accesso reale, direttamente da chi il trading lo vive ogni giorno.",
             requestAccess: "Richiedi l'accesso",
             dashboardHeading: "Accedi alla tua area riservata",
             usernameLabel: "Nome utente",
@@ -258,6 +288,16 @@ export const translations: Record<Language, Dictionary> = {
             successMessage: "Sei dentro. Per ora non c'è ancora nulla, ma sarai la prima a saperlo quando aprirà.",
             errorIncorrect: "Nome utente o password errati.",
             errorGeneric: "Qualcosa è andato storto. Riprova.",
+        },
+        alturelockLogin: {
+            tagline: "Il tuo Co-Pilota",
+            usernameLabel: "Nome utente",
+            passwordLabel: "Password",
+            signInButton: "Accedi",
+            signingInButton: "Accesso in corso...",
+            errorDefault: "Nome utente o password errati.",
+            errorGeneric: "Qualcosa è andato storto. Riprova.",
+            quote: "Dieci anni di esperienza non impediscono di infrangere una regola. Sotto pressione, si resta umani, non macchine. Non si tratta di essere principianti o di essere già in profitto. Si tratta di restare disciplinati quando conta di più.",
         },
     },
     ru: {
@@ -322,6 +362,16 @@ export const translations: Record<Language, Dictionary> = {
             successMessage: "Вы внутри. Пока здесь ничего нет, но вы узнаете первой, когда всё откроется.",
             errorIncorrect: "Неверное имя пользователя или пароль.",
             errorGeneric: "Что-то пошло не так. Попробуйте ещё раз.",
+        },
+        alturelockLogin: {
+            tagline: "Ваш Второй Пилот",
+            usernameLabel: "Имя пользователя",
+            passwordLabel: "Пароль",
+            signInButton: "Войти",
+            signingInButton: "Вход...",
+            errorDefault: "Неверное имя пользователя или пароль.",
+            errorGeneric: "Что-то пошло не так. Попробуйте ещё раз.",
+            quote: "Десять лет опыта не защищают от нарушения правил. Под давлением каждый остаётся человеком, а не машиной. Дело не в том, новичок ты или уже прибыльный трейдер. Дело в дисциплине, особенно когда это важнее всего.",
         },
     },
 };

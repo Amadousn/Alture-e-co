@@ -2,40 +2,37 @@
 
 const IntroSequence = () => {
     return (
-        <section className="relative bg-black overflow-hidden pt-32 pb-16 md:pb-20 font-mono">
-            <div className="absolute inset-0 z-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: 'linear-gradient(#D4AF37 1px, transparent 1px), linear-gradient(90deg, #D4AF37 1px, transparent 1px)',
-                    backgroundSize: '50px 50px'
-                }}></div>
+        <section className="relative min-h-[70vh] flex items-center bg-black overflow-hidden pt-32 pb-16 md:pb-20">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-[500px] h-[500px] md:w-[680px] md:h-[680px] rounded-full bg-gradient-to-br from-[#D4AF37]/20 via-[#D4AF37]/8 to-transparent blur-[100px]" />
             </div>
 
             <div className="container mx-auto max-w-3xl relative z-10 px-4 md:px-6 text-center">
-                <p className="intro-step intro-step-1 text-xs tracking-[0.2em] text-gray-600 mb-6">
-                    &gt; SYSTEMS ARMED
-                </p>
+                <span className="intro-step intro-step-1 inline-block px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-medium tracking-[0.2em] uppercase mb-8 text-primary">
+                    Active
+                </span>
 
-                <h1 className="intro-step intro-step-2 text-2xl sm:text-3xl md:text-4xl font-normal tracking-normal leading-snug mb-2">
+                <h1 className="intro-step intro-step-2 text-3xl sm:text-4xl md:text-5xl font-light tracking-normal leading-snug mb-3">
                     <span className="text-white">Alture</span><span className="text-primary">Lock</span>
                 </h1>
-                <p className="intro-step intro-step-2 text-sm md:text-base text-gray-600 mb-10">
-                    // your co-pilot
+                <p className="intro-step intro-step-2 text-sm md:text-base text-gray-500 mb-10 font-light">
+                    Your Co-Pilot
                 </p>
 
                 <div className="max-w-md mx-auto mb-10">
-                    <p className="intro-step intro-step-3 text-sm md:text-base text-gray-300">
+                    <p className="intro-step intro-step-3 text-base md:text-lg text-gray-300 font-light">
                         You define the rules.
                     </p>
-                    <p className="intro-step intro-step-4 text-sm md:text-base text-gray-300 mt-2">
+                    <p className="intro-step intro-step-4 text-base md:text-lg text-gray-300 font-light mt-2">
                         I lock them.
                     </p>
-                    <p className="intro-step intro-step-5 text-sm md:text-base text-gray-300 mt-2">
+                    <p className="intro-step intro-step-5 text-base md:text-lg text-gray-300 font-light mt-2">
                         You execute. I monitor.
                     </p>
                 </div>
 
-                <p className="intro-step intro-step-6 text-xs md:text-sm text-gray-600 leading-relaxed max-w-xl mx-auto">
-                    // Ten years of experience does not stop a broken rule. Under pressure, everyone is human, not a machine. This is not about being a beginner or being profitable. It is about staying disciplined when it matters most.
+                <p className="intro-step intro-step-6 text-sm md:text-base text-gray-500 font-light leading-relaxed max-w-xl mx-auto">
+                    Ten years of experience does not stop a broken rule. Under pressure, everyone is human, not a machine. This is not about being a beginner or being profitable. It is about staying disciplined when it matters most.
                 </p>
             </div>
 

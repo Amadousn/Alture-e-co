@@ -23,7 +23,12 @@ const MONITOR_QUESTIONS: { id: MonitorId; text: string }[] = [
     { id: "tooLong", text: "Has the trade been open too long?" },
 ];
 
-const SESSION_WINDOWS = ["New York session", "London session", "Asian session", "24 hour session"];
+const SESSION_WINDOWS = [
+    "New York session (13:00–22:00 UTC)",
+    "London session (08:00–17:00 UTC)",
+    "Asian session (00:00–09:00 UTC)",
+    "24 hour session",
+];
 
 const BASE_CONFIRMATION_OPTIONS = ["VWAP reclaim", "Liquidity sweep", "Broken level", "Price reaching a zone", "CVD divergence"];
 
