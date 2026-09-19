@@ -1,0 +1,3 @@
+[submodule "raselio-brain/parker-system"]
+	path = raselio-brain/parker-system
+	url = https://github.com/real-simple-labs/parker-brain

@@ -1,0 +1,11 @@
+{
+  "run_id": "",
+  "brand_id": "a81e7c77-ca41-4cbd-acf8-ec27ea58eb37",
+  "brand_name": "Raselio",
+  "brand_org": "Dylan's Org",
+  "github_repo_url": "https://github.com/parker-brain/dylan-s-org-raselio",
+  "brain_subfolder": "",
+  "parker_brain_version": "v15",
+  "created_at": "2026-09-06T06:30:00Z",
+  "notes": "brand_id découvert le 2026-09-06 à 09:50 UTC : la marque Raselio n'existait pas dans le Parker MCP au début du build (get_available_brands renvoyait organizations: []) et est apparue en cours de route. run_id reste vide : update_parker_brain_setup_status n'a pas été appelé pendant ce build. Le build s'est déroulé dans un dépôt tiers (amadousn/alture-e-co, sous-dossier raselio-brain) faute de dépôt Parker au démarrage ; le cerveau a été transféré le 2026-09-07 dans son dépôt Parker géré parker-brain/dylan-s-org-raselio, à plat à la racine. C'est désormais un cerveau géré : le dépôt d'origine ne fait plus foi."
+}
