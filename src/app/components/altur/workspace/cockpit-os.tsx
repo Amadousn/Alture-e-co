@@ -596,13 +596,15 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                             ))}
                         </div>
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
-                            <div className="flex gap-x-3.5" role="group" aria-label="Chart">
+                            {/* Four ways to see the same market. The label says so: without it the row reads as one long phrase. */}
+                            <div className="flex items-baseline gap-x-3.5" role="group" aria-label="Chart view">
+                                <span className="font-normal text-white/40">View</span>
                                 {(
                                     [
                                         ["candles", "Candles"],
                                         ["flow", "Order flow"],
                                         ["line", "Line"],
-                                        ["tools", "TradingView"],
+                                        ["tools", "TradingView chart"],
                                     ] as const
                                 ).map(([id, text]) => (
                                     <button key={id} type="button" aria-pressed={view === id} onClick={() => setView(id)} className={`nav-link pb-0.5 ${view === id ? "is-active" : ""}`}>
@@ -612,7 +614,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                             </div>
                             <span className="hidden sm:inline h-3 w-px bg-white/15" aria-hidden="true" />
                             <button type="button" aria-expanded={indicatorOpen} onClick={() => setIndicatorOpen((value) => !value)} className={`nav-link pb-0.5 ${indicatorOpen ? "is-active" : ""}`}>
-                                Indicator
+                                Alture indicators
                             </button>
                             {screen.supported && (
                                 <button type="button" onClick={screen.toggle} className="nav-link hidden pb-0.5 sm:block">
@@ -625,10 +627,10 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                     {indicatorOpen && (
                         <div className="cockpit-rise mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 bg-white/[0.04] px-4 py-3 text-[13px] leading-relaxed text-white/70">
                             <p className="max-w-2xl">
-                                <span className="text-white">ALTURE &amp; CO All-in-One</span> is a TradingView indicator, so it runs inside TradingView and not in this terminal. Open this chart there to use it. Here, Order flow shows aggressive volume, absorption, exhaustion and CVD divergence from live Bybit trades.
+                                <span className="text-white">The Alture &amp; Co. indicators are TradingView indicators.</span> They cannot be added to the charts of this terminal, and the TradingView chart embedded here does not load custom indicators either. To use them, open this market on TradingView and add them there from the Indicators menu.
                             </p>
                             <a href={tradingViewUrl(symbol, interval)} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 rounded-sm border border-white/35 px-3 py-1.5 text-xs font-medium text-white hover:border-white transition-colors">
-                                Open {symbol.replace(/USDT$/, "")} in TradingView ↗
+                                Open {symbol.replace(/USDT$/, "")} on TradingView ↗
                             </a>
                         </div>
                     )}
