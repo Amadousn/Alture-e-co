@@ -26,8 +26,8 @@ const FEATURES = [
     { title: "Results in R", text: "Performance is measured in R multiples, not only in dollars won or lost." },
 ];
 
-// What the ALTURE & CO All-in-One indicator draws, taken from the indicator itself.
-const INDICATOR = ["Volume profile with the point of control and the value area", "VWAP with its bands", "EMA cloud", "Structure breaks (BOS and CHoCH) with higher-timeframe context", "Fair value gaps", "CVD divergence, absorption and exhaustion marks", "An on-chart checklist from direction to entry"];
+// What the ALTURE & CO All-in-One indicator draws.
+const INDICATOR = ["Volume Profile with the Point of Control and Value Area", "VWAP with its bands", "EMA Cloud", "Market Structure, including BOS and CHoCH, with higher-timeframe context", "Fair Value Gaps", "An on-chart checklist from direction to entry"];
 
 const TOOLS = [
     ["Watchlist", "Your instruments with live prices, in your own order."],
@@ -182,10 +182,11 @@ const ProductPage = () => {
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <div className="grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-12">
                         <div className="min-w-0 lg:col-span-7 lg:order-1 order-2">
-                            <Shot src="/images/alturelock/order-flow.jpg" alt="The AltureLock terminal's order flow view: candles with volume clusters and a cumulative volume delta pane" width={800} height={779} caption="Order flow in the terminal, from live Bybit trades." />
+                            <Shot src="/images/alturelock/order-flow.jpg" alt="The AltureLock terminal's order flow view: candles with clusters of aggressive volume from live trades" width={800} height={779} caption="Order flow in the terminal, from live Bybit trades." />
                         </div>
                         <div className="min-w-0 lg:col-span-5 lg:order-2 order-1">
-                            <p className={label}>The Alture Indicator</p>
+                            <p className={`${label} !mb-2`}>The Alture Indicator</p>
+                            <p className="mb-5 text-sm text-white/55">Alture &amp; Co. has three published indicators on TradingView.</p>
                             <h2 className={heading}>One indicator for the whole read.</h2>
                             <p className={`mt-6 ${body}`}>ALTURE &amp; CO All-in-One is our TradingView indicator. It puts the context, the setup and the entry timing on a single chart:</p>
                             <ul className="mt-5 space-y-2.5 text-[15px] text-white/75">
@@ -196,7 +197,7 @@ const ProductPage = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="mt-6 text-sm leading-relaxed text-white/45">The indicator runs inside TradingView. In the AltureLock terminal, the order flow view shows aggressive volume, absorption, exhaustion and CVD divergence from live exchange trades.</p>
+                            <p className="mt-6 text-sm leading-relaxed text-white/45">The indicator runs inside TradingView. In the AltureLock terminal, the order flow view shows aggressive volume from live exchange trades.</p>
                         </div>
                     </div>
                 </div>
