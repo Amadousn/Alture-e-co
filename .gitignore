@@ -38,3 +38,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Proprietary TradingView indicator source: kept out of this public repository.
+/indicators/

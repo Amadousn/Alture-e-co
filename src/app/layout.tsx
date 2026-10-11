@@ -1,9 +1,13 @@
 import { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "./i18n/language-context";
-const dmsans = DM_Sans({ subsets: ["latin"] });
+// Both carry Cyrillic so the Russian site renders in the same typefaces.
+const sans = Geist({ subsets: ["latin", "cyrillic"], variable: "--font-sans" });
+const mono = Geist_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-mono" });
+// Wordmark only, which is always Latin.
+const logo = Outfit({ subsets: ["latin"], variable: "--font-logo" });
 // import { AppContextProvider } from "../context-api/PropertyContext";
 // import { NextAuthProvider } from "./components/auth/NextAuthProvider";
 
@@ -34,8 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${dmsans.className}`} suppressHydrationWarning={true}>
-        <div className="ambient-grid" />
+      <body className={`${sans.variable} ${mono.variable} ${logo.variable} font-sans`} suppressHydrationWarning={true}>
         <div className="ambient-glow" />
         {/* <NextAuthProvider> */}
           {/* <AppContextProvider> */}

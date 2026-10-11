@@ -9,12 +9,14 @@ import HeaderLink from "./navigation/HeaderLink";
 import MobileHeaderLink from "./navigation/MobileHeaderLink";
 import { Icon } from "@iconify/react";
 import { useLanguage } from "@/app/i18n/language-context";
+import { useSession } from "@/utils/use-session";
 import { LANGUAGES } from "@/app/i18n/translations";
 
 const Header: React.FC = () => {
   const pathUrl = usePathname();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
+  const session = useSession();
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -26,6 +28,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
 
   // Locks background scroll while the mobile menu is open, so the page
   // underneath can't be scrolled while the overlay is showing.
@@ -68,13 +71,18 @@ const Header: React.FC = () => {
 
   const LanguageSwitcher = ({ className }: { className?: string }) => (
     <div className={`flex items-center gap-1.5 text-xs font-medium tracking-wide ${className ?? ""}`}>
-      {LANGUAGES.map((lang, i) => (
+      {/* Account access, kept quiet: the page stays about the product. */}
+      <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="nav-link is-inline mr-4 whitespace-nowrap">
+        {session.signedIn ? t.mobile.workspace : t.mobile.logIn}
+      </Link>
+      {translated && LANGUAGES.map((lang, i) => (
         <div key={lang.code} className="flex items-center gap-1.5">
           {i > 0 && <span className="text-white/20">/</span>}
           <button
             type="button"
             onClick={() => setLanguage(lang.code)}
-            className={`transition-colors ${language === lang.code ? "text-[#D4AF37]" : "text-gray-500 hover:text-white"}`}
+            aria-pressed={language === lang.code}
+            className={`nav-link is-inline ${language === lang.code ? "is-active" : ""}`}
           >
             {lang.label}
           </button>
@@ -89,22 +97,28 @@ const Header: React.FC = () => {
       fill="none"
       className={className}
       aria-hidden="true"
-      style={{ filter: "drop-shadow(0 0 5px rgba(216, 166, 255, 0.55)) drop-shadow(0 0 3px rgba(244, 114, 182, 0.5))" }}
+      style={{ color: "#E3A1F7", filter: "drop-shadow(0 0 6px rgba(227, 161, 247, 0.75)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.55))" }}
     >
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#D8B4FE" />
-          <stop offset="50%" stopColor="#E879F9" />
-          <stop offset="100%" stopColor="#F472B6" />
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="50%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#FFFFFF" />
         </linearGradient>
       </defs>
-      <rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke={`url(#${gradientId})`} strokeWidth="1.5" />
-      <path d="M8 10.5V7.5a4 4 0 018 0v3" stroke={`url(#${gradientId})`} strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 
   // Check if user is on dashboard to hide header (handled by layout normally, but safety check)
   // if (pathUrl.startsWith('/dashboard')) return null;
+
+  // The AltureLock application itself is in English only, so the language choice is offered on the pages that are translated.
+  const translated = !pathUrl.startsWith("/alturelock") || pathUrl === "/alturelock" || pathUrl === "/alturelock/login";
+
+  // The cockpit is a full-screen application with its own bar.
+  if (pathUrl === "/alturelock/workspace" || pathUrl === "/alturelock/demo") return null;
 
   return (
     <>
@@ -125,8 +139,13 @@ const Header: React.FC = () => {
           {menuItems.map((item, index) => (
             <HeaderLink key={index} item={item} />
           ))}
-          <Link href="/education" aria-label="Private education access" className="flex items-center py-3 opacity-90 hover:opacity-100 transition-opacity">
+          <Link
+            href="/education"
+            aria-current={pathUrl.startsWith("/education") ? "page" : undefined}
+            className={`nav-link flex items-center gap-2 py-3 text-sm tracking-wide font-medium ${pathUrl.startsWith("/education") ? "is-active" : ""}`}
+          >
             <PrivateLockIcon gradientId="lockGradientDesktop" className="w-4 h-4" />
+            {t.nav.education}
           </Link>
         </nav>
 
@@ -135,70 +154,27 @@ const Header: React.FC = () => {
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="flex items-center lg:hidden">
-          <button
-            onClick={() => setNavbarOpen(!navbarOpen)}
-            className="p-2 text-white"
-            aria-label="Toggle mobile menu"
-          >
-            <Icon icon={navbarOpen ? "ph:x" : "ph:list"} className="w-8 h-8" />
-          </button>
+        {/* Phones: language and login only. The three destinations are in the tab bar. */}
+        <div className="flex items-center gap-4 lg:hidden text-xs font-medium">
+          <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="nav-link is-inline whitespace-nowrap">
+            {session.signedIn ? t.mobile.workspace : t.mobile.logIn}
+          </Link>
+          {translated && (
+            <label className="relative">
+              <span className="sr-only">Language</span>
+              <select value={language} onChange={(event) => setLanguage(event.target.value as typeof language)} className="!w-auto !rounded-sm !border-white/25 !bg-black !py-1.5 !pl-2 !pr-6 !text-xs !font-medium !text-white uppercase">
+                {LANGUAGES.map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
       </div>
     </header>
 
-    {/* Mobile menu is portaled directly to the document body, outside the
-        header, so it's never a descendant of an element with backdrop-filter.
-        Nesting it inside the (sometimes blurred) header breaks true
-        viewport-fixed positioning on mobile Safari, which was causing the
-        menu to open at the current scroll position instead of the top. */}
-    {mounted && createPortal(
-      <>
-        {navbarOpen && (
-          <div
-            className="lg:hidden fixed inset-0 w-screen h-screen bg-black/80 backdrop-blur-sm z-[100] transition-opacity duration-300"
-            onClick={() => setNavbarOpen(false)}
-          />
-        )}
-
-        <div
-          ref={mobileMenuRef}
-          className={`lg:hidden fixed top-0 right-0 w-[85%] sm:w-[350px] bg-[#050505]/95 backdrop-blur-xl border-l border-[#D4AF37]/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-[101] ${navbarOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-          style={{ height: "100dvh" }}
-        >
-          <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-8 border-b border-white/5">
-              <span className="text-[#D4AF37] font-bold tracking-[0.2em] text-lg">MENU</span>
-              <button
-                onClick={() => setNavbarOpen(false)}
-                className="text-white/70 hover:text-[#D4AF37] transition-colors p-2 rounded-full hover:bg-white/5"
-              >
-                <Icon icon="ph:x" className="w-6 h-6" />
-              </button>
-            </div>
-
-            <nav className="flex flex-col p-8 space-y-2 overflow-y-auto">
-              {menuItems.map((item, index) => (
-                <MobileHeaderLink key={index} item={item} onClick={() => setNavbarOpen(false)} />
-              ))}
-              <Link
-                href="/education"
-                onClick={() => setNavbarOpen(false)}
-                className="flex items-center gap-3 py-4 px-2 border-b border-white/5 text-gray-400 hover:text-white transition-colors"
-              >
-                <PrivateLockIcon gradientId="lockGradientMobile" className="w-4 h-4 flex-shrink-0" />
-                <span className="text-sm tracking-[0.15em] uppercase font-light">Private</span>
-              </Link>
-              <div className="h-px bg-white/10 my-4" />
-              <LanguageSwitcher className="px-2" />
-            </nav>
-          </div>
-        </div>
-      </>,
-      document.body
-    )}
     </>
   );
 };

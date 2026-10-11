@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
+
+// The real AltureLock workspace is for signed-in users. The product page needs
+// no login. The demo and logging in open only when the owner opens them (see utils/launch).
+const WORKSPACE = ["/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help"];
 
 export const config = {
-    matcher: ["/alturelock"],
+    matcher: ["/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help", "/alturelock/demo", "/alturelock/demo/:path*"],
 };
 
 type ProtectedRoute = {
@@ -12,12 +17,7 @@ type ProtectedRoute = {
     payload: string;
 };
 
-// /education is public: it's a presentation/pitch page, not gated content.
-// The access form embedded on that page still sets education_session via
-// /api/education-login, ready to gate the real member area once it exists.
-const PROTECTED_ROUTES: ProtectedRoute[] = [
-    { prefix: "/alturelock", cookieName: "alturelock_session", secretEnv: "ALTURELOCK_SESSION_SECRET", loginPath: "/alturelock/login", payload: "alturelock-session" },
-];
+const PROTECTED_ROUTES: ProtectedRoute[] = WORKSPACE.map((prefix) => ({ prefix, cookieName: "alturelock_session", secretEnv: "ALTURELOCK_SESSION_SECRET", loginPath: "/alturelock/login", payload: "alturelock-session" }));
 
 async function computeSignature(secret: string, payload: string): Promise<string> {
     const enc = new TextEncoder();
@@ -33,9 +33,18 @@ async function computeSignature(secret: string, payload: string): Promise<string
 }
 
 export async function middleware(req: NextRequest) {
-    const route = PROTECTED_ROUTES.find((r) => req.nextUrl.pathname === r.prefix);
+    const path = req.nextUrl.pathname;
+    if (path === "/alturelock/demo" || path.startsWith("/alturelock/demo/")) {
+        return DEMO_OPEN ? NextResponse.next() : NextResponse.redirect(new URL("/alturelock", req.url));
+    }
+
+    const route = PROTECTED_ROUTES.find((r) => path === r.prefix);
     if (!route) {
         return NextResponse.next();
+    }
+    // Until access begins nobody is let in, whatever their browser holds.
+    if (!LOGIN_OPEN) {
+        return NextResponse.redirect(new URL(route.loginPath, req.url));
     }
 
     const secret = process.env[route.secretEnv];

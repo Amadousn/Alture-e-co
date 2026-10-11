@@ -1,47 +1,50 @@
 "use client";
 
+import { DubaiTime, SectionMark } from "@/app/components/altur/brand/desk-mark";
+import SocialLinks from "@/app/components/altur/brand/social-links";
 import { useLanguage } from "@/app/i18n/language-context";
 
+const EMAIL = "celine@altureandco.com";
+
+// One way to get in touch, set large. No scroll-in animation: "Request
+// access" links land here directly, and it has to be readable at once.
 const Contact = () => {
     const { t } = useLanguage();
+    const { contact } = t;
 
     return (
-        <section id="contact" className="py-12 md:py-20 bg-black relative overflow-hidden">
-            {/* Soft ambient glow behind the contact grid */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[480px] h-[480px] rounded-full bg-gradient-to-br from-[#D4AF37]/15 via-[#D4AF37]/6 to-transparent blur-[100px]" />
-            </div>
+        <section id="contact" className="bg-black !py-20 md:!py-28 scroll-mt-20">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                <SectionMark label={contact.label}>
+                    <DubaiTime />
+                </SectionMark>
 
-            <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
-                <div className="max-w-5xl mx-auto">
-                    {/* Contact Grid */}
-                    <div className="grid mb-8 md:mb-12">
-                        <div
-                            className="max-w-xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 md:divide-x md:divide-white/10"
-                            data-aos="fade-up"
-                            data-aos-delay="100"
-                        >
-                            {/* Email */}
-                            <a href="mailto:celine@altureandco.com" className="group md:px-8 py-2 text-center md:text-left">
-                                <span className="block text-xs font-mono tracking-[0.2em] text-primary/50 mb-3">01</span>
-                                <p className="text-sm font-light text-gray-400 mb-1">{t.contact.email}</p>
-                                <p className="inline-block relative text-base md:text-lg font-light text-white group-hover:text-primary transition-colors break-all">
-                                    celine@altureandco.com
-                                    <span className="absolute left-0 -bottom-1 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"></span>
-                                </p>
-                            </a>
-
-                            {/* Location */}
-                            <div className="group md:px-8 py-2 text-center md:text-left">
-                                <span className="block text-xs font-mono tracking-[0.2em] text-primary/50 mb-3">02</span>
-                                <p className="text-sm font-light text-gray-400 mb-1">{t.contact.location}</p>
-                                <p className="inline-block relative text-base md:text-lg font-light text-white">
-                                    Business Bay, Dubai
-                                    <span className="absolute left-0 -bottom-1 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"></span>
-                                </p>
-                            </div>
-                        </div>
+                <div className="grid lg:grid-cols-12 gap-x-10 gap-y-10 pt-10 md:pt-16 items-end">
+                    <div className="lg:col-span-7">
+                        <h2 className="!text-4xl md:!text-6xl text-white mb-6">{contact.title}</h2>
+                        <p className="text-white/55 leading-relaxed max-w-md">{contact.text}</p>
                     </div>
+
+                    <dl className="lg:col-span-5 grid sm:grid-cols-2 gap-x-10 gap-y-6 text-sm lg:pb-2">
+                        <div className="sm:col-span-2">
+                            <dt className="text-[11px] uppercase tracking-[0.14em] text-white/45 mb-1.5">{contact.email}</dt>
+                            <dd>
+                                <a href={`mailto:${EMAIL}`} className="text-base text-white border-b border-white/30 pb-0.5 hover:border-white transition-colors break-all">
+                                    {EMAIL}
+                                </a>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt className="text-[11px] uppercase tracking-[0.14em] text-white/45 mb-1.5">{contact.location}</dt>
+                            <dd className="text-white">Business Bay, Dubai</dd>
+                        </div>
+                        <div>
+                            <dt className="text-[11px] uppercase tracking-[0.14em] text-white/45 mb-0.5">Social</dt>
+                            <dd>
+                                <SocialLinks className="-ml-2.5" />
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
             </div>
         </section>

@@ -1,82 +1,44 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Ticker from "../ticker";
-import HeroChartBackground from "./hero-chart-background";
+import HeroBtcChart from "./hero-btc-chart";
+import { DubaiTime } from "@/app/components/altur/brand/desk-mark";
 import { useLanguage } from "@/app/i18n/language-context";
 
 const Hero = () => {
    const { t } = useLanguage();
-   const sectionRef = useRef<HTMLElement>(null);
-   const headlineRef = useRef<HTMLDivElement>(null);
-   const [mousePos, setMousePos] = useState<{ xFraction: number; yFraction: number } | null>(null);
-   const [textZone, setTextZone] = useState<{ top: number; bottom: number } | null>(null);
-
-   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const xFraction = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-      const yFraction = Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height));
-      setMousePos({ xFraction, yFraction });
-   };
-
-   const handleMouseLeave = () => {
-      setMousePos(null);
-   };
-
-   useEffect(() => {
-      const section = sectionRef.current;
-      const headline = headlineRef.current;
-      if (!section || !headline) return;
-
-      const update = () => {
-         const sectionRect = section.getBoundingClientRect();
-         const headlineRect = headline.getBoundingClientRect();
-         if (sectionRect.height === 0) return;
-         setTextZone({
-            top: (headlineRect.top - sectionRect.top) / sectionRect.height,
-            bottom: (headlineRect.bottom - sectionRect.top) / sectionRect.height,
-         });
-      };
-
-      update();
-      const observer = new ResizeObserver(update);
-      observer.observe(section);
-      observer.observe(headline);
-      return () => observer.disconnect();
-   }, []);
 
    return (
-      <section
-         ref={sectionRef}
-         onMouseMove={handleMouseMove}
-         onMouseLeave={handleMouseLeave}
-         className="relative min-h-[100dvh] flex flex-col justify-between items-center overflow-hidden bg-black pt-24 md:pt-0"
-      >
-         {/* Live price chart texture */}
-         <HeroChartBackground mousePos={mousePos} textZone={textZone} />
+      <section className="relative min-h-[100dvh] flex flex-col bg-black !py-0 overflow-hidden">
+         <div className="container mx-auto max-w-7xl flex-grow flex flex-col px-4 md:px-6 pt-28 md:pt-36">
+            {/* The statement sits left; the live market runs off to the right. */}
+            <div className="flex-grow grid lg:grid-cols-12 gap-x-10 gap-y-14 items-end pb-10 md:pb-14">
+               <div className="lg:col-span-6" data-aos="fade-up">
+                  <h1 className="!text-4xl sm:!text-5xl lg:!text-[64px] text-white !leading-[1.04] mb-7 max-w-[13ch]">
+                     {t.hero.headline} <span className="text-primary">{t.hero.headlineAccent}</span>{t.hero.headlineSuffix}
+                  </h1>
+                  <p className="text-white/60 text-[15px] md:text-base leading-relaxed max-w-md">
+                     {t.hero.subtext}
+                  </p>
+                  <Link href="/alturelock" className="group inline-flex items-baseline gap-3 mt-9 text-sm font-medium text-white border-b border-white/30 pb-1.5 hover:border-white transition-colors">
+                     {t.offer.alturelock.cta}
+                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </Link>
+               </div>
 
-         {/* Soft ambient glow behind the headline */}
-         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]">
-            <div className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-gradient-to-br from-[#D4AF37]/20 via-[#D4AF37]/8 to-transparent blur-[100px]" />
-         </div>
-
-         <div className="container mx-auto max-w-7xl relative z-10 px-4 md:px-6 h-full flex flex-col justify-center items-center flex-grow py-12">
-
-            {/* Main Content - Centered */}
-            <div ref={headlineRef} className="text-center max-w-3xl" data-aos="fade-up">
-               <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-6 md:mb-8 tracking-normal leading-snug">
-                  {t.hero.headline} <span className="text-primary">{t.hero.headlineAccent}</span>{t.hero.headlineSuffix}
-               </h1>
-
-               <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
-                  {t.hero.subtext}
-               </p>
+               <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="100">
+                  <HeroBtcChart />
+               </div>
             </div>
 
+            {/* Where the desk is, and what time it is there. */}
+            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t border-white/15 py-3.5 text-[11px] uppercase tracking-[0.14em] text-white/45">
+               <span className="text-white/70">Business Bay, Dubai</span>
+               <span className="hidden sm:inline font-mono normal-case tracking-normal">25.19° N, 55.27° E</span>
+               <DubaiTime className="normal-case tracking-normal" />
+            </div>
          </div>
 
-         {/* Ticker at the absolute bottom */}
          <div className="w-full relative z-20 border-t border-white/10 bg-black">
             <Ticker />
          </div>

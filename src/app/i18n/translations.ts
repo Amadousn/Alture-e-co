@@ -13,6 +13,7 @@ type Dictionary = {
     nav: {
         home: string;
         alturelock: string;
+        education: string;
         contact: string;
     };
     hero: {
@@ -22,13 +23,16 @@ type Dictionary = {
         subtext: string;
     };
     offer: {
-        sectionTitlePlain: string;
-        sectionTitleAccent: string;
-        service1: { title: string; description: string; bullets: [string, string] };
-        service2: { title: string; description: string; bullets: [string, string, string] };
-        service3: { title: string; description: string; bullets: [string, string, string, string]; cta: string };
+        trading: { label: string; title: string; description: string; cta: string };
+        alturelock: { label: string; title: string; description: string; cta: string };
+        journal: { label: string; title: string; description: string; cta: string };
+        education: { label: string; title: string; description: string; cta: string };
     };
     contact: {
+        label: string;
+        title: string;
+        text: string;
+        cta: string;
         email: string;
         location: string;
     };
@@ -52,6 +56,7 @@ type Dictionary = {
         headlineAccent: string;
         subtext: string;
         requestAccess: string;
+        exploreProgramme: string;
         dashboardHeading: string;
         usernameLabel: string;
         passwordLabel: string;
@@ -61,6 +66,23 @@ type Dictionary = {
         errorIncorrect: string;
         errorGeneric: string;
     };
+    mobile: { cockpit: string; logIn: string; workspace: string };
+    entry: {
+        headline: string;
+        pillars: string;
+        text: string;
+        explore: string;
+        enter: string;
+        seeDemo: string;
+        note: string;
+        functions: { title: string; text: string }[];
+        systems: string[];
+        live: string;
+        connecting: string;
+        unavailable: string;
+        previewCaption: string;
+    };
+    loginPage: { title: string; noAccount: string; tryDemo: string; or: string; explore: string; closed: string; requestAccess: string };
     alturelockLogin: {
         tagline: string;
         usernameLabel: string;
@@ -78,39 +100,40 @@ export const translations: Record<Language, Dictionary> = {
     // direct, no corporate padding). Left untouched here; the other languages
     // are adapted to read the same way natively, not translated word-for-word.
     en: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", contact: "CONTACT" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", education: "EDUCATION", contact: "CONTACT" },
         hero: {
             headline: "We trade crypto. With",
             headlineAccent: "rules",
             headlineSuffix: ", not feelings.",
-            subtext: "A discreet proprietary desk in Dubai. Every trade passes through the same system before it's placed.",
+            subtext: "A Dubai-based trading company building proprietary strategies, trading tools, and structured education for the crypto markets.",
         },
         offer: {
-            sectionTitlePlain: "Core",
-            sectionTitleAccent: "Disciplines",
-            service1: {
+            trading: {
+                label: "Proprietary Trading",
                 title: "Proprietary Trading",
-                description: "Crypto trading executed from our Dubai desk, using in-house strategies and risk-controlled execution.",
-                bullets: ["Institutional-grade execution, based in Dubai", "Performance available on request"],
+                description: "A Dubai-based desk. Our own capital. Our own strategies. A structured approach to crypto markets and risk management.",
+                cta: "Performance on request →",
             },
-            service2: {
-                title: "AI Market Data & News",
-                description: "Real-time market intelligence, including news, momentum shifts, and volatility signals, surfaced through our data feed.",
-                bullets: ["Live market news & data feed", "Momentum and volatility tracking", "Signals to inform, not replace, judgment"],
+            alturelock: {
+                label: "Trading Rules System",
+                title: "AltureLock",
+                description: "A structured workflow to prepare, execute, manage and review your trades.",
+                cta: "Explore AltureLock",
             },
-            service3: {
-                title: "Trading Rules System",
-                description: "Software built into the trade itself, enforced at the account level. Every order passes through it before execution. One loss triggers a session lock.",
-                bullets: [
-                    "Pre-trade checklist, hard drawdown stop, strategy confirmation",
-                    "Session lock after one loss, configurable",
-                    "Connected directly to your broker",
-                    "Secured with IP-restricted API keys",
-                ],
-                cta: "Explore AltureLock →",
+            journal: {
+                label: "Free",
+                title: "Trading Journal",
+                description: "Record your trades, track your performance and review your trading decisions.",
+                cta: "Open Trading Journal",
+            },
+            education: {
+                label: "Education",
+                title: "Alture Education",
+                description: "Structured trading education focused on market analysis, strategy development, execution, and risk management.",
+                cta: "Explore Education →",
             },
         },
-        contact: { email: "Email", location: "Location" },
+        contact: { label: "Contact", title: "Talk to the desk.", text: "For AltureLock access, education, or performance on request, write to us directly. We reply personally.", cta: "Write to us →", email: "Email", location: "Location" },
         footer: {
             explore: "Explore",
             legal: "Legal",
@@ -131,6 +154,7 @@ export const translations: Record<Language, Dictionary> = {
             headlineAccent: "ladies who already do",
             subtext: "A private circle for ladies learning to trade crypto with structure, not guesswork. Mentorship, rules, and real access, built by someone who's in the room.",
             requestAccess: "Request Access",
+            exploreProgramme: "Explore the programme",
             dashboardHeading: "Access your dashboard",
             usernameLabel: "Username",
             passwordLabel: "Password",
@@ -140,6 +164,27 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Incorrect username or password.",
             errorGeneric: "Something went wrong. Please try again.",
         },
+        mobile: { cockpit: "Cockpit", logIn: "Log in", workspace: "Workspace" },
+        entry: {
+            headline: "Your copilot for consistent trading.",
+            pillars: "Trading Rules. Risk Management. Trading Journal.",
+            text: "AltureLock helps you structure your process, manage your risk and review your performance, one trade at a time.",
+            explore: "Explore AltureLock",
+            enter: "Enter your workspace",
+            seeDemo: "See the demo",
+            note: "No account needed to explore. It runs on a simulated account.",
+            functions: [
+                { title: "Trading Rules", text: "Plan the trade on the chart and confirm you are ready before you commit." },
+                { title: "Risk Management", text: "Know your size, your risk and your reward before the trade is open." },
+                { title: "Trading Journal", text: "Every finished trade is reviewed and recorded, so your results teach you something." },
+            ],
+            systems: ["Markets", "News", "Calendar", "Chart", "Journal"],
+            live: "Bybit, live",
+            connecting: "Connecting to the market…",
+            unavailable: "Market data unavailable",
+            previewCaption: "The cockpit on a phone, with a simulated account",
+        },
+        loginPage: { title: "Log in", noAccount: "No account?", tryDemo: "Try the demo", or: "or", explore: "explore AltureLock", closed: "Access is not open yet.", requestAccess: "Request access" },
         alturelockLogin: {
             tagline: "Your Co-Pilot",
             usernameLabel: "Username",
@@ -152,40 +197,41 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     fr: {
-        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", contact: "CONTACT" },
+        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", education: "FORMATION", contact: "CONTACT" },
         hero: {
             // "On" reads more confident and modern here than the stiffer "Nous tradons".
             headline: "On trade la crypto. Avec des",
             headlineAccent: "règles",
             headlineSuffix: ", pas d'émotions.",
-            subtext: "Un desk propriétaire discret à Dubaï. Chaque trade suit le même processus avant d'être exécuté.",
+            subtext: "Une société de trading basée à Dubaï, qui développe ses propres stratégies, des outils de trading et une formation structurée pour les marchés crypto.",
         },
         offer: {
-            sectionTitlePlain: "Disciplines",
-            sectionTitleAccent: "Fondamentales",
-            service1: {
+            trading: {
+                label: "Trading Propriétaire",
                 title: "Trading Propriétaire",
-                description: "Trading de crypto exécuté depuis notre desk à Dubaï, avec des stratégies internes et une gestion du risque stricte.",
-                bullets: ["Exécution de niveau institutionnel, basée à Dubaï", "Performance disponible sur demande"],
+                description: "Un desk basé à Dubaï. Nos capitaux. Nos stratégies. Une approche structurée des marchés crypto et de la gestion du risque.",
+                cta: "Performance sur demande →",
             },
-            service2: {
-                title: "Données de Marché & Actualités IA",
-                description: "Intelligence de marché en temps réel : actualités, changements de momentum et signaux de volatilité, réunis dans un seul flux.",
-                bullets: ["Actualités et données de marché en direct", "Suivi du momentum et de la volatilité", "Des signaux pour éclairer votre jugement, jamais pour le remplacer"],
+            alturelock: {
+                label: "Système de règles de trading",
+                title: "AltureLock",
+                description: "Un parcours structuré pour préparer, exécuter, gérer et analyser vos trades.",
+                cta: "Découvrir AltureLock",
             },
-            service3: {
-                title: "Système de Règles de Trading",
-                description: "Un logiciel intégré directement à la prise de position, appliqué au niveau du compte. Chaque ordre passe par ce système avant exécution. Une seule perte suffit à déclencher un verrouillage de session.",
-                bullets: [
-                    "Checklist avant chaque trade, stop de drawdown strict, confirmation de la stratégie",
-                    "Verrouillage de session après une perte, configurable",
-                    "Connecté directement à votre broker",
-                    "Sécurisé par des clés API restreintes par IP",
-                ],
-                cta: "Découvrir AltureLock →",
+            journal: {
+                label: "Gratuit",
+                title: "Journal de trading",
+                description: "Enregistrez vos trades, suivez vos performances et revoyez vos décisions de trading.",
+                cta: "Ouvrir le journal",
+            },
+            education: {
+                label: "Formation",
+                title: "Alture Education",
+                description: "Une formation au trading structurée : analyse de marché, construction de stratégie, exécution et gestion du risque.",
+                cta: "Découvrir la formation →",
             },
         },
-        contact: { email: "Email", location: "Adresse" },
+        contact: { label: "Contact", title: "Parlons-en.", text: "Pour un accès à AltureLock, la formation ou nos performances sur demande, écrivez-nous directement. Nous répondons personnellement.", cta: "Nous écrire →", email: "Email", location: "Adresse" },
         footer: {
             explore: "Explorer",
             legal: "Légal",
@@ -206,6 +252,7 @@ export const translations: Record<Language, Dictionary> = {
             headlineAccent: "femmes qui le font déjà",
             subtext: "Un cercle privé pour les femmes qui apprennent à trader la crypto avec méthode, pas au hasard. Mentorat, règles et un accès réel, construit par quelqu'un qui est sur le terrain.",
             requestAccess: "Demander l'Accès",
+            exploreProgramme: "Découvrir le programme",
             dashboardHeading: "Accédez à votre espace",
             usernameLabel: "Nom d'utilisateur",
             passwordLabel: "Mot de passe",
@@ -215,6 +262,27 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Nom d'utilisateur ou mot de passe incorrect.",
             errorGeneric: "Une erreur est survenue. Merci de réessayer.",
         },
+        mobile: { cockpit: "Cockpit", logIn: "Connexion", workspace: "Mon espace" },
+        entry: {
+            headline: "Votre copilote pour trader avec constance.",
+            pillars: "Règles de trading. Gestion du risque. Journal de trading.",
+            text: "AltureLock vous aide à structurer votre méthode, à maîtriser votre risque et à analyser vos résultats, un trade après l'autre.",
+            explore: "Découvrir AltureLock",
+            enter: "Accéder à votre espace",
+            seeDemo: "Voir la démo",
+            note: "Aucun compte requis pour découvrir. La démo tourne sur un compte simulé.",
+            functions: [
+                { title: "Règles de trading", text: "Préparez le trade sur le graphique et vérifiez que vous êtes prêt avant de vous engager." },
+                { title: "Gestion du risque", text: "Connaissez votre taille, votre risque et votre gain potentiel avant d'ouvrir la position." },
+                { title: "Journal de trading", text: "Chaque trade clôturé est analysé et consigné, pour que vos résultats vous apprennent quelque chose." },
+            ],
+            systems: ["Marchés", "Actualités", "Calendrier", "Graphique", "Journal"],
+            live: "Bybit, en direct",
+            connecting: "Connexion au marché…",
+            unavailable: "Données de marché indisponibles",
+            previewCaption: "Le cockpit sur téléphone, avec un compte simulé",
+        },
+        loginPage: { title: "Connexion", noAccount: "Pas de compte ?", tryDemo: "Essayer la démo", or: "ou", explore: "découvrir AltureLock", closed: "L'accès n'est pas encore ouvert.", requestAccess: "Demander un accès" },
         alturelockLogin: {
             tagline: "Votre Co-Pilote",
             usernameLabel: "Nom d'utilisateur",
@@ -227,39 +295,40 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     it: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", contact: "CONTATTI" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", education: "FORMAZIONE", contact: "CONTATTI" },
         hero: {
             headline: "Facciamo trading di crypto. Con",
             headlineAccent: "regole, non emozioni.",
             headlineSuffix: "",
-            subtext: "Un desk proprietario riservato a Dubai. Ogni operazione passa attraverso lo stesso sistema prima di essere eseguita.",
+            subtext: "Una società di trading con sede a Dubai che sviluppa strategie proprietarie, strumenti di trading e formazione strutturata per i mercati crypto.",
         },
         offer: {
-            sectionTitlePlain: "Discipline",
-            sectionTitleAccent: "Fondamentali",
-            service1: {
+            trading: {
+                label: "Trading Proprietario",
                 title: "Trading Proprietario",
-                description: "Trading di crypto eseguito dal nostro desk a Dubai, con strategie interne ed esecuzione a rischio controllato.",
-                bullets: ["Esecuzione di livello istituzionale, con sede a Dubai", "Performance disponibili su richiesta"],
+                description: "Un desk con sede a Dubai. Il nostro capitale. Le nostre strategie. Un approccio strutturato ai mercati crypto e alla gestione del rischio.",
+                cta: "Performance su richiesta →",
             },
-            service2: {
-                title: "Dati di Mercato IA & Notizie",
-                description: "Intelligence di mercato in tempo reale: notizie, variazioni di momentum e segnali di volatilità.",
-                bullets: ["Notizie e dati di mercato in diretta", "Monitoraggio di momentum e volatilità", "Segnali per informare, non sostituire, il giudizio"],
+            alturelock: {
+                label: "Sistema di regole di trading",
+                title: "AltureLock",
+                description: "Un percorso strutturato per preparare, eseguire, gestire e rivedere le tue operazioni.",
+                cta: "Scopri AltureLock",
             },
-            service3: {
-                title: "Sistema di Regole di Trading",
-                description: "Un software integrato direttamente nell'operazione, applicato a livello di account. Ogni ordine vi passa attraverso prima dell'esecuzione. Una perdita attiva un blocco di sessione.",
-                bullets: [
-                    "Checklist pre-trade, stop di drawdown rigido, conferma della strategia",
-                    "Blocco di sessione dopo una perdita, configurabile",
-                    "Connesso direttamente al tuo broker",
-                    "Protetto con chiavi API con restrizione IP",
-                ],
-                cta: "Scopri AltureLock →",
+            journal: {
+                label: "Gratis",
+                title: "Diario di trading",
+                description: "Registra le tue operazioni, monitora le performance e rivedi le tue decisioni di trading.",
+                cta: "Apri il diario",
+            },
+            education: {
+                label: "Formazione",
+                title: "Alture Education",
+                description: "Formazione al trading strutturata: analisi di mercato, sviluppo della strategia, esecuzione e gestione del rischio.",
+                cta: "Scopri la formazione →",
             },
         },
-        contact: { email: "Email", location: "Sede" },
+        contact: { label: "Contatti", title: "Parliamone.", text: "Per l'accesso ad AltureLock, la formazione o le performance su richiesta, scrivici direttamente. Rispondiamo di persona.", cta: "Scrivici →", email: "Email", location: "Sede" },
         footer: {
             explore: "Esplora",
             legal: "Legale",
@@ -280,6 +349,7 @@ export const translations: Record<Language, Dictionary> = {
             headlineAccent: "donne che lo fanno già",
             subtext: "Una community privata per donne che imparano il trading crypto con metodo, non a caso. Mentorship, regole e accesso reale, direttamente da chi il trading lo vive ogni giorno.",
             requestAccess: "Richiedi l'accesso",
+            exploreProgramme: "Scopri il programma",
             dashboardHeading: "Accedi alla tua area riservata",
             usernameLabel: "Nome utente",
             passwordLabel: "Password",
@@ -289,6 +359,27 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Nome utente o password errati.",
             errorGeneric: "Qualcosa è andato storto. Riprova.",
         },
+        mobile: { cockpit: "Cockpit", logIn: "Accedi", workspace: "Il mio spazio" },
+        entry: {
+            headline: "Il tuo copilota per fare trading con costanza.",
+            pillars: "Regole di trading. Gestione del rischio. Diario di trading.",
+            text: "AltureLock ti aiuta a dare struttura al tuo metodo, a gestire il rischio e a rivedere i risultati, un trade alla volta.",
+            explore: "Scopri AltureLock",
+            enter: "Entra nel tuo spazio",
+            seeDemo: "Guarda la demo",
+            note: "Per esplorare non serve un account. La demo usa un conto simulato.",
+            functions: [
+                { title: "Regole di trading", text: "Pianifica il trade sul grafico e verifica di essere pronto prima di impegnarti." },
+                { title: "Gestione del rischio", text: "Conosci dimensione, rischio e rendimento potenziale prima di aprire la posizione." },
+                { title: "Diario di trading", text: "Ogni trade chiuso viene rivisto e registrato, così i tuoi risultati ti insegnano qualcosa." },
+            ],
+            systems: ["Mercati", "Notizie", "Calendario", "Grafico", "Diario"],
+            live: "Bybit, in tempo reale",
+            connecting: "Connessione al mercato…",
+            unavailable: "Dati di mercato non disponibili",
+            previewCaption: "Il cockpit su telefono, con un conto simulato",
+        },
+        loginPage: { title: "Accesso", noAccount: "Non hai un account?", tryDemo: "Prova la demo", or: "oppure", explore: "scopri AltureLock", closed: "L'accesso non è ancora aperto.", requestAccess: "Richiedi l'accesso" },
         alturelockLogin: {
             tagline: "Il tuo Co-Pilota",
             usernameLabel: "Nome utente",
@@ -301,39 +392,40 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     ru: {
-        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", contact: "КОНТАКТЫ" },
+        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", education: "ОБУЧЕНИЕ", contact: "КОНТАКТЫ" },
         hero: {
             headline: "Мы торгуем крипту. По",
             headlineAccent: "правилам, а не на эмоциях.",
             headlineSuffix: "",
-            subtext: "Закрытый проприетарный деск в Дубае. Каждая сделка проходит через одну и ту же систему перед исполнением.",
+            subtext: "Трейдинговая компания из Дубая: собственные стратегии, инструменты для трейдинга и системное обучение для крипторынка.",
         },
         offer: {
-            sectionTitlePlain: "Основные",
-            sectionTitleAccent: "Принципы",
-            service1: {
+            trading: {
+                label: "Проприетарный трейдинг",
                 title: "Проприетарный Трейдинг",
-                description: "Торговля криптовалютой с нашего деска в Дубае, с собственными стратегиями и контролируемым риском исполнения.",
-                bullets: ["Исполнение институционального уровня, база в Дубае", "Показатели доступны по запросу"],
+                description: "Деск в Дубае. Собственный капитал. Собственные стратегии. Системный подход к крипторынку и управлению рисками.",
+                cta: "Показатели по запросу →",
             },
-            service2: {
-                title: "Рыночные Данные ИИ и Новости",
-                description: "Рыночная аналитика в реальном времени: новости, изменения импульса и сигналы волатильности.",
-                bullets: ["Живые новости и рыночные данные", "Отслеживание импульса и волатильности", "Сигналы для информирования, а не замены суждения"],
+            alturelock: {
+                label: "Система торговых правил",
+                title: "AltureLock",
+                description: "Структурированный процесс: подготовка, вход, сопровождение и разбор каждой сделки.",
+                cta: "Познакомиться с AltureLock",
             },
-            service3: {
-                title: "Система Торговых Правил",
-                description: "Программное обеспечение, встроенное прямо в сделку, применяется на уровне аккаунта. Каждый ордер проходит через неё перед исполнением. Убыток запускает блокировку сессии.",
-                bullets: [
-                    "Чек-лист перед сделкой, жёсткий стоп по просадке, подтверждение стратегии",
-                    "Блокировка сессии после убытка, настраивается",
-                    "Подключено напрямую к вашему брокеру",
-                    "Защищено API-ключами с ограничением по IP",
-                ],
-                cta: "Изучить AltureLock →",
+            journal: {
+                label: "Бесплатно",
+                title: "Дневник трейдера",
+                description: "Записывайте сделки, отслеживайте результаты и разбирайте свои торговые решения.",
+                cta: "Открыть дневник",
+            },
+            education: {
+                label: "Обучение",
+                title: "Alture Education",
+                description: "Системное обучение трейдингу: анализ рынка, разработка стратегии, исполнение и управление рисками.",
+                cta: "Подробнее об обучении →",
             },
         },
-        contact: { email: "Email", location: "Локация" },
+        contact: { label: "Контакты", title: "Свяжитесь с нами.", text: "Напишите нам напрямую по поводу доступа к AltureLock, обучения или показателей по запросу. Отвечаем лично.", cta: "Написать нам →", email: "Email", location: "Локация" },
         footer: {
             explore: "Обзор",
             legal: "Юридическая информация",
@@ -354,6 +446,7 @@ export const translations: Record<Language, Dictionary> = {
             headlineAccent: "у женщин, которые уже это делают",
             subtext: "Закрытое сообщество для женщин, которые учатся трейдингу криптовалют системно, а не наугад. Менторство, правила и реальный доступ от той, кто сама в деле.",
             requestAccess: "Запросить доступ",
+            exploreProgramme: "Смотреть программу",
             dashboardHeading: "Доступ в личный кабинет",
             usernameLabel: "Имя пользователя",
             passwordLabel: "Пароль",
@@ -363,6 +456,27 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Неверное имя пользователя или пароль.",
             errorGeneric: "Что-то пошло не так. Попробуйте ещё раз.",
         },
+        mobile: { cockpit: "Кокпит", logIn: "Войти", workspace: "Кабинет" },
+        entry: {
+            headline: "Ваш второй пилот для стабильной торговли.",
+            pillars: "Торговые правила. Управление риском. Дневник сделок.",
+            text: "AltureLock помогает выстроить процесс, держать риск под контролем и разбирать результаты, сделка за сделкой.",
+            explore: "Познакомиться с AltureLock",
+            enter: "Войти в кабинет",
+            seeDemo: "Посмотреть демо",
+            note: "Чтобы посмотреть, аккаунт не нужен. Демо работает на учебном счёте.",
+            functions: [
+                { title: "Торговые правила", text: "Спланируйте сделку на графике и убедитесь, что готовы, прежде чем входить." },
+                { title: "Управление риском", text: "Знайте объём, риск и потенциальную прибыль до открытия позиции." },
+                { title: "Дневник сделок", text: "Каждая закрытая сделка разбирается и записывается, чтобы результаты чему-то учили." },
+            ],
+            systems: ["Рынки", "Новости", "Календарь", "График", "Дневник"],
+            live: "Bybit, онлайн",
+            connecting: "Подключение к рынку…",
+            unavailable: "Рыночные данные недоступны",
+            previewCaption: "Кокпит на телефоне, учебный счёт",
+        },
+        loginPage: { title: "Вход", noAccount: "Нет аккаунта?", tryDemo: "Попробовать демо", or: "или", explore: "познакомиться с AltureLock", closed: "Доступ пока не открыт.", requestAccess: "Запросить доступ" },
         alturelockLogin: {
             tagline: "Ваш Второй Пилот",
             usernameLabel: "Имя пользователя",

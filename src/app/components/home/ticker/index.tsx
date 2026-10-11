@@ -57,7 +57,7 @@ const Ticker = () => {
                     <div key={index} className="flex items-center mx-4 md:mx-8 space-x-2 md:space-x-3">
                         <span className="text-primary/50 font-light tracking-widest text-[10px] md:text-xs">{item.symbol}</span>
                         <span className="text-white font-light text-xs md:text-sm" style={{ letterSpacing: "1px" }}>{item.value}</span>
-                        <span className={`inline-flex items-center gap-1 font-light text-[10px] md:text-xs ${item.up ? "text-emerald-300/70" : "text-red-300/70"}`} style={{ letterSpacing: "0.75px" }}>
+                        <span className={`inline-flex items-center gap-1 font-light text-[10px] md:text-xs ${item.up ? "text-up" : "text-down"}`} style={{ letterSpacing: "0.75px" }}>
                             <svg
                                 className="w-2 h-2 md:w-2.5 md:h-2.5"
                                 viewBox="0 0 10 10"

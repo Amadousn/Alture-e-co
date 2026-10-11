@@ -1,112 +1,58 @@
 "use client";
 import Link from "next/link";
+import { SectionMark } from "@/app/components/altur/brand/desk-mark";
 import { useLanguage } from "@/app/i18n/language-context";
 
+// The firm's four activities as an index, not a grid of cards: each row is
+// one link, and the first is given the room its importance deserves.
 const WhatWeOffer = () => {
     const { t } = useLanguage();
     const { offer } = t;
 
+    const rest = [
+        { n: "02", href: "/alturelock#journal", item: offer.journal, tag: "" },
+        { n: "03", href: "/education", item: offer.education, tag: "" },
+        { n: "04", href: "/contact", item: offer.trading, tag: "" },
+    ];
+
     return (
-        <section id="what-we-offer" className="py-12 md:py-20 bg-black relative overflow-hidden">
-            {/* Grid Background */}
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: 'linear-gradient(#D4AF37 1px, transparent 1px), linear-gradient(90deg, #D4AF37 1px, transparent 1px)',
-                    backgroundSize: '50px 50px'
-                }}></div>
-            </div>
-
-            {/* Soft ambient glow behind the section header */}
-            <div className="absolute inset-x-0 top-0 flex items-start justify-center pointer-events-none">
-                <div className="w-[500px] h-[500px] -translate-y-1/3 rounded-full bg-gradient-to-br from-[#D4AF37]/15 via-[#D4AF37]/6 to-transparent blur-[100px]" />
-            </div>
-
-            <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4 relative z-10">
-                {/* Section Header */}
-                <div className="mb-12 md:mb-16" data-aos="fade-up">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-center text-white">
-                        {offer.sectionTitlePlain} <span className="text-primary">{offer.sectionTitleAccent}</span>
-                    </h2>
-                </div>
-
-                {/* Services Grid - Quiet, hairline-divided layout */}
-                <div className="grid md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/10">
-                    {/* Service 1: Proprietary Trading */}
-                    <div className="group" data-aos="fade-up" data-aos-delay="100">
-                        <div className="border-t border-white/10 group-hover:border-primary/40 transition-colors duration-500 pt-8 md:px-10 md:py-2">
-                            <div className="flex items-center gap-3 mb-6">
-                                <span className="text-xs font-mono tracking-[0.2em] text-primary/50">01</span>
-                                <svg className="w-5 h-5 text-primary/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                            </div>
-
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service1.title}</h3>
-                            <p className="text-gray font-light leading-relaxed mb-6">
-                                {offer.service1.description}
-                            </p>
-
-                            <div className="space-y-2">
-                                {offer.service1.bullets.map((bullet, i) => (
-                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
-                                ))}
-                            </div>
+        <section id="what-we-offer" className="bg-black !py-20 md:!py-28">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                <Link href="/alturelock" data-aos="fade-up" className="group block">
+                    <SectionMark index="01" label={offer.alturelock.label} />
+                    <div className="grid lg:grid-cols-12 gap-x-10 gap-y-6 items-end pt-8 pb-14 md:pt-12 md:pb-20">
+                        <h2 className="lg:col-span-7 font-logo !font-extralight !tracking-[-0.02em] !text-6xl sm:!text-7xl lg:!text-[112px] !leading-[0.95] text-white">
+                            Alture<span className="font-normal">Lock</span>
+                        </h2>
+                        <div className="lg:col-span-5 lg:pb-3">
+                            <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-md">{offer.alturelock.description}</p>
+                            <span className="inline-flex items-center gap-3 mt-7 rounded-sm bg-white text-black text-sm font-medium px-6 py-3.5 lit group-hover:bg-[#e4e4e8] transition-colors">
+                                {offer.alturelock.cta}
+                                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                            </span>
                         </div>
                     </div>
+                </Link>
 
-                    {/* Service 2: AI Market Data & News */}
-                    <div className="group" data-aos="fade-up" data-aos-delay="200">
-                        <div className="border-t border-white/10 group-hover:border-secondary/40 transition-colors duration-500 pt-8 md:px-10 md:py-2">
-                            <div className="flex items-center gap-3 mb-6">
-                                <span className="text-xs font-mono tracking-[0.2em] text-secondary/60">02</span>
-                                <svg className="w-5 h-5 text-secondary/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                </svg>
-                            </div>
-
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service2.title}</h3>
-                            <p className="text-gray font-light leading-relaxed mb-6">
-                                {offer.service2.description}
-                            </p>
-
-                            <div className="space-y-2">
-                                {offer.service2.bullets.map((bullet, i) => (
-                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Service 3: Trading Rules System */}
-                    <div id="trading-rules" className="group" data-aos="fade-up" data-aos-delay="300">
-                        <div className="border-t border-white/10 group-hover:border-primary/40 transition-colors duration-500 pt-8 md:px-10 md:py-2">
-                            <div className="flex items-center gap-3 mb-6">
-                                <span className="text-xs font-mono tracking-[0.2em] text-primary/50">03</span>
-                                <svg className="w-5 h-5 text-primary/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-
-                            <h3 className="text-xl md:text-2xl font-light mb-4 text-white">{offer.service3.title}</h3>
-                            <p className="text-gray font-light leading-relaxed mb-6">
-                                {offer.service3.description}
-                            </p>
-
-                            <div className="space-y-2">
-                                {offer.service3.bullets.map((bullet, i) => (
-                                    <p key={i} className="text-sm font-light text-gray/70">{bullet}</p>
-                                ))}
-                            </div>
-
-                            <Link
-                                href="/alturelock"
-                                className="inline-block mt-6 text-sm font-light text-primary hover:text-primary_hover transition-colors"
-                            >
-                                {offer.service3.cta}
+                <ul>
+                    {rest.map(({ n, href, item, tag }) => (
+                        <li key={n} data-aos="fade-up">
+                            <Link href={href} className="group grid grid-cols-[2.5rem_1fr_auto] lg:grid-cols-12 gap-x-4 lg:gap-x-10 gap-y-2 items-baseline border-t border-white/15 py-7 md:py-9 transition-colors hover:bg-white/[0.025]">
+                                <span className="lg:col-span-1 font-mono text-[11px] tabular-nums text-accent">{n}</span>
+                                <span className="lg:col-span-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+                                    <span className="text-2xl md:text-[32px] font-medium tracking-tight text-white">{item.title}</span>
+                                    {tag && <span className="text-[10px] font-semibold uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-sm border border-[#20B8A8]/70 text-[#20B8A8]">{tag}</span>}
+                                </span>
+                                <span className="col-start-2 lg:col-start-auto lg:col-span-5 text-[15px] leading-relaxed text-white/55 max-w-lg">{item.description}</span>
+                                <span className="col-start-2 lg:col-start-auto lg:col-span-2 lg:text-right text-sm font-medium text-white/80 group-hover:text-white whitespace-nowrap">
+                                    {item.cta.replace(/\s*→\s*$/, "")}{" "}
+                                    <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                                </span>
                             </Link>
-                        </div>
-                    </div>
-                </div>
+                        </li>
+                    ))}
+                    <li className="border-t border-white/15" aria-hidden="true" />
+                </ul>
             </div>
         </section>
     );

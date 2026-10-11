@@ -2,13 +2,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
+import SocialLinks from "@/app/components/altur/brand/social-links";
 import { useLanguage } from "@/app/i18n/language-context";
 
 const Footer = () => {
-  const pathname = usePathname();
   const { t } = useLanguage();
-  const isEducation = pathname?.startsWith("/education");
-  const accentColor = isEducation ? "#E879F9" : "#D4AF37";
+  const path = usePathname();
+  // The cockpit is a full-screen application: no site footer under it.
+  if (path === "/alturelock/workspace" || path === "/alturelock/demo") return null;
 
   return (
     <footer className="relative z-10 bg-black border-t border-white/10">
@@ -19,34 +20,32 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-4 col-span-12">
             <Link href="/" className="inline-block mb-6 md:mb-8">
-              <div className="text-2xl md:text-3xl font-light text-white tracking-tighter">
-                <span className="font-bold" style={{ color: accentColor }}>Alture</span> & Co.
+              <div className="font-logo text-2xl md:text-3xl font-extralight text-white whitespace-nowrap">
+                Alture <span className="accent-light">&</span> Co.
               </div>
             </Link>
-            <div className="flex gap-4">
-              <SocialLink icon="ph:instagram-logo-thin" href="https://instagram.com/altureandco" />
-            </div>
+            <p className="text-sm text-white/45 leading-relaxed max-w-[26ch]">Business Bay, Dubai</p>
           </div>
 
           {/* Navigation Columns */}
           <div className="md:col-span-8 col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] mb-4 md:mb-8" style={{ color: accentColor }}>{t.footer.explore}</h4>
+              <h4 className="text-[11px] !font-normal uppercase tracking-[0.14em] mb-4 md:mb-6 text-white/45">{t.footer.explore}</h4>
               <ul className="space-y-3 md:space-y-4">
                 <FooterLink href="/" label={t.footer.home} />
                 <FooterLink href="/alturelock" label={t.footer.alturelock} />
                 <FooterLink href="/#contact" label={t.footer.contactLink} />
                 <li>
-                  <Link href="/education" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-light text-sm tracking-wide">
-                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#E879F9" }} />
+                  <Link href="/education" className="inline-flex items-center gap-2 nav-link is-inline font-light text-sm tracking-wide">
+                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#E3A1F7", filter: "drop-shadow(0 0 5px rgba(227, 161, 247, 0.7))" }} />
                     {t.footer.education}
                   </Link>
-                </li>
+              </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] mb-4 md:mb-8" style={{ color: accentColor }}>{t.footer.legal}</h4>
+              <h4 className="text-[11px] !font-normal uppercase tracking-[0.14em] mb-4 md:mb-6 text-white/45">{t.footer.legal}</h4>
               <ul className="space-y-3 md:space-y-4">
                 <FooterLink href="/privacy-policy" label={t.footer.privacyPolicy} />
                 <FooterLink href="/terms-of-service" label={t.footer.termsOfService} />
@@ -55,25 +54,13 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] mb-4 md:mb-8" style={{ color: accentColor }}>{t.footer.contact}</h4>
+              <h4 className="text-[11px] !font-normal uppercase tracking-[0.14em] mb-4 md:mb-6 text-white/45">{t.footer.contact}</h4>
               <ul className="space-y-3 md:space-y-4">
-                <li className="flex items-start gap-3 text-gray-400 font-light">
-                  <Icon
-                    icon="ph:map-pin-thin"
-                    className="w-5 h-5 mt-1 flex-shrink-0"
-                    style={{ color: isEducation ? "#D1D5DB" : "#D4AF37" }}
-                  />
-                  <span className="text-sm md:text-base">Business Bay, Dubai</span>
+                <li>
+                  <a href="mailto:celine@altureandco.com" className="nav-link is-inline font-light text-sm tracking-wide break-all">celine@altureandco.com</a>
                 </li>
                 <li>
-                  <a href="mailto:celine@altureandco.com" className="flex items-center gap-3 text-gray-400 font-light hover:text-white transition-colors">
-                    <Icon
-                      icon="ph:envelope-simple-thin"
-                      className="w-5 h-5 flex-shrink-0"
-                      style={{ color: isEducation ? "#D1D5DB" : "#D4AF37" }}
-                    />
-                    <span className="text-sm md:text-base break-all">celine@altureandco.com</span>
-                  </a>
+                  <SocialLinks className="-ml-2.5" />
                 </li>
               </ul>
             </div>
@@ -89,18 +76,16 @@ const Footer = () => {
   );
 };
 
-const FooterLink = ({ href, label }: { href: string, label: string }) => (
-  <li>
-    <Link href={href} className="text-gray-400 hover:text-[#D4AF37] transition-colors font-light text-sm tracking-wide">
-      {label}
-    </Link>
-  </li>
-);
-
-const SocialLink = ({ icon, href }: { icon: string, href: string }) => (
-  <a href={href} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300">
-    <Icon icon={icon} className="w-5 h-5" />
-  </a>
-);
+const FooterLink = ({ href, label }: { href: string, label: string }) => {
+  const pathname = usePathname();
+  const active = pathname === href;
+  return (
+    <li>
+      <Link href={href} aria-current={active ? "page" : undefined} className={`nav-link is-inline font-light text-sm tracking-wide ${active ? "is-active" : ""}`}>
+        {label}
+      </Link>
+    </li>
+  );
+};
 
 export default Footer;

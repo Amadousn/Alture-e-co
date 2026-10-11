@@ -78,7 +78,7 @@ export default function PropertyDetailsClient({ property }: { property: property
         
         {/* Hero Content */}
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-24 flex flex-col items-start justify-end h-full animate-in fade-in slide-in-from-bottom-10 duration-1000">
-           <div className="bg-[#B8860B]/20 backdrop-blur-md border border-[#B8860B]/40 px-6 py-2 text-[#F4C430] text-xs font-bold tracking-[0.2em] uppercase mb-8">
+           <div className="bg-[#A1A1AA]/20 backdrop-blur-md border border-[#A1A1AA]/40 px-6 py-2 text-[#F4C430] text-xs font-bold tracking-[0.2em] uppercase mb-8">
               {property.status} • {property.category}
            </div>
            <h1 className="text-5xl md:text-8xl font-thin text-white mb-8 tracking-tighter drop-shadow-2xl max-w-5xl leading-none">
@@ -86,18 +86,18 @@ export default function PropertyDetailsClient({ property }: { property: property
            </h1>
            <div className="flex items-center gap-8 text-white text-lg font-light tracking-widest">
               <span className="flex items-center gap-3">
-                <Icon icon="ph:map-pin-thin" className="text-[#D4AF37] w-6 h-6" /> 
+                <Icon icon="ph:map-pin-thin" className="text-[#FFFFFF] w-6 h-6" /> 
                 <span className="uppercase">{property.location}</span>
               </span>
-              <span className="text-[#D4AF37]">•</span>
-              <span className="text-3xl font-light text-[#D4AF37]">{property.property_price}</span>
+              <span className="text-[#FFFFFF]">•</span>
+              <span className="text-3xl font-light text-[#FFFFFF]">{property.property_price}</span>
            </div>
         </div>
 
         {/* View Photos Button */}
         <button 
           onClick={openGallery}
-          className="absolute bottom-12 right-12 bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 font-light tracking-[0.2em] hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-500 flex items-center gap-4 group z-20 uppercase text-xs"
+          className="absolute bottom-12 right-12 bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 font-light tracking-[0.2em] hover:bg-[#FFFFFF] hover:border-[#FFFFFF] hover:text-black transition-all duration-500 flex items-center gap-4 group z-20 uppercase text-xs"
         >
           <Icon icon="ph:squares-four-thin" className="w-5 h-5" />
           <span>View Gallery</span>
@@ -120,7 +120,7 @@ export default function PropertyDetailsClient({ property }: { property: property
                  { label: 'Type', value: property.type }
                ].map((stat, i) => (
                  <div key={i} className="text-center md:text-left">
-                    <div className="text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] mb-3 font-semibold">{stat.label}</div>
+                    <div className="text-[#FFFFFF] text-[10px] uppercase tracking-[0.25em] mb-3 font-semibold">{stat.label}</div>
                     <div className="text-4xl font-thin text-gray-900 dark:text-white">{stat.value}</div>
                  </div>
                ))}
@@ -129,7 +129,7 @@ export default function PropertyDetailsClient({ property }: { property: property
             {/* Narrative Description */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
                <h2 className="font-light text-4xl mb-10 tracking-tight text-gray-900 dark:text-white">
-                 <span className="text-[#D4AF37]">The</span> Residence
+                 <span className="text-[#FFFFFF]">The</span> Residence
                </h2>
                {property.description ? (
                  <div className="whitespace-pre-line text-gray-600 dark:text-gray-400 leading-loose font-light text-xl text-justify">
@@ -175,8 +175,8 @@ export default function PropertyDetailsClient({ property }: { property: property
 
                      return (
                         <div key={i} className="flex items-center gap-4 text-gray-800 dark:text-gray-200 group cursor-default">
-                           <div className="p-3 rounded-full border border-gray-200 dark:border-gray-800 group-hover:border-[#D4AF37] transition-colors">
-                              <Icon icon={icon} className="w-6 h-6 text-[#D4AF37]" />
+                           <div className="p-3 rounded-full border border-gray-200 dark:border-gray-800 group-hover:border-[#FFFFFF] transition-colors">
+                              <Icon icon={icon} className="w-6 h-6 text-[#FFFFFF]" />
                            </div>
                            <span className="font-light text-lg tracking-wide">{item}</span>
                         </div>
@@ -190,12 +190,12 @@ export default function PropertyDetailsClient({ property }: { property: property
           <div className="lg:col-span-5 relative">
             <div className="sticky top-32 p-10 bg-[#FAFAFA] dark:bg-[#111] border border-gray-100 dark:border-gray-800">
                <div className="text-center mb-10">
-                 <p className="text-[#D4AF37] uppercase tracking-[0.2em] text-xs font-bold mb-4">Listing Price</p>
+                 <p className="text-[#FFFFFF] uppercase tracking-[0.2em] text-xs font-bold mb-4">Listing Price</p>
                  <div className="text-5xl font-extralight text-gray-900 dark:text-white">{property.property_price}</div>
                </div>
 
                <div className="flex items-center gap-6 mb-10 pb-10 border-b border-gray-200 dark:border-gray-800">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#D4AF37] p-1">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#FFFFFF] p-1">
                     <div className="w-full h-full bg-gray-200 rounded-full relative overflow-hidden">
                        {/* Ideally replace with real agent image */}
                        <Icon icon="ph:user-thin" className="w-full h-full p-2 text-gray-400" />
@@ -203,22 +203,22 @@ export default function PropertyDetailsClient({ property }: { property: property
                   </div>
                   <div>
                     <div className="text-lg font-medium text-gray-900 dark:text-white">Sarah Jenkins</div>
-                    <div className="text-[#D4AF37] text-xs uppercase tracking-widest mt-1">Senior Broker</div>
+                    <div className="text-[#FFFFFF] text-xs uppercase tracking-widest mt-1">Senior Broker</div>
                     <div className="text-gray-400 text-sm mt-2 font-light">+971 50 123 4567</div>
                   </div>
                </div>
 
                <div className="space-y-4">
-                 <button className="w-full bg-[#111] dark:bg-white text-white dark:text-black py-4 font-medium text-sm uppercase tracking-[0.15em] hover:bg-[#D4AF37] dark:hover:bg-[#D4AF37] hover:text-white transition-colors duration-300">
+                 <button className="w-full bg-[#111] dark:bg-white text-white dark:text-black py-4 font-medium text-sm uppercase tracking-[0.15em] hover:bg-[#FFFFFF] dark:hover:bg-[#FFFFFF] hover:text-white transition-colors duration-300">
                     Schedule Viewing
                  </button>
-                 <button className="w-full border border-gray-300 dark:border-gray-700 py-4 font-medium text-sm uppercase tracking-[0.15em] text-gray-900 dark:text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors duration-300">
+                 <button className="w-full border border-gray-300 dark:border-gray-700 py-4 font-medium text-sm uppercase tracking-[0.15em] text-gray-900 dark:text-white hover:border-[#FFFFFF] hover:text-[#FFFFFF] transition-colors duration-300">
                     Contact Broker
                  </button>
                </div>
 
                <div className="mt-8 text-center">
-                  <span className="text-[#D4AF37] text-xs uppercase tracking-widest">Alture & Co. Exclusive</span>
+                  <span className="text-[#FFFFFF] text-xs uppercase tracking-widest">Alture & Co. Exclusive</span>
                </div>
             </div>
           </div>

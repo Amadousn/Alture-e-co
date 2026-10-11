@@ -46,14 +46,28 @@ export const extendedConfig = {
     '2': '2',
     '999': '999'
   },
+  fontFamily: {
+    sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+    mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+    logo: ['var(--font-logo)', 'var(--font-sans)', 'sans-serif'],
+  },
   colors: {
-    // Primary - Gold for CTAs and accents
-    primary: "#D4AF37",        // Classic gold
-    primary_hover: "#F4D03F",  // Lighter gold for hover
+    // Primary - White for CTAs and accents. The site is black and white;
+    // colour is reserved for market direction (up / down below).
+    primary: "#FFFFFF",        // White
+    primary_hover: "#D4D4D8",  // Light grey for hover
 
-    // Secondary - Darker gold for variety
-    secondary: "#B8860B",      // Dark goldenrod
-    secondary_hover: "#DAA520", // Goldenrod
+    // Secondary - Greys
+    secondary: "#A1A1AA",      
+    secondary_hover: "#D4D4D8", 
+
+    // The one brand colour, used sparingly: the "&" in the logo, the accent
+    // word in a headline, section labels and text links.
+    accent: "#E3A1F7",
+
+    // Market direction: teal for gains, pink for losses. Never green and red.
+    up: "#20B8A8",
+    down: "#E955A8",
 
     // Backgrounds - Pure black
     background: "#000000",     // Pure black
@@ -75,10 +89,10 @@ export const extendedConfig = {
     light: "#F8FAFC",
     section: "#0A0A0A",
     herobg: "#0A0A0A",
-    cyan: "#D4AF37",          // Using gold instead
+    cyan: "#FFFFFF",          // Using white instead
     lightgray: "#e5e7eb",
     darkgray: "#374151",
-    skyBlue: "#D4AF37"        // Using gold instead
+    skyBlue: "#FFFFFF"        // Using white instead
   },
   borderRadius: {
     'lg': '0.625rem',

@@ -26,8 +26,8 @@ export default function FeaturedProperties({ properties }: { properties: propert
 
       {/* Decorative gold elements */}
       <div className="absolute inset-0 opacity-10 z-0 pointer-events-none">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#D4AF37] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#B8860B] rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#FFFFFF] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#A1A1AA] rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
@@ -35,12 +35,12 @@ export default function FeaturedProperties({ properties }: { properties: propert
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
             <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="h-px w-12 bg-[#D4AF37]"></div>
-                <span className="text-[#D4AF37] text-xs font-bold tracking-[0.3em] uppercase">Exclusive</span>
-                <div className="h-px w-12 bg-[#D4AF37]"></div>
+                <div className="h-px w-12 bg-[#FFFFFF]"></div>
+                <span className="text-[#FFFFFF] text-xs font-bold tracking-[0.3em] uppercase">Exclusive</span>
+                <div className="h-px w-12 bg-[#FFFFFF]"></div>
             </div>
             <h2 className="text-3xl md:text-5xl font-thin text-white mb-4 md:mb-6">
-                Featured <span className="text-[#D4AF37]">Properties</span>
+                Featured <span className="text-[#FFFFFF]">Properties</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
                 Explore our latest hand-picked selection of premium real estate opportunities in Dubai.
@@ -66,16 +66,16 @@ export default function FeaturedProperties({ properties }: { properties: propert
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                         
                         {/* Price Badge */}
-                        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-[#D4AF37]/30 px-3 py-1.5 md:px-4 md:py-2 text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
+                        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-[#FFFFFF]/30 px-3 py-1.5 md:px-4 md:py-2 text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
                             {property.status}
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <div className="text-[#D4AF37] text-xs uppercase tracking-widest font-bold">
+                        <div className="text-[#FFFFFF] text-xs uppercase tracking-widest font-bold">
                             {property.location}
                         </div>
-                        <h3 className="text-xl md:text-2xl font-light text-white group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-xl md:text-2xl font-light text-white group-hover:text-[#FFFFFF] transition-colors">
                             {property.property_title}
                         </h3>
                         <div className="flex items-center gap-4 text-gray-400 text-xs md:text-sm font-light pt-2 border-t border-white/10 mt-2 md:mt-4">
@@ -97,9 +97,9 @@ export default function FeaturedProperties({ properties }: { properties: propert
             ))}
             </div>
         ) : (
-            <div className="text-center py-12 md:py-20 border border-[#D4AF37]/20 rounded-lg bg-[#111]">
+            <div className="text-center py-12 md:py-20 border border-[#FFFFFF]/20 rounded-lg bg-[#111]">
                 <p className="text-gray-400 text-base md:text-lg font-light">No properties available at the moment.</p>
-                <p className="text-[#D4AF37] text-xs md:text-sm mt-2">Check back soon for exclusive listings.</p>
+                <p className="text-[#FFFFFF] text-xs md:text-sm mt-2">Check back soon for exclusive listings.</p>
             </div>
         )}
 
@@ -107,7 +107,7 @@ export default function FeaturedProperties({ properties }: { properties: propert
         <div className="text-center mt-12 md:mt-16">
             <Link 
                 href="#contact"
-                className="inline-block border border-white/20 text-white px-8 py-3 md:px-10 md:py-4 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-300"
+                className="inline-block border border-white/20 text-white px-8 py-3 md:px-10 md:py-4 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#FFFFFF] hover:border-[#FFFFFF] hover:text-black transition-all duration-300"
             >
                 Contact for Exclusive Listings
             </Link>
