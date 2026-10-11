@@ -3,14 +3,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Bubble, DEFAULT_FLOW_SETTINGS, FlowSettings, FlowSnapshot, INTERVAL_MS, Signal, usd } from "@/utils/order-flow";
 import { useOrderFlow } from "@/utils/use-order-flow";
+import { PROFILE_DEFAULTS, volumeProfile } from "@/utils/volume-profile";
 
-type Kline = { t: number; o: number; h: number; l: number; c: number };
-type Prefs = { bubbles: boolean; absorption: boolean; exhaustion: boolean; divergence: boolean; buyColor: string; sellColor: string; exhColor: string; opacity: number; settings: FlowSettings };
+type Kline = { t: number; o: number; h: number; l: number; c: number; v?: number };
+type Prefs = { profile: boolean; bubbles: boolean; absorption: boolean; exhaustion: boolean; divergence: boolean; buyColor: string; sellColor: string; exhColor: string; opacity: number; settings: FlowSettings };
 type Pick = { type: "bubble"; bubble: Bubble } | { type: "signal"; signal: Signal };
 type Hit = { x: number; y: number; r: number; pick: Pick };
 
 const STORE = "alturelock.flow.v1";
-const DEFAULT_PREFS: Prefs = { bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#20B8A8", sellColor: "#E955A8", exhColor: "#E3A1F7", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
+const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#20B8A8", sellColor: "#E955A8", exhColor: "#E3A1F7", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
 const LABELS: Record<string, string> = { "1": "1 minute", "3": "3 minutes", "5": "5 minutes", "15": "15 minutes", "30": "30 minutes", "60": "1 hour", "240": "4 hours", D: "1 day" };
 
 const fmtPrice = (value: number) => value.toLocaleString(undefined, { minimumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5 });
@@ -48,7 +49,9 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
     const plotW = w - gutter;
     const plotH = h - top - axis - cvdH - 8;
     const cw = narrow ? 7 : 9;
-    const count = Math.max(10, Math.min(rows.length, Math.floor(plotW / cw) - 3));
+    // The Volume Profile has its own strip between the candles and the price scale.
+    const vpW = prefs.profile ? Math.round(plotW * (narrow ? 0.22 : 0.17)) : 0;
+    const count = Math.max(10, Math.min(rows.length, Math.floor((plotW - vpW) / cw) - 3));
     const view = rows.slice(-count);
     const first = view[0].t;
     const lo = Math.min(...view.map((row) => row.l));
@@ -147,6 +150,39 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
     ctx.beginPath();
     ctx.rect(0, 0, plotW, top + plotH + 2);
     ctx.clip();
+
+    // Volume Profile: the volume traded at each price over the candles in view, from the exchange's own klines.
+    // Each row is up-candle volume (light) then down-candle volume; rows inside the value area are brighter.
+    const traded = view.filter((row) => (row.v ?? 0) > 0).map((row) => ({ ...row, v: row.v ?? 0 }));
+    if (vpW > 0 && traded.length >= 10) {
+        const profile = volumeProfile(traded, { ...PROFILE_DEFAULTS, rows: Math.max(24, Math.round(plotH / 4)) });
+        const biggest = Math.max(...profile.rows);
+        const rowH = Math.max(1, Math.abs(y(profile.lo) - y(profile.lo + profile.step)) - 1);
+        const widest = vpW - 6;
+        profile.rows.forEach((volume, j) => {
+            if (volume <= 0 || biggest <= 0) return;
+            const price = profile.lo + (j + 0.5) * profile.step;
+            const width = (widest * volume) / biggest;
+            const upWidth = (width * profile.up[j]) / volume;
+            const inside = price <= profile.vah && price >= profile.val;
+            const py = y(price) - rowH / 2;
+            ctx.fillStyle = `rgba(230,230,230,${inside ? 0.5 : 0.18})`;
+            ctx.fillRect(plotW - upWidth, py, upWidth, rowH);
+            ctx.fillStyle = `rgba(181,124,196,${inside ? 0.7 : 0.26})`;
+            ctx.fillRect(plotW - width, py, width - upWidth, rowH);
+        });
+        ctx.textAlign = "left";
+        for (const [name, price, color] of [["VAH", profile.vah, "rgba(255,255,255,0.55)"], ["POC", profile.poc, "rgba(245,217,10,0.95)"], ["VAL", profile.val, "rgba(255,255,255,0.55)"]] as const) {
+            const py = Math.round(y(price)) + 0.5;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(plotW - vpW - (name === "POC" ? 28 : 0), py);
+            ctx.lineTo(plotW, py);
+            ctx.stroke();
+            ctx.fillStyle = color;
+            ctx.fillText(name, plotW - vpW + 2, py - 7);
+        }
+    }
 
     // Bubbles: one per cluster of aggressive volume at a price, area in proportion to its size.
     if (prefs.bubbles && snapshot && snapshot.bubbleThreshold) {
@@ -401,6 +437,7 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
                     {statusText}
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1" role="group" aria-label="Order flow layers">
+                    <Toggle on={prefs.profile} onChange={(profile) => set({ profile })}>Volume profile</Toggle>
                     <Toggle on={prefs.bubbles} onChange={(bubbles) => set({ bubbles })}>Bubbles</Toggle>
                     <Toggle on={prefs.absorption} onChange={(absorption) => set({ absorption })}>Absorption {found("absorption")}</Toggle>
                     <Toggle on={prefs.exhaustion} onChange={(exhaustion) => set({ exhaustion })}>Exhaustion {found("exhaustion")}</Toggle>

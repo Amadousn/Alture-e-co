@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ProductScreen from "./product-screen";
-import IndicatorFigure from "./indicator-figure";
 import JournalDemo from "@/app/components/altur/journal/journal-demo";
 import { useLanguage } from "@/app/i18n/language-context";
 import { useSession } from "@/utils/use-session";
@@ -28,7 +27,7 @@ const FEATURES = [
 ];
 
 // What the ALTURE & CO All-in-One indicator draws.
-const INDICATOR = ["Volume Profile: a histogram beside the chart showing where volume is concentrated at each price, with the Point of Control (POC), the Value Area High and Low (VAH, VAL), and high and low volume nodes (HVN, LVN)", "VWAP with its bands", "EMA Cloud", "Market Structure, including BOS and CHoCH, with higher-timeframe context", "Fair Value Gaps", "An on-chart checklist from direction to entry"];
+const INDICATOR = ["Volume Profile, including the histogram", "VWAP and its bands", "Market Structure, including BOS and CHoCH", "Fair Value Gaps", "On-chart checklist, from market direction to entry"];
 
 const TOOLS = [
     ["Watchlist", "Your instruments with live prices, in your own order."],
@@ -181,15 +180,14 @@ const ProductPage = () => {
             {/* The indicator */}
             <section className="bg-black !py-16 md:!py-24">
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
-                    <div className="grid grid-cols-1 items-start gap-x-14 gap-y-10 lg:grid-cols-12">
+                    <div className="grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-12">
                         <div className="min-w-0 lg:col-span-7 lg:order-1 order-2">
-                            <IndicatorFigure />
+                            <Shot src="/images/alturelock/order-flow.jpg" alt="The AltureLock terminal's order flow view of Bitcoin: candles with the Volume Profile histogram beside them" width={800} height={779} caption="The AltureLock terminal: order flow with the Volume Profile, from live Bybit data." />
                         </div>
                         <div className="min-w-0 lg:col-span-5 lg:order-2 order-1">
-                            <p className={`${label} !mb-2`}>The Alture Indicator</p>
-                            <p className="mb-5 text-sm text-white/55">Alture &amp; Co. has three published indicators on TradingView.</p>
+                            <p className={label}>The Alture Indicator</p>
                             <h2 className={heading}>One indicator for the whole read.</h2>
-                            <p className={`mt-6 ${body}`}>ALTURE &amp; CO All-in-One is our TradingView indicator. It puts the context, the setup and the entry timing on a single chart:</p>
+                            <p className={`mt-6 ${body}`}>ALTURE &amp; CO | All-in-One is our TradingView indicator, bringing market context, setup structure and entry timing together on one chart.</p>
                             <ul className="mt-5 space-y-2.5 text-[15px] text-white/75">
                                 {INDICATOR.map((item) => (
                                     <li key={item} className="flex gap-3">
@@ -198,7 +196,7 @@ const ProductPage = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="mt-6 text-sm leading-relaxed text-white/45">The indicator runs inside TradingView. Separately, in the AltureLock terminal, the order flow view shows aggressive volume from live exchange trades.</p>
+                            <p className="mt-6 text-sm leading-relaxed text-white/45">The indicator runs directly inside TradingView.</p>
                         </div>
                     </div>
                 </div>

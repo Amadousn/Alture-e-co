@@ -3,7 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { volumeProfile, PROFILE_DEFAULTS } from "../src/utils/volume-profile.ts";
-import { SAMPLE_CANDLES, SAMPLE_LOOKBACK } from "../src/app/components/altur/alture-lock/indicator-example-data.ts";
+import { SAMPLE_CANDLES, SAMPLE_LOOKBACK } from "./fixtures/btc-sample.ts";
 
 const candles = SAMPLE_CANDLES.map(([t, o, h, l, c, v]) => ({ t, o, h, l, c, v }));
 const window = candles.slice(-SAMPLE_LOOKBACK);

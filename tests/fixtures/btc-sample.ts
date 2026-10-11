@@ -1,5 +1,4 @@
-// Real market data, kept as a fixed sample so the figure on the product page
-// always shows the same thing: 90 closed 15-minute candles of BTCUSDT
+// Real market data, kept as a fixed sample for the Volume Profile tests: 90 closed 15-minute candles of BTCUSDT
 // perpetual from Bybit's public API, 09 Oct 2026 14:45 to 10 Oct 2026 13:00 UTC.
 // Each row is [open time, open, high, low, close, volume in BTC].
 export const SAMPLE_SOURCE = "Bybit BTCUSDT perpetual, 15-minute candles, 9–10 October 2026";
