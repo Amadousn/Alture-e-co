@@ -72,11 +72,8 @@ const AltureLockLoginPage = () => {
                     {error}
                 </p>
             )}
-            {!LOGIN_OPEN && (
-                <p role="status" className="border-l-2 border-[#FACC15] pl-4 text-sm text-white/80">
-                    {loginPage.closed}
-                </p>
-            )}
+            {/* Access has not begun. The page stays pure brand, so this is said to screen readers only. */}
+            {!LOGIN_OPEN && <p className="sr-only">{loginPage.closed}</p>}
             <button type="submit" disabled={!LOGIN_OPEN || loading || !username || !password} className="group flex w-full items-center justify-center gap-3 rounded-sm bg-white py-3.5 text-sm font-semibold text-black hover:bg-[#e4e4e8] transition-colors lit disabled:opacity-30 disabled:shadow-none">
                 {loading ? alturelockLogin.signingInButton : alturelockLogin.signInButton}
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -139,15 +136,23 @@ const AltureLockLoginPage = () => {
             </section>
         );
 
-    // A: the same opening as AltureLock itself, with the form beneath the wordmark.
+    // Brand only: the ribbon and the wordmark, nothing else.
+    if (style === "brand")
+        return (
+            <section className="bg-black min-h-[100dvh] flex flex-col items-center justify-center px-6 !pt-24 !pb-24 text-center">
+                <h1 className="sr-only">AltureLock</h1>
+                <Ribbon wide className="h-[40vh] min-h-[200px] max-h-[440px] max-w-6xl" />
+                <div className="mt-8">{wordmark}</div>
+            </section>
+        );
+
+    // A: the brand and the form, with nothing written beside them.
     return (
-        <section className="bg-black min-h-[100dvh] flex flex-col items-center justify-center px-6 !pt-24 !pb-16 text-center">
-            <Ribbon className="h-[26vh] min-h-[150px] max-h-[300px] max-w-5xl" />
+        <section className="bg-black min-h-[100dvh] flex flex-col items-center justify-center px-6 !pt-24 !pb-20 text-center">
+            <Ribbon wide className="h-[30vh] min-h-[170px] max-h-[340px] max-w-5xl" />
             <h1 className="sr-only">Log in to AltureLock</h1>
-            <div className="mt-4">{wordmark}</div>
-            <p className="mt-4 mb-10 text-sm md:text-base text-white/60">{t.entry.headline}</p>
+            <div className="mt-6 mb-12">{wordmark}</div>
             {form}
-            <div className="mt-8">{others}</div>
         </section>
     );
 };

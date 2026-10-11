@@ -10,13 +10,15 @@ type Props = {
     series?: number[] | null;
     // Tells the page which point of the series is under the pointer.
     onProbe?: (index: number | null) => void;
+    // Follows the pointer anywhere on the page, not only over the ribbon itself.
+    wide?: boolean;
 };
 
 // A ribbon of fine lines that turns over on itself once, drawn on a canvas.
 // It unrolls when it appears, turns where the pointer is, swells under it,
 // and sends a ripple along its length when pressed. With reduced motion it
 // is drawn once and left still.
-const Ribbon = ({ className = "", leaving = false, series = null, onProbe }: Props) => {
+const Ribbon = ({ className = "", leaving = false, series = null, onProbe, wide = false }: Props) => {
     const ref = useRef<HTMLCanvasElement>(null);
     const live = useRef({ leaving, series, onProbe });
     live.current = { leaving, series, onProbe };
@@ -53,7 +55,7 @@ const Ribbon = ({ className = "", leaving = false, series = null, onProbe }: Pro
 
             if (!started) started = time || 1;
             const t = time / 1000;
-            const drawn = still ? 1 : Math.min(1, (time - started) / 1500);
+            const drawn = still ? 1 : Math.min(1, (time - started) / 900);
             const reach = 1 - Math.pow(1 - drawn, 3);
             flat += ((live.current.leaving ? 1 : 0) - flat) * 0.14;
             turn += ((over ? pointer : 0.42 + Math.sin(t * 0.3) * 0.03) - turn) * 0.07;
@@ -149,21 +151,23 @@ const Ribbon = ({ className = "", leaving = false, series = null, onProbe }: Pro
         };
         const redraw = () => still && draw(performance.now());
 
-        canvas.addEventListener("pointermove", enter);
-        canvas.addEventListener("pointerdown", press);
-        canvas.addEventListener("pointerleave", leave);
-        canvas.addEventListener("pointercancel", leave);
+        // On a page that is all brand, the whole page is the ribbon's stage.
+        const stage: HTMLElement = wide ? document.documentElement : canvas;
+        stage.addEventListener("pointermove", enter);
+        stage.addEventListener("pointerdown", press);
+        stage.addEventListener("pointerleave", leave);
+        stage.addEventListener("pointercancel", leave);
         window.addEventListener("resize", redraw);
         frame = requestAnimationFrame(draw);
         return () => {
             cancelAnimationFrame(frame);
-            canvas.removeEventListener("pointermove", enter);
-            canvas.removeEventListener("pointerdown", press);
-            canvas.removeEventListener("pointerleave", leave);
-            canvas.removeEventListener("pointercancel", leave);
+            stage.removeEventListener("pointermove", enter);
+            stage.removeEventListener("pointerdown", press);
+            stage.removeEventListener("pointerleave", leave);
+            stage.removeEventListener("pointercancel", leave);
             window.removeEventListener("resize", redraw);
         };
-    }, []);
+    }, [wide]);
 
     return <canvas ref={ref} className={`block w-full cursor-crosshair ${className}`} style={{ touchAction: "pan-y" }} aria-hidden="true" />;
 };
