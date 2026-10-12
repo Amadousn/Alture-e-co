@@ -27,7 +27,14 @@ const FEATURES = [
 ];
 
 // What the ALTURE & CO All-in-One indicator draws.
-const INDICATOR = ["Volume Profile, including the histogram", "VWAP and its bands", "Market Structure, including BOS and CHoCH", "Fair Value Gaps", "On-chart checklist, from market direction to entry"];
+const INDICATOR = [
+    "Volume Profile, including the horizontal histogram, the Point of Control (POC), the Value Area High (VAH) and the Value Area Low (VAL)",
+    "Volume Weighted Average Price (VWAP) and its bands",
+    "Exponential Moving Average (EMA) Cloud",
+    "Market Structure, including Break of Structure (BOS) and Change of Character (CHoCH), with higher-timeframe context",
+    "Fair Value Gaps (FVG)",
+    "On-chart checklist, from market direction to entry",
+];
 
 const TOOLS = [
     ["Watchlist", "Your instruments with live prices, in your own order."],
@@ -41,16 +48,16 @@ const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
 const heading = "!text-3xl md:!text-[40px] md:!leading-[1.1] text-white";
 const body = "text-[15px] md:text-base leading-relaxed text-white/60";
 
-// A real capture of the product. On a phone a wide desktop capture is not
-// shrunk to nothing: it keeps a readable size and scrolls sideways.
+// A real capture of the product on a desktop screen. On a phone it is scaled
+// to the screen's width: the workspace is shown whole, as a desktop layout.
 const Shot = ({ src, alt, width, height, caption }: { src: string; alt: string; width: number; height: number; caption: string }) => (
     <figure>
-        <div className="overflow-x-auto rounded-sm border border-white/15">
-            <Image src={src} alt={alt} width={width} height={height} sizes="(min-width: 1024px) 640px, 680px" className="block h-auto w-full min-w-[620px] lg:min-w-0" />
+        <div className="overflow-hidden rounded-sm border border-white/15">
+            <Image src={src} alt={alt} width={width} height={height} sizes="(min-width: 1024px) 640px, 100vw" className="block h-auto w-full" />
         </div>
         <figcaption className="mt-3 text-xs text-white/40">
             {caption}
-            <span className="lg:hidden"> Desktop view: swipe sideways to see all of it.</span>
+            <span className="lg:hidden"> Shown as on a desktop screen.</span>
         </figcaption>
     </figure>
 );

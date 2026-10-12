@@ -8,7 +8,7 @@ const DOWN = "#E955A8";
 const ACCENT = "#E3A1F7";
 const AXIS_W = 62;
 const AXIS_H = 26;
-const TOP = 30;
+const TOP = 12;
 
 export type ChartMark = { i: number; kind: "high" | "low"; label?: string; tone?: "accent" | "good" | "bad" };
 export type ChartZone = { from: number; to: number; tone: "support" | "resistance" | "guess" | "miss"; label?: string };
@@ -25,6 +25,11 @@ export type ChartView = {
     zones?: ChartZone[];
     // An axis to light up.
     axis?: "price" | "time" | null;
+    // Price levels drawn across the chart, such as the entry, stop loss and take profit of a simulated trade.
+    levels?: { price: number; label: string; tone: "entry" | "stop" | "target" }[];
+    // How slowly the chart prints itself (milliseconds per candle), and how many candles are already there when it appears.
+    pace?: number;
+    start?: number;
     // A ring around candles the learner has picked.
     rings?: Record<number, "good" | "bad" | "shown" | "pin">;
 };
@@ -35,8 +40,10 @@ type Props = {
     onCandle?: (index: number) => void;
     onAxis?: (axis: "price" | "time") => void;
     onPrice?: (price: number) => void;
-    // A short note in the corner, e.g. the timeframe.
+    // What the chart is, written beneath it.
     note?: string;
+    // Fill the height of whatever holds the chart, with no readout above it: for a chart used as a backdrop.
+    fill?: boolean;
 };
 
 function niceStep(range: number, target: number) {
@@ -49,11 +56,14 @@ function niceStep(range: number, target: number) {
 const two = (value: number) => String(value).padStart(2, "0");
 // Times are written in UTC so that every learner, and the server, read the same labels.
 export const clock = (time: number) => `${two(new Date(time).getUTCHours())}:${two(new Date(time).getUTCMinutes())}`;
+const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// A candle is named by its time of day, or by its date when each candle is a day.
+export const stamp = (time: number, minutes: number) => (minutes >= 1440 ? `${new Date(time).getUTCDate()} ${MONTH[new Date(time).getUTCMonth()]}` : `${clock(time)} UTC`);
 
 // The chart every lesson is taught on: candles with a price scale and a time
 // scale, which can print itself, light up what is being explained, and answer
 // when the learner clicks a candle, an axis or a price.
-const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: Props) => {
+const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note, fill = false }: Props) => {
     const wrap = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState({ w: 0, h: 0 });
     const [hover, setHover] = useState<{ x: number; y: number } | null>(null);
@@ -71,9 +81,12 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
     }, []);
 
     // A new set of candles is printed from the start; a change in how many are shown continues from where it was.
+    const startAt = Math.min(view.start ?? 0, candles.length);
     useEffect(() => {
-        from.current = 0;
-        setDrawn(0);
+        from.current = startAt;
+        setDrawn(startAt);
+        // A new set of candles starts where it is told to; later changes to `start` do not rewind it.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [candles]);
     useEffect(() => {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -84,11 +97,12 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
         const start = from.current;
         if (start === target) return;
         const began = performance.now();
-        const span = Math.min(1400, Math.max(260, Math.abs(target - start) * 28));
+        const span = view.pace ? Math.abs(target - start) * view.pace : Math.min(1400, Math.max(260, Math.abs(target - start) * 28));
         let frame = 0;
         const tick = (now: number) => {
             const k = Math.min(1, (now - began) / span);
-            const value = start + (target - start) * (1 - Math.pow(1 - k, 3));
+            // A paced chart prints candle by candle at an even speed; otherwise it eases in.
+            const value = start + (target - start) * (view.pace ? k : 1 - Math.pow(1 - k, 3));
             from.current = value;
             setDrawn(value);
             if (k < 1) frame = requestAnimationFrame(tick);
@@ -98,11 +112,11 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
     }, [target, candles]);
 
     const scale = useMemo(() => {
-        const lo = Math.min(...candles.map((candle) => candle.l), ...(view.zones ?? []).map((zone) => zone.from));
-        const hi = Math.max(...candles.map((candle) => candle.h), ...(view.zones ?? []).map((zone) => zone.to));
+        const lo = Math.min(...candles.map((candle) => candle.l), ...(view.zones ?? []).map((zone) => zone.from), ...(view.levels ?? []).map((level) => level.price));
+        const hi = Math.max(...candles.map((candle) => candle.h), ...(view.zones ?? []).map((zone) => zone.to), ...(view.levels ?? []).map((level) => level.price));
         const pad = (hi - lo) * 0.09;
         return { min: lo - pad, max: hi + pad };
-    }, [candles, view.zones]);
+    }, [candles, view.zones, view.levels]);
 
     const { w, h } = size;
     const plotW = Math.max(0, w - AXIS_W);
@@ -132,7 +146,23 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
     const clickable = Boolean(onCandle || onPrice);
 
     return (
-        <div>
+        <div className={fill ? "h-full" : undefined}>
+            {/* The candle being read: its four prices, in words. */}
+            <p className={`mb-1.5 flex min-h-[1.25rem] flex-wrap gap-x-4 gap-y-0.5 text-xs tabular-nums text-white/45 ${fill ? "hidden" : ""}`}>
+                {read &&
+                    (
+                        [
+                            ["Open", read.o],
+                            ["High", read.h],
+                            ["Low", read.l],
+                            ["Close", read.c],
+                        ] as const
+                    ).map(([name, value]) => (
+                        <span key={name}>
+                            {name} <span className="text-white/85">{exact(value)}</span>
+                        </span>
+                    ))}
+            </p>
         <div
             ref={wrap}
             className={`relative select-none ${clickable ? "cursor-pointer" : "cursor-crosshair"} ${className}`}
@@ -158,7 +188,7 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
                     {candles.map((candle, i) =>
                         i % every === Math.floor(every / 2) ? (
                             <text key={candle.t} x={x(i)} y={h - 8} fontSize={11} fill={view.axis === "time" ? "#FFFFFF" : "#8a8a94"} textAnchor="middle" className="tabular-nums" style={{ transition: "fill 300ms" }}>
-                                {clock(candle.t)}
+                                {view.minutes >= 1440 ? stamp(candle.t, view.minutes) : clock(candle.t)}
                             </text>
                         ) : null
                     )}
@@ -192,6 +222,24 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
                                 <line x1={x(i)} x2={x(i)} y1={y(candle.h)} y2={y(candle.l)} stroke={color} strokeWidth={1.2} />
                                 <rect x={x(i) - body / 2} y={Math.min(y(candle.o), y(candle.c))} width={body} height={Math.max(1.5, Math.abs(y(candle.o) - y(candle.c)))} fill={color} />
                                 {ring && <rect x={x(i) - body / 2 - 5} y={y(candle.h) - 6} width={body + 10} height={y(candle.l) - y(candle.h) + 12} fill="none" stroke={ring === "good" ? UP : ring === "bad" ? DOWN : ring === "shown" ? ACCENT : "#FFFFFF"} strokeOpacity={ring === "pin" ? 0.55 : 0.9} strokeDasharray={ring === "shown" ? "4 3" : undefined} rx={2} />}
+                            </g>
+                        );
+                    })}
+
+                    {/* Levels of a simulated trade */}
+                    {(view.levels ?? []).map((level) => {
+                        const color = level.tone === "stop" ? DOWN : level.tone === "target" ? UP : "#FFFFFF";
+                        return (
+                            <g key={level.tone} pointerEvents="none">
+                                <line x1={0} x2={plotW} y1={y(level.price)} y2={y(level.price)} stroke={color} strokeOpacity={0.85} strokeDasharray={level.tone === "entry" ? "5 4" : undefined} />
+                                <rect x={6} y={y(level.price) - 9} width={level.label.length * 6.3 + 12} height={18} fill="#000000" />
+                                <text x={12} y={y(level.price) + 4} fontSize={10} fontWeight={600} letterSpacing="0.08em" fill={color}>
+                                    {level.label.toUpperCase()}
+                                </text>
+                                <rect x={plotW + 1} y={y(level.price) - 9} width={AXIS_W - 2} height={18} fill="#000000" stroke={color} strokeOpacity={0.7} />
+                                <text x={plotW + 8} y={y(level.price) + 4} fontSize={11} fill={color} className="tabular-nums">
+                                    {fmt(level.price)}
+                                </text>
                             </g>
                         );
                     })}
@@ -236,25 +284,6 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note }: 
                 </svg>
             )}
 
-            {/* The candle being read */}
-            {read && (
-                <p className="pointer-events-none absolute left-0 top-0 flex flex-wrap gap-x-3 sm:gap-x-4 text-xs tabular-nums text-white/45">
-                    {(
-                        [
-                            ["Open", read.o],
-                            ["High", read.h],
-                            ["Low", read.l],
-                            ["Close", read.c],
-                        ] as const
-                    ).map(([name, value]) => (
-                        <span key={name}>
-                            {/* A narrow screen has room for the initial only. */}
-                            <span className="sm:hidden">{name[0]}</span>
-                            <span className="hidden sm:inline">{name}</span> <span className="text-white/85">{exact(value)}</span>
-                        </span>
-                    ))}
-                </p>
-            )}
         </div>
             {/* What this chart is: the market, the exchange, the timeframe and when. */}
             {note && <p className="mt-1.5 text-[11px] leading-snug text-white/40">{note}</p>}

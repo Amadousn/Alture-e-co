@@ -68,3 +68,75 @@ export function useEducationProgress() {
 
     return { progress, ready, returning, visit, complete, goTo, reset };
 }
+
+// ---- The simulated trade and the practice journal. Everything in it comes from the learner's own choices.
+export type PracticeTrade = {
+    id: string;
+    at: number;
+    scenario: string;
+    // When the chart's candles traded, e.g. "6 Sep 2026".
+    when: string;
+    side: "long" | "short" | "out";
+    entry: number | null;
+    stop: number | null;
+    target: number | null;
+    result: "target" | "stop" | "open" | "unfilled" | "out";
+    exit: number | null;
+    size: number;
+    gross: number;
+    fees: number;
+    net: number;
+    r: number;
+    // How many candles after the decision the trade ended.
+    bars: number | null;
+    // What price did over the candles that followed: the last close, the highest and the lowest.
+    after: { from: number; end: number; high: number; low: number };
+};
+export type JournalEntry = PracticeTrade & { reason: string; again: string; note: string };
+type Practice = { last: PracticeTrade | null; journal: JournalEntry[] };
+
+const PRACTICE_KEY = "alture-learning:practice:v1";
+const PRACTICE_EVENT = "alture-learning:practice";
+const NO_PRACTICE: Practice = { last: null, journal: [] };
+
+export function usePractice() {
+    const [practice, setPractice] = useState<Practice>(NO_PRACTICE);
+    const [ready, setReady] = useState(false);
+    const latest = useRef<Practice>(NO_PRACTICE);
+
+    useEffect(() => {
+        const read = () => {
+            try {
+                const raw = window.localStorage.getItem(PRACTICE_KEY);
+                latest.current = raw ? { ...NO_PRACTICE, ...(JSON.parse(raw) as Practice) } : NO_PRACTICE;
+            } catch {
+                latest.current = NO_PRACTICE;
+            }
+            setPractice(latest.current);
+        };
+        read();
+        setReady(true);
+        window.addEventListener("storage", read);
+        window.addEventListener(PRACTICE_EVENT, read);
+        return () => {
+            window.removeEventListener("storage", read);
+            window.removeEventListener(PRACTICE_EVENT, read);
+        };
+    }, []);
+
+    const update = useCallback((change: (current: Practice) => Practice) => {
+        latest.current = change(latest.current);
+        setPractice(latest.current);
+        try {
+            window.localStorage.setItem(PRACTICE_KEY, JSON.stringify(latest.current));
+            window.dispatchEvent(new Event(PRACTICE_EVENT));
+        } catch {
+            // Storage refused: the journal lasts for this visit only.
+        }
+    }, []);
+
+    const setLast = useCallback((trade: PracticeTrade) => update((current) => ({ ...current, last: trade })), [update]);
+    const record = useCallback((entry: JournalEntry) => update((current) => ({ ...current, journal: [entry, ...current.journal.filter((item) => item.id !== entry.id)] })), [update]);
+    const clear = useCallback(() => update(() => NO_PRACTICE), [update]);
+    return { practice, ready, setLast, record, clear };
+}

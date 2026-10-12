@@ -6,7 +6,7 @@ import EduBar from "./edu-bar";
 import { Lock } from "./education-programme";
 import { INTRODUCTION, MODULES } from "./programme-data";
 import LessonChart from "./intro/lesson-chart";
-import { candlesOf, LESSONS, measure, timeframeName } from "./intro/course";
+import { candlesOf, LESSONS, lessonsOf, measure, STAGES, timeframeName } from "./intro/course";
 import { SCENES, SOURCE } from "@/utils/education-chart-data";
 import { useEducationProgress } from "@/utils/education-progress";
 
@@ -40,7 +40,7 @@ const EducationDashboard = () => {
                 {/* Greeting */}
                 <h1 className="!text-3xl md:!text-[40px] md:!leading-[1.1] text-white">{returning ? "Welcome back." : "Welcome."}</h1>
                 <p className="mt-3 max-w-xl text-[15px] md:text-base leading-relaxed text-white/60">
-                    {stats.complete ? "You have completed the Introduction. The seven modules open once you are in the programme." : started && next ? `You are in lesson ${next.lesson + 1} of ${LESSONS.length}: ${LESSONS[next.lesson].title}.` : "Your programme begins with the Introduction: Reading the Chart."}
+                    {stats.complete ? "You have completed the Introduction. The seven modules open once you are in the programme." : started && next ? `You are in ${STAGES.find((stage) => stage.id === LESSONS[next.lesson].stage)!.word}: ${LESSONS[next.lesson].title}.` : "Your programme begins with the Introduction, and the Introduction begins with one question: what is Bitcoin?"}
                 </p>
 
                 <div className="mt-10 md:mt-14 grid gap-x-16 gap-y-12 lg:grid-cols-12">
@@ -52,11 +52,11 @@ const EducationDashboard = () => {
                         </p>
                         <h2 className="mt-3 !text-2xl md:!text-3xl text-white">{INTRODUCTION.name}</h2>
                         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/60">{INTRODUCTION.text}</p>
-                        <Link href={next ? `/education/introduction?lesson=${next.lesson + 1}` : "/education/introduction?lesson=1"} className="group mt-7 inline-flex items-center gap-3 rounded-sm bg-white px-6 py-3.5 text-sm font-medium text-black hover:bg-[#e4e4e8] transition-colors lit">
+                        <Link href={started && next ? `/education/introduction?lesson=${next.lesson + 1}` : "/education/introduction"} className="group mt-7 inline-flex items-center gap-3 rounded-sm bg-white px-6 py-3.5 text-sm font-medium text-black hover:bg-[#e4e4e8] transition-colors lit">
                             {stats.complete ? "Review the Introduction" : started && next ? `Continue: ${LESSONS[next.lesson].title}` : "Start the Introduction"}
                             <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                         </Link>
-                        <Link href={next ? `/education/introduction?lesson=${next.lesson + 1}` : "/education/introduction?lesson=1"} aria-label="Open the Introduction" className="mt-9 block">
+                        <Link href={started && next ? `/education/introduction?lesson=${next.lesson + 1}` : "/education/introduction"} aria-label="Open the Introduction" className="mt-9 block">
                             {ready && <LessonChart className="h-[240px] md:h-[300px]" note={`${SOURCE} · ${timeframeName(SCENES.first.timeframe)} · ${SCENES.first.when}, UTC · historical`} view={{ candles: preview.candles, minutes: preview.minutes }} />}
                         </Link>
                     </section>
@@ -72,20 +72,23 @@ const EducationDashboard = () => {
                             <div className="h-full bg-accent transition-[width] duration-700" style={{ width: `${stats.percent}%` }} />
                         </div>
                         <p className="mt-4 text-sm tabular-nums text-white/55">
-                            {stats.lessonsDone} of {LESSONS.length} lessons · {stats.steps} of {stats.total} steps
+                            {stats.stagesDone} of {STAGES.length} stages · {stats.steps} of {stats.total} activities
                             {last && <span> · last studied {last}</span>}
                         </p>
 
                         <ol className="mt-7 border-b border-white/15">
-                            {LESSONS.map((lesson, i) => {
-                                const item = stats.lessons[i];
-                                const current = !stats.complete && next?.lesson === i;
+                            {STAGES.map((stage, i) => {
+                                const item = stats.stages[i];
+                                const current = !stats.complete && next !== null && LESSONS[next.lesson].stage === stage.id;
+                                const open = lessonsOf(stage.id).find(({ index }) => stats.lessons[index].done < stats.lessons[index].total) ?? lessonsOf(stage.id)[0];
                                 return (
-                                    <li key={lesson.id} className="border-t border-white/15">
-                                        <Link href={`/education/introduction?lesson=${i + 1}`} className="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 py-3.5 transition-colors hover:bg-white/[0.03]">
+                                    <li key={stage.id} className="border-t border-white/15">
+                                        <Link href={`/education/introduction?lesson=${open.index + 1}`} className="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 py-3.5 transition-colors hover:bg-white/[0.03]">
                                             <span>
-                                                <span className={`block text-[15px] ${current ? "text-white" : item.done === item.total ? "text-white/70" : "text-white/85"}`}>{lesson.title}</span>
-                                                <span className="mt-0.5 block text-[13px] text-white/45">{lesson.summary}</span>
+                                                <span className={`block text-[15px] ${current ? "text-white" : item.done === item.total ? "text-white/70" : "text-white/85"}`}>
+                                                    {stage.word} <span className="text-white/45">· {stage.topic}</span>
+                                                </span>
+                                                <span className="mt-0.5 block text-[13px] leading-snug text-white/45">{stage.line}</span>
                                             </span>
                                             <span className="flex items-center gap-2 text-xs tabular-nums text-white/45">
                                                 {item.done === item.total ? <Tick /> : item.done > 0 ? `${item.done} of ${item.total}` : current ? <span className="text-accent">Next</span> : ""}

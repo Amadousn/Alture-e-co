@@ -498,13 +498,3 @@ a:active {
 @media (prefers-reduced-motion: reduce) {
     .al-reveal > * { animation: none; }
 }
-
-/* Alture Education: the vocabulary being taught, in a quiet warm beige. */
-.edu-key {
-    color: #f0e3cb;
-    background: rgba(226, 201, 160, 0.14);
-    padding: 0.04em 0.3em;
-    border-radius: 2px;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-}

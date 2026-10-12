@@ -1,5 +1,6 @@
-// The Introduction: "Reading the Chart". Seven lessons, each a short film
-// followed by things to do, taught on real historical Bitcoin candles
+// The Introduction: one journey in six stages (Discover, Explore, Understand,
+// Decide, Practice, Review). Its chart lessons are short films followed by
+// things to do, taught on real historical Bitcoin candles
 // (BTCUSDT perpetual, Bybit). Every price and count in the text below is read
 // from those candles, never typed in. The lessons stop at reading a chart:
 // they say nothing of strategy and recommend no trade.
@@ -23,19 +24,44 @@ export type Step =
     | { id: string; kind: "explore"; title: string; prompt: string; stage: Stage; items: { key: string; label: string; text: string }[] }
     // `any`: one of the answers is enough. `minor`: smaller turns of the same kind, which are neither right nor wrong.
     | { id: string; kind: "pick"; title: string; prompt: string; stage: ChartStage; answers: number[]; any?: boolean; minor?: { at: number[]; text: string }; wrong: (index: number) => string; right: string }
-    | { id: string; kind: "choice"; title: string; prompt: string; stage: Stage; timeframes?: Timeframe[]; options: Option[]; reveal?: Reveal }
+    // `stage: null`: a question that needs no chart in front of it.
+    | { id: string; kind: "choice"; title: string; prompt: string; stage: Stage | null; timeframes?: Timeframe[]; options: Option[]; reveal?: Reveal }
     | { id: string; kind: "rounds"; title: string; rounds: Round[] }
     | { id: string; kind: "ohlc"; title: string; asks: { candle: "bull" | "bear"; part: CandlePart; prompt: string; wrong: string }[] }
     | { id: string; kind: "zone"; title: string; prompt: string; stage: ChartStage; zone: "support" | "resistance"; right: string }
-    | { id: string; kind: "summary"; title: string };
+    | { id: string; kind: "summary"; title: string }
+    // Discover, Explore, Understand: concepts met by doing something with them.
+    | { id: string; kind: "blocks"; title: string }
+    | { id: string; kind: "sort"; title: string; categories: string[]; items: { text: string; answer: string; why: string; hint: string }[] }
+    | { id: string; kind: "browse"; title: string; prompt: string; note: string; items: { key: string; label: string; example: string; facts: [string, string][] }[] }
+    | { id: string; kind: "calculator"; title: string }
+    | { id: string; kind: "compare"; title: string; rounds: { prompt: string; stages: [ChartStage, ChartStage]; answer: 0 | 1; right: string; wrong: string }[] }
+    // Practice and Review: a simulated trade on historical candles, its review, and the practice journal.
+    | { id: string; kind: "sim"; title: string }
+    | { id: string; kind: "simreview"; title: string }
+    | { id: string; kind: "journal"; title: string }
+    // What a topic covered and the words it introduced. Reading it is not counted as progress.
+    | { id: string; kind: "recap"; title: string; learned: string[]; terms: [string, string][] }
+    | { id: string; kind: "finish"; title: string };
 
-export type Lesson = { id: string; title: string; summary: string; steps: Step[] };
+// The Introduction is one journey in six stages.
+export type StageId = "discover" | "explore" | "understand" | "decide" | "practice" | "review";
+export const STAGES: { id: StageId; word: string; topic: string; line: string }[] = [
+    { id: "discover", word: "Discover", topic: "What is cryptocurrency?", line: "Bitcoin, the blockchain, exchanges and wallets, and what separates investing from active trading." },
+    { id: "explore", word: "Explore", topic: "The markets", line: "Cryptocurrency, stocks, forex, indices and options: what each one is, when it trades and what it risks." },
+    { id: "understand", word: "Understand", topic: "Your capital, or a firm's", line: "Trading your own money compared with a funded-trader programme, with numbers you can change." },
+    { id: "decide", word: "Decide", topic: "Read a real chart", line: "Candles, swings, trends, ranges, support and resistance, on real Bitcoin charts." },
+    { id: "practice", word: "Practice", topic: "Take a simulated trade", line: "Choose a direction, an entry, a stop loss and a take profit, then watch what price did next." },
+    { id: "review", word: "Review", topic: "Understand your decisions", line: "Your practice journal, what you have learned, and where the programme goes from here." },
+];
+
+export type Lesson = { id: string; stage: StageId; title: string; summary: string; steps: Step[] };
 
 export const candlesOf = (scene: SceneId, timeframe?: Timeframe) => {
     const item = SCENES[scene];
     return item.views[timeframe ?? item.timeframe]!;
 };
-export const timeframeName = (timeframe: Timeframe) => (timeframe === "1h" ? "1-hour candles" : `${MINUTES[timeframe]}-minute candles`);
+export const timeframeName = (timeframe: Timeframe) => (timeframe === "1d" ? "daily candles" : timeframe === "1h" ? "1-hour candles" : `${MINUTES[timeframe]}-minute candles`);
 
 // ---------- reading the charts ----------
 
@@ -193,7 +219,7 @@ const finalZone = SCENES.final.zones[0];
 // The candles that reached the zone and gave the move back: a high inside the zone, and an upper wick at least as long as the body.
 const rejections = final.map((candle, i) => i).filter((i) => final[i].h >= finalZone.from && upperWick(final[i]) >= body(final[i]));
 
-export const LESSONS: Lesson[] = [
+const CHART_LESSONS: Omit<Lesson, "stage">[] = [
     {
         id: "chart",
         title: "Understanding the chart",
@@ -219,7 +245,7 @@ export const LESSONS: Lesson[] = [
                 stage: chart("first"),
                 items: [
                     { key: "price", label: "The price scale", text: "Prices rise toward the top. Any point on the chart can be read across to this scale." },
-                    { key: "time", label: "The time scale", text: "Time runs from left to right. Each label is when that candle began, in UTC." },
+                    { key: "time", label: "The time scale", text: "Time runs from left to right. Each label is when that candle began, in UTC: Coordinated Universal Time, the world's reference clock." },
                     { key: "candle", label: "A candle", text: "One candle is everything that happened in one period: here, 15 minutes. Its four prices are in the line above the chart." },
                     { key: "last", label: "The newest candle", text: "The last candle on the right is the most recent. On a live chart it is still moving; these candles are historical, so it is closed." },
                 ],
@@ -261,6 +287,13 @@ export const LESSONS: Lesson[] = [
                     { label: "15", feedback: "15 is the number of minutes in each small candle, not how many fit in an hour." },
                     { label: "60", feedback: "60 is the number of minutes in the hour. How many 15-minute periods is that?" },
                 ],
+            },
+            {
+                id: "chart-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["A chart records every price a market traded at, in order.", "Price is read on the vertical scale, time on the horizontal one; the newest candle is the last on the right.", "A timeframe is the length of time each candle covers. Changing it redraws the same history in bigger or smaller slices."],
+                terms: [["Chart", "A drawing of a market's price over time."], ["Candle", "Everything price did during one period, drawn as one shape."], ["Timeframe", "How much time one candle covers: 15 minutes, 1 hour, 1 day."], ["UTC", "Coordinated Universal Time, the world's reference clock. Chart times here are given in it."], ["BTC/USDT", "The price of one bitcoin (BTC) in USDT, a token designed to follow the US dollar."], ["Perpetual", "A futures contract with no expiry date, the most traded kind on crypto exchanges."]],
             },
         ],
     },
@@ -310,6 +343,13 @@ export const LESSONS: Lesson[] = [
                 ],
             },
             { id: "candles-colour", kind: "rounds", title: "Bullish or bearish", rounds: colourRounds },
+            {
+                id: "candles-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["Every candle has four prices: the open, the high, the low and the close.", "The body runs from open to close; the wicks are prices that were reached and given back.", "A candle that closes above its open is bullish; one that closes below it is bearish."],
+                terms: [["Open", "The first price traded in the candle's period."], ["High", "The highest price reached in the period."], ["Low", "The lowest price reached in the period."], ["Close", "The last price traded in the period."], ["Body", "The part of the candle between the open and the close."], ["Wick", "The thin line above or below the body: prices reached, then given back."], ["Bullish candle", "A candle that closed above its open."], ["Bearish candle", "A candle that closed below its open."]],
+            },
         ],
     },
     {
@@ -414,6 +454,13 @@ export const LESSONS: Lesson[] = [
                     { label: "Nothing certain: it shows buyers defended this price, not what comes next", correct: true, feedback: "Yes. A candle is a record, not a forecast. It shows where buyers stepped in; whether they do so again is not on the chart." },
                 ],
             },
+            {
+                id: "movement-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["A long body means one side moved price and kept it.", "A long wick means a price was tried and refused.", "A small body with wicks on both sides means neither side won.", "A candle records what happened. It does not say what happens next."],
+                terms: [["Buyers", "Those whose buying pushes price up."], ["Sellers", "Those whose selling pushes price down."], ["Rejection", "A long wick: price went there and was pushed back within the same candle."], ["Momentum", "Several candles closing the same way, one after another."], ["Indecision", "A candle that closes almost where it opened, with wicks on both sides."]],
+            },
         ],
     },
     {
@@ -429,8 +476,8 @@ export const LESSONS: Lesson[] = [
                     { caption: "Price does not move in a straight line. It moves in swings.", ms: 4000, stage: chart("uptrend", { shown: upLows[0].i + 4 }) },
                     { caption: "A swing high is a peak: a high with lower highs on both sides.", ms: 4600, stage: chart("uptrend", { shown: upLows[0].i + 4, marks: marksOf([upHighs[0]], "Swing high") }) },
                     { caption: "A swing low is a trough: a low with higher lows on both sides.", ms: 4600, stage: chart("uptrend", { shown: upLows[0].i + 4, marks: [...marksOf([upHighs[0]], "Swing high"), ...marksOf([upLows[0]], "Swing low")] }) },
-                    { caption: "Each peak higher than the last, each trough higher than the last: an uptrend.", ms: 5200, stage: chart("uptrend", { marks: named("uptrend"), path: true }) },
-                    { caption: "Lower highs and lower lows: a downtrend.", ms: 4800, stage: chart("downtrend", { marks: named("downtrend"), path: true }) },
+                    { caption: "A peak above the one before is a Higher High (HH); a trough above the one before is a Higher Low (HL). A sequence of them is an uptrend.", ms: 6400, stage: chart("uptrend", { marks: named("uptrend"), path: true }) },
+                    { caption: "A downtrend commonly develops the other way: a sequence of Lower Highs (LH) and Lower Lows (LL).", ms: 6000, stage: chart("downtrend", { marks: named("downtrend"), path: true }) },
                     { caption: "Highs that stop at about the same price, and lows that do too: a range.", ms: 5000, stage: chart("sideways", { marks: marksOf(SCENES.sideways.pivots), path: true }) },
                 ],
             },
@@ -479,6 +526,22 @@ export const LESSONS: Lesson[] = [
                     { stage: chart("first"), prompt: "And this one?", reveal: { marks: named("first"), path: true }, options: structure("Yes. Higher highs and higher lows. The pullbacks do not change that: each one stopped above the last.", "up") },
                 ],
             },
+            {
+                id: "structure-compare",
+                kind: "compare",
+                title: "Compare two markets",
+                rounds: [
+                    { prompt: "Two real Bitcoin charts. Which one is trending?", stages: [chart("sideways"), chart("uptrend")], answer: 1, right: "Yes. Its peaks and troughs step upward; the other chart's peaks and troughs stop at about the same prices.", wrong: "This one moves sideways: its peaks stop at about the same price, and so do its troughs. A trend steps in one direction." },
+                    { prompt: "And which of these two is in a range?", stages: [chart("levels"), chart("downtrend")], answer: 0, right: "Yes. It turns down from about the same price and up from about the same price, again and again.", wrong: "This one makes lower highs and lower lows: a downtrend. A range keeps returning to the same two areas." },
+                ],
+            },
+            {
+                id: "structure-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["Price moves in swings: peaks called swing highs and troughs called swing lows.", "An uptrend commonly develops through a sequence of higher highs and higher lows.", "A downtrend commonly develops through a sequence of lower highs and lower lows.", "A range is a market whose highs and lows stop at about the same prices.", "A pullback is a move against the trend that has not broken it."],
+                terms: [["Swing high", "A peak: a high with lower highs on both sides."], ["Swing low", "A trough: a low with higher lows on both sides."], ["Higher High (HH)", "A swing high above the one before it."], ["Higher Low (HL)", "A swing low above the one before it."], ["Lower High (LH)", "A swing high below the one before it."], ["Lower Low (LL)", "A swing low below the one before it."], ["Uptrend", "A sequence of higher highs and higher lows."], ["Downtrend", "A sequence of lower highs and lower lows."], ["Range", "Price moving sideways between about the same high and low."], ["Pullback", "A move against the trend that stays within it."], ["Market structure", "The pattern that a market's swings make."]],
+            },
         ],
     },
     {
@@ -518,6 +581,17 @@ export const LESSONS: Lesson[] = [
                 right: `Yes. Price fell into this area ${TIMES[levelLows.length]} and turned up each time.`,
             },
             {
+                id: "levels-touches",
+                kind: "pick",
+                title: "How price reacts",
+                prompt: `Click the ${NUMBER[levelHighs.length]} candles where price reached resistance and turned down.`,
+                stage: chart("levels", { zones: [zone("levels", "resistance")] }),
+                answers: levelHighs.map((pivot) => pivot.i),
+                minor: minorOf("levels", "high"),
+                wrong: (index) => (levels[index].h < resistance.from ? "That candle did not reach the resistance zone. Look for candles whose high is inside the shaded area." : "That candle is in the zone, but it is not where price turned: the swing high is the highest candle of each visit."),
+                right: `Yes. ${cap(TIMES[levelHighs.length])} price rose into the zone, and each time the next candles went lower.`,
+            },
+            {
                 id: "levels-relevant",
                 kind: "choice",
                 title: "Which area matters",
@@ -542,6 +616,13 @@ export const LESSONS: Lesson[] = [
                     { label: "It is an area to watch: price has reacted here before, and may or may not again", correct: true, feedback: "Yes. Support and resistance show where to pay attention. They do not say what will happen." },
                 ],
             },
+            {
+                id: "levels-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["Support is an area where falling price has turned up before; resistance is one where rising price has turned down.", "They are zones, not exact lines.", "A zone shows where to pay attention. It does not say what will happen there."],
+                terms: [["Support", "An area where falling price has repeatedly turned up."], ["Resistance", "An area where rising price has repeatedly turned down."], ["Zone", "A band of prices, not one exact price."], ["Break", "Price moving through a zone that used to hold."]],
+            },
         ],
     },
     {
@@ -554,7 +635,7 @@ export const LESSONS: Lesson[] = [
                 kind: "film",
                 title: "Zoom out",
                 beats: [
-                    { caption: "A 5-minute chart. Lower highs and lower lows: Bitcoin is falling.", ms: 5000, stage: chart("context", { marks: named("context"), path: true }) },
+                    { caption: "A 5-minute chart. Lower Highs (LH) and Lower Lows (LL): Bitcoin is falling.", ms: 5200, stage: chart("context", { marks: named("context"), path: true }) },
                     { caption: "The same hours on 15-minute candles, with what came before. The fall is only the last part.", ms: 5200, stage: chart("context", { timeframe: "15m" }) },
                     { caption: `On 1-hour candles the day looks different: price is up about ${dayGain.toFixed(1)}% in 24 hours.`, ms: 5000, stage: chart("context", { timeframe: "1h" }) },
                     { caption: `The whole 5-minute downtrend is inside these ${NUMBER[lastHours.length]} candles.`, ms: 4800, stage: chart("context", { timeframe: "1h", focus: lastHours }) },
@@ -586,6 +667,13 @@ export const LESSONS: Lesson[] = [
                     { label: "So far, the fall is a pullback within a larger rise", correct: true, feedback: "Yes. That is all the charts say. Whether the rise continues is not something either chart can tell you." },
                     { label: "The day's rise has been undone", feedback: "On 1-hour candles price is still well above where the day's last rally began. The fall may grow into more, but it has not so far." },
                 ],
+            },
+            {
+                id: "context-recap",
+                kind: "recap",
+                title: "What you've learned",
+                learned: ["The same market can be falling on one timeframe and rising on another.", "The higher timeframe is the context for the lower one, so it is read first.", "A chart describes what has happened. It cannot say whether a move will continue."],
+                terms: [["Higher timeframe", "A chart with longer candles, showing more history at once."], ["Lower timeframe", "A chart with shorter candles, showing more detail of less time."], ["Context", "What the larger picture was doing when the smaller one happened."]],
             },
         ],
     },
@@ -661,15 +749,262 @@ export const LESSONS: Lesson[] = [
     },
 ];
 
+// ---------- Discover ----------
+
+const days = candlesOf("horizon").candles;
+const dayLow = Math.min(...days.map((candle) => candle.l));
+const dayHigh = Math.max(...days.map((candle) => candle.h));
+
+const CRYPTO: Lesson = {
+    id: "crypto",
+    stage: "discover",
+    title: "What is cryptocurrency?",
+    summary: "Bitcoin, the blockchain, exchanges and wallets, investing and trading.",
+    steps: [
+        {
+            id: "crypto-film",
+            kind: "film",
+            title: "Bitcoin",
+            beats: [
+                { caption: "A cryptocurrency is digital money that no bank or government issues. Bitcoin was the first.", ms: 5200, stage: chart("horizon", { shown: Math.round(days.length * 0.35) }) },
+                { caption: "It has a price because people buy and sell it, every hour of every day. On markets it is written BTC.", ms: 5600, stage: chart("horizon", { shown: Math.round(days.length * 0.7) }) },
+                { caption: `This is real: Bitcoin from ${SCENES.horizon.when}. Each candle is one day of trading.`, ms: 5400, stage: chart("horizon") },
+                { caption: `In those four months it traded as low as about ${near(dayLow, 100)} dollars and as high as about ${near(dayHigh, 100)}. Prices move a lot.`, ms: 6000, stage: chart("horizon", { axis: "price" }) },
+                { caption: "BTC/USDT is the price of one bitcoin in USDT, a token designed to follow the US dollar. It is the market used throughout this Introduction.", ms: 6600, stage: chart("horizon", { focus: [days.length - 1] }) },
+            ],
+        },
+        { id: "crypto-blocks", kind: "blocks", title: "The blockchain" },
+        {
+            id: "crypto-custody",
+            kind: "sort",
+            title: "Exchange or wallet",
+            categories: ["Exchange", "Wallet"],
+            items: [
+                { text: "A marketplace where people buy and sell cryptocurrency with each other.", answer: "Exchange", why: "An exchange matches buyers with sellers and shows the price they agree on.", hint: "Think of where a price comes from: buyers meeting sellers." },
+                { text: "It holds the private keys: the secret that lets you spend your coins.", answer: "Wallet", why: "A wallet does not hold coins; it holds the keys that control them on the blockchain.", hint: "Coins stay on the blockchain. What you keep is the secret that controls them." },
+                { text: "The company keeps your coins for you, as a bank keeps deposits.", answer: "Exchange", why: "Coins left on an exchange are held by the exchange. If it fails or is hacked, they can be lost.", hint: "Who holds the keys here: you, or a company?" },
+                { text: "Lose its recovery phrase, and nobody can restore your access.", answer: "Wallet", why: "With your own wallet there is no company to ask. Control and responsibility are both yours.", hint: "There is no support desk in this case." },
+                { text: "It shows a live price and a list of orders waiting to trade.", answer: "Exchange", why: "The list of waiting buy and sell orders is the order book, and it lives on an exchange.", hint: "Orders waiting to trade belong to a marketplace." },
+            ],
+        },
+        {
+            id: "crypto-horizon",
+            kind: "choice",
+            title: "Two ways to look at Bitcoin",
+            prompt: "Switch between the two charts of the same Bitcoin. Which one does an active trader work from, to decide what to do in the next few hours?",
+            stage: chart("horizon"),
+            timeframes: ["1d", "15m"],
+            reveal: { timeframe: "15m" },
+            options: [
+                { label: "The daily chart: four months, one candle a day", feedback: "On the daily chart each candle is already a whole day. It is the view of an investor, who holds for months or years and has little use for the detail of one afternoon." },
+                { label: "The 15-minute chart: twelve hours, one candle every 15 minutes", correct: true, feedback: "Yes. Active trading means opening and closing positions over hours or days, so it is read on short candles. An investor, holding for months or years, reads the daily chart instead." },
+            ],
+        },
+        {
+            id: "crypto-style",
+            kind: "sort",
+            title: "Investing or active trading",
+            categories: ["Investing", "Active trading"],
+            items: [
+                { text: "Buys and holds for months or years.", answer: "Investing", why: "Investing is about where the price will be far in the future, so the holding period is long.", hint: "Look at the length of time." },
+                { text: "Opens and closes positions within hours or days.", answer: "Active trading", why: "Active trading looks for shorter moves, and does not need the price to rise over years.", hint: "Look at the length of time." },
+                { text: "Decides in advance the price at which the idea is wrong, and exits there.", answer: "Active trading", why: "A trade is planned with its exit. That exit is called a stop loss, and you will place one later in this Introduction.", hint: "This describes a planned exit from a short-term position." },
+                { text: "Is little concerned by what price does this afternoon.", answer: "Investing", why: "Over years, one afternoon is noise. Over hours, it is everything.", hint: "For whom is one afternoon unimportant?" },
+            ],
+        },
+        {
+            id: "crypto-recap",
+            kind: "recap",
+            title: "What you've learned",
+            learned: ["A cryptocurrency is digital money issued by no bank or government; Bitcoin was the first.", "A blockchain is a shared record of transactions in which each block is tied to the one before, so the past cannot be quietly rewritten.", "An exchange is where cryptocurrency is bought and sold; a wallet holds the keys that control it.", "Investing means holding for months or years; active trading means opening and closing positions over hours or days."],
+            terms: [["Cryptocurrency", "Digital money recorded on a blockchain, issued by no bank or government."], ["Bitcoin (BTC)", "The first and largest cryptocurrency."], ["Blockchain", "A shared record of transactions, kept as a chain of blocks."], ["Block", "A group of transactions added to the record together."], ["Exchange", "A marketplace where buyers and sellers trade."], ["Wallet", "What holds the private keys that control your coins."], ["Private key", "The secret that proves coins are yours to spend."], ["USDT", "A token designed to follow the US dollar, used to price other cryptocurrencies."], ["Investing", "Buying to hold for months or years."], ["Active trading", "Opening and closing positions over hours or days."]],
+        },
+    ],
+};
+
+// ---------- Explore ----------
+
+const MARKETS: Lesson = {
+    id: "markets",
+    stage: "explore",
+    title: "The markets",
+    summary: "Cryptocurrency, stocks, forex, indices and options, side by side.",
+    steps: [
+        {
+            id: "markets-browse",
+            kind: "browse",
+            title: "Five markets",
+            prompt: "Open each of the five markets and compare them.",
+            note: "A summary for comparing markets, not a full description. Hours, products and rules vary by exchange, broker and country.",
+            items: [
+                { key: "crypto", label: "Cryptocurrency", example: "BTC/USDT: the price of one bitcoin in USDT.", facts: [["What it is", "Digital assets such as Bitcoin, recorded on a blockchain."], ["How it is traded", "On crypto exchanges, either directly or through contracts such as perpetual futures."], ["When it trades", "Every hour of every day, weekends included."], ["Main risks", "Large and fast price moves. An exchange can fail or be hacked. Leverage, where it is used, multiplies losses."]] },
+                { key: "stocks", label: "Stocks", example: "AAPL: one share of Apple.", facts: [["What it is", "Shares: small parts of the ownership of a company."], ["How it is traded", "On stock exchanges, through a broker."], ["When it trades", "In exchange hours on business days. The main US session runs from 9:30 to 16:00, New York time."], ["Main risks", "A company can do badly or fail. Prices can jump between one day's close and the next day's open."]] },
+                { key: "forex", label: "Forex", example: "EUR/USD: the price of one euro in US dollars.", facts: [["What it is", "Currencies, always traded in pairs: one currency priced in another."], ["How it is traded", "Through banks and brokers. There is no single central exchange."], ["When it trades", "Around the clock from Monday to Friday. Closed at weekends."], ["Main risks", "It is usually traded with high leverage, so small moves cause large gains and losses. Central bank decisions can move prices sharply."]] },
+                { key: "indices", label: "Indices", example: "The S&P 500: about 500 large US companies in one number.", facts: [["What it is", "A number that tracks a group of stocks."], ["How it is traded", "An index cannot be bought itself. It is traded through products built on it: funds, futures and other derivatives. Trading an index derivative does not mean owning the underlying stocks."], ["When it trades", "It depends on the product. Index futures trade nearly around the clock on business days; the stocks themselves only in exchange hours."], ["Main risks", "The whole market can fall together. Derivatives on an index add leverage, and some can lose more than the amount put in."]] },
+                { key: "options", label: "Options", example: "The right to buy a share at $100 until Friday.", facts: [["What it is", "A contract, not an asset. An option gives the right, but not the obligation, to buy or sell something at a set price until a set date. Options are derivatives: their value is derived from another asset."], ["How it is traded", "On options exchanges, through a broker that has approved the account for options."], ["When it trades", "In the hours of its exchange. Every option has an expiry date."], ["Main risks", "An option that was bought can expire worthless, losing everything paid for it. Selling options can lose far more than was received. Their price depends on time and volatility, not only on direction."]] },
+            ],
+        },
+        {
+            id: "markets-which",
+            kind: "sort",
+            title: "Which market?",
+            categories: ["Cryptocurrency", "Stocks", "Forex", "Indices", "Options"],
+            items: [
+                { text: "EUR/USD", answer: "Forex", why: "A currency pair: the price of one euro in US dollars.", hint: "Two currencies, one priced in the other." },
+                { text: "A share of a company, such as Apple (AAPL)", answer: "Stocks", why: "A share is a small part of the ownership of one company.", hint: "This is ownership of one company." },
+                { text: "BTC/USDT", answer: "Cryptocurrency", why: "The price of one bitcoin in USDT.", hint: "BTC is Bitcoin's ticker." },
+                { text: "The S&P 500", answer: "Indices", why: "A number that tracks about 500 large US companies.", hint: "It is not one company, and it cannot be bought itself." },
+                { text: "The right to buy a share at $100 until Friday", answer: "Options", why: "A right with a set price and an expiry date is an option.", hint: "A right, a set price and a date: this is a contract." },
+                { text: "A market that is open at 3 a.m. on a Sunday", answer: "Cryptocurrency", why: "Crypto trades every hour of every day. Stock exchanges and forex are closed at weekends.", hint: "Which of the five never closes?" },
+            ],
+        },
+        {
+            id: "markets-index",
+            kind: "choice",
+            title: "What you own",
+            prompt: "You buy a derivative on the S&P 500 index. What do you own?",
+            stage: null,
+            options: [
+                { label: "A small part of each of the 500 companies", feedback: "That would be owning the shares themselves. A derivative on the index is a contract about the index's value." },
+                { label: "A contract whose value follows the index, not the companies' shares", correct: true, feedback: "Yes. A derivative's value is derived from something else. You hold a contract; you are not a shareholder of any of the companies." },
+                { label: "The index itself", feedback: "An index is a number, a calculation. It cannot be owned; only products built on it can be traded." },
+            ],
+        },
+        {
+            id: "markets-option",
+            kind: "choice",
+            title: "A risk particular to options",
+            prompt: "You buy an option. Its expiry date arrives and the price is on the wrong side of it. What happens?",
+            stage: null,
+            options: [
+                { label: "You get your money back", feedback: "The price paid for an option is not refunded. It bought a right for a limited time, and that time has run out." },
+                { label: "It expires worthless: you lose what you paid for it", correct: true, feedback: "Yes. An option has an expiry date, which a share or a bitcoin does not. Being right too late is the same as being wrong." },
+                { label: "It turns into shares that you can keep", feedback: "An option on the wrong side at expiry is not exercised. Nothing is delivered; the contract simply ends." },
+            ],
+        },
+        {
+            id: "markets-recap",
+            kind: "recap",
+            title: "What you've learned",
+            learned: ["Stocks are parts of a company; forex is one currency priced in another; an index is a number tracking a group of stocks; options are contracts with an expiry date.", "Crypto trades every hour of every day; most other markets close at night or at weekends.", "Each market has its own risks. Derivatives and leverage add risks that the underlying asset does not have.", "Trading a derivative on something is not the same as owning it."],
+            terms: [["Stock (share)", "A small part of the ownership of a company."], ["Forex", "The market where currencies are traded against each other."], ["Currency pair", "One currency priced in another, such as EUR/USD."], ["Index", "A number that tracks a group of stocks."], ["Derivative", "A contract whose value is derived from another asset."], ["Option", "The right, but not the obligation, to buy or sell at a set price until a set date."], ["Expiry", "The date on which a contract ends."], ["Leverage", "Trading a position larger than the money put in, which multiplies gains and losses."], ["Broker", "A firm through which you access a market."]],
+        },
+    ],
+};
+
+// ---------- Understand ----------
+
+const CAPITAL: Lesson = {
+    id: "capital",
+    stage: "understand",
+    title: "Your capital, or a firm's",
+    summary: "Personal trading capital compared with a funded-trader programme.",
+    steps: [
+        { id: "capital-calculator", kind: "calculator", title: "Two ways to trade" },
+        {
+            id: "capital-split",
+            kind: "choice",
+            title: "The profit split",
+            prompt: "Hypothetical example: a funded account of $50,000 makes a profit of $2,000, with an 80% profit split. What does the trader receive?",
+            stage: null,
+            options: [
+                { label: "$2,000", feedback: "That is the whole profit. The firm keeps its part: here, 20%." },
+                { label: "$1,600", correct: true, feedback: "Yes. 80% of $2,000 is $1,600, and the firm keeps $400. Any fee paid to enter the programme has to be earned back out of that." },
+                { label: "$40,000", feedback: "That is 80% of the account size. The split applies to the profit, not to the account." },
+            ],
+        },
+        {
+            id: "capital-size",
+            kind: "choice",
+            title: "The advertised account",
+            prompt: "A programme advertises a $50,000 funded account. How much of that $50,000 belongs to the trader?",
+            stage: null,
+            options: [
+                { label: "All of it", feedback: "The account is the firm's. The figure is the size the trader is allowed to trade, not money they own." },
+                { label: "Half of it", feedback: "No part of the account is the trader's. Only a share of the profits can ever reach them." },
+                { label: "None of it: it is the firm's account. The trader can receive only their share of profits, if the rules are kept", correct: true, feedback: "Yes. The advertised size is trading allowance, not ownership. What a trader can withdraw is their share of profits, under the programme's rules." },
+            ],
+        },
+        {
+            id: "capital-daily",
+            kind: "choice",
+            title: "Two loss limits",
+            prompt: "Hypothetical example: the rules set a daily loss limit of 5% and a maximum drawdown of 10%. In one day the account loses 6%. What happens?",
+            stage: null,
+            options: [
+                { label: "Nothing: the 10% maximum has not been reached", feedback: "The two limits apply separately. Breaking either one is enough." },
+                { label: "The daily limit is broken, so the account is closed", correct: true, feedback: "Yes. The daily loss limit is a rule of its own. In this example the account ends there, even though the total loss is still under the maximum drawdown." },
+                { label: "The trader must repay the 6%", feedback: "In this example the loss is on the firm's account. What the trader loses is the account itself, and the fee paid to obtain it." },
+            ],
+        },
+        {
+            id: "capital-own",
+            kind: "choice",
+            title: "Your own capital",
+            prompt: "With $2,000 of your own money, you lose 10%. What has it cost you?",
+            stage: null,
+            options: [
+                { label: "Nothing: losses are absorbed", feedback: "That is how a funded account treats losses. With your own capital, every loss is yours." },
+                { label: "$200 of your own money", correct: true, feedback: "Yes. 10% of $2,000 is $200. Nobody shares your profit, and nobody shares your loss." },
+                { label: "$2,000", feedback: "A 10% loss takes a tenth of the account: $200. The remaining $1,800 is still yours." },
+            ],
+        },
+        {
+            id: "capital-recap",
+            kind: "recap",
+            title: "What you've learned",
+            learned: ["With personal capital, all of the profit is yours and so is all of the loss.", "In a funded-trader programme the account belongs to the firm: the trader usually pays a fee, must pass an evaluation, and receives only a share of profits.", "Such programmes have rules, such as a daily loss limit and a maximum drawdown. Breaking one ends the account.", "The advertised account size is what a trader may trade, not money they own or can withdraw.", "Nothing here is a promise of funding or of profit. Programmes differ, and their rules decide the result."],
+            terms: [["Trading capital", "The money a trader trades with."], ["Prop firm", "A proprietary trading firm: a firm that lets traders trade its accounts under its rules."], ["Funded account", "An account provided by a firm for a trader to trade."], ["Evaluation (challenge)", "A test, usually paid for, that a trader must pass under the firm's rules to obtain a funded account."], ["Profit split", "The share of profits the trader receives; the firm keeps the rest."], ["Drawdown", "A fall in an account's value from an earlier level."], ["Maximum drawdown", "The largest total loss the rules allow before the account is closed."], ["Daily loss limit", "The largest loss the rules allow in one day."]],
+        },
+    ],
+};
+
+// ---------- Practice and Review ----------
+
+const PRACTICE: Lesson = {
+    id: "practice",
+    stage: "practice",
+    title: "Take a simulated trade",
+    summary: "A decision on a real historical chart, and what price did next.",
+    steps: [
+        { id: "practice-sim", kind: "sim", title: "Your decision" },
+        { id: "practice-review", kind: "simreview", title: "Review your decision" },
+        {
+            id: "practice-recap",
+            kind: "recap",
+            title: "What you've learned",
+            learned: ["A trade is planned before it is taken: a direction, an entry, a stop loss and a take profit.", "The stop loss decides how much can be lost; the position size is worked out from it.", "Fees are charged on the way in and on the way out, and they count.", "Staying out is a decision too, and sometimes the best one.", "One trade proves little: a sound decision can lose, and a poor one can win."],
+            terms: [["Long", "A position that profits when price rises."], ["Short", "A position that profits when price falls."], ["Entry", "The price at which a position is opened."], ["Stop loss", "The price at which a position is closed at a loss, decided in advance."], ["Take profit", "The price at which a position is closed at a profit, decided in advance."], ["Position size", "How much is bought or sold."], ["Reward-to-risk", "How much a trade aims to make for each dollar it risks."], ["R", "The amount risked on a trade. A result of +2R is twice that amount; -1R is its loss."], ["Fee", "What the exchange charges for each trade."]],
+        },
+    ],
+};
+
+const REVIEW: Lesson = {
+    id: "review",
+    stage: "review",
+    title: "Understand your decisions",
+    summary: "Your practice journal, and what the Introduction covered.",
+    steps: [
+        { id: "review-journal", kind: "journal", title: "Your practice journal" },
+        { id: "review-finish", kind: "finish", title: "What you've learned" },
+    ],
+};
+
+export const LESSONS: Lesson[] = [CRYPTO, MARKETS, CAPITAL, ...CHART_LESSONS.map((lesson) => ({ ...lesson, stage: "decide" as const })), PRACTICE, REVIEW];
+export const lessonsOf = (stage: StageId) => LESSONS.map((lesson, index) => ({ lesson, index })).filter((item) => item.lesson.stage === stage);
+
+// Reading a recap or the closing page is not progress: only doing something is.
+const counts = (step: Step) => step.kind !== "recap" && step.kind !== "finish";
 export const ALL_STEPS = LESSONS.flatMap((lesson) => lesson.steps);
-export const TOTAL_STEPS = ALL_STEPS.length;
+export const TOTAL_STEPS = ALL_STEPS.filter(counts).length;
 
 // How far a learner is, from what they have really completed.
 export function measure(done: Record<string, number>) {
-    const lessons = LESSONS.map((lesson) => ({ id: lesson.id, done: lesson.steps.filter((step) => done[step.id]).length, total: lesson.steps.length }));
+    const lessons = LESSONS.map((lesson) => ({ id: lesson.id, stage: lesson.stage, done: lesson.steps.filter((step) => counts(step) && done[step.id]).length, total: lesson.steps.filter(counts).length }));
+    const stages = STAGES.map((stage) => ({ id: stage.id, done: lessons.filter((lesson) => lesson.stage === stage.id).reduce((sum, lesson) => sum + lesson.done, 0), total: lessons.filter((lesson) => lesson.stage === stage.id).reduce((sum, lesson) => sum + lesson.total, 0) }));
     const steps = lessons.reduce((sum, lesson) => sum + lesson.done, 0);
-    // Where to continue: the first step not yet done.
+    // Where to continue: the first thing to do that is not yet done.
     let next: { lesson: number; step: number } | null = null;
-    LESSONS.some((lesson, l) => lesson.steps.some((step, s) => (done[step.id] ? false : ((next = { lesson: l, step: s }), true))));
-    return { lessons, steps, total: TOTAL_STEPS, percent: Math.round((steps / TOTAL_STEPS) * 100), lessonsDone: lessons.filter((lesson) => lesson.done === lesson.total).length, next: next as { lesson: number; step: number } | null, complete: steps === TOTAL_STEPS };
+    LESSONS.some((lesson, l) => lesson.steps.some((step, s) => (!counts(step) || done[step.id] ? false : ((next = { lesson: l, step: s }), true))));
+    return { lessons, stages, steps, total: TOTAL_STEPS, percent: Math.round((steps / TOTAL_STEPS) * 100), lessonsDone: lessons.filter((lesson) => lesson.done === lesson.total).length, stagesDone: stages.filter((stage) => stage.done === stage.total).length, next: next as { lesson: number; step: number } | null, complete: steps === TOTAL_STEPS };
 }

@@ -2,9 +2,10 @@
 // what those candles actually show, so each claim the lessons make is checked here.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { SCENES, MOVEMENT, MAJOR, swings, aggregate, highsOf, lowsOf, upperWick, lowerWick, buyingRuns } from "../src/utils/education-chart-data.ts";
+import { SCENES, SCENARIOS, MOVEMENT, MAJOR, swings, aggregate, highsOf, lowsOf, upperWick, lowerWick, buyingRuns, readStructure } from "../src/utils/education-chart-data.ts";
+import { planIssue, resolve, compareCapital } from "../src/utils/education-sim.ts";
 import * as RAW from "../src/utils/education-btc-candles.ts";
-import { LESSONS, candlesOf } from "../src/app/components/altur/education/intro/course.ts";
+import { LESSONS, STAGES, candlesOf, measure } from "../src/app/components/altur/education/intro/course.ts";
 
 const list = (id) => SCENES[id].views[SCENES[id].timeframe].candles;
 const H = (id) => highsOf(SCENES[id]).map((p) => list(id)[p.i].h);
@@ -15,7 +16,7 @@ const span = (c) => Math.max(...c.map((x) => x.h)) - Math.min(...c.map((x) => x.
 const body = (c) => c.c - c.o;
 
 test("the raw data is real-shaped: well-formed candles, evenly spaced, at Bitcoin prices", () => {
-    const minutes = { FIRST: 15, MOVEMENT: 5, UPTREND: 15, DOWNTREND: 15, SIDEWAYS: 30, LEVELS: 15, CONTEXTHOUR: 60, CONTEXTQUARTER: 15, CONTEXTFIVE: 5, FINAL: 15 };
+    const minutes = { FIRST: 15, MOVEMENT: 5, UPTREND: 15, DOWNTREND: 15, SIDEWAYS: 30, LEVELS: 15, CONTEXTHOUR: 60, CONTEXTQUARTER: 15, CONTEXTFIVE: 5, FINAL: 15, DAILY: 1440, DAILYRECENT: 15, SIMASEEN: 15, SIMANEXT: 15, SIMBSEEN: 15, SIMBNEXT: 15, SIMCSEEN: 15, SIMCNEXT: 15 };
     for (const [name, step] of Object.entries(minutes)) {
         const rows = RAW[name];
         assert.ok(rows.length >= 22, name);
@@ -27,7 +28,8 @@ test("the raw data is real-shaped: well-formed candles, evenly spaced, at Bitcoi
     }
 });
 
-for (const id of Object.keys(SCENES)) {
+// The four-month daily chart is shown, not used for swing exercises, so it is not held to this.
+for (const id of Object.keys(SCENES).filter((id) => id !== "horizon")) {
     test(`${id}: its swing points alternate, and each is the extreme of the four candles on either side`, () => {
         const c = list(id);
         const p = SCENES[id].pivots;
@@ -140,8 +142,10 @@ test("the final chart: an uptrend whose last two peaks stop in the same zone, bo
     assert.ok(Math.min(...c.slice(lows.at(-1).i + 1).map((x) => x.l)) > c[lows.at(-1).i].l);
 });
 
-test("the lessons: seven of them, every step has a unique id, and every exercise has an answer on its chart", () => {
-    assert.equal(LESSONS.length, 7);
+test("the journey: six stages, every step has a unique id, and every exercise has an answer", () => {
+    assert.deepEqual(STAGES.map((s) => s.id), ["discover", "explore", "understand", "decide", "practice", "review"]);
+    assert.deepEqual([...new Set(LESSONS.map((l) => l.stage))], STAGES.map((s) => s.id), "lessons follow the order of the stages");
+    assert.equal(LESSONS.filter((l) => l.stage === "decide").length, 7);
     const steps = LESSONS.flatMap((l) => l.steps);
     assert.equal(new Set(steps.map((s) => s.id)).size, steps.length);
     for (const step of steps) {
@@ -157,7 +161,118 @@ test("the lessons: seven of them, every step has a unique id, and every exercise
             assert.equal(new Set(q.options.map((o) => o.label)).size, q.options.length, `${step.id}: distinct options`);
         }
         if (step.kind === "zone") assert.ok(SCENES[step.stage.scene].zones.some((z) => z.kind === step.zone), step.id);
+        if (step.kind === "sort") step.items.forEach((item) => assert.ok(step.categories.includes(item.answer), `${step.id}: ${item.text}`));
+        if (step.kind === "compare") step.rounds.forEach((r) => assert.ok(r.answer === 0 || r.answer === 1));
+    }
+    // Every topic ends with what was learned and its key terms, and no term is defined twice in one recap.
+    for (const lesson of LESSONS.filter((l) => !["final", "review"].includes(l.id))) {
+        const recap = lesson.steps.at(-1);
+        assert.equal(recap.kind, "recap", lesson.id);
+        assert.ok(recap.learned.length >= 3 && recap.terms.length >= 3, lesson.id);
+        assert.equal(new Set(recap.terms.map((t) => t[0])).size, recap.terms.length, lesson.id);
     }
     // Nothing in the text was left as a broken number.
     assert.ok(!/NaN|undefined|Infinity/.test(JSON.stringify(LESSONS, (k, v) => (typeof v === "function" ? v(0) : v))));
+});
+
+test("progress counts what the learner does, not what they read", () => {
+    const all = LESSONS.flatMap((l) => l.steps);
+    const reading = all.filter((s) => s.kind === "recap" || s.kind === "finish");
+    const doing = all.filter((s) => s.kind !== "recap" && s.kind !== "finish");
+    assert.ok(reading.length >= 9);
+    assert.equal(measure({}).total, doing.length);
+    // Opening every recap and the closing page moves nothing.
+    const read = measure(Object.fromEntries(reading.map((s) => [s.id, 1])));
+    assert.equal(read.steps, 0);
+    assert.equal(read.percent, 0);
+    assert.deepEqual(read.next, { lesson: 0, step: 0 });
+    // Doing everything completes it, whether or not a single recap was opened.
+    const did = measure(Object.fromEntries(doing.map((s) => [s.id, 1])));
+    assert.ok(did.complete && did.percent === 100 && did.stagesDone === 6 && did.next === null);
+});
+
+test("the daily chart is four months of real Bitcoin, built from the 15-minute candles", () => {
+    const days = SCENES.horizon.views["1d"].candles, recent = SCENES.horizon.views["15m"].candles;
+    assert.ok(days.length >= 100);
+    days.forEach((d, i) => { assert.equal(d.t % 86400000, 0); if (i > 0) assert.equal(d.t - days[i - 1].t, 86400000); });
+    assert.equal(recent.length, 48);
+    assert.equal(recent.at(-1).t + 900000, days.at(-1).t + 86400000, "the 15-minute chart ends where the daily chart ends");
+    assert.equal(recent.at(-1).c, days.at(-1).c);
+});
+
+// ---------- the simulated trade ----------
+
+const C = (o, h, l, c) => ({ t: 0, o, h, l, c });
+
+test("a plan must have its stop loss and take profit on the right sides of the entry", () => {
+    assert.equal(planIssue({ side: "long", entry: 100, stop: 95, target: 110 }), null);
+    assert.equal(planIssue({ side: "short", entry: 100, stop: 105, target: 90 }), null);
+    assert.match(planIssue({ side: "long", entry: 100, stop: 105, target: 110 }), /stop loss goes below/);
+    assert.match(planIssue({ side: "long", entry: 100, stop: 95, target: 99 }), /take profit goes above/);
+    assert.match(planIssue({ side: "short", entry: 100, stop: 95, target: 90 }), /stop loss goes above/);
+    assert.match(planIssue({ side: "short", entry: 100, stop: 105, target: 101 }), /take profit goes below/);
+    assert.match(planIssue({ side: "long", entry: 100, stop: NaN, target: 110 }), /Set an entry/);
+});
+
+test("profit and loss follow from entry, exit, size and fees", () => {
+    // Long at 100, stop 95: $100 risked buys 20 units. Target 110 reached on the second candle.
+    const win = resolve({ side: "long", entry: 100, stop: 95, target: 110 }, 100, [C(100, 104, 99, 103), C(103, 111, 102, 110)], 100, 0.001);
+    assert.equal(win.result, "target");
+    assert.equal(win.size, 20);
+    assert.equal(win.gross, 200);
+    assert.ok(Math.abs(win.fees - (100 + 110) * 20 * 0.001) < 1e-9);
+    assert.ok(Math.abs(win.net - (200 - 4.2)) < 1e-9);
+    assert.equal(win.r, 2);
+    assert.deepEqual([win.filledAt, win.exitAt, win.exit], [-1, 1, 110]);
+    // The same plan, stopped: exactly the amount risked, plus fees.
+    const loss = resolve({ side: "long", entry: 100, stop: 95, target: 110 }, 100, [C(100, 101, 94, 96)], 100, 0.001);
+    assert.deepEqual([loss.result, loss.gross, loss.r, loss.exit], ["stop", -100, -1, 95]);
+    assert.ok(loss.net < -100);
+    // A short profits when price falls.
+    const short = resolve({ side: "short", entry: 100, stop: 104, target: 92 }, 100, [C(100, 101, 91, 93)], 100, 0);
+    assert.deepEqual([short.result, short.size, short.gross, short.r], ["target", 25, 200, 2]);
+});
+
+test("the rules of the replay: stop first when a candle reaches both, limit orders wait, an unfinished trade is valued at the last close", () => {
+    const both = resolve({ side: "long", entry: 100, stop: 95, target: 110 }, 100, [C(100, 112, 94, 105)], 100, 0);
+    assert.equal(both.result, "stop");
+    // An entry below the current price is not filled until price trades there.
+    const wait = resolve({ side: "long", entry: 98, stop: 95, target: 104 }, 100, [C(100, 103, 99, 102), C(102, 102, 97, 99), C(99, 105, 98.5, 104)], 100, 0);
+    assert.deepEqual([wait.filledAt, wait.result, wait.exitAt], [1, "target", 2]);
+    // In the candle that fills the order, the take profit is not counted, only the stop loss.
+    const fillAndStop = resolve({ side: "long", entry: 98, stop: 95, target: 104 }, 100, [C(100, 105, 94, 96)], 100, 0);
+    assert.equal(fillAndStop.result, "stop");
+    const never = resolve({ side: "long", entry: 90, stop: 85, target: 100 }, 100, [C(100, 103, 99, 102)], 100, 0);
+    assert.deepEqual([never.result, never.net, never.exit], ["unfilled", 0, null]);
+    const open = resolve({ side: "long", entry: 100, stop: 95, target: 110 }, 100, [C(100, 103, 99, 102), C(102, 104, 101, 103)], 100, 0);
+    assert.deepEqual([open.result, open.exit, open.gross, open.r], ["open", 103, 60, 0.6]);
+});
+
+test("the three practice charts are real, hide what came next, and do not all reward the same decision", () => {
+    assert.equal(SCENARIOS.length, 3);
+    const results = [];
+    for (const s of SCENARIOS) {
+        assert.equal(s.next[0].t, s.seen.at(-1).t + 900000, `${s.id}: what came next starts right after what was seen`);
+        assert.equal(s.next.length, 24);
+        assert.ok(["up", "down", "sideways"].includes(s.reading));
+        assert.equal(s.reading, readStructure(s.seen));
+        const last = s.seen.at(-1).c, sp = Math.max(...s.seen.map((x) => x.h)) - Math.min(...s.seen.map((x) => x.l));
+        const long = resolve({ side: "long", entry: last, stop: last - sp * 0.2, target: last + sp * 0.4 }, last, s.next);
+        const short = resolve({ side: "short", entry: last, stop: last + sp * 0.2, target: last - sp * 0.4 }, last, s.next);
+        results.push([long.net > 0, short.net > 0]);
+    }
+    assert.ok(results.some(([l, s]) => l || s), "a trade can win");
+    assert.ok(results.some(([l, s]) => !l && !s), "on at least one chart, staying out beats both a long and a short of this kind");
+    assert.ok(SCENARIOS.some((s) => s.reading === "sideways"), "one chart has no clear trend");
+});
+
+test("your capital beside a funded account: the split, the fee, and the limits", () => {
+    const base = { own: 2000, account: 50000, fee: 300, splitPct: 80, drawdownPct: 10, dailyPct: 5 };
+    const win = compareCapital({ ...base, resultPct: 4 });
+    assert.deepEqual([win.ownResult, win.ownEnd, win.accountResult, win.share, win.net, win.breached], [80, 2080, 2000, 1600, 1300, false]);
+    assert.deepEqual([win.limit, win.daily], [5000, 2500]);
+    const loss = compareCapital({ ...base, resultPct: -4 });
+    assert.deepEqual([loss.ownResult, loss.share, loss.net, loss.breached, loss.cushion], [-80, 0, -300, false, 3000]);
+    const breach = compareCapital({ ...base, resultPct: -10 });
+    assert.deepEqual([breach.breached, breach.net, breach.cushion, breach.ownResult], [true, -300, 0, -200]);
 });

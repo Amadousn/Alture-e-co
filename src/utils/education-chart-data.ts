@@ -4,13 +4,13 @@
 // chart (its swings, its zones, which candle is the strongest) is worked out
 // here from the candles themselves, and held to account by tests/education.test.mjs.
 
-import { CONTEXTFIVE, CONTEXTHOUR, CONTEXTQUARTER, DOWNTREND, FINAL, FIRST, LEVELS, MOVEMENT as MOVES, SIDEWAYS, UPTREND } from "./education-btc-candles.ts";
+import { CONTEXTFIVE, CONTEXTHOUR, CONTEXTQUARTER, DAILY, DAILYRECENT, DOWNTREND, FINAL, FIRST, LEVELS, MOVEMENT as MOVES, SIDEWAYS, SIMANEXT, SIMASEEN, SIMBNEXT, SIMBSEEN, SIMCNEXT, SIMCSEEN, UPTREND } from "./education-btc-candles.ts";
 import type { Row } from "./education-btc-candles.ts";
 
 export type Candle = { t: number; o: number; h: number; l: number; c: number };
 export type Pivot = { i: number; kind: "high" | "low" };
 export type Zone = { kind: "support" | "resistance"; from: number; to: number };
-export type Timeframe = "5m" | "15m" | "30m" | "1h";
+export type Timeframe = "5m" | "15m" | "30m" | "1h" | "1d";
 export type SceneView = { candles: Candle[]; minutes: number };
 export type Scene = {
     id: string;
@@ -27,7 +27,7 @@ export type Scene = {
 };
 
 export const SOURCE = "BTCUSDT perpetual · Bybit";
-export const MINUTES: Record<Timeframe, number> = { "5m": 5, "15m": 15, "30m": 30, "1h": 60 };
+export const MINUTES: Record<Timeframe, number> = { "5m": 5, "15m": 15, "30m": 30, "1h": 60, "1d": 1440 };
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const candles = (rows: Row[]): Candle[] => rows.map(([t, o, h, l, c]) => ({ t, o, h, l, c }));
@@ -109,7 +109,11 @@ context.when = when(candles(CONTEXTHOUR), 60);
 const final = scene("final", "15m", FINAL);
 final.zones = [zoneAround(final, "resistance", highsOf(final).slice(-2))];
 
-export const SCENES = { first, movement, uptrend, downtrend, sideways, levels, context, final };
+// ---- Discover: four months of Bitcoin, one candle a day, and the last twelve hours of them on 15 minutes.
+const horizon = scene("horizon", "1d", DAILY);
+horizon.views["15m"] = { candles: candles(DAILYRECENT), minutes: 15 };
+
+export const SCENES = { first, movement, uptrend, downtrend, sideways, levels, context, final, horizon };
 export type SceneId = keyof typeof SCENES;
 
 // ---- What each candle of the movement chart is an example of, found by measuring every candle.
@@ -147,3 +151,21 @@ const indecision = most(moves, (candle) => (named.has(moves.indexOf(candle)) || 
 // The candles of the buying runs, apart from the one that gave back most of its rise.
 const momentum = runs.flat().filter((i) => i !== rejection);
 export const MOVEMENT = { strongBuy, strongSell, rejection, defended, indecision, runs, momentum };
+
+// ---- Practice: three moments in Bitcoin's history. The learner sees `seen`, decides, and only then is shown `next`.
+// What the visible candles were doing, read from their last two swing highs and lows.
+export type Reading = "up" | "down" | "sideways";
+export function readStructure(list: Candle[]): Reading {
+    const pivots = swings(list, MAJOR);
+    const last = (kind: "high" | "low") => pivots.filter((pivot) => pivot.kind === kind).slice(-2).map((pivot) => (kind === "high" ? list[pivot.i].h : list[pivot.i].l));
+    const [h, l] = [last("high"), last("low")];
+    if (h.length < 2 || l.length < 2) return "sideways";
+    return h[1] > h[0] && l[1] > l[0] ? "up" : h[1] < h[0] && l[1] < l[0] ? "down" : "sideways";
+}
+export type Scenario = { id: string; seen: Candle[]; next: Candle[]; when: string; reading: Reading; pivots: Pivot[] };
+const scenario = (id: string, seen: Row[], next: Row[]): Scenario => {
+    const list = candles(seen);
+    return { id, seen: list, next: candles(next), when: when(list, 15), reading: readStructure(list), pivots: swings(list, MAJOR) };
+};
+export const SCENARIOS: Scenario[] = [scenario("a", SIMASEEN, SIMANEXT), scenario("b", SIMBSEEN, SIMBNEXT), scenario("c", SIMCSEEN, SIMCNEXT)];
+
