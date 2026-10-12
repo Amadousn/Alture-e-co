@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { compareCapital } from "@/utils/education-sim";
 import { Step } from "./course";
 import { ChartOf, Done, Feedback, NextOne, Prompt, retry, TRIES } from "./shared";
@@ -260,87 +260,133 @@ export const Browse = ({ step, onDone }: { step: Extract<Step, { kind: "browse" 
     );
 };
 
-// ---------- calculator: your own capital beside a funded account ----------
+// ---------- calculator: your own capital beside a prop firm's account ----------
 
-const Slider = ({ name, value, min, max, step, onChange, show }: { name: string; value: number; min: number; max: number; step: number; onChange: (next: number) => void; show: string }) => (
-    <label className="block">
-        <span className="flex items-baseline justify-between gap-4 text-sm">
-            <span className="text-white/60">{name}</span>
-            <span className="tabular-nums text-white">{show}</span>
-        </span>
-        <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} className="edu-range mt-2" style={{ "--fill": `${((value - min) / (max - min)) * 100}%` } as CSSProperties} />
-    </label>
-);
+// One hypothetical example, the same for every learner, so the three days can be compared.
+const EXAMPLE = { own: 2000, account: 50000, fee: 300, splitPct: 80, drawdownPct: 10, dailyPct: 5 };
+const DAYS = [
+    { key: "good", label: "A good day", resultPct: 2 },
+    { key: "bad", label: "A losing day", resultPct: -2 },
+    { key: "mistake", label: "One big mistake", resultPct: -6 },
+] as const;
+type DayKey = (typeof DAYS)[number]["key"];
+
+const DIFFERENCE: [string, string, string][] = [
+    ["Whose money is it?", "Yours.", "The firm's. You pay a fee to be tested for it."],
+    ["What do you risk?", "Your own money. Every loss is yours.", "The fee you paid, and the account itself. The trading loss is the firm's."],
+    ["What do you keep?", "All of the profit.", "A share of the profit. The firm keeps the rest."],
+    ["Whose rules?", "Your own. Nobody stops you but you.", "The firm's. Break one, and the account is closed."],
+];
+const OWN = "Your own capital";
+const FIRM = "A funded account, from a prop firm";
+const COLUMNS = "md:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1.2fr)]";
+const plus = (value: number) => `${value > 0 ? "+" : ""}${usd(value)}`;
 
 export const Calculator = ({ onDone }: { onDone: Done }) => {
-    const [input, setInput] = useState({ own: 2000, resultPct: 4, account: 50000, fee: 300, splitPct: 80, drawdownPct: 10, dailyPct: 5 });
-    const [seen, setSeen] = useState({ profit: false, loss: false, breach: false });
-    const out = useMemo(() => compareCapital(input), [input]);
-    const set = (change: Partial<typeof input>) => {
-        const next = { ...input, ...change };
-        setInput(next);
-        const result = compareCapital(next);
-        // Only what the learner tries themselves is ticked: the starting position does not count.
-        const now = { profit: seen.profit || next.resultPct > 0, loss: seen.loss || (next.resultPct < 0 && !result.breached), breach: seen.breach || result.breached };
-        if (now.profit !== seen.profit || now.loss !== seen.loss || now.breach !== seen.breach) {
-            setSeen(now);
-            if (now.profit && now.loss && now.breach) onDone(1);
-        }
+    const [day, setDay] = useState<DayKey | null>(null);
+    const [seen, setSeen] = useState<DayKey[]>([]);
+    const all = seen.length === DAYS.length;
+    const chosen = DAYS.find((item) => item.key === day);
+    const out = useMemo(() => (chosen ? compareCapital({ ...EXAMPLE, resultPct: chosen.resultPct }) : null), [chosen]);
+
+    const open = (key: DayKey) => {
+        setDay(key);
+        if (seen.includes(key)) return;
+        const next = [...seen, key];
+        setSeen(next);
+        if (next.length === DAYS.length) onDone(1);
     };
     const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E955A8]" : "text-white");
+    // What reaches the trader from the funded account on that day.
+    const reaches = out ? (out.closedInADay ? -EXAMPLE.fee : out.share) : 0;
 
     return (
-        <div>
-            <Prompt>Move the result up and down, and watch what reaches you in each case.</Prompt>
-            <div className="mt-6 max-w-xl">
-                <Slider name="Result of the trading, as a hypothetical" value={input.resultPct} min={-15} max={15} step={1} onChange={(resultPct) => set({ resultPct })} show={`${input.resultPct > 0 ? "+" : ""}${input.resultPct}%`} />
+        <div className="max-w-4xl">
+            <Prompt>You can trade with your own money, or with the money of a proprietary trading firm (a prop firm). Here is the difference.</Prompt>
+
+            <div className="mt-6 border-t border-white/10" role="table" aria-label="Your own capital compared with a funded account">
+                <div className={`hidden md:grid ${COLUMNS} gap-x-8 border-b border-white/10 py-3`} role="row">
+                    <span role="columnheader" />
+                    <span role="columnheader" className={label}>
+                        {OWN}
+                    </span>
+                    <span role="columnheader" className={label}>
+                        {FIRM}
+                    </span>
+                </div>
+                {DIFFERENCE.map(([question, own, firm]) => (
+                    <div key={question} className={`grid gap-x-8 gap-y-2 border-b border-white/10 py-4 ${COLUMNS}`} role="row">
+                        <p role="rowheader" className="text-sm text-white/50">
+                            {question}
+                        </p>
+                        <p role="cell" className="text-[15px] leading-relaxed text-white">
+                            <span className={`${label} mb-1 block md:hidden`}>{OWN}</span>
+                            {own}
+                        </p>
+                        <p role="cell" className="text-[15px] leading-relaxed text-white">
+                            <span className={`${label} mb-1 block md:hidden`}>{FIRM}</span>
+                            {firm}
+                        </p>
+                    </div>
+                ))}
             </div>
 
-            <div className="mt-8 grid gap-x-16 gap-y-10 md:grid-cols-2">
-                <div role="group" aria-label="Your own capital">
-                    <p className={label}>Your own capital</p>
-                    <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(out.ownResult)}`}>{usd(out.ownResult)}</p>
-                    <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-                        {out.ownResult >= 0 ? "All of the profit is yours." : "All of the loss is yours."} Your {usd(input.own)} becomes <span className="tabular-nums text-white">{usd(out.ownEnd)}</span>.
-                    </p>
-                    <div className="mt-6">
-                        <Slider name="Your capital" value={input.own} min={500} max={20000} step={500} onChange={(own) => set({ own })} show={usd(input.own)} />
-                    </div>
-                </div>
-
-                <div role="group" aria-label="A funded account">
-                    <p className={label}>A funded account</p>
-                    <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(out.net)}`}>{usd(out.net)}</p>
-                    <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-                        {out.breached
-                            ? `The account lost ${usd(-out.accountResult)}, more than the ${usd(out.limit)} the rules allow. It is closed. The loss was the firm's; what you lose is the ${usd(input.fee)} fee.`
-                            : out.accountResult > 0
-                              ? `The account made ${usd(out.accountResult)}. Your ${input.splitPct}% share is ${usd(out.share)}; after the ${usd(input.fee)} fee you paid, that leaves ${usd(out.net)}.`
-                              : out.accountResult < 0
-                                ? `The account lost ${usd(-out.accountResult)}. That loss is the firm's, but it uses up your allowance: only ${usd(out.cushion)} more may be lost before the account is closed. You have paid the ${usd(input.fee)} fee.`
-                                : `Nothing was made or lost. You have paid the ${usd(input.fee)} fee.`}
-                    </p>
-                    <div className="mt-6 space-y-4">
-                        <Slider name="Advertised account size" value={input.account} min={10000} max={200000} step={10000} onChange={(account) => set({ account })} show={usd(input.account)} />
-                        <Slider name="Fee for the evaluation" value={input.fee} min={50} max={600} step={25} onChange={(fee) => set({ fee })} show={usd(input.fee)} />
-                        <Slider name="Profit split to the trader" value={input.splitPct} min={50} max={90} step={5} onChange={(splitPct) => set({ splitPct })} show={`${input.splitPct}%`} />
-                        <Slider name="Maximum drawdown" value={input.drawdownPct} min={4} max={12} step={1} onChange={(drawdownPct) => set({ drawdownPct })} show={`${input.drawdownPct}% = ${usd(out.limit)}`} />
-                        <Slider name="Daily loss limit" value={input.dailyPct} min={2} max={6} step={1} onChange={(dailyPct) => set({ dailyPct })} show={`${input.dailyPct}% = ${usd(out.daily)}`} />
-                    </div>
-                    <p className="mt-4 text-[13px] leading-relaxed text-white/45">
-                        Of the {usd(input.account)} advertised, none is yours to withdraw. Lose more than {usd(out.daily)} in a single day and the account is closed too, whatever the total.
-                    </p>
-                </div>
-            </div>
-
-            <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-2">
-                <Check on={seen.profit}>Try a profit</Check>
-                <Check on={seen.loss}>Try a loss within the limits</Check>
-                <Check on={seen.breach}>Try a loss beyond the maximum drawdown</Check>
-            </ul>
-            <p className="mt-5 max-w-3xl text-[13px] leading-relaxed text-white/40">
-                Hypothetical figures that you set yourself, to show how the arithmetic works. Real programmes have more rules, such as profit targets and time limits, and they differ from firm to firm. An evaluation can be failed, in which case the fee is lost. Nothing here promises funding or profit.
+            <p className="mt-10 text-lg font-medium tracking-tight text-white">Now one day, three ways. Open each one.</p>
+            <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-white/45">
+                Hypothetical example: {usd(EXAMPLE.own)} of your own, or a {usd(EXAMPLE.account)} funded account with a {usd(EXAMPLE.fee)} fee, an {EXAMPLE.splitPct}% profit split, a daily loss limit of {EXAMPLE.dailyPct}% and a maximum drawdown of {EXAMPLE.drawdownPct}%.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2.5" role="group" aria-label="The day">
+                {DAYS.map((item) => (
+                    <button key={item.key} type="button" aria-pressed={day === item.key} onClick={() => open(item.key)} className={`inline-flex items-center gap-2.5 rounded-sm border px-4 py-2.5 text-sm transition-colors ${day === item.key ? "border-white text-white" : "border-white/25 text-white/75 hover:border-white hover:text-white"}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${seen.includes(item.key) ? "bg-[#20B8A8]" : "bg-white/25"}`} aria-hidden="true" />
+                        {item.label}
+                        <span className="tabular-nums text-white/45">
+                            {item.resultPct > 0 ? "+" : ""}
+                            {item.resultPct}%
+                        </span>
+                    </button>
+                ))}
+            </div>
+
+            {chosen && out && (
+                <div key={chosen.key} className="cockpit-rise mt-6 grid gap-x-12 gap-y-8 md:grid-cols-2" role="status">
+                    <div>
+                        <p className={label}>{OWN}</p>
+                        <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(out.ownResult)}`}>{plus(out.ownResult)}</p>
+                        <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+                            {out.ownResult > 0 ? "All of the profit is yours." : "All of the loss is yours."} Your {usd(EXAMPLE.own)} becomes {usd(out.ownEnd)}
+                            {chosen.key === "mistake" ? ", and nothing stops you from trading on to win it back." : "."}
+                        </p>
+                    </div>
+                    <div>
+                        <p className={label}>{FIRM}</p>
+                        <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(reaches)}`}>{plus(reaches)}</p>
+                        <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+                            {out.closedInADay
+                                ? `The account lost ${usd(-out.accountResult)} in one day, more than the ${usd(out.daily)} daily loss limit. It is closed. The loss was the firm's. What you lose is the ${usd(EXAMPLE.fee)} fee, and the account.`
+                                : out.accountResult > 0
+                                  ? `The account made ${usd(out.accountResult)}. Your ${EXAMPLE.splitPct}% share is ${usd(out.share)} and the firm keeps ${usd(out.accountResult - out.share)}. You paid a ${usd(EXAMPLE.fee)} fee to get this far.`
+                                  : `The account lost ${usd(-out.accountResult)}. That loss is the firm's, not yours. But only ${usd(out.cushion)} more may be lost before the account is closed.`}
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            <p className="mt-6 text-[13px] leading-relaxed text-white/40">
+                {seen.length} of {DAYS.length} opened. Real programmes differ from firm to firm, and an evaluation can be failed. Nothing here promises funding or profit.
+            </p>
+
+            {all && (
+                <div className="cockpit-rise mt-10 border-t border-white/10 pt-8">
+                    <p className="font-logo text-3xl md:text-4xl font-light leading-tight text-white">Either way, you need clear rules.</p>
+                    <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">
+                        You are human, and emotion is part of every decision. One mistake can undo weeks of work, if not everything: your own money in one case, the fee and the account in the other. That is why we built AltureLock: to help you set your rules before the trade, and keep to them when emotion pulls the other way.
+                    </p>
+                    <a href="/alturelock" target="_blank" rel="noopener" className="group mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-0.5 text-sm font-medium text-white hover:border-white transition-colors">
+                        See AltureLock <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </a>
+                </div>
+            )}
         </div>
     );
 };

@@ -92,6 +92,8 @@ export function compareCapital(input: CapitalInput) {
         limit,
         daily,
         breached,
+        // The same result made in a single day: the daily loss limit closes the account as well.
+        closedInADay: accountResult <= -Math.min(limit, daily),
         // What reaches the trader: a share of the profit, nothing of a loss, and the fee is paid either way.
         share: accountResult > 0 ? (accountResult * splitPct) / 100 : 0,
         net: (accountResult > 0 ? (accountResult * splitPct) / 100 : 0) - fee,

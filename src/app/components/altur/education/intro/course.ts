@@ -49,7 +49,7 @@ export type StageId = "discover" | "explore" | "understand" | "decide" | "practi
 export const STAGES: { id: StageId; word: string; topic: string; line: string }[] = [
     { id: "discover", word: "Discover", topic: "What is cryptocurrency?", line: "Bitcoin, the blockchain, exchanges and wallets, and what separates investing from active trading." },
     { id: "explore", word: "Explore", topic: "The markets", line: "Cryptocurrency, stocks, forex, indices and options: what each one is, when it trades and what it risks." },
-    { id: "understand", word: "Understand", topic: "Your capital, or a firm's", line: "Trading your own money compared with a funded-trader programme, with numbers you can change." },
+    { id: "understand", word: "Understand", topic: "Your capital, or a firm's", line: "Trading your own money compared with a prop firm's account: what you risk, what you keep, and why rules come first." },
     { id: "decide", word: "Decide", topic: "Read a real chart", line: "Candles, swings, trends, ranges, support and resistance, on real Bitcoin charts." },
     { id: "practice", word: "Practice", topic: "Take a simulated trade", line: "Choose a direction, an entry, a stop loss and a take profit, then watch what price did next." },
     { id: "review", word: "Review", topic: "Understand your decisions", line: "Your practice journal, what you have learned, and where the programme goes from here." },
@@ -902,6 +902,19 @@ const CAPITAL: Lesson = {
     steps: [
         { id: "capital-calculator", kind: "calculator", title: "Two ways to trade" },
         {
+            id: "capital-sides",
+            kind: "sort",
+            title: "A prop firm: for and against",
+            categories: ["Advantage", "Disadvantage"],
+            items: [
+                { text: "A losing trade is a loss on the firm's account, not on your savings.", answer: "Advantage", why: "Your own trading capital is not on the line. The most you can lose is the fee you paid.", hint: "Ask whose money is lost when a trade goes wrong." },
+                { text: "You pay a fee before you trade, and it is gone if you fail.", answer: "Disadvantage", why: "The evaluation is paid for first. Fail it, or break a rule later, and the fee is lost.", hint: "Here money leaves your pocket before any trade is taken." },
+                { text: "You can trade a larger account than your own savings would allow.", answer: "Advantage", why: "The size is the firm's money. It is an allowance to trade, never money you own.", hint: "Compare $2,000 of your own with a $50,000 account." },
+                { text: "The rules are strict: one day beyond the daily loss limit, and the account is closed.", answer: "Disadvantage", why: "The rules apply at once and to everyone. One emotional mistake can end the account.", hint: "Ask what a single bad decision costs here." },
+                { text: "You keep only a share of the profit.", answer: "Disadvantage", why: "The firm keeps the rest. With your own capital, all of the profit is yours.", hint: "Compare it with keeping everything." },
+            ],
+        },
+        {
             id: "capital-split",
             kind: "choice",
             title: "The profit split",
@@ -953,7 +966,7 @@ const CAPITAL: Lesson = {
             id: "capital-recap",
             kind: "recap",
             title: "What you've learned",
-            learned: ["With personal capital, all of the profit is yours and so is all of the loss.", "In a funded-trader programme the account belongs to the firm: the trader usually pays a fee, must pass an evaluation, and receives only a share of profits.", "Such programmes have rules, such as a daily loss limit and a maximum drawdown. Breaking one ends the account.", "The advertised account size is what a trader may trade, not money they own or can withdraw.", "Nothing here is a promise of funding or of profit. Programmes differ, and their rules decide the result."],
+            learned: ["With personal capital, all of the profit is yours and so is all of the loss.", "In a funded-trader programme the account belongs to the firm: the trader usually pays a fee, must pass an evaluation, and receives only a share of profits.", "Such programmes have rules, such as a daily loss limit and a maximum drawdown. Breaking one ends the account.", "The advertised account size is what a trader may trade, not money they own or can withdraw.", "With either one, a single emotional mistake can undo a great deal. Clear rules, set before the trade, are what protect a trader. AltureLock is built to help you keep to them.", "Nothing here is a promise of funding or of profit. Programmes differ, and their rules decide the result."],
             terms: [["Trading capital", "The money a trader trades with."], ["Prop firm", "A proprietary trading firm: a firm that lets traders trade its accounts under its rules."], ["Funded account", "An account provided by a firm for a trader to trade."], ["Evaluation (challenge)", "A test, usually paid for, that a trader must pass under the firm's rules to obtain a funded account."], ["Profit split", "The share of profits the trader receives; the firm keeps the rest."], ["Drawdown", "A fall in an account's value from an earlier level."], ["Maximum drawdown", "The largest total loss the rules allow before the account is closed."], ["Daily loss limit", "The largest loss the rules allow in one day."]],
         },
     ],

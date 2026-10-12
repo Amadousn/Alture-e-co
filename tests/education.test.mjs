@@ -275,4 +275,7 @@ test("your capital beside a funded account: the split, the fee, and the limits",
     assert.deepEqual([loss.ownResult, loss.share, loss.net, loss.breached, loss.cushion], [-80, 0, -300, false, 3000]);
     const breach = compareCapital({ ...base, resultPct: -10 });
     assert.deepEqual([breach.breached, breach.net, breach.cushion, breach.ownResult], [true, -300, 0, -200]);
+    // The lesson's three days: a profit, a loss within the limits, and a day beyond the daily loss limit.
+    const days = [2, -2, -6].map((resultPct) => compareCapital({ ...base, resultPct }));
+    assert.deepEqual(days.map((d) => [d.ownResult, d.ownEnd, d.accountResult, d.share, d.cushion, d.closedInADay]), [[40, 2040, 1000, 800, 5000, false], [-40, 1960, -1000, 0, 4000, false], [-120, 1880, -3000, 0, 2000, true]]);
 });
