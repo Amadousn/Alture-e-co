@@ -299,6 +299,54 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
     ) : null;
 
 
+    // What the result teaches. The chart beside it grows to the same height, so the two columns stay level.
+    const insight =
+        phase === "result" && trade ? (
+            <>
+                        {followed && coach && (
+                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                                <p className={label}>Why this trade worked</p>
+                                <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
+                                    <li>You traded with the structure: the swings were {scenario.reading === "up" ? "rising" : "falling"}, and you went {trade.side}.</li>
+                                    <li>Your stop loss sat beyond the last swing {trade.side === "long" ? "low" : "high"}, so ordinary movement could not take you out.</li>
+                                    <li>You risked 1 to make {trade.entry !== null && trade.stop !== null && trade.target !== null ? (Math.abs(trade.target - trade.entry) / Math.abs(trade.entry - trade.stop)).toFixed(1) : "2"}, and let the trade reach its target.</li>
+                                </ul>
+                                <p className="mt-3 text-sm leading-relaxed text-white/70">That is three ideas out of a whole method. The programme teaches the rest, with a coach beside you: how to find these moments yourself, when to stay out, and how to keep your rules.</p>
+                                <div className="mt-3 flex flex-wrap gap-2.5">
+                                    <Link href="/contact" className="lit rounded-sm bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-[#e4e4e8]">
+                                        Request access
+                                    </Link>
+                                    <Link href="/education/programme" className={quiet}>
+                                        See the seven modules
+                                    </Link>
+                                </div>
+                                <p className="mt-3 text-xs leading-relaxed text-white/40">The coach's charts are real, and chosen as examples where the method worked. In a live market no method wins every time, which is what the stop loss is for.</p>
+                            </div>
+                        )}
+                        {trade.side === "out" && (
+                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                                <p className={label}>{scenario.reading === "sideways" ? "Why a trader stays out here" : "What staying out meant here"}</p>
+                                {scenario.reading === "sideways" ? (
+                                    <>
+                                        <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
+                                            <li>No structure: the swing highs and lows were not stepping up or down, so there was no direction to trade with.</li>
+                                            <li>No place for a stop loss: without a clear swing, no price would have proved the idea wrong.</li>
+                                            <li>
+                                                Six hours later {asset.name} was {Math.abs(((trade.after.end - trade.after.from) / trade.after.from) * 100).toFixed(2)}% from where it started. The move was not there to take.
+                                            </li>
+                                        </ul>
+                                        <p className="mt-3 text-sm leading-relaxed text-white/70">Waiting is part of the work. The market will still be there tomorrow, and your capital with it. A scalper might trade the small moves inside a range like this one, but that takes speed and experience: it is not where a beginner should start.</p>
+                                    </>
+                                ) : (
+                                    <p className="mt-2 text-sm leading-relaxed text-white/80">
+                                        Staying out cost you nothing, and that is never a mistake. But the structure here was {scenario.reading === "up" ? "rising" : "falling"}, with a clear swing to put a stop loss behind: this was a setup a trader would take. Take the chart again and ask the coach.
+                                    </p>
+                                )}
+                            </div>
+                        )}
+            </>
+        ) : null;
+
     return (
         <div>
             <div className="mb-3 flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
@@ -326,11 +374,11 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                 </p>
             </div>
 
-            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-start lg:gap-x-8">
-            <div className="min-w-0">
+            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:gap-x-8">
+            <div className="min-w-0 lg:flex lg:flex-col">
             <SimChart
                 ref={chart}
-                className="h-[46vh] min-h-[320px] border border-white/10 lg:h-[calc(100dvh-17.5rem)] lg:min-h-[300px]"
+                className="h-[46vh] min-h-[320px] border border-white/10 lg:h-auto lg:min-h-[max(300px,calc(100dvh-17.5rem))] lg:flex-1"
                 seen={seen}
                 minutes={scenario.minutes}
                 side={side === "out" ? null : side}
@@ -499,7 +547,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                 <p className="mt-4 border-t border-white/15 pt-4 text-sm leading-relaxed text-white/55">{issue}</p>
                             )}
                             {forced && liq !== null && <p className="mt-3 border-l-2 border-[#FACC15] pl-3 text-[13px] leading-relaxed text-white/75">Your stop loss is beyond the liquidation price. At {leverage}x the position would be closed by force at {price(liq)}, and the whole {whole(amount)} lost, before your stop loss is reached. Move the stop loss closer, or lower the leverage.</p>}
-                            {plan && !issue && !forced && (riskPerUnit(plan) * sizeOf(plan)) / balance > 0.02 && <p className="mt-3 border-l-2 border-[#FACC15] pl-3 text-[13px] leading-relaxed text-white/75">Being stopped here would cost {(((riskPerUnit(plan) * sizeOf(plan)) / balance) * 100).toFixed(1)}% of your practice account. A common rule of thumb is to risk no more than 1 to 2% on one trade.</p>}
+                            {plan && !issue && !forced && (riskPerUnit(plan) * sizeOf(plan)) / balance > 0.02 && <p className="mt-3 border-l-2 border-[#FACC15] pl-3 text-[13px] leading-relaxed text-white/75">Stopped here: {(((riskPerUnit(plan) * sizeOf(plan)) / balance) * 100).toFixed(1)}% of your account. Rule of thumb: 1 to 2% a trade.</p>}
                             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
                                 <button
                                     type="button"
@@ -564,48 +612,8 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             </p>
                         )}
                         <Feedback tone={!traded ? "plain" : trade.net >= 0 ? "good" : "bad"}>{outcomeText(trade)}</Feedback>
-                        {followed && coach && (
-                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
-                                <p className={label}>Why this trade worked</p>
-                                <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
-                                    <li>You traded with the structure: the swings were {scenario.reading === "up" ? "rising" : "falling"}, and you went {trade.side}.</li>
-                                    <li>Your stop loss sat beyond the last swing {trade.side === "long" ? "low" : "high"}, so ordinary movement could not take you out.</li>
-                                    <li>You risked 1 to make {trade.entry !== null && trade.stop !== null && trade.target !== null ? (Math.abs(trade.target - trade.entry) / Math.abs(trade.entry - trade.stop)).toFixed(1) : "2"}, and let the trade reach its target.</li>
-                                </ul>
-                                <p className="mt-3 text-sm leading-relaxed text-white/70">That is three ideas out of a whole method. The programme teaches the rest, with a coach beside you: how to find these moments yourself, when to stay out, and how to keep your rules.</p>
-                                <div className="mt-3 flex flex-wrap gap-2.5">
-                                    <Link href="/contact" className="lit rounded-sm bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-[#e4e4e8]">
-                                        Request access
-                                    </Link>
-                                    <Link href="/education/programme" className={quiet}>
-                                        See the seven modules
-                                    </Link>
-                                </div>
-                                <p className="mt-3 text-xs leading-relaxed text-white/40">The coach's charts are real, and chosen as examples where the method worked. In a live market no method wins every time, which is what the stop loss is for.</p>
-                            </div>
-                        )}
+                        {insight}
                         {traded && !followed && trade.net <= 0 && !hint && scenario.reading !== "sideways" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">On the next chart, ask the coach before you decide: it shows where the structure is going and where to put your stop loss.</p>}
-                        {trade.side === "out" && (
-                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
-                                <p className={label}>{scenario.reading === "sideways" ? "Why a trader stays out here" : "What staying out meant here"}</p>
-                                {scenario.reading === "sideways" ? (
-                                    <>
-                                        <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
-                                            <li>No structure: the swing highs and lows were not stepping up or down, so there was no direction to trade with.</li>
-                                            <li>No place for a stop loss: without a clear swing, no price would have proved the idea wrong.</li>
-                                            <li>
-                                                Six hours later {asset.name} was {Math.abs(((trade.after.end - trade.after.from) / trade.after.from) * 100).toFixed(2)}% from where it started. The move was not there to take.
-                                            </li>
-                                        </ul>
-                                        <p className="mt-3 text-sm leading-relaxed text-white/70">Waiting is part of the work. The market will still be there tomorrow, and your capital with it. A scalper might trade the small moves inside a range like this one, but that takes speed and experience: it is not where a beginner should start.</p>
-                                    </>
-                                ) : (
-                                    <p className="mt-2 text-sm leading-relaxed text-white/80">
-                                        Staying out cost you nothing, and that is never a mistake. But the structure here was {scenario.reading === "up" ? "rising" : "falling"}, with a clear swing to put a stop loss behind: this was a setup a trader would take. Take the chart again and ask the coach.
-                                    </p>
-                                )}
-                            </div>
-                        )}
                         {traded && scenario.reading === "sideways" && trade.net <= 0 && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">This chart had no clear structure, so there was nothing to trade with and no swing to put a stop loss behind. Not every setup is worth taking: here the rule was to wait, even when waiting is boring.</p>}
                         {trade.result === "liquidated" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">Leverage did this, not the market: the same move without leverage would have cost a fraction of it. A stop loss inside the liquidation price would have closed the trade first.</p>}
                         {trade.result === "stop" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">The plan held: you lost what you had decided to risk, and no more. That is a stop loss doing its work.</p>}

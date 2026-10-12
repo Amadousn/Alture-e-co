@@ -9,7 +9,7 @@ const EducationHero = () => {
     const { education } = t;
 
     return (
-        <section className="bg-black min-h-[100dvh] flex flex-col justify-end !pt-32 md:!pt-40 !pb-14 md:!pb-20">
+        <section className="bg-black !pt-28 md:!pt-32 !pb-14 md:!pb-20">
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
                 <div className="flex items-baseline gap-4 border-t border-white/15 pt-3.5 text-[11px] uppercase tracking-[0.14em]">
                     <span className="text-white/70">{education.badge}</span>
