@@ -323,7 +323,7 @@ test("the practice charts are real, hide what came next, and do not all reward t
     assert.ok(SCENARIOS.some((s) => s.reading === "sideways"), "one chart has no clear trend");
 });
 
-test("the coach: on the first chart the suggested plan reaches its take profit; on others it can lose", () => {
+test("the coach: on every chart with a trend, the suggested plan reaches its take profit on the real candles", () => {
     const outcome = (s) => {
         const plan = suggestion(s);
         return plan ? simulate(P({ side: plan.side, entry: plan.entry, stop: plan.stop, target: plan.target, leverage: 5 }), plan.entry, s.minutes) : null;
@@ -340,10 +340,15 @@ test("the coach: on the first chart the suggested plan reaches its take profit; 
     assert.ok(first.net > 0 && first.exitAt > 30, "it takes a while, so the replay has something to show");
     // Any leverage the learner can choose leaves the liquidation price beyond that stop loss.
     for (const leverage of LEVERAGES) assert.equal(stopTooFar({ side: plan.side, entry: plan.entry, stop: plan.stop, leverage }), false, `${leverage}x`);
-    // The coach is not always right: with the same kind of plan, at least one other chart is stopped out.
-    const others = SCENARIOS.slice(1).map(outcome);
-    assert.ok(others.some((o) => o && o.result === "stop"), "a suggested plan can lose");
-    assert.ok(others.some((o) => o && o.result === "target"), "and can win");
+    // Every trending chart was chosen as an example where the coach's plan worked; against the trend, the mirror plan is stopped.
+    for (const s of SCENARIOS.filter((s) => s.reading !== "sideways")) {
+        const p = suggestion(s);
+        assert.ok(p, `${s.id} has a suggested plan`);
+        assert.equal(outcome(s).result, "target", s.id);
+        const against = simulate(P({ side: p.side === "long" ? "short" : "long", entry: p.entry, stop: p.entry - (p.stop - p.entry), target: p.entry - (p.target - p.entry), leverage: 5 }), p.entry, s.minutes);
+        assert.equal(against.result, "stop", `${s.id}: against the structure`);
+        for (const leverage of LEVERAGES) assert.equal(stopTooFar({ side: p.side, entry: p.entry, stop: p.stop, leverage }), false, `${s.id} ${leverage}x`);
+    }
     // A sideways chart has no suggested plan at all.
     SCENARIOS.filter((s) => s.reading === "sideways").forEach((s) => assert.equal(suggestion(s), null));
     // A suggested stop loss always leaves the trade room: at least a quarter of a percent.

@@ -235,6 +235,8 @@ const ReadingTheChart = () => {
                                 <Link href="/education/dashboard" className="mt-8 inline-block text-sm text-white/55 hover:text-white transition-colors">
                                     ← Dashboard
                                 </Link>
+                                {/* The simulated trade puts its coach here. */}
+                                <div id="edu-coach-slot" className="mt-8" />
                             </div>
                         </aside>
 
