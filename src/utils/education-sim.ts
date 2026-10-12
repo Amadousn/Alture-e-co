@@ -25,7 +25,7 @@ export type Outcome = {
 
 // A practice account of virtual dollars, the amounts and leverage a learner can choose, and a typical taker fee charged on the way in and on the way out.
 export const START_BALANCE = 10000;
-export const MARGINS = [250, 500, 1000, 2500];
+export const MARGINS = [2500, 4000, 6000, 8000];
 export const LEVERAGES = [1, 2, 5, 10, 20];
 export const FEE_RATE = 0.0006;
 

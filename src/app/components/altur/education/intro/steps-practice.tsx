@@ -18,7 +18,7 @@ const percent = (value: number, digits = 1) => `${value > 0 ? "+" : value < 0 ? 
 const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
 const primary = "group inline-flex items-center gap-3 rounded-sm bg-white px-6 py-3 text-sm font-medium text-black hover:bg-[#e4e4e8] transition-colors lit disabled:bg-transparent disabled:text-white/35 disabled:shadow-none disabled:border disabled:border-white/15";
 const quiet = "rounded-sm border border-white/30 px-4 py-2.5 text-sm text-white hover:border-white transition-colors";
-const choice = (on: boolean) => `rounded-sm border px-3 py-2 text-sm tabular-nums transition-colors disabled:border-white/10 disabled:text-white/25 ${on ? "border-white text-white lit" : "border-white/25 text-white/70 hover:border-white"}`;
+const choice = (on: boolean) => `rounded-sm border px-3 py-1.5 text-sm tabular-nums transition-colors disabled:border-white/10 disabled:text-white/25 ${on ? "border-white text-white lit" : "border-white/25 text-white/70 hover:border-white"}`;
 const span = (minutes: number) => {
     const total = Math.max(1, Math.round(minutes));
     return total >= 60 ? `${Math.floor(total / 60)} h${total % 60 ? ` ${total % 60} min` : ""}` : `${total} min`;
@@ -107,7 +107,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
     const [side, setSide] = useState<Side | "out" | null>(null);
     const [levels, setLevels] = useState<{ entry: number; stop: number | null; target: number | null }>({ entry: lastClose, stop: null, target: null });
     const [placing, setPlacing] = useState<LevelKey>("stop");
-    const [margin, setMargin] = useState(1000);
+    const [margin, setMargin] = useState(2500);
     const [leverage, setLeverage] = useState(5);
     // The coach is there for the first trade, and on request afterwards.
     const [hint, setHint] = useState(scenario.guided);
@@ -265,9 +265,11 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                 </p>
             </div>
 
+            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-start lg:gap-x-8">
+            <div className="min-w-0">
             <SimChart
                 ref={chart}
-                className="h-[46vh] min-h-[320px] border border-white/10"
+                className="h-[46vh] min-h-[320px] border border-white/10 lg:h-[calc(100dvh-25rem)] lg:min-h-[300px]"
                 seen={seen}
                 minutes={scenario.minutes}
                 side={side === "out" ? null : side}
@@ -283,11 +285,36 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                 onDrag={phase === "plan" ? setLevel : undefined}
             />
             <p className="mt-2 text-xs leading-relaxed text-white/40">
-                A simulation on real, historical candles: no order is placed and no money is used. Drag the chart to move it, scroll to zoom, drag the price scale to stretch it, double-click to fit.
+                A simulation on real, historical candles: no order is placed, no money is used. Choose a level and click the chart, or drag its line. Drag to move, scroll to zoom, drag either scale to stretch, double-click to fit.
                 {later ? " The replay is drawn from one real candle a minute; the path inside each minute is drawn, not recorded." : ""}
             </p>
+                            {phase === "plan" && side && side !== "out" && hint && (
+                                <div className="cockpit-rise mt-3 border-l-2 border-accent pl-4">
+                                    <p className={label}>The coach</p>
+                                    {coach && coach.side === side ? (
+                                        <>
+                                            <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-white/80">
+                                                Last swing {side === "long" ? "low" : "high"}: {price(coach.swing)}. A stop loss just beyond it loses only if the {side === "long" ? "rising" : "falling"} structure breaks. A take profit twice as far away means one win pays for two losses.
+                                            </p>
+                                            <div className="mt-2.5 flex flex-wrap gap-2.5">
+                                                <button type="button" onClick={() => setLevels((current) => ({ ...current, stop: coach.stop }))} className={quiet}>
+                                                    Put my stop loss there
+                                                </button>
+                                                <button type="button" disabled={twoForOne === null} onClick={() => twoForOne !== null && setLevel("target", twoForOne)} className={`${quiet} disabled:border-white/10 disabled:text-white/30`}>
+                                                    Take profit at 2 for 1
+                                                </button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-white/80">
+                                            {scenario.reading === "sideways" ? "There is no clear structure on this chart, so there is no swing that clearly proves a trade wrong. If you trade it, keep the amount small." : coach ? `You are trading against the structure, which is ${scenario.reading === "up" ? "rising" : "falling"}. You can, but the last swings give you nothing to lean on. Keep the amount small.` : "The structure is clear, but the last swing against it is almost at the price: a stop loss there would be hit by an ordinary move. Give the trade more room than that."}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+            </div>
 
-            <div className="mt-5">
+            <div className="mt-5 lg:mt-0">
                 {phase === "observe" && (
                     <div className="cockpit-rise">
                         <Prompt>{scenario.guided ? `Your first trade, with a coach. This is ${asset.name} on ${scenario.when}: real candles, stopped at one moment.` : `This is ${asset.name} on ${scenario.when}: real candles, stopped at one moment. Read it before you decide.`}</Prompt>
@@ -333,7 +360,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                     <div className="cockpit-rise">
                         <Prompt>{`What do you do at ${price(lastClose)}?`}</Prompt>
                         {hint && <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">{scenario.reading === "sideways" ? "The coach: there is no clear structure to lean on here. Staying out is a sound decision." : `The coach: the structure is ${scenario.reading === "up" ? "rising" : "falling"}. Going ${withTrend} trades with it; going ${withTrend === "long" ? "short" : "long"} trades against it.`}</p>}
-                        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                        <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                             {(
                                 [
                                     ["long", "Go long", "You profit if price rises, and lose if it falls."],
@@ -363,17 +390,14 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                 )}
 
                 {phase === "plan" && side && side !== "out" && (
-                    <div className="cockpit-rise grid gap-x-12 gap-y-8 lg:grid-cols-12">
-                        <div className="lg:col-span-7">
-                            <Prompt>{`You are going ${side} on ${asset.name}. Place your stop loss and your take profit: choose a level, then click the chart, or drag its line.`}</Prompt>
-                            <div className="mt-4" role="group" aria-label="Levels">
+                    <div className="cockpit-rise">
+                        <div>
+                            <Prompt>{`You are going ${side} on ${asset.name}.`}</Prompt>
+                            <div className="mt-3" role="group" aria-label="Levels">
                                 {(["entry", "stop", "target"] as const).map((key) => (
-                                    <div key={key} className={`grid grid-cols-[1fr_7.5rem] items-center gap-x-4 border-t sm:grid-cols-[7rem_1fr_7.5rem] border-white/15 py-2.5 transition-colors last:border-b ${placing === key ? "bg-white/[0.05]" : ""}`}>
-                                        <button type="button" aria-pressed={placing === key} onClick={() => setPlacing(key)} className={`text-left text-sm font-medium ${placing === key ? "text-accent" : "text-white hover:text-accent"}`}>
+                                    <div key={key} className={`grid grid-cols-[1fr_8rem] items-center gap-x-4 border-t border-white/15 py-1.5 transition-colors last:border-b ${placing === key ? "bg-white/[0.05]" : ""}`}>
+                                        <button type="button" aria-pressed={placing === key} title={key === "entry" ? "Where the position opens. It starts at the current price." : key === "stop" ? "Where it is closed at a loss: the price that proves the idea wrong." : "Where it is closed at a profit."} onClick={() => setPlacing(key)} className={`text-left text-sm font-medium ${placing === key ? "text-accent" : "text-white hover:text-accent"}`}>
                                             {WORD[key]}
-                                        </button>
-                                        <button type="button" tabIndex={-1} onClick={() => setPlacing(key)} className="hidden text-left text-[13px] leading-snug text-white/50 sm:block">
-                                            {key === "entry" ? "Where the position opens. It starts at the current price." : key === "stop" ? "Where it is closed at a loss: the price that proves the idea wrong." : "Where it is closed at a profit."}
                                         </button>
                                         <input
                                             type="number"
@@ -384,7 +408,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                             placeholder="not set"
                                             onFocus={() => setPlacing(key)}
                                             onChange={(event) => (event.target.value === "" ? key !== "entry" && setLevels((current) => ({ ...current, [key]: null })) : setLevel(key, Number(event.target.value)))}
-                                            className="!w-full !rounded-sm !border !border-white/20 !bg-transparent !px-2.5 !py-1.5 !text-right !text-sm !tabular-nums !text-white placeholder:!text-white/30 focus:!border-white focus:!outline-none"
+                                            className="!w-full !rounded-sm !border !border-white/20 !bg-transparent !px-2.5 !py-1 !text-right !text-sm !tabular-nums !text-white placeholder:!text-white/30 focus:!border-white focus:!outline-none"
                                         />
                                     </div>
                                 ))}
@@ -401,33 +425,9 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                     </button>
                                 )}
                             </div>
-                            {hint && (
-                                <div className="mt-5 border-l-2 border-accent pl-4">
-                                    <p className={label}>The coach</p>
-                                    {coach && coach.side === side ? (
-                                        <>
-                                            <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/80">
-                                                The last swing {side === "long" ? "low" : "high"} is at {price(coach.swing)}. If price breaks it, the {side === "long" ? "rising" : "falling"} structure you are trading is broken. A stop loss just beyond it loses only when the idea is wrong. A take profit twice as far away means one win pays for two losses.
-                                            </p>
-                                            <div className="mt-3 flex flex-wrap gap-2.5">
-                                                <button type="button" onClick={() => setLevels((current) => ({ ...current, stop: coach.stop }))} className={quiet}>
-                                                    Put my stop loss there
-                                                </button>
-                                                <button type="button" disabled={twoForOne === null} onClick={() => twoForOne !== null && setLevel("target", twoForOne)} className={`${quiet} disabled:border-white/10 disabled:text-white/30`}>
-                                                    Take profit at 2 for 1
-                                                </button>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/80">
-                                            {scenario.reading === "sideways" ? "There is no clear structure on this chart, so there is no swing that clearly proves a trade wrong. If you trade it, keep the amount small." : coach ? `You are trading against the structure, which is ${scenario.reading === "up" ? "rising" : "falling"}. You can, but the last swings give you nothing to lean on. Keep the amount small.` : "The structure is clear, but the last swing against it is almost at the price: a stop loss there would be hit by an ordinary move. Give the trade more room than that."}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
                         </div>
 
-                        <div className="lg:col-span-5">
+                        <div className="mt-3">
                             <p className={label}>Amount from your practice account</p>
                             <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Amount">
                                 {MARGINS.map((value) => (
@@ -436,7 +436,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                     </button>
                                 ))}
                             </div>
-                            <p className={`${label} mt-4`}>Leverage</p>
+                            <p className={`${label} mt-3`}>Leverage</p>
                             <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Leverage">
                                 {LEVERAGES.map((value) => (
                                     <button key={value} type="button" aria-pressed={leverage === value} onClick={() => setLeverage(value)} className={choice(leverage === value)}>
@@ -444,9 +444,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                     </button>
                                 ))}
                             </div>
-                            <p className="mt-2.5 text-[13px] leading-relaxed text-white/45">
-                                {leverage === 1 ? `Without leverage, your position is the ${whole(amount)} itself.` : `Leverage multiplies the position, and so both the gain and the loss: at ${leverage}x, a 1% move in price is ${leverage}% of your ${whole(amount)}.`}
-                            </p>
+                            <p className="mt-2 text-[13px] leading-relaxed text-white/45">{leverage === 1 ? `No leverage: the position is the ${whole(amount)} itself.` : `At ${leverage}x, a 1% move in price is ${leverage}% of your ${whole(amount)}.`}</p>
                             {amount === 0 ? (
                                 <div className="mt-4">
                                     <p className="text-sm leading-relaxed text-white/70">Your practice account is too low to open a trade. That is what a run of losses does, and why the size of each one matters.</p>
@@ -455,7 +453,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                     </button>
                                 </div>
                             ) : plan && !issue ? (
-                                <dl className="mt-4 space-y-2 border-t border-white/15 pt-4 text-sm">
+                                <dl className="mt-3 space-y-1.5 border-t border-white/15 pt-3 text-[13px]">
                                     {(
                                         [
                                             ["Position", `${whole(positionValue(plan))} · ${sizeOf(plan).toFixed(4)} ${asset.ticker}`, ""],
@@ -476,8 +474,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             )}
                             {forced && liq !== null && <p className="mt-3 border-l-2 border-[#FACC15] pl-3 text-[13px] leading-relaxed text-white/75">Your stop loss is beyond the liquidation price. At {leverage}x the position would be closed by force at {price(liq)}, and the whole {whole(amount)} lost, before your stop loss is reached. Move the stop loss closer, or lower the leverage.</p>}
                             {plan && !issue && !forced && (riskPerUnit(plan) * sizeOf(plan)) / balance > 0.02 && <p className="mt-3 border-l-2 border-[#FACC15] pl-3 text-[13px] leading-relaxed text-white/75">Being stopped here would cost {(((riskPerUnit(plan) * sizeOf(plan)) / balance) * 100).toFixed(1)}% of your practice account. A common rule of thumb is to risk no more than 1 to 2% on one trade.</p>}
-                            {plan && !issue && <p className="mt-3 text-[13px] leading-relaxed text-white/40">Fees of {(FEE_RATE * 100).toFixed(2)}% of the position are charged on the way in and on the way out. If your entry is not the current price, the order waits until price trades there.</p>}
-                            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
                                 <button
                                     type="button"
                                     disabled={!plan || Boolean(issue)}
@@ -579,6 +576,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                         </p>
                     </div>
                 )}
+            </div>
             </div>
             {sharing && trade && outcome && outcome.filledAt !== null && cardOf(trade, outcome.filledAt) && <ShareTrade card={cardOf(trade, outcome.filledAt)!} onClose={() => setSharing(false)} />}
         </div>

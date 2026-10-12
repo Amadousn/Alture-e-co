@@ -1026,4 +1026,4 @@ export function measure(done: Record<string, number>) {
 }
 
 // Where "Try a trade" leads: straight to the simulated trade, whatever has been done before.
-export const TRADE_LINK = `/education/introduction?lesson=${LESSONS.findIndex((lesson) => lesson.id === "practice") + 1}`;
+export const TRADE_LINK = `/education/introduction?lesson=${LESSONS.findIndex((lesson) => lesson.id === "practice") + 1}&step=1`;

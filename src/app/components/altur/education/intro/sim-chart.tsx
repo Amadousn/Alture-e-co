@@ -83,7 +83,7 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
     // The view: pixels per candle, the candle index at the right edge, and a price range once the learner has set one by hand.
     const view = useRef<{ bar: number; right: number; range: [number, number] | null; follow: boolean; set: boolean }>({ bar: 10, right: 0, range: null, follow: true, set: false });
     const hover = useRef<{ x: number; y: number } | null>(null);
-    const drag = useRef<{ mode: "pan" | "scale" | "level"; key?: string; x: number; y: number; right: number; range: [number, number]; moved: boolean } | null>(null);
+    const drag = useRef<{ mode: "pan" | "scale" | "stretch" | "level"; key?: string; x: number; y: number; right: number; bar: number; range: [number, number]; moved: boolean } | null>(null);
     const pointers = useRef(new Map<number, { x: number; y: number }>());
     const pinch = useRef<{ distance: number; bar: number } | null>(null);
     const shown = useRef<{ min: number; max: number; width: number; height: number }>({ min: 0, max: 1, width: 0, height: 0 });
@@ -418,7 +418,7 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
         event.currentTarget.setPointerCapture(event.pointerId);
         const { min, max } = shown.current;
         const level = at.x < at.plotW && latest.current.onDrag ? near(at.y) : undefined;
-        drag.current = { mode: at.x >= at.plotW ? "scale" : level ? "level" : "pan", key: level?.key, x: at.x, y: at.y, right: view.current.right, range: [min, max], moved: false };
+        drag.current = { mode: at.x >= at.plotW ? "scale" : at.y >= at.plotH ? "stretch" : level ? "level" : "pan", key: level?.key, x: at.x, y: at.y, right: view.current.right, bar: view.current.bar, range: [min, max], moved: false };
     };
     const onPointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
         const at = local(event);
@@ -437,7 +437,7 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
         const held = drag.current;
         const canvas = event.currentTarget;
         if (!held) {
-            canvas.style.cursor = at.x >= at.plotW ? "ns-resize" : latest.current.onDrag && near(at.y) ? "row-resize" : latest.current.onPlace ? "crosshair" : "grab";
+            canvas.style.cursor = at.x >= at.plotW ? "ns-resize" : at.y >= at.plotH ? "ew-resize" : latest.current.onDrag && near(at.y) ? "row-resize" : latest.current.onPlace ? "crosshair" : "grab";
             return draw();
         }
         const [dx, dy] = [at.x - held.x, at.y - held.y];
@@ -448,6 +448,10 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
             const middle = (held.range[0] + held.range[1]) / 2;
             const half = ((held.range[1] - held.range[0]) / 2) * factor;
             view.current.range = [middle - half, middle + half];
+        } else if (held.mode === "stretch") {
+            // Dragging the time scale squeezes or spreads the candles, about the right edge of the chart.
+            view.current.bar = clamp(held.bar * Math.exp(dx * 0.006), 2.5, 48);
+            view.current.follow = false;
         } else if (held.moved) {
             view.current.right = held.right - dx / view.current.bar;
             view.current.follow = false;
@@ -476,7 +480,7 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
             <canvas
                 ref={canvasRef}
                 role="img"
-                aria-label={`${props.title}. A candlestick chart. Drag to move it, scroll to zoom, drag the price scale on the right to stretch it.`}
+                aria-label={`${props.title}. A candlestick chart. Drag to move it, scroll to zoom, drag the price scale on the right or the time scale below to stretch it.`}
                 className="block h-full w-full touch-pan-y"
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}

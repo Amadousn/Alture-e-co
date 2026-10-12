@@ -115,8 +115,10 @@ const ReadingTheChart = () => {
         if (asked >= 1 && asked <= LESSONS.length) {
             const lesson = asked - 1;
             const open = LESSONS[lesson].steps.findIndex((step) => !progress.done[step.id]);
+            // A link can name the step as well, so that "Try a trade" opens the trade even when it has been done before.
+            const named = Number(new URLSearchParams(window.location.search).get("step"));
             setEntered(true);
-            return setAt({ lesson, step: open === -1 ? 0 : open });
+            return setAt({ lesson, step: named >= 1 && named <= LESSONS[lesson].steps.length ? named - 1 : open === -1 ? 0 : open });
         }
         const lesson = Math.min(progress.lesson, LESSONS.length - 1);
         setAt({ lesson, step: Math.min(progress.step, LESSONS[lesson].steps.length - 1) });
@@ -254,7 +256,8 @@ const ReadingTheChart = () => {
                                 </select>
                             </label>
 
-                            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+                            {/* The simulated trade needs the whole screen: its heading steps aside on a wide one. */}
+                            <div className={`flex flex-wrap items-end justify-between gap-x-8 gap-y-3 ${step.kind === "sim" ? "lg:hidden" : ""}`}>
                                 <div>
                                     <p className="text-xs text-white/45">
                                         {stage.word} · {lesson.title}
@@ -272,7 +275,7 @@ const ReadingTheChart = () => {
                                 </ol>
                             </div>
 
-                            <div key={step.id} className="cockpit-rise mt-6">
+                            <div key={step.id} className={`cockpit-rise mt-6 ${step.kind === "sim" ? "lg:mt-0" : ""}`}>
                                 <StepView step={step} done={progress.done} onDone={(tries) => complete(step.id, tries)} go={go} />
                             </div>
 
