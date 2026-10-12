@@ -178,7 +178,8 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
             // A tab left in the background must not jump the replay forward when it returns.
             const elapsed = Math.min(0.1, (now - before) / 1000);
             before = now;
-            clock.current = Math.min(end, clock.current + elapsed * PACE * speedRef.current);
+            // With no position to watch, the six hours pass four times as fast.
+            clock.current = Math.min(end, clock.current + elapsed * PACE * speedRef.current * (tradeSide === null ? 4 : 1));
             chart.current?.draw();
             if (now - told > 80) {
                 told = now;
@@ -584,6 +585,28 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             </div>
                         )}
                         {traded && !followed && trade.net <= 0 && !hint && scenario.reading !== "sideways" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">On the next chart, ask the coach before you decide: it shows where the structure is going and where to put your stop loss.</p>}
+                        {trade.side === "out" && (
+                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                                <p className={label}>{scenario.reading === "sideways" ? "Why a trader stays out here" : "What staying out meant here"}</p>
+                                {scenario.reading === "sideways" ? (
+                                    <>
+                                        <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
+                                            <li>No structure: the swing highs and lows were not stepping up or down, so there was no direction to trade with.</li>
+                                            <li>No place for a stop loss: without a clear swing, no price would have proved the idea wrong.</li>
+                                            <li>
+                                                Six hours later {asset.name} was {Math.abs(((trade.after.end - trade.after.from) / trade.after.from) * 100).toFixed(2)}% from where it started. The move was not there to take.
+                                            </li>
+                                        </ul>
+                                        <p className="mt-3 text-sm leading-relaxed text-white/70">Waiting is part of the work. The market will still be there tomorrow, and your capital with it. A scalper might trade the small moves inside a range like this one, but that takes speed and experience: it is not where a beginner should start.</p>
+                                    </>
+                                ) : (
+                                    <p className="mt-2 text-sm leading-relaxed text-white/80">
+                                        Staying out cost you nothing, and that is never a mistake. But the structure here was {scenario.reading === "up" ? "rising" : "falling"}, with a clear swing to put a stop loss behind: this was a setup a trader would take. Take the chart again and ask the coach.
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                        {traded && scenario.reading === "sideways" && trade.net <= 0 && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">This chart had no clear structure, so there was nothing to trade with and no swing to put a stop loss behind. Not every setup is worth taking: here the rule was to wait, even when waiting is boring.</p>}
                         {trade.result === "liquidated" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">Leverage did this, not the market: the same move without leverage would have cost a fraction of it. A stop loss inside the liquidation price would have closed the trade first.</p>}
                         {trade.result === "stop" && <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">The plan held: you lost what you had decided to risk, and no more. That is a stop loss doing its work.</p>}
                         <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">

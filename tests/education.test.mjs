@@ -293,6 +293,12 @@ test("the practice charts are real, hide what came next, and do not all reward t
     assert.equal(SCENARIOS.length, 8);
     assert.deepEqual([...new Set(SCENARIOS.map((s) => s.asset.ticker))].sort(), ["BTC", "ETH", "SOL"]);
     assert.equal(SCENARIOS[0].id, "guide");
+    // The second chart has no structure: the coach suggests nothing, and an ordinary long or short both lose.
+    assert.equal(SCENARIOS[1].reading, "sideways");
+    {
+        const s = SCENARIOS[1], last = s.seen.at(-1).c, sp = Math.max(...s.seen.map((x) => x.h)) - Math.min(...s.seen.map((x) => x.l));
+        for (const dir of [1, -1]) assert.ok(simulate(P({ side: dir === 1 ? "long" : "short", entry: last, stop: last - dir * sp * 0.2, target: last + dir * sp * 0.4, leverage: 5 }), last, s.minutes).net < 0);
+    }
     assert.deepEqual(SCENARIOS.filter((s) => s.guided).map((s) => s.id), ["guide"]);
     const results = [];
     for (const s of SCENARIOS) {

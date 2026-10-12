@@ -179,8 +179,8 @@ const scenario = (id: string, data: SimData): Scenario => {
     for (let i = 0; i < data.minutes.length; i += 4) minutes.push({ t: data.start + (i / 4) * 60000, o: data.minutes[i], h: data.minutes[i + 1], l: data.minutes[i + 2], c: data.minutes[i + 3] });
     return { id, asset: ASSETS.find((asset) => asset.symbol === data.symbol)!, seen: list, next: aggregate(minutes, 15), minutes, when: when(list, 15), reading: readStructure(list), pivots: swings(list, MAJOR), guided: id === "guide" };
 };
-// In the order a learner meets them: the coached chart, a clear trend in each of the other two markets, then harder ones.
-const ORDER: (keyof typeof SIM)[] = ["guide", "sol1", "eth1", "a", "sol2", "eth2", "b", "c"];
+// In the order a learner meets them: the coached chart, where a proper trade wins; then a market with no structure, where the right decision is to stay out; then the rest.
+const ORDER: (keyof typeof SIM)[] = ["guide", "b", "sol1", "eth1", "a", "eth2", "sol2", "c"];
 export const SCENARIOS: Scenario[] = ORDER.map((id) => scenario(id, SIM[id]));
 
 // The plan a coach would point to on a trending chart: with the structure, the stop loss just beyond
