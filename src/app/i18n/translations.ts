@@ -148,7 +148,7 @@ export const translations: Record<Language, Dictionary> = {
             rightsReserved: "All rights reserved.",
         },
         education: {
-            badge: "Open to everyone",
+            badge: "Alture Education",
             headlineLine1: "Trade with discipline.",
             headlinePrefix: "Learn from",
             headlineAccent: "traders who already do",
@@ -246,7 +246,7 @@ export const translations: Record<Language, Dictionary> = {
             rightsReserved: "Tous droits réservés.",
         },
         education: {
-            badge: "Ouvert à tous",
+            badge: "Alture Education",
             headlineLine1: "Tradez avec discipline.",
             headlinePrefix: "Apprenez auprès de",
             headlineAccent: "traders qui le font déjà",
@@ -343,7 +343,7 @@ export const translations: Record<Language, Dictionary> = {
             rightsReserved: "Tutti i diritti riservati.",
         },
         education: {
-            badge: "Aperto a tutti",
+            badge: "Alture Education",
             headlineLine1: "Fai trading con disciplina.",
             headlinePrefix: "Impara da",
             headlineAccent: "chi lo fa già",
@@ -440,7 +440,7 @@ export const translations: Record<Language, Dictionary> = {
             rightsReserved: "Все права защищены.",
         },
         education: {
-            badge: "Открыто для всех",
+            badge: "Alture Education",
             headlineLine1: "Торгуйте с дисциплиной.",
             headlinePrefix: "Учитесь",
             headlineAccent: "у тех, кто уже это делает",
