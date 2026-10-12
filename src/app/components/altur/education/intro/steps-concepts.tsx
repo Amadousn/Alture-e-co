@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { CSSProperties, useMemo, useRef, useState } from "react";
 import { compareCapital } from "@/utils/education-sim";
 import { Step } from "./course";
 import { ChartOf, Done, Feedback, NextOne, Prompt, retry, TRIES } from "./shared";
@@ -268,7 +268,7 @@ const Slider = ({ name, value, min, max, step, onChange, show }: { name: string;
             <span className="text-white/60">{name}</span>
             <span className="tabular-nums text-white">{show}</span>
         </span>
-        <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} className="mt-1.5 block h-5 !w-full cursor-pointer !border-0 !bg-transparent !p-0 accent-[#E3A1F7]" />
+        <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} className="edu-range mt-2" style={{ "--fill": `${((value - min) / (max - min)) * 100}%` } as CSSProperties} />
     </label>
 );
 
@@ -297,7 +297,7 @@ export const Calculator = ({ onDone }: { onDone: Done }) => {
             </div>
 
             <div className="mt-8 grid gap-x-16 gap-y-10 md:grid-cols-2">
-                <section className="!py-0" aria-label="Your own capital">
+                <div role="group" aria-label="Your own capital">
                     <p className={label}>Your own capital</p>
                     <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(out.ownResult)}`}>{usd(out.ownResult)}</p>
                     <p className="mt-3 text-[15px] leading-relaxed text-white/70">
@@ -306,9 +306,9 @@ export const Calculator = ({ onDone }: { onDone: Done }) => {
                     <div className="mt-6">
                         <Slider name="Your capital" value={input.own} min={500} max={20000} step={500} onChange={(own) => set({ own })} show={usd(input.own)} />
                     </div>
-                </section>
+                </div>
 
-                <section className="!py-0" aria-label="A funded account">
+                <div role="group" aria-label="A funded account">
                     <p className={label}>A funded account</p>
                     <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${tone(out.net)}`}>{usd(out.net)}</p>
                     <p className="mt-3 text-[15px] leading-relaxed text-white/70">
@@ -330,7 +330,7 @@ export const Calculator = ({ onDone }: { onDone: Done }) => {
                     <p className="mt-4 text-[13px] leading-relaxed text-white/45">
                         Of the {usd(input.account)} advertised, none is yours to withdraw. Lose more than {usd(out.daily)} in a single day and the account is closed too, whatever the total.
                     </p>
-                </section>
+                </div>
             </div>
 
             <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-2">

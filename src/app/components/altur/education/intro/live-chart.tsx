@@ -8,7 +8,7 @@ import { AdvancedChart, tradingViewSymbol, tradingViewUrl } from "@/app/componen
 const LiveChart = () => {
     const [open, setOpen] = useState(false);
     return (
-        <section className="!py-0 mt-12 border-t border-white/10 pt-6" aria-label="Live Bitcoin chart">
+        <div role="group" className="mt-12 border-t border-white/10 pt-6" aria-label="Live Bitcoin chart">
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
                 <button type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="group inline-flex items-center gap-2 border-b border-white/30 pb-0.5 text-sm font-medium text-white hover:border-white transition-colors">
                     {open ? "Hide the live chart" : "See the live Bitcoin chart"}
@@ -29,7 +29,7 @@ const LiveChart = () => {
                     </p>
                 </div>
             )}
-        </section>
+        </div>
     );
 };
 

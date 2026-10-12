@@ -498,3 +498,56 @@ a:active {
 @media (prefers-reduced-motion: reduce) {
     .al-reveal > * { animation: none; }
 }
+
+/* Education sliders: drawn by hand so every browser shows the same track and handle. */
+.edu-range {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    touch-action: pan-y;
+    --fill: 50%;
+}
+.edu-range:focus { outline: none; }
+.edu-range::-webkit-slider-runnable-track {
+    height: 2px;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(to right, #ffffff 0, #ffffff var(--fill), rgba(255, 255, 255, 0.2) var(--fill), rgba(255, 255, 255, 0.2) 100%);
+}
+.edu-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -8px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 12px rgba(227, 161, 247, 0.55);
+}
+.edu-range::-moz-range-track {
+    height: 2px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.2);
+}
+.edu-range::-moz-range-progress {
+    height: 2px;
+    background: #ffffff;
+}
+.edu-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 12px rgba(227, 161, 247, 0.55);
+}
+.edu-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
+.edu-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
