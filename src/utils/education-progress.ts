@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { START_BALANCE } from "@/utils/education-sim";
 
 // What a learner has actually done in the Introduction, kept in this browser.
 // Nothing here is filled in for them: a step is recorded when they finish it.
@@ -80,24 +81,31 @@ export type PracticeTrade = {
     entry: number | null;
     stop: number | null;
     target: number | null;
-    result: "target" | "stop" | "open" | "unfilled" | "out";
+    result: "target" | "stop" | "liquidated" | "open" | "unfilled" | "out";
     exit: number | null;
     size: number;
     gross: number;
     fees: number;
     net: number;
     r: number;
-    // How many candles after the decision the trade ended.
-    bars: number | null;
+    // The part of the practice account put into the trade, the leverage on it, and the result as a share of that part.
+    margin: number;
+    leverage: number;
+    roi: number;
+    // How many minutes after the decision the trade ended.
+    minutes: number | null;
     // What price did over the candles that followed: the last close, the highest and the lowest.
     after: { from: number; end: number; high: number; low: number };
 };
 export type JournalEntry = PracticeTrade & { reason: string; again: string; note: string };
-type Practice = { last: PracticeTrade | null; journal: JournalEntry[] };
+// The practice account: virtual dollars that every finished simulated trade adds to or takes from.
+export type PracticeAccount = { balance: number; trades: number; wins: number };
+type Practice = { last: PracticeTrade | null; journal: JournalEntry[]; account: PracticeAccount };
 
-const PRACTICE_KEY = "alture-learning:practice:v1";
+// v2: trades carry a margin and a leverage, and there is a practice account.
+const PRACTICE_KEY = "alture-learning:practice:v2";
 const PRACTICE_EVENT = "alture-learning:practice";
-const NO_PRACTICE: Practice = { last: null, journal: [] };
+const NO_PRACTICE: Practice = { last: null, journal: [], account: { balance: START_BALANCE, trades: 0, wins: 0 } };
 
 export function usePractice() {
     const [practice, setPractice] = useState<Practice>(NO_PRACTICE);
@@ -135,8 +143,18 @@ export function usePractice() {
         }
     }, []);
 
-    const setLast = useCallback((trade: PracticeTrade) => update((current) => ({ ...current, last: trade })), [update]);
+    // A finished trade becomes the one under review, and its result goes to the practice account. Staying out, or an order never filled, changes nothing.
+    const setLast = useCallback(
+        (trade: PracticeTrade) =>
+            update((current) => {
+                const traded = trade.side !== "out" && trade.result !== "unfilled";
+                const account = traded ? { balance: Math.max(0, current.account.balance + trade.net), trades: current.account.trades + 1, wins: current.account.wins + (trade.net > 0 ? 1 : 0) } : current.account;
+                return { ...current, last: trade, account };
+            }),
+        [update]
+    );
+    const refill = useCallback(() => update((current) => ({ ...current, account: NO_PRACTICE.account })), [update]);
     const record = useCallback((entry: JournalEntry) => update((current) => ({ ...current, journal: [entry, ...current.journal.filter((item) => item.id !== entry.id)] })), [update]);
     const clear = useCallback(() => update(() => NO_PRACTICE), [update]);
-    return { practice, ready, setLast, record, clear };
+    return { practice, ready, setLast, record, clear, refill };
 }

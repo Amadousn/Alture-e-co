@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { STYLE_VIEWS } from "@/utils/education-chart-data";
 import { compareCapital } from "@/utils/education-sim";
 import { Step } from "./course";
+import LessonChart from "./lesson-chart";
 import { ChartOf, Done, Feedback, NextOne, Prompt, retry, TRIES } from "./shared";
 
 const usd = (value: number) => `${value < 0 ? "-" : ""}$${Math.abs(Math.round(value)).toLocaleString("en-US")}`;
@@ -215,6 +217,8 @@ export const Sort = ({ step, onDone }: { step: Extract<Step, { kind: "sort" }>; 
 
 // ---------- browse: open each item and compare ----------
 
+const DAYS_OF_WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
 export const Browse = ({ step, onDone }: { step: Extract<Step, { kind: "browse" }>; onDone: Done }) => {
     const [open, setOpen] = useState(step.items[0].key);
     const [seen, setSeen] = useState<string[]>([step.items[0].key]);
@@ -228,13 +232,37 @@ export const Browse = ({ step, onDone }: { step: Extract<Step, { kind: "browse" 
     return (
         <div>
             <Prompt>{step.prompt}</Prompt>
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Markets">
-                {step.items.map((entry) => (
-                    <button key={entry.key} type="button" role="tab" aria-selected={open === entry.key} onClick={() => show(entry.key)} className={`nav-link flex items-center gap-2 pb-1 text-[15px] font-medium ${open === entry.key ? "is-active" : ""}`}>
-                        {entry.label}
-                        <span className={`h-1.5 w-1.5 rounded-full transition-colors ${seen.includes(entry.key) ? "bg-[#20B8A8]" : "bg-white/20"}`} aria-hidden="true" />
-                    </button>
-                ))}
+            <div className="mt-6 max-w-3xl" role="tablist" aria-label="Markets">
+                <div className="grid grid-cols-[7.5rem_repeat(7,minmax(0,1fr))] gap-x-1.5 pb-2 sm:grid-cols-[9.5rem_repeat(7,minmax(0,1fr))]" aria-hidden="true">
+                    <span className={label}>Open</span>
+                    {DAYS_OF_WEEK.map((day) => (
+                        <span key={day} className="text-center text-[11px] text-white/40">
+                            {day}
+                        </span>
+                    ))}
+                </div>
+                {step.items.map((entry) => {
+                    const on = open === entry.key;
+                    return (
+                        <button key={entry.key} type="button" role="tab" aria-selected={on} onClick={() => show(entry.key)} className={`grid w-full grid-cols-[7.5rem_repeat(7,minmax(0,1fr))] items-center gap-x-1.5 border-t border-white/10 py-2.5 text-left transition-colors sm:grid-cols-[9.5rem_repeat(7,minmax(0,1fr))] ${on ? "bg-white/[0.05]" : "hover:bg-white/[0.03]"}`}>
+                            <span className={`flex items-center gap-2 text-[15px] font-medium ${on ? "text-white" : "text-white/60"}`}>
+                                <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full transition-colors ${seen.includes(entry.key) ? "bg-[#20B8A8]" : "bg-white/20"}`} aria-hidden="true" />
+                                {entry.label}
+                            </span>
+                            {DAYS_OF_WEEK.map((day, i) => {
+                                const weekend = i > 4;
+                                const openAllDay = entry.hours === "always" || (entry.hours === "weekdays" && !weekend);
+                                const session = entry.hours === "sessions" && !weekend;
+                                return (
+                                    <span key={day} className="block h-2.5 rounded-[1px] bg-white/[0.07]" aria-hidden="true">
+                                        {(openAllDay || session) && <span className={`block h-full rounded-[1px] transition-colors ${on ? "bg-white" : "bg-white/35"}`} style={session ? { width: "28%", marginLeft: "40%" } : undefined} />}
+                                    </span>
+                                );
+                            })}
+                        </button>
+                    );
+                })}
+                <p className="border-t border-white/10 pt-2.5 text-[12px] leading-relaxed text-white/40">Each bar is one day. A full bar is open around the clock; a short one is an exchange session of a few hours.</p>
             </div>
             <div key={open} className="cockpit-rise mt-8 grid gap-x-12 gap-y-6 lg:grid-cols-12">
                 <div className="lg:col-span-4">
@@ -256,6 +284,191 @@ export const Browse = ({ step, onDone }: { step: Extract<Step, { kind: "browse" 
             <p className="mt-8 text-[13px] leading-relaxed text-white/40">
                 {seen.length} of {step.items.length} opened. {step.note}
             </p>
+        </div>
+    );
+};
+
+// ---------- styles: the same market, held for seconds or for years ----------
+
+type StyleKey = "scalper" | "day" | "swing" | "position" | "investor";
+const STYLES: { key: StyleKey; name: string; hold: string; view: keyof typeof STYLE_VIEWS; chart: string; line: string; facts: [string, string][] }[] = [
+    {
+        key: "scalper",
+        name: "Scalper",
+        hold: "Seconds to minutes",
+        view: "minute",
+        chart: "1-minute candles: an hour and a half",
+        line: "Takes very small moves, many times over.",
+        facts: [
+            ["Trades", "Many in one day."],
+            ["Looks at", "1-minute candles, and faster."],
+            ["At the screen", "Every second of the session."],
+            ["The hard part", "Speed and cost. The moves are small, so fees take a large share of each one."],
+        ],
+    },
+    {
+        key: "day",
+        name: "Day trader",
+        hold: "Minutes to hours",
+        view: "quarter",
+        chart: "15-minute candles: twelve hours",
+        line: "Opens and closes within the day, and holds nothing overnight.",
+        facts: [
+            ["Trades", "A few in a day."],
+            ["Looks at", "5- and 15-minute candles, with the hourly chart for direction."],
+            ["At the screen", "Several hours, at set times."],
+            ["The hard part", "Stopping. After a loss, the next trade is always one click away."],
+        ],
+    },
+    {
+        key: "swing",
+        name: "Swing trader",
+        hold: "Days to weeks",
+        view: "fourHour",
+        chart: "4-hour candles: ten days",
+        line: "Holds through one swing of the market, from a turn to the next.",
+        facts: [
+            ["Trades", "A few in a month."],
+            ["Looks at", "4-hour and daily candles."],
+            ["At the screen", "A look once or twice a day."],
+            ["The hard part", "Patience, and holding through nights and weekends, when crypto keeps trading."],
+        ],
+    },
+    {
+        key: "position",
+        name: "Position trader",
+        hold: "Weeks to months",
+        view: "month",
+        chart: "Daily candles: six weeks",
+        line: "Follows one large move for as long as it lasts.",
+        facts: [
+            ["Trades", "A handful in a year."],
+            ["Looks at", "Daily and weekly candles."],
+            ["At the screen", "A few times a week."],
+            ["The hard part", "Sitting through large moves against the position without abandoning the plan."],
+        ],
+    },
+    {
+        key: "investor",
+        name: "Investor",
+        hold: "Years",
+        view: "all",
+        chart: "Daily candles: four months, and an investor looks further back still",
+        line: "Buys what they believe will be worth more in years, and holds it.",
+        facts: [
+            ["Trades", "Buys, sometimes adds, rarely sells."],
+            ["Looks at", "The long-term picture more than the chart."],
+            ["At the screen", "Very little."],
+            ["The hard part", "Doing nothing while the price halves, which Bitcoin has done more than once."],
+        ],
+    },
+];
+const TIME = ["A few minutes", "An hour or two", "Most of the day"];
+const LEAVE = ["Minutes", "Hours", "Days or weeks", "Years"];
+// Which of the five a learner's two answers point to: how long they can leave a position decides most of it.
+function fit(time: number, leave: number): StyleKey {
+    if (leave === 3) return "investor";
+    if (leave === 2) return "swing";
+    if (time === 0) return "swing";
+    return leave === 0 && time === 2 ? "scalper" : "day";
+}
+
+export const Styles = ({ onDone }: { onDone: Done }) => {
+    const [open, setOpen] = useState<StyleKey>("scalper");
+    const [seen, setSeen] = useState<StyleKey[]>(["scalper"]);
+    const [time, setTime] = useState<number | null>(null);
+    const [leave, setLeave] = useState<number | null>(null);
+    const item = STYLES.find((style) => style.key === open)!;
+    const all = seen.length === STYLES.length;
+    const show = (key: StyleKey) => {
+        setOpen(key);
+        if (seen.includes(key)) return;
+        setSeen([...seen, key]);
+        if (seen.length + 1 === STYLES.length) onDone(1);
+    };
+    const match = time !== null && leave !== null ? STYLES.find((style) => style.key === fit(time, leave))! : null;
+    const pick = (on: boolean) => `rounded-sm border px-3.5 py-2 text-sm transition-colors ${on ? "border-white text-white lit" : "border-white/25 text-white/70 hover:border-white"}`;
+
+    return (
+        <div>
+            <Prompt>Investing and trading differ in one thing above all: how long a position is held. Here is the same Bitcoin, on the same day, as five people would look at it. Open each one.</Prompt>
+
+            <div className="mt-7 grid grid-cols-2 gap-x-2 gap-y-2 sm:grid-cols-5" role="tablist" aria-label="Styles">
+                <p className={`${label} col-span-2 hidden border-b border-white/15 pb-2 sm:col-span-4 sm:block`}>Active trading</p>
+                <p className={`${label} hidden border-b border-white/15 pb-2 sm:block`}>Investing</p>
+                {STYLES.map((style) => (
+                    <button key={style.key} type="button" role="tab" aria-selected={open === style.key} onClick={() => show(style.key)} className={`rounded-sm border px-3.5 py-3 text-left transition-colors ${open === style.key ? "border-white" : "border-white/20 hover:border-white/60"}`}>
+                        <span className="flex items-center justify-between gap-2 text-[15px] font-medium text-white">
+                            {style.name}
+                            <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${seen.includes(style.key) ? "bg-[#20B8A8]" : "bg-white/20"}`} aria-hidden="true" />
+                        </span>
+                        <span className="mt-1 block text-[13px] text-white/50">{style.hold}</span>
+                    </button>
+                ))}
+            </div>
+
+            <div key={open} className="cockpit-rise mt-7 grid gap-x-12 gap-y-6 lg:grid-cols-12">
+                <div className="lg:col-span-7">
+                    <LessonChart className="h-[34vh] min-h-[240px]" view={{ candles: STYLE_VIEWS[item.view].candles, minutes: STYLE_VIEWS[item.view].minutes, pace: 6 }} note={`What ${item.key === "investor" ? "an" : "a"} ${item.name.toLowerCase()} looks at. ${item.chart}. BTCUSDT perpetual · Bybit · ending 11 Oct 2026, 00:00 UTC · historical.`} />
+                </div>
+                <div className="lg:col-span-5">
+                    <p className="font-logo text-4xl font-light leading-none text-white">{item.name}</p>
+                    <p className="mt-3 text-[15px] leading-relaxed" style={{ color: BEIGE }}>
+                        Holds for {item.hold.toLowerCase()}. {item.line}
+                    </p>
+                    <dl className="mt-5 space-y-3.5">
+                        {item.facts.map(([term, text]) => (
+                            <div key={term} className="grid gap-x-5 gap-y-0.5 sm:grid-cols-[7.5rem_1fr]">
+                                <dt className="text-sm text-white/45">{term}</dt>
+                                <dd className="text-[15px] leading-relaxed text-white/85">{text}</dd>
+                            </div>
+                        ))}
+                    </dl>
+                </div>
+            </div>
+
+            <p className="mt-7 text-[13px] leading-relaxed text-white/40">
+                {seen.length} of {STYLES.length} opened. None of the five is better than the others: each asks for a different amount of time, and a different kind of patience.
+            </p>
+
+            {all && (
+                <div className="cockpit-rise mt-9 border-t border-white/10 pt-7">
+                    <p className="text-lg font-medium tracking-tight text-white">Which one sounds like you?</p>
+                    <div className="mt-4 grid gap-x-12 gap-y-5 md:grid-cols-2">
+                        <fieldset>
+                            <legend className="text-sm text-white/70">On a normal day, how much time can you give the market?</legend>
+                            <div className="mt-2.5 flex flex-wrap gap-2">
+                                {TIME.map((text, i) => (
+                                    <button key={text} type="button" aria-pressed={time === i} onClick={() => setTime(i)} className={pick(time === i)}>
+                                        {text}
+                                    </button>
+                                ))}
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend className="text-sm text-white/70">How long could you leave a position open without touching it?</legend>
+                            <div className="mt-2.5 flex flex-wrap gap-2">
+                                {LEAVE.map((text, i) => (
+                                    <button key={text} type="button" aria-pressed={leave === i} onClick={() => setLeave(i)} className={pick(leave === i)}>
+                                        {text}
+                                    </button>
+                                ))}
+                            </div>
+                        </fieldset>
+                    </div>
+                    {match && (
+                        <div key={match.key} className="cockpit-rise mt-6 border-l-2 border-accent pl-4" role="status">
+                            <p className="font-logo text-3xl font-light leading-tight text-white">Closest to {match.key === "investor" ? "an investor" : `a ${match.name.toLowerCase()}`}.</p>
+                            <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/70">
+                                {match.line} It is a place to start, not a verdict: the answer often changes once you have tried. Later in this Introduction you will take a simulated trade the way a day trader would, on 15-minute candles, and see how it feels.
+                            </p>
+                            <button type="button" onClick={() => show(match.key)} className="mt-3 border-b border-white/30 pb-0.5 text-sm font-medium text-white hover:border-white">
+                                Look at the {match.name.toLowerCase()} again
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

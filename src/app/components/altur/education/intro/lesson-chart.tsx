@@ -58,7 +58,9 @@ const two = (value: number) => String(value).padStart(2, "0");
 export const clock = (time: number) => `${two(new Date(time).getUTCHours())}:${two(new Date(time).getUTCMinutes())}`;
 const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 // A candle is named by its time of day, or by its date when each candle is a day.
-export const stamp = (time: number, minutes: number) => (minutes >= 1440 ? `${new Date(time).getUTCDate()} ${MONTH[new Date(time).getUTCMonth()]}` : `${clock(time)} UTC`);
+const day = (time: number) => `${new Date(time).getUTCDate()} ${MONTH[new Date(time).getUTCMonth()]}`;
+// Candles of several hours span days, so they carry their date as well.
+export const stamp = (time: number, minutes: number) => (minutes >= 1440 ? day(time) : minutes >= 240 ? `${day(time)}, ${clock(time)} UTC` : `${clock(time)} UTC`);
 
 // The chart every lesson is taught on: candles with a price scale and a time
 // scale, which can print itself, light up what is being explained, and answer
@@ -188,7 +190,7 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note, fi
                     {candles.map((candle, i) =>
                         i % every === Math.floor(every / 2) ? (
                             <text key={candle.t} x={x(i)} y={h - 8} fontSize={11} fill={view.axis === "time" ? "#FFFFFF" : "#8a8a94"} textAnchor="middle" className="tabular-nums" style={{ transition: "fill 300ms" }}>
-                                {view.minutes >= 1440 ? stamp(candle.t, view.minutes) : clock(candle.t)}
+                                {view.minutes >= 240 ? day(candle.t) : clock(candle.t)}
                             </text>
                         ) : null
                     )}

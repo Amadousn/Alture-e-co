@@ -6,7 +6,7 @@ import { ChartZone } from "./lesson-chart";
 import CandleStage, { CandlePart } from "./candle-stage";
 import { candlesOf, LESSONS, Option, Reveal, Stage, Step } from "./course";
 import { ChartOf, Done, Feedback, NextOne, Options, Prompt, reason, retry, Rich, STAGE, StageOf, Timeframes, Tone, TRIES } from "./shared";
-import { Blocks, Browse, Calculator, Compare, Recap, Sort } from "./steps-concepts";
+import { Blocks, Browse, Calculator, Compare, Recap, Sort, Styles } from "./steps-concepts";
 import { Finish, Journal, Sim, SimReview } from "./steps-practice";
 
 // ---------- film: a short explanation that plays like a video ----------
@@ -482,6 +482,8 @@ const StepView = ({ step, done, onDone, go }: { step: Step; done: Record<string,
             return <Sort step={step} onDone={onDone} />;
         case "browse":
             return <Browse step={step} onDone={onDone} />;
+        case "styles":
+            return <Styles onDone={onDone} />;
         case "calculator":
             return <Calculator onDone={onDone} />;
         case "compare":

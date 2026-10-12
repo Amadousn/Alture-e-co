@@ -4,7 +4,9 @@
 // chart (its swings, its zones, which candle is the strongest) is worked out
 // here from the candles themselves, and held to account by tests/education.test.mjs.
 
-import { CONTEXTFIVE, CONTEXTHOUR, CONTEXTQUARTER, DAILY, DAILYRECENT, DOWNTREND, FINAL, FIRST, LEVELS, MOVEMENT as MOVES, SIDEWAYS, SIMANEXT, SIMASEEN, SIMBNEXT, SIMBSEEN, SIMCNEXT, SIMCSEEN, UPTREND } from "./education-btc-candles.ts";
+import { CONTEXTFIVE, CONTEXTHOUR, CONTEXTQUARTER, DAILY, DAILYRECENT, DOWNTREND, FINAL, FIRST, LEVELS, MOVEMENT as MOVES, SIDEWAYS, UPTREND } from "./education-btc-candles.ts";
+import { SIM, STYLEFOURHOUR, STYLEMINUTE } from "./education-sim-candles.ts";
+import type { SimData } from "./education-sim-candles.ts";
 import type { Row } from "./education-btc-candles.ts";
 
 export type Candle = { t: number; o: number; h: number; l: number; c: number };
@@ -152,7 +154,7 @@ const indecision = most(moves, (candle) => (named.has(moves.indexOf(candle)) || 
 const momentum = runs.flat().filter((i) => i !== rejection);
 export const MOVEMENT = { strongBuy, strongSell, rejection, defended, indecision, runs, momentum };
 
-// ---- Practice: three moments in Bitcoin's history. The learner sees `seen`, decides, and only then is shown `next`.
+// ---- Practice: moments in the history of three markets. The learner sees `seen`, decides, and only then is shown what came next.
 // What the visible candles were doing, read from their last two swing highs and lows.
 export type Reading = "up" | "down" | "sideways";
 export function readStructure(list: Candle[]): Reading {
@@ -162,10 +164,49 @@ export function readStructure(list: Candle[]): Reading {
     if (h.length < 2 || l.length < 2) return "sideways";
     return h[1] > h[0] && l[1] > l[0] ? "up" : h[1] < h[0] && l[1] < l[0] ? "down" : "sideways";
 }
-export type Scenario = { id: string; seen: Candle[]; next: Candle[]; when: string; reading: Reading; pivots: Pivot[] };
-const scenario = (id: string, seen: Row[], next: Row[]): Scenario => {
-    const list = candles(seen);
-    return { id, seen: list, next: candles(next), when: when(list, 15), reading: readStructure(list), pivots: swings(list, MAJOR) };
+export type Asset = { symbol: SimData["symbol"]; name: string; ticker: string; pair: string; digits: number };
+export const ASSETS: Asset[] = [
+    { symbol: "BTCUSDT", name: "Bitcoin", ticker: "BTC", pair: "BTC/USDT", digits: 1 },
+    { symbol: "SOLUSDT", name: "Solana", ticker: "SOL", pair: "SOL/USDT", digits: 2 },
+    { symbol: "ETHUSDT", name: "Ethereum", ticker: "ETH", pair: "ETH/USDT", digits: 2 },
+];
+// `next` is the six hours that followed as 15-minute candles; `minutes` is the same six hours, one candle a minute.
+// `guided`: the chart a first trade is coached on, chosen because reading it well was rewarded.
+export type Scenario = { id: string; asset: Asset; seen: Candle[]; next: Candle[]; minutes: Candle[]; when: string; reading: Reading; pivots: Pivot[]; guided: boolean };
+const scenario = (id: string, data: SimData): Scenario => {
+    const list = candles(data.seen);
+    const minutes: Candle[] = [];
+    for (let i = 0; i < data.minutes.length; i += 4) minutes.push({ t: data.start + (i / 4) * 60000, o: data.minutes[i], h: data.minutes[i + 1], l: data.minutes[i + 2], c: data.minutes[i + 3] });
+    return { id, asset: ASSETS.find((asset) => asset.symbol === data.symbol)!, seen: list, next: aggregate(minutes, 15), minutes, when: when(list, 15), reading: readStructure(list), pivots: swings(list, MAJOR), guided: id === "guide" };
 };
-export const SCENARIOS: Scenario[] = [scenario("a", SIMASEEN, SIMANEXT), scenario("b", SIMBSEEN, SIMBNEXT), scenario("c", SIMCSEEN, SIMCNEXT)];
+// In the order a learner meets them: the coached chart, a clear trend in each of the other two markets, then harder ones.
+const ORDER: (keyof typeof SIM)[] = ["guide", "sol1", "eth1", "a", "sol2", "eth2", "b", "c"];
+export const SCENARIOS: Scenario[] = ORDER.map((id) => scenario(id, SIM[id]));
+
+// The plan a coach would point to on a trending chart: with the structure, the stop loss just beyond
+// the last swing against it, and a take profit twice as far away as the stop loss. Null when there is no trend to lean on.
+export function suggestion(item: Scenario): { side: "long" | "short"; entry: number; stop: number; target: number; swing: number; swingAt: number } | null {
+    if (item.reading === "sideways") return null;
+    const entry = item.seen[item.seen.length - 1].c;
+    const round = (value: number) => Number(value.toFixed(item.asset.digits));
+    const kind = item.reading === "up" ? "low" : "high";
+    const level = (point: Pivot) => (kind === "low" ? item.seen[point.i].l : item.seen[point.i].h);
+    // The last swing against the trend that leaves the trade room to breathe: one almost at the price is no protection.
+    const pivot = [...item.pivots].reverse().find((point) => point.kind === kind && (kind === "low" ? entry - level(point) : level(point) - entry) > entry * 0.0025);
+    if (!pivot) return null;
+    const swing = level(pivot);
+    const room = entry * 0.0006;
+    const stop = round(kind === "low" ? swing - room : swing + room);
+    if (kind === "low" ? stop >= entry : stop <= entry) return null;
+    return { side: kind === "low" ? "long" : "short", entry, stop, target: round(entry + 2 * (entry - stop)), swing, swingAt: pivot.i };
+}
+
+// ---- Discover: the same Bitcoin, ending at the same moment, as five kinds of trader would look at it.
+export const STYLE_VIEWS = {
+    minute: { candles: candles(STYLEMINUTE), minutes: 1 },
+    quarter: horizon.views["15m"]!,
+    fourHour: { candles: candles(STYLEFOURHOUR), minutes: 240 },
+    month: { candles: listOf(horizon).slice(-45), minutes: 1440 },
+    all: horizon.views["1d"]!,
+};
 
