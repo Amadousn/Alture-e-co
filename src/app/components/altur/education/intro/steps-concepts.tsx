@@ -295,10 +295,10 @@ const STYLES: { key: StyleKey; name: string; hold: string; view: keyof typeof ST
     {
         key: "scalper",
         name: "Scalper",
-        hold: "Seconds to minutes",
+        hold: "Seconds to two hours",
         view: "minute",
         chart: "1-minute candles: an hour and a half",
-        line: "Takes very small moves, many times over.",
+        line: "Captures short-term price movements. Most trades last seconds or minutes; some run longer, up to about two hours, depending on the strategy.",
         facts: [
             ["Trades", "Many in one day."],
             ["Looks at", "1-minute candles, and faster."],
@@ -351,10 +351,10 @@ const STYLES: { key: StyleKey; name: string; hold: string; view: keyof typeof ST
     {
         key: "investor",
         name: "Investor",
-        hold: "Years",
+        hold: "Months to years",
         view: "all",
         chart: "Daily candles: four months, and an investor looks further back still",
-        line: "Buys what they believe will be worth more in years, and holds it.",
+        line: "Buys what they believe will be worth more later, and holds it for many months or for years.",
         facts: [
             ["Trades", "Buys, sometimes adds, rarely sells."],
             ["Looks at", "The long-term picture more than the chart."],
@@ -364,7 +364,7 @@ const STYLES: { key: StyleKey; name: string; hold: string; view: keyof typeof ST
     },
 ];
 const TIME = ["A few minutes", "An hour or two", "Most of the day"];
-const LEAVE = ["Minutes", "Hours", "Days or weeks", "Years"];
+const LEAVE = ["Minutes", "Hours", "Days or weeks", "Months or years"];
 // Which of the five a learner's two answers point to: how long they can leave a position decides most of it.
 function fit(time: number, leave: number): StyleKey {
     if (leave === 3) return "investor";
