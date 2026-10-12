@@ -29,7 +29,7 @@ export default function ScrollToTop() {
   }, []);
 
   // The terminal is an application with its own panes: no floating button over its figures.
-  if (path === "/alturelock/workspace" || path === "/alturelock/demo") return null;
+  if (path === "/alturelock/workspace" || path === "/alturelock/demo" || path === "/education/dashboard" || path === "/education/introduction") return null;
 
   return (
     <div className="fixed bottom-20 right-4 lg:bottom-8 lg:right-8 z-50">

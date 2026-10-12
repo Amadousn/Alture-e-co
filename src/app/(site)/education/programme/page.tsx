@@ -3,7 +3,7 @@ import EducationProgramme from "@/app/components/altur/education/education-progr
 
 export const metadata: Metadata = {
     title: "The Programme | Alture & Co. Education",
-    description: "Seven months, one step at a time: what each month of the Alture & Co. programme covers.",
+    description: "Seven modules, one step at a time: the Introduction and the modules of the Alture & Co. programme.",
 };
 
 const ProgrammePage = () => <EducationProgramme />;

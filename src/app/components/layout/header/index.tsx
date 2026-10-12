@@ -119,6 +119,8 @@ const Header: React.FC = () => {
 
   // The cockpit is a full-screen application with its own bar.
   if (pathUrl === "/alturelock/workspace" || pathUrl === "/alturelock/demo") return null;
+  // The learning pages have their own bar too.
+  if (pathUrl === "/education/dashboard" || pathUrl === "/education/introduction") return null;
 
   return (
     <>

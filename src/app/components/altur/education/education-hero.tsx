@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/app/i18n/language-context";
-import { MONTHS } from "./programme-data";
+import { MODULES } from "./programme-data";
 
 const EducationHero = () => {
     const { t } = useLanguage();
@@ -13,7 +13,7 @@ const EducationHero = () => {
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
                 <div className="flex items-baseline gap-4 border-t border-white/15 pt-3.5 text-[11px] uppercase tracking-[0.14em]">
                     <span className="text-white/70">{education.badge}</span>
-                    <span className="ml-auto font-mono normal-case tracking-normal text-white/45">{String(MONTHS.length).padStart(2, "0")}</span>
+                    <span className="ml-auto font-mono normal-case tracking-normal text-white/45">{String(MODULES.length).padStart(2, "0")}</span>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-x-10 gap-y-12 pt-10 md:pt-16">
@@ -37,13 +37,13 @@ const EducationHero = () => {
                         </div>
                     </div>
 
-                    {/* The programme as a table of contents: each line opens the programme page at that month. */}
+                    {/* The programme as a table of contents: each line opens the programme page at that module. */}
                     <ol className="lg:col-span-5 lg:pl-10 self-end">
-                        {MONTHS.map((month, i) => (
+                        {MODULES.map((item, i) => (
                             <li key={i}>
-                                <Link href={`/education/programme#month-${i + 1}`} className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-3 border-t border-white/15 py-3.5 text-left transition-colors hover:bg-white/[0.03]">
+                                <Link href={`/education/programme#module-${i + 1}`} className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-3 border-t border-white/15 py-3.5 text-left transition-colors hover:bg-white/[0.03]">
                                     <span className="font-mono text-[11px] tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</span>
-                                    <span className="text-[15px] text-white/75 group-hover:text-white transition-colors">{month.title}</span>
+                                    <span className="text-[15px] text-white/75 group-hover:text-white transition-colors">{item.title}</span>
                                     <span aria-hidden="true" className="text-white/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">→</span>
                                 </Link>
                             </li>
