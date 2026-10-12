@@ -1024,3 +1024,6 @@ export function measure(done: Record<string, number>) {
     LESSONS.some((lesson, l) => lesson.steps.some((step, s) => (!counts(step) || done[step.id] ? false : ((next = { lesson: l, step: s }), true))));
     return { lessons, stages, steps, total: TOTAL_STEPS, percent: Math.round((steps / TOTAL_STEPS) * 100), lessonsDone: lessons.filter((lesson) => lesson.done === lesson.total).length, stagesDone: stages.filter((stage) => stage.done === stage.total).length, next: next as { lesson: number; step: number } | null, complete: steps === TOTAL_STEPS };
 }
+
+// Where "Try a trade" leads: straight to the simulated trade, whatever has been done before.
+export const TRADE_LINK = `/education/introduction?lesson=${LESSONS.findIndex((lesson) => lesson.id === "practice") + 1}`;

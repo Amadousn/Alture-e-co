@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { TRADE_LINK } from "./intro/course";
 
 const LINKS = [
     ["/education/dashboard", "Dashboard"],
@@ -27,6 +28,10 @@ const EduBar = ({ percent }: { percent: number | null }) => {
                             {text}
                         </Link>
                     ))}
+                    {/* A full page load, so that it works from inside the Introduction too. */}
+                    <a href={TRADE_LINK} className="flex-shrink-0 rounded-sm border border-white/30 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.06em] text-white transition-colors hover:border-white">
+                        Try a trade
+                    </a>
                 </nav>
                 <div className="ml-auto flex items-center gap-3 text-xs text-white/55">
                     {percent !== null && (

@@ -107,7 +107,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
     const [side, setSide] = useState<Side | "out" | null>(null);
     const [levels, setLevels] = useState<{ entry: number; stop: number | null; target: number | null }>({ entry: lastClose, stop: null, target: null });
     const [placing, setPlacing] = useState<LevelKey>("stop");
-    const [margin, setMargin] = useState(500);
+    const [margin, setMargin] = useState(1000);
     const [leverage, setLeverage] = useState(5);
     // The coach is there for the first trade, and on request afterwards.
     const [hint, setHint] = useState(scenario.guided);
@@ -532,6 +532,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                 {phase === "result" && trade && (
                     <div className="cockpit-rise">
                         <p className={label}>{trade.side === "out" ? `${asset.pair} · no position` : `${SIDE[trade.side]} ${trade.leverage}x · ${asset.pair} · simulated`}</p>
+                        {traded && trade.net > 0 && <p className="mt-3 font-logo text-4xl font-light leading-none text-white md:text-5xl">{trade.result === "target" ? (trade.side === withTrend ? "Nice trade." : "Good catch.") : "Well held."}</p>}
                         <p className="mt-3 text-2xl font-medium tracking-tight text-white md:text-3xl">{HEADLINE[trade.result]}</p>
                         {traded && (
                             <p className={`mt-3 font-logo text-6xl font-light leading-none tabular-nums ${trade.net >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>
@@ -564,7 +565,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             </button>
                         </div>
                         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/45">
-                            Practice account: {plain(balance)}. Continue below to review this decision and record it in your practice journal.
+                            Practice account: {plain(balance)}. Continue below for a short review of this decision, or skip it and take another chart.
                             {practice.account.trades >= 3 && (
                                 <>
                                     {" "}

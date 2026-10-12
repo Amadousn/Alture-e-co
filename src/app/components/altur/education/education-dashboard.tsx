@@ -6,7 +6,7 @@ import EduBar from "./edu-bar";
 import { Lock } from "./education-programme";
 import { INTRODUCTION, MODULES } from "./programme-data";
 import LessonChart from "./intro/lesson-chart";
-import { candlesOf, LESSONS, lessonsOf, measure, STAGES, timeframeName } from "./intro/course";
+import { candlesOf, LESSONS, lessonsOf, measure, STAGES, timeframeName, TRADE_LINK } from "./intro/course";
 import { SCENES, SOURCE } from "@/utils/education-chart-data";
 import { useEducationProgress } from "@/utils/education-progress";
 
@@ -56,6 +56,9 @@ const EducationDashboard = () => {
                             {stats.complete ? "Review the Introduction" : started && next ? `Continue: ${LESSONS[next.lesson].title}` : "Start the Introduction"}
                             <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                         </Link>
+                        <a href={TRADE_LINK} className="ml-0 mt-3 inline-flex items-center rounded-sm border border-white/30 px-6 py-3.5 text-sm font-medium text-white transition-colors hover:border-white sm:ml-3 sm:mt-7">
+                            Just try a trade
+                        </a>
                         <Link href={started && next ? `/education/introduction?lesson=${next.lesson + 1}` : "/education/introduction"} aria-label="Open the Introduction" className="mt-9 block">
                             {ready && <LessonChart className="h-[240px] md:h-[300px]" note={`${SOURCE} · ${timeframeName(SCENES.first.timeframe)} · ${SCENES.first.when}, UTC · historical`} view={{ candles: preview.candles, minutes: preview.minutes }} />}
                         </Link>

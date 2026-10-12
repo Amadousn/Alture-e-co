@@ -291,7 +291,20 @@ const ReadingTheChart = () => {
                                     </button>
                                 )}
                             </div>
-                            {!done && <p className="mt-3 text-right text-xs text-white/35">{step.kind === "film" ? "Watch to the end to continue." : "Finish this step to continue."}</p>}
+                            {!done && (
+                                <p className="mt-3 text-right text-xs text-white/40">
+                                    {step.kind === "film" ? "Watch to the end to continue" : "Finish this step to continue"}
+                                    {next && (
+                                        <>
+                                            , or{" "}
+                                            <button type="button" onClick={() => move(next.lesson, next.step)} className="border-b border-white/30 text-white/75 hover:border-white hover:text-white">
+                                                skip it
+                                            </button>
+                                        </>
+                                    )}
+                                    . A skipped step is not counted as done.
+                                </p>
+                            )}
                             {lesson.stage === "decide" && <LiveChart />}
                         </main>
                     </div>
