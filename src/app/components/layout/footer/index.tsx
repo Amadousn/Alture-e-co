@@ -9,7 +9,7 @@ const Footer = () => {
   const { t } = useLanguage();
   const path = usePathname();
   // The cockpit is a full-screen application: no site footer under it.
-  if (path === "/alturelock/workspace" || path === "/alturelock/demo" || path === "/education/dashboard" || path === "/education/introduction") return null;
+  if ((path.startsWith("/alturelock/") && path !== "/alturelock/login") || path === "/education/dashboard" || path === "/education/introduction") return null;
 
   return (
     <footer className="relative z-10 bg-black border-t border-white/10">

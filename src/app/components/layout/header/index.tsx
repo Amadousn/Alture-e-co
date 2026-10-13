@@ -118,7 +118,7 @@ const Header: React.FC = () => {
   const translated = !pathUrl.startsWith("/alturelock") || pathUrl === "/alturelock" || pathUrl === "/alturelock/login";
 
   // The cockpit is a full-screen application with its own bar.
-  if (pathUrl === "/alturelock/workspace" || pathUrl === "/alturelock/demo") return null;
+  if (pathUrl.startsWith("/alturelock/") && pathUrl !== "/alturelock/login") return null;
   // The learning pages have their own bar too.
   if (pathUrl === "/education/dashboard" || pathUrl === "/education/introduction") return null;
 
