@@ -118,6 +118,8 @@ const KEYS = {
     imports: "alturelock:imports",
     watchlist: "alturelock:watchlist",
     timezone: "alturelock:timezone",
+    reviews: "alturelock:trade-reviews",
+    strategies: "alturelock:strategies",
 } as const;
 
 const CHANGE_EVENT = "alturelock:store-change";
@@ -204,3 +206,21 @@ export const useWatchlist = () => useStored<string[]>(KEYS.watchlist, DEFAULT_WA
 
 // The timezone sessions and times are shown in. "local" follows the device.
 export const useTimezone = () => useStored<string>(KEYS.timezone, "Asia/Dubai");
+
+// The trader's own review of a closed trade, kept apart from the trade itself so
+// that it survives a re-import from the exchange. Keyed by trade id.
+export type TradeReview = {
+    strategy?: string;
+    // The confluences of that strategy that were present when the trade was taken.
+    confluences?: string[];
+    tags?: string[];
+    // 1 to 5: how well the trade was executed, whatever its result.
+    rating?: number;
+    notes?: string;
+};
+export type TradeReviews = Record<string, TradeReview>;
+export const useTradeReviews = () => useStored<TradeReviews>(KEYS.reviews, {});
+
+// A strategy as the trader defines it: a name and the confluences they look for.
+export type Strategy = { id: string; name: string; confluences: string[] };
+export const useStrategies = () => useStored<Strategy[]>(KEYS.strategies, []);

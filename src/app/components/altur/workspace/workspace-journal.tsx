@@ -102,6 +102,7 @@ const WorkspaceJournal = () => {
                     )}
 
                     <JournalDashboard
+                        reviewable
                         days={HISTORY_DAYS}
                         trades={trades}
                         positions={importedPositions.length > 0 ? importedPositions : imported.length === 0 && sync.status === "on" ? sync.positions : []}

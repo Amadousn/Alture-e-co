@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import TradeRecap from "./trade-recap";
+import TradeReview from "./trade-review";
 
 export type TradeDetail = { kind: "closed"; trade: ClosedTrade } | { kind: "open"; position: OpenPosition };
 
@@ -69,9 +70,11 @@ type Props = {
     onPrevious?: () => void;
     onNext?: () => void;
     position?: { index: number; total: number };
+    // The owner's own journal: the trade can be reviewed (strategy, confluences, tags, rating, notes).
+    reviewable?: boolean;
 };
 
-const TradeDetails = ({ detail, onClose, onPrevious, onNext, position }: Props) => {
+const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewable = false }: Props) => {
     const isOpen = detail.kind === "open";
     const [now, setNow] = useState(() => Date.now());
     const [copied, setCopied] = useState(false);
@@ -239,6 +242,8 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position }: Props) 
                         <p className="text-sm leading-relaxed text-white whitespace-pre-wrap">{detail.trade.reflection}</p>
                     </div>
                 )}
+
+                {reviewable && detail.kind === "closed" && <TradeReview tradeId={detail.trade.id} />}
 
                 {/* How the result is made up, so the figures can be checked by hand */}
                 {detail.kind === "closed" && (

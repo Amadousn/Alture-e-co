@@ -4,6 +4,9 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { computeJournalStats, DailyPerformance } from "@/utils/journal-stats";
 import TradeDetails, { TradeDetail } from "./trade-details";
+import JournalAnalytics from "./journal-analytics";
+import Strategies from "./strategies";
+import { useTradeReviews } from "@/utils/workspace-store";
 import ShareMonth from "./share-month";
 import DayPanel from "./day-panel";
 
@@ -236,9 +239,12 @@ type Props = {
     // Public demo: hides the greeting and labels the data as sample trades.
     sample?: boolean;
     onRefresh?: () => void;
+    // The owner's own journal: trades can be reviewed and strategies kept.
+    reviewable?: boolean;
 };
 
-const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades, positions, ownerName, status, notes, onSaveNote, sample, onRefresh }: Props) => {
+const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades, positions, ownerName, status, notes, onSaveNote, sample, onRefresh, reviewable = false }: Props) => {
+    const [reviews] = useTradeReviews();
     const months = useMemo(() => buildMonths(days), [days]);
     const [monthIndex, setMonthIndex] = useState(0);
     const [breakdown, setBreakdown] = useState<"weekday" | "month">("weekday");
@@ -698,6 +704,12 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                 }
             `}</style>
 
+            <JournalAnalytics trades={trades} reviews={reviewable ? reviews : {}} />
+            {reviewable && (
+                <div className="mt-6">
+                    <Strategies />
+                </div>
+            )}
             {dayPanel !== null && onSaveNote && (
                 <DayPanel
                     key={dateKey(dayPanel)}
@@ -730,6 +742,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                     onPrevious={detailIndex > 0 ? () => setDetail({ kind: "closed", trade: listedTrades[detailIndex - 1] }) : undefined}
                     onNext={detailIndex >= 0 && detailIndex < listedTrades.length - 1 ? () => setDetail({ kind: "closed", trade: listedTrades[detailIndex + 1] }) : undefined}
                     position={detailIndex >= 0 ? { index: detailIndex, total: listedTrades.length } : undefined}
+                    reviewable={reviewable}
                 />
             )}
         </div>
