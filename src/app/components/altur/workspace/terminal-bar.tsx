@@ -14,16 +14,23 @@ const TerminalBar = ({ demo }: { demo: boolean }) => {
     const session = useSession();
     const links = demo
         ? [["/alturelock/demo", "Terminal"], ["/alturelock/demo/trade", "Guided trade"], ["/alturelock/demo/journal", "Journal"]]
-        : [["/alturelock/workspace", "Terminal"], ["/alturelock/rules", "Rules"], ["/alturelock/journal", "Journal"], ["/alturelock/connections", "Connections"]];
+        : [["/alturelock/home", "Home"], ["/alturelock/workspace", "Terminal"], ["/alturelock/rules", "Plan a trade"], ["/alturelock/journal", "Journal"], ["/alturelock/connections", "Connections"]];
+    const NAMES: Record<string, string> = { "/alturelock/settings": "Settings", "/alturelock/help": "Help" };
+    const current = links.find(([href]) => href === path)?.[1] ?? NAMES[path] ?? "";
 
     return (
         <header className="flex flex-shrink-0 flex-wrap items-center gap-x-8 gap-y-2 border-b border-white/10 px-4 py-2.5">
-            <Link href={demo ? "/alturelock" : "/alturelock/workspace"} aria-label="AltureLock" className="flex items-center gap-3">
+            <Link href={demo ? "/alturelock" : "/alturelock/home"} aria-label="AltureLock" className="flex items-center gap-3 lg:hidden">
                 <AltureLockLogo size="sm" />
                 {demo && <span className="rounded-sm border border-[#FACC15]/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#FACC15]">Demo</span>}
             </Link>
 
-            <nav aria-label="AltureLock" className="order-3 lg:order-none flex w-full lg:w-auto items-center gap-x-6 overflow-x-auto">
+            <p className="hidden text-xs text-white/45 lg:block">
+                AltureLock <span className="mx-1.5 text-white/25">/</span>
+                <span className="text-white">{current}</span>
+            </p>
+            {/* On a wide screen these places are in the sidebar. */}
+            <nav aria-label="AltureLock" className="order-3 flex w-full items-center gap-x-6 overflow-x-auto lg:hidden">
                 {links.map(([href, text]) => {
                     const active = path === href;
                     return (

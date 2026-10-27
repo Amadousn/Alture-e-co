@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import TerminalBar from "./terminal-bar";
+import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import TradeRecap from "@/app/components/altur/journal/trade-recap";
 import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
 import { TIMEZONES, useSessions } from "./os/sessions";
@@ -477,7 +478,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const quiet = "group inline-flex items-center gap-2 text-[13px] font-medium text-white/80 border-b border-white/25 pb-0.5 hover:text-white hover:border-white transition-colors";
 
     return (
-        <div className="flex min-h-[100dvh] flex-col bg-black text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden">
+        <div className={`flex min-h-[100dvh] flex-col bg-black text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH}`}>
+            <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} />
             {demo && (

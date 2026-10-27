@@ -3,10 +3,10 @@ import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
 
 // The real AltureLock workspace is for signed-in users. The product page needs
 // no login. The demo and logging in open only when the owner opens them (see utils/launch).
-const WORKSPACE = ["/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help"];
+const WORKSPACE = ["/alturelock/home", "/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help"];
 
 export const config = {
-    matcher: ["/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help", "/alturelock/demo", "/alturelock/demo/:path*"],
+    matcher: ["/alturelock/home", "/alturelock/workspace", "/alturelock/rules", "/alturelock/journal", "/alturelock/connections", "/alturelock/settings", "/alturelock/help", "/alturelock/demo", "/alturelock/demo/:path*"],
 };
 
 type ProtectedRoute = {

@@ -1,6 +1,7 @@
 "use client";
 
 import TerminalBar from "./terminal-bar";
+import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import { useWorkspaceSettings } from "@/utils/workspace-store";
 
 // Frame shared by every AltureLock page outside the terminal itself: the same bar on top, then the page.
@@ -9,7 +10,8 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false }: { child
 
 
     return (
-        <div className="min-h-[100dvh] bg-black text-white">
+        <div className={`min-h-[100dvh] bg-black text-white ${SIDEBAR_WIDTH}`}>
+            <TerminalSidebar demo={demo} />
             <div className="sticky top-0 z-40 bg-black">
                 <TerminalBar demo={demo} />
                 {demo && (
