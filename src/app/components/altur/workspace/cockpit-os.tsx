@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import TerminalBar from "./terminal-bar";
 import LiveTV from "./os/live-tv";
+import { StatePanel, WatchPanel } from "@/app/components/altur/cmd/terminal-panels";
 import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import TradeRecap from "@/app/components/altur/journal/trade-recap";
 import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
@@ -479,7 +480,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const quiet = "group inline-flex items-center gap-2 text-[13px] font-medium text-white/80 border-b border-white/25 pb-0.5 hover:text-white hover:border-white transition-colors";
 
     return (
-        <div className={`flex min-h-[100dvh] flex-col bg-black text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH}`}>
+        <div className={`cmd-ground flex min-h-[100dvh] flex-col text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH}`}>
             <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} />
@@ -490,26 +491,14 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </p>
             )}
 
-            <div className={`grid min-h-0 flex-1 lg:grid-cols-[248px_minmax(0,1fr)_340px] xl:grid-cols-[268px_minmax(0,1fr)_372px] ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
+            <div className={`grid min-h-0 flex-1 gap-3 p-0 lg:p-3 lg:grid-cols-[236px_minmax(0,1fr)_300px] xl:grid-cols-[250px_minmax(0,1fr)_330px] ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
                 {/* Markets */}
-                <aside className="hidden lg:flex min-h-0 flex-col gap-y-6 overflow-y-auto border-r border-white/10 py-4" aria-label="Markets">
-                    <Watchlist tickers={tickers} compact selected={symbol} onSelect={select} />
-                    {factsList && (
-                        <div>
-                            <p className={`${label} mb-2 px-4`}>{assetFor(symbol)?.name ?? symbol.replace(/USDT$/, "")} · perpetual</p>
-                            {factsList}
-                        </div>
-                    )}
-                    {moversList && (
-                        <div>
-                            <p className={`${label} mb-2 px-4`}>Movers · 24h</p>
-                            {moversList}
-                        </div>
-                    )}
+                <aside className="hidden min-h-0 lg:flex" aria-label="Markets">
+                    <WatchPanel tickers={tickers} selected={symbol} onSelect={select} levels={levels.map((level) => ({ label: level.label, price: level.price }))} />
                 </aside>
 
                 {/* The chart */}
-                <main ref={screen.ref} className={`flex min-h-0 min-w-0 flex-col bg-black px-4 pb-3 pt-3 ${screen.active ? "h-screen !p-5" : ""}`}>
+                <main ref={screen.ref} className={`cmd-panel flex min-h-0 min-w-0 flex-col px-4 pb-3 pt-3 ${screen.active ? "h-screen !p-5" : ""}`}>
                     {/* On a phone the watchlist is a strip above the chart. */}
                     <div className="lg:hidden -mx-4 mb-3 flex gap-2 overflow-x-auto px-4">
                         {listStore.ready &&
@@ -598,8 +587,12 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </main>
 
                 {/* What is yours: the next thing to do, the trade, the journal, and what to read */}
-                <aside className="flex min-h-0 flex-col border-t border-white/10 lg:border-l lg:border-t-0" aria-label="Your workspace">
-                    <div className="flex-shrink-0 px-4 pb-4 pt-4">
+                <aside className="flex min-h-0 flex-col gap-3 border-t border-white/10 lg:overflow-y-auto lg:border-t-0" aria-label="Your workspace">
+                    <div className="hidden lg:block">
+                        <StatePanel demo={demo} state={first.id === "orient" ? "idle" : account.active?.stage === "prepare" ? "planning" : "active"} detail={first.id === "orient" ? "No trade is a position too. Prepare one only when your setup is there." : first.note} href={first.id === "orient" ? rulesHref : first.href} action={first.id === "orient" ? prepareItem.action : first.action} />
+                    </div>
+                    <div className="cmd-panel flex flex-col lg:min-h-[520px] lg:flex-shrink-0">
+                    <div className="flex-shrink-0 px-4 pb-4 pt-4 lg:hidden">
                         <p className={label}>{demo ? "Simulated account" : name ? `Welcome back, ${name}` : "Your workspace"}</p>
                         {first.id === "orient" ? (
                             <>
@@ -823,6 +816,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                 )}
                             </div>
                         )}
+                    </div>
                     </div>
                 </aside>
             </div>

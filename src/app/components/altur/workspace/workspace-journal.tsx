@@ -66,19 +66,7 @@ const WorkspaceJournal = () => {
     const noteCount = Object.keys(notes).length;
 
     return (
-        <WorkspaceShell>
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-                <div>
-                    <h1 className="!text-3xl md:!text-4xl text-white mb-2 flex flex-wrap items-center gap-3">
-                        Trading Journal
-                    </h1>
-                    <p className="text-sm text-[#9a9aa5]">Your trade history, statistics and daily notes.</p>
-                </div>
-                <Link href="/alturelock/rules" className="h-10 px-5 inline-flex items-center rounded-sm border border-white/25 text-sm font-medium text-white hover:bg-white/10 transition-colors">
-                    Record a trade in Rules
-                </Link>
-            </div>
-
+        <WorkspaceShell width="full">
             {!ready ? (
                 <p className="text-sm text-[#7d7d87]">Loading your journal…</p>
             ) : (

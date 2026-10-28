@@ -551,3 +551,70 @@ a:active {
 }
 .edu-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
 .edu-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
+
+/* AltureLock command centre: graphite ground, a faint technical grid, panels
+   with fine corner markers, teal light used sparingly. */
+.cmd-ground {
+    background-color: #0a0d0f;
+    background-image:
+        radial-gradient(1200px 600px at 70% -10%, rgba(32, 184, 168, 0.06), transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: auto, 48px 48px, 48px 48px;
+}
+.cmd-panel {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008)), #0d1114;
+    border-radius: 3px;
+}
+.cmd-panel::before,
+.cmd-panel::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    pointer-events: none;
+    border-color: rgba(32, 184, 168, 0.55);
+    border-style: solid;
+}
+.cmd-panel::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+}
+.cmd-panel::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+}
+.cmd-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+}
+.cmd-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 30px;
+    padding: 0 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.72);
+    white-space: nowrap;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .cmd-live {
+        animation: cmd-pulse 2.4s ease-in-out infinite;
+    }
+}
+@keyframes cmd-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(32, 184, 168, 0.45); }
+    50% { box-shadow: 0 0 0 4px rgba(32, 184, 168, 0); }
+}

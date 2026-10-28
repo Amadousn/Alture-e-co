@@ -2,9 +2,11 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
-import { computeJournalStats, DailyPerformance } from "@/utils/journal-stats";
+import { computeJournalStats } from "@/utils/journal-stats";
 import TradeDetails, { TradeDetail } from "./trade-details";
+import PerformanceChart from "./performance-chart";
 import JournalAnalytics from "./journal-analytics";
+import JournalCommand from "@/app/components/altur/cmd/journal-command";
 import Strategies from "./strategies";
 import { useTradeReviews } from "@/utils/workspace-store";
 import ShareMonth from "./share-month";
@@ -63,8 +65,8 @@ function useCountUp(target: number, duration = 600): number {
 
 const pnlColor = (value: number) => (value >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]");
 
-const cardClass = "rounded-sm border border-white/15 bg-black";
-const labelClass = "text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]";
+const cardClass = "cmd-panel";
+const labelClass = "text-[11px] uppercase tracking-[0.12em] text-white/40";
 
 // How many closed trades show before "Show all".
 const COLLAPSED_TRADES = 4;
@@ -87,95 +89,8 @@ const DirectionTag = ({ direction, leverage }: { direction: "Long" | "Short"; le
 
 // Running P&L from zero. The line is white above break-even and red below it.
 // Hovering (or dragging on touch) reads off the running total day by day.
-const EquityCurve = ({ daily }: { daily: DailyPerformance[] }) => {
-    const gradientId = useId();
-    const fillId = useId();
-    const [hover, setHover] = useState<number | null>(null);
-    const height = 40;
-    const values = [0, ...daily.map((d) => d.cumulative)];
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const span = max - min || 1;
-    const y = (value: number) => height - 3 - ((value - min) / span) * (height - 6);
-    const x = (i: number) => (i / (values.length - 1 || 1)) * 100;
-    const zeroY = y(0);
-    const line = values.map((value, i) => `${x(i)},${y(value)}`).join(" ");
-    const zeroOffset = zeroY / height;
-
-    const track = (clientX: number, target: HTMLDivElement) => {
-        const rect = target.getBoundingClientRect();
-        const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        setHover(Math.round(ratio * (values.length - 1)));
-    };
-    const active = hover !== null && hover < values.length ? hover : null;
-    const activeDay = active !== null && active > 0 ? daily[active - 1] : null;
-
-    return (
-        <div>
-            <div
-                className="relative h-20 cursor-crosshair touch-none"
-                onPointerMove={(e) => track(e.clientX, e.currentTarget)}
-                onPointerDown={(e) => track(e.clientX, e.currentTarget)}
-                onPointerLeave={() => setHover(null)}
-            >
-                <svg viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
-                    <defs>
-                        <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2={height}>
-                            <stop offset={zeroOffset} stopColor={WHITE} />
-                            <stop offset={zeroOffset} stopColor={RED} />
-                        </linearGradient>
-                        <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0" stopColor={WHITE} stopOpacity="0.12" />
-                            <stop offset="1" stopColor={WHITE} stopOpacity="0" />
-                        </linearGradient>
-                    </defs>
-                    <polygon points={`0,${height} ${line} 100,${height}`} fill={`url(#${fillId})`} />
-                    <line x1="0" x2="100" y1={zeroY} y2={zeroY} stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="2 3" vectorEffect="non-scaling-stroke" />
-                    <polyline points={line} fill="none" stroke={`url(#${gradientId})`} strokeWidth="1.75" vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
-                </svg>
-                {active !== null && (
-                    <>
-                        <span className="absolute top-0 bottom-0 w-px bg-white/20 pointer-events-none" style={{ left: `${x(active)}%` }} />
-                        <span
-                            className={`absolute w-2 h-2 -ml-1 -mt-1 rounded-full pointer-events-none ${values[active] >= 0 ? "bg-white" : "bg-[#E955A8]"}`}
-                            style={{ left: `${x(active)}%`, top: `${(y(values[active]) / height) * 100}%` }}
-                        />
-                    </>
-                )}
-            </div>
-            <p className="text-[11px] tabular-nums text-gray-500 mt-2 h-4">
-                {active === null ? (
-                    <span className="font-sans font-light text-gray-600">Hover the curve to read each day</span>
-                ) : activeDay ? (
-                    <>
-                        {activeDay.date} · day <span className={pnlColor(activeDay.profitLoss)}>{formatSignedDollars(activeDay.profitLoss)}</span> · total{" "}
-                        <span className={pnlColor(activeDay.cumulative)}>{formatSignedDollars(activeDay.cumulative)}</span>
-                    </>
-                ) : (
-                    "Start of month · $0.00"
-                )}
-            </p>
-        </div>
-    );
-};
 
 // One figure with a thin fill showing where it sits on its scale.
-const Metric = ({ fraction, value, label, hint, negative }: { fraction: number; value: string; label: string; hint?: string; negative?: boolean }) => {
-    // Starts empty so the bar sweeps in on first paint.
-    const [drawn, setDrawn] = useState(false);
-    useEffect(() => setDrawn(true), []);
-    const clamped = drawn ? Math.max(0, Math.min(1, fraction)) : 0;
-    return (
-        <div className="bg-black px-4 py-3.5">
-            <p className={`${labelClass} mb-1.5`}>{label}</p>
-            <p className={`text-xl font-semibold tabular-nums ${negative ? "text-[#E955A8]" : "text-white"}`}>{value}</p>
-            <div className="h-[3px] bg-white/15 mt-2.5">
-                <div className={`h-full ${negative ? "bg-[#E955A8]" : "bg-white"}`} style={{ width: `${clamped * 100}%`, transition: "width 700ms cubic-bezier(0.22, 1, 0.36, 1)" }} />
-            </div>
-            <p className="text-[11px] tabular-nums text-[#7d7d87] mt-1.5 h-4">{hint}</p>
-        </div>
-    );
-};
 
 const Bars = ({ items }: { items: { label: string; value: number }[] }) => {
     const largest = Math.max(1, ...items.map((item) => Math.abs(item.value)));
@@ -343,7 +258,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
     const today = now.getUTCFullYear() === selected.year && now.getUTCMonth() === selected.month ? now.getUTCDate() : null;
 
     return (
-        <div className="max-w-6xl mx-auto text-left">
+        <div className="w-full text-left">
             {ownerName && (
                 <>
                     <h1 className="text-3xl sm:text-4xl font-light text-white leading-snug mb-2">
@@ -361,7 +276,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                 ) : sample ? (
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                         <span className="text-[10px] tabular-nums uppercase px-1.5 py-0.5 rounded-sm bg-accent/15 text-accent">Demo</span>
-                        <span className="font-light">Sample trades, not a real account. Click a day or a trade to open it, hover the curve.</span>
+                        <span className="font-light">Sample trades, not a real account. Open any day or trade to read it on the real candles of that day.</span>
                     </div>
                 ) : (
                     <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -395,69 +310,11 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-                <div className="flex flex-col gap-4">
-                    {/* Overall performance */}
-                    <div className={`${cardClass} p-5`}>
-                        <div className="flex items-center justify-between gap-3 mb-3">
-                            <p className={labelClass}>Overall performance</p>
-                            <p className="text-[11px] font-light text-gray-500">{selected.label}</p>
-                        </div>
-                        <p className={`text-[34px] leading-none font-semibold tracking-tight tabular-nums mb-4 ${stats.totalPnl >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>{formatSignedDollars(animatedPnl)}</p>
-                        <EquityCurve daily={stats.daily} />
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-light text-gray-500 mt-3">
-                            <span>
-                                {stats.totalTrades} {stats.totalTrades === 1 ? "trade" : "trades"}
-                            </span>
-                            <span className="text-gray-700">·</span>
-                            <span>{formatDollars(stats.totalFees)} fees</span>
-                            <span className="text-gray-700">·</span>
-                            <span>{formatDollars(stats.maxDrawdown)} max drawdown</span>
-                        </div>
-                    </div>
+            <JournalCommand trades={trades} reviews={reviewable ? reviews : {}} sample={sample} onOpenTrade={(trade) => setDetail({ kind: "closed", trade })} />
 
-                    {/* Key metrics */}
-                    <div className={`${cardClass} overflow-hidden`}>
-                        <p className={`${labelClass} px-4 pt-4 pb-3`}>Key metrics</p>
-                        <div className="grid grid-cols-2 gap-px bg-white/15 border-t border-white/15">
-                            <Metric fraction={stats.winRate / 100} value={`${stats.winRate.toFixed(0)}%`} label="Win rate" hint={`${stats.wins}W / ${stats.losses}L`} />
-                            <Metric fraction={(stats.profitFactor ?? 0) / 3} value={stats.profitFactor === null ? "—" : stats.profitFactor.toFixed(2)} label="Profit factor" hint="Gross profit / gross loss" />
-                            <Metric fraction={(stats.payoffRatio ?? 0) / 3} value={stats.payoffRatio === null ? "—" : stats.payoffRatio.toFixed(2)} label="Win / loss size" hint={`${formatCompact(stats.averageWin)} vs ${formatCompact(stats.averageLoss)}`} />
-                            <Metric
-                                fraction={stats.averageWin > 0 ? Math.abs(stats.expectancy) / stats.averageWin : 0}
-                                value={stats.totalTrades === 0 ? "—" : formatCompact(stats.expectancy)}
-                                label="Per trade"
-                                hint="Average result"
-                                negative={stats.expectancy < 0}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Weekday / monthly breakdown */}
-                    <div className={`${cardClass} p-5`}>
-                        <div className="flex items-center justify-between gap-3 mb-4">
-                            <p className={labelClass}>P&amp;L by {breakdown === "weekday" ? "weekday" : "month"}</p>
-                            <div className="flex items-center rounded-sm border border-white/25 p-0.5 text-[11px]">
-                                {(["weekday", "month"] as const).map((mode) => (
-                                    <button
-                                        key={mode}
-                                        type="button"
-                                        onClick={() => setBreakdown(mode)}
-                                        aria-pressed={breakdown === mode}
-                                        className={`px-2.5 py-1 rounded-sm font-medium transition-colors ${breakdown === mode ? "bg-white text-black lit" : "text-[#9a9aa5] hover:text-white"}`}
-                                    >
-                                        {mode === "weekday" ? "Weekday" : "Monthly"}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                        <Bars items={breakdownItems} />
-                        <p className="text-[10px] font-light text-gray-600 mt-3">Last {days} days</p>
-                    </div>
-                </div>
-
+            <div className="grid grid-cols-1 xl:grid-cols-[1fr_minmax(300px,380px)] gap-4 mb-4">
                 {/* P&L calendar */}
-                <div className={`${cardClass} p-4 md:p-5 lg:col-span-2`}>
+                <div className={`${cardClass} p-4 md:p-6`}>
                     <div className="flex items-center justify-between gap-4 mb-4">
                         <p className={labelClass}>Calendar</p>
                         <div className="flex items-center gap-1 rounded-sm border border-white/25 px-1 py-0.5">
@@ -547,6 +404,27 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                         )}
                     </p>
                 </div>
+                <div className={`${cardClass} p-5 md:p-6`}>
+                    {/* Weekday / monthly breakdown */}
+                        <div className="flex items-center justify-between gap-3 mb-4">
+                            <p className={labelClass}>P&amp;L by {breakdown === "weekday" ? "weekday" : "month"}</p>
+                            <div className="flex items-center rounded-sm border border-white/25 p-0.5 text-[11px]">
+                                {(["weekday", "month"] as const).map((mode) => (
+                                    <button
+                                        key={mode}
+                                        type="button"
+                                        onClick={() => setBreakdown(mode)}
+                                        aria-pressed={breakdown === mode}
+                                        className={`px-2.5 py-1 rounded-sm font-medium transition-colors ${breakdown === mode ? "bg-white text-black lit" : "text-[#9a9aa5] hover:text-white"}`}
+                                    >
+                                        {mode === "weekday" ? "Weekday" : "Monthly"}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <Bars items={breakdownItems} />
+                        <p className="text-[10px] font-light text-gray-600 mt-3">Last {days} days</p>
+                    </div>
             </div>
 
             {/* Trade breakdown: click a figure to filter the list below */}
@@ -558,7 +436,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                         {untagged > 0 ? `. ${untagged} ${untagged === 1 ? "trade was" : "trades were"} placed without it.` : "."}
                     </p>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/15 border-t border-white/15">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/[0.05] border-t border-white/[0.05]">
                     {segments.map((item) => {
                         const active = segment === item.id;
                         const total = monthTrades.length || 1;
@@ -568,7 +446,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                                 type="button"
                                 onClick={() => setSegment(active ? "all" : item.id)}
                                 aria-pressed={active}
-                                className={`text-left px-4 py-3.5 transition-colors ${item.id === "all" ? "col-span-2 md:col-span-1" : ""} ${active ? "bg-[#17171c] shadow-[inset_0_2px_0_#E3A1F7]" : "bg-black hover:bg-[#0c0c0c]"}`}
+                                className={`text-left px-4 py-3.5 transition-colors ${item.id === "all" ? "col-span-2 md:col-span-1" : ""} ${active ? "bg-[#17171c] shadow-[inset_0_2px_0_#E3A1F7]" : "bg-[#070707] hover:bg-[#0e0e10]"}`}
                             >
                                 <span className={`${labelClass} flex items-center justify-between gap-2 mb-1.5`}>
                                     {item.label}

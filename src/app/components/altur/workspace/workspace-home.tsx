@@ -3,53 +3,59 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import WorkspaceShell from "./workspace-shell";
-import { EconomicCalendar } from "./os/tv";
 import { useSessions } from "./os/sessions";
+import EquityChart from "@/app/components/altur/cmd/equity-chart";
+import Sparkline, { useCloses } from "@/app/components/altur/cmd/sparkline";
+import type { ClosedTrade } from "@/utils/bybit";
 import { computeJournalStats } from "@/utils/journal-stats";
 import { analyse } from "@/utils/journal-analytics";
 import { useNews, useTickers } from "@/utils/use-market-intel";
 import { useActiveTrade, useImports, useRecordedTrades, useTradeReviews, useWorkspaceSettings } from "@/utils/workspace-store";
 
-// The first screen after signing in: the day at a glance. What the market is
-// doing, what is on the calendar and in the news, and how the trader's own
-// journal stands. It points to one next step and never pushes a trade.
+// The command overview: the trader's realised results and curve, the one next
+// action, the state of their discipline, and the market at the bottom. Real
+// data only; the demo passes its sample trades, and says so.
 
-const label = "text-[11px] uppercase tracking-[0.12em] text-white/45";
-const card = "rounded-sm border border-white/10 bg-black p-5";
 const money = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const whole = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E955A8]" : "text-white");
-const ago = (at: number) => {
-    const minutes = Math.max(1, Math.round((Date.now() - at) / 60000));
-    return minutes < 60 ? `${minutes} min ago` : minutes < 1440 ? `${Math.round(minutes / 60)} h ago` : `${Math.round(minutes / 1440)} d ago`;
-};
-// The trading sessions as UTC hours, to say which one the trader does best in.
+const RANGES = [
+    ["1M", 30],
+    ["3M", 91],
+    ["6M", 182],
+    ["All", Infinity],
+] as const;
 const SESSIONS = [
     { name: "Asia", from: 0, to: 8 },
     { name: "London", from: 7, to: 16 },
     { name: "New York", from: 13, to: 21 },
 ];
-const WATCH = [
-    ["BTCUSDT", "Bitcoin"],
-    ["ETHUSDT", "Ethereum"],
-    ["SOLUSDT", "Solana"],
+const MARKETS = [
+    ["BTCUSDT", "BTC"],
+    ["ETHUSDT", "ETH"],
+    ["SOLUSDT", "SOL"],
+    ["HYPEUSDT", "HYPE"],
 ] as const;
 
-const Curve = ({ values }: { values: number[] }) => {
-    const points = [0, ...values];
-    const min = Math.min(...points);
-    const max = Math.max(...points);
-    const y = (value: number) => 56 - ((value - min) / (max - min || 1)) * 52;
-    const line = points.map((value, i) => `${(i / (points.length - 1 || 1)) * 100},${y(value)}`).join(" ");
+const Market = ({ symbol, name, price, change }: { symbol: string; name: string; price?: number; change?: number }) => {
+    const closes = useCloses(symbol);
     return (
-        <svg viewBox="0 0 100 60" preserveAspectRatio="none" className="mt-4 h-28 w-full" aria-hidden="true">
-            <line x1="0" x2="100" y1={y(0)} y2={y(0)} stroke="rgba(255,255,255,0.12)" strokeDasharray="1.5 1.5" vectorEffect="non-scaling-stroke" />
-            <polyline points={`0,60 ${line} 100,60`} fill="rgba(255,255,255,0.05)" stroke="none" />
-            <polyline points={line} fill="none" stroke="#ffffff" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-        </svg>
+        <div className="flex items-center gap-3">
+            <div className="min-w-[96px]">
+                <p className="cmd-label">{name}</p>
+                <p className="mt-1 font-mono text-[15px] text-white">
+                    {price !== undefined ? `$${price.toLocaleString("en-US", { maximumFractionDigits: price > 1000 ? 0 : 2 })}` : "…"}
+                    {change !== undefined && <span className={`ml-2 text-xs ${tone(change)}`}>{`${change >= 0 ? "+" : ""}${change.toFixed(2)}%`}</span>}
+                </p>
+            </div>
+            <Sparkline values={closes} />
+        </div>
     );
 };
 
-const WorkspaceHome = () => {
+// demoTrades: the sample trades of the demo. Without them, the trader's own journal.
+const WorkspaceHome = ({ demoTrades }: { demoTrades?: ClosedTrade[] }) => {
+    const demo = demoTrades !== undefined;
     const [settings] = useWorkspaceSettings();
     const [recorded] = useRecordedTrades();
     const [imports] = useImports();
@@ -57,182 +63,171 @@ const WorkspaceHome = () => {
     const [active] = useActiveTrade();
     const tickers = useTickers();
     const news = useNews("crypto");
-    const { rows } = useSessions();
+    const { rows, now } = useSessions();
+    const [range, setRange] = useState<(typeof RANGES)[number][0]>("All");
     const [hour, setHour] = useState<number | null>(null);
     useEffect(() => setHour(new Date().getHours()), []);
 
-    const trades = useMemo(() => [...recorded, ...Object.values(imports).flatMap((item) => item.trades)].sort((a, b) => a.closedAt - b.closedAt), [recorded, imports]);
+    const all = useMemo(() => (demoTrades ? [...demoTrades] : [...recorded, ...Object.values(imports).flatMap((item) => item.trades)]).sort((a, b) => a.closedAt - b.closedAt), [demoTrades, recorded, imports]);
+    const days = RANGES.find(([id]) => id === range)![1];
+    const trades = useMemo(() => (days === Infinity ? all : all.filter((trade) => trade.closedAt >= Date.now() - days * 86400000)), [all, days]);
     const stats = useMemo(() => computeJournalStats(trades), [trades]);
-    const data = useMemo(() => analyse(trades, reviews), [trades, reviews]);
-    const bySession = useMemo(
-        () =>
-            SESSIONS.map((session) => {
-                const list = trades.filter((trade) => {
-                    const h = new Date(trade.openedAt ?? trade.closedAt).getUTCHours();
-                    return h >= session.from && h < session.to;
-                });
-                return { name: session.name, trades: list.length, profitLoss: list.reduce((sum, trade) => sum + trade.profitLoss, 0), wins: list.filter((trade) => trade.profitLoss > 0).length };
-            }),
-        [trades]
-    );
-    const bestDay = [...data.weekdays].filter((day) => day.trades > 0).sort((a, b) => b.profitLoss - a.profitLoss)[0];
-    const bestSession = [...bySession].filter((session) => session.trades > 0).sort((a, b) => b.profitLoss - a.profitLoss)[0];
-    const greeting = hour === null ? "Hello" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-    const name = settings.name.trim();
-    const openSessions = rows.filter((row) => row.state.open).map((row) => row.session.name);
-    const next = active ? { href: "/alturelock/rules", text: "Go back to your trade in progress" } : { href: "/alturelock/workspace", text: "Read the market in the terminal" };
+    const data = useMemo(() => analyse(all, demo ? {} : reviews), [all, reviews, demo]);
+    const months = useMemo(() => {
+        const out = new Map<string, number>();
+        for (const trade of all) {
+            const d = new Date(trade.closedAt);
+            const key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+            out.set(key, (out.get(key) ?? 0) + trade.profitLoss);
+        }
+        return [...out.entries()].slice(-4).map(([key, value]) => ({ label: new Date(Date.UTC(Number(key.split("-")[0]), Number(key.split("-")[1]), 1)).toLocaleString("en-US", { month: "short", timeZone: "UTC" }), value }));
+    }, [all]);
+    const sessions = SESSIONS.map((session) => ({ ...session, list: all.filter((trade) => { const h = new Date(trade.openedAt ?? trade.closedAt).getUTCHours(); return h >= session.from && h < session.to; }) })).map((s) => ({ name: s.name, total: s.list.reduce((sum, t) => sum + t.profitLoss, 0), count: s.list.length }));
+    const bestSession = [...sessions].filter((s) => s.count).sort((a, b) => b.total - a.total)[0];
+    const bestDay = [...data.weekdays].filter((d) => d.trades).sort((a, b) => b.profitLoss - a.profitLoss)[0];
+    const withRules = all.filter((trade) => trade.rulesFollowed !== undefined);
+    const kept = withRules.filter((trade) => trade.rulesFollowed).length;
+    const todayLosses = all.filter((trade) => trade.profitLoss < 0 && new Date(trade.closedAt).toDateString() === new Date().toDateString()).length;
+    const maxLosses = settings.limits?.maxLosses;
+
+    const greeting = hour === null ? "Hello." : hour < 12 ? "Good morning." : hour < 18 ? "Good afternoon." : "Good evening.";
+    const next = now === null ? null : [...rows].sort((a, b) => a.state.changesAt - b.state.changesAt)[0];
+    const minutes = next && now !== null ? Math.round((next.state.changesAt - now) / 60000) : 0;
+    const when = minutes >= 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+    const ring = 2 * Math.PI * 34;
+    const terminal = demo ? "/alturelock/demo" : "/alturelock/workspace";
+    const journal = demo ? "/alturelock/demo/journal" : "/alturelock/journal";
 
     return (
-        <WorkspaceShell width="max-w-7xl">
-            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <WorkspaceShell width="full" demo={demo}>
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
                 <div>
-                    <h1 className="!text-3xl md:!text-4xl !font-light text-white">
-                        {greeting}
-                        {name ? `, ${name}` : ""}.
+                    <p className="cmd-label">Command overview{demo ? " · sample trades" : ""}</p>
+                    <h1 className="mt-2 !text-2xl md:!text-[28px] !font-normal !leading-tight text-white">
+                        {greeting} {next && <span className="text-white/50">{`${next.session.name} ${next.state.open ? "closes" : "opens"} in ${when}.`}</span>}
                     </h1>
-                    <p className="mt-2 text-sm text-white/50">
-                        {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
-                        {openSessions.length > 0 ? ` · ${openSessions.join(" and ")} ${openSessions.length === 1 ? "is" : "are"} open` : " · no main session is open"}
-                    </p>
                 </div>
-                <Link href={next.href} className="group inline-flex items-center gap-3 rounded-sm bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-[#e4e4e8]">
-                    {next.text}
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </Link>
+                <div className="flex gap-1 rounded-md border border-white/10 bg-white/[0.02] p-1" role="group" aria-label="Period">
+                    {RANGES.map(([id]) => (
+                        <button key={id} type="button" aria-pressed={range === id} onClick={() => setRange(id)} className={`rounded px-3 py-1 font-mono text-xs transition-colors ${range === id ? "bg-white/[0.1] text-white" : "text-white/45 hover:text-white"}`}>
+                            {id}
+                        </button>
+                    ))}
+                </div>
             </div>
 
-            {/* The market, in one line */}
-            <div className="mt-8 grid gap-px overflow-hidden rounded-sm border border-white/10 bg-white/10 sm:grid-cols-3">
-                {WATCH.map(([symbol, title]) => {
-                    const ticker = tickers.status === "live" ? tickers.bySymbol[symbol] : undefined;
-                    return (
-                        <div key={symbol} className="bg-black px-5 py-4">
-                            <p className={label}>{title}</p>
-                            <p className="mt-2 text-xl font-semibold tabular-nums text-white">{ticker ? `$${ticker.price.toLocaleString("en-US", { maximumFractionDigits: ticker.price > 1000 ? 1 : 3 })}` : "…"}</p>
-                            {ticker && <p className={`mt-0.5 text-xs tabular-nums ${tone(ticker.change24h)}`}>{`${ticker.change24h >= 0 ? "+" : ""}${ticker.change24h.toFixed(2)}% in 24 h`}</p>}
+            <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
+                <section className="cmd-panel !py-6 px-6" aria-label="Realised results">
+                    <div className="flex flex-wrap items-start gap-x-10 gap-y-5">
+                        <div>
+                            <p className="cmd-label">Realized P&amp;L · {range === "All" ? "all time" : `last ${range}`}</p>
+                            <p className={`mt-2 text-[44px] font-semibold leading-none tracking-tight tabular-nums ${tone(stats.totalPnl)}`}>{all.length ? money(stats.totalPnl) : "$0.00"}</p>
                         </div>
-                    );
-                })}
-            </div>
-
-            <div className="mt-6 grid gap-6 lg:grid-cols-12">
-                {/* Your trading */}
-                <div className="space-y-6 lg:col-span-7">
-                    <div className={card}>
-                        <div className="flex items-baseline justify-between gap-4">
-                            <p className={label}>Your trading · all time</p>
-                            <Link href="/alturelock/journal" className="text-xs text-white/50 hover:text-white">
-                                Open the journal →
-                            </Link>
-                        </div>
-                        {trades.length === 0 ? (
-                            <div className="mt-4">
-                                <p className="text-[15px] text-white">No trades in your journal yet.</p>
-                                <p className="mt-1 text-sm text-white/50">Plan a trade with your rules and it lands here when you review it, or connect your exchange.</p>
-                            </div>
-                        ) : (
-                            <>
-                                <p className={`mt-3 text-4xl font-semibold tabular-nums ${tone(stats.totalPnl)}`}>{money(stats.totalPnl)}</p>
-                                <Curve values={stats.daily.map((day) => day.cumulative)} />
-                                <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-4 sm:grid-cols-4">
-                                    {(
-                                        [
-                                            ["Trades", String(stats.totalTrades)],
-                                            ["Win rate", `${Math.round(stats.winRate)}%`],
-                                            ["Profit factor", stats.profitFactor === null ? "-" : stats.profitFactor.toFixed(2)],
-                                            ["Per trade", money(stats.expectancy)],
-                                        ] as const
-                                    ).map(([term, value]) => (
-                                        <div key={term}>
-                                            <dt className={label}>{term}</dt>
-                                            <dd className="mt-1 text-lg font-semibold tabular-nums text-white">{value}</dd>
-                                        </div>
-                                    ))}
-                                </dl>
-                            </>
-                        )}
+                        <dl className="flex flex-wrap gap-x-8 gap-y-3 pt-1">
+                            {(
+                                [
+                                    ["Trades", String(stats.totalTrades)],
+                                    ["Profit factor", stats.profitFactor === null ? "-" : stats.profitFactor.toFixed(2)],
+                                    ["Per trade", trades.length ? whole(stats.expectancy) : "-"],
+                                    ["Max drawdown", trades.length ? `-$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "-"],
+                                ] as const
+                            ).map(([term, value]) => (
+                                <div key={term} className="border-l border-white/[0.08] pl-4 first:border-0 first:pl-0">
+                                    <dt className="cmd-label">{term}</dt>
+                                    <dd className="mt-1.5 font-mono text-lg text-white">{value}</dd>
+                                </div>
+                            ))}
+                        </dl>
                     </div>
-
-                    {trades.length > 0 && (
-                        <div className={card}>
-                            <p className={label}>When you trade best</p>
-                            <div className="mt-4 grid gap-6 sm:grid-cols-2">
-                                <div>
-                                    <p className="text-sm text-white/55">By session (UTC)</p>
-                                    <ul className="mt-2 space-y-2">
-                                        {bySession.map((session) => (
-                                            <li key={session.name} className="flex items-baseline justify-between gap-4 text-sm">
-                                                <span className="text-white">
-                                                    {session.name}
-                                                    <span className="ml-2 text-xs text-white/40">
-                                                        {session.trades} {session.trades === 1 ? "trade" : "trades"}
-                                                    </span>
-                                                </span>
-                                                <span className={`tabular-nums ${tone(session.profitLoss)}`}>{session.trades ? money(session.profitLoss) : "-"}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-white/55">By weekday</p>
-                                    <ul className="mt-2 space-y-2">
-                                        {data.weekdays
-                                            .filter((day) => day.trades > 0)
-                                            .map((day) => (
-                                                <li key={day.label} className="flex items-baseline justify-between gap-4 text-sm">
-                                                    <span className="text-white">
-                                                        {day.label}
-                                                        <span className="ml-2 text-xs text-white/40">{Math.round(day.winRate)}% won</span>
-                                                    </span>
-                                                    <span className={`tabular-nums ${tone(day.profitLoss)}`}>{money(day.profitLoss)}</span>
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            </div>
-                            {bestDay && bestSession && (
-                                <p className="mt-4 border-t border-white/10 pt-3 text-sm text-white/65">
-                                    Your strongest so far: {bestDay.label}, during the {bestSession.name} session. One period of data proves little; keep journaling and it becomes clearer.
-                                </p>
-                            )}
+                    {months.length > 0 && (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                            {months.map((month) => (
+                                <span key={month.label} className={`rounded border px-3 py-1.5 ${month.value >= 0 ? "border-[#20B8A8]/25 bg-[#20B8A8]/[0.06]" : "border-[#E955A8]/25 bg-[#E955A8]/[0.06]"}`}>
+                                    <span className="cmd-label block !text-[9.5px]">{month.label}</span>
+                                    <span className={`font-mono text-sm ${tone(month.value)}`}>{whole(month.value)}</span>
+                                </span>
+                            ))}
                         </div>
                     )}
-                </div>
+                    <div className="mt-6">{trades.length ? <EquityChart trades={trades} height={330} /> : <div className="flex h-[330px] items-center justify-center text-sm text-white/40">Your equity curve appears with your first recorded trade.</div>}</div>
+                </section>
 
-                {/* Today */}
-                <div className="space-y-6 lg:col-span-5">
-                    <div className={card}>
-                        <div className="flex items-baseline justify-between gap-4">
-                            <p className={label}>Crypto news</p>
-                            <Link href="/alturelock/workspace" className="text-xs text-white/50 hover:text-white">
-                                All news →
+                <div className="grid gap-4">
+                    <section className="cmd-panel !py-6 px-6" aria-label="Next action">
+                        <p className="cmd-label">Next action</p>
+                        <p className="mt-3 text-lg font-medium text-white">{active ? "A trade is in progress." : "No trade in progress."}</p>
+                        <p className="mt-1.5 text-sm leading-relaxed text-white/55">{active ? "Go back to it and manage it by your plan." : "No trade is a position too. Read the market, and plan a trade only when your setup is there."}</p>
+                        <div className="mt-5 grid grid-cols-2 gap-2.5">
+                            <Link href={active && !demo ? "/alturelock/rules" : terminal} className="rounded-md border border-[#20B8A8]/40 bg-[#20B8A8]/10 px-3.5 py-3 transition-colors hover:bg-[#20B8A8]/15">
+                                <span className="cmd-label block !text-[#20B8A8]">{active && !demo ? "Resume" : "Open"}</span>
+                                <span className="mt-1 block text-sm font-medium text-white">{active && !demo ? "Trade" : "Terminal"} →</span>
+                            </Link>
+                            <Link href={journal} className="rounded-md border border-white/10 bg-white/[0.02] px-3.5 py-3 transition-colors hover:border-white/25">
+                                <span className="cmd-label block">Review</span>
+                                <span className="mt-1 block text-sm font-medium text-white">Journal →</span>
                             </Link>
                         </div>
-                        {news.status === "live" ? (
-                            <ul className="mt-3 divide-y divide-white/10">
-                                {news.items.slice(0, 5).map((item) => (
-                                    <li key={item.id} className="py-2.5">
-                                        <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm leading-snug text-white hover:text-white/75">
-                                            {item.title}
-                                        </a>
-                                        <p className="mt-1 text-xs text-white/40">
-                                            {item.source} · {ago(item.publishedAt)}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="mt-3 text-sm text-white/45">{news.status === "loading" ? "Loading headlines…" : "Headlines are unavailable right now."}</p>
-                        )}
-                    </div>
-                    <div className={card}>
-                        <p className={label}>High-impact events</p>
-                        <div className="mt-3 h-[320px]">
-                            <EconomicCalendar highOnly className="h-full" />
+                    </section>
+
+                    <section className="cmd-panel !py-6 px-6" aria-label="Discipline">
+                        <p className="cmd-label">System</p>
+                        <div className="mt-4 flex items-center gap-6">
+                            <svg viewBox="0 0 80 80" className="h-[88px] w-[88px] flex-shrink-0" aria-label={`${Math.round(stats.winRate)}% win rate`} role="img">
+                                <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5" />
+                                <circle cx="40" cy="40" r="34" fill="none" stroke="#20B8A8" strokeWidth="5" strokeLinecap="round" strokeDasharray={`${(ring * stats.winRate) / 100} ${ring}`} transform="rotate(-90 40 40)" style={{ filter: "drop-shadow(0 0 4px rgba(32,184,168,0.6))" }} />
+                                <text x="40" y="42" textAnchor="middle" fill="#fff" fontSize="17" fontWeight="600">{`${Math.round(stats.winRate)}%`}</text>
+                                <text x="40" y="55" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="6.5" letterSpacing="1.2">WIN RATE</text>
+                            </svg>
+                            <dl className="flex-1 space-y-2.5 text-sm">
+                                <div className="flex justify-between gap-3">
+                                    <dt className="text-white/55">Rules kept</dt>
+                                    <dd className="font-mono text-white">{withRules.length ? `${kept}/${withRules.length}` : "-"}</dd>
+                                </div>
+                                <div className="flex justify-between gap-3">
+                                    <dt className="text-white/55">Best session</dt>
+                                    <dd className="text-white">{bestSession?.name ?? "-"}</dd>
+                                </div>
+                                <div className="flex justify-between gap-3">
+                                    <dt className="text-white/55">Losses today</dt>
+                                    <dd className={`font-mono ${maxLosses && todayLosses >= maxLosses ? "text-[#E955A8]" : "text-[#20B8A8]"}`}>{maxLosses ? `${todayLosses} of ${maxLosses}` : todayLosses}</dd>
+                                </div>
+                            </dl>
                         </div>
-                    </div>
+                        {bestDay && bestSession && (
+                            <p className="mt-5 border-t border-white/[0.07] pt-4 text-sm leading-relaxed text-white/55">
+                                Strongest so far: <span className="text-white">{bestDay.label}, {bestSession.name}</span>. One period of data proves little.
+                            </p>
+                        )}
+                    </section>
                 </div>
             </div>
+
+            <section className="cmd-panel !py-5 mt-4 grid gap-6 px-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]" aria-label="Market">
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+                    {MARKETS.map(([symbol, name]) => {
+                        const ticker = tickers.status === "live" ? tickers.bySymbol[symbol] : undefined;
+                        return <Market key={symbol} symbol={symbol} name={name} price={ticker?.price} change={ticker?.change24h} />;
+                    })}
+                </div>
+                <div className="border-white/[0.07] lg:border-l lg:pl-6">
+                    <p className="cmd-label">Wire</p>
+                    {news.status === "live" ? (
+                        <ul className="mt-2 space-y-1.5">
+                            {news.items.slice(0, 2).map((item) => (
+                                <li key={item.id} className="truncate text-sm">
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/75">
+                                        {item.title}
+                                    </a>
+                                    <span className="ml-2 text-xs text-white/40">{item.source}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="mt-2 text-sm text-white/40">{news.status === "loading" ? "Loading headlines…" : "Headlines are unavailable right now."}</p>
+                    )}
+                </div>
+            </section>
+            {demo && <p className="mt-4 text-right font-mono text-[10.5px] uppercase tracking-[0.16em] text-white/30">Sample trades · live market data</p>}
         </WorkspaceShell>
     );
 };
