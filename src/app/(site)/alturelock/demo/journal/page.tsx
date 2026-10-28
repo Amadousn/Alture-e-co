@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const DemoJournalPage = () => (
-    <WorkspaceShell demo width="full">
+    <WorkspaceShell demo width="full" themed>
         <JournalDemo />
     </WorkspaceShell>
 );

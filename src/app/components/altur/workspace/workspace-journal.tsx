@@ -66,7 +66,7 @@ const WorkspaceJournal = () => {
     const noteCount = Object.keys(notes).length;
 
     return (
-        <WorkspaceShell width="full">
+        <WorkspaceShell width="full" themed>
             {!ready ? (
                 <p className="text-sm text-[#7d7d87]">Loading your journal…</p>
             ) : (

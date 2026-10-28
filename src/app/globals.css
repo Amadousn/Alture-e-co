@@ -614,3 +614,35 @@ a:active {
     0%, 100% { box-shadow: 0 0 0 0 rgba(32, 184, 168, 0.45); }
     50% { box-shadow: 0 0 0 4px rgba(32, 184, 168, 0); }
 }
+
+/* Light theme of the AltureLock pages that offer it (the Journal). The frame
+   follows it; the page itself colours from the --j-* variables. */
+.lumen {
+    background: #f6f4f0 !important;
+    color: #17181a;
+}
+.lumen > header,
+.lumen > div > header {
+    background: rgba(246, 244, 240, 0.92) !important;
+    border-color: #e6e2db !important;
+}
+.lumen header .text-white,
+.lumen aside[aria-label="AltureLock"] .text-white {
+    color: #17181a !important;
+}
+.lumen header [class*="text-white/"],
+.lumen aside[aria-label="AltureLock"] [class*="text-white/"] {
+    color: #6c6a66 !important;
+}
+.lumen aside[aria-label="AltureLock"] {
+    background: #fbfaf7 !important;
+    border-color: #e6e2db !important;
+}
+.lumen aside[aria-label="AltureLock"] a[aria-current="page"] {
+    background: #ece8e1 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+.lumen aside[aria-label="AltureLock"] a:first-child {
+    border-color: #d8d3ca !important;
+}
