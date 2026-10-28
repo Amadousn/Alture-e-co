@@ -30,9 +30,14 @@ const THEMES = {
     dark: { "--j-bg": "#0d0e10", "--j-s1": "#16181b", "--j-s2": "#1d2024", "--j-s3": "#24282d", "--j-ink": "#ededee", "--j-mu": "#9a9da3", "--j-fa": "#62666d", "--j-line": "#262a2f", "--j-up": "#3cc9b8", "--j-dn": "#e4609f", "--j-upbg": "rgba(60,201,184,0.13)", "--j-dnbg": "rgba(228,96,159,0.13)", "--j-upsoft": "rgba(60,201,184,0.4)", "--j-shadow": "0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 40px -22px rgba(0,0,0,0.8)", "--j-tip": "#f2f2f3", "--j-tipink": "#111214", "--j-active": "#f2f2f3", "--j-activeink": "#111214" },
 } as const;
 
-const money = (value: number, digits = 2) => `${value < 0 ? "−" : "+"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
-const plain = (value: number) => `$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+// When the trader hides amounts (on a shared screen, a stream, a screenshot), dollar
+// figures become dots; percentages, counts and the shape of the charts stay.
+let HIDDEN = false;
+const MASK = "$ ••••";
+const money = (value: number, digits = 2) => HIDDEN ? `${value < 0 ? "−" : "+"}${MASK}` : `${value < 0 ? "−" : "+"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
+const plain = (value: number) => HIDDEN ? MASK : `$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const axisMoney = (value: number) => {
+    if (HIDDEN) return value === 0 ? "$0" : "••";
     const a = Math.abs(value);
     return `${value < 0 ? "−" : ""}$${a >= 1000 ? `${(a / 1000).toFixed(a >= 10000 ? 0 : 1)}K` : a.toFixed(0)}`;
 };
@@ -257,6 +262,24 @@ function rangeOf(preset: Preset, custom: { from: string; to: string }, first: nu
 
 const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status }: Props) => {
     const [theme, setTheme] = useTheme();
+    const [hidden, setHidden] = useState(false);
+    useEffect(() => {
+        try {
+            setHidden(window.localStorage.getItem("alturelock:hide-amounts") === "1");
+        } catch {
+            // storage refused: amounts stay visible
+        }
+    }, []);
+    const toggleHidden = () => {
+        const next = !hidden;
+        setHidden(next);
+        try {
+            window.localStorage.setItem("alturelock:hide-amounts", next ? "1" : "0");
+        } catch {
+            // the choice lasts for this visit
+        }
+    };
+    HIDDEN = hidden;
     const [stored] = useTradeReviews();
     const reviews: TradeReviews = reviewable ? stored : {};
     const [preset, setPreset] = useState<Preset>("all");
@@ -381,13 +404,20 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                     <input type="date" aria-label="To" value={custom.to} onChange={(e) => { setCustom({ ...custom, to: e.target.value }); if (custom.from) setPreset("custom"); }} className="!w-[8.6rem] !border-0 !bg-transparent !p-0 !text-[13px] !text-inherit" />
                 </span>
                 <span className="ml-auto flex items-center gap-4">
-                    {sample && <span className="rounded-md bg-[#f6ecd5] px-2 py-0.5 text-[11.5px] text-[#8a6210]">Simulated trades</span>}
                     {status && <span className="hidden text-[12.5px] text-[var(--j-mu)] 2xl:inline">{status}</span>}
                     {ordered.length > 0 && (
                         <button type="button" onClick={() => setSharing(true)} className={quiet}>
                             Share ↗
                         </button>
                     )}
+                    <button type="button" onClick={toggleHidden} aria-pressed={hidden} title={hidden ? "Show amounts" : "Hide amounts"} className={`flex items-center gap-1.5 ${quiet}`}>
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                            <circle cx="12" cy="12" r="3" />
+                            {hidden && <path d="M4 4l16 16" />}
+                        </svg>
+                        {hidden ? "Show amounts" : "Hide amounts"}
+                    </button>
                     <span className="flex rounded-lg bg-[var(--j-s2)] p-0.5 text-[12px]" role="group" aria-label="Theme">
                         {(["light", "dark"] as const).map((t) => (
                             <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)} className={`rounded-md px-2.5 py-1 capitalize transition-colors ${theme === t ? "bg-[var(--j-s1)] text-[var(--j-ink)] shadow-sm" : "text-[var(--j-mu)]"}`}>
@@ -403,7 +433,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]">Net P&amp;L · {range.label}</p>
                     <p className={`mt-2 font-mono text-[34px] leading-none tracking-tight ${inRange.length ? tone(stats.totalPnl) : ""}`}>{inRange.length ? money(stats.totalPnl) : "No trades"}</p>
-                    <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? `Realised, after ${plain(fees)} of fees` : "Choose another period"}</p>
+                    <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : "Choose another period"}</p>
                 </div>
                 {(
                     [
@@ -411,7 +441,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                         ["Profit factor", stats.profitFactor === null ? null : stats.profitFactor.toFixed(2), stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Gross profit ÷ gross loss"],
                         ["Average trade", inRange.length ? money(stats.expectancy, 0) : null, stats.wins ? `Average win ${money(stats.averageWin, 0)}` : ""],
                         ["Trades", inRange.length ? String(stats.totalTrades) : null, `${tradingDays} trading ${tradingDays === 1 ? "day" : "days"}`],
-                        ["Max drawdown", inRange.length ? `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}` : null, "From an equity high"],
+                        ["Max drawdown", inRange.length ? (hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`) : null, "From an equity high"],
                     ] as const
                 ).map(([k, v, hint]) => (
                     <div key={k} className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
