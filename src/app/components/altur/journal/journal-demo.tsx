@@ -10,6 +10,16 @@ import JournalDashboard from "./journal-dashboard";
 // Entries and exits sit inside each instrument's real Bybit range for that
 // day (taken 2026-10-10), on its real tick and lot size.
 const SAMPLE: [number, number, string, "Long" | "Short", number, number, number, "Continuation" | "Reversal"][] = [
+    [0, 13, "BTCUSDT", "Short", 83596.0, 83328.7, 3.0, "Continuation"],
+    [0, 14, "ETHUSDT", "Short", 2506.45, 2451.01, 100.0, "Continuation"],
+    [0, 15, "SOLUSDT", "Short", 101.51, 105.55, 300.0, "Reversal"],
+    [0, 16, "BTCUSDT", "Long", 82207.4, 82597.7, 3.0, "Continuation"],
+    [0, 20, "BTCUSDT", "Short", 83232.0, 82784.5, 3.0, "Continuation"],
+    [0, 21, "ETHUSDT", "Short", 2455.56, 2467.94, 100.0, "Reversal"],
+    [0, 22, "SOLUSDT", "Long", 104.4, 104.67, 2300.0, "Continuation"],
+    [0, 23, "BTCUSDT", "Short", 81961.7, 81688.4, 3.0, "Continuation"],
+    [0, 27, "ETHUSDT", "Long", 2312.58, 2314.92, 100.0, "Reversal"],
+    [0, 27, "BTCUSDT", "Short", 80338.8, 80537.2, 3.0, "Reversal"],
     [0, 1, "BTCUSDT", "Short", 83971, 83333.3, 2.977, "Continuation"],
     [0, 2, "ETHUSDT", "Short", 2722.08, 2708.4, 91.84, "Continuation"],
     [0, 2, "HYPEUSDT", "Long", 88.215, 88.13, 2833.99, "Reversal"],
@@ -52,14 +62,11 @@ const TAKER_FEE = 0.00055;
 const LEVERAGE = 20;
 
 const cents = (value: number) => Math.round(value * 100) / 100;
-// The sample is sized for one retail trader with an account of about $10,000:
-// a tenth of the quantities the rows were first written with, rounded to each
-// instrument's lot size on Bybit.
-const SCALE = 0.1;
+// Quantities rounded to each instrument's lot size on Bybit.
 const LOT: Record<string, number> = { BTCUSDT: 0.001, ETHUSDT: 0.01, SOLUSDT: 0.1, XRPUSDT: 1, HYPEUSDT: 0.01 };
 const sized = (instrument: string, quantity: number) => {
     const lot = LOT[instrument] ?? 0.001;
-    return Number((Math.round((quantity * SCALE) / lot) * lot).toFixed(6));
+    return Number((Math.round(quantity / lot) * lot).toFixed(6));
 };
 
 export function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[] } {
