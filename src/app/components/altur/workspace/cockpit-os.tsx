@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import TerminalBar from "./terminal-bar";
+import LiveTV from "./os/live-tv";
 import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import TradeRecap from "@/app/components/altur/journal/trade-recap";
 import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
@@ -618,6 +619,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                             </>
                         )}
                     </div>
+
+                    <LiveTV />
 
                     <div className="flex flex-shrink-0 gap-x-5 overflow-x-auto border-b border-white/10 px-4" role="tablist" aria-label="Workspace">
                         {tabs.map(([id, text]) => (

@@ -52,12 +52,22 @@ const TAKER_FEE = 0.00055;
 const LEVERAGE = 20;
 
 const cents = (value: number) => Math.round(value * 100) / 100;
+// The sample is sized for one retail trader with an account of about $10,000:
+// a tenth of the quantities the rows were first written with, rounded to each
+// instrument's lot size on Bybit.
+const SCALE = 0.1;
+const LOT: Record<string, number> = { BTCUSDT: 0.001, ETHUSDT: 0.01, SOLUSDT: 0.1, XRPUSDT: 1, HYPEUSDT: 0.01 };
+const sized = (instrument: string, quantity: number) => {
+    const lot = LOT[instrument] ?? 0.001;
+    return Number((Math.round((quantity * SCALE) / lot) * lot).toFixed(6));
+};
 
-function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[] } {
+export function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[] } {
     const now = new Date();
     const year = now.getUTCFullYear();
     const month = now.getUTCMonth();
-    const trades = SAMPLE.map(([monthsAgo, day, instrument, direction, entryPrice, exitPrice, quantity, setup], i) => {
+    const trades = SAMPLE.map(([monthsAgo, day, instrument, direction, entryPrice, exitPrice, written, setup], i) => {
+        const quantity = sized(instrument, written);
         // Fees and P&L are worked out from the prices and the quantity, never
         // the other way round, so every figure on a trade agrees with the rest.
         const fee = cents((entryPrice + exitPrice) * quantity * TAKER_FEE);
@@ -86,7 +96,7 @@ function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[] } {
         .filter((trade) => trade.closedAt <= now.getTime())
         .sort((a, b) => b.closedAt - a.closedAt);
     const positions: OpenPosition[] = [
-        { instrument: "BTCUSDT", direction: "Long", entryPrice: 82560, markPrice: 82790, quantity: 3.028, leverage: LEVERAGE, positionSize: cents(82560 * 3.028), unrealisedPnl: cents((82790 - 82560) * 3.028), openedAt: now.getTime() - 3 * 60 * 60 * 1000 },
+        { instrument: "BTCUSDT", direction: "Long", entryPrice: 82560, markPrice: 82790, quantity: sized("BTCUSDT", 3.028), leverage: LEVERAGE, positionSize: cents(82560 * sized("BTCUSDT", 3.028)), unrealisedPnl: cents((82790 - 82560) * sized("BTCUSDT", 3.028)), openedAt: now.getTime() - 3 * 60 * 60 * 1000 },
     ];
     return { trades, positions };
 }
