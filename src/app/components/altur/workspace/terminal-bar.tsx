@@ -71,7 +71,7 @@ const TerminalBar = ({ demo }: { demo: boolean }) => {
     const next = now === null ? null : [...rows].sort((a, b) => a.state.changesAt - b.state.changesAt)[0];
 
     return (
-        <header className="flex flex-shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/[0.06] bg-[#0a0d0f]/95 px-4 py-2.5 backdrop-blur lg:px-5">
+        <header className="flex flex-shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/[0.05] bg-[#0a0b0d]/90 px-4 py-3 backdrop-blur lg:px-8">
             <Link href={links[0][0]} aria-label="AltureLock" className="flex items-center gap-3 lg:hidden">
                 <AltureLockLogo size="sm" />
             </Link>
@@ -89,33 +89,30 @@ const TerminalBar = ({ demo }: { demo: boolean }) => {
                 ))}
             </nav>
 
-            <div className="ml-auto flex items-center gap-2">
+            <div className="ml-auto flex items-center gap-6">
                 {demo ? (
-                    <span className="cmd-chip hidden sm:inline-flex">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" aria-hidden="true" />
-                        Simulated account
-                    </span>
+                    <span className="hidden text-[11.5px] text-[#d9b75a] sm:inline">Simulated account</span>
                 ) : (
                     importsStore.ready && (
-                        <Link href="/alturelock/connections" className="cmd-chip hidden hover:border-white/20 sm:inline-flex">
+                        <Link href="/alturelock/connections" className="hidden items-center gap-2 text-[12.5px] text-white/55 transition-colors hover:text-white sm:inline-flex">
                             <span className={`h-1.5 w-1.5 rounded-full ${connected.length ? "cmd-live bg-[#20B8A8]" : "bg-white/30"}`} aria-hidden="true" />
                             {connected.length ? `${connected.map((id) => id[0].toUpperCase() + id.slice(1)).join(", ")} · read-only` : "No exchange connected"}
                         </Link>
                     )
                 )}
                 {next && now !== null && (
-                    <span className="cmd-chip hidden md:inline-flex">
+                    <span className="hidden text-[12.5px] text-white/45 md:inline">
                         {next.session.name} {next.state.open ? "closes" : "opens"} · {span(next.state.changesAt - now)}
                     </span>
                 )}
-                {clock && <span className="cmd-chip hidden md:inline-flex">{clock} UTC</span>}
-                <button type="button" onClick={toggleFull} aria-pressed={full} aria-label={full ? "Exit full screen (F)" : "Full screen (F)"} title={full ? "Exit full screen (F)" : "Full screen (F)"} className="hidden h-[30px] w-[30px] items-center justify-center rounded-md border border-[#20B8A8]/35 text-[#20B8A8] transition-colors hover:bg-[#20B8A8]/10 sm:flex">
+                {clock && <span className="hidden font-mono text-[12.5px] text-white/45 md:inline">{clock} UTC</span>}
+                <button type="button" onClick={toggleFull} aria-pressed={full} aria-label={full ? "Exit full screen (F)" : "Full screen (F)"} title={full ? "Exit full screen (F)" : "Full screen (F)"} className="hidden h-8 w-8 items-center justify-center text-white/60 transition-colors hover:text-white sm:flex">
                     <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
                         {full ? <path d="M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" /> : <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" />}
                     </svg>
                 </button>
                 {demo ? (
-                    <Link href="/alturelock/login" className="ml-1 rounded-md border border-white/25 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:border-white">
+                    <Link href="/alturelock/login" className="text-[12.5px] font-medium text-white transition-colors hover:text-white/70">
                         Log in
                     </Link>
                 ) : (

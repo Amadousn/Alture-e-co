@@ -17,13 +17,10 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false }: { child
             <div className="sticky top-0 z-40">
                 <TerminalBar demo={demo} />
                 {demo && (
-                    <p className="border-b border-white/10 px-4 py-2 text-xs text-white/70">
-                        <span className="mr-2 font-semibold text-[#FACC15]">Demo environment.</span>
-                        The account, the trade and the results on this page are simulated.
-                    </p>
+                    <p className="sr-only">Demo environment: the account, the trades and the results on this page are simulated.</p>
                 )}
             </div>
-            <div className={full ? "relative px-4 pb-24 pt-5 md:px-8 xl:px-10" : `${width} mx-auto px-4 pb-24 pt-8 md:px-6 md:pt-10`}>
+            <div className={full ? "relative px-4 pb-24 pt-10 md:px-10 xl:px-14" : `${width} mx-auto px-4 pb-24 pt-8 md:px-6 md:pt-10`}>
                 {store.ready && !store.persistent && (
                     <p className="rounded-sm border border-[#E955A8]/40 bg-[#E955A8]/10 px-4 py-3 text-sm text-white mb-8">
                         This browser is blocking storage, so nothing you enter here will be kept after you leave the page.

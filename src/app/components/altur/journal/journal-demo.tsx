@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
-import JournalDashboard from "./journal-dashboard";
+import JournalStudio from "./journal-studio";
 
 // Invented trades for the public demo. Each row is
 // [months ago, day of month, instrument, direction, entry, exit, quantity, setup].
@@ -119,7 +119,7 @@ const JournalDemo = () => {
 
     if (!data) return <div className="max-w-6xl mx-auto h-[640px]" />;
 
-    return <JournalDashboard sample env="demo" readOnlyVerified={false} days={90} trades={data.trades} positions={data.positions} />;
+    return <JournalStudio sample trades={data.trades} positions={data.positions} />;
 };
 
 export default JournalDemo;

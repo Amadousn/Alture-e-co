@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import WorkspaceShell from "./workspace-shell";
-import JournalDashboard from "@/app/components/altur/journal/journal-dashboard";
+import JournalStudio from "@/app/components/altur/journal/journal-studio";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { useDailyNotes, useImports, useRecordedTrades } from "@/utils/workspace-store";
 
@@ -89,9 +89,8 @@ const WorkspaceJournal = () => {
                         </div>
                     )}
 
-                    <JournalDashboard
+                    <JournalStudio
                         reviewable
-                        days={HISTORY_DAYS}
                         trades={trades}
                         positions={importedPositions.length > 0 ? importedPositions : imported.length === 0 && sync.status === "on" ? sync.positions : []}
                         notes={notes}
