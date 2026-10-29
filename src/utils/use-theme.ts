@@ -2,18 +2,18 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-// Light or dark, for the AltureLock pages that offer both. Light is the default;
+// Light or dark, for the AltureLock pages that offer both. Dark is the default;
 // the choice is kept in this browser and shared by every open tab.
 export type Theme = "light" | "dark";
 const KEY = "alturelock:theme";
 const EVENT = "alturelock:theme-change";
 
 export function useTheme(): [Theme, (theme: Theme) => void] {
-    const [theme, setTheme] = useState<Theme>("light");
+    const [theme, setTheme] = useState<Theme>("dark");
     useEffect(() => {
         const read = () => {
             try {
-                setTheme(window.localStorage.getItem(KEY) === "dark" ? "dark" : "light");
+                setTheme(window.localStorage.getItem(KEY) === "light" ? "light" : "dark");
             } catch {
                 // storage refused: stay on the default
             }
