@@ -7,6 +7,7 @@ import AltureLockLogo from "./alturelock-logo";
 import { useSessions } from "./os/sessions";
 import { useSession } from "@/utils/use-session";
 import { useImports } from "@/utils/workspace-store";
+import { useTheme } from "@/utils/use-theme";
 
 // The bar across the top of every AltureLock screen: where you are, whether an
 // exchange is connected, the next session change, the time in UTC, and full screen.
@@ -29,7 +30,8 @@ const span = (ms: number) => {
     return minutes >= 60 ? `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, "0")}m` : `${minutes}m`;
 };
 
-const TerminalBar = ({ demo }: { demo: boolean }) => {
+const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean }) => {
+    const [theme, setTheme] = useTheme();
     const path = usePathname();
     const session = useSession();
     const [imports, , importsStore] = useImports();
@@ -106,6 +108,13 @@ const TerminalBar = ({ demo }: { demo: boolean }) => {
                     </span>
                 )}
                 {clock && <span className="hidden font-mono text-[12.5px] text-white/45 md:inline">{clock} UTC</span>}
+                {themed && (
+                    <button type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={theme === "light" ? "Switch to dark" : "Switch to light"} title={theme === "light" ? "Dark theme" : "Light theme"} className="hidden h-8 w-8 items-center justify-center text-white/60 transition-colors hover:text-white sm:flex">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                            {theme === "light" ? <path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" /> : <><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5" /></>}
+                        </svg>
+                    </button>
+                )}
                 <button type="button" onClick={toggleFull} aria-pressed={full} aria-label={full ? "Exit full screen (F)" : "Full screen (F)"} title={full ? "Exit full screen (F)" : "Full screen (F)"} className="hidden h-8 w-8 items-center justify-center text-white/60 transition-colors hover:text-white sm:flex">
                     <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
                         {full ? <path d="M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" /> : <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" />}

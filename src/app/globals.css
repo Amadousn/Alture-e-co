@@ -560,36 +560,14 @@ a:active {
 }
 .cmd-panel {
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008)), #0d1114;
-    border-radius: 3px;
-}
-.cmd-panel::before,
-.cmd-panel::after {
-    content: "";
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    pointer-events: none;
-    border-color: rgba(32, 184, 168, 0.55);
-    border-style: solid;
-}
-.cmd-panel::before {
-    top: -1px;
-    left: -1px;
-    border-width: 1px 0 0 1px;
-}
-.cmd-panel::after {
-    bottom: -1px;
-    right: -1px;
-    border-width: 0 1px 1px 0;
+    border: 0;
+    background: #16181b;
+    border-radius: 16px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -22px rgba(0, 0, 0, 0.8);
 }
 .cmd-label {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.42);
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.5);
 }
 .cmd-chip {
     display: inline-flex;
@@ -646,3 +624,22 @@ a:active {
 .lumen aside[aria-label="AltureLock"] a:first-child {
     border-color: #d8d3ca !important;
 }
+
+/* The Terminal in the light theme: the same white modules on warm paper as the Journal. */
+.lumen-term .cmd-panel {
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(23, 24, 26, 0.04), 0 14px 32px -20px rgba(23, 24, 26, 0.22);
+}
+.lumen-term .cmd-label { color: #6c6a66; }
+.lumen-term .text-white { color: #17181a !important; }
+.lumen-term [class*="text-white/"] { color: #6c6a66 !important; }
+.lumen-term .bg-black { background-color: #ffffff !important; }
+.lumen-term [class*="border-white/"] { border-color: #e6e2db !important; }
+.lumen-term [class*="bg-white/"] { background-color: rgba(23, 24, 26, 0.035) !important; }
+.lumen-term .text-\[\#20B8A8\] { color: #0d8a7b !important; }
+.lumen-term .text-\[\#E955A8\] { color: #c23a77 !important; }
+.lumen-term .nav-link.is-active { color: #17181a !important; text-shadow: none; }
+.lumen-term .nav-link { color: #8a877f; }
+.lumen-term .nav-link:hover { color: #17181a; }
+.lumen-term svg text[fill="#fff"] { fill: #17181a; }
+.lumen-term svg circle[stroke="rgba(255,255,255,0.08)"] { stroke: #e6e2db; }

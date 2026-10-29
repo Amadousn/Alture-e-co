@@ -22,6 +22,7 @@ import { DEMO_BRIEFING, demoActiveTrade, demoPosition, demoTrades } from "@/util
 import { assetFor, derivePlan } from "@/utils/trade-plan";
 import { Briefing, News, useBriefing, useNews, useTickers } from "@/utils/use-market-intel";
 import { useSession } from "@/utils/use-session";
+import { useTheme } from "@/utils/use-theme";
 import { ActiveTrade, normaliseActiveTrade, useActiveTrade, useImports, useRecordedTrades, useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 
 const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
@@ -298,6 +299,7 @@ const HOUR = 60 * 60 * 1000;
 const since = (ms: number) => (ms < HOUR ? `${Math.max(1, Math.round(ms / 60000))} minutes` : ms < DAY ? `${Math.round(ms / HOUR)} hours` : `${Math.round(ms / DAY)} days`);
 
 const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
+    const [theme] = useTheme();
     const params = useSearchParams();
     const router = useRouter();
     const tickers = useTickers();
@@ -480,10 +482,10 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const quiet = "group inline-flex items-center gap-2 text-[13px] font-medium text-white/80 border-b border-white/25 pb-0.5 hover:text-white hover:border-white transition-colors";
 
     return (
-        <div className={`cmd-ground flex min-h-[100dvh] flex-col text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH}`}>
+        <div className={`cmd-ground flex min-h-[100dvh] flex-col text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH} ${theme === "light" ? "lumen lumen-term" : ""}`}>
             <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
-            <TerminalBar demo={demo} />
+            <TerminalBar demo={demo} themed />
             {demo && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
                     <span className="mr-2 font-semibold text-[#FACC15]">Demo environment.</span>
