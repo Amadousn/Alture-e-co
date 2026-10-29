@@ -53,6 +53,14 @@ const held = (trade: ClosedTrade) => {
     const minutes = Math.round((trade.closedAt - trade.openedAt) / 60000);
     return minutes >= 1440 ? `${(minutes / 1440).toFixed(1)} days` : minutes >= 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
 };
+// What each figure means, shown when the pointer rests on its name.
+const DEFINE: Record<string, string> = {
+    "Win rate": "Share of closed trades with a positive net result.",
+    "Profit factor": "Gross profit divided by gross loss.",
+    "Average trade": "Net result divided by the number of trades.",
+    Trades: "Closed trades in the period.",
+    "Max drawdown": "The largest fall of the equity curve from a previous high.",
+};
 type Group = { label: string; count: number; wins: number; total: number };
 const group = (label: string, list: ClosedTrade[]): Group => ({ label, count: list.length, wins: list.filter((t) => t.profitLoss > 0).length, total: list.reduce((s, t) => s + t.profitLoss, 0) });
 
@@ -431,7 +439,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
             {/* 1. Overview */}
             <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.35fr_repeat(5,1fr)]">
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
-                    <p className="text-[12.5px] text-[var(--j-mu)]">Net P&amp;L · {range.label}</p>
+                    <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
                     <p className={`mt-2 font-mono text-[34px] leading-none tracking-tight ${inRange.length ? tone(stats.totalPnl) : ""}`}>{inRange.length ? money(stats.totalPnl) : "No trades"}</p>
                     <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : "Choose another period"}</p>
                 </div>
@@ -445,7 +453,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                     ] as const
                 ).map(([k, v, hint]) => (
                     <div key={k} className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
-                        <p className="text-[12.5px] text-[var(--j-mu)]">{k}</p>
+                        <p className="text-[12.5px] text-[var(--j-mu)]" title={DEFINE[k]}>{k}</p>
                         <p className="mt-2 font-mono text-[22px] leading-none">{v ?? <span className="text-[var(--j-fa)]">–</span>}</p>
                         <p className="mt-2 text-[12px] text-[var(--j-fa)]">{v === null ? "" : hint}</p>
                     </div>
@@ -821,10 +829,6 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                 ))}
                         </div>
                     )}
-                    <p className="mt-4 border-t border-[var(--j-line)] pt-3 text-[12px] leading-relaxed text-[var(--j-mu)]">
-                        <span className="font-medium text-[var(--j-ink)]">Definitions.</span> Net P&amp;L: realised result of closed trades, after fees. Win rate: share of closed trades with a positive net result. Profit factor: gross profit divided by gross loss. Max drawdown: the largest fall of the equity curve from a previous high. Open positions are not counted until closed.
-                        {scope.length < 30 && " A sample this small describes what happened; it does not prove an edge."}
-                    </p>
                 </Module>
             </div>
 
