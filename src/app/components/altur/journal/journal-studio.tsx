@@ -9,6 +9,8 @@ import TradeRecap from "./trade-recap";
 import TradeDetails, { TradeDetail } from "./trade-details";
 import ShareMonth from "./share-month";
 import Strategies from "./strategies";
+import TradeForm from "./trade-form";
+import { useRecordedTrades } from "@/utils/workspace-store";
 
 // The trading journal. One period drives everything on the page: the overview,
 // the curve, the months, the calendar, the history and the analysis. Days are
@@ -299,6 +301,15 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const [open, setOpen] = useState<string | null>(null);
     const [shown, setShown] = useState(15);
     const [detail, setDetail] = useState<TradeDetail | null>(null);
+    // Trades recorded in this browser (by hand or through Rules) can be added, corrected and deleted; imported ones come from the exchange.
+    const [recorded, setRecorded] = useRecordedTrades();
+    const [editing, setEditing] = useState<ClosedTrade | "new" | null>(null);
+    const [removing, setRemoving] = useState<string | null>(null);
+    const ownIds = new Set(recorded.map((t) => t.id));
+    const saveTrade = (trade: ClosedTrade) => {
+        setRecorded((list) => (list.some((t) => t.id === trade.id) ? list.map((t) => (t.id === trade.id ? trade : t)) : [trade, ...list]));
+        setEditing(null);
+    };
     const [sharing, setSharing] = useState(false);
     const [draft, setDraft] = useState("");
 
@@ -413,6 +424,11 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 </span>
                 <span className="ml-auto flex items-center gap-4">
                     {status && <span className="hidden text-[12.5px] text-[var(--j-mu)] 2xl:inline">{status}</span>}
+                    {reviewable && (
+                        <button type="button" onClick={() => setEditing("new")} className="rounded-lg bg-[var(--j-active)] px-3 py-1.5 text-[var(--j-activeink)]">
+                            + Add a trade
+                        </button>
+                    )}
                     {ordered.length > 0 && (
                         <button type="button" onClick={() => setSharing(true)} className={quiet}>
                             Share ↗
@@ -436,12 +452,29 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 </span>
             </div>
 
+            {reviewable && ordered.length === 0 && (
+                <Module label="Start" className="mt-4 flex flex-wrap items-center justify-between gap-5 p-6">
+                    <div>
+                        <p className="text-[17px] font-medium">Your journal is empty.</p>
+                        <p className="mt-1 max-w-xl text-[13.5px] text-[var(--j-mu)]">Add a trade you have already closed, or plan your next one with your rules: it lands here when you review it. Notes can already be kept for any day in the calendar.</p>
+                    </div>
+                    <span className="flex gap-3 text-[13.5px]">
+                        <button type="button" onClick={() => setEditing("new")} className="rounded-lg bg-[var(--j-active)] px-4 py-2.5 text-[var(--j-activeink)]">
+                            Add a trade
+                        </button>
+                        <a href="/alturelock/rules" className="rounded-lg bg-[var(--j-s2)] px-4 py-2.5">
+                            Plan a trade
+                        </a>
+                    </span>
+                </Module>
+            )}
+
             {/* 1. Overview */}
             <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.35fr_repeat(5,1fr)]">
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
-                    <p className={`mt-2 font-mono text-[34px] leading-none tracking-tight ${inRange.length ? tone(stats.totalPnl) : ""}`}>{inRange.length ? money(stats.totalPnl) : "No trades"}</p>
-                    <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : "Choose another period"}</p>
+                    <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-mono text-[34px] ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
+                    <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : ordered.length ? "Choose another period" : ""}</p>
                 </div>
                 {(
                     [
@@ -449,7 +482,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                         ["Profit factor", stats.profitFactor === null ? null : stats.profitFactor.toFixed(2), stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Gross profit ÷ gross loss"],
                         ["Average trade", inRange.length ? money(stats.expectancy, 0) : null, stats.wins ? `Average win ${money(stats.averageWin, 0)}` : ""],
                         ["Trades", inRange.length ? String(stats.totalTrades) : null, `${tradingDays} trading ${tradingDays === 1 ? "day" : "days"}`],
-                        ["Max drawdown", inRange.length ? (hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`) : null, "From an equity high"],
+                        ["Max drawdown", inRange.length ? (stats.maxDrawdown < 0.005 ? "None" : hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`) : null, stats.maxDrawdown < 0.005 ? "No fall from a high yet" : "From an equity high"],
                     ] as const
                 ).map(([k, v, hint]) => (
                     <div key={k} className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
@@ -785,9 +818,33 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                                 {(r?.notes || t.reflection) && <p className="mt-3 text-[14px] leading-relaxed">“{r?.notes || t.reflection}”</p>}
                                                 <p className="mt-3 flex flex-wrap items-baseline justify-between gap-3 text-[12.5px]">
                                                     <span className="text-[var(--j-fa)]">{missing.length ? `Not recorded yet: ${missing.join(", ")}.` : ""}</span>
-                                                    <button type="button" onClick={() => setDetail({ kind: "closed", trade: t })} className={quiet}>
-                                                        {reviewable ? "Review this trade →" : "Open the full trade →"}
-                                                    </button>
+                                                    <span className="flex flex-wrap items-baseline gap-4">
+                                                        {reviewable && ownIds.has(t.id) && (
+                                                            removing === t.id ? (
+                                                                <span className="flex items-baseline gap-3">
+                                                                    <span className="text-[var(--j-mu)]">Delete this trade?</span>
+                                                                    <button type="button" onClick={() => { setRecorded((list) => list.filter((x) => x.id !== t.id)); setRemoving(null); setOpen(null); }} className="text-[var(--j-dn)]">
+                                                                        Delete
+                                                                    </button>
+                                                                    <button type="button" onClick={() => setRemoving(null)} className={quiet}>
+                                                                        Keep
+                                                                    </button>
+                                                                </span>
+                                                            ) : (
+                                                                <>
+                                                                    <button type="button" onClick={() => setEditing(t)} className={quiet}>
+                                                                        Edit
+                                                                    </button>
+                                                                    <button type="button" onClick={() => setRemoving(t.id)} className={quiet}>
+                                                                        Delete
+                                                                    </button>
+                                                                </>
+                                                            )
+                                                        )}
+                                                        <button type="button" onClick={() => setDetail({ kind: "closed", trade: t })} className={quiet}>
+                                                            {reviewable ? "Review this trade →" : "Open the full trade →"}
+                                                        </button>
+                                                    </span>
                                                 </p>
                                             </div>
                                         )}
@@ -839,7 +896,8 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
             )}
 
             {sharing && <ShareMonth monthLabel={`${MONTHS[cal.m]} ${cal.y}`} monthShort={MONTHS[cal.m].slice(0, 3)} year={cal.y} month={cal.m} trades={calTrades} initialDay={day ? Number(day.slice(8)) : null} sample={sample} onClose={() => setSharing(false)} />}
-            {detail && <TradeDetails detail={detail} onClose={() => setDetail(null)} reviewable={reviewable} />}
+            {editing && <TradeForm colours={vars} trade={editing === "new" ? undefined : editing} onSave={saveTrade} onClose={() => setEditing(null)} />}
+            {detail && <TradeDetails detail={detail} onClose={() => setDetail(null)} reviewable={reviewable} colours={vars} masked={hidden} />}
         </div>
     );
 };

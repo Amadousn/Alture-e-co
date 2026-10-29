@@ -50,7 +50,7 @@ export type ClosedTrade = {
     openedAt?: number;
     closedAt: number;
     // Set on trades recorded through the Rules workflow, never by the exchange.
-    source?: "rules" | "bybit";
+    source?: "rules" | "bybit" | "manual";
     plannedEntry?: number;
     stopLoss?: number;
     takeProfit?: number;

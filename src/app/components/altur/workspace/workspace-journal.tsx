@@ -77,18 +77,6 @@ const WorkspaceJournal = () => {
                         </p>
                     )}
 
-                    {trades.length === 0 && (
-                        <div className="rounded-sm border border-white/15 bg-black p-6 md:p-8 mb-6">
-                            <p className="text-xl font-semibold tracking-tight text-white mb-2">No trades yet.</p>
-                            <p className="text-sm text-[#9a9aa5] max-w-xl mb-5">
-                                Take a trade through Rules and it lands here when you review it, with its result, setup and your reflection. You can already keep a note for any day on the calendar below.
-                            </p>
-                            <Link href="/alturelock/rules" className="h-11 px-6 inline-flex items-center rounded-sm bg-white text-black text-sm font-semibold hover:bg-[#e4e4e8] transition-colors">
-                                Start in Rules
-                            </Link>
-                        </div>
-                    )}
-
                     <JournalStudio
                         reviewable
                         trades={trades}

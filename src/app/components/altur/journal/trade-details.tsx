@@ -8,11 +8,15 @@ import TradeReview from "./trade-review";
 
 export type TradeDetail = { kind: "closed"; trade: ClosedTrade } | { kind: "open"; position: OpenPosition };
 
+// Set by the panel when the trader hides amounts: dollar figures become dots.
+let MASKED = false;
 function formatDollars(value: number): string {
+    if (MASKED) return "$ ••••";
     return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 function formatSigned(value: number, suffix = ""): string {
+    if (MASKED && suffix === "") return `${value >= 0 ? "+" : "−"}$ ••••`;
     const sign = value >= 0 ? "+" : "-";
     return `${sign}${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${suffix}`;
 }
@@ -43,22 +47,22 @@ function formatClock(value: number): string {
 }
 
 const Cell = ({ label, value }: { label: string; value: string }) => (
-    <div className="bg-black px-5 py-3">
-        <dt className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-1.5">{label}</dt>
-        <dd className="text-[15px] font-medium tabular-nums text-white">{value}</dd>
+    <div className="bg-[var(--j-s1,#000)] px-5 py-3">
+        <dt className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-1.5">{label}</dt>
+        <dd className="text-[15px] font-medium tabular-nums text-[var(--j-ink,#fff)]">{value}</dd>
     </div>
 );
 
 const TimePoint = ({ label, at, fallback, align }: { label: string; at: number | null | undefined; fallback: string; align: "left" | "right" }) => (
     <div className={align === "right" ? "text-right" : ""}>
-        <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-1.5">{label}</p>
+        <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-1.5">{label}</p>
         {typeof at === "number" ? (
             <>
-                <p className="text-[15px] font-medium tabular-nums text-white">{formatClock(at)}</p>
-                <p className="text-xs tabular-nums text-[#7d7d87] mt-0.5">{formatDate(at)}</p>
+                <p className="text-[15px] font-medium tabular-nums text-[var(--j-ink,#fff)]">{formatClock(at)}</p>
+                <p className="text-xs tabular-nums text-[var(--j-mu,#7d7d87)] mt-0.5">{formatDate(at)}</p>
             </>
         ) : (
-            <p className="text-[15px] font-medium text-[#55555e]">{fallback}</p>
+            <p className="text-[15px] font-medium text-[var(--j-fa,#55555e)]">{fallback}</p>
         )}
     </div>
 );
@@ -72,9 +76,13 @@ type Props = {
     position?: { index: number; total: number };
     // The owner's own journal: the trade can be reviewed (strategy, confluences, tags, rating, notes).
     reviewable?: boolean;
+    // The journal's theme variables (the panel is drawn outside the page) and its Hide amounts choice.
+    colours?: React.CSSProperties;
+    masked?: boolean;
 };
 
-const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewable = false }: Props) => {
+const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewable = false, colours, masked = false }: Props) => {
+    MASKED = masked;
     const isOpen = detail.kind === "open";
     const [now, setNow] = useState(() => Date.now());
     const [copied, setCopied] = useState(false);
@@ -137,39 +145,39 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
     const accent = up ? "#20B8A8" : "#E955A8";
 
     return createPortal(
-        <div className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-label={`${source.instrument} trade details`}>
+        <div style={colours} className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-label={`${source.instrument} trade details`}>
             <button type="button" aria-label="Close trade details" onClick={onClose} className="absolute inset-0 bg-black/80 cursor-default" />
 
-            <div key={detail.kind === "closed" ? detail.trade.id : `open-${source.instrument}`} className="trade-details-panel relative w-full sm:max-w-[460px] max-h-[100dvh] sm:max-h-[88dvh] overflow-y-auto bg-black border border-white/15 sm:rounded-sm shadow-[0_24px_80px_rgba(0,0,0,0.8)]">
+            <div key={detail.kind === "closed" ? detail.trade.id : `open-${source.instrument}`} className="trade-details-panel relative w-full sm:max-w-[460px] max-h-[100dvh] sm:max-h-[88dvh] overflow-y-auto bg-[var(--j-s1,#000)] border border-[var(--j-line,rgba(255,255,255,0.15))] sm:rounded-sm shadow-[0_24px_80px_rgba(0,0,0,0.8)]">
                 {/* Result strip along the top edge */}
                 <div className="h-[3px] w-full" style={{ backgroundColor: accent }} />
 
-                <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-white/15">
+                <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-[var(--j-line,rgba(255,255,255,0.15))]">
                     <div className="flex items-center gap-2.5 min-w-0">
-                        <p className="text-lg font-semibold tracking-tight text-white">{source.instrument}</p>
-                        <span className="text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-black" style={{ backgroundColor: source.direction === "Long" ? "#20B8A8" : "#E955A8" }}>
+                        <p className="text-lg font-semibold tracking-tight text-[var(--j-ink,#fff)]">{source.instrument}</p>
+                        <span className="text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-[var(--j-activeink,#000)]" style={{ backgroundColor: source.direction === "Long" ? "#20B8A8" : "#E955A8" }}>
                             {source.direction} {source.leverage.toLocaleString(undefined, { maximumFractionDigits: 1 })}×
                         </span>
-                        <span className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm border ${isOpen ? "border-primary/60 text-primary" : "border-white/25 text-[#9a9aa5]"}`}>
+                        <span className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm border ${isOpen ? "border-primary/60 text-primary" : "border-[var(--j-line,rgba(255,255,255,0.25))] text-[var(--j-mu,#9a9aa5)]"}`}>
                             {isOpen && <span className="trade-details-live h-1.5 w-1.5 rounded-full bg-primary" />}
                             {isOpen ? "Open" : "Closed"}
                         </span>
                     </div>
-                    <button type="button" onClick={onClose} aria-label="Close" className="flex h-8 w-8 items-center justify-center rounded-sm text-[#9a9aa5] hover:text-white hover:bg-white/10 transition-colors text-xl leading-none">
+                    <button type="button" onClick={onClose} aria-label="Close" className="flex h-8 w-8 items-center justify-center rounded-sm text-[var(--j-mu,#9a9aa5)] hover:text-[var(--j-ink,#fff)] hover:bg-[var(--j-s2,rgba(255,255,255,0.1))] transition-colors text-xl leading-none">
                         ×
                     </button>
                 </div>
 
                 <div className="flex items-end justify-between gap-6 px-5 pt-4 pb-4">
                     <div>
-                        <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-2">{isOpen ? "Unrealised P&L (USDT)" : "Realised P&L (USDT)"}</p>
+                        <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-2">{isOpen ? "Unrealised P&L (USDT)" : "Realised P&L (USDT)"}</p>
                         <p className="text-[32px] leading-none font-semibold tracking-tight tabular-nums" style={{ color: accent }}>
                             {formatSigned(pnl)}
                         </p>
                     </div>
                     {pnlPercent !== null && (
                         <div className="text-right">
-                            <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-2">ROI</p>
+                            <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-2">ROI</p>
                             <p className="text-2xl leading-none font-semibold tabular-nums" style={{ color: accent }}>
                                 {formatSigned(pnlPercent, "%")}
                             </p>
@@ -180,22 +188,22 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 {detail.kind === "closed" && <TradeRecap trade={detail.trade} sample={detail.trade.id.startsWith("sample-")} />}
 
                 {/* Opened, how long, closed */}
-                <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-4 border-y border-white/15 bg-[#080808]">
+                <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-4 border-y border-[var(--j-line,rgba(255,255,255,0.15))] bg-[var(--j-s2,#080808)]">
                     <TimePoint label="Opened" at={openedAt} fallback={NOT_RECORDED} align="left" />
                     <div className="flex flex-col items-center min-w-[120px]">
-                        <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-2">{isOpen ? "Open for" : "Duration"}</p>
+                        <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-2">{isOpen ? "Open for" : "Duration"}</p>
                         <div className="flex items-center w-full gap-1.5">
                             <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                            <span className="h-px flex-1 bg-white/20" />
-                            <span className={`text-[13px] font-semibold tabular-nums ${duration === NOT_RECORDED ? "text-[#55555e]" : "text-white"}`}>{duration}</span>
-                            <span className="h-px flex-1 bg-white/20" />
+                            <span className="h-px flex-1 bg-[var(--j-line,rgba(255,255,255,0.2))]" />
+                            <span className={`text-[13px] font-semibold tabular-nums ${duration === NOT_RECORDED ? "text-[var(--j-fa,#55555e)]" : "text-[var(--j-ink,#fff)]"}`}>{duration}</span>
+                            <span className="h-px flex-1 bg-[var(--j-line,rgba(255,255,255,0.2))]" />
                             <span className={`h-1.5 w-1.5 rounded-full ${isOpen ? "trade-details-live bg-primary" : "bg-white"}`} />
                         </div>
                     </div>
                     <TimePoint label="Closed" at={closedAt} fallback="Still open" align="right" />
                 </div>
 
-                <dl className="grid grid-cols-2 gap-px bg-white/15">
+                <dl className="grid grid-cols-2 gap-px bg-[var(--j-line,rgba(255,255,255,0.15))]">
                     <Cell label="Entry price" value={formatPrice(source.entryPrice)} />
                     {detail.kind === "closed" ? (
                         <Cell label="Exit price" value={formatPrice(detail.trade.exitPrice)} />
@@ -209,18 +217,18 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 </dl>
 
                 {detail.kind === "closed" && (
-                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-white/15">
-                        <span className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Setup</span>
-                        <span className={`text-[15px] font-medium ${detail.trade.setup ? "text-white" : "text-[#55555e]"}`}>
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
+                        <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Setup</span>
+                        <span className={`text-[15px] font-medium ${detail.trade.setup ? "text-[var(--j-ink,#fff)]" : "text-[var(--j-fa,#55555e)]"}`}>
                             {detail.trade.setup ?? "Not recorded (placed outside the Trading Rules)"}
                         </span>
                     </div>
                 )}
 
-                <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-white/15">
-                    <span className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Price move</span>
-                    <span className="text-[15px] font-medium tabular-nums text-white">
-                        {formatPrice(source.entryPrice)} <span className="text-[#55555e]">→</span> {formatPrice(reference)}
+                <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
+                    <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Price move</span>
+                    <span className="text-[15px] font-medium tabular-nums text-[var(--j-ink,#fff)]">
+                        {formatPrice(source.entryPrice)} <span className="text-[var(--j-fa,#55555e)]">→</span> {formatPrice(reference)}
                         <span className="ml-3" style={{ color: priceMove >= 0 ? "#20B8A8" : "#E955A8" }}>
                             {formatSigned(priceMove, "%")}
                         </span>
@@ -228,8 +236,8 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 </div>
 
                 {detail.kind === "closed" && detail.trade.rulesFollowed !== undefined && (
-                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-white/15">
-                        <span className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Rules followed</span>
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
+                        <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Rules followed</span>
                         <span className="text-[15px] font-medium" style={{ color: detail.trade.rulesFollowed ? "#20B8A8" : "#E955A8" }}>
                             {detail.trade.rulesFollowed ? "Yes" : "No"}
                         </span>
@@ -237,9 +245,9 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 )}
 
                 {detail.kind === "closed" && detail.trade.reflection && (
-                    <div className="px-5 py-4 border-t border-white/15">
-                        <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87] mb-2">Reflection</p>
-                        <p className="text-sm leading-relaxed text-white whitespace-pre-wrap">{detail.trade.reflection}</p>
+                    <div className="px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
+                        <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)] mb-2">Reflection</p>
+                        <p className="text-sm leading-relaxed text-[var(--j-ink,#fff)] whitespace-pre-wrap">{detail.trade.reflection}</p>
                     </div>
                 )}
 
@@ -247,12 +255,12 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
 
                 {/* How the result is made up, so the figures can be checked by hand */}
                 {detail.kind === "closed" && (
-                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-white/15">
-                        <span className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Result</span>
-                        <span className="text-[13px] tabular-nums text-[#9a9aa5] text-right">
-                            Gross <span className="text-white font-medium">{formatSigned(pnl + detail.trade.fee)}</span>
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
+                        <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Result</span>
+                        <span className="text-[13px] tabular-nums text-[var(--j-mu,#9a9aa5)] text-right">
+                            Gross <span className="text-[var(--j-ink,#fff)] font-medium">{formatSigned(pnl + detail.trade.fee)}</span>
                             <span className="mx-2">−</span>
-                            Fees <span className="text-white font-medium">{formatSigned(detail.trade.fee).slice(1)}</span>
+                            Fees <span className="text-[var(--j-ink,#fff)] font-medium">{formatSigned(detail.trade.fee).slice(1)}</span>
                             <span className="mx-2">=</span>
                             <span className="font-semibold" style={{ color: accent }}>
                                 {formatSigned(pnl)}
@@ -261,14 +269,14 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                     </div>
                 )}
 
-                <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-white/15 bg-[#080808]">
+                <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-[var(--j-line,rgba(255,255,255,0.15))] bg-[var(--j-s2,#080808)]">
                     <div className="flex items-center gap-1">
                         <button
                             type="button"
                             onClick={onPrevious}
                             disabled={!onPrevious}
                             aria-label="Previous trade"
-                            className="flex h-9 w-9 items-center justify-center rounded-sm border border-white/25 text-white hover:bg-white/10 transition-colors disabled:opacity-25 disabled:hover:bg-transparent"
+                            className="flex h-9 w-9 items-center justify-center rounded-sm border border-[var(--j-line,rgba(255,255,255,0.25))] text-[var(--j-ink,#fff)] hover:bg-[var(--j-s2,rgba(255,255,255,0.1))] transition-colors disabled:opacity-25 disabled:hover:bg-transparent"
                         >
                             ←
                         </button>
@@ -277,12 +285,12 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                             onClick={onNext}
                             disabled={!onNext}
                             aria-label="Next trade"
-                            className="flex h-9 w-9 items-center justify-center rounded-sm border border-white/25 text-white hover:bg-white/10 transition-colors disabled:opacity-25 disabled:hover:bg-transparent"
+                            className="flex h-9 w-9 items-center justify-center rounded-sm border border-[var(--j-line,rgba(255,255,255,0.25))] text-[var(--j-ink,#fff)] hover:bg-[var(--j-s2,rgba(255,255,255,0.1))] transition-colors disabled:opacity-25 disabled:hover:bg-transparent"
                         >
                             →
                         </button>
                         {position && (
-                            <span className="ml-3 text-xs tabular-nums text-[#7d7d87]">
+                            <span className="ml-3 text-xs tabular-nums text-[var(--j-mu,#7d7d87)]">
                                 {position.index + 1} / {position.total}
                             </span>
                         )}
@@ -290,7 +298,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                     <button
                         type="button"
                         onClick={copySummary}
-                        className={`h-9 px-4 rounded-sm text-xs font-semibold transition-colors ${copied ? "bg-[#20B8A8] text-black" : "bg-white text-black hover:bg-primary"}`}
+                        className={`h-9 px-4 rounded-sm text-xs font-semibold transition-colors ${copied ? "bg-[#20B8A8] text-[var(--j-activeink,#000)]" : "bg-[var(--j-active,#fff)] text-[var(--j-activeink,#000)] hover:bg-primary"}`}
                     >
                         {copied ? "Copied" : "Copy summary"}
                     </button>
