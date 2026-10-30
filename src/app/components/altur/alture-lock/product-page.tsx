@@ -79,7 +79,7 @@ const PLANS = [
         yearly: 103,
         founding: { monthly: 79, yearly: 63 },
         text: "Terminal, Journal and our two premium indicators. $146 / month apart.",
-        items: ["Everything in Journal", "Everything in Terminal", "All-in-One Premium and Order Flow indicators on TradingView", "Rules checked before the trade, results recorded after it"],
+        items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
         main: true,
     },
@@ -87,10 +87,10 @@ const PLANS = [
 
 // The TradingView indicators, also sold on their own.
 const INDICATORS = [
-    { name: "All-in-One Premium · Alture & Co", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
-    { name: "All-in-One · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
-    { name: "Order Flow · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
-    { name: "Volume Profile + Market Structure + FVG · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes, market structure and Fair Value Gaps." },
+    { name: "Volume Profile + Footprint · Alture & Co", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
+    { name: "Volume Profile + VWAP · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
+    { name: "Order Flow CVD · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
+    { name: "Volume Profile + FVG + MS · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes, market structure and Fair Value Gaps." },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
@@ -335,7 +335,7 @@ const ProductPage = () => {
                         <div className="min-w-0 lg:col-span-5 lg:order-2 order-1">
                             <p className={label}>The Alture Indicator</p>
                             <h2 className={heading}>One indicator for the whole read.</h2>
-                            <p className={`mt-6 ${body}`}>All-in-One · Alture &amp; Co is our TradingView indicator, bringing market context, setup structure and entry timing together on one chart.</p>
+                            <p className={`mt-6 ${body}`}>Volume Profile + Footprint · Alture &amp; Co is our TradingView indicator, bringing market context, setup structure and entry timing together on one chart.</p>
                             <ul className="mt-5 space-y-2.5 text-[15px] text-white/75">
                                 {INDICATOR.map((item) => (
                                     <li key={item} className="flex gap-3">

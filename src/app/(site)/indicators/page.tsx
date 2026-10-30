@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Indicators | Alture & Co.",
-    description: "The Alture & Co. TradingView indicators: All-in-One Premium, All-in-One Standard, Order Flow, and Volume Profile + Market Structure + FVG.",
+    description: "The Alture & Co. TradingView indicators: Volume Profile + Footprint, Volume Profile + VWAP, Order Flow CVD, and Volume Profile + FVG + MS.",
 };
 
 // The four TradingView indicators. Prices match the pricing on the AltureLock page.
 const INDICATORS = [
     {
         id: "all-in-one",
-        name: "All-in-One Premium",
+        name: "Volume Profile + Footprint",
         plan: "TradingView Premium or Ultimate",
         price: 39,
         image: "/images/indicators/allinone.jpg",
@@ -21,17 +21,17 @@ const INDICATORS = [
     },
     {
         id: "standard",
-        name: "All-in-One",
+        name: "Volume Profile + VWAP",
         plan: "Every TradingView plan",
         price: 19,
         image: "/images/indicators/standard.jpg",
         line: "The same read, on any TradingView plan.",
-        text: "Everything in the All-in-One, with order flow estimated from 1-minute candles instead of the footprint, so it runs without a Premium plan.",
+        text: "Everything in Volume Profile + Footprint, with order flow estimated from 1-minute candles instead of the footprint, so it runs without a Premium plan.",
         items: ["Volume Profile with POC, VAH and VAL", "Low-volume nodes", "VWAP and its bands", "Market structure", "Fair Value Gaps", "Order flow estimated from 1-minute candles"],
     },
     {
         id: "order-flow",
-        name: "Order Flow",
+        name: "Order Flow CVD",
         plan: "TradingView Premium or Ultimate",
         price: 39,
         image: "/images/indicators/orderflow.jpg",
@@ -41,7 +41,7 @@ const INDICATORS = [
     },
     {
         id: "volume-profile",
-        name: "Volume Profile + Market Structure + FVG",
+        name: "Volume Profile + FVG + MS",
         plan: "Every TradingView plan",
         price: 0,
         image: "/images/indicators/vpms.jpg",
