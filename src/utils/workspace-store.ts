@@ -116,6 +116,7 @@ const KEYS = {
     trades: "alturelock:trades",
     notes: "alturelock:notes",
     imports: "alturelock:imports",
+    backtests: "alturelock:backtests",
     watchlist: "alturelock:watchlist",
     timezone: "alturelock:timezone",
     reviews: "alturelock:trade-reviews",
@@ -224,3 +225,9 @@ export const useTradeReviews = () => useStored<TradeReviews>(KEYS.reviews, {});
 // A strategy as the trader defines it: a name and the confluences they look for.
 export type Strategy = { id: string; name: string; confluences: string[] };
 export const useStrategies = () => useStored<Strategy[]>(KEYS.strategies, []);
+
+// Backtesting: trades taken while replaying past candles. Kept apart from real
+// trades so they never mix with the account's results.
+export type BacktestTrade = ClosedTrade & { session: string; risk: number; r: number; exit: "stop" | "target" | "manual" };
+export type BacktestSession = { id: string; symbol: string; interval: string; from: number; createdAt: number; trades: BacktestTrade[] };
+export const useBacktests = () => useStored<BacktestSession[]>(KEYS.backtests, []);

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClosedTrade } from "@/utils/bybit";
 import { INTERVAL_MS } from "@/utils/order-flow";
 
-type Candle = { t: number; o: number; h: number; l: number; c: number; v: number };
+export type Candle = { t: number; o: number; h: number; l: number; c: number; v: number };
 export type ChartLevel = { label: string; price: number; color: string };
 
 const UP = "#20B8A8";
@@ -26,7 +26,7 @@ function niceStep(range: number, target: number) {
 
 type PlotProps = { candles: Candle[]; size: { w: number; h: number }; count: number; offset: number; setCount: (next: number) => void; setOffset: (next: number) => void; symbol: string; interval: string; levels: ChartLevel[]; trades: ClosedTrade[] };
 
-const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol, interval, levels, trades }: PlotProps) => {
+export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol, interval, levels, trades }: PlotProps) => {
     const [hover, setHover] = useState<{ x: number; y: number } | null>(null);
     const drag = useRef<{ x: number; offset: number } | null>(null);
 

@@ -16,6 +16,7 @@ const icon = (path: React.ReactNode) => (
 const ICONS = {
     home: icon(<><path d="M3 11l9-7 9 7" /><path d="M5 10v10h14V10" /></>),
     terminal: icon(<><path d="M3 17l5-6 4 3 6-8 3 3" /><path d="M3 21h18" /></>),
+    backtest: icon(<><path d="M4 12a8 8 0 1 0 2.3-5.6" /><path d="M4 4v4h4" /><path d="M12 8v4l3 2" /></>),
     journal: icon(<><rect x="5" y="3" width="14" height="18" rx="1.5" /><path d="M9 8h6M9 12h6M9 16h4" /></>),
     more: icon(<><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></>),
 };
@@ -44,11 +45,13 @@ const TerminalSidebar = ({ demo }: { demo: boolean }) => {
               { href: "/alturelock/demo/home", label: "Home", icon: ICONS.home },
               { href: "/alturelock/demo", label: "Terminal", icon: ICONS.terminal },
               { href: "/alturelock/demo/journal", label: "Journal", icon: ICONS.journal },
+              { href: "/alturelock/demo/backtest", label: "Backtest", icon: ICONS.backtest },
           ]
         : [
               { href: "/alturelock/home", label: "Home", icon: ICONS.home },
               { href: "/alturelock/workspace", label: "Terminal", icon: ICONS.terminal },
               { href: "/alturelock/journal", label: "Journal", icon: ICONS.journal },
+              { href: "/alturelock/backtest", label: "Backtest", icon: ICONS.backtest },
           ];
     const more = demo
         ? [

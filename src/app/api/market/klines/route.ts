@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const asked = Math.floor(Number(request.nextUrl.searchParams.get("limit")));
     const limit = Number.isFinite(asked) && asked >= 2 ? Math.min(asked, 1000) : 160;
     try {
-        const res = await fetch(`https://api.bybit.com/v5/market/kline?category=linear&symbol=${symbol}&interval=${interval}&limit=${historical ? 300 : limit}${historical ? `&start=${Math.floor(start)}&end=${Math.floor(end)}` : ""}`, { next: { revalidate: historical ? 3600 : 10 } });
+        const res = await fetch(`https://api.bybit.com/v5/market/kline?category=linear&symbol=${symbol}&interval=${interval}&limit=${historical ? 1000 : limit}${historical ? `&start=${Math.floor(start)}&end=${Math.floor(end)}` : ""}`, { next: { revalidate: historical ? 3600 : 10 } });
         const json = await res.json();
         if (!res.ok || json?.retCode !== 0) throw new Error("bybit");
         // Rows arrive newest first: [startTime, open, high, low, close, volume, turnover].
