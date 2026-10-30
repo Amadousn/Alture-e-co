@@ -128,7 +128,6 @@ const Pricing = () => {
                         return (
                             <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#E3A1F7]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(227,161,247,0.55),inset_0_1px_0_rgba(227,161,247,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
                                 {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(227,161,247,0.24),transparent_70%)]" />}
-                                {main && <span className="absolute -top-3 left-8 rounded-sm bg-[#0b080d] px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-[#E3A1F7] ring-1 ring-[#E3A1F7]/45">The complete system</span>}
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
                                 <p className="mt-6 flex items-baseline gap-2">
                                     <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
