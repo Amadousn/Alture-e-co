@@ -126,29 +126,30 @@ const Pricing = () => {
                         const main = plan.main;
                         const paid = plan.monthly > 0;
                         return (
-                            <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "bg-white text-black shadow-[0_0_80px_-20px_rgba(255,255,255,0.45)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
-                                {main && <span className="absolute -top-3 left-8 rounded-sm bg-black px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-white ring-1 ring-white/25">The complete system</span>}
-                                <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal">Lock</span></> : plan.name}</p>
+                            <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#E3A1F7]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(227,161,247,0.55),inset_0_1px_0_rgba(227,161,247,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
+                                {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(227,161,247,0.24),transparent_70%)]" />}
+                                {main && <span className="absolute -top-3 left-8 rounded-sm bg-[#0b080d] px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-[#E3A1F7] ring-1 ring-[#E3A1F7]/45">The complete system</span>}
+                                <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
                                 <p className="mt-6 flex items-baseline gap-2">
                                     <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
-                                    <span className={`text-sm ${main ? "text-black/50" : "text-white/45"}`}>{paid ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
+                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
                                 </p>
-                                <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-black/65" : "text-white/60"}`}>{plan.text}</p>
-                                <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-black/85" : "text-white/80"}`}>
+                                <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-white/70" : "text-white/60"}`}>{plan.text}</p>
+                                <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-white/90" : "text-white/80"}`}>
                                     {plan.items.map((item) => (
                                         <li key={item} className={`flex gap-3 ${item.startsWith("No ") ? "text-white/40" : ""}`}>
-                                            <span className={main ? "text-black/40" : "text-white/40"} aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
+                                            <span className={main ? "text-[#E3A1F7]" : "text-white/40"} aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
                                             {item}
                                         </li>
                                     ))}
                                     {plan.soon.map((item) => (
-                                        <li key={item} className={`flex gap-3 ${main ? "text-black/40" : "text-white/40"}`}>
+                                        <li key={item} className={`flex gap-3 ${main ? "text-white/40" : "text-white/40"}`}>
                                             <span aria-hidden="true">·</span>
                                             {item}, coming soon
                                         </li>
                                     ))}
                                 </ul>
-                                <Link href="/#contact" className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-black text-white hover:bg-[#1c1c1e]" : "border border-white/25 text-white hover:border-white"}`}>
+                                <Link href="/#contact" className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
                                     Request access
                                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                                 </Link>
