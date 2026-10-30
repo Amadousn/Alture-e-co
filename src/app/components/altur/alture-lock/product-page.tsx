@@ -77,7 +77,8 @@ const PLANS = [
         name: "AltureLock",
         monthly: 129,
         yearly: 103,
-        text: "Terminal, Journal and our two premium indicators. $166 a month apart.",
+        founding: { monthly: 79, yearly: 63 },
+        text: "Terminal, Journal and our two premium indicators. $146 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "All-in-One Premium and Order Flow indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
         main: true,
@@ -86,9 +87,9 @@ const PLANS = [
 
 // The TradingView indicators, also sold on their own.
 const INDICATORS = [
-    { name: "ALTURE & CO | All-in-One Premium", price: 49, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
+    { name: "ALTURE & CO | All-in-One Premium", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
     { name: "ALTURE & CO | All-in-One Standard", price: 19, text: "The same read without the footprint, for every TradingView plan." },
-    { name: "Alture Order Flow", price: 49, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
+    { name: "Alture Order Flow", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
     { name: "ALTURE & CO | VP + LVN + MS", price: 0, text: "Volume Profile, low-volume nodes and market structure." },
 ];
 
@@ -131,16 +132,29 @@ const Pricing = () => {
                 <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-4">
                     {PLANS.map((plan) => {
                         const price = yearly ? plan.yearly : plan.monthly;
+                        const founding = plan.founding ? (yearly ? plan.founding.yearly : plan.founding.monthly) : null;
                         const main = plan.main;
                         const paid = plan.monthly > 0;
                         return (
                             <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#E3A1F7]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(227,161,247,0.55),inset_0_1px_0_rgba(227,161,247,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
                                 {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(227,161,247,0.24),transparent_70%)]" />}
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
-                                <p className="mt-6 flex items-baseline gap-2">
-                                    <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
-                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `/ month, billed $${plan.yearly * 12} / year` : "/ month") : "forever"}</span>
-                                </p>
+                                {founding ? (
+                                    <>
+                                        <p className="mt-6 flex items-baseline gap-2">
+                                            <span className="font-logo text-5xl font-light tabular-nums">${founding}</span>
+                                            <span className="font-logo text-2xl font-light tabular-nums text-white/35 line-through decoration-1">${price}</span>
+                                            <span className="text-sm text-white/50">/ month</span>
+                                        </p>
+                                        <p className="mt-2 text-[13px] text-[#E3A1F7]">Founding price for the first 50 members, kept for life.</p>
+                                        {yearly && <p className="mt-1 text-xs text-white/45">Billed ${founding * 12} / year.</p>}
+                                    </>
+                                ) : (
+                                    <p className="mt-6 flex items-baseline gap-2">
+                                        <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
+                                        <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `/ month, billed $${plan.yearly * 12} / year` : "/ month") : "forever"}</span>
+                                    </p>
+                                )}
                                 <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-white/70" : "text-white/60"}`}>{plan.text}</p>
                                 <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-white/90" : "text-white/80"}`}>
                                     {plan.items.map((item) => (
@@ -172,9 +186,9 @@ const Pricing = () => {
                             <li key={item.name} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-12 md:items-center">
                                 <p className="text-[15px] font-medium text-white md:col-span-4">{item.name}</p>
                                 <p className="text-sm leading-relaxed text-white/55 md:col-span-5">{item.text}</p>
-                                <p className="flex items-baseline gap-1.5 md:col-span-1 md:justify-end">
+                                <p className="flex items-baseline gap-1.5 whitespace-nowrap md:col-span-1 md:justify-end">
                                     <span className="font-logo text-2xl font-light tabular-nums text-white">{item.price ? `$${yearly ? Math.round(item.price * 0.8) : item.price}` : "Free"}</span>
-                                    {item.price > 0 && <span className="text-xs text-white/45">/ month</span>}
+                                    {item.price > 0 && <span className="whitespace-nowrap text-xs text-white/45">/ month</span>}
                                 </p>
                                 <Link href="/#contact" className="text-sm text-white/80 underline-offset-4 hover:text-white hover:underline md:col-span-2 md:text-right">
                                     {item.price ? "Request access →" : "Get it free →"}
