@@ -139,7 +139,7 @@ const Pricing = () => {
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
                                 <p className="mt-6 flex items-baseline gap-2">
                                     <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
-                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
+                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `/ month, billed $${plan.yearly * 12} / year` : "/ month") : "forever"}</span>
                                 </p>
                                 <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-white/70" : "text-white/60"}`}>{plan.text}</p>
                                 <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-white/90" : "text-white/80"}`}>
@@ -174,7 +174,7 @@ const Pricing = () => {
                                 <p className="text-sm leading-relaxed text-white/55 md:col-span-5">{item.text}</p>
                                 <p className="flex items-baseline gap-1.5 md:col-span-1 md:justify-end">
                                     <span className="font-logo text-2xl font-light tabular-nums text-white">{item.price ? `$${yearly ? Math.round(item.price * 0.8) : item.price}` : "Free"}</span>
-                                    {item.price > 0 && <span className="text-xs text-white/45">/mo</span>}
+                                    {item.price > 0 && <span className="text-xs text-white/45">/ month</span>}
                                 </p>
                                 <Link href="/#contact" className="text-sm text-white/80 underline-offset-4 hover:text-white hover:underline md:col-span-2 md:text-right">
                                     {item.price ? "Request access →" : "Get it free →"}
