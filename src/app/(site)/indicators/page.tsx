@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Indicators | Alture & Co.",
-    description: "The Alture & Co. TradingView indicators: All-in-One Premium, All-in-One Standard, Order Flow, and VP + LVN + MS.",
+    description: "The Alture & Co. TradingView indicators: All-in-One Premium, All-in-One Standard, Order Flow, and Volume Profile + Market Structure + FVG.",
 };
 
 // The four TradingView indicators. Prices match the pricing on the AltureLock page.
@@ -21,7 +21,7 @@ const INDICATORS = [
     },
     {
         id: "standard",
-        name: "All-in-One Standard",
+        name: "All-in-One",
         plan: "Every TradingView plan",
         price: 19,
         image: "/images/indicators/standard.jpg",
@@ -40,14 +40,14 @@ const INDICATORS = [
         items: ["Bid × ask on the candles", "Imbalances", "CVD divergence", "Volume bubbles", "Numbers that adapt to the zoom"],
     },
     {
-        id: "vp-lvn-ms",
-        name: "VP + LVN + MS",
+        id: "volume-profile",
+        name: "Volume Profile + Market Structure + FVG",
         plan: "Every TradingView plan",
         price: 0,
         image: "/images/indicators/vpms.jpg",
         line: "Where volume traded, and where it did not.",
-        text: "The base of the Alture read: the volume profile, the low-volume nodes price moves through quickly, and the structure of the market.",
-        items: ["Volume Profile with POC, VAH and VAL", "Low-volume nodes", "Market structure"],
+        text: "The base of the Alture read: the volume profile, the low-volume nodes price moves through quickly, the structure of the market and its Fair Value Gaps.",
+        items: ["Volume Profile with POC, VAH and VAL", "Low-volume nodes", "Market structure", "Fair Value Gaps"],
     },
 ];
 

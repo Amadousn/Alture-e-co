@@ -88,9 +88,9 @@ const PLANS = [
 // The TradingView indicators, also sold on their own.
 const INDICATORS = [
     { name: "All-in-One Premium · Alture & Co", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
-    { name: "All-in-One Standard · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
+    { name: "All-in-One · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
     { name: "Order Flow · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
-    { name: "VP + LVN + MS · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes and market structure." },
+    { name: "Volume Profile + Market Structure + FVG · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes, market structure and Fair Value Gaps." },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
