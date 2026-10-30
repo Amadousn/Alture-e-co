@@ -180,7 +180,7 @@ const Pricing = () => {
                 </div>
                 <div className="mt-20">
                     <p className="text-xl md:text-2xl font-medium tracking-tight text-white">Indicators only</p>
-                    <p className={`mt-2 ${body}`}>Our TradingView indicators, without the terminal.</p>
+                    <p className={`mt-2 ${body}`}>Our TradingView indicators, without the terminal. <Link href="/indicators" className="border-b border-white/30 text-white hover:border-white">See the indicators</Link></p>
                     <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
                         {INDICATORS.map((item) => (
                             <li key={item.name} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-12 md:items-center">
