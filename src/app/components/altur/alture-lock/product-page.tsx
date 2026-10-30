@@ -87,10 +87,10 @@ const PLANS = [
 
 // The TradingView indicators, also sold on their own.
 const INDICATORS = [
-    { name: "ALTURE & CO | All-in-One Premium", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
-    { name: "ALTURE & CO | All-in-One Standard", price: 19, text: "The same read without the footprint, for every TradingView plan." },
-    { name: "Alture Order Flow", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
-    { name: "ALTURE & CO | VP + LVN + MS", price: 0, text: "Volume Profile, low-volume nodes and market structure." },
+    { name: "All-in-One Premium · Alture & Co", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
+    { name: "All-in-One Standard · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
+    { name: "Order Flow · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
+    { name: "VP + LVN + MS · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes and market structure." },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
@@ -335,7 +335,7 @@ const ProductPage = () => {
                         <div className="min-w-0 lg:col-span-5 lg:order-2 order-1">
                             <p className={label}>The Alture Indicator</p>
                             <h2 className={heading}>One indicator for the whole read.</h2>
-                            <p className={`mt-6 ${body}`}>ALTURE &amp; CO | All-in-One is our TradingView indicator, bringing market context, setup structure and entry timing together on one chart.</p>
+                            <p className={`mt-6 ${body}`}>All-in-One · Alture &amp; Co is our TradingView indicator, bringing market context, setup structure and entry timing together on one chart.</p>
                             <ul className="mt-5 space-y-2.5 text-[15px] text-white/75">
                                 {INDICATOR.map((item) => (
                                     <li key={item} className="flex gap-3">
