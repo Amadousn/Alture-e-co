@@ -44,6 +44,32 @@ const TOOLS = [
     ["Your own limits", "Set how many trades or losses end your day, and be told when you are there."],
 ];
 
+// Prices. Only what exists today is listed as included; what is being built says so.
+const PLANS = [
+    {
+        name: "Free",
+        monthly: 0,
+        yearly: 0,
+        text: "Start a journal and see your trading clearly.",
+        items: ["Trading Journal, trades added by hand", "P&L calendar, equity curve and analysis", "1 strategy", "Position size calculator"],
+        soon: [] as string[],
+    },
+    {
+        name: "AltureLock",
+        monthly: 29,
+        yearly: 23,
+        text: "The whole system: rules before the trade, the terminal, and a journal that fills itself.",
+        items: [
+            "Everything in Free",
+            "Pre-trade checklist and daily loss limits",
+            "Terminal: live charts, order flow, news, calendar and live TV",
+            "Journal synced from your Bybit account",
+            "Unlimited strategies, trade review on the real candles",
+        ],
+        soon: ["Backtesting", "More exchanges"],
+    },
+];
+
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
 const heading = "!text-3xl md:!text-[40px] md:!leading-[1.1] text-white";
 const body = "text-[15px] md:text-base leading-relaxed text-white/60";
@@ -61,6 +87,64 @@ const Shot = ({ src, alt, width, height, caption }: { src: string; alt: string; 
         </figcaption>
     </figure>
 );
+
+const Pricing = () => {
+    const [yearly, setYearly] = useState(false);
+    return (
+        <section id="pricing" className="scroll-mt-16 bg-black !py-16 md:!py-24">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                <div className="flex flex-wrap items-end justify-between gap-6">
+                    <div>
+                        <p className={label}>Pricing</p>
+                        <h2 className={heading}>Simple pricing.</h2>
+                    </div>
+                    <div className="flex items-center gap-5 text-sm" role="group" aria-label="Billing">
+                        {([false, true] as const).map((option) => (
+                            <button key={String(option)} type="button" onClick={() => setYearly(option)} aria-pressed={yearly === option} className={`border-b pb-0.5 transition-colors ${yearly === option ? "border-white text-white" : "border-transparent text-white/45 hover:text-white"}`}>
+                                {option ? "Yearly · save 20%" : "Monthly"}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <div className="mt-12 grid gap-6 md:grid-cols-2">
+                    {PLANS.map((plan) => {
+                        const price = yearly ? plan.yearly : plan.monthly;
+                        const main = plan.monthly > 0;
+                        return (
+                            <div key={plan.name} className={`flex flex-col rounded-2xl border p-8 md:p-10 ${main ? "border-white/30 bg-white/[0.04]" : "border-white/10"}`}>
+                                <p className="text-lg font-medium tracking-tight text-white">{plan.name}</p>
+                                <p className="mt-6 flex items-baseline gap-2">
+                                    <span className="font-logo text-5xl md:text-6xl font-light tabular-nums text-white">${price}</span>
+                                    <span className="text-sm text-white/45">{main ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
+                                </p>
+                                <p className={`mt-4 ${body}`}>{plan.text}</p>
+                                <ul className="mt-8 space-y-3 text-[15px] text-white/80">
+                                    {plan.items.map((item) => (
+                                        <li key={item} className="flex gap-3">
+                                            <span className="text-white/40" aria-hidden="true">✓</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                    {plan.soon.map((item) => (
+                                        <li key={item} className="flex gap-3 text-white/40">
+                                            <span aria-hidden="true">·</span>
+                                            {item}, coming soon
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Link href="/#contact" className={`group mt-10 inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
+                                    Request access
+                                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                                </Link>
+                            </div>
+                        );
+                    })}
+                </div>
+                <p className="mt-6 text-xs text-white/40">Prices in US dollars. AltureLock places no orders and gives no trading advice.</p>
+            </div>
+        </section>
+    );
+};
 
 const ProductPage = () => {
     const { t } = useLanguage();
@@ -259,6 +343,9 @@ const ProductPage = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Pricing */}
+            <Pricing />
 
             {/* Who it is for */}
             <section className="bg-black !pt-16 md:!pt-24 !pb-24 md:!pb-32">
