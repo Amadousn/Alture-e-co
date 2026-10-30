@@ -66,8 +66,8 @@ const PLANS = [
     },
     {
         name: "Terminal",
-        monthly: 29,
-        yearly: 23,
+        monthly: 39,
+        yearly: 31,
         text: "For the trader who needs the rules in front of every entry.",
         items: ["Pre-trade checklist and daily loss limits", "Position size calculator", "Live charts and order flow", "News, economic calendar and live TV"],
         soon: [] as string[],
@@ -75,8 +75,8 @@ const PLANS = [
     },
     {
         name: "AltureLock",
-        monthly: 49,
-        yearly: 39,
+        monthly: 59,
+        yearly: 47,
         text: "Terminal and Journal together, $9 a month less than both apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
