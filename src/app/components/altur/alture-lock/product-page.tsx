@@ -77,11 +77,19 @@ const PLANS = [
         name: "AltureLock",
         monthly: 129,
         yearly: 103,
-        text: "Terminal, Journal and the Alture Indicator: the complete system.",
-        items: ["Everything in Journal", "Everything in Terminal", "ALTURE & CO | All-in-One indicator on TradingView", "Rules checked before the trade, results recorded after it"],
+        text: "Terminal, Journal and our two premium indicators. $166 a month apart.",
+        items: ["Everything in Journal", "Everything in Terminal", "All-in-One Premium and Order Flow indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
         main: true,
     },
+];
+
+// The TradingView indicators, also sold on their own.
+const INDICATORS = [
+    { name: "ALTURE & CO | All-in-One Premium", price: 49, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
+    { name: "ALTURE & CO | All-in-One Standard", price: 19, text: "The same read without the footprint, for every TradingView plan." },
+    { name: "Alture Order Flow", price: 49, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
+    { name: "ALTURE & CO | VP + LVN + MS", price: 0, text: "Volume Profile, low-volume nodes and market structure." },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
@@ -155,6 +163,25 @@ const Pricing = () => {
                             </div>
                         );
                     })}
+                </div>
+                <div className="mt-20">
+                    <p className="text-xl md:text-2xl font-medium tracking-tight text-white">Indicators only</p>
+                    <p className={`mt-2 ${body}`}>Our TradingView indicators, without the terminal.</p>
+                    <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
+                        {INDICATORS.map((item) => (
+                            <li key={item.name} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-12 md:items-center">
+                                <p className="text-[15px] font-medium text-white md:col-span-4">{item.name}</p>
+                                <p className="text-sm leading-relaxed text-white/55 md:col-span-5">{item.text}</p>
+                                <p className="flex items-baseline gap-1.5 md:col-span-1 md:justify-end">
+                                    <span className="font-logo text-2xl font-light tabular-nums text-white">{item.price ? `$${yearly ? Math.round(item.price * 0.8) : item.price}` : "Free"}</span>
+                                    {item.price > 0 && <span className="text-xs text-white/45">/mo</span>}
+                                </p>
+                                <Link href="/#contact" className="text-sm text-white/80 underline-offset-4 hover:text-white hover:underline md:col-span-2 md:text-right">
+                                    {item.price ? "Request access →" : "Get it free →"}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
                 <p className="mt-6 text-xs text-white/40">Prices in US dollars. AltureLock places no orders and gives no trading advice.</p>
             </div>
