@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import TerminalBar from "./terminal-bar";
 import LiveTV from "./os/live-tv";
+import RiskCalculator from "./os/risk-calculator";
 import { StatePanel, WatchPanel } from "@/app/components/altur/cmd/terminal-panels";
 import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import TradeRecap from "@/app/components/altur/journal/trade-recap";
@@ -668,6 +669,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                 ) : (
                                     <p className="text-[13px] leading-relaxed text-white/55">{account.ready ? "No trade in progress." : " "}</p>
                                 )}
+
+                                {!limitReached && <RiskCalculator asset={symbol.replace(/USDT$/, "")} price={ticker ? ticker.price : null} />}
 
                                 {!demo && (today.length > 0 || limits?.maxTrades !== undefined || limits?.maxLosses !== undefined) && (
                                     <div>
