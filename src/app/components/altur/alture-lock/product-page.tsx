@@ -56,8 +56,8 @@ const PLANS = [
     },
     {
         name: "AltureLock",
-        monthly: 29,
-        yearly: 23,
+        monthly: 49,
+        yearly: 39,
         text: "The whole system: rules before the trade, the terminal, and a journal that fills itself.",
         items: [
             "Everything in Free",
