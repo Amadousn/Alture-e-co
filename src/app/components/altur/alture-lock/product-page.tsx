@@ -51,22 +51,36 @@ const PLANS = [
         monthly: 0,
         yearly: 0,
         text: "Start a journal and see your trading clearly.",
-        items: ["Trading Journal, every trade entered by hand", "P&L calendar, equity curve and analysis", "1 strategy", "Position size calculator", "No exchange connection"],
+        items: ["Trading Journal, every trade entered by hand", "P&L calendar, equity curve and analysis", "1 strategy", "No exchange connection"],
         soon: [] as string[],
+        main: false,
+    },
+    {
+        name: "Journal",
+        monthly: 29,
+        yearly: 23,
+        text: "For the trader who wants the truth about every trade.",
+        items: ["Exchange connected: your journal fills itself", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session"],
+        soon: ["Backtesting", "More exchanges beyond Bybit"],
+        main: false,
+    },
+    {
+        name: "Terminal",
+        monthly: 29,
+        yearly: 23,
+        text: "For the trader who needs the rules in front of every entry.",
+        items: ["Pre-trade checklist and daily loss limits", "Position size calculator", "Live charts and order flow", "News, economic calendar and live TV"],
+        soon: [] as string[],
+        main: false,
     },
     {
         name: "AltureLock",
         monthly: 49,
         yearly: 39,
-        text: "The whole system: rules before the trade, the terminal, and a journal that fills itself.",
-        items: [
-            "Everything in Free",
-            "Exchange connected: your journal fills itself",
-            "Pre-trade checklist and daily loss limits",
-            "Terminal: live charts, order flow, news, calendar and live TV",
-            "Unlimited strategies, trade review on the real candles",
-        ],
+        text: "Terminal and Journal together, $9 a month less than both apart.",
+        items: ["Everything in Journal", "Everything in Terminal", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
+        main: true,
     },
 ];
 
@@ -106,19 +120,20 @@ const Pricing = () => {
                         ))}
                     </div>
                 </div>
-                <div className="mt-12 grid gap-6 md:grid-cols-2">
+                <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                     {PLANS.map((plan) => {
                         const price = yearly ? plan.yearly : plan.monthly;
-                        const main = plan.monthly > 0;
+                        const main = plan.main;
+                        const paid = plan.monthly > 0;
                         return (
-                            <div key={plan.name} className={`flex flex-col rounded-2xl border p-8 md:p-10 ${main ? "border-white/30 bg-white/[0.04]" : "border-white/10"}`}>
+                            <div key={plan.name} className={`flex flex-col rounded-2xl border p-8 ${main ? "border-white/30 bg-white/[0.04]" : "border-white/10"}`}>
                                 <p className="text-lg font-medium tracking-tight text-white">{plan.name}</p>
                                 <p className="mt-6 flex items-baseline gap-2">
-                                    <span className="font-logo text-5xl md:text-6xl font-light tabular-nums text-white">${price}</span>
-                                    <span className="text-sm text-white/45">{main ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
+                                    <span className="font-logo text-5xl font-light tabular-nums text-white">${price}</span>
+                                    <span className="text-sm text-white/45">{paid ? (yearly ? `a month, billed $${plan.yearly * 12} a year` : "a month") : "forever"}</span>
                                 </p>
                                 <p className={`mt-4 ${body}`}>{plan.text}</p>
-                                <ul className="mt-8 space-y-3 text-[15px] text-white/80">
+                                <ul className="mb-10 mt-8 space-y-3 text-[15px] text-white/80">
                                     {plan.items.map((item) => (
                                         <li key={item} className={`flex gap-3 ${item.startsWith("No ") ? "text-white/40" : ""}`}>
                                             <span className="text-white/40" aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
@@ -132,7 +147,7 @@ const Pricing = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <Link href="/#contact" className={`group mt-10 inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
+                                <Link href="/#contact" className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
                                     Request access
                                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                                 </Link>
