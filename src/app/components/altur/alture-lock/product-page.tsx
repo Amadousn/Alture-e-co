@@ -51,7 +51,7 @@ const PLANS = [
         monthly: 0,
         yearly: 0,
         text: "Start a journal and see your trading clearly.",
-        items: ["Trading Journal, trades added by hand", "P&L calendar, equity curve and analysis", "1 strategy", "Position size calculator"],
+        items: ["Trading Journal, every trade entered by hand", "P&L calendar, equity curve and analysis", "1 strategy", "Position size calculator", "No exchange connection"],
         soon: [] as string[],
     },
     {
@@ -61,12 +61,12 @@ const PLANS = [
         text: "The whole system: rules before the trade, the terminal, and a journal that fills itself.",
         items: [
             "Everything in Free",
+            "Exchange connected: your journal fills itself",
             "Pre-trade checklist and daily loss limits",
             "Terminal: live charts, order flow, news, calendar and live TV",
-            "Journal synced from your Bybit account",
             "Unlimited strategies, trade review on the real candles",
         ],
-        soon: ["Backtesting", "More exchanges"],
+        soon: ["Backtesting", "More exchanges beyond Bybit"],
     },
 ];
 
@@ -120,8 +120,8 @@ const Pricing = () => {
                                 <p className={`mt-4 ${body}`}>{plan.text}</p>
                                 <ul className="mt-8 space-y-3 text-[15px] text-white/80">
                                     {plan.items.map((item) => (
-                                        <li key={item} className="flex gap-3">
-                                            <span className="text-white/40" aria-hidden="true">✓</span>
+                                        <li key={item} className={`flex gap-3 ${item.startsWith("No ") ? "text-white/40" : ""}`}>
+                                            <span className="text-white/40" aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
                                             {item}
                                         </li>
                                     ))}
