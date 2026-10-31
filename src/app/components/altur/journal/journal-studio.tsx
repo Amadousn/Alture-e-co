@@ -1,5 +1,6 @@
 "use client";
 
+import { insightsOf, Insight, MIN_SCORE_TRADES, Score, scoreOf } from "@/utils/journal-insights";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { computeJournalStats } from "@/utils/journal-stats";
@@ -268,6 +269,59 @@ const Gauge = ({ value }: { value: number | null }) => {
     );
 };
 
+// The Alture Score: a large ring, the parts it is made of, and what the trades say.
+const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight[]; count: number }) => {
+    const r = 15.5;
+    const c = 2 * Math.PI * r;
+    const color = (v: number) => (v >= 70 ? "var(--j-up)" : v >= 45 ? "var(--j-ink)" : "var(--j-dn)");
+    return (
+        <div className="grid gap-x-8 gap-y-6 p-5 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1.25fr)] lg:items-center">
+            <div className="flex items-center gap-5">
+                <div className="relative h-[112px] w-[112px] flex-shrink-0">
+                    <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" aria-hidden="true">
+                        <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-s3)" strokeWidth="2.4" />
+                        {score && <circle cx="18" cy="18" r={r} fill="none" stroke={color(score.total)} strokeWidth="2.4" strokeLinecap="round" strokeDasharray={`${(score.total / 100) * c} ${c}`} className="transition-[stroke-dasharray] duration-700" />}
+                    </svg>
+                    <span className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="font-logo text-[34px] font-extralight leading-none">{score ? score.total : "–"}</span>
+                        <span className="mt-1 text-[10.5px] text-[var(--j-fa)]">of 100</span>
+                    </span>
+                </div>
+                <div className="lg:hidden xl:block">
+                    <p className="text-[16px] font-medium">Alture Score</p>
+                    <p className="mt-1 max-w-[13rem] text-[12px] leading-relaxed text-[var(--j-mu)]">{score ? "From your own trades in this period." : `Shows from ${MIN_SCORE_TRADES} closed trades. ${count} so far.`}</p>
+                </div>
+            </div>
+            <ul className="space-y-2.5">
+                {(score?.parts ?? []).map((p) => (
+                    <li key={p.label} className="grid grid-cols-[7.5rem_minmax(0,1fr)_2rem] items-center gap-3 text-[12.5px]" title={p.detail}>
+                        <span className="truncate text-[var(--j-mu)]">{p.label}</span>
+                        <span className="h-[5px] rounded-full bg-[var(--j-s2)]">
+                            <span className="block h-full rounded-full transition-[width] duration-700" style={{ width: `${p.value}%`, background: color(p.value) }} />
+                        </span>
+                        <span className="text-right font-mono tabular-nums">{Math.round(p.value)}</span>
+                    </li>
+                ))}
+            </ul>
+            <div className="lg:border-l lg:border-[var(--j-line)] lg:pl-8">
+                <p className="text-[12.5px] text-[var(--j-mu)]">What your trades say</p>
+                {insights.length === 0 ? (
+                    <p className="mt-2 text-[13px] leading-relaxed text-[var(--j-fa)]">{score ? "No clear pattern yet in this period. Findings appear when a difference is large enough to matter." : "Findings appear once there are enough trades to compare."}</p>
+                ) : (
+                    <ul className="mt-2 space-y-2.5">
+                        {insights.map((i) => (
+                            <li key={i.text} className="flex gap-3 text-[13.5px] leading-relaxed">
+                                <span className="mt-[8px] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: i.tone === "up" ? "var(--j-up)" : i.tone === "down" ? "var(--j-dn)" : "var(--j-mu)" }} />
+                                {i.text}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        </div>
+    );
+};
+
 const Bars = ({ rows, sub = false }: { rows: Group[]; sub?: boolean }) => {
     const largest = Math.max(1, ...rows.map((r) => Math.abs(r.total)));
     return (
@@ -371,6 +425,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const range = rangeOf(preset, custom, first);
     const inRange = useMemo(() => ordered.filter((t) => t.closedAt >= range.from && t.closedAt < range.to), [ordered, range.from, range.to]);
     const stats = useMemo(() => computeJournalStats(inRange), [inRange]);
+    const score = useMemo(() => scoreOf(inRange, reviews), [inRange, reviews]);
     const fees = inRange.reduce((s, t) => s + t.fee, 0);
     const unrealised = positions.reduce((s, p) => s + p.unrealisedPnl, 0);
     const strategyOf = (t: ClosedTrade) => reviews[t.id]?.strategy ?? t.setup;
@@ -437,6 +492,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const edge = edgeOf(scope);
     const byStrategy = strategies.map((s) => group(s, scope.filter((t) => strategyOf(t) === s))).filter((g) => g.count).sort((a, b) => b.total - a.total);
     const bySide = (["Long", "Short"] as const).map((d) => group(d, scope.filter((t) => t.direction === d))).filter((g) => g.count);
+    const insights = insightsOf(inRange, reviews, strategyOf);
     const byAsset = [...new Set(scope.map((t) => t.instrument))].map((s) => group(asset(s), scope.filter((t) => t.instrument === s))).sort((a, b) => b.total - a.total);
     const byWeekday = [1, 2, 3, 4, 5, 6, 0].map((d, i) => group(WEEK[i], scope.filter((t) => new Date(t.closedAt).getUTCDay() === d))).filter((g) => g.count);
     const bySession = SESSIONS.map((s) => group(s.name, scope.filter((t) => { const h = new Date(t.openedAt ?? t.closedAt).getUTCHours(); return h >= s.from && h < s.to; }))).filter((g) => g.count);
@@ -587,6 +643,13 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                     );
                 })()}
             </Module>
+
+            {/* 1b. Score and findings */}
+            {inRange.length > 0 && (
+                <Module label="Alture Score" className="mt-4">
+                    <ScoreCard score={score} insights={insights} count={inRange.length} />
+                </Module>
+            )}
 
             {/* 2. Performance and months */}
             <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.75fr)_minmax(0,1fr)]">
