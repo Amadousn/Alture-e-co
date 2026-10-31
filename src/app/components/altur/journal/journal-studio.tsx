@@ -28,8 +28,8 @@ const SESSIONS = [
 ];
 
 const THEMES = {
-    light: { "--j-bg": "#f6f4f0", "--j-s1": "#ffffff", "--j-s2": "#f0ede7", "--j-s3": "#e9e5dd", "--j-ink": "#17181a", "--j-mu": "#6c6a66", "--j-fa": "#a29f99", "--j-line": "#e6e2db", "--j-up": "#0d8a7b", "--j-dn": "#c23a77", "--j-upbg": "#e1f2ef", "--j-dnbg": "#f7e4ec", "--j-upsoft": "#9fd3cc", "--j-shadow": "0 1px 2px rgba(23,24,26,0.04), 0 14px 32px -20px rgba(23,24,26,0.22)", "--j-tip": "#17181a", "--j-tipink": "#ffffff", "--j-active": "#17181a", "--j-activeink": "#ffffff" },
-    dark: { "--j-bg": "#0d0e10", "--j-s1": "#16181b", "--j-s2": "#1d2024", "--j-s3": "#24282d", "--j-ink": "#ededee", "--j-mu": "#9a9da3", "--j-fa": "#62666d", "--j-line": "#262a2f", "--j-up": "#3cc9b8", "--j-dn": "#e4609f", "--j-upbg": "rgba(60,201,184,0.13)", "--j-dnbg": "rgba(228,96,159,0.13)", "--j-upsoft": "rgba(60,201,184,0.4)", "--j-shadow": "0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 40px -22px rgba(0,0,0,0.8)", "--j-tip": "#f2f2f3", "--j-tipink": "#111214", "--j-active": "#f2f2f3", "--j-activeink": "#111214" },
+    light: { "--j-bg": "#f6f4f0", "--j-s1": "#ffffff", "--j-s2": "#f0ede7", "--j-s3": "#e9e5dd", "--j-ink": "#17181a", "--j-mu": "#6c6a66", "--j-fa": "#a29f99", "--j-line": "#e6e2db", "--j-up": "#0d8a7b", "--j-dn": "#c23a77", "--j-upbg": "#e1f2ef", "--j-dnbg": "#f7e4ec", "--j-upsoft": "#9fd3cc", "--j-shadow": "0 1px 2px rgba(23,24,26,0.04), 0 14px 32px -20px rgba(23,24,26,0.22)", "--j-tip": "#17181a", "--j-tipink": "#ffffff", "--j-active": "#17181a", "--j-activeink": "#ffffff", "--font-mono": "var(--font-logo)" },
+    dark: { "--j-bg": "#040306", "--j-s1": "#0b090e", "--j-s2": "#151119", "--j-s3": "#1d1822", "--j-ink": "#ededee", "--j-mu": "#9a93a3", "--j-fa": "#625b6b", "--j-line": "#221c28", "--j-up": "#3cc9b8", "--j-dn": "#e4609f", "--j-upbg": "rgba(60,201,184,0.13)", "--j-dnbg": "rgba(228,96,159,0.13)", "--j-upsoft": "rgba(60,201,184,0.4)", "--j-border": "rgba(227,161,247,0.16)", "--j-shadow": "0 0 40px -18px rgba(227,161,247,0.35)", "--j-radius": "10px", "--j-glow": "radial-gradient(70% 40% at 15% 0%, rgba(227,161,247,0.16), transparent 70%)", "--font-mono": "var(--font-logo)", "--j-tip": "#f2f2f3", "--j-tipink": "#111214", "--j-active": "#f2f2f3", "--j-activeink": "#111214" },
 } as const;
 
 // When the trader hides amounts (on a shared screen, a stream, a screenshot), dollar
@@ -80,7 +80,7 @@ function useWidth<T extends HTMLElement>() {
 }
 
 const Module = ({ children, className = "", label }: { children: React.ReactNode; className?: string; label?: string }) => (
-    <section aria-label={label} className={`rounded-2xl bg-[var(--j-s1)] shadow-[var(--j-shadow)] ${className}`}>
+    <section aria-label={label} className={`rounded-[var(--j-radius,16px)] border border-[var(--j-border,transparent)] bg-[var(--j-s1)] shadow-[var(--j-shadow)] ${className}`}>
         {children}
     </section>
 );
@@ -248,6 +248,8 @@ type Props = {
     sample?: boolean;
     reviewable?: boolean;
     status?: React.ReactNode;
+    // Overrides for the theme's colours and shapes (used to compare looks).
+    look?: Record<string, string>;
 };
 type Filter = "all" | "wins" | "losses" | "long" | "short";
 
@@ -270,7 +272,7 @@ function rangeOf(preset: Preset, custom: { from: string; to: string }, first: nu
     return { from: first, to: Infinity, label: "All time" };
 }
 
-const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status }: Props) => {
+const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status, look }: Props) => {
     const [theme, setTheme] = useTheme();
     const [hidden, setHidden] = useState(false);
     useEffect(() => {
@@ -398,7 +400,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     };
     const dayTrades = day ? byDay.get(day) ?? [] : [];
     const dayTotal = dayTrades.reduce((s, t) => s + t.profitLoss, 0);
-    const vars = THEMES[theme] as unknown as React.CSSProperties;
+    const vars = { ...THEMES[look ? "dark" : theme], ...look } as unknown as React.CSSProperties;
     const quiet = "text-[var(--j-mu)] transition-colors hover:text-[var(--j-ink)]";
     const presets: [Preset, string][] = [
         ["month", "This month"],
@@ -409,7 +411,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     ];
 
     return (
-        <div style={vars} className="-mx-4 -mt-6 min-h-[calc(100dvh-49px)] bg-[var(--j-bg)] px-4 pb-16 pt-6 text-[var(--j-ink)] md:-mx-8 md:px-8 xl:-mx-10 xl:px-10">
+        <div style={vars} className="-mx-4 -mt-6 min-h-[calc(100dvh-49px)] bg-[var(--j-bg)] [background-image:var(--j-glow,none)] px-4 pb-16 pt-6 text-[var(--j-ink)] md:-mx-8 md:px-8 xl:-mx-10 xl:px-10">
             {/* Period, theme and sharing */}
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-[13px]">
                 {presets.map(([id, text]) => (
@@ -444,7 +446,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                     </button>
                     <span className="flex rounded-lg bg-[var(--j-s2)] p-0.5 text-[12px]" role="group" aria-label="Theme">
                         {(["light", "dark"] as const).map((t) => (
-                            <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)} className={`rounded-md px-2.5 py-1 capitalize transition-colors ${theme === t ? "bg-[var(--j-s1)] text-[var(--j-ink)] shadow-sm" : "text-[var(--j-mu)]"}`}>
+                            <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)} className={`rounded-md px-2.5 py-1 capitalize transition-colors ${theme === t ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "text-[var(--j-mu)] hover:text-[var(--j-ink)]"}`}>
                                 {t}
                             </button>
                         ))}
@@ -473,7 +475,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
             <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.35fr_repeat(5,1fr)]">
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
-                    <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-mono text-[34px] ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
+                    <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-logo text-[40px] font-extralight ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
                     <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : ordered.length ? "Choose another period" : ""}</p>
                 </div>
                 {(

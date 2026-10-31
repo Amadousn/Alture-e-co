@@ -99,7 +99,7 @@ const WorkspaceHome = ({ demoTrades }: { demoTrades?: ClosedTrade[] }) => {
     const journal = demo ? "/alturelock/demo/journal" : "/alturelock/journal";
 
     return (
-        <WorkspaceShell width="full" demo={demo}>
+        <WorkspaceShell width="full" demo={demo} themed paper>
             <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
                 <div>
                     <p className="cmd-label">Command overview{demo ? " · sample trades" : ""}</p>

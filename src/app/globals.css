@@ -625,6 +625,17 @@ a:active {
     border-color: #d8d3ca !important;
 }
 
+/* Menu links and the amber demo marks stay readable on paper. */
+.lumen .nav-link { color: #6c6a66 !important; text-shadow: none !important; }
+.lumen .nav-link:hover, .lumen .nav-link.is-active { color: #17181a !important; }
+.lumen .text-\[\#FACC15\], .lumen .text-\[\#d9b75a\] { color: #8a6500 !important; }
+.lumen .border-\[\#FACC15\]\/60 { border-color: #b88a00 !important; }
+.lumen aside[aria-label="AltureLock"] a { color: #4a4844 !important; }
+
+/* Account tabs above the Journal */
+.lumen [role="tablist"] .text-white { color: #17181a !important; }
+.lumen [role="tablist"] .border-white { border-color: #17181a !important; }
+
 /* The Terminal in the light theme: the same white modules on warm paper as the Journal. */
 .lumen-term .cmd-panel {
     background: #ffffff;
