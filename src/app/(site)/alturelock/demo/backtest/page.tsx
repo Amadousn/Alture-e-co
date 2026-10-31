@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const DemoBacktestPage = () => (
     <WorkspaceShell demo width="full">
-        <BacktestStudio />
+        <BacktestStudio demo />
     </WorkspaceShell>
 );
 

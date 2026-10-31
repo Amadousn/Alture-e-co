@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import WorkspaceShell from "@/app/components/altur/workspace/workspace-shell";
-import JournalDemo from "@/app/components/altur/journal/journal-demo";
+import DemoJournalAccounts from "@/app/components/altur/journal/demo-journal-accounts";
 
 export const metadata: Metadata = {
     title: "Sample journal | AltureLock demo",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const DemoJournalPage = () => (
     <WorkspaceShell demo width="full" themed>
-        <JournalDemo />
+        <DemoJournalAccounts />
     </WorkspaceShell>
 );
 

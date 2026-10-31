@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Plot, type Candle, type ChartLevel } from "./os/terminal-chart";
 import { fmtPrice } from "./os/watchlist";
 import { INTERVAL_MS } from "@/utils/order-flow";
-import { BacktestSession, BacktestTrade, useBacktests } from "@/utils/workspace-store";
+import { BacktestSession, BacktestTrade, useBacktests, useStrategies, useTradeReviews } from "@/utils/workspace-store";
 
 // Backtesting on real Bybit history. The chart only ever shows candles up to
 // the replay cursor: what comes next stays hidden until the trader steps forward.
@@ -23,7 +23,7 @@ const CHUNK = 1000;
 const FEE = 0.00055; // Bybit taker fee, each side
 const SIZE_KEY = "alturelock:risk-calc";
 
-type Position = { direction: "Long" | "Short"; entry: number; stop: number; target: number; quantity: number; risk: number; openedAt: number };
+type Position = { direction: "Long" | "Short"; entry: number; stop: number; target: number; quantity: number; risk: number; openedAt: number; strategy: string };
 
 const usd = (value: number) => `${value < 0 ? "−" : value > 0 ? "+" : ""}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const num = (value: string) => {
@@ -44,8 +44,11 @@ const panel = "cmd-panel rounded-2xl border border-white/10 bg-white/[0.02] p-5"
 const field = "w-full rounded-md border border-white/12 bg-white/[0.03] px-2.5 py-1.5 text-[13px] tabular-nums text-white outline-none focus:border-white/40";
 const small = "text-[11px] text-white/40";
 
-const BacktestStudio = () => {
+const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
     const [sessions, setSessions] = useBacktests();
+    const [strategies] = useStrategies();
+    const [, setReviews] = useTradeReviews();
+    const [strategy, setStrategy] = useState("");
     const [symbol, setSymbol] = useState("BTCUSDT");
     const [interval, setIntervalId] = useState("15");
     const [day, setDay] = useState(() => dayInput(Date.now() - 30 * 86400000));
@@ -159,8 +162,10 @@ const BacktestStudio = () => {
                 exit,
             };
             setSessions((list) => list.map((item) => (item.id === sessionId ? { ...item, trades: [...item.trades, trade] } : item)));
+            // The strategy goes where the journal reads it: the trade's review.
+            if (pos.strategy) setReviews((current) => ({ ...current, [trade.id]: { ...current[trade.id], strategy: pos.strategy } }));
         },
-        [sessionId, symbol, setSessions]
+        [sessionId, symbol, setSessions, setReviews]
     );
 
     // One step forward: the next candle appears, and an open position is checked against it.
@@ -229,7 +234,7 @@ const BacktestStudio = () => {
         const t = num(target) ?? entry + sign * 2 * Math.abs(entry - s);
         if (!Number.isFinite(s) || (entry - s) * sign <= 0 || (t - entry) * sign <= 0) return null;
         const risk = (a * p) / 100;
-        return { direction, entry, stop: s, target: t, quantity: risk / Math.abs(entry - s), risk, openedAt: current.t + step };
+        return { direction, entry, stop: s, target: t, quantity: risk / Math.abs(entry - s), risk, openedAt: current.t + step, strategy };
     };
 
     const open = (direction: "Long" | "Short") => {
@@ -397,6 +402,19 @@ const BacktestStudio = () => {
                                         <input className={field} inputMode="decimal" value={target} onChange={(event) => setTarget(event.target.value)} placeholder="Auto: 2R" />
                                     </label>
                                 </div>
+                                <label className="block">
+                                    <span className={small}>Strategy</span>
+                                    <select value={strategy} onChange={(event) => setStrategy(event.target.value)} className={`${field} block`}>
+                                        <option value="" className="bg-black">
+                                            {strategies.length ? "No strategy" : "No strategy yet (add them in the Journal)"}
+                                        </option>
+                                        {strategies.map((item) => (
+                                            <option key={item.id} value={item.name} className="bg-black">
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
                                 <p className="text-[11px] leading-relaxed text-white/35">Left empty, the stop goes at the low (long) or high (short) of the last 10 candles, and the target at 2R. Entry is the close of the current candle.</p>
                                 <div className="grid grid-cols-2 gap-3">
                                     <button type="button" disabled={!longPlan} onClick={() => open("Long")} className="rounded-md bg-[#20B8A8] py-2.5 text-[13px] font-semibold text-black disabled:opacity-30">
@@ -461,7 +479,12 @@ const BacktestStudio = () => {
                                     {allR.toFixed(2)} R
                                 </span>
                             </p>
-                            <p className="mt-2 text-[11px] text-white/35">Kept apart from your real journal.</p>
+                            <p className="mt-2 text-[11px] text-white/35">
+                                Kept apart from your real journal.{" "}
+                                <a href={`${demo ? "/alturelock/demo/journal" : "/alturelock/journal"}?account=backtest`} className="border-b border-white/30 text-white/70 hover:text-white">
+                                    Open in the Journal
+                                </a>
+                            </p>
                         </div>
                     )}
                 </div>
