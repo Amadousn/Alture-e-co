@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import TradeRecap from "./trade-recap";
 import TradeReview from "./trade-review";
+import TradeShots from "./trade-shots";
 
 export type TradeDetail = { kind: "closed"; trade: ClosedTrade } | { kind: "open"; position: OpenPosition };
 
@@ -251,6 +252,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                     </div>
                 )}
 
+                {reviewable && detail.kind === "closed" && <TradeShots tradeId={detail.trade.id} />}
                 {reviewable && detail.kind === "closed" && <TradeReview tradeId={detail.trade.id} />}
 
                 {/* How the result is made up, so the figures can be checked by hand */}
