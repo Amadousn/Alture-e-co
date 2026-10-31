@@ -596,13 +596,13 @@ a:active {
 /* Light theme of the AltureLock pages that offer it (the Journal). The frame
    follows it; the page itself colours from the --j-* variables. */
 .lumen {
-    background: #f3f4f7 !important;
+    background: radial-gradient(900px 520px at 12% -8%, rgba(184, 120, 230, 0.13), transparent 70%), radial-gradient(700px 480px at 100% 110%, rgba(140, 120, 240, 0.08), transparent 70%), #f2f1f7 !important;
     color: #0c0d10;
 }
 .lumen > header,
 .lumen > div > header {
-    background: rgba(246, 244, 240, 0.92) !important;
-    border-color: #e2e4ea !important;
+    background: rgba(246, 245, 251, 0.85) !important;
+    border-color: #e4e1ee !important;
 }
 .lumen header .text-white,
 .lumen aside[aria-label="AltureLock"] .text-white {
@@ -613,8 +613,8 @@ a:active {
     color: #62656e !important;
 }
 .lumen aside[aria-label="AltureLock"] {
-    background: #fbfbfd !important;
-    border-color: #e2e4ea !important;
+    background: #fbfafe !important;
+    border-color: #e4e1ee !important;
 }
 .lumen aside[aria-label="AltureLock"] a[aria-current="page"] {
     background: #ece8f4 !important;
@@ -636,16 +636,16 @@ a:active {
 .lumen [role="tablist"] .text-white { color: #0c0d10 !important; }
 .lumen [role="tablist"] .border-white { border-color: #0c0d10 !important; }
 
-/* The Terminal in the light theme: the same white modules on warm paper as the Journal. */
+/* The Terminal in the light theme: the same white modules on a cool violet ground as the Journal. */
 .lumen-term .cmd-panel {
     background: #ffffff;
-    box-shadow: 0 1px 2px rgba(23, 24, 26, 0.04), 0 14px 32px -20px rgba(23, 24, 26, 0.22);
+    box-shadow: 0 0 0 1px rgba(120, 90, 170, 0.07), 0 1px 2px rgba(40, 20, 70, 0.04), 0 18px 40px -24px rgba(90, 50, 150, 0.28);
 }
 .lumen-term .cmd-label { color: #62656e; }
 .lumen-term .text-white { color: #0c0d10 !important; }
 .lumen-term [class*="text-white/"] { color: #62656e !important; }
 .lumen-term .bg-black { background-color: #ffffff !important; }
-.lumen-term [class*="border-white/"] { border-color: #e2e4ea !important; }
+.lumen-term [class*="border-white/"] { border-color: #e4e1ee !important; }
 .lumen-term [class*="bg-white/"] { background-color: rgba(23, 24, 26, 0.035) !important; }
 .lumen-term .text-\[\#20B8A8\] { color: #0d8a7b !important; }
 .lumen-term .text-\[\#E955A8\] { color: #c23a77 !important; }
@@ -653,4 +653,4 @@ a:active {
 .lumen-term .nav-link { color: #7c808a; }
 .lumen-term .nav-link:hover { color: #0c0d10; }
 .lumen-term svg text[fill="#fff"] { fill: #0c0d10; }
-.lumen-term svg circle[stroke="rgba(255,255,255,0.08)"] { stroke: #e2e4ea; }
+.lumen-term svg circle[stroke="rgba(255,255,255,0.08)"] { stroke: #e4e1ee; }
