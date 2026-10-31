@@ -63,6 +63,25 @@ const DEFINE: Record<string, string> = {
     Trades: "Closed trades in the period.",
     "Max drawdown": "The largest fall of the equity curve from a previous high.",
 };
+// Streaks and the shape of wins and losses, in trade order. R is used where the
+// trade carries it (backtests); real exchange trades have no recorded stop.
+const edgeOf = (list: ClosedTrade[]) => {
+    const wins = list.filter((t) => t.profitLoss > 0);
+    const losses = list.filter((t) => t.profitLoss < 0);
+    const avgWin = wins.length ? wins.reduce((s, t) => s + t.profitLoss, 0) / wins.length : null;
+    const avgLoss = losses.length ? -losses.reduce((s, t) => s + t.profitLoss, 0) / losses.length : null;
+    let run = 0;
+    let bestWin = 0;
+    let bestLoss = 0;
+    for (const t of list) {
+        if (t.profitLoss === 0) continue;
+        run = t.profitLoss > 0 ? (run > 0 ? run + 1 : 1) : run < 0 ? run - 1 : -1;
+        bestWin = Math.max(bestWin, run);
+        bestLoss = Math.max(bestLoss, -run);
+    }
+    const rs = list.map((t) => (t as ClosedTrade & { r?: number }).r).filter((r): r is number => typeof r === "number");
+    return { avgWin, avgLoss, payoff: avgWin !== null && avgLoss ? avgWin / avgLoss : null, bestWin, bestLoss, current: run, expectancyR: rs.length === list.length && rs.length ? rs.reduce((s, r) => s + r, 0) / rs.length : null };
+};
 type Group = { label: string; count: number; wins: number; total: number };
 const group = (label: string, list: ClosedTrade[]): Group => ({ label, count: list.length, wins: list.filter((t) => t.profitLoss > 0).length, total: list.reduce((s, t) => s + t.profitLoss, 0) });
 
@@ -384,6 +403,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     );
     const strategies = [...new Set(ordered.map(strategyOf).filter(Boolean) as string[])];
     const scope = day ? inRange.filter((t) => dayKey(t.closedAt) === day) : inRange;
+    const edge = edgeOf(scope);
     const byStrategy = strategies.map((s) => group(s, scope.filter((t) => strategyOf(t) === s))).filter((g) => g.count).sort((a, b) => b.total - a.total);
     const bySide = (["Long", "Short"] as const).map((d) => group(d, scope.filter((t) => t.direction === d))).filter((g) => g.count);
     const byAsset = [...new Set(scope.map((t) => t.instrument))].map((s) => group(asset(s), scope.filter((t) => t.instrument === s))).sort((a, b) => b.total - a.total);
@@ -869,6 +889,24 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                         <p className="mt-4 text-sm text-[var(--j-mu)]">Nothing to analyse in this selection.</p>
                     ) : (
                         <div className="mt-2 divide-y divide-[var(--j-line)]">
+                            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 py-3.5 text-[13px]">
+                                {(
+                                    [
+                                        ["Average win", edge.avgWin !== null ? money(edge.avgWin) : "—", "text-[var(--j-up)]", "Average net result of the winning trades."],
+                                        ["Average loss", edge.avgLoss !== null ? money(-edge.avgLoss) : "—", "text-[var(--j-dn)]", "Average net result of the losing trades."],
+                                        ["Win / loss size", edge.payoff !== null ? `${edge.payoff.toFixed(2)} ×` : "—", "", "Average win divided by average loss. Above 1, a win pays more than a loss costs."],
+                                        ...(edge.expectancyR !== null ? [["Expectancy", `${edge.expectancyR >= 0 ? "+" : ""}${edge.expectancyR.toFixed(2)} R`, tone(edge.expectancyR), "What each trade earned on average, in units of the risk taken."]] : []),
+                                        ["Best win streak", `${edge.bestWin}`, "", "Most winning trades in a row."],
+                                        ["Worst loss streak", `${edge.bestLoss}`, "", "Most losing trades in a row."],
+                                        ["Current streak", edge.current === 0 ? "—" : `${Math.abs(edge.current)} ${edge.current > 0 ? "won" : "lost"}`, edge.current > 0 ? "text-[var(--j-up)]" : edge.current < 0 ? "text-[var(--j-dn)]" : "", "Where the latest trades of this selection stand."],
+                                    ] as [string, string, string, string][]
+                                ).map(([term, value, color, hint]) => (
+                                    <div key={term} className="min-w-0">
+                                        <dt className="text-[12px] text-[var(--j-mu)]" title={hint}>{term}</dt>
+                                        <dd className={`mt-0.5 font-mono tabular-nums ${color}`}>{value}</dd>
+                                    </div>
+                                ))}
+                            </dl>
                             {(
                                 [
                                     ["Strategy", byStrategy],
