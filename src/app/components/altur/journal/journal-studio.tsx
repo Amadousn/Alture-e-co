@@ -646,7 +646,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
 
             {/* 1b. Score and findings */}
             {inRange.length > 0 && (
-                <Module label="Alture Score" className="mt-4">
+                <Module label="Alture Score" className="!py-0 mt-4">
                     <ScoreCard score={score} insights={insights} count={inRange.length} />
                 </Module>
             )}
