@@ -60,6 +60,8 @@ const DEFINE: Record<string, string> = {
     "Win rate": "Share of closed trades with a positive net result.",
     "Profit factor": "Gross profit divided by gross loss.",
     "Average trade": "Net result divided by the number of trades.",
+    "Day win rate": "Share of trading days that closed with a net gain.",
+    "Average win / loss": "Average winning trade divided by average losing trade.",
     Trades: "Closed trades in the period.",
     "Max drawdown": "The largest fall of the equity curve from a previous high.",
 };
@@ -237,6 +239,35 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
     );
 };
 
+// A donut split between wins and losses, the share of wins written inside.
+const Ring = ({ win, loss, size = 54 }: { win: number; loss: number; size?: number }) => {
+    const r = 15.5;
+    const c = 2 * Math.PI * r;
+    const total = win + loss;
+    const share = total ? win / total : 0;
+    return (
+        <svg viewBox="0 0 36 36" width={size} height={size} className="flex-shrink-0 -rotate-90" aria-hidden="true">
+            <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-s3)" strokeWidth="3.2" />
+            {total > 0 && <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-dn)" strokeWidth="3.2" strokeDasharray={`${c} ${c}`} />}
+            {total > 0 && <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-up)" strokeWidth="3.2" strokeDasharray={`${share * c} ${c}`} strokeLinecap={share > 0 && share < 1 ? "round" : "butt"} />}
+        </svg>
+    );
+};
+
+// A half dial for the profit factor: 0 to 3, with 1 (break-even) marked.
+const Gauge = ({ value }: { value: number | null }) => {
+    const v = value === null ? 0 : Math.min(3, value);
+    const len = Math.PI * 15;
+    const color = value === null ? "var(--j-s3)" : value >= 1 ? "var(--j-up)" : "var(--j-dn)";
+    return (
+        <svg viewBox="0 0 36 20" width={60} height={34} className="flex-shrink-0" aria-hidden="true">
+            <path d="M3 18 A15 15 0 0 1 33 18" fill="none" stroke="var(--j-s3)" strokeWidth="3.2" strokeLinecap="round" />
+            <path d="M3 18 A15 15 0 0 1 33 18" fill="none" stroke={color} strokeWidth="3.2" strokeLinecap="round" strokeDasharray={`${(v / 3) * len} ${len}`} />
+            <line x1="18" y1="1.2" x2="18" y2="5.6" stroke="var(--j-mu)" strokeWidth="0.8" transform="rotate(-30 18 18)" />
+        </svg>
+    );
+};
+
 const Bars = ({ rows, sub = false }: { rows: Group[]; sub?: boolean }) => {
     const largest = Math.max(1, ...rows.map((r) => Math.abs(r.total)));
     return (
@@ -320,7 +351,8 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const [strategy, setStrategy] = useState<string | null>(null);
     const [day, setDay] = useState<string | null>(null);
     const [open, setOpen] = useState<string | null>(null);
-    const [shown, setShown] = useState(15);
+    const [shown, setShown] = useState(8);
+    const [lens, setLens] = useState<string>("Strategy");
     const [detail, setDetail] = useState<TradeDetail | null>(null);
     // Trades recorded in this browser (by hand or through Rules) can be added, corrected and deleted; imported ones come from the exchange.
     const [recorded, setRecorded] = useRecordedTrades();
@@ -342,7 +374,6 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const fees = inRange.reduce((s, t) => s + t.fee, 0);
     const unrealised = positions.reduce((s, p) => s + p.unrealisedPnl, 0);
     const strategyOf = (t: ClosedTrade) => reviews[t.id]?.strategy ?? t.setup;
-    const tradingDays = new Set(inRange.map((t) => dayKey(t.closedAt))).size;
 
     // The calendar's month: the latest month of the period that has a trade.
     const anchor = inRange.length ? new Date(inRange[inRange.length - 1].closedAt) : new Date(Math.min(Date.now(), range.to === Infinity ? Date.now() : range.to - 1));
@@ -416,7 +447,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
         const next = day === k ? null : k;
         setDay(next);
         setDraft(next ? notes?.[next] ?? "" : "");
-        setShown(15);
+        setShown(8);
     };
     const dayTrades = day ? byDay.get(day) ?? [] : [];
     const dayTotal = dayTrades.reduce((s, t) => s + t.profitLoss, 0);
@@ -492,27 +523,69 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
             )}
 
             {/* 1. Overview */}
-            <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.35fr_repeat(5,1fr)]">
+            <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.25fr_repeat(5,1fr)]">
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
                     <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-logo text-[40px] font-extralight ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
                     <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : ordered.length ? "Choose another period" : ""}</p>
                 </div>
-                {(
-                    [
-                        ["Win rate", inRange.length ? `${Math.round(stats.winRate)}%` : null, `${stats.wins} won · ${stats.losses} lost`],
-                        ["Profit factor", stats.profitFactor === null ? null : stats.profitFactor.toFixed(2), stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Gross profit ÷ gross loss"],
-                        ["Average trade", inRange.length ? money(stats.expectancy, 0) : null, stats.wins ? `Average win ${money(stats.averageWin, 0)}` : ""],
-                        ["Trades", inRange.length ? String(stats.totalTrades) : null, `${tradingDays} trading ${tradingDays === 1 ? "day" : "days"}`],
-                        ["Max drawdown", inRange.length ? (stats.maxDrawdown < 0.005 ? "None" : hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`) : null, stats.maxDrawdown < 0.005 ? "No fall from a high yet" : "From an equity high"],
-                    ] as const
-                ).map(([k, v, hint]) => (
-                    <div key={k} className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
-                        <p className="text-[12.5px] text-[var(--j-mu)]" title={DEFINE[k]}>{k}</p>
-                        <p className="mt-2 font-mono text-[22px] leading-none">{v ?? <span className="text-[var(--j-fa)]">–</span>}</p>
-                        <p className="mt-2 text-[12px] text-[var(--j-fa)]">{v === null ? "" : hint}</p>
-                    </div>
-                ))}
+                {(() => {
+                    const empty = <span className="text-[var(--j-fa)]">–</span>;
+                    const days = [...new Set(inRange.map((t) => dayKey(t.closedAt)))].map((k) => inRange.filter((t) => dayKey(t.closedAt) === k).reduce((s, t) => s + t.profitLoss, 0));
+                    const greenDays = days.filter((v) => v > 0).length;
+                    const redDays = days.filter((v) => v < 0).length;
+                    const avgW = stats.wins ? stats.averageWin : 0;
+                    const avgL = stats.losses ? Math.abs(stats.averageLoss) : 0;
+                    const cell = "flex items-center gap-3.5 border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0";
+                    const head = (k: string, text = k) => <p className="text-[12.5px] text-[var(--j-mu)]" title={DEFINE[k]}>{text}</p>;
+                    const big = "mt-1.5 font-mono text-[22px] leading-none";
+                    const small = "mt-1.5 whitespace-nowrap text-[11.5px] text-[var(--j-fa)]";
+                    return (
+                        <>
+                            <div className={cell}>
+                                <Ring win={stats.wins} loss={stats.losses} />
+                                <div className="min-w-0">
+                                    {head("Win rate")}
+                                    <p className={big}>{inRange.length ? `${Math.round(stats.winRate)}%` : empty}</p>
+                                    <p className={small}>{inRange.length ? `${stats.wins} won · ${stats.losses} lost` : ""}</p>
+                                </div>
+                            </div>
+                            <div className={cell}>
+                                <Gauge value={stats.profitFactor} />
+                                <div className="min-w-0">
+                                    {head("Profit factor")}
+                                    <p className={big}>{stats.profitFactor === null ? empty : stats.profitFactor.toFixed(2)}</p>
+                                    <p className={small}>{stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Above 1 earns"}</p>
+                                </div>
+                            </div>
+                            <div className={cell}>
+                                <Ring win={greenDays} loss={redDays} />
+                                <div className="min-w-0">
+                                    {head("Day win rate")}
+                                    <p className={big}>{days.length ? `${Math.round((greenDays / Math.max(1, greenDays + redDays)) * 100)}%` : empty}</p>
+                                    <p className={small}>{days.length ? `${greenDays} green · ${redDays} red days` : ""}</p>
+                                </div>
+                            </div>
+                            <div className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
+                                {head("Average win / loss")}
+                                <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)} ×` : empty}</p>
+                                <div className="mt-3 flex h-[7px] gap-[3px] overflow-hidden rounded-full">
+                                    <span className="rounded-l-full bg-[var(--j-up)]" style={{ flex: avgW || (avgL ? 0 : 1) }} />
+                                    <span className="rounded-r-full bg-[var(--j-dn)]" style={{ flex: avgL || (avgW ? 0 : 1) }} />
+                                </div>
+                                <p className="mt-1.5 flex justify-between font-mono text-[11.5px]">
+                                    <span className="text-[var(--j-up)]">{avgW ? money(avgW, 0) : ""}</span>
+                                    <span className="text-[var(--j-dn)]">{avgL ? money(-avgL, 0) : ""}</span>
+                                </p>
+                            </div>
+                            <div className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
+                                {head("Trades")}
+                                <p className={big}>{inRange.length ? stats.totalTrades : empty}</p>
+                                <p className={small}>{inRange.length ? (stats.maxDrawdown < 0.005 ? "No drawdown yet" : `Max drawdown ${hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`}`) : ""}</p>
+                            </div>
+                        </>
+                    );
+                })()}
             </Module>
 
             {/* 2. Performance and months */}
@@ -889,12 +962,9 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                         <p className="mt-4 text-sm text-[var(--j-mu)]">Nothing to analyse in this selection.</p>
                     ) : (
                         <div className="mt-2 divide-y divide-[var(--j-line)]">
-                            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 py-3.5 text-[13px]">
+                            <dl className="grid grid-cols-3 gap-x-4 gap-y-3 py-3.5 text-[13px]">
                                 {(
                                     [
-                                        ["Average win", edge.avgWin !== null ? money(edge.avgWin) : "—", "text-[var(--j-up)]", "Average net result of the winning trades."],
-                                        ["Average loss", edge.avgLoss !== null ? money(-edge.avgLoss) : "—", "text-[var(--j-dn)]", "Average net result of the losing trades."],
-                                        ["Win / loss size", edge.payoff !== null ? `${edge.payoff.toFixed(2)} ×` : "—", "", "Average win divided by average loss. Above 1, a win pays more than a loss costs."],
                                         ...(edge.expectancyR !== null ? [["Expectancy", `${edge.expectancyR >= 0 ? "+" : ""}${edge.expectancyR.toFixed(2)} R`, tone(edge.expectancyR), "What each trade earned on average, in units of the risk taken."]] : []),
                                         ["Best win streak", `${edge.bestWin}`, "", "Most winning trades in a row."],
                                         ["Worst loss streak", `${edge.bestLoss}`, "", "Most losing trades in a row."],
@@ -907,23 +977,33 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                     </div>
                                 ))}
                             </dl>
-                            {(
-                                [
-                                    ["Strategy", byStrategy],
-                                    ["Long or short", bySide],
-                                    ["Asset", byAsset],
-                                    ["Weekday", byWeekday],
-                                    ["Session of entry (UTC)", bySession],
-                                    ["Execution rating", byRating],
-                                ] as const
-                            )
-                                .filter(([, rows]) => rows.length)
-                                .map(([title, rows]) => (
-                                    <div key={title} className="py-3.5">
-                                        <p className="text-[13px] font-medium">{title}</p>
-                                        <Bars rows={rows as Group[]} />
+                            {(() => {
+                                const views = (
+                                    [
+                                        ["Strategy", byStrategy],
+                                        ["Side", bySide],
+                                        ["Asset", byAsset],
+                                        ["Weekday", byWeekday],
+                                        ["Session", bySession],
+                                        ["Rating", byRating],
+                                    ] as const
+                                ).filter(([, rows]) => rows.length);
+                                const current = views.find(([title]) => title === lens) ?? views[0];
+                                if (!current) return null;
+                                return (
+                                    <div className="py-3.5">
+                                        <div className="flex flex-wrap gap-1 rounded-lg bg-[var(--j-s2)] p-0.5 text-[12px]" role="tablist" aria-label="Analyse by">
+                                            {views.map(([title]) => (
+                                                <button key={title} type="button" role="tab" aria-selected={current[0] === title} onClick={() => setLens(title)} className={`flex-1 rounded-md px-2 py-1 transition-colors ${current[0] === title ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "text-[var(--j-mu)] hover:text-[var(--j-ink)]"}`}>
+                                                    {title}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        {current[0] === "Session" && <p className="mt-2 text-[11.5px] text-[var(--j-fa)]">Session of entry, UTC</p>}
+                                        <Bars rows={current[1] as Group[]} />
                                     </div>
-                                ))}
+                                );
+                            })()}
                         </div>
                     )}
                 </Module>
