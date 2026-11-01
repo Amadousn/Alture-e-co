@@ -193,24 +193,42 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
 };
 
 // Real against estimated order flow: why two volume-profile indicators cost differently.
+// A spec sheet, not cards: two columns, three facts, the price.
+const COMPARE = [
+    { name: "Volume Profile + Footprint", price: 39, data: "real" as const, rows: ["TradingView footprint", "Every trade, bid and ask", "Premium or Ultimate"] },
+    { name: "Volume Profile + VWAP", price: 19, data: "estimated" as const, rows: ["1-minute candles", "Estimated pressure", "Every plan"] },
+];
 const Compare = () => (
-    <section className="bg-black !py-10 md:!py-14">
+    <section className="bg-black !py-10 md:!py-16">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
             <p className={label}>Real or estimated</p>
-            <h2 className="max-w-[22ch] text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Why one costs $39 and the other $19.</h2>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-                <div className="rounded-sm border border-[#E3A1F7]/50 bg-[#E3A1F7]/[0.04] p-6 md:p-8 shadow-[0_0_70px_-20px_rgba(227,161,247,0.45)]">
-                    <DataBadge data="real" />
-                    <p className="mt-5 text-xl font-medium text-white">Volume Profile + Footprint · $39</p>
-                    <p className={`mt-3 ${body}`}>Reads TradingView&apos;s footprint: every trade, at every price, split between what was bought at the ask and sold at the bid. Delta, absorption and exhaustion are what really traded.</p>
-                    <p className="mt-5 text-sm text-white/45">Needs TradingView Premium or Ultimate, which provide the footprint.</p>
-                </div>
-                <div className="rounded-sm border border-dashed border-white/20 p-6 md:p-8">
-                    <DataBadge data="estimated" />
-                    <p className="mt-5 text-xl font-medium text-white">Volume Profile + VWAP · $19</p>
-                    <p className={`mt-3 ${body}`}>Works out buying and selling pressure from 1-minute candles. Close to the real flow most of the time, but an estimate: it cannot see the trades at the bid and the ask themselves.</p>
-                    <p className="mt-5 text-sm text-white/45">Runs on every TradingView plan, including the free one.</p>
-                </div>
+            <h2 className="text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Same read. Different source.</h2>
+            <div className="mt-12 grid grid-cols-[minmax(0,7rem)_1fr_1fr] md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
+                <span />
+                {COMPARE.map((c) => (
+                    <div key={c.name} className="relative border-l border-white/10 px-4 md:px-8 pt-7 pb-6">
+                        {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#E3A1F7] shadow-[0_0_18px_2px_rgba(227,161,247,0.55)]" />}
+                        <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-[#E3A1F7]" : "text-white/40"}`}>
+                            <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-[#E3A1F7] shadow-[0_0_8px_#E3A1F7]" : "border border-white/40"}`} />
+                            {c.data === "real" ? "Real" : "Estimated"}
+                        </p>
+                        <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>
+                        <p className="mt-4 flex items-baseline gap-1.5">
+                            <span className="font-logo text-[40px] md:text-[52px] font-extralight leading-none tabular-nums text-white">${c.price}</span>
+                            <span className="text-[12px] text-white/35">/ month</span>
+                        </p>
+                    </div>
+                ))}
+                {["Order flow from", "Sees", "TradingView plan"].map((term, i) => (
+                    <div key={term} className="contents">
+                        <span className="border-t border-white/10 py-4 pr-3 text-[12px] uppercase tracking-[0.1em] text-white/35">{term}</span>
+                        {COMPARE.map((c) => (
+                            <span key={c.name} className={`border-l border-t border-white/10 px-4 md:px-8 py-4 ${c.data === "real" ? "text-white" : "text-white/50"}`}>
+                                {c.rows[i]}
+                            </span>
+                        ))}
+                    </div>
+                ))}
             </div>
         </div>
     </section>
