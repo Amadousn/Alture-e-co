@@ -9,7 +9,7 @@ import { useState } from "react";
 
 type Data = "real" | "estimated" | "none";
 // spots: boxes on the indicator's image, in % of its width and height [x, y, w, h].
-type Feature = { name: string; what: string; spots?: number[][] };
+type Feature = { name: string; what: string; spots?: number[][]; draw?: "ema" | "vwap" | "fvg" };
 type Indicator = { id: string; name: string; plan: string; price: number; image: string; line: string; text: string; data: Data; features: Feature[] };
 
 const at = (feature: Feature, ...spots: number[][]): Feature => ({ ...feature, spots });
@@ -17,12 +17,12 @@ const LVN_BANDS = [[2.3, 44.6, 84, 3.2], [2.3, 50.7, 84, 2], [2.3, 70.4, 84, 3.9
 
 const VP: Feature = { name: "Volume Profile · POC, VAH, VAL", what: "How much volume traded at each price. The POC is the price with the most volume, where the market agreed the most. VAH and VAL frame the value area, where 70% of the volume traded. Price tends to return to value, or to move fast once it accepts outside it." };
 const LVN: Feature = { name: "Low-volume nodes", what: "Prices where almost nothing traded. The market moved through them quickly, so it often does again: they act as gaps price crosses fast, and as targets on the other side." };
-const VWAP: Feature = { name: "VWAP and its bands", what: "The average price paid today, weighted by volume. Above it, buyers are in control on average; below, sellers. The bands mark how far price has stretched from that average." };
+const VWAP: Feature = { draw: "vwap", name: "VWAP and its bands", what: "The average price paid today, weighted by volume. Above it, buyers are in control on average; below, sellers. The bands mark how far price has stretched from that average." };
 const MS: Feature = { name: "Market structure · BOS and CHoCH", what: "A Break of Structure (BOS) confirms the trend continues: a new high in an uptrend, a new low in a downtrend. A Change of Character (CHoCH) is the first break against the trend, the first sign it may be turning." };
-const EMA: Feature = { name: "EMA cloud · 9 and 21", what: "Two exponential moving averages, 9 and 21 by default, with the space between them filled. Purple when the fast one is above, a bullish short-term trend; white when below. The lines can be shown alone, without the cloud. Off by default, one click in the settings." };
+const EMA: Feature = { draw: "ema", name: "EMA cloud · 9 and 21", what: "Two exponential moving averages, 9 and 21 by default, with the space between them filled. Purple when the fast one is above, a bullish short-term trend; white when below. The lines can be shown alone, without the cloud. Off by default, one click in the settings." };
 // The Break of Structure lines on the VP charts (standard and free).
 const BOS_LINES = [[11, 55.3, 12.5, 2], [26, 52, 10, 2], [39.6, 61.4, 10.2, 2], [42, 50.6, 6, 2], [56, 63.6, 6, 2]];
-const FVG: Feature = { name: "Fair Value Gaps", what: "Three candles where the middle one moved so fast that the first and third do not overlap. That empty zone is an imbalance: price often comes back to fill it before moving on." };
+const FVG: Feature = { draw: "fvg", name: "Fair Value Gaps", what: "Three candles where the middle one moved so fast that the first and third do not overlap. That empty zone is an imbalance: price often comes back to fill it before moving on." };
 
 const INDICATORS: Indicator[] = [
     {
@@ -107,6 +107,42 @@ const DataBadge = ({ data }: { data: Data }) =>
         </span>
     ) : null;
 
+// A feature that is not on the chart's picture, drawn alone over the dimmed chart.
+const PRICE = "M4 78 L12 70 L18 74 L26 60 L33 64 L40 50 L47 55 L54 44 L61 49 L68 40 L75 46 L82 36 L90 42 L96 34";
+const Drawn = ({ kind }: { kind: "ema" | "vwap" | "fvg" }) => (
+    <svg viewBox="0 0 100 125" className="spot-in pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+        <g transform="translate(0 22)">
+            {kind !== "fvg" && <path d={PRICE} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="0.6" />}
+            {kind === "ema" && (
+                <>
+                    <path d="M4 80 C20 72 30 64 44 56 S70 44 96 38 L96 44 C72 50 58 56 44 62 S20 76 4 84 Z" fill="#c850f0" fillOpacity="0.22" />
+                    <path d="M4 80 C20 72 30 64 44 56 S70 44 96 38" fill="none" stroke="#c850f0" strokeWidth="0.7" />
+                    <path d="M4 84 C20 76 30 68 44 62 S72 50 96 44" fill="none" stroke="#c850f0" strokeOpacity="0.6" strokeWidth="0.6" />
+                </>
+            )}
+            {kind === "vwap" && (
+                <>
+                    <path d="M4 66 C30 60 60 52 96 44" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" strokeDasharray="1 1" />
+                    <path d="M4 82 C30 74 60 64 96 56" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" strokeDasharray="1 1" />
+                    <path d="M4 74 C30 67 60 58 96 50" fill="none" stroke="#D94C92" strokeWidth="0.9" />
+                </>
+            )}
+            {kind === "fvg" && (
+                <>
+                    {[[20, 62, 70], [30, 40, 66], [40, 28, 44], [50, 30, 38], [60, 34, 46]].map(([x, top, bottom], i) => (
+                        <g key={i}>
+                            <line x1={x} x2={x} y1={top - 3} y2={bottom + 3} stroke="rgba(255,255,255,0.5)" strokeWidth="0.4" />
+                            <rect x={x - 2.5} y={top} width="5" height={bottom - top} fill={i === 1 ? "#20B8A8" : "rgba(255,255,255,0.75)"} />
+                        </g>
+                    ))}
+                    <rect x="22.5" y="47" width="72" height="18" fill="#E3A1F7" fillOpacity="0.12" stroke="#E3A1F7" strokeWidth="0.35" />
+                    <text x="88" y="58" fill="#E3A1F7" fontSize="3.2" fontFamily="monospace" textAnchor="end">FVG</text>
+                </>
+            )}
+        </g>
+    </svg>
+);
+
 // The indicator's image with the chosen feature lit: the rest of the chart dims,
 // the feature's zones are outlined. Features not drawn on this chart leave it whole.
 const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature; index: number }) => {
@@ -123,12 +159,13 @@ const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature
                         ))}
                     </mask>
                 </defs>
-                <rect width="100" height="125" fill="black" mask={`url(#m-${item.id})`} className="transition-opacity duration-500" opacity={spots.length ? 0.62 : 0} />
+                <rect width="100" height="125" fill="black" mask={`url(#m-${item.id})`} className="transition-opacity duration-500" opacity={spots.length ? 0.62 : feature.draw ? 0.93 : 0} />
                 {spots.map(([x, y, w, h], i) => (
                     <rect key={`${feature.name}-${i}`} x={x} y={y * 1.25} width={w} height={h * 1.25} rx="0.8" fill="none" stroke="#E3A1F7" strokeWidth="0.35" className="spot-in" style={{ filter: "drop-shadow(0 0 1.2px rgba(227,161,247,0.9))" }} />
                 ))}
             </svg>
-            {spots.length > 0 && (
+            {!spots.length && feature.draw && <Drawn kind={feature.draw} key={`drawn-${feature.name}`} />}
+            {(spots.length > 0 || feature.draw) && (
                 <span key={feature.name} className="spot-in absolute bottom-3 left-3 rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-[#E3A1F7] backdrop-blur">
                     {String(index + 1).padStart(2, "0")} · {feature.name}
                 </span>
