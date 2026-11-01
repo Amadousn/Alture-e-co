@@ -365,6 +365,32 @@ const ProductPage = () => {
                 </div>
             </section>
 
+            {/* Security of exchange connections */}
+            <section id="security" className="scroll-mt-16 bg-black !py-16 md:!py-24">
+                <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                    <div className="grid gap-x-14 gap-y-10 lg:grid-cols-12">
+                        <div className="lg:col-span-5">
+                            <p className={label}>Security</p>
+                            <h2 className={`${heading} max-w-[12ch]`}>Read-only. Nothing else.</h2>
+                            <p className={`mt-6 max-w-md ${body}`}>AltureLock reads your trades. It never places an order, never moves a dollar.</p>
+                        </div>
+                        <dl className="lg:col-span-7 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+                            {[
+                                ["Read-only keys only", "AltureLock accepts exchange API keys that can only read. Any key that can trade, transfer or withdraw is rejected automatically, before anything is imported."],
+                                ["Checked with the exchange", "We don't take the key's word for it. When you connect, AltureLock asks the exchange itself what the key is allowed to do."],
+                                ["Sealed on our server", "Your key is encrypted the moment it arrives and is never shown again, not even to you."],
+                                ["Yours to cut off", "Disconnect in one click, or delete the key at your exchange. Access ends at once."],
+                            ].map(([title, text]) => (
+                                <div key={title}>
+                                    <dt className="text-lg font-medium tracking-tight text-white">{title}</dt>
+                                    <dd className={`mt-2 ${body}`}>{text}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
             {/* Integrated tools */}
             <section className="bg-black !py-16 md:!py-24">
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
