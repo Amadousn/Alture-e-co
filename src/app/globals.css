@@ -654,3 +654,10 @@ a:active {
 .lumen-term .nav-link:hover { color: #0c0d10; }
 .lumen-term svg text[fill="#fff"] { fill: #0c0d10; }
 .lumen-term svg circle[stroke="rgba(255,255,255,0.08)"] { stroke: #e4e1ee; }
+
+/* Indicators page: a feature's zone fading in on the chart. */
+@keyframes spot-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.spot-in { animation: spot-in 0.45s ease-out both; }
