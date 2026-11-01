@@ -19,6 +19,9 @@ const VP: Feature = { name: "Volume Profile · POC, VAH, VAL", what: "How much v
 const LVN: Feature = { name: "Low-volume nodes", what: "Prices where almost nothing traded. The market moved through them quickly, so it often does again: they act as gaps price crosses fast, and as targets on the other side." };
 const VWAP: Feature = { name: "VWAP and its bands", what: "The average price paid today, weighted by volume. Above it, buyers are in control on average; below, sellers. The bands mark how far price has stretched from that average." };
 const MS: Feature = { name: "Market structure · BOS and CHoCH", what: "A Break of Structure (BOS) confirms the trend continues: a new high in an uptrend, a new low in a downtrend. A Change of Character (CHoCH) is the first break against the trend, the first sign it may be turning." };
+const EMA: Feature = { name: "EMA cloud · 9 and 21", what: "Two exponential moving averages, 9 and 21 by default, with the space between them filled. Purple when the fast one is above, a bullish short-term trend; white when below. The lines can be shown alone, without the cloud. Off by default, one click in the settings." };
+// The Break of Structure lines on the VP charts (standard and free).
+const BOS_LINES = [[11, 55.3, 12.5, 2], [26, 52, 10, 2], [39.6, 61.4, 10.2, 2], [42, 50.6, 6, 2], [56, 63.6, 6, 2]];
 const FVG: Feature = { name: "Fair Value Gaps", what: "Three candles where the middle one moved so fast that the first and third do not overlap. That empty zone is an imbalance: price often comes back to fill it before moving on." };
 
 const INDICATORS: Indicator[] = [
@@ -33,8 +36,10 @@ const INDICATORS: Indicator[] = [
         data: "real",
         features: [
             at(VP, [55.5, 33, 28.5, 57.5]),
+            VWAP,
+            EMA,
             at(LVN, [0, 36.5, 84, 4.6], [0, 75.4, 84, 5.7]),
-            at(MS, [0, 30.5, 6, 4.5], [36.5, 65.5, 5, 3.5]),
+            at(MS, [0, 30.5, 5.5, 3.5], [36.8, 66, 4.6, 3]),
             at(FVG, [44.2, 57.5, 8.6, 12.4]),
             { spots: [[43.5, 46.8, 5.2, 5.4], [12, 60.3, 4.2, 4.2], [44.5, 72.3, 4.6, 4.6], [48.2, 77.6, 4, 4]], name: "Delta bubbles", what: "Each bubble is the difference between what was bought at the ask and sold at the bid in a candle, taken from the real footprint. A large bubble at a level shows where one side pushed hard." },
             { spots: [[12.5, 60.5, 27, 7.2]], name: "CVD divergence", what: "Cumulative volume delta adds every candle's delta. When price makes a new high but CVD does not, buyers are no longer behind the move: a warning before the reversal." },
@@ -50,7 +55,7 @@ const INDICATORS: Indicator[] = [
         line: "The same read, on any TradingView plan.",
         text: "Everything in Volume Profile + Footprint, with the order flow estimated from 1-minute candles instead of the footprint. It runs on any TradingView plan.",
         data: "estimated",
-        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, [10.5, 51.5, 51, 12.5]), at(FVG, [60.3, 58.3, 5.6, 8.8]), { spots: [[2.5, 42, 63, 42]], name: "Estimated order flow", what: "Buying and selling pressure worked out from the shape and volume of 1-minute candles. It follows the real flow closely most of the time, but it is an estimate: it cannot see what was actually traded at the bid and the ask." }],
+        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), EMA, { spots: [[2.5, 42, 63, 42]], name: "Estimated order flow", what: "Buying and selling pressure worked out from the shape and volume of 1-minute candles. It follows the real flow closely most of the time, but it is an estimate: it cannot see what was actually traded at the bid and the ask." }],
     },
     {
         id: "order-flow",
@@ -78,7 +83,7 @@ const INDICATORS: Indicator[] = [
         line: "Where volume traded, and where it did not.",
         text: "The base of the Alture read: the volume profile, the low-volume nodes price moves through quickly, the structure of the market and its Fair Value Gaps.",
         data: "none",
-        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(MS, [10.5, 51.5, 51, 12.5]), FVG],
+        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(MS, ...BOS_LINES), FVG],
     },
 ];
 
