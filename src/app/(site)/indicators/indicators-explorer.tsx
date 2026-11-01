@@ -192,42 +192,27 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
     );
 };
 
-// Footprint against 1-minute order flow: why two volume-profile indicators cost differently.
-// A spec sheet, not cards: two columns, three facts, the price.
+// Footprint against 1-minute order flow: two sentences and the price.
 const COMPARE = [
-    { name: "Volume Profile + Footprint", price: 39, data: "real" as const, rows: ["TradingView footprint", "Every trade, bid and ask", "Premium or Ultimate"] },
-    { name: "Volume Profile + VWAP", price: 19, data: "estimated" as const, rows: ["1-minute data", "Buying and selling pressure, minute by minute", "Every plan"] },
+    { name: "Volume Profile + Footprint", price: 39, line: "Every trade.", note: "TradingView footprint · Premium or Ultimate", real: true },
+    { name: "Volume Profile + VWAP", price: 19, line: "Every minute.", note: "1-minute data · Every TradingView plan", real: false },
 ];
 const Compare = () => (
     <section className="bg-black !py-10 md:!py-16">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-            <p className={label}>Tick-level or 1-minute</p>
-            <h2 className="text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Same read. Different source.</h2>
-            <div className="mt-12 grid grid-cols-[minmax(0,7rem)_1fr_1fr] md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
-                <span />
+            <div className="divide-y divide-white/10 border-y border-white/10">
                 {COMPARE.map((c) => (
-                    <div key={c.name} className="relative border-l border-white/10 px-4 md:px-8 pt-7 pb-6">
-                        {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#E3A1F7] shadow-[0_0_18px_2px_rgba(227,161,247,0.55)]" />}
-                        <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-[#E3A1F7]" : "text-white/40"}`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-[#E3A1F7] shadow-[0_0_8px_#E3A1F7]" : "border border-white/40"}`} />
-                            {c.data === "real" ? "Tick-level" : "1-minute precision"}
-                        </p>
-                        <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>
-                        <p className="mt-4 flex items-baseline gap-1.5">
-                            <span className="font-logo text-[40px] md:text-[52px] font-extralight leading-none tabular-nums text-white">${c.price}</span>
+                    <a key={c.name} href={c.real ? "#all-in-one" : "#standard"} className="group grid grid-cols-[1fr_auto] items-end gap-6 py-8 md:py-10">
+                        <div>
+                            <p className={`text-[11px] uppercase tracking-[0.14em] ${c.real ? "text-[#E3A1F7]" : "text-white/40"}`}>{c.name}</p>
+                            <p className={`mt-3 font-logo text-[44px] md:text-[72px] font-extralight leading-none tracking-tight ${c.real ? "text-white [text-shadow:0_0_40px_rgba(227,161,247,0.35)]" : "text-white/70"}`}>{c.line}</p>
+                            <p className="mt-4 text-[13px] md:text-[14px] text-white/40">{c.note}</p>
+                        </div>
+                        <p className="flex items-baseline gap-1.5">
+                            <span className="font-logo text-[36px] md:text-[48px] font-extralight leading-none text-white">${c.price}</span>
                             <span className="text-[12px] text-white/35">/ month</span>
                         </p>
-                    </div>
-                ))}
-                {["Order flow from", "Sees", "TradingView plan"].map((term, i) => (
-                    <div key={term} className="contents">
-                        <span className="border-t border-white/10 py-4 pr-3 text-[12px] uppercase tracking-[0.1em] text-white/35">{term}</span>
-                        {COMPARE.map((c) => (
-                            <span key={c.name} className={`border-l border-t border-white/10 px-4 md:px-8 py-4 ${c.data === "real" ? "text-white" : "text-white/50"}`}>
-                                {c.rows[i]}
-                            </span>
-                        ))}
-                    </div>
+                    </a>
                 ))}
             </div>
         </div>
