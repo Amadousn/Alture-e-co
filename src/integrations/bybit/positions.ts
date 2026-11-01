@@ -63,8 +63,8 @@ export type ImportedTrade = {
     profitLoss: number;
     openedAt?: number;
     closedAt: number;
-    source: "bybit" | "binance" | "okx";
-    provider: "bybit" | "binance" | "okx";
+    source: "bybit" | "binance" | "okx" | "bitget" | "hyperliquid";
+    provider: "bybit" | "binance" | "okx" | "bitget" | "hyperliquid";
     orderIds: string[];
     fills: number;
     exits: number;

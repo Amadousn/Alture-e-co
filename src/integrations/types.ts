@@ -3,7 +3,7 @@
 // AltureLock journals trades; it never places them. Every connection is
 // read-only, and each provider declares only what it can really do.
 
-export type ProviderId = "bybit" | "binance" | "okx" | "tradovate" | "ninjatrader" | "metatrader5" | "tradingview";
+export type ProviderId = "bybit" | "binance" | "okx" | "bitget" | "hyperliquid" | "ibkr" | "tradovate" | "ninjatrader" | "metatrader5" | "tradingview";
 
 export type ProviderCategory = "Crypto exchanges" | "Futures trading" | "Forex / CFD trading" | "Charting and trading";
 

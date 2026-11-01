@@ -65,9 +65,12 @@ const Row = ({ provider, status, action, children }: { provider: ProviderDefinit
 );
 
 // What differs between exchanges on the connection form.
-const GUIDES: Partial<Record<ProviderId, { steps: string[]; demo: string; secret: string; minLength: number }>> = {
+type Guide = { steps: string[]; demo: string | null; secret: string; minLength: number; passphrase?: boolean; address?: boolean; note?: string };
+const GUIDES: Partial<Record<ProviderId, Guide>> = {
     bybit: { steps: ["In Bybit, open API Management and create a new key.", "Choose Read-Only. Leave trading, transfers and withdrawals off.", "Paste the key and secret here."], demo: "Demo trading", secret: "API secret", minLength: 8 },
     binance: { steps: ["In Binance, open API Management and create a system-generated key.", "Keep only Enable Reading ticked. Leave futures, spot, margin, transfers and withdrawals off.", "Paste the API key and secret key here."], demo: "Futures testnet", secret: "Secret key", minLength: 16 },
+    okx: { steps: ["In OKX, open API and create a new key.", "Choose Read only. Leave Trade and Withdraw off.", "Paste the API key, the secret key and the passphrase you chose."], demo: "Demo trading", secret: "Secret key", minLength: 8, passphrase: true },
+    hyperliquid: { steps: ["Copy the wallet address you trade with on Hyperliquid.", "Paste it here. Nothing else is needed."], demo: null, secret: "", minLength: 0, address: true, note: "Hyperliquid's history is public on its chain. AltureLock only reads it: there is no key, nothing to sign, and nothing that could ever trade or move funds." },
 };
 
 const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
@@ -77,6 +80,8 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
     const [environment, setEnvironment] = useState<"demo" | "live">("demo");
     const [apiKey, setApiKey] = useState("");
     const [apiSecret, setApiSecret] = useState("");
+    const [passphrase, setPassphrase] = useState("");
+    const [address, setAddress] = useState("");
     const [confirming, setConfirming] = useState(false);
     const { status, summary, failure } = connection;
     const connected = summary !== null;
@@ -84,11 +89,13 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
 
     const submit = async (event: FormEvent) => {
         event.preventDefault();
-        const ok = await connection.connect({ environment, apiKey, apiSecret });
+        const ok = await connection.connect(guide.address ? { address } : { environment, apiKey, apiSecret, passphrase });
         // The secret leaves this page as soon as it has been sent.
         setApiSecret("");
+        setPassphrase("");
         if (ok) {
             setApiKey("");
+            setAddress("");
             setOpen(false);
         }
     };
@@ -180,15 +187,25 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
             {open && !connected && (
                 <form onSubmit={submit} className="cockpit-rise mt-5 grid lg:grid-cols-12 gap-x-10 gap-y-6 border border-white/15 p-5 md:p-7" autoComplete="off">
                     <div className="lg:col-span-5 text-sm leading-relaxed text-white/55">
-                        <p className="text-white font-medium mb-2">Create a read-only key at {provider.name}</p>
+                        <p className="text-white font-medium mb-2">{guide.address ? `Connect your ${provider.name} wallet` : `Create a read-only key at ${provider.name}`}</p>
                         <ol className="list-decimal pl-5 space-y-1.5">
                             {guide.steps.map((step) => (
                                 <li key={step}>{step}</li>
                             ))}
                         </ol>
-                        <p className="mt-4">AltureLock refuses any key that can trade or move funds. The key is sent once to our server, sealed, and never shown again or stored in this page.</p>
+                        <p className="mt-4">{guide.note ?? "AltureLock refuses any key that can trade or move funds. The key is sent once to our server, sealed, and never shown again or stored in this page."}</p>
                     </div>
                     <div className="lg:col-span-7 space-y-4">
+                        {guide.address ? (
+                            <div>
+                                <label htmlFor={`${provider.id}-address`} className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
+                                    Wallet address
+                                </label>
+                                <input id={`${provider.id}-address`} type="text" autoComplete="off" spellCheck={false} placeholder="0x…" value={address} onChange={(event) => setAddress(event.target.value)} className={fieldClass} />
+                            </div>
+                        ) : (
+                            <>
+                        {guide.demo && (
                         <div>
                             <span className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">Environment</span>
                             <div className="grid grid-cols-2 gap-1 rounded-sm border border-white/25 p-1 max-w-sm" role="group" aria-label="Environment">
@@ -199,6 +216,7 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
                                 ))}
                             </div>
                         </div>
+                        )}
                         <div>
                             <label htmlFor={`${provider.id}-key`} className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
                                 API key
@@ -211,8 +229,18 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
                             </label>
                             <input id={`${provider.id}-secret`} type="password" autoComplete="new-password" spellCheck={false} value={apiSecret} onChange={(event) => setApiSecret(event.target.value)} className={fieldClass} />
                         </div>
+                        {guide.passphrase && (
+                            <div>
+                                <label htmlFor={`${provider.id}-passphrase`} className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
+                                    Passphrase
+                                </label>
+                                <input id={`${provider.id}-passphrase`} type="password" autoComplete="new-password" spellCheck={false} value={passphrase} onChange={(event) => setPassphrase(event.target.value)} className={fieldClass} />
+                            </div>
+                        )}
+                            </>
+                        )}
                         <div className="flex flex-wrap gap-2 pt-1">
-                            <button type="submit" disabled={status === "connecting" || apiKey.trim().length < guide.minLength || apiSecret.trim().length < guide.minLength} className={primary}>
+                            <button type="submit" disabled={status === "connecting" || (guide.address ? !/^0x[0-9a-fA-F]{40}$/.test(address.trim()) : apiKey.trim().length < guide.minLength || apiSecret.trim().length < guide.minLength || (!!guide.passphrase && !passphrase.trim()))} className={primary}>
                                 {status === "connecting" ? `Checking with ${provider.name}…` : `Connect ${provider.name}`}
                             </button>
                             <button type="button" onClick={() => setOpen(false)} className={quiet}>

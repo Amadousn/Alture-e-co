@@ -29,6 +29,8 @@ export type BinanceFill = {
     commission: number;
     commissionAsset: string;
     time: number;
+    // The position size before this fill, signed, when the source reports it (Hyperliquid).
+    startPosition?: number;
 };
 
 const EPSILON = 1e-9;
@@ -95,6 +97,11 @@ export function buildBinanceTrades(fills: BinanceFill[], leverage: (symbol: stri
         let remaining = fill.qty;
         let life = lives.get(key);
 
+        // A position already open before the imported history: its entry is unknown.
+        if (!life && fill.startPosition !== undefined && Math.abs(fill.startPosition) > EPSILON) {
+            life = { symbol: fill.symbol, direction: fill.startPosition > 0 ? 1 : -1, size: Math.abs(fill.startPosition), entryQty: 0, entryValue: 0, exitQty: 0, exitValue: 0, pnl: 0, fees: 0, unpricedFees: false, openedAt: null, closedAt: fill.time, firstId: fill.id, orders: new Set(), fills: 0, exits: 0, executions: [] };
+            lives.set(key, life);
+        }
         // A reduce on a side with no known position: it closes something opened before the history.
         if (!life && fill.realizedPnl !== 0) {
             const direction: 1 | -1 = fill.positionSide === "LONG" ? 1 : fill.positionSide === "SHORT" ? -1 : sign === 1 ? -1 : 1;
