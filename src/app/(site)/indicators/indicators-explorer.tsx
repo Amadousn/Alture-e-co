@@ -53,9 +53,9 @@ const INDICATORS: Indicator[] = [
         price: 19,
         image: "/images/indicators/standard.jpg",
         line: "The same read, on any TradingView plan.",
-        text: "Everything in Volume Profile + Footprint, with the order flow estimated from 1-minute candles instead of the footprint. It runs on any TradingView plan.",
+        text: "Everything in Volume Profile + Footprint, with the order flow built from 1-minute data, the closest read to the footprint on any TradingView plan.",
         data: "estimated",
-        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), EMA, { spots: [[2.5, 42, 63, 42]], name: "Estimated order flow", what: "Buying and selling pressure worked out from the shape and volume of 1-minute candles. It follows the real flow closely most of the time, but it is an estimate: it cannot see what was actually traded at the bid and the ask." }],
+        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), EMA, { spots: [[2.5, 42, 63, 42]], name: "1-minute order flow", what: "Buying and selling pressure rebuilt from the 1-minute data inside each candle: the closest read to the footprint without a Premium plan. It tracks the footprint closely, without the trade-by-trade split at the bid and the ask." }],
     },
     {
         id: "order-flow",
@@ -103,7 +103,7 @@ const DataBadge = ({ data }: { data: Data }) =>
     ) : data === "estimated" ? (
         <span className="inline-flex items-center gap-2 rounded-sm border border-dashed border-white/30 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
             <span className="h-1.5 w-1.5 rounded-full border border-white/50" />
-            Estimated order flow
+            1-minute order flow
         </span>
     ) : null;
 
@@ -192,16 +192,16 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
     );
 };
 
-// Real against estimated order flow: why two volume-profile indicators cost differently.
+// Footprint against 1-minute order flow: why two volume-profile indicators cost differently.
 // A spec sheet, not cards: two columns, three facts, the price.
 const COMPARE = [
     { name: "Volume Profile + Footprint", price: 39, data: "real" as const, rows: ["TradingView footprint", "Every trade, bid and ask", "Premium or Ultimate"] },
-    { name: "Volume Profile + VWAP", price: 19, data: "estimated" as const, rows: ["1-minute candles", "Estimated pressure", "Every plan"] },
+    { name: "Volume Profile + VWAP", price: 19, data: "estimated" as const, rows: ["1-minute data", "Buying and selling pressure, minute by minute", "Every plan"] },
 ];
 const Compare = () => (
     <section className="bg-black !py-10 md:!py-16">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-            <p className={label}>Real or estimated</p>
+            <p className={label}>Tick-level or 1-minute</p>
             <h2 className="text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Same read. Different source.</h2>
             <div className="mt-12 grid grid-cols-[minmax(0,7rem)_1fr_1fr] md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
                 <span />
@@ -210,7 +210,7 @@ const Compare = () => (
                         {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#E3A1F7] shadow-[0_0_18px_2px_rgba(227,161,247,0.55)]" />}
                         <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-[#E3A1F7]" : "text-white/40"}`}>
                             <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-[#E3A1F7] shadow-[0_0_8px_#E3A1F7]" : "border border-white/40"}`} />
-                            {c.data === "real" ? "Real" : "Estimated"}
+                            {c.data === "real" ? "Tick-level" : "1-minute precision"}
                         </p>
                         <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>
                         <p className="mt-4 flex items-baseline gap-1.5">
