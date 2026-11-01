@@ -55,7 +55,7 @@ const INDICATORS: Indicator[] = [
         line: "The same read, on any TradingView plan.",
         text: "Everything in Volume Profile + Footprint, with the order flow built from 1-minute data, the closest read to the footprint on any TradingView plan.",
         data: "estimated",
-        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), EMA, { spots: [[2.5, 42, 63, 42]], name: "1-minute order flow", what: "Buying and selling pressure rebuilt from the 1-minute data inside each candle: the closest read to the footprint without a Premium plan. It tracks the footprint closely, without the trade-by-trade split at the bid and the ask." }],
+        features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), at(EMA, [24.5, 44.5, 41.5, 17.5]), { spots: [[2.5, 42, 63, 42]], name: "1-minute order flow", what: "Buying and selling pressure rebuilt from the 1-minute data inside each candle: the closest read to the footprint without a Premium plan. It tracks the footprint closely, without the trade-by-trade split at the bid and the ask." }],
     },
     {
         id: "order-flow",
@@ -107,42 +107,6 @@ const DataBadge = ({ data }: { data: Data }) =>
         </span>
     ) : null;
 
-// A feature that is not on the chart's picture, drawn alone over the dimmed chart.
-const PRICE = "M4 78 L12 70 L18 74 L26 60 L33 64 L40 50 L47 55 L54 44 L61 49 L68 40 L75 46 L82 36 L90 42 L96 34";
-const Drawn = ({ kind }: { kind: "ema" | "vwap" | "fvg" }) => (
-    <svg viewBox="0 0 100 125" className="spot-in pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-        <g transform="translate(0 22)">
-            {kind !== "fvg" && <path d={PRICE} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="0.6" />}
-            {kind === "ema" && (
-                <>
-                    <path d="M4 80 C20 72 30 64 44 56 S70 44 96 38 L96 44 C72 50 58 56 44 62 S20 76 4 84 Z" fill="#c850f0" fillOpacity="0.22" />
-                    <path d="M4 80 C20 72 30 64 44 56 S70 44 96 38" fill="none" stroke="#c850f0" strokeWidth="0.7" />
-                    <path d="M4 84 C20 76 30 68 44 62 S72 50 96 44" fill="none" stroke="#c850f0" strokeOpacity="0.6" strokeWidth="0.6" />
-                </>
-            )}
-            {kind === "vwap" && (
-                <>
-                    <path d="M4 66 C30 60 60 52 96 44" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" strokeDasharray="1 1" />
-                    <path d="M4 82 C30 74 60 64 96 56" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" strokeDasharray="1 1" />
-                    <path d="M4 74 C30 67 60 58 96 50" fill="none" stroke="#D94C92" strokeWidth="0.9" />
-                </>
-            )}
-            {kind === "fvg" && (
-                <>
-                    {[[20, 62, 70], [30, 40, 66], [40, 28, 44], [50, 30, 38], [60, 34, 46]].map(([x, top, bottom], i) => (
-                        <g key={i}>
-                            <line x1={x} x2={x} y1={top - 3} y2={bottom + 3} stroke="rgba(255,255,255,0.5)" strokeWidth="0.4" />
-                            <rect x={x - 2.5} y={top} width="5" height={bottom - top} fill={i === 1 ? "#20B8A8" : "rgba(255,255,255,0.75)"} />
-                        </g>
-                    ))}
-                    <rect x="22.5" y="47" width="72" height="18" fill="#E3A1F7" fillOpacity="0.12" stroke="#E3A1F7" strokeWidth="0.35" />
-                    <text x="88" y="58" fill="#E3A1F7" fontSize="3.2" fontFamily="monospace" textAnchor="end">FVG</text>
-                </>
-            )}
-        </g>
-    </svg>
-);
-
 // The indicator's image with the chosen feature lit: the rest of the chart dims,
 // the feature's zones are outlined. Features not drawn on this chart leave it whole.
 const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature; index: number }) => {
@@ -159,13 +123,12 @@ const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature
                         ))}
                     </mask>
                 </defs>
-                <rect width="100" height="125" fill="black" mask={`url(#m-${item.id})`} className="transition-opacity duration-500" opacity={spots.length ? 0.62 : feature.draw ? 0.93 : 0} />
+                <rect width="100" height="125" fill="black" mask={`url(#m-${item.id})`} className="transition-opacity duration-500" opacity={spots.length ? 0.62 : 0} />
                 {spots.map(([x, y, w, h], i) => (
                     <rect key={`${feature.name}-${i}`} x={x} y={y * 1.25} width={w} height={h * 1.25} rx="0.8" fill="none" stroke="#E3A1F7" strokeWidth="0.35" className="spot-in" style={{ filter: "drop-shadow(0 0 1.2px rgba(227,161,247,0.9))" }} />
                 ))}
             </svg>
-            {!spots.length && feature.draw && <Drawn kind={feature.draw} key={`drawn-${feature.name}`} />}
-            {(spots.length > 0 || feature.draw) && (
+            {spots.length > 0 && (
                 <span key={feature.name} className="spot-in absolute bottom-3 left-3 rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-[#E3A1F7] backdrop-blur">
                     {String(index + 1).padStart(2, "0")} · {feature.name}
                 </span>
