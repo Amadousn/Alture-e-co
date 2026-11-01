@@ -5,7 +5,7 @@ import WorkspaceShell from "./workspace-shell";
 import { SectionMark } from "@/app/components/altur/brand/desk-mark";
 import { BRAND_MARKS, BrandMark } from "@/app/components/altur/brand/brand-marks";
 import { PROVIDERS } from "@/integrations/registry";
-import type { ConnectionStatus, ProviderCategory, ProviderDefinition } from "@/integrations/types";
+import type { ConnectionStatus, ProviderCategory, ProviderDefinition, ProviderId } from "@/integrations/types";
 import { useConnection } from "@/integrations/use-connection";
 
 const CATEGORIES: ProviderCategory[] = ["Crypto exchanges", "Futures trading", "Forex / CFD trading", "Charting and trading"];
@@ -64,8 +64,15 @@ const Row = ({ provider, status, action, children }: { provider: ProviderDefinit
     </li>
 );
 
-const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
-    const connection = useConnection("bybit");
+// What differs between exchanges on the connection form.
+const GUIDES: Partial<Record<ProviderId, { steps: string[]; demo: string; secret: string; minLength: number }>> = {
+    bybit: { steps: ["In Bybit, open API Management and create a new key.", "Choose Read-Only. Leave trading, transfers and withdrawals off.", "Paste the key and secret here."], demo: "Demo trading", secret: "API secret", minLength: 8 },
+    binance: { steps: ["In Binance, open API Management and create a system-generated key.", "Keep only Enable Reading ticked. Leave futures, spot, margin, transfers and withdrawals off.", "Paste the API key and secret key here."], demo: "Futures testnet", secret: "Secret key", minLength: 16 },
+};
+
+const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
+    const guide = GUIDES[provider.id]!;
+    const connection = useConnection(provider.id);
     const [open, setOpen] = useState(false);
     const [environment, setEnvironment] = useState<"demo" | "live">("demo");
     const [apiKey, setApiKey] = useState("");
@@ -115,8 +122,8 @@ const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
                         [
                             ["Environment", summary.environment],
                             ["API key", summary.keyHint],
-                            ["Account", summary.accountHint ?? "Not reported by Bybit"],
-                            ["Access", summary.readOnlyVerified ? "Read-only, confirmed by Bybit" : "Not confirmable on demo"],
+                            ["Account", summary.accountHint ?? `Not reported by ${provider.name}`],
+                            ["Access", summary.readOnlyVerified ? `Read-only, confirmed by ${provider.name}` : "Not confirmable on a test account"],
                             ["Last successful sync", connection.lastSyncAt ? dateTime(connection.lastSyncAt) : "Not synced yet"],
                         ] as const
                     ).map(([label, value]) => (
@@ -134,7 +141,7 @@ const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
                     {connection.lastResult && ` This sync read ${connection.lastResult.executions} ${connection.lastResult.executions === 1 ? "fill" : "fills"} and added ${connection.lastResult.added} new ${connection.lastResult.added === 1 ? "trade" : "trades"}.`}
                 </p>
             )}
-            {connected && status === "connected" && <p className="mt-3 text-sm text-white/55">Bybit accepted the key. Nothing has been imported yet: press Sync now to bring in your last 90 days.</p>}
+            {connected && status === "connected" && <p className="mt-3 text-sm text-white/55">{provider.name} accepted the key. Nothing has been imported yet: press Sync now to bring in your last 90 days.</p>}
 
             {failure && (
                 <div role="alert" className="cockpit-rise mt-4 flex flex-wrap items-center justify-between gap-3 border-l-2 border-[#E955A8] pl-4 py-1">
@@ -154,8 +161,8 @@ const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
 
             {confirming && (
                 <div className="cockpit-rise mt-4 border border-white/15 p-5">
-                    <p className="text-sm text-white mb-1">Disconnect Bybit?</p>
-                    <p className="text-sm text-white/55 mb-4 max-w-2xl">AltureLock forgets the key at once. To cancel the key itself, delete it in your Bybit account under API Management.</p>
+                    <p className="text-sm text-white mb-1">Disconnect {provider.name}?</p>
+                    <p className="text-sm text-white/55 mb-4 max-w-2xl">AltureLock forgets the key at once. To cancel the key itself, delete it in your {provider.name} account under API Management.</p>
                     <div className="flex flex-wrap gap-2">
                         <button type="button" onClick={() => connection.disconnect(false).then(() => setConfirming(false))} className={primary}>
                             Disconnect, keep imported trades
@@ -173,11 +180,11 @@ const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
             {open && !connected && (
                 <form onSubmit={submit} className="cockpit-rise mt-5 grid lg:grid-cols-12 gap-x-10 gap-y-6 border border-white/15 p-5 md:p-7" autoComplete="off">
                     <div className="lg:col-span-5 text-sm leading-relaxed text-white/55">
-                        <p className="text-white font-medium mb-2">Create a read-only key at Bybit</p>
+                        <p className="text-white font-medium mb-2">Create a read-only key at {provider.name}</p>
                         <ol className="list-decimal pl-5 space-y-1.5">
-                            <li>In Bybit, open API Management and create a new key.</li>
-                            <li>Choose Read-Only. Leave trading, transfers and withdrawals off.</li>
-                            <li>Paste the key and secret here.</li>
+                            {guide.steps.map((step) => (
+                                <li key={step}>{step}</li>
+                            ))}
                         </ol>
                         <p className="mt-4">AltureLock refuses any key that can trade or move funds. The key is sent once to our server, sealed, and never shown again or stored in this page.</p>
                     </div>
@@ -187,26 +194,26 @@ const BybitRow = ({ provider }: { provider: ProviderDefinition }) => {
                             <div className="grid grid-cols-2 gap-1 rounded-sm border border-white/25 p-1 max-w-sm" role="group" aria-label="Environment">
                                 {(["demo", "live"] as const).map((value) => (
                                     <button key={value} type="button" aria-pressed={environment === value} onClick={() => setEnvironment(value)} className={`rounded-sm py-2 text-sm font-semibold transition-colors ${environment === value ? "bg-white text-black" : "text-white/55 hover:text-white"}`}>
-                                        {value === "demo" ? "Demo trading" : "Live"}
+                                        {value === "demo" ? guide.demo : "Live"}
                                     </button>
                                 ))}
                             </div>
                         </div>
                         <div>
-                            <label htmlFor="bybit-key" className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
+                            <label htmlFor={`${provider.id}-key`} className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
                                 API key
                             </label>
-                            <input id="bybit-key" type="text" autoComplete="off" spellCheck={false} value={apiKey} onChange={(event) => setApiKey(event.target.value)} className={fieldClass} />
+                            <input id={`${provider.id}-key`} type="text" autoComplete="off" spellCheck={false} value={apiKey} onChange={(event) => setApiKey(event.target.value)} className={fieldClass} />
                         </div>
                         <div>
-                            <label htmlFor="bybit-secret" className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
-                                API secret
+                            <label htmlFor={`${provider.id}-secret`} className="block text-[11px] uppercase tracking-[0.08em] text-white/45 mb-1.5">
+                                {guide.secret}
                             </label>
-                            <input id="bybit-secret" type="password" autoComplete="new-password" spellCheck={false} value={apiSecret} onChange={(event) => setApiSecret(event.target.value)} className={fieldClass} />
+                            <input id={`${provider.id}-secret`} type="password" autoComplete="new-password" spellCheck={false} value={apiSecret} onChange={(event) => setApiSecret(event.target.value)} className={fieldClass} />
                         </div>
                         <div className="flex flex-wrap gap-2 pt-1">
-                            <button type="submit" disabled={status === "connecting" || apiKey.trim().length < 8 || apiSecret.trim().length < 8} className={primary}>
-                                {status === "connecting" ? "Checking with Bybit…" : "Connect Bybit"}
+                            <button type="submit" disabled={status === "connecting" || apiKey.trim().length < guide.minLength || apiSecret.trim().length < guide.minLength} className={primary}>
+                                {status === "connecting" ? `Checking with ${provider.name}…` : `Connect ${provider.name}`}
                             </button>
                             <button type="button" onClick={() => setOpen(false)} className={quiet}>
                                 Cancel
@@ -256,7 +263,7 @@ const WorkspaceConnections = () => (
                 <section key={category} className="!py-0 mb-12 !bg-transparent">
                     <SectionMark label={category} className="!border-t-0 mb-3" />
                     <ul>
-                        {list.map((provider) => (provider.id === "bybit" ? <BybitRow key={provider.id} provider={provider} /> : <PlannedRow key={provider.id} provider={provider} />))}
+                        {list.map((provider) => (GUIDES[provider.id] && provider.availability === "available" ? <ExchangeRow key={provider.id} provider={provider} /> : <PlannedRow key={provider.id} provider={provider} />))}
                         <li className="border-t border-white/15" aria-hidden="true" />
                     </ul>
                 </section>
