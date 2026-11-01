@@ -8,7 +8,7 @@ import { PROVIDERS } from "@/integrations/registry";
 import type { ConnectionStatus, ProviderCategory, ProviderDefinition, ProviderId } from "@/integrations/types";
 import { useConnection } from "@/integrations/use-connection";
 
-const CATEGORIES: ProviderCategory[] = ["Crypto exchanges", "Futures trading", "Forex / CFD trading", "Charting and trading"];
+const CATEGORIES: ProviderCategory[] = ["Crypto exchanges", "Futures trading", "Forex / CFD trading", "Stocks and ETFs", "Charting and trading"];
 
 const STATUS: Record<ConnectionStatus, { label: string; tone: string }> = {
     "not-connected": { label: "Not connected", tone: "text-white/55" },
@@ -271,7 +271,7 @@ const PlannedRow = ({ provider }: { provider: ProviderDefinition }) => {
                     {provider.requirements.map((item) => (
                         <li key={item}>{item}</li>
                     ))}
-                    <li>No connection exists yet, so nothing can be imported from {provider.name} today.</li>
+                    <li>{provider.id === "metatrader5" || provider.id === "ibkr" ? "No live connection: import the file from the Journal, with Import a file." : `No connection exists yet, so nothing can be imported from ${provider.name} today.`}</li>
                 </ul>
             )}
         </Row>

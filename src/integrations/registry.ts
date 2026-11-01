@@ -57,6 +57,16 @@ export const PROVIDERS: ProviderDefinition[] = [
         requirements: ["A Bitget API key with read-only permissions, plus its passphrase."],
     },
     {
+        id: "ibkr",
+        name: "Interactive Brokers",
+        category: "Stocks and ETFs",
+        availability: "planned",
+        access: "Activity Statement import",
+        capabilities: NONE,
+        summary: "Stocks, ETFs and forex from an Interactive Brokers Activity Statement: download it as CSV and use Import a file in the Journal. Executions are rebuilt into whole positions with IBKR's own realised P/L. A live connection to IBKR is not built.",
+        requirements: ["An Activity Statement downloaded as CSV from the IBKR Portal."],
+    },
+    {
         id: "tradovate",
         name: "Tradovate",
         category: "Futures trading",
@@ -83,7 +93,7 @@ export const PROVIDERS: ProviderDefinition[] = [
         availability: "planned",
         access: "History report import",
         capabilities: NONE,
-        summary: "MetaTrader 5's official integration only runs on a Windows computer with the terminal open and logged in. It is not an online service, so a website cannot connect to it directly. The realistic route is importing the account history report.",
+        summary: "MetaTrader 5 is not an online service a website can connect to, so its history comes in as a file: export the HTML report from the History tab and use Import a file in the Journal. Prop firm accounts work the same way.",
         requirements: ["A history report exported from the MetaTrader 5 terminal."],
     },
     {

@@ -31,6 +31,8 @@ export type BinanceFill = {
     time: number;
     // The position size before this fill, signed, when the source reports it (Hyperliquid).
     startPosition?: number;
+    // Count the commission as a fee whatever its asset (sources that report it in the account currency).
+    feeInQuote?: boolean;
 };
 
 const EPSILON = 1e-9;
@@ -92,8 +94,9 @@ export function buildBinanceTrades(fills: BinanceFill[], leverage: (symbol: stri
     for (const fill of unique) {
         const key = `${fill.symbol}|${fill.positionSide}`;
         const sign: 1 | -1 = fill.side === "BUY" ? 1 : -1;
-        const fee = settles(fill.symbol, fill.commissionAsset) ? fill.commission : 0;
-        const unpriced = fill.commission > 0 && !settles(fill.symbol, fill.commissionAsset);
+        const counted = fill.feeInQuote || settles(fill.symbol, fill.commissionAsset);
+        const fee = counted ? fill.commission : 0;
+        const unpriced = fill.commission > 0 && !counted;
         let remaining = fill.qty;
         let life = lives.get(key);
 

@@ -1,5 +1,6 @@
 "use client";
 
+import FileImport from "./file-import";
 import { insightsOf, Insight, MIN_SCORE_TRADES, Score, scoreOf } from "@/utils/journal-insights";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
@@ -418,6 +419,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
         setEditing(null);
     };
     const [sharing, setSharing] = useState(false);
+    const [importing, setImporting] = useState(false);
     const [draft, setDraft] = useState("");
 
     const ordered = useMemo(() => [...trades].sort((a, b) => a.closedAt - b.closedAt), [trades]);
@@ -534,9 +536,14 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 <span className="ml-auto flex items-center gap-4">
                     {status && <span className="hidden text-[12.5px] text-[var(--j-mu)] 2xl:inline">{status}</span>}
                     {reviewable && (
-                        <button type="button" onClick={() => setEditing("new")} className="rounded-lg bg-[var(--j-active)] px-3 py-1.5 text-[var(--j-activeink)]">
-                            + Add a trade
-                        </button>
+                        <>
+                            <button type="button" onClick={() => setImporting(true)} className={quiet}>
+                                Import a file
+                            </button>
+                            <button type="button" onClick={() => setEditing("new")} className="rounded-lg bg-[var(--j-active)] px-3 py-1.5 text-[var(--j-activeink)]">
+                                + Add a trade
+                            </button>
+                        </>
                     )}
                     {ordered.length > 0 && (
                         <button type="button" onClick={() => setSharing(true)} className={quiet}>
@@ -1080,6 +1087,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
 
             {sharing && <ShareMonth monthLabel={`${MONTHS[cal.m]} ${cal.y}`} monthShort={MONTHS[cal.m].slice(0, 3)} year={cal.y} month={cal.m} trades={calTrades} initialDay={day ? Number(day.slice(8)) : null} sample={sample} onClose={() => setSharing(false)} />}
             {editing && <TradeForm colours={vars} trade={editing === "new" ? undefined : editing} onSave={saveTrade} onClose={() => setEditing(null)} />}
+            {importing && <FileImport onClose={() => setImporting(false)} />}
             {detail && <TradeDetails detail={detail} onClose={() => setDetail(null)} reviewable={reviewable} colours={vars} masked={hidden} />}
         </div>
     );

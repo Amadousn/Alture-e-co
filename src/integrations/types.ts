@@ -5,7 +5,7 @@
 
 export type ProviderId = "bybit" | "binance" | "okx" | "bitget" | "hyperliquid" | "ibkr" | "tradovate" | "ninjatrader" | "metatrader5" | "tradingview";
 
-export type ProviderCategory = "Crypto exchanges" | "Futures trading" | "Forex / CFD trading" | "Charting and trading";
+export type ProviderCategory = "Crypto exchanges" | "Futures trading" | "Forex / CFD trading" | "Charting and trading" | "Stocks and ETFs";
 
 // What a provider's adapter supports today. False means not built, whatever the provider itself offers.
 export type ProviderCapabilities = {
