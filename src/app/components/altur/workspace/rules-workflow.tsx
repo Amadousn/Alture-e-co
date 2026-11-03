@@ -8,10 +8,11 @@ import Cockpit from "./rules/cockpit";
 import Review from "./rules/review";
 import { labelClass, panelClass, primaryButton, quietButton, signed, StateBadge } from "./rules/ui";
 import type { ClosedTrade } from "@/utils/bybit";
-import { NEW_ACTIVE_TRADE, normaliseActiveTrade, useActiveTrade, useRecordedTrades, useWorkspaceSettings } from "@/utils/workspace-store";
+import { NEW_ACTIVE_TRADE, normaliseActiveTrade, useActiveTrade, useImports, useRecordedTrades, useWorkspaceSettings } from "@/utils/workspace-store";
 import { applySizing, assetFor, MarketRules } from "@/utils/trade-plan";
 import { useTradeActions } from "./rules/use-trade-actions";
 import { useMarket, useQuotes } from "@/utils/use-market";
+import { dayLimit } from "@/utils/day-limit";
 
 const STAGES = [
     { id: "prepare", label: "Prepare" },
@@ -36,7 +37,8 @@ export const Stages = ({ stage }: { stage: string }) => {
 const RulesWorkflow = () => {
     const [settings, , settingsStore] = useWorkspaceSettings();
     const [stored, setTrade, tradeStore] = useActiveTrade();
-    const [, setRecorded] = useRecordedTrades();
+    const [recorded, setRecorded] = useRecordedTrades();
+    const [imports] = useImports();
     const [now, setNow] = useState(() => Date.now());
     const [confirmDiscard, setConfirmDiscard] = useState(false);
     const [saved, setSaved] = useState<ClosedTrade | null>(null);
@@ -115,6 +117,31 @@ const RulesWorkflow = () => {
                         >
                             Prepare another trade
                         </button>
+                    </div>
+                </div>
+            </WorkspaceShell>
+        );
+    }
+
+    // The trader's own limit is reached: no new plan today. A trade already open stays reachable, so it can be managed and closed.
+    const limit = dayLimit([...recorded, ...Object.values(imports).flatMap((item) => item.trades)], settings.limits, now);
+    if (limit.reached && (!trade || trade.stage === "prepare")) {
+        return (
+            <WorkspaceShell width="max-w-7xl">
+                <div role="alert" className={`${panelClass} cockpit-rise max-w-3xl p-7 md:p-10`}>
+                    <p className={`${labelClass} mb-3`}>Plan a trade is closed</p>
+                    <p className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">Stop here for today.</p>
+                    <p className="text-sm leading-relaxed text-[#9a9aa5] mb-8">
+                        {limit.text[0].toUpperCase()}
+                        {limit.text.slice(1)}. This is where you said you would stop. It reopens tomorrow.
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                        <Link href="/alturelock/journal" className={`${primaryButton} inline-flex items-center`}>
+                            Review today
+                        </Link>
+                        <Link href="/alturelock/settings" className={`${quietButton} inline-flex items-center`}>
+                            Your limits
+                        </Link>
                     </div>
                 </div>
             </WorkspaceShell>

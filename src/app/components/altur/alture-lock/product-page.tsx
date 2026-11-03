@@ -20,7 +20,7 @@ const STEPS = [
 const FEATURES = [
     { title: "Pre-trade checklist", text: "A sequential checklist before every entry. No step skipped, no shortcuts." },
     { title: "Live monitoring", text: "Open trades are watched against the exit rules you set beforehand." },
-    { title: "Account-level limits", text: "Risk limits are enforced on the account itself, not left on paper." },
+    { title: "Limits on the exchange", text: "By access only. Speak with us and we set it up together." },
     { title: "Automatic position sizing", text: "Size is calculated from your risk percent and your stop distance." },
     { title: "A journal that tells the truth", text: "See whether a loss came from the strategy, or from not following it." },
     { title: "Results in R", text: "Performance is measured in R multiples, not only in dollars won or lost." },

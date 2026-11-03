@@ -402,7 +402,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
           : opened
             ? { id: "trade", title: stale ? "Check your open trade" : "Open trade", note: stale ? `${activeAsset.name} ${account.active.plan.direction.toLowerCase()}, opened ${since(openedAgo)} ago. Is it still open?` : `${activeAsset.name} ${account.active.plan.direction.toLowerCase()}, open for ${since(openedAgo)}`, action: stale ? "Check the trade" : "Open the trade", href: rulesHref }
             : { id: "trade", title: "Continue your plan", note: `${activeAsset.name} ${account.active.plan.direction.toLowerCase()}, not entered`, action: "Continue the plan", href: rulesHref };
-    const prepareItem: Item = { id: "trade", title: "Prepare a setup", note: limitReached ? `${limitText}. Preparing is still allowed` : "Only when you see one. No trade is a position too", action: demo ? "Walk through a trade" : "Prepare a setup", href: rulesHref };
+    const prepareItem: Item = { id: "trade", title: "Prepare a setup", note: limitReached ? `${limitText}. Plan a trade reopens tomorrow` : "Only when you see one. No trade is a position too", action: demo ? "Walk through a trade" : "Prepare a setup", href: rulesHref };
 
     // Positions the exchange itself reported at the last sync. Old readings are flagged, not trusted.
     const syncAge = account.positionsAt ? now - account.positionsAt : 0;

@@ -47,7 +47,7 @@ const WorkspaceSettings = () => {
 
                     <div className="mb-10 max-w-xl">
                         <p className={`${labelClass} mb-2`}>When to stop for the day</p>
-                        <p className="text-sm text-[#9a9aa5] mb-4">Your own limits. When one is reached, the workspace tells you so and puts your review first. It never blocks you. Leave a field empty for no limit.</p>
+                        <p className="text-sm text-[#9a9aa5] mb-4">Your own limits. When one is reached, Plan a trade closes until tomorrow and the workspace puts your review first. A trade already open stays yours to manage.</p>
                         <div className="grid grid-cols-2 gap-4">
                             {(
                                 [
