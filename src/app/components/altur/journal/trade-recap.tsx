@@ -36,6 +36,10 @@ function windowFor(trade: ClosedTrade) {
 const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sample?: boolean; bare?: boolean }) => {
     const [state, setState] = useState<{ id: string; candles: Candle[] | null } | null>(null);
     const view = windowFor(trade);
+    // The replay: how many candles have been revealed, or null when the whole trade is shown.
+    const [cursor, setCursor] = useState<number | null>(null);
+    const [playing, setPlaying] = useState(false);
+    const [speed, setSpeed] = useState(1);
     const hasFeed = /^[A-Z0-9]{2,20}USDT$/.test(trade.instrument);
 
     useEffect(() => {
@@ -64,6 +68,29 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
     const marks = trade.executions?.length
         ? trade.executions
         : [...(trade.openedAt ? [{ kind: "entry" as const, price: trade.entryPrice, quantity: trade.quantity, at: trade.openedAt }] : []), { kind: "exit" as const, price: trade.exitPrice, quantity: trade.quantity, at: trade.closedAt }];
+    const total = candles?.length ?? 0;
+    useEffect(() => {
+        setCursor(null);
+        setPlaying(false);
+    }, [trade.id]);
+    useEffect(() => {
+        if (!playing || cursor === null) return;
+        if (cursor >= total) return setPlaying(false);
+        const id = setTimeout(() => setCursor(cursor + 1), 450 / speed);
+        return () => clearTimeout(id);
+    }, [playing, cursor, total, speed]);
+    // Revealed up to the end of the last candle shown. Everything later stays hidden, as it was at the time.
+    const replaying = cursor !== null && !!candles;
+    const shownCandles = replaying ? candles.slice(0, cursor) : candles;
+    const revealedTo = replaying && shownCandles?.length ? shownCandles[shownCandles.length - 1].t + view.minutes * MINUTE : Infinity;
+    const shownMarks = marks.filter((mark) => mark.at < revealedTo);
+    const startReplay = () => {
+        if (!candles) return;
+        const firstMark = Math.min(...marks.map((mark) => mark.at));
+        const before = candles.findIndex((candle) => candle.t + view.minutes * MINUTE > firstMark);
+        setCursor(Math.max(2, (before < 0 ? 0 : before) - 10));
+        setPlaying(true);
+    };
     const levels = [
         ...(trade.takeProfit ? [{ label: "TP", value: trade.takeProfit, color: UP }] : []),
         ...(trade.stopLoss ? [{ label: "SL", value: trade.stopLoss, color: DOWN }] : []),
@@ -83,13 +110,13 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
         const y = (value: number) => TOP + ((max - value) / (max - min)) * (H - TOP - BOTTOM);
         const slot = (W - RIGHT) / candles.length;
         const body = Math.max(1, slot * 0.6);
-        const first = marks.find((m) => m.kind === "entry");
-        const lastExit = [...marks].reverse().find((m) => m.kind === "exit");
+        const first = shownMarks.find((m) => m.kind === "entry");
+        const lastExit = [...shownMarks].reverse().find((m) => m.kind === "exit");
         chart = (
             <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img" aria-label={`${trade.instrument} ${view.name} candles around the trade, with entry and exit marked`}>
                 {/* While the trade was open */}
                 {first && lastExit && <rect x={x(first.at)} y={TOP} width={Math.max(1, x(lastExit.at) - x(first.at))} height={H - TOP - BOTTOM} fill={won ? UP : DOWN} opacity={0.06} />}
-                {candles.map((c) => {
+                {shownCandles!.map((c) => {
                     const cx = x(c.t) + slot / 2;
                     const color = c.c >= c.o ? UP : DOWN;
                     return (
@@ -109,7 +136,7 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
                 ))}
                 {/* From the first entry to the last exit */}
                 {first && lastExit && <line x1={x(first.at)} y1={y(first.price)} x2={x(lastExit.at)} y2={y(lastExit.price)} stroke={won ? UP : DOWN} strokeWidth={1.25} strokeDasharray="2 4" />}
-                {marks.map((mark, i) => {
+                {shownMarks.map((mark, i) => {
                     const entry = mark.kind === "entry";
                     // A long is bought from below and sold from above; a short is the reverse.
                     const below = entry ? long : !long;
@@ -137,6 +164,16 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
     // Bare: only the drawing, for places that frame it themselves.
     if (bare) return <div>{loading ? <p className="py-10 text-sm text-white/40">Loading the price history…</p> : chart ?? <p className="py-6 text-sm text-white/45">No price history is available for this trade.</p>}</div>;
 
+    // While the trade is open in the replay: its result at the last close, before fees. Scaled exits have no single figure.
+    const lastClose = shownCandles?.[shownCandles.length - 1]?.c;
+    const entered = shownMarks.some((mark) => mark.kind === "entry");
+    const exited = shownMarks.some((mark) => mark.kind === "exit");
+    const replayResult = !replaying || !entered || marks.length > 2 || lastClose === undefined
+        ? null
+        : exited
+          ? `Closed ${trade.profitLoss >= 0 ? "+" : "-"}$${Math.abs(trade.profitLoss).toLocaleString("en-US", { maximumFractionDigits: 2 })}`
+          : `Open ${(lastClose - trade.entryPrice) * trade.quantity * (long ? 1 : -1) >= 0 ? "+" : "-"}$${Math.abs((lastClose - trade.entryPrice) * trade.quantity).toLocaleString("en-US", { maximumFractionDigits: 2 })} before fees`;
+
     const linkClass = "text-xs text-[#c8c8d0] border-b border-[#55555e] hover:text-white hover:border-white";
 
     return (
@@ -152,6 +189,44 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
 
             {loading && <p className="px-5 py-10 text-center text-sm text-[#7d7d87]">Loading the price history…</p>}
             {chart && <div className="px-2">{chart}</div>}
+            {chart && !sample && (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-2 text-xs text-[#c8c8d0]">
+                    {cursor === null ? (
+                        <button type="button" onClick={startReplay} className={linkClass}>
+                            Replay this trade
+                        </button>
+                    ) : (
+                        <>
+                            <button type="button" onClick={() => (cursor >= total ? startReplay() : setPlaying((value) => !value))} className="w-14 text-left text-white">
+                                {cursor >= total ? "Again" : playing ? "Pause" : "Play"}
+                            </button>
+                            <input
+                                type="range"
+                                min={2}
+                                max={total}
+                                value={cursor}
+                                aria-label="Replay position"
+                                onChange={(event) => {
+                                    setPlaying(false);
+                                    setCursor(Number(event.target.value));
+                                }}
+                                className="min-w-[120px] flex-1"
+                            />
+                            <span className="flex gap-2" role="group" aria-label="Replay speed">
+                                {[1, 4, 16].map((value) => (
+                                    <button key={value} type="button" aria-pressed={speed === value} onClick={() => setSpeed(value)} className={speed === value ? "text-white" : "text-[#7d7d87] hover:text-white"}>
+                                        {value}x
+                                    </button>
+                                ))}
+                            </span>
+                            {replayResult && <span className="tabular-nums">{replayResult}</span>}
+                            <button type="button" onClick={() => { setCursor(null); setPlaying(false); }} className="text-[#7d7d87] hover:text-white">
+                                Close
+                            </button>
+                        </>
+                    )}
+                </div>
+            )}
             {!loading && !chart && (
                 <p className="px-5 py-6 text-sm leading-relaxed text-[#9a9aa5]">
                     {hasFeed ? "The price history for this trade could not be loaded just now, so no chart is drawn." : `There is no price history source for ${trade.instrument} here, so no chart can be drawn.`} {sample ? "" : "You can attach your own chart screenshot below."}

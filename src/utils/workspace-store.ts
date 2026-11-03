@@ -117,6 +117,7 @@ const KEYS = {
     trades: "alturelock:trades",
     notes: "alturelock:notes",
     imports: "alturelock:imports",
+    accountSlots: "alturelock:account-slots",
     backtests: "alturelock:backtests",
     watchlist: "alturelock:watchlist",
     timezone: "alturelock:timezone",
@@ -204,6 +205,10 @@ export type ProviderImport = {
 export type Imports = Record<string, ProviderImport>;
 
 export const useImports = () => useStored<Imports>(KEYS.imports, {});
+
+// The further accounts a trader added on a provider, with the name they gave each. No credentials here.
+export type AccountSlot = { slot: string; label: string };
+export const useAccountSlots = () => useStored<Record<string, AccountSlot[]>>(KEYS.accountSlots, {});
 
 // The instruments the trader follows, in their own order. A starting list the
 // trader can change; prices always come from the market feed, never from here.

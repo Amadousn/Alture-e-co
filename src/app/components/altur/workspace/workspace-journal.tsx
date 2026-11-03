@@ -6,12 +6,14 @@ import WorkspaceShell from "./workspace-shell";
 import JournalStudio from "@/app/components/altur/journal/journal-studio";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import {
+  useAccountSlots,
   useBacktests,
   useDailyNotes,
   useImports,
   useRecordedTrades,
 } from "@/utils/workspace-store";
 import { useSearchParams } from "next/navigation";
+import { providerFor } from "@/integrations/registry";
 
 // How far back the calendar can be browsed.
 const HISTORY_DAYS = 365;
@@ -93,14 +95,34 @@ const WorkspaceJournal = () => {
     };
   }, []);
 
+  // One account at a time, or all of them together.
+  const [slots] = useAccountSlots();
+  const [shown, setShown] = useState("all");
+  const accounts = useMemo(() => {
+    const nameOf = (key: string) => {
+      const [provider, slot] = key.split(":");
+      const label = slot && slots[provider]?.find((item) => item.slot === slot)?.label;
+      return label || providerFor(provider)?.name || provider;
+    };
+    return [
+      ...(recorded.length ? [{ id: "recorded", name: "Added by hand" }] : []),
+      ...Object.keys(imports)
+        .filter((key) => imports[key].trades.length || imports[key].positions.length)
+        .map((key) => ({ id: key, name: nameOf(key) })),
+    ];
+  }, [imports, recorded.length, slots]);
+  const selected = accounts.some((item) => item.id === shown) ? shown : "all";
+
   const trades = useMemo(() => {
+    if (selected === "recorded") return recorded;
+    if (selected !== "all") return imports[selected]?.trades ?? [];
     // The owner-only server sync is ignored once a connection has imported trades, so nothing is counted twice.
     const synced =
       imported.length === 0 && sync.status === "on" ? sync.trades : [];
     return [...recorded, ...imported, ...synced].sort(
       (a, b) => b.closedAt - a.closedAt,
     );
-  }, [recorded, imported, sync]);
+  }, [recorded, imported, imports, selected, sync]);
 
   const saveNote = (dateKey: string, text: string | null) =>
     setNotes((current) => {
@@ -157,6 +179,22 @@ const WorkspaceJournal = () => {
             ))}
           </div>
 
+          {account === "real" && accounts.length > 1 && (
+            <div className="mb-6 flex flex-wrap gap-2 text-xs" role="group" aria-label="Show account">
+              {[{ id: "all", name: "All accounts" }, ...accounts].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={selected === item.id}
+                  onClick={() => setShown(item.id)}
+                  className={`rounded-sm border px-3 py-1.5 transition-colors ${selected === item.id ? "border-white bg-white text-black" : "border-white/20 text-[#9a9aa5] hover:text-white"}`}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          )}
+
           {account === "backtest" ? (
             <JournalStudio
               key="backtest"
@@ -188,7 +226,11 @@ const WorkspaceJournal = () => {
               reviewable
               trades={trades}
               positions={
-                importedPositions.length > 0
+                selected === "recorded"
+                  ? []
+                  : selected !== "all"
+                    ? (imports[selected]?.positions ?? [])
+                  : importedPositions.length > 0
                   ? importedPositions
                   : imported.length === 0 && sync.status === "on"
                     ? sync.positions
@@ -230,7 +272,7 @@ const WorkspaceJournal = () => {
                     {noteCount} {noteCount === 1 ? "note" : "notes"}
                   </span>
                   <span className="text-[#55555e]">·</span>
-                  <span>Saved in this browser</span>
+                  <span>Saved with your journal</span>
                 </>
               }
             />

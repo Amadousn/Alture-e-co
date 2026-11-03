@@ -7,6 +7,7 @@ import { BRAND_MARKS, BrandMark } from "@/app/components/altur/brand/brand-marks
 import { PROVIDERS } from "@/integrations/registry";
 import type { ConnectionStatus, ProviderCategory, ProviderDefinition, ProviderId } from "@/integrations/types";
 import { useConnection } from "@/integrations/use-connection";
+import { useAccountSlots, useImports } from "@/utils/workspace-store";
 
 const CATEGORIES: ProviderCategory[] = ["Crypto exchanges", "Futures trading", "Forex / CFD trading", "Stocks and ETFs", "Charting and trading"];
 
@@ -77,9 +78,9 @@ const GUIDES: Partial<Record<ProviderId, Guide>> = {
     hyperliquid: { steps: ["Copy the wallet address you trade with on Hyperliquid.", "Paste it here. Nothing else is needed."], demo: null, secret: "", minLength: 0, address: true, note: "Hyperliquid's history is public on its chain. AltureLock only reads it: there is no key, nothing to sign, and nothing that could ever trade or move funds." },
 };
 
-const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
+const ExchangeRow = ({ provider, slot = "", label, onRemoved }: { provider: ProviderDefinition; slot?: string; label?: string; onRemoved?: () => void }) => {
     const guide = GUIDES[provider.id]!;
-    const connection = useConnection(provider.id);
+    const connection = useConnection(provider.id, slot);
     const [open, setOpen] = useState(false);
     const [environment, setEnvironment] = useState<"demo" | "live">("demo");
     const [apiKey, setApiKey] = useState("");
@@ -106,7 +107,7 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
 
     return (
         <Row
-            provider={provider}
+            provider={label ? { ...provider, name: label } : provider}
             status={!connection.ready ? <span className="text-xs text-white/45">Checking…</span> : !connection.available ? <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/55">Unavailable</span> : <Status status={status} />}
             action={
                 !connection.ready || !connection.available ? null : connected ? (
@@ -175,10 +176,10 @@ const ExchangeRow = ({ provider }: { provider: ProviderDefinition }) => {
                     <p className="text-sm text-white mb-1">Disconnect {provider.name}?</p>
                     <p className="text-sm text-white/55 mb-4 max-w-2xl">AltureLock forgets the key at once. To cancel the key itself, delete it in your {provider.name} account under API Management.</p>
                     <div className="flex flex-wrap gap-2">
-                        <button type="button" onClick={() => connection.disconnect(false).then(() => setConfirming(false))} className={primary}>
+                        <button type="button" onClick={() => connection.disconnect(false).then(() => { setConfirming(false); onRemoved?.(); })} className={primary}>
                             Disconnect, keep imported trades
                         </button>
-                        <button type="button" onClick={() => connection.disconnect(true).then(() => setConfirming(false))} className={quiet}>
+                        <button type="button" onClick={() => connection.disconnect(true).then(() => { setConfirming(false); onRemoved?.(); })} className={quiet}>
                             Disconnect and remove imported trades
                         </button>
                         <button type="button" onClick={() => setConfirming(false)} className="px-3 text-xs text-white/55 hover:text-white">
@@ -282,6 +283,43 @@ const PlannedRow = ({ provider }: { provider: ProviderDefinition }) => {
     );
 };
 
+// A provider's accounts: the first one, then any the trader added and named.
+const ExchangeAccounts = ({ provider }: { provider: ProviderDefinition }) => {
+    const [slots, setSlots] = useAccountSlots();
+    const [imports] = useImports();
+    const [naming, setNaming] = useState(false);
+    const [name, setName] = useState("");
+    const extra = slots[provider.id] ?? [];
+    const add = (event: FormEvent) => {
+        event.preventDefault();
+        const label = name.trim() || `${provider.name} ${extra.length + 2}`;
+        setSlots((current) => ({ ...current, [provider.id]: [...(current[provider.id] ?? []), { slot: crypto.randomUUID().replace(/-/g, "").slice(0, 8), label }] }));
+        setName("");
+        setNaming(false);
+    };
+    const remove = (slot: string) => setSlots((current) => ({ ...current, [provider.id]: (current[provider.id] ?? []).filter((item) => item.slot !== slot) }));
+    return (
+        <>
+            <ExchangeRow provider={provider} />
+            {extra.map((item) => (
+                <ExchangeRow key={item.slot} provider={provider} slot={item.slot} label={item.label} onRemoved={() => remove(item.slot)} />
+            ))}
+            {imports[provider.id] && (
+                <li className="py-3 text-sm">
+                    {naming ? (
+                        <form onSubmit={add} className="flex flex-wrap items-center gap-2">
+                            <input value={name} onChange={(event) => setName(event.target.value)} placeholder={`${provider.name} ${extra.length + 2}`} aria-label="Account name" className={`${fieldClass} max-w-xs`} />
+                            <button type="submit" className={quiet}>Add</button>
+                        </form>
+                    ) : (
+                        <button type="button" onClick={() => setNaming(true)} className="text-white/60 hover:text-white">+ Add another {provider.name} account</button>
+                    )}
+                </li>
+            )}
+        </>
+    );
+};
+
 const WorkspaceConnections = () => (
     <WorkspaceShell>
         <div className="grid lg:grid-cols-12 gap-x-10 gap-y-4 items-end mb-10 md:mb-14">
@@ -295,7 +333,7 @@ const WorkspaceConnections = () => (
                 <section key={category} className="!py-0 mb-12 !bg-transparent">
                     <SectionMark label={category} className="!border-t-0 mb-3" />
                     <ul>
-                        {list.map((provider) => (GUIDES[provider.id] && provider.availability === "available" ? <ExchangeRow key={provider.id} provider={provider} /> : <PlannedRow key={provider.id} provider={provider} />))}
+                        {list.map((provider) => (GUIDES[provider.id] && provider.availability === "available" ? <ExchangeAccounts key={provider.id} provider={provider} /> : <PlannedRow key={provider.id} provider={provider} />))}
                         <li className="border-t border-white/15" aria-hidden="true" />
                     </ul>
                 </section>

@@ -57,8 +57,8 @@ const PLANS = [
     },
     {
         name: "Journal",
-        monthly: 29,
-        yearly: 23,
+        monthly: 39,
+        yearly: 31,
         text: "For the trader who wants the truth about every trade.",
         items: ["Exchange connected: your journal fills itself", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
@@ -66,8 +66,8 @@ const PLANS = [
     },
     {
         name: "Terminal",
-        monthly: 39,
-        yearly: 31,
+        monthly: 59,
+        yearly: 47,
         text: "For the trader who needs the rules in front of every entry.",
         items: ["Pre-trade checklist and daily loss limits", "Position size calculator", "Live charts and order flow", "News, economic calendar and live TV"],
         soon: [] as string[],
