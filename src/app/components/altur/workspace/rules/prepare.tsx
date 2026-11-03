@@ -6,6 +6,7 @@ import { ActiveTrade, DEFAULT_CHECKLIST, TradePlan, WorkspaceSettings } from "@/
 import { Asset, ASSETS, assetFor, derivePlan, fallbackTick, num, planIssues, snap } from "@/utils/trade-plan";
 import type { Market, Quotes } from "@/utils/use-market";
 import TradeChart, { Level } from "./trade-chart";
+import { Attribution, IndicatorCandlesChart, tradingViewUrl } from "../os/tv";
 import { Cells, Chip, clock, Explain, feedName, fieldClass, labelClass, money, panelClass, priceText, primaryButton, quantityText, quietButton, StateBadge } from "./ui";
 
 const STEPS = ["Asset", "Direction", "Setup", "Levels", "Ready"] as const;
@@ -113,6 +114,22 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
     const [placing, setPlacing] = useState<Level | null>(null);
     // Guided placing runs until the trader chooses to type instead.
     const [guided, setGuided] = useState(true);
+    // Which chart is showing. A market with no feed opens on TradingView, the only chart it has.
+    const [chartView, setChartView] = useState<"levels" | "tradingview" | null>(null);
+    const showTradingView = (chartView ?? (asset?.feed ? "levels" : "tradingview")) === "tradingview";
+    const [otherMarket, setOtherMarket] = useState("");
+    const [contracts, setContracts] = useState<string[]>([]);
+    useEffect(() => {
+        if (step !== 0 || contracts.length) return;
+        let live = true;
+        fetch("/api/market/tickers")
+            .then((res) => (res.ok ? res.json() : Promise.reject()))
+            .then((json) => live && setContracts((json.tickers as { symbol: string }[]).map((row) => row.symbol).sort()))
+            .catch(() => {});
+        return () => {
+            live = false;
+        };
+    }, [step, contracts.length]);
     const advance = useRef<ReturnType<typeof setTimeout> | null>(null);
     useEffect(() => () => void (advance.current && clearTimeout(advance.current)), []);
 
@@ -147,6 +164,18 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
         Setup: plan.setup,
         Levels: valid && derived.ratio !== null ? `1 : ${derived.ratio.toFixed(2)}` : "",
         Ready: tradeReady ? "Ready" : reached === 4 ? `${confirmed.filter(Boolean).length} of 3` : "",
+    };
+
+    // Price levels belong to one asset, so a new asset starts with a clean plan.
+    const startPlan = (instrument: string): Partial<TradePlan> => ({ instrument, plannedEntry: "", actualEntry: "", stopLoss: "", takeProfit: "", quantity: "" });
+    const pickOther = () => {
+        const typed = otherMarket.trim().toUpperCase().replace(/[\s/-]/g, "");
+        if (!typed) return;
+        // "PEPE" finds its contract, even a scaled one such as 1000PEPEUSDT; anything else is a stock or forex pair as typed.
+        const contract = contracts.find((symbol) => symbol === typed) ?? contracts.find((symbol) => symbol === `${typed}USDT`) ?? contracts.find((symbol) => new RegExp(`^\\d+${typed}USDT$`).test(symbol));
+        setChartView(null);
+        setOtherMarket("");
+        choose(startPlan(contract ?? typed), 1);
     };
 
     const feedLine =
@@ -244,7 +273,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                         onClick={() =>
                                             choose(
                                                 // Price levels belong to one asset, so a new asset starts with a clean plan.
-                                                selected ? {} : { instrument: option.instrument, plannedEntry: "", actualEntry: "", stopLoss: "", takeProfit: "", quantity: "" },
+                                                selected ? {} : startPlan(option.instrument),
                                                 1
                                             )
                                         }
@@ -277,13 +306,33 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                             );
                         })}
                     </ul>
-                    <p className="px-5 md:px-7 py-4 text-xs leading-relaxed text-[#7d7d87]">
+                    <form
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            pickOther();
+                        }}
+                        className="flex flex-wrap items-end gap-3 border-t border-white/15 px-5 md:px-7 py-4"
+                    >
+                        <label className="min-w-[220px] flex-1">
+                            <span className={labelClass}>Another market</span>
+                            <input value={otherMarket} onChange={(event) => setOtherMarket(event.target.value)} list="plan-markets" placeholder="PEPE, AAPL, EURUSD" autoComplete="off" spellCheck={false} className={`${fieldClass} mt-1.5 uppercase placeholder:normal-case`} />
+                            <datalist id="plan-markets">
+                                {contracts.map((symbol) => (
+                                    <option key={symbol} value={symbol} />
+                                ))}
+                            </datalist>
+                        </label>
+                        <button type="submit" disabled={!otherMarket.trim()} className={quietButton}>
+                            Continue
+                        </button>
+                    </form>
+                    <p className="border-t border-white/15 px-5 md:px-7 py-4 text-xs leading-relaxed text-[#7d7d87]">
                         {quotes.status === "live"
                             ? quotes.simulated ? `${quotes.source}.` : `Prices: ${quotes.source}. Updated ${clock(quotes.fetchedAt)}. Your own broker may quote slightly differently.`
                             : quotes.status === "loading"
                               ? "Loading prices…"
                               : "Live prices are unavailable right now. You can still choose an asset and plan with prices from your own chart."}{" "}
-                        No live price feed is connected for Nasdaq, so you enter its prices yourself.
+                        Bybit also lists some stocks and forex pairs, such as AAPL and EURUSD. A market without a feed opens on TradingView, and you enter its prices yourself.
                     </p>
                 </div>
             )}
@@ -346,6 +395,23 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
 
                         <div className="grid lg:grid-cols-[minmax(0,1fr)_370px]">
                             <div className="flex min-w-0 flex-col">
+                                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/15 px-5 md:px-7 py-2">
+                                    <div role="group" aria-label="Chart" className="flex gap-1 text-xs">
+                                        {(["levels", "tradingview"] as const).map((id) => (
+                                            <button key={id} type="button" aria-pressed={showTradingView === (id === "tradingview")} onClick={() => setChartView(id)} className={`rounded-sm px-3 py-1.5 transition-colors ${showTradingView === (id === "tradingview") ? "bg-white text-black" : "text-[#9a9aa5] hover:text-white"}`}>
+                                                {id === "levels" ? "Your levels" : "TradingView"}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    {showTradingView && <Attribution href={tradingViewUrl(plan.instrument)}>Powered by TradingView</Attribution>}
+                                </div>
+                                {showTradingView ? (
+                                    <div className="relative h-[300px] sm:h-[360px] lg:h-auto lg:min-h-[440px] lg:flex-1">
+                                        <div className="absolute inset-0">
+                                            <IndicatorCandlesChart symbol={plan.instrument} interval="15" timezone={Intl.DateTimeFormat().resolvedOptions().timeZone} />
+                                        </div>
+                                    </div>
+                                ) : (
                                 <TradeChart
                                     className="h-[300px] sm:h-[360px] lg:h-auto lg:min-h-[440px] lg:flex-1"
                                     candles={live?.candles ?? null}
@@ -361,6 +427,23 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                     caption={live ? (live.simulated ? `${live.symbol} · simulated candles for the demo` : `${live.symbol} · last 24 hours · 15-minute candles`) : "Your plan levels · no price feed"}
                                     emptyText={market.status === "loading" ? "Loading price…" : "No price chart is available for this asset. Type your entry price and your levels appear here."}
                                 />
+                                )}
+                                {/* Both levels point the other way: the trader decides, nothing is changed for them. */}
+                                {derived.stop !== null && derived.target !== null && !derived.stopOnRightSide && !derived.targetOnRightSide && (
+                                    <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E955A8]/50 bg-[#E955A8]/10 px-5 md:px-7 py-3 text-sm text-white">
+                                        <span>
+                                            You chose {plan.direction.toLowerCase()}, but these levels are a {plan.direction === "Long" ? "short" : "long"}.
+                                        </span>
+                                        <span className="flex flex-wrap gap-2">
+                                            <button type="button" onClick={() => patchPlan({ direction: plan.direction === "Long" ? "Short" : "Long" })} className="rounded-sm bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#e4e4e8]">
+                                                Switch to {plan.direction === "Long" ? "short" : "long"}
+                                            </button>
+                                            <button type="button" onClick={() => patchPlan({ stopLoss: plan.takeProfit, takeProfit: plan.stopLoss })} className="rounded-sm border border-white/30 px-3 py-1.5 text-xs text-white hover:border-white">
+                                                Stay {plan.direction.toLowerCase()}, swap the levels
+                                            </button>
+                                        </span>
+                                    </div>
+                                )}
                                 <p className="border-t border-white/15 px-5 md:px-7 py-2.5 text-xs leading-relaxed text-[#7d7d87]">{feedLine}</p>
                             </div>
 

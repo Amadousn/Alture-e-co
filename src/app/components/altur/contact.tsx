@@ -4,7 +4,7 @@ import { DubaiTime, SectionMark } from "@/app/components/altur/brand/desk-mark";
 import SocialLinks from "@/app/components/altur/brand/social-links";
 import { useLanguage } from "@/app/i18n/language-context";
 
-const EMAIL = "celine@altureandco.com";
+const EMAIL = "contact@altureandco.com";
 
 // One way to get in touch, set large. No scroll-in animation: "Request
 // access" links land here directly, and it has to be readable at once.

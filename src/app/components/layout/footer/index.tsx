@@ -57,7 +57,7 @@ const Footer = () => {
               <h4 className="text-[11px] !font-normal uppercase tracking-[0.14em] mb-4 md:mb-6 text-white/45">{t.footer.contact}</h4>
               <ul className="space-y-3 md:space-y-4">
                 <li>
-                  <a href="mailto:celine@altureandco.com" className="nav-link is-inline font-light text-sm tracking-wide break-all">celine@altureandco.com</a>
+                  <a href="mailto:contact@altureandco.com" className="nav-link is-inline font-light text-sm tracking-wide break-all">contact@altureandco.com</a>
                 </li>
                 <li>
                   <SocialLinks className="-ml-2.5" />

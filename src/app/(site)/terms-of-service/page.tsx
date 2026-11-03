@@ -45,7 +45,7 @@ const sections = [
     {
         heading: "Contact",
         body: [
-            "celine@altureandco.com",
+            "contact@altureandco.com",
         ],
     },
 ];

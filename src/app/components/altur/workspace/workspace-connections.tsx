@@ -26,8 +26,12 @@ const dateTime = (time: number) => new Date(time).toLocaleString(undefined, { da
 
 // The provider's brand mark where a verified one is available; otherwise a
 // plain dashed square that cannot be mistaken for a real logo.
+const LOGO_FILES = ["bitget", "hyperliquid", "ibkr", "metatrader5", "ninjatrader", "tradovate"];
 const Logo = ({ provider }: { provider: ProviderDefinition }) =>
-    BRAND_MARKS[provider.id] ? (
+    LOGO_FILES.includes(provider.id) ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={`/images/brokers/${provider.id}.png`} alt={`${provider.name} logo`} width={40} height={40} className="h-10 w-10 flex-shrink-0 rounded-sm object-contain" />
+    ) : BRAND_MARKS[provider.id] ? (
         <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-white" role="img" aria-label={`${provider.name} logo`}>
             <BrandMark name={provider.id} className={provider.id === "bybit" ? "h-10 w-10" : "h-7 w-7"} />
         </span>
@@ -299,7 +303,7 @@ const WorkspaceConnections = () => (
         })}
 
         <p className="text-xs leading-relaxed text-white/40 max-w-3xl">
-            Logos are shown where a verified brand mark is available; "Logo pending" marks the ones still to be added. Imported trades are kept in this browser, like the rest of your journal. Provider names are the property of their owners; listing a provider here does not mean it is connected or endorsed.
+            Provider names are the property of their owners; listing a provider here does not mean it is connected or endorsed.
         </p>
     </WorkspaceShell>
 );

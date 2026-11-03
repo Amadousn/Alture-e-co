@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FEED_SYMBOLS } from "@/utils/trade-plan";
+import { FEED_PATTERN, FEED_SYMBOLS } from "@/utils/trade-plan";
 
 // Public market data for the Rules planner, from Bybit's public endpoints
 // (no API key). If Bybit cannot be reached the route says so: it never
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ quotes, source: SOURCE, fetchedAt: Date.now() }, { headers });
     }
 
-    if (!FEED_SYMBOLS.includes(symbol)) return NextResponse.json({ unavailable: true }, { status: 404 });
+    if (!FEED_PATTERN.test(symbol)) return NextResponse.json({ unavailable: true }, { status: 404 });
 
     try {
         const [ticker, kline, info] = await Promise.all([

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ClosedTrade } from "@/utils/bybit";
 import { INTERVAL_MS } from "@/utils/order-flow";
 
@@ -15,6 +15,7 @@ const AXIS_H = 24;
 const TOP = 30;
 const GAP = 5;
 const DEFAULT_COUNT = 110;
+const MIN_COUNT = 20;
 
 // A "nice" step for the price scale: 1, 2 or 5 times a power of ten.
 function niceStep(range: number, target: number) {
@@ -27,8 +28,12 @@ function niceStep(range: number, target: number) {
 type PlotProps = { candles: Candle[]; size: { w: number; h: number }; count: number; offset: number; setCount: (next: number) => void; setOffset: (next: number) => void; symbol: string; interval: string; levels: ChartLevel[]; trades: ClosedTrade[] };
 
 export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol, interval, levels, trades }: PlotProps) => {
+    const clip = useId();
     const [hover, setHover] = useState<{ x: number; y: number } | null>(null);
-    const drag = useRef<{ x: number; offset: number } | null>(null);
+    const drag = useRef<{ x: number; y: number; offset: number; count: number; zoom: number; zone: "plot" | "price" | "time" } | null>(null);
+    // Dragging the price scale stretches the candles: below 1 tall, above 1 flat.
+    const [priceZoom, setPriceZoom] = useState(1);
+    const [zone, setZone] = useState<"plot" | "price" | "time">("plot");
 
     const total = candles.length;
     const shownCount = Math.min(count, total);
@@ -52,8 +57,10 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
     // The others are named at the edge they lie beyond, so the plan is never out of sight.
     const above = levels.filter((level) => level.price >= hi + span * 0.8).sort((a, b) => a.price - b.price);
     const below = levels.filter((level) => level.price <= lo - span * 0.8).sort((a, b) => b.price - a.price);
-    const min = Math.min(lo, ...near.map((level) => level.price)) - span * 0.06;
-    const max = Math.max(hi, ...near.map((level) => level.price)) + span * 0.06;
+    const fitMin = Math.min(lo, ...near.map((level) => level.price)) - span * 0.06;
+    const fitMax = Math.max(hi, ...near.map((level) => level.price)) + span * 0.06;
+    const min = (fitMin + fitMax) / 2 - ((fitMax - fitMin) / 2) * priceZoom;
+    const max = (fitMin + fitMax) / 2 + ((fitMax - fitMin) / 2) * priceZoom;
     const y = (price: number) => TOP + ((max - price) / (max - min)) * priceH;
     const priceAt = (py: number) => max - ((py - TOP) / priceH) * (max - min);
     const x = (i: number) => (i + 0.5) * slot;
@@ -103,25 +110,39 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
             return fills.filter((fill) => fill.at >= from && fill.at <= to && fill.price > min && fill.price < max).map((fill) => ({ ...fill, long: trade.direction === "Long", id: `${trade.id}-${fill.kind}-${fill.at}` }));
         });
 
+    const zoneAt = (px: number, py: number) => (px > plotW ? "price" : py > h - AXIS_H ? "time" : "plot");
+    const reset = () => {
+        setOffset(0);
+        setCount(DEFAULT_COUNT);
+        setPriceZoom(1);
+    };
+
     const move = (event: React.PointerEvent<HTMLDivElement>) => {
         const rect = event.currentTarget.getBoundingClientRect();
         const px = event.clientX - rect.left;
         const py = event.clientY - rect.top;
-        if (drag.current) {
+        if (drag.current?.zone === "price") setPriceZoom(Math.max(0.15, Math.min(6, drag.current.zoom * Math.exp((py - drag.current.y) / 180))));
+        else if (drag.current?.zone === "time") setCount(Math.round(Math.max(MIN_COUNT, Math.min(total, drag.current.count * Math.exp((px - drag.current.x) / 220)))));
+        else if (drag.current) {
             const moved = Math.round((px - drag.current.x) / Math.max(slot, 1));
             setOffset(Math.max(0, Math.min(maxOffset, drag.current.offset + moved)));
         }
+        if (!drag.current) setZone(zoneAt(px, py));
         setHover(px >= 0 && px <= plotW && py >= TOP && py <= TOP + plotH ? { x: px, y: py } : null);
     };
 
     return (
         <div
-            className="relative h-full select-none cursor-crosshair"
+            className={`relative h-full select-none ${zone === "price" ? "cursor-ns-resize" : zone === "time" ? "cursor-ew-resize" : "cursor-crosshair"}`}
             style={{ touchAction: "pan-y" }}
             onPointerMove={move}
+            // Safari would otherwise select the text around the chart during a drag.
+            onMouseDown={(event) => event.preventDefault()}
             onPointerDown={(event) => {
                 const rect = event.currentTarget.getBoundingClientRect();
-                drag.current = { x: event.clientX - rect.left, offset: shift };
+                const px = event.clientX - rect.left;
+                const py = event.clientY - rect.top;
+                drag.current = { x: px, y: py, offset: shift, count: shownCount, zoom: priceZoom, zone: zoneAt(px, py) };
                 event.currentTarget.setPointerCapture(event.pointerId);
             }}
             onPointerUp={() => (drag.current = null)}
@@ -130,10 +151,7 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                 drag.current = null;
                 setHover(null);
             }}
-            onDoubleClick={() => {
-                setOffset(0);
-                setCount(DEFAULT_COUNT);
-            }}
+            onDoubleClick={reset}
         >
             <svg width={w} height={h} className="block" role="img" aria-label={`${symbol} candle chart`}>
                 {/* Scale */}
@@ -159,6 +177,10 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                     const vh = (candle.v / maxVol) * volH;
                     return <rect key={`v${candle.t}`} x={x(i) - body / 2} y={TOP + plotH - vh} width={body} height={vh} fill={color} opacity={0.32} />;
                 })}
+                <clipPath id={clip}>
+                    <rect x={0} y={TOP} width={plotW} height={priceH} />
+                </clipPath>
+                <g clipPath={`url(#${clip})`}>
                 {rows.map((candle, i) => {
                     const color = candle.c >= candle.o ? UP : DOWN;
                     return (
@@ -168,6 +190,7 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                         </g>
                     );
                 })}
+                </g>
 
                 {/* The trade in progress */}
                 {near.map((level) => (
@@ -252,14 +275,11 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                 {marks.length > 0 && <span className="text-white/35">▲ your entries and exits</span>}
             </p>
 
-            {(shift > 0 || shownCount !== Math.min(DEFAULT_COUNT, total)) && (
+            {(shift > 0 || priceZoom !== 1 || shownCount !== Math.min(DEFAULT_COUNT, total)) && (
                 <button
                     type="button"
                     onPointerDown={(event) => event.stopPropagation()}
-                    onClick={() => {
-                        setOffset(0);
-                        setCount(DEFAULT_COUNT);
-                    }}
+                    onClick={reset}
                     className="absolute bottom-8 rounded-sm bg-[#1c1c20] px-2.5 py-1 text-[11px] text-white hover:bg-[#2a2a30]"
                     style={{ right: AXIS_W + 8 }}
                 >

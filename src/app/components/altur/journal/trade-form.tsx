@@ -17,12 +17,19 @@ const toInput = (at: number) => {
 const fromInput = (value: string) => (value ? Date.parse(`${value}:00Z`) : NaN);
 const num = (value: string) => (value.trim() === "" ? NaN : Number(value.replace(",", ".")));
 
-type Draft = { instrument: string; direction: "Long" | "Short"; entry: string; exit: string; quantity: string; leverage: string; fee: string; opened: string; closed: string; setup: string; reported: string };
+type Draft = { instrument: string; direction: "Long" | "Short"; entry: string; exit: string; quantity: string; leverage: string; fee: string; opened: string; closed: string; setup: string; reported: string; market: Market; sizeIn: "value" | "margin" | "units" | "lots" };
+type Market = "crypto" | "stocks";
+// What one standard lot holds: 100,000 of a currency, 100 ounces of gold. Other symbols differ per broker, so they have no lot here.
+const CURRENCIES = "USD|EUR|GBP|JPY|CHF|AUD|NZD|CAD";
+const lotOf = (symbol: string) => (symbol === "XAUUSD" ? 100 : new RegExp(`^(${CURRENCIES})(${CURRENCIES})$`).test(symbol) ? 100000 : null);
 
 // colours: the journal theme variables, since the form is drawn outside the page.
 const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; onSave: (trade: ClosedTrade) => void; onClose: () => void; colours?: React.CSSProperties }) => {
     const [draft, setDraft] = useState<Draft>(() => ({
         instrument: trade ? trade.instrument.replace(/USDT$/, "") : "BTC",
+        market: !trade || trade.instrument.endsWith("USDT") ? "crypto" : "stocks",
+        // Crypto traders size in USDT; a saved trade reopens in the units it holds, so nothing is rounded.
+        sizeIn: trade ? "units" : "value",
         direction: trade?.direction ?? "Long",
         entry: trade ? String(trade.entryPrice) : "",
         exit: trade ? String(trade.exitPrice) : "",
@@ -42,15 +49,27 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
         return () => window.removeEventListener("keydown", key);
     }, [onClose]);
 
-    const v = { entry: num(draft.entry), exit: num(draft.exit), quantity: num(draft.quantity), leverage: num(draft.leverage), fee: draft.fee.trim() === "" ? 0 : num(draft.fee), opened: fromInput(draft.opened), closed: fromInput(draft.closed), reported: num(draft.reported) };
+    const typedSize = num(draft.quantity);
+    const crypto = draft.market === "crypto";
+    const inValue = crypto && draft.sizeIn === "value";
+    const inMargin = crypto && draft.sizeIn === "margin";
+    const symbol = draft.instrument.trim().toUpperCase();
+    const lot = crypto ? null : lotOf(symbol);
+    const inLots = lot !== null && draft.sizeIn !== "units";
+    const quote = symbol.slice(-3);
+    const asset = draft.instrument.trim().toUpperCase().replace(/USDT$/, "") || "asset";
+    const v = { entry: num(draft.entry), exit: num(draft.exit), quantity: inValue ? typedSize / num(draft.entry) : inMargin ? (typedSize * num(draft.leverage)) / num(draft.entry) : inLots ? typedSize * lot : typedSize, leverage: num(draft.leverage), fee: draft.fee.trim() === "" ? 0 : num(draft.fee), opened: fromInput(draft.opened), closed: fromInput(draft.closed), reported: num(draft.reported) };
     const gross = (v.exit - v.entry) * v.quantity * (draft.direction === "Long" ? 1 : -1);
-    const computed = gross - v.fee;
+    // A pair not quoted in USD cannot be summed here: its profit is in another currency.
+    const computed = lot !== null && quote !== "USD" ? NaN : gross - v.fee;
     const problems = useMemo(() => {
         const out: string[] = [];
         if (!/^[A-Za-z0-9]{2,15}$/.test(draft.instrument.trim())) out.push("Name the asset, for example BTC.");
         if (!(v.entry > 0)) out.push("Enter the entry price.");
         if (!(v.exit > 0)) out.push("Enter the exit price.");
-        if (!(v.quantity > 0)) out.push("Enter the size, in units of the asset.");
+        if (!(v.quantity > 0)) out.push(inMargin ? "Enter the entry price, the margin and the leverage." : inValue ? "Enter the entry price and the position size in USDT." : "Enter the size.");
+        // The sum of such a trade is in its quote currency; only the broker knows it in the account's.
+        if (lot !== null && quote !== "USD" && !Number.isFinite(v.reported)) out.push(`The profit on ${symbol} is in ${quote}. Enter the result your broker reported.`);
         if (!(v.leverage >= 1)) out.push("Leverage is 1 or more.");
         if (!(v.fee >= 0)) out.push("Fees cannot be negative.");
         if (!Number.isFinite(v.closed)) out.push("Enter when the trade closed.");
@@ -64,7 +83,7 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
         setTried(true);
         if (problems.length) return;
         const symbol = draft.instrument.trim().toUpperCase();
-        const instrument = symbol.endsWith("USDT") ? symbol : `${symbol}USDT`;
+        const instrument = draft.market === "stocks" || symbol.endsWith("USDT") ? symbol : `${symbol}USDT`;
         const useReported = Number.isFinite(v.reported);
         onSave({
             ...(trade ?? {}),
@@ -88,6 +107,7 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
 
     const field = "!mt-1.5 !block !w-full !rounded-lg !border-0 !bg-[var(--j-s2)] !px-3 !py-2 !text-[14px] !text-[var(--j-ink)] placeholder:!text-[var(--j-fa)]";
     const label = "block text-[12.5px] text-[var(--j-mu)]";
+    const dollars = (value: number) => `$${value.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
     const money = (value: number) => `${value < 0 ? "−" : "+"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     return createPortal(
@@ -106,10 +126,22 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
                         Cancel
                     </button>
                 </div>
-                <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4">
+                <div className="mt-5 flex rounded-lg bg-[var(--j-s2)] p-1" role="group" aria-label="Market">
+                    {(
+                        [
+                            ["crypto", "Crypto"],
+                            ["stocks", "Stocks and forex"],
+                        ] as const
+                    ).map(([id, name]) => (
+                        <button key={id} type="button" aria-pressed={draft.market === id} onClick={() => set({ market: id, instrument: draft.market === id ? draft.instrument : "", quantity: "" })} className={`flex-1 rounded-md py-1.5 text-[13.5px] ${draft.market === id ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "text-[var(--j-mu)]"}`}>
+                            {name}
+                        </button>
+                    ))}
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
                     <label className={label}>
                         Asset
-                        <input value={draft.instrument} onChange={(e) => set({ instrument: e.target.value })} placeholder="BTC" className={field} />
+                        <input value={draft.instrument} onChange={(e) => set({ instrument: e.target.value })} placeholder={draft.market === "crypto" ? "BTC" : "AAPL, EURUSD"} className={field} />
                     </label>
                     <div className={label}>
                         Direction
@@ -129,10 +161,53 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
                         Exit price
                         <input inputMode="decimal" value={draft.exit} onChange={(e) => set({ exit: e.target.value })} className={field} />
                     </label>
-                    <label className={label}>
-                        Size (units of the asset)
-                        <input inputMode="decimal" value={draft.quantity} onChange={(e) => set({ quantity: e.target.value })} placeholder="0.25" className={field} />
-                    </label>
+                    <div className={label}>
+                        {draft.market === "crypto" ? (
+                            <span className="flex items-center justify-between">
+                                Size
+                                <span className="flex gap-2 text-[12px]" role="group" aria-label="Size in">
+                                    {(
+                                        [
+                                            ["value", "Position"],
+                                            ["margin", "Margin"],
+                                            ["units", asset],
+                                        ] as const
+                                    ).map(([id, name]) => (
+                                        <button key={id} type="button" aria-pressed={draft.sizeIn === id} onClick={() => set({ sizeIn: id, quantity: "" })} className={draft.sizeIn === id ? "text-[var(--j-ink)]" : "text-[var(--j-fa)] hover:text-[var(--j-mu)]"}>
+                                            {name}
+                                        </button>
+                                    ))}
+                                </span>
+                            </span>
+                        ) : lot !== null ? (
+                            <span className="flex items-center justify-between">
+                                Size
+                                <span className="flex gap-2 text-[12px]" role="group" aria-label="Size in">
+                                    {(
+                                        [
+                                            ["lots", "Lots"],
+                                            ["units", "Units"],
+                                        ] as const
+                                    ).map(([id, name]) => (
+                                        <button key={id} type="button" aria-pressed={(id === "lots") === inLots} onClick={() => set({ sizeIn: id, quantity: "" })} className={(id === "lots") === inLots ? "text-[var(--j-ink)]" : "text-[var(--j-fa)] hover:text-[var(--j-mu)]"}>
+                                            {name}
+                                        </button>
+                                    ))}
+                                </span>
+                            </span>
+                        ) : (
+                            "Size (shares)"
+                        )}
+                        <input inputMode="decimal" aria-label="Size" value={draft.quantity} onChange={(e) => set({ quantity: e.target.value })} placeholder={inValue ? "Position in USDT" : inMargin ? "Margin in USDT" : crypto ? `Size in ${asset}` : inLots ? "0.50" : "100"} className={field} />
+                        {inLots && v.quantity > 0 && <span className="mt-1 block text-[11.5px] text-[var(--j-fa)]">{v.quantity.toLocaleString("en-US")} {symbol === "XAUUSD" ? "ounces" : symbol.slice(0, 3)}</span>}
+                        {crypto && (
+                            <span className="mt-1 block text-[11.5px] text-[var(--j-fa)]">
+                                {v.quantity > 0 && Number.isFinite(v.quantity) && v.leverage >= 1
+                                    ? `Position ${dollars(v.quantity * v.entry)} · Margin ${dollars((v.quantity * v.entry) / v.leverage)}`
+                                    : "Enter one, the other follows from the leverage."}
+                            </span>
+                        )}
+                    </div>
                     <label className={label}>
                         Leverage
                         <input inputMode="decimal" value={draft.leverage} onChange={(e) => set({ leverage: e.target.value })} className={field} />
@@ -180,7 +255,7 @@ const TradeForm = ({ trade, onSave, onClose, colours }: { trade?: ClosedTrade; o
                 <button type="submit" className="mt-5 w-full rounded-xl bg-[var(--j-active)] py-3 text-[14px] font-medium text-[var(--j-activeink)]">
                     {trade ? "Save the changes" : "Add to the journal"}
                 </button>
-                <p className="mt-3 text-center text-[12px] text-[var(--j-fa)]">Saved in this browser with the rest of your journal.</p>
+                <p className="mt-3 text-center text-[12px] text-[var(--j-fa)]">Saved with the rest of your journal.</p>
             </form>
         </div>,
         document.body

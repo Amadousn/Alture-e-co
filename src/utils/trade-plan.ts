@@ -5,10 +5,10 @@
 import type { ClosedTrade } from "@/utils/bybit";
 import type { ActiveTrade, TradePlan } from "@/utils/workspace-store";
 
-export type AssetId = "BTC" | "ETH" | "SOL" | "XRP" | "HYPE" | "NASDAQ";
+
 
 export type Asset = {
-    id: AssetId;
+    id: string;
     name: string;
     ticker: string;
     glyph: string;
@@ -29,9 +29,22 @@ export const ASSETS: Asset[] = [
     { id: "NASDAQ", name: "Nasdaq", ticker: "NASDAQ", glyph: "N", instrument: "NASDAQ", feed: null, unit: "units" },
 ];
 
+export const FEED_PATTERN = /^[A-Z0-9]{2,20}USDT$/;
+
 export const FEED_SYMBOLS = ASSETS.flatMap((asset) => (asset.feed ? [asset.feed] : []));
 
-export const assetFor = (instrument: string): Asset | null => ASSETS.find((asset) => asset.instrument === instrument.trim().toUpperCase()) ?? null;
+export const assetFor = (instrument: string): Asset | null => {
+    const symbol = instrument.trim().toUpperCase();
+    if (!symbol) return null;
+    const listed = ASSETS.find((asset) => asset.instrument === symbol);
+    if (listed) return listed;
+    // Any other USDT contract has Bybit's feed; a stock or forex pair has none, its prices are entered by hand.
+    if (FEED_PATTERN.test(symbol)) {
+        const ticker = symbol.replace(/USDT$/, "");
+        return { id: symbol, name: ticker, ticker, glyph: ticker[0], instrument: symbol, feed: symbol, unit: ticker };
+    }
+    return { id: symbol, name: symbol, ticker: symbol, glyph: symbol[0], instrument: symbol, feed: null, unit: "units" };
+};
 
 // Published for the instrument by the exchange whose feed is used.
 export type MarketRules = { tickSize: number; qtyStep: number; minQty: number; maxLeverage: number };

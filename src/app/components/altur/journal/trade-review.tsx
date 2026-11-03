@@ -87,7 +87,7 @@ const TradeReview = ({ tradeId }: { tradeId: string }) => {
 
             <p className={`${label} mt-5 mb-2`}>Notes</p>
             <textarea value={review.notes ?? ""} onChange={(event) => update({ notes: event.target.value })} rows={3} maxLength={1000} placeholder="What you saw, why you took it, what you would do differently." className="!block !w-full !rounded-sm !border !border-[var(--j-line,rgba(255,255,255,0.2))] !bg-transparent !px-3 !py-2 !text-sm !text-[var(--j-ink,#fff)] placeholder:!text-[var(--j-ink,#fff)]/30 focus:!border-[var(--j-ink,#fff)]" />
-            <p className="mt-2 text-[11px] text-[var(--j-mu,rgba(255,255,255,0.45))]">{store.persistent ? "Saved as you go, in this browser." : "This browser is blocking storage: the review will not be kept."}</p>
+            <p className="mt-2 text-[11px] text-[var(--j-mu,rgba(255,255,255,0.45))]">{store.persistent ? "Saved as you go." : "This browser is blocking storage: the review will not be kept."}</p>
         </div>
     );
 };

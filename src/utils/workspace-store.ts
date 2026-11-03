@@ -1,11 +1,12 @@
 "use client";
 
-// The AltureLock workspace keeps everything in the visitor's own browser.
-// There is no server copy: each of the four stores below is one localStorage
-// key, and the hooks keep every open tab and component in step.
+// Each store below is one localStorage key, and the hooks keep every open tab and
+// component in step. For a signed-in customer, utils/cloud-sync keeps the same
+// values in their account, so they follow them to any device.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
+import { endSync, queuePush, startSync } from "@/utils/cloud-sync";
 
 export type ChecklistItem = { id: string; label: string; required: boolean };
 
@@ -24,7 +25,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     { id: "conditions", label: "Trading conditions valid", required: true },
 ];
 
-export const DEFAULT_SETTINGS: WorkspaceSettings = { name: "Diva", checklist: DEFAULT_CHECKLIST };
+export const DEFAULT_SETTINGS: WorkspaceSettings = { name: "", checklist: DEFAULT_CHECKLIST };
 
 // "manage" is only found on trades saved by the first version of the
 // workflow; it is read as "execute" (see normaliseActiveTrade).
@@ -125,6 +126,8 @@ const KEYS = {
 
 const CHANGE_EVENT = "alturelock:store-change";
 
+export const signOutOfWorkspace = () => endSync(Object.values(KEYS));
+
 type StoreState = {
     // False until the saved value has been read, so pages can show a loading state.
     ready: boolean;
@@ -150,6 +153,7 @@ function useStored<T>(key: string, initial: T): [T, (next: T | ((current: T) => 
             }
         };
         read();
+        void startSync(Object.values(KEYS), CHANGE_EVENT);
         const onChange = (event: Event) => {
             if (event instanceof StorageEvent ? event.key === key : (event as CustomEvent<string>).detail === key) read();
         };
@@ -170,6 +174,7 @@ function useStored<T>(key: string, initial: T): [T, (next: T | ((current: T) => 
             setValue(resolved);
             try {
                 window.localStorage.setItem(key, JSON.stringify(resolved));
+                queuePush(key);
                 window.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: key }));
             } catch {
                 setState({ ready: true, persistent: false });
@@ -206,7 +211,7 @@ export const DEFAULT_WATCHLIST = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "H
 export const useWatchlist = () => useStored<string[]>(KEYS.watchlist, DEFAULT_WATCHLIST);
 
 // The timezone sessions and times are shown in. "local" follows the device.
-export const useTimezone = () => useStored<string>(KEYS.timezone, "Asia/Dubai");
+export const useTimezone = () => useStored<string>(KEYS.timezone, "local");
 
 // The trader's own review of a closed trade, kept apart from the trade itself so
 // that it survives a re-import from the exchange. Keyed by trade id.

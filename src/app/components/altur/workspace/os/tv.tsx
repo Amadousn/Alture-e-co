@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // TradingView's official embeddable widgets. Each is an iframe served by
 // TradingView: AltureLock cannot read what is inside it, and it gives no
@@ -57,7 +57,20 @@ export const CHART_INTERVALS = [
     { id: "D", label: "1D" },
 ] as const;
 
-export const tradingViewSymbol = (symbol: string) => `BYBIT:${symbol}.P`;
+// TradingView's own name for the market: a Bybit contract, Nasdaq's index, or a stock or forex pair as typed.
+export const tradingViewSymbol = (symbol: string) => (symbol === "NASDAQ" ? "OANDA:NAS100USD" : symbol.endsWith("USDT") ? `BYBIT:${symbol}.P` : symbol);
+
+// The candles of the Alture indicators. Only TradingView's tv.js embed accepts them.
+const INDICATOR_CANDLES = {
+    "paneProperties.background": "#000000",
+    "paneProperties.backgroundType": "solid",
+    "mainSeriesProperties.candleStyle.upColor": "#9C9C9C",
+    "mainSeriesProperties.candleStyle.borderUpColor": "#4DD0E1",
+    "mainSeriesProperties.candleStyle.wickUpColor": "#FFFFFF",
+    "mainSeriesProperties.candleStyle.downColor": "#FFFFFF",
+    "mainSeriesProperties.candleStyle.borderDownColor": "#F48FB1",
+    "mainSeriesProperties.candleStyle.wickDownColor": "#FFFFFF",
+};
 export const tradingViewUrl = (symbol: string, interval?: string) => `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(tradingViewSymbol(symbol))}${interval ? `&interval=${interval}` : ""}`;
 
 export const AdvancedChart = ({ symbol, interval, timezone, className }: { symbol: string; interval: string; timezone: string; className?: string }) => (
@@ -67,3 +80,50 @@ export const AdvancedChart = ({ symbol, interval, timezone, className }: { symbo
         config={{ autosize: true, symbol: tradingViewSymbol(symbol), interval, timezone, theme: "dark", style: "1", locale: "en", backgroundColor: "#000000", gridColor: "rgba(255,255,255,0.04)", allow_symbol_change: false, hide_side_toolbar: false, withdateranges: true, save_image: false, calendar: false, support_host: "https://www.tradingview.com" }}
     />
 );
+
+let tvScript: Promise<void> | null = null;
+const loadTv = () =>
+    (tvScript ??= new Promise<void>((resolve, reject) => {
+        const tag = document.createElement("script");
+        tag.src = "https://s3.tradingview.com/tv.js";
+        tag.onload = () => resolve();
+        tag.onerror = () => {
+            tvScript = null;
+            reject(new Error("TradingView unavailable"));
+        };
+        document.head.appendChild(tag);
+    }));
+
+// TradingView's chart with the candles of our indicators.
+export const IndicatorCandlesChart = ({ symbol, interval, timezone }: { symbol: string; interval: string; timezone: string }) => {
+    const host = useRef<HTMLDivElement>(null);
+    const [failed, setFailed] = useState(false);
+
+    useEffect(() => {
+        let live = true;
+        const node = host.current;
+        if (!node) return;
+        const id = `tv-${crypto.randomUUID()}`;
+        node.innerHTML = `<div id="${id}" style="height:100%;width:100%"></div>`;
+        setFailed(false);
+        loadTv()
+            .then(() => {
+                if (!live) return;
+                const { TradingView } = window as unknown as { TradingView: { widget: new (config: Record<string, unknown>) => unknown } };
+                new TradingView.widget({ autosize: true, symbol: tradingViewSymbol(symbol), interval, timezone, theme: "dark", style: "1", locale: "en", container_id: id, allow_symbol_change: false, save_image: false, overrides: INDICATOR_CANDLES, support_host: "https://www.tradingview.com" });
+            })
+            .catch(() => live && setFailed(true));
+        return () => {
+            live = false;
+            node.innerHTML = "";
+        };
+    }, [symbol, interval, timezone]);
+
+    if (failed) return <p className="flex h-full items-center justify-center px-6 text-center text-sm text-[#9a9aa5]">TradingView could not be reached. Your levels and numbers still work.</p>;
+    return (
+        <div className="relative h-full w-full">
+            <p className="absolute inset-0 flex items-center justify-center text-sm text-[#7d7d87]">Loading TradingView…</p>
+            <div ref={host} className="relative" style={{ height: "100%", width: "100%", colorScheme: "light" }} />
+        </div>
+    );
+};

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
 
 // The real AltureLock workspace is for signed-in users. The product page needs
@@ -47,8 +48,22 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL(route.loginPath, req.url));
     }
 
-    const secret = process.env[route.secretEnv];
     const loginUrl = new URL(route.loginPath, req.url);
+
+    // A customer account. getUser asks Supabase, so a forged cookie is refused,
+    // and an expiring session is renewed on the way through.
+    const res = NextResponse.next();
+    const client = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+        cookies: {
+            getAll: () => req.cookies.getAll(),
+            setAll: (list) => list.forEach(({ name, value, options }) => res.cookies.set(name, value, options)),
+        },
+    });
+    const { data } = await client.auth.getUser();
+    if (data.user) return res;
+
+    // Otherwise the owner's older login.
+    const secret = process.env[route.secretEnv];
 
     if (!secret) {
         return NextResponse.redirect(loginUrl);

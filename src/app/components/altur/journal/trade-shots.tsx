@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { compress, readShots, Shot, writeShots } from "@/utils/trade-shots";
 
 // The charts of a trade: before the entry, at the exit, the higher timeframe.
-// Added by pasting a screenshot, dropping a file or picking one. Kept in this browser.
+// Added by pasting a screenshot, dropping a file or picking one.
 
 const LIMIT = 6;
 const label = "text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]";
@@ -19,7 +19,7 @@ const TradeShots = ({ tradeId }: { tradeId: string }) => {
 
     useEffect(() => {
         let live = true;
-        readShots(tradeId).then((list) => live && setShots(list)).catch(() => live && setError("This browser is blocking storage: charts cannot be kept."));
+        readShots(tradeId).then((list) => live && setShots(list)).catch(() => live && setError("The charts could not be loaded. Check your connection and try again."));
         return () => {
             live = false;
         };
@@ -35,7 +35,7 @@ const TradeShots = ({ tradeId }: { tradeId: string }) => {
             setShots(next);
             setError("");
         } catch {
-            setError("The image could not be kept in this browser.");
+            setError("The image could not be saved. Check your connection and try again.");
         }
     };
     const remove = async (id: string) => {

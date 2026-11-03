@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ClosedTrade } from "@/utils/bybit";
-import { getScreenshot, removeScreenshot, saveScreenshot } from "@/utils/screenshot-store";
 
 type Candle = { t: number; o: number; h: number; l: number; c: number };
 
@@ -36,10 +35,6 @@ function windowFor(trade: ClosedTrade) {
 // entry, the exit and the plan's levels marked where they actually were.
 const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sample?: boolean; bare?: boolean }) => {
     const [state, setState] = useState<{ id: string; candles: Candle[] | null } | null>(null);
-    const [shot, setShot] = useState<string | null>(null);
-    const [viewing, setViewing] = useState(false);
-    const [shotError, setShotError] = useState("");
-    const picker = useRef<HTMLInputElement>(null);
     const view = windowFor(trade);
     const hasFeed = /^[A-Z0-9]{2,20}USDT$/.test(trade.instrument);
 
@@ -60,38 +55,6 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
         // The window is derived from the trade, so the trade's id is the whole dependency.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trade.id]);
-
-    // The attached screenshot, if this trade has one.
-    useEffect(() => {
-        let url: string | null = null;
-        let cancelled = false;
-        setShot(null);
-        setViewing(false);
-        setShotError("");
-        if (sample || bare) return;
-        getScreenshot(trade.id)
-            .then((blob) => {
-                if (cancelled || !blob) return;
-                url = URL.createObjectURL(blob);
-                setShot(url);
-            })
-            .catch(() => {});
-        return () => {
-            cancelled = true;
-            if (url) URL.revokeObjectURL(url);
-        };
-    }, [trade.id, sample, bare]);
-
-    const attach = async (file: File | undefined) => {
-        if (!file) return;
-        setShotError("");
-        try {
-            const blob = await saveScreenshot(trade.id, file);
-            setShot(URL.createObjectURL(blob));
-        } catch {
-            setShotError("That image could not be saved. Try a PNG or JPEG.");
-        }
-    };
 
     const loading = state === null || state.id !== trade.id;
     const candles = !loading ? state.candles : null;
@@ -210,55 +173,6 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
                 </ul>
             )}
             {chart && sample && <p className="px-5 pb-3 text-[11px] text-[#7d7d87]">Sample trade on real candles: its prices sit inside that day&apos;s range, but its times are illustrative.</p>}
-
-            {!sample && (
-                <div className="border-t border-white/15 px-5 py-4">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Chart screenshot</p>
-                        <div className="flex gap-4">
-                            <button type="button" onClick={() => picker.current?.click()} className={linkClass}>
-                                {shot ? "Replace" : "Attach a TradingView screenshot"}
-                            </button>
-                            {shot && (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        removeScreenshot(trade.id).catch(() => {});
-                                        setShot(null);
-                                        setViewing(false);
-                                    }}
-                                    className="text-xs text-[#E955A8] border-b border-[#E955A8]/50 hover:border-[#E955A8]"
-                                >
-                                    Remove
-                                </button>
-                            )}
-                        </div>
-                        <input
-                            ref={picker}
-                            type="file"
-                            accept="image/png,image/jpeg,image/webp"
-                            className="hidden"
-                            onChange={(event) => {
-                                attach(event.target.files?.[0]);
-                                event.target.value = "";
-                            }}
-                        />
-                    </div>
-                    {shot && (
-                        <button type="button" onClick={() => setViewing((value) => !value)} aria-expanded={viewing} className="mt-3 block w-full overflow-hidden border border-white/15" aria-label={viewing ? "Shrink the screenshot" : "Enlarge the screenshot"}>
-                            {/* A local image the trader attached; nothing to optimise. */}
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={shot} alt="Chart screenshot attached to this trade" className={`w-full ${viewing ? "" : "max-h-40 object-cover object-top"}`} />
-                        </button>
-                    )}
-                    {shotError && (
-                        <p role="alert" className="mt-2 text-xs text-[#E955A8]">
-                            {shotError}
-                        </p>
-                    )}
-                    {!shot && !shotError && <p className="mt-2 text-xs text-[#7d7d87]">Kept in this browser with the rest of your journal.</p>}
-                </div>
-            )}
         </div>
     );
 };

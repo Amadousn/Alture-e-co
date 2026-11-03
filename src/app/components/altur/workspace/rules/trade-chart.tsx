@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { Candle } from "@/utils/use-market";
 import { decimalsOf, fallbackTick, snap } from "@/utils/trade-plan";
 import { DOWN, UP } from "./ui";
@@ -37,8 +37,14 @@ const PAD_BOTTOM = 26;
 
 // Price chart with the three plan levels drawn on it. Levels can be dragged,
 // nudged with the arrow keys, or placed with a click.
-const TradeChart = ({ candles, levels, marker, tick, editable = [], placing = null, onChange, onPlaced, riskText, rewardText, caption, emptyText, className = "" }: Props) => {
+const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], placing = null, onChange, onPlaced, riskText, rewardText, caption, emptyText, className = "" }: Props) => {
     const wrap = useRef<HTMLDivElement>(null);
+    // Dragging the scales, as on the terminal chart: right to stretch the prices, bottom to zoom in time.
+    const clip = useId();
+    const [priceZoom, setPriceZoom] = useState(1);
+    const [visible, setVisible] = useState<number | null>(null);
+    const scaling = useRef<{ axis: "price" | "time"; from: number; start: number } | null>(null);
+    const candles = allCandles && visible ? allCandles.slice(-visible) : allCandles;
     const [size, setSize] = useState({ w: 0, h: 0 });
     const [hover, setHover] = useState<number | null>(null);
     const [dragging, setDragging] = useState<Level | null>(null);
@@ -61,7 +67,9 @@ const TradeChart = ({ candles, levels, marker, tick, editable = [], placing = nu
         const span = Math.max(hi - lo, hi * 0.004);
         // With nothing but a single level, leave room either side to place the others.
         const pad = values.length === 1 ? hi * 0.03 : span * 0.12;
-        domain = [Math.max(0, lo - pad), hi + pad];
+        const middle = (lo + hi) / 2;
+        const half = ((hi + pad - (lo - pad)) / 2) * priceZoom;
+        domain = [Math.max(0, middle - half), middle + half];
     }
     if (frozen.current) domain = frozen.current;
 
@@ -118,14 +126,17 @@ const TradeChart = ({ candles, levels, marker, tick, editable = [], placing = nu
             <div ref={wrap} className="absolute inset-0 select-none">
                 {ready && (
                     <svg width={w} height={h} role="group" aria-label="Trade plan chart" className="block">
-                        {/* Recent price */}
+                        {/* Recent price, in the colours of the Alture indicator */}
+                        <clipPath id={clip}>
+                            <rect x={0} y={PAD_TOP} width={plotW} height={plotH} />
+                        </clipPath>
                         {(candles ?? []).map((c, i) => {
                             const x = i * slot + slot / 2;
-                            const color = c.c >= c.o ? UP : DOWN;
+                            const rising = c.c >= c.o;
                             return (
-                                <g key={c.t} opacity={0.62}>
-                                    <line x1={x} x2={x} y1={y(c.h)} y2={y(c.l)} stroke={color} strokeWidth={1} />
-                                    <rect x={x - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={color} />
+                                <g key={c.t} clipPath={`url(#${clip})`}>
+                                    <line x1={x} x2={x} y1={y(c.h)} y2={y(c.l)} stroke="#FFFFFF" strokeOpacity={0.75} strokeWidth={1} />
+                                    <rect x={x - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={rising ? "#9C9C9C" : "#FFFFFF"} stroke={rising ? "#4DD0E1" : "#F48FB1"} strokeOpacity={rising ? 1 : 0.6} />
                                 </g>
                             );
                         })}
@@ -156,6 +167,36 @@ const TradeChart = ({ candles, levels, marker, tick, editable = [], placing = nu
                                 </text>
                             </g>
                         )}
+
+                        {/* Scales: drag to stretch, double-click to reset */}
+                        {(["price", "time"] as const).map((axis) => (
+                            <rect
+                                key={axis}
+                                x={axis === "price" ? plotW : 0}
+                                y={axis === "price" ? 0 : h - PAD_BOTTOM}
+                                width={axis === "price" ? GUTTER : plotW}
+                                height={axis === "price" ? h : PAD_BOTTOM}
+                                fill="transparent"
+                                style={{ cursor: axis === "price" ? "ns-resize" : "ew-resize", touchAction: "none" }}
+                                onMouseDown={(event) => event.preventDefault()}
+                                onPointerDown={(event) => {
+                                    event.currentTarget.setPointerCapture(event.pointerId);
+                                    scaling.current = axis === "price" ? { axis, from: event.clientY, start: priceZoom } : { axis, from: event.clientX, start: count };
+                                }}
+                                onPointerMove={(event) => {
+                                    const drag = scaling.current;
+                                    if (!drag) return;
+                                    if (drag.axis === "price") setPriceZoom(Math.max(0.15, Math.min(6, drag.start * Math.exp((event.clientY - drag.from) / 180))));
+                                    else setVisible(Math.round(Math.max(20, Math.min(allCandles?.length ?? 20, drag.start * Math.exp((event.clientX - drag.from) / 220)))));
+                                }}
+                                onPointerUp={() => (scaling.current = null)}
+                                onPointerCancel={() => (scaling.current = null)}
+                                onDoubleClick={() => {
+                                    setPriceZoom(1);
+                                    setVisible(null);
+                                }}
+                            />
+                        ))}
 
                         {/* Plan levels */}
                         {LEVELS.map((level) => {

@@ -212,7 +212,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                         <Cell label="Mark price" value={formatPrice(detail.position.markPrice)} />
                     )}
                     <Cell label="Position size" value={formatDollars(source.positionSize)} />
-                    <Cell label="Quantity" value={source.quantity.toLocaleString(undefined, { maximumFractionDigits: 6 })} />
+                    <Cell label="Size" value={source.quantity.toLocaleString(undefined, { maximumFractionDigits: 6 })} />
                     <Cell label="Margin" value={margin > 0 ? formatDollars(margin) : NOT_RECORDED} />
                     {detail.kind === "closed" ? <Cell label="Trading fees" value={formatDollars(detail.trade.fee)} /> : <Cell label="Exit price" value="Not closed yet" />}
                 </dl>

@@ -8,10 +8,23 @@ import { useSession } from "@/utils/use-session";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/app/i18n/language-context";
 import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
+import { supabase } from "@/utils/supabase/client";
+
+type Mode = "signin" | "signup" | "forgot" | "reset";
+
+const COPY = {
+    en: { email: "Email", newPassword: "New password", create: "Create account", creating: "Creating...", noAccount: "No account yet?", haveAccount: "Already have an account?", signIn: "Sign in", signUp: "Create one", forgot: "Forgot your password?", send: "Send the link", sending: "Sending...", save: "Save the password", saving: "Saving...", checkMail: "Check your email and open the link to confirm your account.", resetSent: "If this email has an account, a link to choose a new password is on its way. Nothing after a few minutes? Check your spam, and the address you typed.", short: "Use at least 8 characters.", unconfirmed: "Confirm your email first, using the link we sent you.", same: "This is already your password. Choose a different one.", weak: "This password is too easy to guess. Choose a stronger one.", tooMany: "Too many attempts. Please wait a few minutes and try again.", wrong: "Incorrect email or password.", expired: "This link has expired. Please ask for a new one." },
+    fr: { email: "Email", newPassword: "Nouveau mot de passe", create: "Créer mon compte", creating: "Création...", noAccount: "Pas encore de compte ?", haveAccount: "Déjà un compte ?", signIn: "Se connecter", signUp: "En créer un", forgot: "Mot de passe oublié ?", send: "Envoyer le lien", sending: "Envoi...", save: "Enregistrer", saving: "Enregistrement...", checkMail: "Ouvrez le lien reçu par email pour confirmer votre compte.", resetSent: "Si cet email a un compte, vous allez recevoir un lien pour choisir un nouveau mot de passe. Rien après quelques minutes ? Regardez vos spams et vérifiez l'adresse saisie.", short: "8 caractères minimum.", unconfirmed: "Confirmez d'abord votre email avec le lien reçu.", same: "C'est déjà votre mot de passe. Choisissez-en un autre.", weak: "Ce mot de passe est trop facile à deviner. Choisissez-en un plus solide.", tooMany: "Trop de tentatives. Patientez quelques minutes avant de réessayer.", wrong: "Email ou mot de passe incorrect.", expired: "Ce lien a expiré. Demandez-en un nouveau." },
+    it: { email: "Email", newPassword: "Nuova password", create: "Crea account", creating: "Creazione...", noAccount: "Non hai un account?", haveAccount: "Hai già un account?", signIn: "Accedi", signUp: "Creane uno", forgot: "Password dimenticata?", send: "Invia il link", sending: "Invio...", save: "Salva la password", saving: "Salvataggio...", checkMail: "Apri il link che ti abbiamo inviato per confermare l'account.", resetSent: "Se a questa email corrisponde un account, riceverai un link per scegliere una nuova password. Non arriva dopo qualche minuto? Controlla lo spam e l'indirizzo inserito.", short: "Almeno 8 caratteri.", unconfirmed: "Prima conferma l'email con il link che ti abbiamo inviato.", same: "È già la tua password. Scegline una diversa.", weak: "Questa password è troppo facile da indovinare. Scegline una più sicura.", tooMany: "Troppi tentativi. Attendi qualche minuto e riprova.", wrong: "Email o password errati.", expired: "Questo link è scaduto. Richiedine uno nuovo." },
+    ru: { email: "Email", newPassword: "Новый пароль", create: "Создать аккаунт", creating: "Создаём...", noAccount: "Ещё нет аккаунта?", haveAccount: "Уже есть аккаунт?", signIn: "Войти", signUp: "Создать", forgot: "Забыли пароль?", send: "Отправить ссылку", sending: "Отправляем...", save: "Сохранить пароль", saving: "Сохраняем...", checkMail: "Откройте ссылку из письма, чтобы подтвердить аккаунт.", resetSent: "Если на этот email есть аккаунт, мы отправим ссылку для смены пароля. Письма нет уже несколько минут? Проверьте спам и правильность адреса.", short: "Минимум 8 символов.", unconfirmed: "Сначала подтвердите email по ссылке из письма.", same: "Это ваш текущий пароль. Выберите другой.", weak: "Этот пароль слишком простой. Выберите более надёжный.", tooMany: "Слишком много попыток. Подождите несколько минут и повторите.", wrong: "Неверный email или пароль.", expired: "Срок действия ссылки истёк. Запросите новую." },
+};
 
 const AltureLockLoginPage = () => {
     const router = useRouter();
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const copy = COPY[language as keyof typeof COPY] ?? COPY.en;
+    const [mode, setMode] = useState<Mode>("signin");
+    const [notice, setNotice] = useState("");
     const { alturelockLogin, loginPage } = t;
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -20,64 +33,110 @@ const AltureLockLoginPage = () => {
     const session = useSession();
     // Temporary: lets the three candidate designs be compared with ?style=a, b or c.
     const [style, setStyle] = useState("a");
-    useEffect(() => setStyle(new URLSearchParams(window.location.search).get("style") ?? "a"), []);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setStyle(params.get("style") ?? "a");
+        if (params.get("mode") === "reset") setMode("reset");
+        if (params.get("link") === "expired") setError(copy.expired);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Already signed in: there is nothing to do here.
     useEffect(() => {
-        if (session.signedIn) router.replace("/alturelock/workspace");
-    }, [session.signedIn, router]);
+        if (session.signedIn && mode !== "reset") router.replace("/alturelock/workspace");
+    }, [session.signedIn, mode, router]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // Access has not begun: the page is shown, but nothing is sent.
         if (!LOGIN_OPEN) return;
         setError("");
+        setNotice("");
+        if ((mode === "signup" || mode === "reset") && password.length < 8) return setError(copy.short);
         setLoading(true);
+        const auth = supabase().auth;
+        let leaving = false;
+        const back = `${window.location.origin}/alturelock/auth/callback`;
         try {
-            const res = await fetch("/api/alturelock-login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
-            if (res.ok) {
-                router.push("/alturelock/workspace");
-                router.refresh();
-                return;
+            if (mode === "forgot") {
+                await auth.resetPasswordForEmail(username, { redirectTo: `${back}?reset=1` });
+                setNotice(copy.resetSent);
+            } else if (mode === "signup") {
+                const { error } = await auth.signUp({ email: username, password, options: { emailRedirectTo: back } });
+                if (error) setError(error.code === "weak_password" ? copy.weak : error.status === 429 ? copy.tooMany : alturelockLogin.errorGeneric);
+                else setNotice(copy.checkMail);
+            } else {
+                const { error } = mode === "reset" ? await auth.updateUser({ password }) : await auth.signInWithPassword({ email: username, password });
+                if (!error) {
+                    // A full load, so the workspace starts from this account's data.
+                    leaving = true;
+                    window.location.assign("/alturelock/workspace");
+                    return;
+                }
+                setError(error.code === "email_not_confirmed" ? copy.unconfirmed : error.code === "same_password" ? copy.same : error.code === "weak_password" ? copy.weak : error.code === "session_not_found" || error.code === "session_expired" || error.name === "AuthSessionMissingError" ? copy.expired : error.status === 429 ? copy.tooMany : mode === "signin" && error.status === 400 ? copy.wrong : alturelockLogin.errorGeneric);
             }
-            setError(res.status === 401 ? alturelockLogin.errorDefault : alturelockLogin.errorGeneric);
         } catch {
             setError(alturelockLogin.errorGeneric);
         } finally {
-            setLoading(false);
+            // Stays busy while the workspace loads, so the form cannot be sent twice.
+            if (!leaving) setLoading(false);
         }
     };
+    const go = (next: Mode) => {
+        setMode(next);
+        setError("");
+        setNotice("");
+    };
+    const needsEmail = mode !== "reset";
+    const needsPassword = mode !== "forgot";
+    const button = { signin: [alturelockLogin.signInButton, alturelockLogin.signingInButton], signup: [copy.create, copy.creating], forgot: [copy.send, copy.sending], reset: [copy.save, copy.saving] }[mode];
 
     const field = "!w-full !rounded-none !border-0 !border-b !border-white/25 !bg-transparent !px-0 !py-3 !text-base !text-white placeholder:!text-white/30 focus:!border-white focus:!outline-none focus:!ring-0 disabled:!opacity-40 disabled:!cursor-not-allowed";
     const form = (
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6 text-left">
-            <div>
-                <label htmlFor="login-username" className="block text-[11px] uppercase tracking-[0.14em] text-white/45">
-                    {alturelockLogin.usernameLabel}
-                </label>
-                <input id="login-username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" disabled={!LOGIN_OPEN} className={field} />
-            </div>
-            <div>
-                <label htmlFor="login-password" className="block text-[11px] uppercase tracking-[0.14em] text-white/45">
-                    {alturelockLogin.passwordLabel}
-                </label>
-                <input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" disabled={!LOGIN_OPEN} className={field} />
-            </div>
+            {needsEmail && (
+                <div>
+                    <label htmlFor="login-email" className="block text-[11px] uppercase tracking-[0.14em] text-white/45">
+                        {copy.email}
+                    </label>
+                    <input id="login-email" type="email" value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="email" disabled={!LOGIN_OPEN} className={field} />
+                </div>
+            )}
+            {needsPassword && (
+                <div>
+                    <label htmlFor="login-password" className="block text-[11px] uppercase tracking-[0.14em] text-white/45">
+                        {mode === "reset" ? copy.newPassword : alturelockLogin.passwordLabel}
+                    </label>
+                    <input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "signin" ? "current-password" : "new-password"} disabled={!LOGIN_OPEN} className={field} />
+                </div>
+            )}
             {error && (
                 <p role="alert" className="text-sm text-[#E955A8]">
                     {error}
                 </p>
             )}
+            {notice && <p role="status" className="text-sm text-white/80">{notice}</p>}
             {/* Access has not begun. The page stays pure brand, so this is said to screen readers only. */}
             {!LOGIN_OPEN && <p className="sr-only">{loginPage.closed}</p>}
-            <button type="submit" disabled={!LOGIN_OPEN || loading || !username || !password} className="group flex w-full items-center justify-center gap-3 rounded-sm bg-white py-3.5 text-sm font-semibold text-black hover:bg-[#e4e4e8] transition-colors lit disabled:opacity-30 disabled:shadow-none">
-                {loading ? alturelockLogin.signingInButton : alturelockLogin.signInButton}
+            <button type="submit" disabled={!LOGIN_OPEN || loading || (needsEmail && !username) || (needsPassword && !password)} className="group flex w-full items-center justify-center gap-3 rounded-sm bg-white py-3.5 text-sm font-semibold text-black hover:bg-[#e4e4e8] transition-colors lit disabled:opacity-30 disabled:shadow-none">
+                {loading ? button[1] : button[0]}
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </button>
+            {LOGIN_OPEN && mode !== "reset" && (
+                <div className="space-y-2 text-center text-xs text-white/45">
+                    {mode === "signin" && (
+                        <p>
+                            <button type="button" onClick={() => go("forgot")} className="hover:text-white">{copy.forgot}</button>
+                        </p>
+                    )}
+                    <p>
+                        {mode === "signin" ? copy.noAccount : copy.haveAccount}{" "}
+                        <button type="button" onClick={() => go(mode === "signin" ? "signup" : "signin")} className="border-b border-white/25 text-white/80 hover:border-white hover:text-white">
+                            {mode === "signin" ? copy.signUp : copy.signIn}
+                        </button>
+                    </p>
+                </div>
+            )}
         </form>
     );
     const others = (

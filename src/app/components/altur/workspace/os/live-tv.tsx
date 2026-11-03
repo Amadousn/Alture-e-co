@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Bloomberg Television's own live stream, in YouTube's player. The channel
 // address always plays whatever Bloomberg has live, so the panel does not need
-// updating when their stream restarts. It starts muted, and the trader's choice
+// updating when their stream restarts. It starts muted, the sound is turned on
+// with our own button through YouTube's player commands, and the trader's choice
 // to show or hide it is remembered in this browser.
 
 const CHANNEL = "UCIALMKvObZNtJ6AmdCLP7Lg";
@@ -14,6 +15,19 @@ const LiveTV = () => {
   const [on, setOn] = useState(true);
   // The player is heavy: it waits until the chart and prices have loaded first.
   const [ready, setReady] = useState(false);
+  const [sound, setSound] = useState(false);
+  const player = useRef<HTMLIFrameElement>(null);
+  const command = (func: string, args: unknown[] = []) =>
+    player.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "https://www.youtube.com");
+  const toggleSound = () => {
+    const next = !sound;
+    command(next ? "unMute" : "mute");
+    if (next) {
+      command("setVolume", [100]);
+      command("playVideo");
+    }
+    setSound(next);
+  };
   useEffect(() => {
     const timer = window.setTimeout(() => setReady(true), 2500);
     return () => window.clearTimeout(timer);
@@ -28,6 +42,7 @@ const LiveTV = () => {
   const toggle = () => {
     const next = !on;
     setOn(next);
+    setSound(false);
     try {
       window.localStorage.setItem(KEY, next ? "on" : "off");
     } catch {
@@ -46,21 +61,34 @@ const LiveTV = () => {
           )}
           Bloomberg · Live TV
         </p>
-        <button
-          type="button"
-          onClick={toggle}
-          aria-pressed={on}
-          className="text-xs text-white/50 transition-colors hover:text-white"
-        >
-          {on ? "Hide" : "Show"}
-        </button>
+        <span className="flex items-center gap-3">
+          {on && ready && (
+            <button
+              type="button"
+              onClick={toggleSound}
+              aria-pressed={sound}
+              className={`text-xs transition-colors hover:text-white ${sound ? "text-white" : "text-white/50"}`}
+            >
+              {sound ? "Sound on" : "Sound off"}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={toggle}
+            aria-pressed={on}
+            className="text-xs text-white/50 transition-colors hover:text-white"
+          >
+            {on ? "Hide" : "Show"}
+          </button>
+        </span>
       </div>
       {on && (
         <div className="mt-2.5 aspect-video w-full overflow-hidden rounded-sm border border-white/10 bg-[#0a0a0a]">
           {ready && (
             <iframe
+              ref={player}
               title="Bloomberg Television, live"
-              src={`https://www.youtube.com/embed/live_stream?channel=${CHANNEL}&autoplay=1&mute=1&playsinline=1&rel=0`}
+              src={`https://www.youtube.com/embed/live_stream?channel=${CHANNEL}&autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
               referrerPolicy="strict-origin-when-cross-origin"
