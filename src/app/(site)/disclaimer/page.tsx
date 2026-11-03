@@ -33,7 +33,7 @@ const sections = [
     {
         heading: "Contact",
         body: [
-            "For questions, contact celine@altureandco.com.",
+            "For questions, contact contact@altureandco.com.",
         ],
     },
 ];

@@ -73,7 +73,7 @@ npm start
 ## Contact
 
 - **Phone**: +971 50 984 5622
-- **Email**: Celine@altureandco.com
+- **Email**: contact@altureandco.com
 - **Location**: Dubai, UAE
 
 ## License
