@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import WorkspaceShell from "./workspace-shell";
+import BillingPanel from "./billing-panel";
 import { ChecklistItem, DEFAULT_CHECKLIST, useWorkspaceSettings } from "@/utils/workspace-store";
 
 const fieldClass = "!rounded-sm !bg-[#0c0c0c] !border-white/25 !text-sm !text-white px-3 py-2.5 focus:!border-white";
@@ -25,6 +26,7 @@ const WorkspaceSettings = () => {
     return (
         <WorkspaceShell width="max-w-3xl">
             <h1 className="!text-3xl md:!text-4xl text-white mb-2">Settings</h1>
+            <BillingPanel />
             <p className="text-sm text-[#9a9aa5] mb-10">Changes are saved as you make them, in this browser.</p>
 
             {!store.ready ? (

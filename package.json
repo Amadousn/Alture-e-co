@@ -31,7 +31,8 @@
     "react-slick": "^0.30.2",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "stripe": "^23.1.0"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",

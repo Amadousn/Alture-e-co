@@ -9,7 +9,8 @@ import JournalDemo from "@/app/components/altur/journal/journal-demo";
 import { useLanguage } from "@/app/i18n/language-context";
 import { useSession } from "@/utils/use-session";
 import { ENTER_KEY } from "@/utils/enter-flag";
-import { DEMO_OPEN } from "@/utils/launch";
+import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
+import PlanButton from "./plan-button";
 
 const STEPS = [
     { title: "You define the rules", text: "Risk per trade, stop distance, sessions, loss limits, entry confirmations." },
@@ -78,7 +79,7 @@ const PLANS = [
         monthly: 129,
         yearly: 103,
         founding: { monthly: 79, yearly: 63 },
-        text: "Terminal, Journal and our two premium indicators. $146 / month apart.",
+        text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
         main: true,
@@ -170,10 +171,16 @@ const Pricing = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <Link href="/#contact" className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
-                                    Request access
+                                {LOGIN_OPEN && plan.monthly > 0 ? (
+                                    <PlanButton plan={plan.founding ? "founding" : plan.name.toLowerCase()} yearly={yearly} className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
+                                        Choose {plan.name}
+                                    </PlanButton>
+                                ) : (
+                                    <Link href={LOGIN_OPEN ? "/alturelock/login" : "/#contact"} className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
+                                        {LOGIN_OPEN ? "Start free" : "Request access"}
                                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                                </Link>
+                                    </Link>
+                                )}
                             </div>
                         );
                     })}

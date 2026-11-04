@@ -63,6 +63,15 @@ export async function readOthers<T>(req: NextRequest, provider: string, slot: st
     return held.filter((item): item is NonNullable<typeof item> => item !== null) as T[];
 }
 
+// How many accounts this customer holds on other providers, for the plan's limit.
+export async function otherProviders(_req: NextRequest, provider: string) {
+    const me = await account();
+    if (!me) return 0;
+    const { count, error } = await me.client.from(TABLE).select("provider", { count: "exact", head: true }).neq("provider", provider);
+    if (error) throw new Error("Connections could not be read.");
+    return count ?? 0;
+}
+
 export async function writeConnection(res: NextResponse, provider: string, slot: string, stored: unknown) {
     const me = await account();
     if (!me) return void res.cookies.set(cookieName(provider, slot), await seal(stored), COOKIE);

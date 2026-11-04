@@ -2,7 +2,8 @@ import { LOGIN_OPEN } from "@/utils/launch";
 import { NextRequest, NextResponse } from "next/server";
 import { ADAPTERS, ConnectionError } from "@/integrations/server";
 import { vaultReady } from "@/integrations/vault";
-import { readConnection, readOthers, removeConnection, slotOf, writeConnection } from "@/integrations/connection-store";
+import { connectionLimit, planOf, signedInUser, stripe } from "@/integrations/billing";
+import { otherProviders, readConnection, readOthers, removeConnection, slotOf, writeConnection } from "@/integrations/connection-store";
 import type { ProviderId } from "@/integrations/types";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +39,14 @@ export async function POST(req: NextRequest, { params }: Context) {
     if (!vaultReady()) return notConfigured();
     if (!sameOrigin(req)) return NextResponse.json({ error: "Refused." }, { status: 403, headers: NO_STORE });
     try {
+        // The plan's number of connected accounts. Payments off, or no customer account: no limit applies.
+        const api = stripe();
+        const user = api ? await signedInUser() : null;
+        if (api && user?.email) {
+            const allowed = connectionLimit(await planOf(api, user.id, user.email));
+            const held = (await readOthers(req, provider, slotOf(req))).length + (await otherProviders(req, provider));
+            if (held >= allowed) return NextResponse.json({ error: allowed === 0 ? "Connecting an exchange needs a paid plan." : "Your plan connects one account. AltureLock connects as many as you want." , failure: { message: allowed === 0 ? "Connecting an exchange needs a paid plan." : "Your plan connects one account. AltureLock connects as many as you want.", retryable: false, reconnect: true } }, { status: 403, headers: NO_STORE });
+        }
         const { stored, summary } = await adapter.connect(await req.json().catch(() => null));
         // The same account twice would count every trade twice.
         const slot = slotOf(req);
