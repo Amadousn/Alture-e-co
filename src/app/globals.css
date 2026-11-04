@@ -661,3 +661,13 @@ a:active {
     to { opacity: 1; }
 }
 .spot-in { animation: spot-in 0.45s ease-out both; }
+
+/* White chart marks would vanish on the light terminal. */
+.lumen-term svg [stroke="#FFFFFF"] { stroke: #0c0d10; }
+.lumen-term svg [fill="#FFFFFF"] { fill: #0c0d10; }
+.lumen-term svg rect[fill="#000000"] { fill: #ffffff; }
+.lumen-term .nav-link { color: #62656e; }
+.lumen-term .nav-link:hover, .lumen-term .nav-link.is-active { color: #0c0d10; text-shadow: none; }
+.lumen-term .text-accent, .lumen-term .accent-light { color: #0c0d10 !important; text-shadow: none; }
+.lumen-term .bg-accent { background-color: #0c0d10 !important; }
+.lumen-term .border-accent { border-color: #0c0d10 !important; }
