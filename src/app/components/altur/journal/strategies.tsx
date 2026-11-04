@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useStrategies } from "@/utils/workspace-store";
+import { usePlan } from "@/utils/use-plan";
 
 // The trader's strategies and the confluences each one looks for. Reviews tick
 // these, and the analytics show which of them actually pay.
@@ -9,11 +11,14 @@ const Strategies = () => {
     const [strategies, setStrategies, store] = useStrategies();
     const [name, setName] = useState("");
     const [adding, setAdding] = useState<Record<string, string>>({});
+    const { enforced, plan } = usePlan();
+    // The Free plan keeps one strategy. One made earlier is never deleted.
+    const full = enforced && plan === "free" && strategies.length >= 1;
     if (!store.ready) return null;
 
     const create = () => {
         const clean = name.trim();
-        if (!clean || strategies.some((item) => item.name === clean)) return;
+        if (full || !clean || strategies.some((item) => item.name === clean)) return;
         setStrategies((list) => [...list, { id: `s-${Date.now()}`, name: clean, confluences: [] }]);
         setName("");
     };
@@ -56,6 +61,11 @@ const Strategies = () => {
                     </li>
                 ))}
             </ul>
+            {full ? (
+                <p className="mt-4 border-t border-white/10 pt-4 text-sm text-white/60">
+                    The Free plan includes 1 strategy. <Link href="/alturelock#pricing" className="border-b border-white/30 text-white hover:border-white">See the plans</Link>
+                </p>
+            ) : (
             <form
                 className="mt-4 flex gap-2 border-t border-white/10 pt-4"
                 onSubmit={(event) => {
@@ -68,6 +78,7 @@ const Strategies = () => {
                     Add strategy
                 </button>
             </form>
+            )}
         </div>
     );
 };

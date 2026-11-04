@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePlan } from "@/utils/use-plan";
 import type { ClosedTrade } from "@/utils/bybit";
 
 type Candle = { t: number; o: number; h: number; l: number; c: number };
@@ -33,7 +35,7 @@ function windowFor(trade: ClosedTrade) {
 
 // What happened, drawn: the real candles of the trade's instrument, with the
 // entry, the exit and the plan's levels marked where they actually were.
-const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sample?: boolean; bare?: boolean }) => {
+const Recap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sample?: boolean; bare?: boolean }) => {
     const [state, setState] = useState<{ id: string; candles: Candle[] | null } | null>(null);
     const view = windowFor(trade);
     // The replay: how many candles have been revealed, or null when the whole trade is shown.
@@ -250,6 +252,20 @@ const TradeRecap = ({ trade, sample = false, bare = false }: { trade: ClosedTrad
             {chart && sample && <p className="px-5 pb-3 text-[11px] text-[#7d7d87]">Sample trade on real candles: its prices sit inside that day&apos;s range, but its times are illustrative.</p>}
         </div>
     );
+};
+
+// The replay comes with the Journal and AltureLock plans. Visitors, the demo's samples and the owner are not limited.
+const TradeRecap = (props: Parameters<typeof Recap>[0]) => {
+    const { ready, enforced, plan } = usePlan(props.sample);
+    if (!ready) return null;
+    if (enforced && plan !== "journal" && plan !== "alturelock")
+        return (
+            <p className="text-sm text-white/60">
+                The trade replay comes with the Journal and AltureLock plans.{" "}
+                <Link href="/alturelock#pricing" className="border-b border-white/30 text-white hover:border-white">See the plans</Link>
+            </p>
+        );
+    return <Recap {...props} />;
 };
 
 export default TradeRecap;

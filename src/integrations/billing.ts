@@ -71,3 +71,10 @@ export async function terminalAllowed() {
         return true;
     }
 }
+
+// A customer account, as opposed to a visitor or the owner's login, while payments are on.
+export async function isCustomer() {
+    if (!stripe()) return false;
+    const user = await signedInUser();
+    return Boolean(user?.email);
+}
