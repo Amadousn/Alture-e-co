@@ -1,9 +1,8 @@
 // Keeps a connection's credentials sealed on the server side.
 //
-// AltureLock has no user accounts or database yet, so a connection is held in
-// an encrypted, HttpOnly cookie: the browser stores it but cannot read it,
-// page scripts cannot reach it, and only this server holds the key that opens
-// it (AES-256-GCM). Removing the cookie removes the credentials.
+// A connection is sealed here (AES-256-GCM) before it is stored, in the customer's
+// account or in an HttpOnly cookie (see connection-store). Only this server holds
+// the key that opens it.
 
 const SECRET = () => process.env.ALTURELOCK_VAULT_SECRET ?? "";
 

@@ -1,7 +1,7 @@
 import { LOGIN_OPEN } from "@/utils/launch";
 import { NextRequest, NextResponse } from "next/server";
 import { ADAPTERS, ConnectionError } from "@/integrations/server";
-import { unseal } from "@/integrations/vault";
+import { readConnection, slotOf } from "@/integrations/connection-store";
 import type { ProviderId } from "@/integrations/types";
 
 export const dynamic = "force-dynamic";
@@ -18,9 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ pro
     const origin = req.headers.get("origin");
     if (origin && origin !== req.nextUrl.origin) return NextResponse.json({ error: "Refused." }, { status: 403, headers: NO_STORE });
 
-    const asked = req.nextUrl.searchParams.get("slot") ?? "";
-    const slot = /^[a-z0-9]{1,8}$/.test(asked) ? asked : "";
-    const stored = await unseal(req.cookies.get(`al_conn_${provider}${slot ? `_${slot}` : ""}`)?.value);
+    const stored = await readConnection<never>(req, provider, slotOf(req)).catch(() => null);
     if (!stored) return NextResponse.json({ error: "Not connected.", failure: { message: "This connection is no longer active. Connect again.", retryable: false, reconnect: true } }, { status: 401, headers: NO_STORE });
 
     const body = (await req.json().catch(() => ({}))) as { since?: number };

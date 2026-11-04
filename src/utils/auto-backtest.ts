@@ -6,8 +6,12 @@
 
 export type Bar = { t: number; o: number; h: number; l: number; c: number; v: number };
 export type ExitPlan = "fixed" | "reaction" | "half" | "value-area";
-export type SimTrade = { direction: "Long" | "Short"; openedAt: number; closedAt: number; entry: number; stop: number; r: number; vwapConfirmed: boolean; exit: string };
-export type Settings = { sweepVolume: number; acceptCandles: number; costPerSide: number };
+export type SimTrade = { direction: "Long" | "Short"; openedAt: number; closedAt: number; entry: number; stop: number; r: number; vwapConfirmed: boolean; exit: string; sweepAt: number; vah: number; val: number; gapTop: number; gapBottom: number; gapAt: number };
+export type Settings = { sweepVolume: number; acceptCandles: number; costPerSide: number; secondSweep?: { within: number; volume: boolean }; limitOrders?: boolean };
+
+// Bybit's standard rates. A limit order pays the maker fee and no slippage, a stop always pays the taker fee and slippage.
+const MAKER = 0.0002;
+const TAKER_WITH_SLIPPAGE = 0.00065;
 
 export const DEFAULTS: Settings = { sweepVolume: 1.5, acceptCandles: 2, costPerSide: 0.00065 }; // Bybit taker 0.055% plus 0.01% slippage
 
@@ -74,7 +78,7 @@ const average = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / (xs.length || 
 // Everything is written for a short and mirrored for a long by turning prices negative.
 const flip = (b: Bar): Bar => ({ ...b, o: -b.o, c: -b.c, h: -b.l, l: -b.h });
 
-export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS): { trades: SimTrade[]; skipped: number } {
+export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS): { trades: SimTrade[]; skipped: number; missed: number } {
     const vw = vwapSeries(bars);
     const m15 = aggregate(bars, 15);
     const m5 = aggregate(bars, 5);
@@ -82,10 +86,11 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
     const index1 = new Map(bars.map((b, i) => [b.t, i]));
     const trades: SimTrade[] = [];
     let skipped = 0;
+    let missed = 0;
     let busyUntil = 0;
 
     for (let i = 96 + 20; i < m15.length - 1; i++) {
-        const sweep = m15[i];
+        let sweep = m15[i];
         if (sweep.t < busyUntil) continue;
         const va = valueArea(m15.slice(i - 96, i));
         if (!va) continue;
@@ -96,10 +101,32 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
         const sign = short ? 1 : -1;
         const see = (b: Bar) => (short ? b : flip(b));
 
+        // Optionally wait for a second sweep of the same side, with the stop beyond both.
+        let stopFrom = see(sweep).h;
+        if (s.secondSweep) {
+            let found = false;
+            for (let j = i + 1; j <= Math.min(i + s.secondSweep.within, m15.length - 2); j++) {
+                const again = valueArea(m15.slice(j - 96, j));
+                if (!again) continue;
+                const b = m15[j];
+                const repeats = short ? b.h > again.vah && b.c < again.vah : b.l < again.val && b.c > again.val;
+                const loud = !s.secondSweep.volume || b.v > average(m15.slice(j - 20, j).map((x) => x.v)) * s.sweepVolume;
+                if (repeats && loud) {
+                    sweep = b;
+                    stopFrom = Math.max(stopFrom, see(b).h);
+                    found = true;
+                    va.vah = again.vah;
+                    va.val = again.val;
+                    break;
+                }
+            }
+            if (!found) continue;
+        }
+
         // The gap on the 5-minute, within an hour of the sweep.
         const start5 = index5.get(sweep.t + 15 * MIN);
         if (start5 === undefined) continue;
-        const stop = see(sweep).h;
+        const stop = stopFrom;
         let gap: { top: number; bottom: number; at: number } | null = null;
         for (let k = Math.max(start5, 16); k < Math.min(start5 + 12, m5.length); k++) {
             const [a, c] = [see(m5[k - 2]), see(m5[k])];
@@ -136,8 +163,23 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
                 break;
             }
         }
+        if (s.limitOrders) {
+            // A limit at the gap's edge, valid 15 minutes. It counts as filled only if price trades through it.
+            entryAt = -1;
+            for (let k = from1; k < Math.min(from1 + 15, bars.length); k++) {
+                if (see(bars[k]).c > stop) break;
+                if (see(bars[k]).h > gap.bottom) {
+                    entryAt = k;
+                    break;
+                }
+            }
+            if (entryAt < 0) {
+                missed += 1;
+                continue;
+            }
+        }
         if (entryAt < 0) continue;
-        const entry = see(bars[entryAt]).c;
+        const entry = s.limitOrders ? gap.bottom : see(bars[entryAt]).c;
         const risk = stop - entry;
         if (!(risk > 0)) continue;
         const v0 = vw[entryAt];
@@ -170,7 +212,7 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
                 break;
             }
             if (plan === "value-area") {
-                if (b.l <= target0) {
+                if (s.limitOrders ? b.l < target0 : b.l <= target0) {
                     result = R(target0);
                     exit = "value area";
                     break;
@@ -178,7 +220,7 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
                 continue;
             }
             const level = bandAt(k, band);
-            if (!reached && b.l <= level) {
+            if (!reached && (s.limitOrders ? b.l < level : b.l <= level)) {
                 reached = true;
                 accepted = 0;
                 if (plan === "fixed") {
@@ -212,10 +254,10 @@ export function runBacktest(bars: Bar[], plan: ExitPlan, s: Settings = DEFAULTS)
                 }
             }
         }
-        trades.push({ direction: short ? "Short" : "Long", openedAt: bars[entryAt].t, closedAt: bars[exitAt].t, entry: entry * sign, stop: stop * sign, r: result - Math.abs(cost), vwapConfirmed: bars[entryAt].c * sign < v0.vwap * sign, exit });
+        trades.push({ direction: short ? "Short" : "Long", openedAt: bars[entryAt].t, closedAt: bars[exitAt].t, entry: entry * sign, stop: stop * sign, r: result - (s.limitOrders ? (((MAKER + (exit === "stop" || exit === "day end" || exit === "sweep at band" ? TAKER_WITH_SLIPPAGE : MAKER)) * Math.abs(entry)) / risk) : Math.abs(cost)), vwapConfirmed: bars[entryAt].c * sign < v0.vwap * sign, exit, sweepAt: sweep.t, vah: va.vah, val: va.val, gapTop: gap.top * sign, gapBottom: gap.bottom * sign, gapAt: m5[gap.at].t });
         busyUntil = bars[exitAt].t;
     }
-    return { trades, skipped };
+    return { trades, skipped, missed };
 }
 
 export function summary(trades: SimTrade[]) {
