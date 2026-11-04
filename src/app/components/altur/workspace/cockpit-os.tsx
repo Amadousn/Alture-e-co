@@ -17,7 +17,7 @@ import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
 import { ENTER_KEY } from "@/utils/enter-flag";
 import { useLanguage } from "@/app/i18n/language-context";
-import { AdvancedChart, CHART_INTERVALS, EconomicCalendar, tradingViewUrl } from "./os/tv";
+import { AdvancedChart, Attribution, CHART_INTERVALS, EconomicCalendar, tradingViewUrl } from "./os/tv";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { DEMO_BRIEFING, demoActiveTrade, demoPosition, demoTrades } from "@/utils/demo-cockpit";
 import { assetFor, derivePlan } from "@/utils/trade-plan";
@@ -551,6 +551,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                         {text}
                                     </button>
                                 ))}
+                                {view === "tools" && <Attribution href={tradingViewUrl(symbol)}>Powered by TradingView</Attribution>}
                             </div>
                             <span className="hidden sm:inline h-3 w-px bg-white/15" aria-hidden="true" />
                             <button type="button" aria-expanded={indicatorOpen} onClick={() => setIndicatorOpen((value) => !value)} className={`nav-link pb-0.5 ${indicatorOpen ? "is-active" : ""}`}>

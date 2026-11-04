@@ -28,7 +28,7 @@ const Widget = ({ script, config, className = "" }: { script: string; config: Re
 };
 
 export const Attribution = ({ href, children }: { href: string; children: React.ReactNode }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer nofollow" className="text-[11px] text-white/40 hover:text-white transition-colors">
+    <a href={href} target="_blank" rel="noopener noreferrer nofollow" className="whitespace-nowrap text-[11px] text-white/40 hover:text-white transition-colors">
         {children}
     </a>
 );

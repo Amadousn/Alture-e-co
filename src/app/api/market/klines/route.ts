@@ -4,6 +4,38 @@ import { NextRequest, NextResponse } from "next/server";
 // data. Used by the cockpit's own chart. Never substitutes made-up prices.
 const INTERVALS = new Set(["1", "3", "5", "15", "30", "60", "240", "D"]);
 
+// Each answer from Bybit is kept briefly and shared, so many charts asking at once make one request. If a refresh fails,
+// the real candles from the last minute are kept rather than blanking a chart.
+const held = new Map<string, { at: number; list?: string[][]; pending?: Promise<string[][]> }>();
+
+async function rows(url: string, keep: number) {
+    const entry = held.get(url);
+    const age = entry ? Date.now() - entry.at : Infinity;
+    if (entry?.list && age < keep) return entry.list;
+    if (entry?.pending) return entry.pending;
+    if (held.size > 500) held.clear();
+    const pending = fetch(url, { cache: "no-store" })
+        .then((res) => res.json().then((json) => {
+            if (!res.ok || json?.retCode !== 0) throw new Error("bybit");
+            return json.result.list as string[][];
+        }))
+        .then((list) => {
+            held.set(url, { at: Date.now(), list });
+            return list;
+        })
+        .catch((error) => {
+            const last = held.get(url);
+            if (last?.list && Date.now() - last.at < Math.max(keep, 60_000)) {
+                held.set(url, { at: last.at, list: last.list });
+                return last.list;
+            }
+            held.delete(url);
+            throw error;
+        });
+    held.set(url, { at: entry?.at ?? 0, list: entry?.list, pending });
+    return pending;
+}
+
 export async function GET(request: NextRequest) {
     const symbol = (request.nextUrl.searchParams.get("symbol") ?? "").toUpperCase();
     const interval = request.nextUrl.searchParams.get("interval") ?? "15";
@@ -16,11 +48,9 @@ export async function GET(request: NextRequest) {
     const asked = Math.floor(Number(request.nextUrl.searchParams.get("limit")));
     const limit = Number.isFinite(asked) && asked >= 2 ? Math.min(asked, 1000) : 160;
     try {
-        const res = await fetch(`https://api.bybit.com/v5/market/kline?category=linear&symbol=${symbol}&interval=${interval}&limit=${historical ? 1000 : limit}${historical ? `&start=${Math.floor(start)}&end=${Math.floor(end)}` : ""}`, { next: { revalidate: historical ? 3600 : 10 } });
-        const json = await res.json();
-        if (!res.ok || json?.retCode !== 0) throw new Error("bybit");
+        const list = await rows(`https://api.bybit.com/v5/market/kline?category=linear&symbol=${symbol}&interval=${interval}&limit=${historical ? 1000 : limit}${historical ? `&start=${Math.floor(start)}&end=${Math.floor(end)}` : ""}`, historical ? 3_600_000 : 10_000);
         // Rows arrive newest first: [startTime, open, high, low, close, volume, turnover].
-        const candles = (json.result.list as string[][])
+        const candles = list
             .map((row) => ({ t: Number(row[0]), o: Number(row[1]), h: Number(row[2]), l: Number(row[3]), c: Number(row[4]), v: Number(row[5]) || 0 }))
             .filter((c) => [c.t, c.o, c.h, c.l, c.c].every(Number.isFinite))
             .reverse();
