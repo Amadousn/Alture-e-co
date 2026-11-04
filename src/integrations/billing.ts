@@ -55,3 +55,19 @@ export async function planOf(api: Stripe, userId: string, email: string): Promis
 
 // How many exchange accounts a plan may connect.
 export const connectionLimit = (plan: PlanId) => (plan === "alturelock" ? Infinity : plan === "free" ? 0 : 1);
+
+export const opensTerminal = (plan: PlanId) => plan === "terminal" || plan === "alturelock";
+
+// Whether this visitor may open the Terminal. Only a customer account is limited: payments off and the owner's login stay open,
+// and a moment when Stripe cannot be reached does not lock out someone who has paid.
+export async function terminalAllowed() {
+    const api = stripe();
+    if (!api) return true;
+    const user = await signedInUser();
+    if (!user?.email) return true;
+    try {
+        return opensTerminal(await planOf(api, user.id, user.email));
+    } catch {
+        return true;
+    }
+}
