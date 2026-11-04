@@ -5,10 +5,9 @@ const key = process.env.STRIPE_SECRET_KEY ?? "";
 if (!key.startsWith("sk_test_") && process.env.ALLOW_LIVE !== "1") throw new Error("Not a test key.");
 const api = new Stripe(key);
 const PLANS = [
-    ["journal", "AltureLock Journal", 39, 372],
-    ["terminal", "AltureLock Terminal", 59, 564],
-    ["alturelock", "AltureLock", 129, 1236],
-    ["founding", "AltureLock Founding", 79, 756],
+    ["journal", "AltureLock Journal", 39, 396],
+    ["terminal", "AltureLock Terminal", 59, 600],
+    ["alturelock", "AltureLock", 129, 1320],
 ];
 for (const [id, name, monthly, yearly] of PLANS) {
     const found = (await api.products.search({ query: `metadata['plan']:'${id}'` })).data[0];

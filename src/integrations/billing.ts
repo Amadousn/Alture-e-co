@@ -7,11 +7,10 @@ import { createServerClient } from "@supabase/ssr";
 
 export type PlanId = "free" | "journal" | "terminal" | "alturelock";
 export type Interval = "monthly" | "yearly";
-export const FOUNDING_SEATS = 50;
 
 // Stripe's lookup keys, created once by scripts/stripe-setup.mjs.
 export const priceKey = (plan: string, interval: Interval) => `alture_${plan}_${interval}`;
-export const PAID = ["journal", "terminal", "alturelock", "founding"] as const;
+export const PAID = ["journal", "terminal", "alturelock"] as const;
 
 export const stripe = () => {
     const key = process.env.STRIPE_SECRET_KEY;
@@ -48,7 +47,7 @@ export async function planOf(api: Stripe, userId: string, email: string): Promis
     if (!customer) return "free";
     const { data } = await api.subscriptions.list({ customer: customer.id, status: "all", limit: 20, expand: ["data.items.data.price"] });
     const keys = data.filter((sub) => ["active", "trialing", "past_due"].includes(sub.status)).flatMap((sub) => sub.items.data.map((item) => item.price.lookup_key ?? ""));
-    if (keys.some((key) => /_(alturelock|founding)_/.test(key))) return "alturelock";
+    if (keys.some((key) => /_alturelock_/.test(key))) return "alturelock";
     if (keys.some((key) => key.includes("_terminal_"))) return "terminal";
     if (keys.some((key) => key.includes("_journal_"))) return "journal";
     return "free";
@@ -56,15 +55,3 @@ export async function planOf(api: Stripe, userId: string, email: string): Promis
 
 // How many exchange accounts a plan may connect.
 export const connectionLimit = (plan: PlanId) => (plan === "alturelock" ? Infinity : plan === "free" ? 0 : 1);
-
-export async function foundingTaken(api: Stripe) {
-    let taken = 0;
-    for (const interval of ["monthly", "yearly"] as Interval[]) {
-        const { data } = await api.prices.list({ lookup_keys: [priceKey("founding", interval)], limit: 1 });
-        if (!data[0]) continue;
-        for await (const sub of api.subscriptions.list({ price: data[0].id, status: "all", limit: 100 })) {
-            if (["active", "trialing", "past_due"].includes(sub.status)) taken += 1;
-        }
-    }
-    return taken;
-}

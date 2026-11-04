@@ -59,16 +59,16 @@ const PLANS = [
     {
         name: "Journal",
         monthly: 39,
-        yearly: 31,
+        yearly: 33,
         text: "For the trader who wants the truth about every trade.",
-        items: ["Exchange connected: your journal fills itself", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session"],
+        items: ["Automatic import from your exchange", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
         main: false,
     },
     {
         name: "Terminal",
         monthly: 59,
-        yearly: 47,
+        yearly: 50,
         text: "For the trader who needs the rules in front of every entry.",
         items: ["Pre-trade checklist and daily loss limits", "Position size calculator", "Live charts and order flow", "News, economic calendar and live TV"],
         soon: [] as string[],
@@ -77,8 +77,7 @@ const PLANS = [
     {
         name: "AltureLock",
         monthly: 129,
-        yearly: 103,
-        founding: { monthly: 79, yearly: 63 },
+        yearly: 110,
         text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
@@ -125,7 +124,7 @@ const Pricing = () => {
                     <div className="flex items-center gap-5 text-sm" role="group" aria-label="Billing">
                         {([false, true] as const).map((option) => (
                             <button key={String(option)} type="button" onClick={() => setYearly(option)} aria-pressed={yearly === option} className={`border-b pb-0.5 transition-colors ${yearly === option ? "border-white text-white" : "border-transparent text-white/45 hover:text-white"}`}>
-                                {option ? "Yearly · save 20%" : "Monthly"}
+                                {option ? "Yearly · save 15%" : "Monthly"}
                             </button>
                         ))}
                     </div>
@@ -133,29 +132,17 @@ const Pricing = () => {
                 <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-4">
                     {PLANS.map((plan) => {
                         const price = yearly ? plan.yearly : plan.monthly;
-                        const founding = plan.founding ? (yearly ? plan.founding.yearly : plan.founding.monthly) : null;
                         const main = plan.main;
                         const paid = plan.monthly > 0;
                         return (
                             <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#E3A1F7]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(227,161,247,0.55),inset_0_1px_0_rgba(227,161,247,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
                                 {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(227,161,247,0.24),transparent_70%)]" />}
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
-                                {founding ? (
-                                    <>
-                                        <p className="mt-6 flex items-baseline gap-2">
-                                            <span className="font-logo text-5xl font-light tabular-nums">${founding}</span>
-                                            <span className="font-logo text-2xl font-light tabular-nums text-white/35 line-through decoration-1">${price}</span>
-                                            <span className="text-sm text-white/50">/ month</span>
-                                        </p>
-                                        <p className="mt-2 text-[13px] text-[#E3A1F7]">Founding price for the first 50 members, kept for life.</p>
-                                        {yearly && <p className="mt-1 text-xs text-white/45">Billed ${founding * 12} / year.</p>}
-                                    </>
-                                ) : (
-                                    <p className="mt-6 flex items-baseline gap-2">
-                                        <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
-                                        <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? (yearly ? `/ month, billed $${plan.yearly * 12} / year` : "/ month") : "forever"}</span>
-                                    </p>
-                                )}
+                                <p className="mt-6 flex items-baseline gap-2">
+                                    <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
+                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? "/ month" : "forever"}</span>
+                                </p>
+                                {paid && yearly && <p className="mt-2 text-xs text-white/45">Billed ${plan.yearly * 12} yearly</p>}
                                 <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-white/70" : "text-white/60"}`}>{plan.text}</p>
                                 <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-white/90" : "text-white/80"}`}>
                                     {plan.items.map((item) => (
@@ -172,7 +159,7 @@ const Pricing = () => {
                                     ))}
                                 </ul>
                                 {LOGIN_OPEN && plan.monthly > 0 ? (
-                                    <PlanButton plan={plan.founding ? "founding" : plan.name.toLowerCase()} yearly={yearly} className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
+                                    <PlanButton plan={plan.name.toLowerCase()} yearly={yearly} className={`group mt-auto inline-flex items-center justify-center gap-3 rounded-sm px-7 py-4 text-sm font-semibold transition-colors ${main ? "bg-white text-black hover:bg-[#e4e4e8] lit" : "border border-white/25 text-white hover:border-white"}`}>
                                         Choose {plan.name}
                                     </PlanButton>
                                 ) : (

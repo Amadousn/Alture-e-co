@@ -44,7 +44,7 @@ const IndicatorsPage = () => (
                 <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-6 border-t border-white/10 pt-12">
                     <div>
                         <p className="text-2xl md:text-3xl font-medium tracking-tight text-white">Both premium indicators are included in AltureLock.</p>
-                        <p className="mt-2 text-sm text-white/55">With the Terminal and the Journal, from $79 / month for the first 50 members.</p>
+                        <p className="mt-2 text-sm text-white/55">With the Terminal and the Journal.</p>
                     </div>
                     <Link href="/alturelock#pricing" className="group inline-flex items-center gap-3 rounded-sm border border-white/25 px-7 py-4 text-sm font-semibold text-white transition-colors hover:border-white">
                         See AltureLock

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { findCustomer, FOUNDING_SEATS, foundingTaken, Interval, PAID, planOf, priceKey, signedInUser, stripe } from "@/integrations/billing";
+import { findCustomer, Interval, PAID, planOf, priceKey, signedInUser, stripe } from "@/integrations/billing";
 
 const NO_STORE = { "Cache-Control": "no-store" };
 const fail = (error: string, status: number) => NextResponse.json({ error }, { status, headers: NO_STORE });
@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
     if (!(PAID as readonly string[]).includes(body.plan ?? "")) return fail("Unknown plan.", 400);
     try {
         if ((await planOf(api, user.id, user.email)) !== "free") return fail("You already have a plan. Change it from your billing page.", 409);
-        if (body.plan === "founding" && (await foundingTaken(api)) >= FOUNDING_SEATS) return fail("The founding places are taken.", 409);
         const { data: prices } = await api.prices.list({ lookup_keys: [priceKey(body.plan!, interval)], active: true, limit: 1 });
         if (!prices[0]) return fail("This plan is not available.", 400);
         const customer = (await findCustomer(api, user.id, user.email)) ?? (await api.customers.create({ email: user.email, metadata: { user_id: user.id } }));
