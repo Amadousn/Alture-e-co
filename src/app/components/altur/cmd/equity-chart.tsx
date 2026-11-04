@@ -8,7 +8,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 export type EquityTrade = { id: string; instrument: string; direction: "Long" | "Short"; profitLoss: number; closedAt: number };
 const TEAL = "#20B8A8";
-const MAGENTA = "#E955A8";
+const MAGENTA = "#E5484D";
 
 const money = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const short = (value: number) => {
@@ -147,11 +147,11 @@ const EquityChart = ({ trades, height = 300, bars = false, drawdown = false }: {
                     <dl className="mt-2 space-y-1 font-mono text-xs">
                         <div className="flex justify-between">
                             <dt className="text-white/50">Realized</dt>
-                            <dd className={active.trade.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}>{money(active.trade.profitLoss)}</dd>
+                            <dd className={active.trade.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>{money(active.trade.profitLoss)}</dd>
                         </div>
                         <div className="flex justify-between">
                             <dt className="text-white/50">{drawdown ? "From peak" : "Cumulative"}</dt>
-                            <dd className={series[hover] >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}>{money(series[hover])}</dd>
+                            <dd className={series[hover] >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>{money(series[hover])}</dd>
                         </div>
                     </dl>
                 </div>

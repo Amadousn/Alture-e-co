@@ -111,7 +111,7 @@ const AltureLockLoginPage = () => {
                 </div>
             )}
             {error && (
-                <p role="alert" className="text-sm text-[#E955A8]">
+                <p role="alert" className="text-sm text-[#E5484D]">
                     {error}
                 </p>
             )}

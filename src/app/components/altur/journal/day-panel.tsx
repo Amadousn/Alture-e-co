@@ -77,7 +77,7 @@ const DayPanel = ({ dateLabel, note, onSave, trades, onOpenTrade, onClose }: Pro
                                                 setEditing(true);
                                                 setConfirmDelete(false);
                                             }}
-                                            className="text-[#E955A8] border-b border-[#E955A8]/50 hover:border-[#E955A8]"
+                                            className="text-[#E5484D] border-b border-[#E5484D]/50 hover:border-[#E5484D]"
                                         >
                                             Delete note
                                         </button>
@@ -86,7 +86,7 @@ const DayPanel = ({ dateLabel, note, onSave, trades, onOpenTrade, onClose }: Pro
                                         </button>
                                     </>
                                 ) : (
-                                    <button type="button" onClick={() => setConfirmDelete(true)} className="text-[#7d7d87] hover:text-[#E955A8] transition-colors">
+                                    <button type="button" onClick={() => setConfirmDelete(true)} className="text-[#7d7d87] hover:text-[#E5484D] transition-colors">
                                         Delete
                                     </button>
                                 )}
@@ -131,7 +131,7 @@ const DayPanel = ({ dateLabel, note, onSave, trades, onOpenTrade, onClose }: Pro
                 <div className="px-5 py-5">
                     <div className="flex items-center justify-between gap-4 mb-3">
                         <p className="text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]">Trades closed this day</p>
-                        {trades.length > 0 && <span className={`text-sm font-semibold tabular-nums ${total >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>{signed(total)}</span>}
+                        {trades.length > 0 && <span className={`text-sm font-semibold tabular-nums ${total >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{signed(total)}</span>}
                     </div>
                     {trades.length === 0 ? (
                         <p className="text-sm text-[#7d7d87]">No trades closed on this day.</p>
@@ -142,9 +142,9 @@ const DayPanel = ({ dateLabel, note, onSave, trades, onOpenTrade, onClose }: Pro
                                     <button type="button" onClick={() => onOpenTrade(trade)} className="w-full flex items-center justify-between gap-4 px-4 py-3 text-left hover:bg-[#0c0c0c] transition-colors">
                                         <span className="flex items-center gap-2.5">
                                             <span className="text-sm font-medium text-white">{trade.instrument}</span>
-                                            <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-black ${trade.direction === "Long" ? "bg-[#20B8A8]" : "bg-[#E955A8]"}`}>{trade.direction}</span>
+                                            <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-black ${trade.direction === "Long" ? "bg-[#20B8A8]" : "bg-[#E5484D]"}`}>{trade.direction}</span>
                                         </span>
-                                        <span className={`text-sm tabular-nums ${trade.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>{signed(trade.profitLoss)}</span>
+                                        <span className={`text-sm tabular-nums ${trade.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{signed(trade.profitLoss)}</span>
                                     </button>
                                 </li>
                             ))}

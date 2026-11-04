@@ -37,7 +37,7 @@ const Footer = () => {
                 <FooterLink href="/#contact" label={t.footer.contactLink} />
                 <li>
                   <Link href="/education" className="inline-flex items-center gap-2 nav-link is-inline font-light text-sm tracking-wide">
-                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#E3A1F7", filter: "drop-shadow(0 0 5px rgba(227, 161, 247, 0.7))" }} />
+                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#FFFFFF", filter: "drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))" }} />
                     {t.footer.education}
                   </Link>
               </li>

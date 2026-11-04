@@ -8,8 +8,8 @@ export type Candle = { t: number; o: number; h: number; l: number; c: number; v:
 export type ChartLevel = { label: string; price: number; color: string };
 
 const UP = "#20B8A8";
-const DOWN = "#E955A8";
-const ACCENT = "#E3A1F7";
+const DOWN = "#E5484D";
+const ACCENT = "#FFFFFF";
 const AXIS_W = 74;
 const AXIS_H = 24;
 const TOP = 30;
@@ -268,7 +268,7 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                         {name} <span className="text-white/85">{fmt(value)}</span>
                     </span>
                 ))}
-                <span className={readChange >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}>
+                <span className={readChange >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>
                     {readChange >= 0 ? "+" : ""}
                     {readChange.toFixed(2)}%
                 </span>

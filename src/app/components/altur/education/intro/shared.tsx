@@ -69,7 +69,7 @@ export const Prompt = ({ children }: { children: string }) => (
     </p>
 );
 
-const BORDER: Record<Tone, string> = { good: "border-[#20B8A8] text-white", bad: "border-[#E955A8] text-white/85", plain: "border-white/25 text-white/75", shown: "border-accent text-white" };
+const BORDER: Record<Tone, string> = { good: "border-[#20B8A8] text-white", bad: "border-[#E5484D] text-white/85", plain: "border-white/25 text-white/75", shown: "border-accent text-white" };
 export const Feedback = ({ tone, lead, children }: { tone: Tone; lead?: string; children: string }) => (
     <p key={`${lead}${children}`} role="status" className={`cockpit-rise mt-4 max-w-2xl border-l-2 pl-4 text-[15px] leading-relaxed ${BORDER[tone]}`}>
         {lead && <span className="font-medium text-white">{lead} </span>}
@@ -88,7 +88,7 @@ export const Options = ({ options, onPick, picked, closed }: { options: Option[]
     <div className="mt-5 flex flex-wrap gap-2.5">
         {options.map((option, i) => {
             const chosen = picked[i];
-            const state = option.correct && closed ? (chosen ? "border-[#20B8A8] text-white" : "border-accent text-white") : chosen ? "border-[#E955A8]/60 text-white/45" : closed ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white";
+            const state = option.correct && closed ? (chosen ? "border-[#20B8A8] text-white" : "border-accent text-white") : chosen ? "border-[#E5484D]/60 text-white/45" : closed ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white";
             return (
                 <button key={option.label} type="button" disabled={closed || chosen} onClick={() => onPick(i)} className={`rounded-sm border px-4 py-2.5 text-left text-sm transition-colors ${state}`}>
                     {option.label}

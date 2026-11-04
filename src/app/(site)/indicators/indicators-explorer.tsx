@@ -93,10 +93,10 @@ const body = "text-[15px] md:text-base leading-relaxed text-white/60";
 // The badge that tells the two order-flow sources apart at a glance.
 const DataBadge = ({ data }: { data: Data }) =>
     data === "real" ? (
-        <span className="inline-flex items-center gap-2 rounded-sm border border-[#E3A1F7]/60 bg-[#E3A1F7]/[0.08] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#E3A1F7] shadow-[0_0_22px_rgba(227,161,247,0.28)]">
+        <span className="inline-flex items-center gap-2 rounded-sm border border-white/60 bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_0_22px_rgba(255, 255, 255,0.28)]">
             <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E3A1F7] opacity-70" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#E3A1F7]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
             </span>
             Real footprint data
         </span>
@@ -112,7 +112,7 @@ const DataBadge = ({ data }: { data: Data }) =>
 const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature; index: number }) => {
     const spots = feature.spots ?? [];
     return (
-        <div className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-2xl border ${item.data === "real" ? "border-[#E3A1F7]/40 shadow-[0_0_60px_-10px_rgba(227,161,247,0.35)]" : "border-white/10"}`}>
+        <div className={`relative mx-auto w-full max-w-[480px] overflow-hidden rounded-2xl border ${item.data === "real" ? "border-white/40 shadow-[0_0_60px_-10px_rgba(255, 255, 255,0.35)]" : "border-white/10"}`}>
             <Image src={item.image} alt={`${item.name} on a TradingView chart`} width={1080} height={1350} className="block w-full" />
             <svg viewBox="0 0 100 125" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
                 <defs>
@@ -125,11 +125,11 @@ const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature
                 </defs>
                 <rect width="100" height="125" fill="black" mask={`url(#m-${item.id})`} className="transition-opacity duration-500" opacity={spots.length ? 0.62 : 0} />
                 {spots.map(([x, y, w, h], i) => (
-                    <rect key={`${feature.name}-${i}`} x={x} y={y * 1.25} width={w} height={h * 1.25} rx="0.8" fill="none" stroke="#E3A1F7" strokeWidth="0.35" className="spot-in" style={{ filter: "drop-shadow(0 0 1.2px rgba(227,161,247,0.9))" }} />
+                    <rect key={`${feature.name}-${i}`} x={x} y={y * 1.25} width={w} height={h * 1.25} rx="0.8" fill="none" stroke="#FFFFFF" strokeWidth="0.35" className="spot-in" style={{ filter: "drop-shadow(0 0 1.2px rgba(255, 255, 255,0.9))" }} />
                 ))}
             </svg>
             {spots.length > 0 && (
-                <span key={feature.name} className="spot-in absolute bottom-3 left-3 rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-[#E3A1F7] backdrop-blur">
+                <span key={feature.name} className="spot-in absolute bottom-3 left-3 rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-white backdrop-blur">
                     {String(index + 1).padStart(2, "0")} · {feature.name}
                 </span>
             )}
@@ -161,9 +161,9 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
                                 return (
                                     <li key={f.name} className="border-b border-white/10">
                                         <button type="button" aria-expanded={active} onClick={() => setOpen(i)} onMouseEnter={() => setOpen(i)} className="group grid w-full grid-cols-[2.25rem_1fr_auto] items-baseline gap-3 py-3.5 text-left">
-                                            <span className={`font-mono text-[12px] tabular-nums transition-colors ${active ? "text-[#E3A1F7]" : "text-white/30"}`}>{String(i + 1).padStart(2, "0")}</span>
+                                            <span className={`font-mono text-[12px] tabular-nums transition-colors ${active ? "text-white" : "text-white/30"}`}>{String(i + 1).padStart(2, "0")}</span>
                                             <span className={`text-[15px] transition-colors ${active ? "text-white" : "text-white/60 group-hover:text-white/90"}`}>{f.name}</span>
-                                            <span className={`text-[12px] transition-all ${active ? "text-[#E3A1F7]" : "text-white/0 group-hover:text-white/40"}`}>{f.spots ? "●" : "→"}</span>
+                                            <span className={`text-[12px] transition-all ${active ? "text-white" : "text-white/0 group-hover:text-white/40"}`}>{f.spots ? "●" : "→"}</span>
                                         </button>
                                         <div className={`grid transition-[grid-template-rows] duration-300 ${active ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                                             <p className="overflow-hidden pl-[3rem] pr-4 text-[14px] leading-relaxed text-white/55">
@@ -207,9 +207,9 @@ const Compare = () => (
                 <span />
                 {COMPARE.map((c) => (
                     <div key={c.name} className="relative border-l border-white/10 px-4 md:px-8 pt-7 pb-6">
-                        {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#E3A1F7] shadow-[0_0_18px_2px_rgba(227,161,247,0.55)]" />}
-                        <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-[#E3A1F7]" : "text-white/40"}`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-[#E3A1F7] shadow-[0_0_8px_#E3A1F7]" : "border border-white/40"}`} />
+                        {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white shadow-[0_0_18px_2px_rgba(255, 255, 255,0.55)]" />}
+                        <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-white" : "text-white/40"}`}>
+                            <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-white shadow-[0_0_8px_#FFFFFF]" : "border border-white/40"}`} />
                             {c.data === "real" ? "Tick-level" : "1-minute precision"}
                         </p>
                         <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>

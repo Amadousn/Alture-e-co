@@ -63,11 +63,11 @@ export const extendedConfig = {
 
     // The one brand colour, used sparingly: the "&" in the logo, the accent
     // word in a headline, section labels and text links.
-    accent: "#E3A1F7",
+    accent: "#FFFFFF",
 
     // Market direction: teal for gains, pink for losses. Never green and red.
     up: "#20B8A8",
-    down: "#E955A8",
+    down: "#E5484D",
 
     // Backgrounds - Pure black
     background: "#000000",     // Pure black

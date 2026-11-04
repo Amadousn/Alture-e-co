@@ -257,14 +257,14 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
             <div className="mt-3 lg:mt-0">
                 <p className={label}>The coach</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">Not sure where this market is going? The coach reads it with you.</p>
-                <button type="button" onClick={() => setHint(true)} className="mt-3 w-full rounded-sm border border-accent px-4 py-2.5 text-sm font-medium text-white shadow-[0_0_22px_rgba(227,161,247,0.28)] transition-shadow hover:shadow-[0_0_30px_rgba(227,161,247,0.45)]">
+                <button type="button" onClick={() => setHint(true)} className="mt-3 w-full rounded-sm border border-accent px-4 py-2.5 text-sm font-medium text-white shadow-[0_0_22px_rgba(255, 255, 255,0.28)] transition-shadow hover:shadow-[0_0_30px_rgba(255, 255, 255,0.45)]">
                     Ask the coach
                 </button>
             </div>
         )
     ) : phase === "plan" && side && side !== "out" ? (
         <div className="mt-3 lg:mt-0">
-                                <div className="cockpit-rise border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                                <div className="cockpit-rise border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(255, 255, 255,0.14)]">
                                     <p className={label}>The coach</p>
                                     {coach && coach.side === side ? (
                                         <>
@@ -289,7 +289,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
         </div>
     ) : read !== null || !scenario.guided ? (
         <div className="mt-3 lg:mt-0">
-            <div className="cockpit-rise border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+            <div className="cockpit-rise border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(255, 255, 255,0.14)]">
                 <p className={label}>The coach</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-white/80">
                     {scenario.reading === "sideways" ? "The ringed swing highs and lows are not stepping in one direction. There is no clear structure to lean on here: staying out is a sound decision." : `The ringed swing highs and lows are ${scenario.reading === "up" ? "rising" : "falling"}. Going ${withTrend} trades with that structure; going ${withTrend === "long" ? "short" : "long"} trades against it.`}
@@ -304,7 +304,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
         phase === "result" && trade ? (
             <>
                         {followed && coach && (
-                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(255, 255, 255,0.14)]">
                                 <p className={label}>Why this trade worked</p>
                                 <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-white/80">
                                     <li>You traded with the structure: the swings were {scenario.reading === "up" ? "rising" : "falling"}, and you went {trade.side}.</li>
@@ -324,7 +324,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             </div>
                         )}
                         {trade.side === "out" && (
-                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(227,161,247,0.14)]">
+                            <div className="mt-5 border-l-2 border-accent bg-accent/[0.05] py-3 pl-4 pr-4 shadow-[0_0_34px_rgba(255, 255, 255,0.14)]">
                                 <p className={label}>{scenario.reading === "sideways" ? "Why a trader stays out here" : "What staying out meant here"}</p>
                                 {scenario.reading === "sideways" ? (
                                     <>
@@ -415,7 +415,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                             ["sideways", "Neither: sideways"],
                                         ] as const
                                     ).map(([value, name]) => (
-                                        <button key={value} type="button" disabled={read !== null} onClick={() => setRead(value)} className={`rounded-sm border px-4 py-2.5 text-sm transition-colors ${read === null ? "border-white/25 text-white hover:border-white" : value === scenario.reading ? "border-[#20B8A8] text-white" : read === value ? "border-[#E955A8]/60 text-white/45" : "border-white/10 text-white/35"}`}>
+                                        <button key={value} type="button" disabled={read !== null} onClick={() => setRead(value)} className={`rounded-sm border px-4 py-2.5 text-sm transition-colors ${read === null ? "border-white/25 text-white hover:border-white" : value === scenario.reading ? "border-[#20B8A8] text-white" : read === value ? "border-[#E5484D]/60 text-white/45" : "border-white/10 text-white/35"}`}>
                                             {name}
                                         </button>
                                     ))}
@@ -531,7 +531,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                                     {(
                                         [
                                             ["Position", `${whole(positionValue(plan))} · ${sizeOf(plan).toFixed(4)} ${asset.ticker}`, ""],
-                                            ["If the stop loss is hit", forced ? `-${plain(plan.margin)} (liquidated first)` : `-${plain(riskPerUnit(plan) * sizeOf(plan))}`, "text-[#E955A8]"],
+                                            ["If the stop loss is hit", forced ? `-${plain(plan.margin)} (liquidated first)` : `-${plain(riskPerUnit(plan) * sizeOf(plan))}`, "text-[#E5484D]"],
                                             ["If the take profit is hit", `+${plain(rewardPerUnit(plan) * sizeOf(plan))}`, "text-[#20B8A8]"],
                                             ["Reward-to-risk", `${ratio(plan).toFixed(2)} for each 1 risked`, ""],
                                             ["Liquidation price", liq === null ? "none without leverage" : `${price(liq)} (${((Math.abs(liq - plan.entry) / plan.entry) * 100).toFixed(1)}% away)`, ""],
@@ -577,7 +577,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                             ) : running === null ? (
                                 <p className="mt-3 text-lg text-white/70">Waiting for price to reach your entry at {price(levels.entry)}.</p>
                             ) : (
-                                <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${running >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>
+                                <p className={`mt-3 font-logo text-5xl font-light leading-none tabular-nums ${running >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>
                                     {money(running)}
                                     <span className="ml-4 text-xl text-white/55">{percent(running / amount)}</span>
                                 </p>
@@ -606,7 +606,7 @@ export const Sim = ({ onDone }: { onDone: Done }) => {
                         {traded && trade.net > 0 && <p className="mt-3 font-logo text-4xl font-light leading-none text-white md:text-5xl">{trade.result === "target" ? (trade.side === withTrend ? "Nice trade." : "Good catch.") : "Well held."}</p>}
                         <p className="mt-3 text-2xl font-medium tracking-tight text-white md:text-3xl">{HEADLINE[trade.result]}</p>
                         {traded && (
-                            <p className={`mt-3 font-logo text-6xl font-light leading-none tabular-nums ${trade.net >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>
+                            <p className={`mt-3 font-logo text-6xl font-light leading-none tabular-nums ${trade.net >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>
                                 {money(Math.abs(shownNet - trade.net) < 0.005 ? trade.net : shownNet)}
                                 <span className="ml-4 text-2xl text-white/55">{percent(trade.roi)}</span>
                             </p>
@@ -818,7 +818,7 @@ export const Journal = ({ onDone, onPractice }: { onDone: Done; onPractice: () =
                                         {entry.side !== "out" ? ` ${entry.leverage}x` : ""}
                                         <span className="ml-3 text-sm text-white/45">{entry.reason}</span>
                                     </span>
-                                    <span className={`text-sm tabular-nums ${entry.side === "out" || entry.result === "unfilled" ? "text-white/45" : entry.net >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>{entry.side === "out" ? "No trade" : entry.result === "unfilled" ? "Not filled" : money(entry.net)}</span>
+                                    <span className={`text-sm tabular-nums ${entry.side === "out" || entry.result === "unfilled" ? "text-white/45" : entry.net >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{entry.side === "out" ? "No trade" : entry.result === "unfilled" ? "Not filled" : money(entry.net)}</span>
                                 </button>
                                 {active && (
                                     <div className="cockpit-rise pb-6 pt-1">

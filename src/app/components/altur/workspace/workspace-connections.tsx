@@ -17,7 +17,7 @@ const STATUS: Record<ConnectionStatus, { label: string; tone: string }> = {
     connected: { label: "Connected", tone: "text-[#20B8A8]" },
     syncing: { label: "Syncing", tone: "text-white" },
     synced: { label: "Synced", tone: "text-[#20B8A8]" },
-    "sync-failed": { label: "Sync failed", tone: "text-[#E955A8]" },
+    "sync-failed": { label: "Sync failed", tone: "text-[#E5484D]" },
 };
 
 const fieldClass = "!rounded-sm !bg-[#0c0c0c] !border-white/25 !text-sm !text-white px-3 py-2.5 focus:!border-white";
@@ -156,7 +156,7 @@ const ExchangeRow = ({ provider, slot = "", label, onRemoved }: { provider: Prov
             {connected && status === "connected" && <p className="mt-3 text-sm text-white/55">{provider.name} accepted the key. Nothing has been imported yet: press Sync now to bring in your last 90 days.</p>}
 
             {failure && (
-                <div role="alert" className="cockpit-rise mt-4 flex flex-wrap items-center justify-between gap-3 border-l-2 border-[#E955A8] pl-4 py-1">
+                <div role="alert" className="cockpit-rise mt-4 flex flex-wrap items-center justify-between gap-3 border-l-2 border-[#E5484D] pl-4 py-1">
                     <p className="text-sm text-white">{failure.message}</p>
                     {connected && failure.retryable && (
                         <button type="button" onClick={connection.sync} disabled={busy} className={`${quiet} !h-9 !text-xs`}>

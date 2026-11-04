@@ -8,7 +8,7 @@ import type { ClosedTrade } from "@/utils/bybit";
 // each trade as a bar (teal above zero, magenta below). Hover reads one trade.
 
 const TEAL = "#20B8A8";
-const MAGENTA = "#E955A8";
+const MAGENTA = "#E5484D";
 const DAY = 24 * 60 * 60 * 1000;
 const RANGES = [
     { id: "1M", days: 30 },

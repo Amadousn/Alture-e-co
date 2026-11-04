@@ -117,7 +117,7 @@ const Ribbon = ({ className = "", leaving = false, series = null, onProbe, wide 
                 const glint = Math.exp(-(d * d) / 0.004);
                 const alpha = Math.min(1, (d > 0 ? 0.14 + 0.8 * facing : 0.05 + 0.24 * facing) + glint * 0.7 + lift * 0.5) * (1 - flat * 0.6);
                 const gradient = ctx.createLinearGradient(x - run, y + rise, x + run, y - rise);
-                gradient.addColorStop(0, `rgba(227,161,247,${alpha * (0.18 + lift * 0.5)})`);
+                gradient.addColorStop(0, `rgba(255, 255, 255,${alpha * (0.18 + lift * 0.5)})`);
                 gradient.addColorStop(0.5, `rgba(240,228,248,${alpha * 0.85})`);
                 gradient.addColorStop(1, `rgba(255,255,255,${alpha})`);
                 ctx.strokeStyle = gradient;

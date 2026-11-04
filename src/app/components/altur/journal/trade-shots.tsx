@@ -102,14 +102,14 @@ const TradeShots = ({ tradeId }: { tradeId: string }) => {
                 )}
             </div>
             <input ref={input} type="file" accept="image/*" multiple hidden onChange={(event) => { add([...(event.target.files ?? [])]); event.target.value = ""; }} />
-            {error && <p className="mt-2 text-[11px] text-[var(--j-dn,#E955A8)]">{error}</p>}
+            {error && <p className="mt-2 text-[11px] text-[var(--j-dn,#E5484D)]">{error}</p>}
 
             {open && (
                 <div role="dialog" aria-label="Chart" className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-black/85 p-6 backdrop-blur-sm" onClick={() => setOpen(null)}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={open.src} alt="Chart of this trade" className="max-h-[82vh] max-w-full rounded-lg border border-white/15" onClick={(event) => event.stopPropagation()} />
                     <div className="flex gap-3 text-sm" onClick={(event) => event.stopPropagation()}>
-                        <button type="button" onClick={() => remove(open.id)} className="rounded-sm border border-white/25 px-4 py-2 text-white/80 hover:border-[#E955A8] hover:text-[#E955A8]">Remove</button>
+                        <button type="button" onClick={() => remove(open.id)} className="rounded-sm border border-white/25 px-4 py-2 text-white/80 hover:border-[#E5484D] hover:text-[#E5484D]">Remove</button>
                         <button type="button" onClick={() => setOpen(null)} className="rounded-sm bg-white px-4 py-2 font-medium text-black">Close</button>
                     </div>
                 </div>

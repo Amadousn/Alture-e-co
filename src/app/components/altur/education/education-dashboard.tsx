@@ -146,7 +146,7 @@ const EducationDashboard = () => {
                                         reset();
                                         setConfirming(false);
                                     }}
-                                    className="text-[#E955A8] border-b border-[#E955A8]/50"
+                                    className="text-[#E5484D] border-b border-[#E5484D]/50"
                                 >
                                     Erase
                                 </button>{" "}

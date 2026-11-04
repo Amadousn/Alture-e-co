@@ -52,7 +52,7 @@ const ProductScreen = ({ caption, leaving = false }: { caption: string; leaving?
 
             {/* On a phone the terminal is still shown as what it is today: a desktop workspace, on a screen. */}
             <figure className="lg:hidden mx-auto w-full max-w-[560px]">
-                <div className="rounded-[10px] border border-white/20 bg-[#0b0b0d] p-[5px] shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(227,161,247,0.06)]">
+                <div className="rounded-[10px] border border-white/20 bg-[#0b0b0d] p-[5px] shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(255, 255, 255,0.06)]">
                     <Image src="/images/alturelock/cockpit.jpg" alt="The AltureLock terminal on a desktop screen: the watchlist, the chart and the trade in progress" width={1440} height={900} sizes="(max-width: 600px) 100vw, 560px" className="block h-auto w-full rounded-[5px]" />
                 </div>
                 <div className="mx-auto h-[10px] w-[22%] bg-gradient-to-b from-white/15 to-white/5" aria-hidden="true" />

@@ -25,7 +25,7 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false, themed = 
             </div>
             <div className={full ? "relative px-4 pb-24 pt-6 md:px-8 xl:px-10" : `${width} mx-auto px-4 pb-24 pt-8 md:px-6 md:pt-10`}>
                 {store.ready && !store.persistent && (
-                    <p className="rounded-sm border border-[#E955A8]/40 bg-[#E955A8]/10 px-4 py-3 text-sm text-white mb-8">
+                    <p className="rounded-sm border border-[#E5484D]/40 bg-[#E5484D]/10 px-4 py-3 text-sm text-white mb-8">
                         This browser is blocking storage, so nothing you enter here will be kept after you leave the page.
                     </p>
                 )}

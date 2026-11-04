@@ -13,7 +13,7 @@ const Strategies = () => {
     const [adding, setAdding] = useState<Record<string, string>>({});
     const { enforced, plan } = usePlan();
     // The Free plan keeps one strategy. One made earlier is never deleted.
-    const full = enforced && plan === "free" && strategies.length >= 1;
+    const full = enforced && plan !== "journal" && plan !== "alturelock" && strategies.length >= 1;
     if (!store.ready) return null;
 
     const create = () => {
@@ -33,7 +33,7 @@ const Strategies = () => {
                     <li key={item.id} className="border-t border-white/10 pt-3">
                         <div className="flex items-baseline justify-between gap-4">
                             <p className="text-[15px] font-medium text-white">{item.name}</p>
-                            <button type="button" onClick={() => setStrategies((list) => list.filter((entry) => entry.id !== item.id))} className="text-xs text-white/40 hover:text-[#E955A8]">
+                            <button type="button" onClick={() => setStrategies((list) => list.filter((entry) => entry.id !== item.id))} className="text-xs text-white/40 hover:text-[#E5484D]">
                                 Remove
                             </button>
                         </div>
@@ -63,7 +63,7 @@ const Strategies = () => {
             </ul>
             {full ? (
                 <p className="mt-4 border-t border-white/10 pt-4 text-sm text-white/60">
-                    The Free plan includes 1 strategy. <Link href="/alturelock#pricing" className="border-b border-white/30 text-white hover:border-white">See the plans</Link>
+                    Your plan includes 1 strategy. <Link href="/alturelock#pricing" className="border-b border-white/30 text-white hover:border-white">See the plans</Link>
                 </p>
             ) : (
             <form

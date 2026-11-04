@@ -96,8 +96,8 @@ const BrandChart = ({ symbol, interval, levels = [], onReading }: { symbol: stri
 
             {hover !== null && <span className="pointer-events-none absolute top-0 bottom-0 w-px bg-white/15" style={{ left: left(hover) }} />}
             <span className="pointer-events-none absolute -ml-1.5 -mt-1.5 flex h-3 w-3" style={{ left: left(at), top: top(closes[at]) }}>
-                {hover === null && <span className={`absolute inline-flex h-full w-full rounded-full ${up ? "bg-[#20B8A8]" : "bg-[#E955A8]"} cockpit-ping`} />}
-                <span className={`relative inline-flex h-3 w-3 rounded-full ring-2 ring-black ${hover !== null ? "bg-white" : up ? "bg-[#20B8A8]" : "bg-[#E955A8]"}`} />
+                {hover === null && <span className={`absolute inline-flex h-full w-full rounded-full ${up ? "bg-[#20B8A8]" : "bg-[#E5484D]"} cockpit-ping`} />}
+                <span className={`relative inline-flex h-3 w-3 rounded-full ring-2 ring-black ${hover !== null ? "bg-white" : up ? "bg-[#20B8A8]" : "bg-[#E5484D]"}`} />
             </span>
         </div>
     );

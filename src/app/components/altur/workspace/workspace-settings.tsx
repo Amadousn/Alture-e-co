@@ -112,7 +112,7 @@ const WorkspaceSettings = () => {
                                         type="button"
                                         onClick={() => setChecklist((list) => list.filter((entry) => entry.id !== item.id))}
                                         aria-label={`Remove "${item.label}"`}
-                                        className="text-xs text-[#7d7d87] hover:text-[#E955A8] transition-colors"
+                                        className="text-xs text-[#7d7d87] hover:text-[#E5484D] transition-colors"
                                     >
                                         Remove
                                     </button>

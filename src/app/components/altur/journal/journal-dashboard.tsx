@@ -14,7 +14,7 @@ import DayPanel from "./day-panel";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const WHITE = "#f5f5f5";
-const RED = "#E955A8";
+const RED = "#E5484D";
 
 function formatSignedDollars(value: number): string {
     const sign = value >= 0 ? "+" : "-";
@@ -63,7 +63,7 @@ function useCountUp(target: number, duration = 600): number {
     return value;
 }
 
-const pnlColor = (value: number) => (value >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]");
+const pnlColor = (value: number) => (value >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]");
 
 const cardClass = "cmd-panel";
 const labelClass = "text-[11px] uppercase tracking-[0.12em] text-white/40";
@@ -82,7 +82,7 @@ const SEGMENT_FILTERS: Record<SegmentId, (trade: ClosedTrade) => boolean> = {
 };
 
 const DirectionTag = ({ direction, leverage }: { direction: "Long" | "Short"; leverage: number }) => (
-    <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-black ${direction === "Long" ? "bg-[#20B8A8]" : "bg-[#E955A8]"}`}>
+    <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-black ${direction === "Long" ? "bg-[#20B8A8]" : "bg-[#E5484D]"}`}>
         {direction} {leverage.toLocaleString(undefined, { maximumFractionDigits: 1 })}×
     </span>
 );
@@ -100,7 +100,7 @@ const Bars = ({ items }: { items: { label: string; value: number }[] }) => {
                 <div key={item.label} className="flex-1 flex flex-col items-center justify-end gap-1.5 h-full min-w-0" title={`${item.label}: ${formatSignedDollars(item.value)}`}>
                     <span className={`text-[9px] tabular-nums ${item.value === 0 ? "text-gray-700" : pnlColor(item.value)}`}>{item.value === 0 ? "" : formatCompact(item.value)}</span>
                     <div
-                        className={`w-full rounded-sm transition-all duration-500 hover:brightness-125 ${item.value < 0 ? "bg-[#E955A8]" : "bg-white/90"}`}
+                        className={`w-full rounded-sm transition-all duration-500 hover:brightness-125 ${item.value < 0 ? "bg-[#E5484D]" : "bg-white/90"}`}
                         style={{ height: item.value === 0 ? 2 : `${Math.max(4, (Math.abs(item.value) / largest) * 60)}%`, opacity: item.value === 0 ? 0.15 : 1 }}
                     />
                     <span className="text-[10px] font-light text-gray-500">{item.label}</span>
@@ -282,7 +282,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                         <span className="inline-flex rounded-full h-1.5 w-1.5 bg-[#20B8A8]" />
                         <span className="uppercase tracking-[0.15em]">Synced from Bybit</span>
-                        <span className={`text-[10px] tabular-nums uppercase px-1.5 py-0.5 rounded ${env === "live" ? "bg-[#E955A8]/10 text-[#E955A8]" : "bg-white/5 text-gray-400"}`}>{env}</span>
+                        <span className={`text-[10px] tabular-nums uppercase px-1.5 py-0.5 rounded ${env === "live" ? "bg-[#E5484D]/10 text-[#E5484D]" : "bg-white/5 text-gray-400"}`}>{env}</span>
                         <span className="text-gray-600 font-light hidden sm:inline">{readOnlyVerified ? "· read-only key confirmed" : "· read-only not confirmed on demo"}</span>
                     </div>
                 )}
@@ -354,7 +354,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                                 ? "bg-[#0c0c0c]"
                                 : performance.profitLoss >= 0
                                     ? "bg-[#20B8A8]/[0.18]"
-                                    : "bg-[#E955A8]/[0.14]";
+                                    : "bg-[#E5484D]/[0.14]";
                             const cellClass = `rounded-sm ${tone} ${day === selectedDay ? "ring-1 ring-accent" : day === today ? "ring-1 ring-white/40" : ""} min-h-[54px] md:min-h-[86px] p-1.5 md:p-2.5 flex flex-col justify-between text-left`;
                             const dayNumber = (
                                 <span className="flex items-center justify-end gap-1.5 w-full text-[10px] tabular-nums text-[#7d7d87]">
@@ -446,7 +446,7 @@ const JournalDashboard = ({ env = "demo", readOnlyVerified = false, days, trades
                                 type="button"
                                 onClick={() => setSegment(active ? "all" : item.id)}
                                 aria-pressed={active}
-                                className={`text-left px-4 py-3.5 transition-colors ${item.id === "all" ? "col-span-2 md:col-span-1" : ""} ${active ? "bg-[#17171c] shadow-[inset_0_2px_0_#E3A1F7]" : "bg-[#070707] hover:bg-[#0e0e10]"}`}
+                                className={`text-left px-4 py-3.5 transition-colors ${item.id === "all" ? "col-span-2 md:col-span-1" : ""} ${active ? "bg-[#17171c] shadow-[inset_0_2px_0_#FFFFFF]" : "bg-[#070707] hover:bg-[#0e0e10]"}`}
                             >
                                 <span className={`${labelClass} flex items-center justify-between gap-2 mb-1.5`}>
                                     {item.label}

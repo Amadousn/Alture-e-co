@@ -72,9 +72,16 @@ export async function terminalAllowed() {
     }
 }
 
-// A customer account, as opposed to a visitor or the owner's login, while payments are on.
-export async function isCustomer() {
-    if (!stripe()) return false;
+// Backtesting comes with the Journal and AltureLock plans. Payments off and the owner's login stay open.
+export async function backtestAllowed() {
+    const api = stripe();
+    if (!api) return true;
     const user = await signedInUser();
-    return Boolean(user?.email);
+    if (!user?.email) return true;
+    try {
+        const plan = await planOf(api, user.id, user.email);
+        return plan === "journal" || plan === "alturelock";
+    } catch {
+        return true;
+    }
 }

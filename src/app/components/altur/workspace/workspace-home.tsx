@@ -18,7 +18,7 @@ import { useActiveTrade, useImports, useRecordedTrades, useTradeReviews, useWork
 
 const money = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const whole = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
-const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E955A8]" : "text-white");
+const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white");
 const RANGES = [
     ["1M", 30],
     ["3M", 91],
@@ -142,7 +142,7 @@ const WorkspaceHome = ({ demoTrades }: { demoTrades?: ClosedTrade[] }) => {
                     {months.length > 0 && (
                         <div className="mt-5 flex flex-wrap gap-2">
                             {months.map((month) => (
-                                <span key={month.label} className={`rounded border px-3 py-1.5 ${month.value >= 0 ? "border-[#20B8A8]/25 bg-[#20B8A8]/[0.06]" : "border-[#E955A8]/25 bg-[#E955A8]/[0.06]"}`}>
+                                <span key={month.label} className={`rounded border px-3 py-1.5 ${month.value >= 0 ? "border-[#20B8A8]/25 bg-[#20B8A8]/[0.06]" : "border-[#E5484D]/25 bg-[#E5484D]/[0.06]"}`}>
                                     <span className="cmd-label block !text-[9.5px]">{month.label}</span>
                                     <span className={`font-mono text-sm ${tone(month.value)}`}>{whole(month.value)}</span>
                                 </span>
@@ -189,7 +189,7 @@ const WorkspaceHome = ({ demoTrades }: { demoTrades?: ClosedTrade[] }) => {
                                 </div>
                                 <div className="flex justify-between gap-3">
                                     <dt className="text-white/55">Losses today</dt>
-                                    <dd className={`font-mono ${maxLosses && todayLosses >= maxLosses ? "text-[#E955A8]" : "text-[#20B8A8]"}`}>{maxLosses ? `${todayLosses} of ${maxLosses}` : todayLosses}</dd>
+                                    <dd className={`font-mono ${maxLosses && todayLosses >= maxLosses ? "text-[#E5484D]" : "text-[#20B8A8]"}`}>{maxLosses ? `${todayLosses} of ${maxLosses}` : todayLosses}</dd>
                                 </div>
                             </dl>
                         </div>

@@ -59,7 +59,7 @@ const PALETTES = {
         accent: "#FFFFFF",
         green: "#20B8A8",
         greenRgb: "32, 184, 168",
-        red: "#E955A8",
+        red: "#E5484D",
         redRgb: "233, 85, 168",
         curveRgb: "255, 255, 255",
         qrGround: "#ffffff",

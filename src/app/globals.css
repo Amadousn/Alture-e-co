@@ -22,7 +22,7 @@ body {
     height: 1100px;
     max-width: 160vw;
     max-height: 160vw;
-    background: radial-gradient(circle, rgba(227, 161, 247, 0.06) 0%, rgba(227, 161, 247, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
 * {
@@ -246,8 +246,8 @@ h4 {
 h1 .text-primary,
 h2 .text-primary,
 .accent-light {
-    color: #E3A1F7;
-    text-shadow: 0 0 26px rgba(227, 161, 247, 0.4);
+    color: #FFFFFF;
+    text-shadow: 0 0 26px rgba(255, 255, 255, 0.4);
 }
 
 /* Figures line up in columns everywhere, as in a trading terminal. */
@@ -270,8 +270,8 @@ body {
 }
 /* Where you are is said by colour and a little light alone: no line under it. */
 .nav-link.is-active {
-    color: #E3A1F7;
-    text-shadow: 0 0 18px rgba(227, 161, 247, 0.45);
+    color: #FFFFFF;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
 }
 
 /* A selected control or a primary button: a thin rim and a faint halo. */
@@ -289,7 +289,7 @@ a:focus-visible,
 button:focus-visible,
 [role="checkbox"]:focus-visible,
 [role="tab"]:focus-visible {
-    outline: 2px solid #E3A1F7;
+    outline: 2px solid #FFFFFF;
     outline-offset: 2px;
 }
 button:active:not(:disabled),
@@ -443,7 +443,7 @@ a:active {
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9), 0 0 60px rgba(227, 161, 247, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 255, 255, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     /* It comes out of the darkness on its far side. */
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 10%, #000 26%);
     mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 10%, #000 26%);
@@ -530,7 +530,7 @@ a:active {
     border: 0;
     border-radius: 50%;
     background: #ffffff;
-    box-shadow: 0 0 12px rgba(227, 161, 247, 0.55);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
 }
 .edu-range::-moz-range-track {
     height: 2px;
@@ -547,10 +547,10 @@ a:active {
     border: 0;
     border-radius: 50%;
     background: #ffffff;
-    box-shadow: 0 0 12px rgba(227, 161, 247, 0.55);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
 }
-.edu-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
-.edu-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(227, 161, 247, 0.5); }
+.edu-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); }
+.edu-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); }
 
 /* AltureLock command centre: graphite ground, a faint technical grid, panels
    with fine corner markers, teal light used sparingly. */
@@ -648,7 +648,7 @@ a:active {
 .lumen-term [class*="border-white/"] { border-color: #e4e1ee !important; }
 .lumen-term [class*="bg-white/"] { background-color: rgba(23, 24, 26, 0.035) !important; }
 .lumen-term .text-\[\#20B8A8\] { color: #0d8a7b !important; }
-.lumen-term .text-\[\#E955A8\] { color: #c23a77 !important; }
+.lumen-term .text-\[\#E5484D\] { color: #C62F35 !important; }
 .lumen-term .nav-link.is-active { color: #0c0d10 !important; text-shadow: none; }
 .lumen-term .nav-link { color: #7c808a; }
 .lumen-term .nav-link:hover { color: #0c0d10; }

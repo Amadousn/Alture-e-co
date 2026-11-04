@@ -97,7 +97,7 @@ const Header: React.FC = () => {
       fill="none"
       className={className}
       aria-hidden="true"
-      style={{ color: "#E3A1F7", filter: "drop-shadow(0 0 6px rgba(227, 161, 247, 0.75)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.55))" }}
+      style={{ color: "#FFFFFF", filter: "drop-shadow(0 0 6px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.55))" }}
     >
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">

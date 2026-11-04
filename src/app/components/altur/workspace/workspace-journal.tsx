@@ -146,7 +146,7 @@ const WorkspaceJournal = () => {
       ) : (
         <>
           {sync.status === "error" && (
-            <p className="rounded-sm border border-[#E955A8]/40 bg-[#E955A8]/10 px-4 py-3 text-sm text-white mb-6">
+            <p className="rounded-sm border border-[#E5484D]/40 bg-[#E5484D]/10 px-4 py-3 text-sm text-white mb-6">
               Exchange sync: {sync.message} Your recorded trades below are
               unaffected.
             </p>

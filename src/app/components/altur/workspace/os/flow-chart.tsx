@@ -11,7 +11,7 @@ type Pick = { type: "bubble"; bubble: Bubble } | { type: "signal"; signal: Signa
 type Hit = { x: number; y: number; r: number; pick: Pick };
 
 const STORE = "alturelock.flow.v1";
-const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#20B8A8", sellColor: "#E955A8", exhColor: "#E3A1F7", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
+const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#20B8A8", sellColor: "#E5484D", exhColor: "#FFFFFF", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
 const LABELS: Record<string, string> = { "1": "1 minute", "3": "3 minutes", "5": "5 minutes", "15": "15 minutes", "30": "30 minutes", "60": "1 hour", "240": "4 hours", D: "1 day" };
 
 const fmtPrice = (value: number) => value.toLocaleString(undefined, { minimumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5 });
@@ -433,7 +433,7 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
         <div className={`flex flex-col ${fill ? "h-full" : ""}`}>
             <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
                 <p className="flex items-center gap-2 text-[11px] text-white/45" role="status">
-                    <span className={`inline-flex h-1.5 w-1.5 shrink-0 rounded-full ${flow.status === "live" && snapshot?.since ? "bg-[#20B8A8]" : flow.status === "reconnecting" ? "bg-[#E955A8]" : "bg-white/40"}`} />
+                    <span className={`inline-flex h-1.5 w-1.5 shrink-0 rounded-full ${flow.status === "live" && snapshot?.since ? "bg-[#20B8A8]" : flow.status === "reconnecting" ? "bg-[#E5484D]" : "bg-white/40"}`} />
                     {statusText}
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1" role="group" aria-label="Order flow layers">

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 const UP = "#20B8A8";
-const DOWN = "#E955A8";
-const ACCENT = "#E3A1F7";
+const DOWN = "#E5484D";
+const ACCENT = "#FFFFFF";
 
 export type CandlePart = "body" | "upper" | "lower" | "open" | "high" | "low" | "close";
 export type CandleSpec = {

@@ -267,8 +267,8 @@ const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], 
                             <g>
                                 {hover !== null && (
                                     <>
-                                        <line x1={0} x2={plotW} y1={y(hover)} y2={y(hover)} stroke="#E3A1F7" strokeWidth={1} />
-                                        <rect x={plotW + 1} y={y(hover) - 10} width={GUTTER - 2} height={20} fill="#E3A1F7" />
+                                        <line x1={0} x2={plotW} y1={y(hover)} y2={y(hover)} stroke="#FFFFFF" strokeWidth={1} />
+                                        <rect x={plotW + 1} y={y(hover) - 10} width={GUTTER - 2} height={20} fill="#FFFFFF" />
                                         <text x={plotW + 8} y={y(hover) + 4} fontSize={11} fontWeight={700} fill="#000000">
                                             {fmt(hover)}
                                         </text>

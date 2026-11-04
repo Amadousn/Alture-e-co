@@ -17,7 +17,7 @@ const short = (value: number) => {
     const a = Math.abs(value);
     return `${value >= 0 ? "+" : "-"}$${a >= 1000 ? `${(a / 1000).toFixed(1)}K` : a.toFixed(0)}`;
 };
-const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E955A8]" : "text-white");
+const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white");
 const RANGES = [
     ["1M", 30],
     ["3M", 91],
@@ -41,7 +41,7 @@ const Bars = ({ rows }: { rows: Group[] }) => {
                     </div>
                     <div className="mt-1.5 flex items-center gap-3">
                         <span className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
-                            <span className="block h-full rounded-full" style={{ width: `${(Math.abs(row.profitLoss) / largest) * 100}%`, backgroundColor: row.profitLoss >= 0 ? "#20B8A8" : "#E955A8" }} />
+                            <span className="block h-full rounded-full" style={{ width: `${(Math.abs(row.profitLoss) / largest) * 100}%`, backgroundColor: row.profitLoss >= 0 ? "#20B8A8" : "#E5484D" }} />
                         </span>
                         <span className="w-14 text-right font-mono text-[11px] text-white/40">
                             {row.trades} {row.trades === 1 ? "trade" : "trades"}
@@ -134,7 +134,7 @@ const JournalCommand = ({ trades, reviews, sample = false, onOpenTrade }: { trad
                         </div>
                         <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                             <p className="text-lg font-semibold text-white">{trade.instrument}</p>
-                            <span className={`rounded-sm border px-1.5 py-0.5 font-mono text-[10.5px] uppercase ${trade.direction === "Long" ? "border-[#20B8A8]/50 text-[#20B8A8]" : "border-[#E955A8]/50 text-[#E955A8]"}`}>
+                            <span className={`rounded-sm border px-1.5 py-0.5 font-mono text-[10.5px] uppercase ${trade.direction === "Long" ? "border-[#20B8A8]/50 text-[#20B8A8]" : "border-[#E5484D]/50 text-[#E5484D]"}`}>
                                 {trade.direction} {trade.leverage}x
                             </span>
                             <span className={`font-mono text-lg ${tone(trade.profitLoss)}`}>{money(trade.profitLoss)}</span>
@@ -159,7 +159,7 @@ const JournalCommand = ({ trades, reviews, sample = false, onOpenTrade }: { trad
                                     ).map(([term, value]) => (
                                         <div key={term} className="flex justify-between gap-3">
                                             <dt className="text-white/50">{term}</dt>
-                                            <dd className={`text-right ${value === "Yes" ? "text-[#20B8A8]" : value === "No" ? "text-[#E955A8]" : "text-white"}`}>{value}</dd>
+                                            <dd className={`text-right ${value === "Yes" ? "text-[#20B8A8]" : value === "No" ? "text-[#E5484D]" : "text-white"}`}>{value}</dd>
                                         </div>
                                     ))}
                                 </dl>

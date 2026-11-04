@@ -103,7 +103,7 @@ const RulesDemo = () => {
                         <p className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
                             {assetFor(finished.instrument)?.name ?? finished.instrument} {finished.direction}
                         </p>
-                        <p className={`text-2xl font-semibold tabular-nums ${finished.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E955A8]"}`}>{signed(finished.profitLoss)}</p>
+                        <p className={`text-2xl font-semibold tabular-nums ${finished.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{signed(finished.profitLoss)}</p>
                         <p className="mt-4 max-w-lg text-sm leading-relaxed text-[#9a9aa5]">That is the whole process: plan, confirm, trade, review. In your workspace this trade would now be in your Trading Journal. Nothing was saved here, because none of it was real.</p>
                     </div>
                     <Cells
@@ -148,7 +148,7 @@ const RulesDemo = () => {
 
             {/* The guide: always in reach, always says what Next will do. */}
             <div className="fixed inset-x-0 bottom-[58px] lg:bottom-0 z-40 border-t border-white/25 bg-black/95 backdrop-blur" role="region" aria-label="Demo guide">
-                <div className="h-px bg-accent transition-all duration-500 ease-out" style={{ width: `${(guide.n / TOTAL) * 100}%`, boxShadow: "0 0 10px rgba(227,161,247,0.7)" }} aria-hidden="true" />
+                <div className="h-px bg-accent transition-all duration-500 ease-out" style={{ width: `${(guide.n / TOTAL) * 100}%`, boxShadow: "0 0 10px rgba(255, 255, 255,0.7)" }} aria-hidden="true" />
                 <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-5 gap-y-2 px-4 md:px-6 py-3">
                     <span className="font-mono text-[11px] tabular-nums text-accent">
                         {String(guide.n).padStart(2, "0")} / {TOTAL}

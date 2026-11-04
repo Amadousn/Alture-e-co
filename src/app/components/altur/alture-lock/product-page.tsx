@@ -61,8 +61,8 @@ const PLANS = [
         monthly: 39,
         yearly: 33,
         text: "For the trader who wants the truth about every trade.",
-        items: ["Automatic import from your exchange", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session"],
-        soon: ["Backtesting", "More exchanges beyond Bybit"],
+        items: ["Automatic import from your exchange", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session", "Backtesting on real market history"],
+        soon: ["More exchanges beyond Bybit"],
         main: false,
     },
     {
@@ -80,7 +80,7 @@ const PLANS = [
         yearly: 127,
         text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
-        soon: ["Backtesting", "More exchanges beyond Bybit"],
+        soon: ["More exchanges beyond Bybit"],
         main: true,
     },
 ];
@@ -135,8 +135,8 @@ const Pricing = () => {
                         const main = plan.main;
                         const paid = plan.monthly > 0;
                         return (
-                            <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#E3A1F7]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(227,161,247,0.55),inset_0_1px_0_rgba(227,161,247,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
-                                {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(227,161,247,0.24),transparent_70%)]" />}
+                            <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#FFFFFF]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(255,255,255,0.55),inset_0_1px_0_rgba(255,255,255,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
+                                {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,0.24),transparent_70%)]" />}
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
                                 <p className="mt-6 flex items-baseline gap-2">
                                     <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
@@ -147,7 +147,7 @@ const Pricing = () => {
                                 <ul className={`mb-10 mt-8 space-y-3 text-[15px] ${main ? "text-white/90" : "text-white/80"}`}>
                                     {plan.items.map((item) => (
                                         <li key={item} className={`flex gap-3 ${item.startsWith("No ") ? "text-white/40" : ""}`}>
-                                            <span className={main ? "text-[#E3A1F7]" : "text-white/40"} aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
+                                            <span className={main ? "text-[#FFFFFF]" : "text-white/40"} aria-hidden="true">{item.startsWith("No ") ? "–" : "✓"}</span>
                                             {item}
                                         </li>
                                     ))}
