@@ -7,7 +7,7 @@ const api = new Stripe(key);
 const PLANS = [
     ["journal", "AltureLock Journal", 39, 396],
     ["terminal", "AltureLock Terminal", 59, 600],
-    ["alturelock", "AltureLock", 129, 1320],
+    ["alturelock", "AltureLock", 149, 1524],
 ];
 for (const [id, name, monthly, yearly] of PLANS) {
     const found = (await api.products.search({ query: `metadata['plan']:'${id}'` })).data[0];

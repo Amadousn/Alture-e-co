@@ -76,8 +76,8 @@ const PLANS = [
     },
     {
         name: "AltureLock",
-        monthly: 129,
-        yearly: 110,
+        monthly: 149,
+        yearly: 127,
         text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: ["Backtesting", "More exchanges beyond Bybit"],
