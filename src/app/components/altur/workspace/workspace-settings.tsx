@@ -27,7 +27,7 @@ const WorkspaceSettings = () => {
         <WorkspaceShell width="max-w-3xl">
             <h1 className="!text-3xl md:!text-4xl text-white mb-2">Settings</h1>
             <BillingPanel />
-            <p className="text-sm text-[#9a9aa5] mb-10">Changes are saved as you make them, in this browser.</p>
+            <p className="text-sm text-[#9a9aa5] mb-10">Changes are saved as you make them.</p>
 
             {!store.ready ? (
                 <p className="text-sm text-[#7d7d87]">Loading your settings…</p>
