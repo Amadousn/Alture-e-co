@@ -57,7 +57,9 @@ const SAMPLE: [number, number, string, "Long" | "Short", number, number, number,
     [2, 28, "BTCUSDT", "Long", 77734.9, 78451.5, 3.216, "Reversal"],
 ];
 
-// Bybit's taker fee on perpetuals, charged on the way in and on the way out.
+// Bybit's base perpetual fees: the demo trader enters with a limit order (maker)
+// and exits at market (taker), as most planned trades do.
+const MAKER_FEE = 0.0002;
 const TAKER_FEE = 0.00055;
 const LEVERAGE = 20;
 
@@ -85,7 +87,7 @@ export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; posi
         const quantity = sized(instrument, written);
         // Fees and P&L are worked out from the prices and the quantity, never
         // the other way round, so every figure on a trade agrees with the rest.
-        const fee = cents((entryPrice + exitPrice) * quantity * TAKER_FEE);
+        const fee = cents(entryPrice * quantity * MAKER_FEE + exitPrice * quantity * TAKER_FEE);
         const gross = (exitPrice - entryPrice) * quantity * (direction === "Long" ? 1 : -1);
         // Spread across the trading day so same-day trades stay in order.
         const closedAt = Date.UTC(year, month - monthsAgo, day, 8 + (i % 6) * 2, 15 + ((i * 7) % 40), (i * 13) % 60);

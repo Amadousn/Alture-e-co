@@ -63,7 +63,7 @@ const DEFINE: Record<string, string> = {
     "Profit factor": "Gross profit divided by gross loss.",
     "Average trade": "Net result divided by the number of trades.",
     "Day win rate": "Share of trading days that closed with a net gain.",
-    "Average win / loss": "Average winning trade divided by average losing trade.",
+    "Win / loss": "Average winning trade divided by average losing trade.",
     Trades: "Closed trades in the period.",
     "Max drawdown": "The largest fall of the equity curve from a previous high.",
 };
@@ -638,7 +638,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                 </div>
                             </div>
                             <div className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
-                                {head("Average win / loss")}
+                                {head("Win / loss")}
                                 <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)} ×` : empty}</p>
                                 <div className="mt-3 flex h-[7px] gap-[3px] overflow-hidden rounded-full">
                                     <span className="rounded-l-full bg-[var(--j-up)]" style={{ flex: avgW || (avgL ? 0 : 1) }} />
