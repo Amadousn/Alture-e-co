@@ -11,7 +11,7 @@ type Pick = { type: "bubble"; bubble: Bubble } | { type: "signal"; signal: Signa
 type Hit = { x: number; y: number; r: number; pick: Pick };
 
 const STORE = "alturelock.flow.v1";
-const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#20B8A8", sellColor: "#E5484D", exhColor: "#FFFFFF", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
+const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#4DD0E1", sellColor: "#F48FB1", exhColor: "#C792EA", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
 const LABELS: Record<string, string> = { "1": "1 minute", "3": "3 minutes", "5": "5 minutes", "15": "15 minutes", "30": "30 minutes", "60": "1 hour", "240": "4 hours", D: "1 day" };
 
 const fmtPrice = (value: number) => value.toLocaleString(undefined, { minimumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5 });
@@ -44,7 +44,9 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
     const narrow = w < 520;
     const gutter = narrow ? 62 : 66;
     const axis = 18;
-    const cvdH = Math.max(52, Math.round(h * 0.2));
+    // The CVD pane keeps a one-line strip until it has two streamed candles to draw, so the candles get the room.
+    const cvdReady = (snapshot?.cvd ?? []).filter((point) => rows.some((row) => row.t === point.t)).length >= 2;
+    const cvdH = cvdReady ? Math.max(52, Math.round(h * 0.2)) : 16;
     const top = 10;
     const plotW = w - gutter;
     const plotH = h - top - axis - cvdH - 8;
@@ -108,12 +110,12 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
         }
     }
 
-    // Candles in white and grey, so the coloured bubbles carry the order flow.
+    // The Alture & Co. candle: soft grey wicks, grey rising body with a cyan border,
+    // white falling body with a soft pink border, so the bubbles still carry the flow.
     view.forEach((row, i) => {
         const cx = Math.round(xi(i)) + 0.5;
         const up = row.c >= row.o;
-        ctx.strokeStyle = up ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.34)";
-        ctx.fillStyle = up ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.34)";
+        ctx.strokeStyle = "rgba(216,216,220,0.5)";
         ctx.beginPath();
         ctx.moveTo(cx, y(row.h));
         ctx.lineTo(cx, y(row.l));
@@ -121,7 +123,10 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
         const bodyTop = y(Math.max(row.o, row.c));
         const bodyH = Math.max(1, y(Math.min(row.o, row.c)) - bodyTop);
         const bw = Math.max(3, cw - 3);
+        ctx.fillStyle = up ? "rgba(156,156,156,0.9)" : "rgba(255,255,255,0.88)";
         ctx.fillRect(cx - bw / 2, bodyTop, bw, bodyH);
+        ctx.strokeStyle = up ? "#4DD0E1" : "rgba(244,143,177,0.75)";
+        ctx.strokeRect(cx - bw / 2 + 0.5, bodyTop + 0.5, bw - 1, Math.max(0, bodyH - 1));
     });
 
     // Time axis.
@@ -166,9 +171,9 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
             const upWidth = (width * profile.up[j]) / volume;
             const inside = price <= profile.vah && price >= profile.val;
             const py = y(price) - rowH / 2;
-            ctx.fillStyle = `rgba(230,230,230,${inside ? 0.5 : 0.18})`;
+            ctx.fillStyle = `rgba(77,208,225,${inside ? 0.42 : 0.14})`;
             ctx.fillRect(plotW - upWidth, py, upWidth, rowH);
-            ctx.fillStyle = `rgba(181,124,196,${inside ? 0.7 : 0.26})`;
+            ctx.fillStyle = `rgba(244,143,177,${inside ? 0.42 : 0.14})`;
             ctx.fillRect(plotW - width, py, width - upWidth, rowH);
         });
         ctx.textAlign = "left";
@@ -292,9 +297,11 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
     return hits;
 }
 
-const Toggle = ({ on, onChange, children }: { on: boolean; onChange: (next: boolean) => void; children: React.ReactNode }) => (
-    <button type="button" aria-pressed={on} onClick={() => onChange(!on)} className={`nav-link pb-1 text-xs font-medium ${on ? "is-active" : "!text-white/35"}`}>
+const STATE_TONE = { on: "text-[#4DD0E1]", wait: "text-white/45", none: "text-white/45", off: "text-white/30", bad: "text-[#F48FB1]" } as const;
+const Toggle = ({ on, onChange, children, state }: { on: boolean; onChange: (next: boolean) => void; children: React.ReactNode; state?: { text: string; tone: keyof typeof STATE_TONE; note?: string } }) => (
+    <button type="button" aria-pressed={on} onClick={() => onChange(!on)} title={state?.note} className={`nav-link pb-1 text-xs font-medium ${on ? "is-active" : "!text-white/35"}`}>
         {children}
+        {state && on && <span className={`ml-1.5 font-mono text-[10.5px] font-normal ${STATE_TONE[state.tone]}`}>{state.tone === "wait" ? "· waiting" : `· ${state.text}`}</span>}
     </button>
 );
 
@@ -329,7 +336,12 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
     useEffect(() => {
         try {
             const saved = JSON.parse(window.localStorage.getItem(STORE) ?? "null");
-            if (saved && typeof saved === "object") setPrefs({ ...DEFAULT_PREFS, ...saved, settings: { ...DEFAULT_FLOW_SETTINGS, ...(saved.settings ?? {}) } });
+            if (saved && typeof saved === "object") {
+                // The old default colours give way to the Alture palette; colours the trader chose stay.
+                const old: Record<string, string> = { buyColor: "#20B8A8", sellColor: "#E5484D", exhColor: "#FFFFFF" };
+                for (const k of Object.keys(old)) if (saved[k] === old[k]) delete saved[k];
+                setPrefs({ ...DEFAULT_PREFS, ...saved, settings: { ...DEFAULT_FLOW_SETTINGS, ...(saved.settings ?? {}) } });
+            }
         } catch {
             // Keep the defaults.
         }
@@ -421,6 +433,22 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
               : snapshot?.since
                 ? `Live from Bybit's public trades · order flow since ${clock(snapshot.since)} · ${snapshot.tradeCount.toLocaleString()} trades`
                 : "Connected. Waiting for the first trades…";
+    // What each layer is doing right now, so a zero never leaves the trader guessing.
+    type State = { text: string; tone: "on" | "wait" | "none" | "off" | "bad"; note?: string };
+    const stateOf = (on: boolean, kind: Signal["kind"] | "bubbles", ready: boolean, need: string): State => {
+        if (!on) return { text: "off", tone: "off" };
+        if (failed) return { text: "error", tone: "bad", note: "The candles could not be loaded." };
+        if (flow.status === "reconnecting") return { text: "paused", tone: "bad", note: "Reconnecting to Bybit's trade stream." };
+        if (!snapshot || flow.status !== "live" || !ready) return { text: "waiting", tone: "wait", note: need };
+        const n = kind === "bubbles" ? snapshot.bubbles.length : found(kind);
+        return n > 0 ? { text: String(n), tone: "on" } : { text: "none yet", tone: "none", note: "Watching. Nothing has met the conditions since the stream started." };
+    };
+    const layerStates = {
+        bubbles: stateOf(prefs.bubbles, "bubbles", Boolean(snapshot?.bubbleThreshold), "Needs enough trades to set the automatic size threshold."),
+        absorption: stateOf(prefs.absorption, "absorption", snapshot?.absThreshold !== null && snapshot?.absThreshold !== undefined, `Needs ${s.absWindowSec * 3} seconds of trades to set its threshold.`),
+        exhaustion: stateOf(prefs.exhaustion, "exhaustion", (snapshot?.coveredCandles ?? 0) >= 3, `Needs 3 fully streamed candles (${snapshot?.coveredCandles ?? 0} so far).`),
+        divergence: stateOf(prefs.divergence, "divergence", (snapshot?.coveredCandles ?? 0) >= s.divPivot * 2 + 3, `Needs ${s.divPivot * 2 + 3} fully streamed candles (${snapshot?.coveredCandles ?? 0} so far).`),
+    };
     const waiting: string[] = [];
     if (snapshot && flow.status === "live") {
         if (prefs.bubbles && !snapshot.bubbleThreshold) waiting.push("Bubbles appear once enough trades have arrived to set the automatic size threshold.");
@@ -438,10 +466,10 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1" role="group" aria-label="Order flow layers">
                     <Toggle on={prefs.profile} onChange={(profile) => set({ profile })}>Volume profile</Toggle>
-                    <Toggle on={prefs.bubbles} onChange={(bubbles) => set({ bubbles })}>Bubbles</Toggle>
-                    <Toggle on={prefs.absorption} onChange={(absorption) => set({ absorption })}>Absorption {found("absorption")}</Toggle>
-                    <Toggle on={prefs.exhaustion} onChange={(exhaustion) => set({ exhaustion })}>Exhaustion {found("exhaustion")}</Toggle>
-                    <Toggle on={prefs.divergence} onChange={(divergence) => set({ divergence })}>CVD divergence {found("divergence")}</Toggle>
+                    <Toggle on={prefs.bubbles} onChange={(bubbles) => set({ bubbles })} state={layerStates.bubbles}>Bubbles</Toggle>
+                    <Toggle on={prefs.absorption} onChange={(absorption) => set({ absorption })} state={layerStates.absorption}>Absorption</Toggle>
+                    <Toggle on={prefs.exhaustion} onChange={(exhaustion) => set({ exhaustion })} state={layerStates.exhaustion}>Exhaustion</Toggle>
+                    <Toggle on={prefs.divergence} onChange={(divergence) => set({ divergence })} state={layerStates.divergence}>CVD divergence</Toggle>
                     <Toggle on={tuning} onChange={setTuning}>Settings</Toggle>
                 </div>
             </div>
@@ -454,10 +482,13 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
                 )}
             </div>
 
-            <p className="mt-2 text-[10px] leading-relaxed text-white/30">
-                Circle: a cluster of aggressive volume at one price (size = traded value). A diamond: potential absorption. E triangle (purple): potential exhaustion. D: potential CVD divergence. Outlined is provisional, filled is confirmed, grey did not hold. Tap any mark for the numbers. Bybit only; none of this is a trade signal.
-            </p>
-            {waiting.length > 0 && <p className="mt-1 text-[10px] leading-relaxed text-white/30">{waiting.join(" ")}</p>}
+            <details className="mt-1.5 text-[10.5px] leading-relaxed text-white/40">
+                <summary className="cursor-pointer select-none text-white/45 hover:text-white">How to read the marks</summary>
+                <p className="mt-1">
+                    Circle: a cluster of aggressive volume at one price (size = traded value). Diamond: potential absorption. E triangle: potential exhaustion. D: potential CVD divergence. Outlined is provisional, filled is confirmed, grey did not hold. Tap any mark for the numbers. Bybit only; none of this is a trade signal.
+                </p>
+                {waiting.length > 0 && <p className="mt-1">{waiting.join(" ")}</p>}
+            </details>
 
             {tuning && (
                 <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-4 md:grid-cols-4">
