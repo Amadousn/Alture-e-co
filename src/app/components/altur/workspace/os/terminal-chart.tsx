@@ -214,18 +214,30 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                             <rect x={x0} width={plotW - x0} y={Math.min(y(from), y(to))} height={Math.abs(y(from) - y(to))} fill={`url(#${clip}-${id})`} />
                         </>
                     );
-                    const tag = (level: ChartLevel, mono: string, color: string) => (
+                    // On the scale: the price alone, marked by the level's colour. Its name sits in the
+                    // chart on a compact chip beside the structure, so neither covers the scale.
+                    const tag = (level: ChartLevel, color: string) => (
                         <g key={`tag-${level.label}`}>
                             <rect x={plotW + 1} y={y(level.price) - 9} width={AXIS_W - 2} height={18} rx={3} fill="#07080a" />
                             <rect x={plotW + 1} y={y(level.price) - 9} width={2} height={18} fill={color} />
-                            <text x={plotW + 8} y={y(level.price) + 4} fontSize={9} fontWeight={600} fill={color} letterSpacing="0.08em">
-                                {mono}
-                            </text>
                             <text x={plotW + AXIS_W - 6} y={y(level.price) + 4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
                                 {fmt(level.price)}
                             </text>
                         </g>
                     );
+                    const name = (level: ChartLevel, text: string, color: string, place: "above" | "below" | "left") => {
+                        const width = text.length * 6.2 + 14;
+                        const cx = place === "left" ? Math.max(4, x0 - 12 - width) : Math.min(x0 + 10, plotW - width - 4);
+                        const cy = place === "above" ? y(level.price) - 21 : place === "below" ? y(level.price) + 4 : y(level.price) - 8.5;
+                        return (
+                            <g key={`name-${level.label}`}>
+                                <rect x={cx} y={cy} width={width} height={17} rx={3} fill="#07080a" fillOpacity={0.88} stroke={color} strokeOpacity={0.35} />
+                                <text x={cx + 7} y={cy + 11.8} fontSize={9.5} fontWeight={600} fill={color} letterSpacing="0.09em">
+                                    {text}
+                                </text>
+                            </g>
+                        );
+                    };
                     const risk = entry && stop ? Math.abs(entry.price - stop.price) : 0;
                     const reward = entry && target ? Math.abs(target.price - entry.price) : 0;
                     return (
@@ -252,10 +264,13 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                                     {(reward / risk).toFixed(1)}R
                                 </text>
                             )}
-                            {stop && tag(stop, "INV", ALT_DOWN)}
-                            {target && tag(target, "TGT", ALT_UP)}
-                            {entry && tag(entry, "ENT", "#FFFFFF")}
-                            {others.map((level) => tag(level, level.label.slice(0, 3).toUpperCase(), level.color))}
+                            {stop && name(stop, "STOP LOSS", ALT_DOWN, (target?.price ?? Infinity) > stop.price ? "below" : "above")}
+                            {target && name(target, "TAKE PROFIT", ALT_UP, (stop?.price ?? -Infinity) < target.price ? "above" : "below")}
+                            {entry && name(entry, "ENTRY", "#FFFFFF", "left")}
+                            {stop && tag(stop, ALT_DOWN)}
+                            {target && tag(target, ALT_UP)}
+                            {entry && tag(entry, "#FFFFFF")}
+                            {others.map((level) => tag(level, level.color))}
                         </g>
                     );
                 })()}
