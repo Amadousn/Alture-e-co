@@ -676,3 +676,9 @@ a:active {
 .lumen-term .text-accent, .lumen-term .accent-light { color: #0c0d10 !important; text-shadow: none; }
 .lumen-term .bg-accent { background-color: #0c0d10 !important; }
 .lumen-term .border-accent { border-color: #0c0d10 !important; }
+
+/* Room for the AltureLock rail on wide screens: labelled, or folded to icons. */
+@media (min-width: 1024px) {
+    .rail-pad { padding-left: 14rem; transition: padding-left 0.2s; }
+    html[data-rail="narrow"] .rail-pad { padding-left: 4rem; }
+}

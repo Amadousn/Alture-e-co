@@ -590,7 +590,15 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 <div className="p-5 sm:col-span-3 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
                     <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-logo text-[40px] font-extralight ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
-                    <p className="mt-2 text-[12px] text-[var(--j-fa)]">{inRange.length ? (hidden ? "Realised, after fees" : `Realised, after ${plain(fees)} of fees`) : ordered.length ? "Choose another period" : ""}</p>
+                    {inRange.length ? (
+                        <dl className="mt-3 grid grid-cols-3 gap-2 border-t border-[var(--j-line)] pt-3 text-[11.5px]">
+                            <div title="Closed trades, after fees"><dt className="text-[var(--j-fa)]">Realised</dt><dd className={`mt-0.5 font-mono ${tone(stats.totalPnl)}`}>{money(stats.totalPnl, 0)}</dd></div>
+                            <div title="Trading fees paid on these trades, already taken off"><dt className="text-[var(--j-fa)]">Fees</dt><dd className="mt-0.5 font-mono text-[var(--j-mu)]">{hidden ? plain(fees) : `−${plain(fees)}`}</dd></div>
+                            <div title="Open positions right now, not counted in the result"><dt className="text-[var(--j-fa)]">Unrealised</dt><dd className={`mt-0.5 font-mono ${positions.length ? tone(unrealised) : "text-[var(--j-fa)]"}`}>{positions.length ? money(unrealised, 0) : "–"}</dd></div>
+                        </dl>
+                    ) : (
+                        <p className="mt-2 text-[12px] text-[var(--j-fa)]">{ordered.length ? "Choose another period" : ""}</p>
+                    )}
                 </div>
                 {(() => {
                     const empty = <span className="text-[var(--j-fa)]">–</span>;
