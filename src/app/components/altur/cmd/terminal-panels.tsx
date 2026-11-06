@@ -18,8 +18,8 @@ const Row = ({ symbol, tickers, selected, onSelect }: { symbol: string; tickers:
     const closes = useCloses(symbol);
     const ticker = tickers.status === "live" ? tickers.bySymbol[symbol] : undefined;
     return (
-        <button type="button" aria-pressed={selected} onClick={onSelect} className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-x-3 px-4 py-2.5 text-left transition-colors ${selected ? "bg-[#20B8A8]/[0.07]" : "hover:bg-white/[0.03]"}`}>
-            {selected && <span className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-[#20B8A8]" aria-hidden="true" />}
+        <button type="button" aria-pressed={selected} onClick={onSelect} className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-x-3 px-4 py-2.5 text-left transition-colors ${selected ? "bg-[var(--j-s2,rgba(255,255,255,0.05))]" : "hover:bg-white/[0.03]"}`}>
+            {selected && <span className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-[#4DD0E1]" aria-hidden="true" />}
             <span className="min-w-0">
                 <span className="text-[13px] font-semibold text-white">{base(symbol)}</span>
                 <span className="ml-1.5 font-mono text-[9.5px] text-white/35">PERP</span>
@@ -76,7 +76,7 @@ export const StatePanel = ({ demo, state, detail, href, action }: { demo: boolea
                 </div>
                 <p className="mt-2.5 text-[15px] font-medium text-white">{words[state][1]}</p>
                 <p className="mt-1 text-[13px] leading-relaxed text-white/50">{detail}</p>
-                <Link href={href} className="mt-3 inline-flex items-center gap-2 rounded-md border border-[#20B8A8]/40 bg-[#20B8A8]/10 px-3.5 py-2 text-xs font-medium text-white transition-colors hover:bg-[#20B8A8]/15">
+                <Link href={href} className="mt-3 inline-flex items-center gap-2 rounded-lg bg-[var(--j-active,#f2f2f3)] px-3.5 py-2 text-xs font-medium text-[var(--j-activeink,#111214)] transition-opacity hover:opacity-90">
                     {action} →
                 </Link>
             </div>
@@ -115,7 +115,7 @@ export const StatePanel = ({ demo, state, detail, href, action }: { demo: boolea
                     {rules.map((rule) => (
                         <li key={rule.id}>
                             <label className="flex cursor-pointer items-start gap-2.5 text-[13px] text-white/80">
-                                <input type="checkbox" checked={Boolean(ticked[rule.id])} onChange={() => setTicked((all) => ({ ...all, [rule.id]: !all[rule.id] }))} className="mt-0.5 !h-4 !w-4 accent-[#20B8A8]" />
+                                <input type="checkbox" checked={Boolean(ticked[rule.id])} onChange={() => setTicked((all) => ({ ...all, [rule.id]: !all[rule.id] }))} className="mt-0.5 !h-4 !w-4 accent-[var(--j-up,#20B8A8)]" />
                                 {rule.label}
                             </label>
                         </li>

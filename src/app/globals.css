@@ -682,3 +682,20 @@ a:active {
     .rail-pad { padding-left: 14rem; transition: padding-left 0.2s; }
     html[data-rail="narrow"] .rail-pad { padding-left: 4rem; }
 }
+
+/* Terminal on the Journal's design language. The root carries THEMES[theme]
+   (os/design.tsx) as variables; these rules map the terminal's own classes
+   onto the Journal's surfaces, ink, lines and gain/loss colours. */
+.j-term.cmd-ground { background-color: var(--j-bg); background-image: var(--j-glow, none); }
+.j-term .cmd-panel { background: var(--j-s1); border: 1px solid var(--j-border, transparent); border-radius: var(--j-radius, 16px); box-shadow: var(--j-shadow); }
+.j-term .cmd-label { color: var(--j-mu); }
+.j-term .text-white { color: var(--j-ink); }
+.j-term [class*="text-white/"] { color: var(--j-mu); }
+.j-term [class*="text-white/2"], .j-term [class*="text-white/3"] { color: var(--j-fa); }
+.j-term [class*="text-white/7"], .j-term [class*="text-white/8"], .j-term [class*="text-white/9"] { color: var(--j-ink); }
+.j-term [class*="border-white/"] { border-color: var(--j-line); }
+.j-term [class*="bg-white/"] { background-color: var(--j-s2); }
+.j-term .text-\[\#20B8A8\] { color: var(--j-up); }
+.j-term .text-\[\#E5484D\] { color: var(--j-dn); }
+.j-term .font-mono, .j-term .tabular-nums { font-family: var(--font-mono, inherit); }
+.j-term input[type="checkbox"] { background-color: var(--j-s2); border: 1px solid var(--j-line); border-radius: 3px; }

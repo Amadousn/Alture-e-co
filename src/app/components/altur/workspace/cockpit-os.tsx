@@ -13,6 +13,7 @@ import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
 import { TIMEZONES, useSessions } from "./os/sessions";
 import { useFullscreen } from "./os/fullscreen";
 import PrivacyToggle from "./os/privacy-toggle";
+import { THEMES } from "./os/design";
 import { MASK, usePrivacy } from "@/utils/workspace-store";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
@@ -489,7 +490,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const quiet = "group inline-flex items-center gap-2 text-[13px] font-medium text-white/80 border-b border-white/25 pb-0.5 hover:text-white hover:border-white transition-colors";
 
     return (
-        <div className={`cmd-ground flex min-h-[100dvh] flex-col text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH} ${theme === "light" ? "lumen lumen-term" : ""}`}>
+        <div style={THEMES[theme] as unknown as React.CSSProperties} className={`j-term cmd-ground flex min-h-[100dvh] flex-col text-white lg:h-[100dvh] lg:min-h-0 lg:overflow-hidden ${SIDEBAR_WIDTH} ${theme === "light" ? "lumen lumen-term" : ""}`}>
             <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
