@@ -34,9 +34,11 @@ const WorkspaceSettings = () => {
             ) : (
                 <>
                     <div className="rounded-sm border border-white/15 bg-black p-5 md:p-6 mb-6">
-                        <label htmlFor="workspace-name" className={`${labelClass} block mb-2`}>
-                            Name shown in your workspace
+                        <p className={`${labelClass} mb-4`}>Profile</p>
+                        <label htmlFor="workspace-name" className="block text-sm text-white mb-1">
+                            Display name
                         </label>
+                        <p className="text-sm text-[#9a9aa5] mb-3">Used in your greeting on Home, in your timezone. Leave it empty for no name.</p>
                         <input
                             id="workspace-name"
                             type="text"

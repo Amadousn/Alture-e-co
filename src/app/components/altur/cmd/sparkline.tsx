@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export function useCloses(symbol: string, interval = "60", count = 48) {
     const [closes, setCloses] = useState<number[] | null>(null);
     useEffect(() => {
+        if (!symbol) return;
         let cancelled = false;
         fetch(`/api/market/klines?symbol=${symbol}&interval=${interval}`, { cache: "no-store" })
             .then((res) => (res.ok ? res.json() : null))

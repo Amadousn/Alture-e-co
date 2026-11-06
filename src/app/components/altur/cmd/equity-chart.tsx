@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { MASK, usePrivacy } from "@/utils/workspace-store";
 
 // The equity curve of the command centre: cumulative realised P&L, one point
 // per trade, with an optional row of outcome bars under it (teal win, magenta
@@ -10,8 +11,11 @@ export type EquityTrade = { id: string; instrument: string; direction: "Long" | 
 const TEAL = "#20B8A8";
 const MAGENTA = "#E5484D";
 
-const money = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+// Set by the chart from the shared Hide amounts choice.
+let HIDE = false;
+const money = (value: number) => HIDE ? `${value < 0 ? "−" : "+"}${MASK}` : `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const short = (value: number) => {
+    if (HIDE) return "••";
     const a = Math.abs(value);
     return `${value < 0 ? "-" : ""}$${a >= 1000 ? `${(a / 1000).toFixed(a >= 10000 ? 0 : 1)}K` : a.toFixed(0)}`;
 };
@@ -31,6 +35,8 @@ function useSize<T extends HTMLElement>() {
 }
 
 const EquityChart = ({ trades, height = 300, bars = false, drawdown = false }: { trades: EquityTrade[]; height?: number; bars?: boolean; drawdown?: boolean }) => {
+    const [hidden] = usePrivacy();
+    HIDE = hidden;
     const { ref, width } = useSize<HTMLDivElement>();
     const id = useId().replace(/:/g, "");
     const [hover, setHover] = useState<number | null>(null);
@@ -104,13 +110,13 @@ const EquityChart = ({ trades, height = 300, bars = false, drawdown = false }: {
                     </defs>
                     {ticks.map((value) => (
                         <g key={value}>
-                            <line x1="0" x2={plotW} y1={y(value)} y2={y(value)} stroke="rgba(255,255,255,0.05)" />
-                            <text x={plotW + 10} y={y(value) + 4} fill="rgba(255,255,255,0.4)" fontSize="11" fontFamily="ui-monospace, Menlo, monospace">
+                            <line x1="0" x2={plotW} y1={y(value)} y2={y(value)} style={{ stroke: "var(--j-line, rgba(255,255,255,0.05))" }} />
+                            <text x={plotW + 10} y={y(value) + 4} style={{ fill: "var(--j-mu, rgba(255,255,255,0.4))" }} fontSize="11" fontFamily="ui-monospace, Menlo, monospace">
                                 {short(value)}
                             </text>
                         </g>
                     ))}
-                    <line x1="0" x2={plotW} y1={y(0)} y2={y(0)} stroke="rgba(255,255,255,0.18)" strokeDasharray="3 4" />
+                    <line x1="0" x2={plotW} y1={y(0)} y2={y(0)} style={{ stroke: "var(--j-fa, rgba(255,255,255,0.18))" }} strokeDasharray="3 4" />
                     <g clipPath={`url(#reveal-${id})`}>
                         <path d={area} fill={`url(#fill-${id})`} />
                         <path d={line} fill="none" stroke={color} strokeWidth="2" filter={`url(#glow-${id})`} strokeLinejoin="round" />
@@ -124,13 +130,13 @@ const EquityChart = ({ trades, height = 300, bars = false, drawdown = false }: {
                         })}
                     {bars && <line x1="0" x2={plotW} y1={plotH + gap + barH / 2} y2={plotH + gap + barH / 2} stroke="rgba(255,255,255,0.12)" />}
                     {labels.map((i) => (
-                        <text key={i} x={Math.min(plotW - 30, Math.max(20, x(i)))} y={height - 6} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="11" fontFamily="ui-monospace, Menlo, monospace">
+                        <text key={i} x={Math.min(plotW - 30, Math.max(20, x(i)))} y={height - 6} textAnchor="middle" style={{ fill: "var(--j-mu, rgba(255,255,255,0.4))" }} fontSize="11" fontFamily="ui-monospace, Menlo, monospace">
                             {day(points[i].trade.closedAt)}
                         </text>
                     ))}
                     {active && hover !== null && (
                         <g>
-                            <line x1={x(hover)} x2={x(hover)} y1="0" y2={height - 22} stroke="rgba(255,255,255,0.25)" strokeDasharray="2 3" />
+                            <line x1={x(hover)} x2={x(hover)} y1="0" y2={height - 22} style={{ stroke: "var(--j-fa, rgba(255,255,255,0.25))" }} strokeDasharray="2 3" />
                             <circle cx={x(hover)} cy={y(series[hover])} r="5" fill="#0d1114" stroke={color} strokeWidth="2" />
                         </g>
                     )}

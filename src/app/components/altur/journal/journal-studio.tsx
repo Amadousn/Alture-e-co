@@ -5,7 +5,9 @@ import { insightsOf, Insight, MIN_SCORE_TRADES, Score, scoreOf } from "@/utils/j
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { computeJournalStats } from "@/utils/journal-stats";
-import { useTradeReviews, TradeReviews } from "@/utils/workspace-store";
+import { useTradeReviews, TradeReviews, usePrivacy } from "@/utils/workspace-store";
+import { THEMES, Module } from "@/app/components/altur/workspace/os/design";
+import PrivacyToggle from "@/app/components/altur/workspace/os/privacy-toggle";
 import { useTheme } from "@/utils/use-theme";
 import TradeRecap from "./trade-recap";
 import TradeDetails, { TradeDetail } from "./trade-details";
@@ -29,10 +31,6 @@ const SESSIONS = [
     { name: "After hours", from: 21, to: 24 },
 ];
 
-const THEMES = {
-    light: { "--j-bg": "#f3f4f7", "--j-s1": "#ffffff", "--j-s2": "#eef0f4", "--j-s3": "#e5e8ee", "--j-ink": "#0c0d10", "--j-mu": "#62656e", "--j-fa": "#9a9ea8", "--j-line": "#e2e4ea", "--j-up": "#0d8a7b", "--j-dn": "#c23a77", "--j-upbg": "#e1f2ef", "--j-dnbg": "#f7e4ec", "--j-upsoft": "#9fd3cc", "--j-shadow": "0 1px 2px rgba(23,24,26,0.04), 0 14px 32px -20px rgba(23,24,26,0.22)", "--j-tip": "#0c0d10", "--j-tipink": "#ffffff", "--j-active": "#0c0d10", "--j-activeink": "#ffffff", "--font-mono": "var(--font-logo)" },
-    dark: { "--j-bg": "#040306", "--j-s1": "#0b090e", "--j-s2": "#151119", "--j-s3": "#1d1822", "--j-ink": "#ededee", "--j-mu": "#9a93a3", "--j-fa": "#625b6b", "--j-line": "#221c28", "--j-up": "#3cc9b8", "--j-dn": "#e4609f", "--j-upbg": "rgba(60,201,184,0.13)", "--j-dnbg": "rgba(228,96,159,0.13)", "--j-upsoft": "rgba(60,201,184,0.4)", "--j-border": "rgba(255, 255, 255,0.16)", "--j-shadow": "0 0 40px -18px rgba(255, 255, 255,0.35)", "--j-radius": "10px", "--j-glow": "radial-gradient(70% 40% at 15% 0%, rgba(255, 255, 255,0.16), transparent 70%)", "--font-mono": "var(--font-logo)", "--j-tip": "#f2f2f3", "--j-tipink": "#111214", "--j-active": "#f2f2f3", "--j-activeink": "#111214" },
-} as const;
 
 // When the trader hides amounts (on a shared screen, a stream, a screenshot), dollar
 // figures become dots; percentages, counts and the shape of the charts stay.
@@ -102,11 +100,6 @@ function useWidth<T extends HTMLElement>() {
     return { ref, width };
 }
 
-const Module = ({ children, className = "", label }: { children: React.ReactNode; className?: string; label?: string }) => (
-    <section aria-label={label} className={`rounded-[var(--j-radius,16px)] border border-[var(--j-border,transparent)] bg-[var(--j-s1)] shadow-[var(--j-shadow)] ${className}`}>
-        {children}
-    </section>
-);
 
 // ---------- the performance chart ----------
 
@@ -379,23 +372,7 @@ function rangeOf(preset: Preset, custom: { from: string; to: string }, first: nu
 
 const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status, look }: Props) => {
     const [theme, setTheme] = useTheme();
-    const [hidden, setHidden] = useState(false);
-    useEffect(() => {
-        try {
-            setHidden(window.localStorage.getItem("alturelock:hide-amounts") === "1");
-        } catch {
-            // storage refused: amounts stay visible
-        }
-    }, []);
-    const toggleHidden = () => {
-        const next = !hidden;
-        setHidden(next);
-        try {
-            window.localStorage.setItem("alturelock:hide-amounts", next ? "1" : "0");
-        } catch {
-            // the choice lasts for this visit
-        }
-    };
+    const [hidden] = usePrivacy();
     HIDDEN = hidden;
     const [stored] = useTradeReviews();
     const reviews: TradeReviews = reviewable ? stored : {};
@@ -550,14 +527,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                             Share ↗
                         </button>
                     )}
-                    <button type="button" onClick={toggleHidden} aria-pressed={hidden} title={hidden ? "Show amounts" : "Hide amounts"} className={`flex items-center gap-1.5 ${quiet}`}>
-                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-                            <circle cx="12" cy="12" r="3" />
-                            {hidden && <path d="M4 4l16 16" />}
-                        </svg>
-                        {hidden ? "Show amounts" : "Hide amounts"}
-                    </button>
+                    <PrivacyToggle className={quiet} />
                     <span className="flex rounded-lg bg-[var(--j-s2)] p-0.5 text-[12px]" role="group" aria-label="Theme">
                         {(["light", "dark"] as const).map((t) => (
                             <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)} className={`rounded-md px-2.5 py-1 capitalize transition-colors ${theme === t ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "text-[var(--j-mu)] hover:text-[var(--j-ink)]"}`}>

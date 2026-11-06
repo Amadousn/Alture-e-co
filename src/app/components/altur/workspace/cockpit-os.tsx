@@ -12,6 +12,8 @@ import TradeRecap from "@/app/components/altur/journal/trade-recap";
 import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
 import { TIMEZONES, useSessions } from "./os/sessions";
 import { useFullscreen } from "./os/fullscreen";
+import PrivacyToggle from "./os/privacy-toggle";
+import { MASK, usePrivacy } from "@/utils/workspace-store";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
@@ -30,8 +32,10 @@ const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
 const DAY = 24 * 60 * 60 * 1000;
 const STAGE = { prepare: "Preparing", execute: "Active", manage: "Active", review: "In review" } as const;
 
-const money = (value: number) => `${value < 0 ? "-" : ""}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-const signed = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+// Set from the shared Hide amounts choice on each render.
+let HIDE = false;
+const money = (value: number) => HIDE ? MASK : `${value < 0 ? "-" : ""}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const signed = (value: number) => HIDE ? `${value < 0 ? "−" : "+"}${MASK}` : `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const tone = (value: number | null | undefined) => (value == null ? "text-white/45" : value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white");
 const ago = (time: number, now: number) => {
     const minutes = Math.max(0, Math.round((now - time) / 60000));
@@ -330,6 +334,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
     const screen = useFullscreen<HTMLDivElement>();
+    const [hidden] = usePrivacy();
+    HIDE = hidden;
     const [arrival, arrived] = useArrival(demo);
 
     const base = demo ? "/alturelock/demo" : "/alturelock/workspace";
@@ -557,6 +563,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                             <button type="button" aria-expanded={indicatorOpen} onClick={() => setIndicatorOpen((value) => !value)} className={`nav-link pb-0.5 ${indicatorOpen ? "is-active" : ""}`}>
                                 Alture indicators
                             </button>
+                            <PrivacyToggle className="nav-link hidden pb-0.5 sm:flex" />
                             {screen.supported && (
                                 <button type="button" onClick={screen.toggle} className="nav-link hidden pb-0.5 sm:block">
                                     {screen.active ? "Exit full screen" : "Full screen"}

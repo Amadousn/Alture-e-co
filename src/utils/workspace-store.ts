@@ -123,6 +123,8 @@ const KEYS = {
     timezone: "alturelock:timezone",
     reviews: "alturelock:trade-reviews",
     strategies: "alturelock:strategies",
+    privacy: "alturelock:hide-amounts",
+    homeMarkets: "alturelock:home-markets",
 } as const;
 
 const CHANGE_EVENT = "alturelock:store-change";
@@ -216,6 +218,20 @@ export const DEFAULT_WATCHLIST = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "H
 export const useWatchlist = () => useStored<string[]>(KEYS.watchlist, DEFAULT_WATCHLIST);
 
 // The timezone sessions and times are shown in. "local" follows the device.
+// Hide amounts: one choice shared by Home, Journal and Terminal, kept with the account.
+export const MASK = "$ ••••";
+export const usePrivacy = (): [boolean, (next: boolean) => void] => {
+    const [value, set] = useStored<boolean | number>(KEYS.privacy, false);
+    // Older browsers stored the choice as 1 / 0.
+    return [Boolean(value), set];
+};
+
+// The market strip on Home: whether it shows, which markets, in what order, and how.
+export type HomeMarkets = { show: boolean; symbols: string[]; view: "compact" | "expanded" };
+export const HOME_MARKET_CHOICES = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT"];
+export const DEFAULT_HOME_MARKETS: HomeMarkets = { show: false, symbols: ["BTCUSDT", "ETHUSDT"], view: "compact" };
+export const useHomeMarkets = () => useStored<HomeMarkets>(KEYS.homeMarkets, DEFAULT_HOME_MARKETS);
+
 export const useTimezone = () => useStored<string>(KEYS.timezone, "local");
 
 // The trader's own review of a closed trade, kept apart from the trade itself so
