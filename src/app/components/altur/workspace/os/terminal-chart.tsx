@@ -7,9 +7,10 @@ import { INTERVAL_MS } from "@/utils/order-flow";
 export type Candle = { t: number; o: number; h: number; l: number; c: number; v: number };
 export type ChartLevel = { label: string; price: number; color: string };
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
 const ACCENT = "#FFFFFF";
+// The trade structure takes the borders of the Alture & Co. indicator candles.
+const ALT_UP = "#4DD0E1";
+const ALT_DOWN = "#F48FB1";
 const AXIS_W = 74;
 const AXIS_H = 24;
 const TOP = 30;
@@ -173,39 +174,91 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
 
                 {/* Volume, then candles */}
                 {rows.map((candle, i) => {
-                    const color = candle.c >= candle.o ? UP : DOWN;
                     const vh = (candle.v / maxVol) * volH;
-                    return <rect key={`v${candle.t}`} x={x(i) - body / 2} y={TOP + plotH - vh} width={body} height={vh} fill={color} opacity={0.32} />;
+                    return <rect key={`v${candle.t}`} x={x(i) - body / 2} y={TOP + plotH - vh} width={body} height={vh} fill={candle.c >= candle.o ? ALT_UP : ALT_DOWN} opacity={0.22} />;
                 })}
                 <clipPath id={clip}>
                     <rect x={0} y={TOP} width={plotW} height={priceH} />
                 </clipPath>
                 <g clipPath={`url(#${clip})`}>
                 {rows.map((candle, i) => {
-                    const color = candle.c >= candle.o ? UP : DOWN;
+                    // The Alture & Co. candle: grey rising body with a cyan border, white falling body with a soft pink border.
+                    const rising = candle.c >= candle.o;
                     return (
                         <g key={candle.t}>
-                            <line x1={x(i)} x2={x(i)} y1={y(candle.h)} y2={y(candle.l)} stroke={color} strokeWidth={1} />
-                            <rect x={x(i) - body / 2} y={Math.min(y(candle.o), y(candle.c))} width={body} height={Math.max(1, Math.abs(y(candle.o) - y(candle.c)))} fill={color} />
+                            <line x1={x(i)} x2={x(i)} y1={y(candle.h)} y2={y(candle.l)} stroke="#d8d8dc" strokeOpacity={0.55} strokeWidth={1} />
+                            <rect x={x(i) - body / 2} y={Math.min(y(candle.o), y(candle.c))} width={body} height={Math.max(1, Math.abs(y(candle.o) - y(candle.c)))} fill={rising ? "#9C9C9C" : "#FFFFFF"} stroke={rising ? ALT_UP : ALT_DOWN} strokeOpacity={rising ? 1 : 0.7} strokeWidth={body > 3 ? 1 : 0.6} />
                         </g>
                     );
                 })}
                 </g>
 
-                {/* The trade in progress */}
-                {near.map((level) => (
-                    <g key={level.label}>
-                        <line x1={0} x2={plotW} y1={y(level.price)} y2={y(level.price)} stroke={level.color} strokeOpacity={0.85} strokeDasharray="5 5" />
-                        <rect x={6} y={y(level.price) - 9} width={level.label.length * 6.4 + 12} height={18} fill="#000000" />
-                        <text x={12} y={y(level.price) + 4} fontSize={10} fontWeight={600} fill={level.color} letterSpacing="0.08em">
-                            {level.label.toUpperCase()}
-                        </text>
-                        <rect x={plotW + 1} y={y(level.price) - 9} width={AXIS_W - 2} height={18} fill="#000000" stroke={level.color} strokeOpacity={0.7} />
-                        <text x={plotW + 10} y={y(level.price) + 4} fontSize={11} fill={level.color} className="tabular-nums">
-                            {fmt(level.price)}
-                        </text>
-                    </g>
-                ))}
+                {/* The trade in progress, drawn as an Alture structure: soft risk and
+                    reward zones that fade in from the entry spine, hairline levels, and
+                    monogram tags on the scale instead of three loud horizontal lines. */}
+                {(() => {
+                    const find = (name: string) => near.find((level) => level.label === name);
+                    const entry = find("Entry");
+                    const stop = find("Stop loss");
+                    const target = find("Take profit");
+                    const others = near.filter((level) => level !== entry && level !== stop && level !== target);
+                    const x0 = Math.max(0, plotW * 0.58);
+                    const zone = (from: number, to: number, color: string, id: string) => (
+                        <>
+                            <defs>
+                                <linearGradient id={`${clip}-${id}`} x1="0" x2="1" y1="0" y2="0">
+                                    <stop offset="0" stopColor={color} stopOpacity={0.02} />
+                                    <stop offset="1" stopColor={color} stopOpacity={0.16} />
+                                </linearGradient>
+                            </defs>
+                            <rect x={x0} width={plotW - x0} y={Math.min(y(from), y(to))} height={Math.abs(y(from) - y(to))} fill={`url(#${clip}-${id})`} />
+                        </>
+                    );
+                    const tag = (level: ChartLevel, mono: string, color: string) => (
+                        <g key={`tag-${level.label}`}>
+                            <rect x={plotW + 1} y={y(level.price) - 9} width={AXIS_W - 2} height={18} rx={3} fill="#07080a" />
+                            <rect x={plotW + 1} y={y(level.price) - 9} width={2} height={18} fill={color} />
+                            <text x={plotW + 8} y={y(level.price) + 4} fontSize={9} fontWeight={600} fill={color} letterSpacing="0.08em">
+                                {mono}
+                            </text>
+                            <text x={plotW + AXIS_W - 6} y={y(level.price) + 4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
+                                {fmt(level.price)}
+                            </text>
+                        </g>
+                    );
+                    const risk = entry && stop ? Math.abs(entry.price - stop.price) : 0;
+                    const reward = entry && target ? Math.abs(target.price - entry.price) : 0;
+                    return (
+                        <g aria-label="Trade plan">
+                            {entry && stop && zone(entry.price, stop.price, ALT_DOWN, "risk")}
+                            {entry && target && zone(entry.price, target.price, ALT_UP, "reward")}
+                            {stop && <line x1={x0} x2={plotW} y1={y(stop.price)} y2={y(stop.price)} stroke={ALT_DOWN} strokeOpacity={0.55} strokeDasharray="1 3" />}
+                            {target && (
+                                <>
+                                    <line x1={x0} x2={plotW} y1={y(target.price)} y2={y(target.price)} stroke={ALT_UP} strokeOpacity={0.7} />
+                                    <path d={`M ${plotW - 14} ${y(target.price)} l 5 -5 l 5 5 l -5 5 Z`} fill="none" stroke={ALT_UP} strokeWidth={1.2} />
+                                </>
+                            )}
+                            {entry && (
+                                <>
+                                    <line x1={0} x2={plotW} y1={y(entry.price)} y2={y(entry.price)} stroke="#FFFFFF" strokeOpacity={0.14} />
+                                    <line x1={x0} x2={plotW} y1={y(entry.price)} y2={y(entry.price)} stroke="#FFFFFF" strokeOpacity={0.75} />
+                                    {(stop || target) && <line x1={x0} x2={x0} y1={y(target?.price ?? entry.price)} y2={y(stop?.price ?? entry.price)} stroke="#FFFFFF" strokeOpacity={0.35} />}
+                                    <path d={`M ${x0} ${y(entry.price) - 6} l 6 6 l -6 6 l -6 -6 Z`} fill="#07080a" stroke="#FFFFFF" strokeWidth={1.4} />
+                                </>
+                            )}
+                            {risk > 0 && reward > 0 && (
+                                <text x={plotW - 22} y={y(target!.price) + (y(entry!.price) > y(target!.price) ? 16 : -8)} textAnchor="end" fontSize={11} fill={ALT_UP} letterSpacing="0.04em" className="tabular-nums">
+                                    {(reward / risk).toFixed(1)}R
+                                </text>
+                            )}
+                            {stop && tag(stop, "INV", ALT_DOWN)}
+                            {target && tag(target, "TGT", ALT_UP)}
+                            {entry && tag(entry, "ENT", "#FFFFFF")}
+                            {others.map((level) => tag(level, level.label.slice(0, 3).toUpperCase(), level.color))}
+                        </g>
+                    );
+                })()}
 
                 {[...edge(TOP + 12, 1, above), ...edge(TOP + priceH - 6, -1, below)].map(({ level, py, arrow }) => (
                     <text key={level.label} x={plotW - 8} y={py} fontSize={10} fontWeight={600} fill={level.color} textAnchor="end" letterSpacing="0.06em" className="tabular-nums">
@@ -225,8 +278,8 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                 {/* Last price */}
                 {shift === 0 && (
                     <g>
-                        <line x1={0} x2={plotW} y1={y(last.c)} y2={y(last.c)} stroke={rising ? UP : DOWN} strokeOpacity={0.5} strokeDasharray="2 4" />
-                        <rect x={plotW + 1} y={y(last.c) - 10} width={AXIS_W - 2} height={20} fill={rising ? UP : DOWN} />
+                        <line x1={0} x2={plotW} y1={y(last.c)} y2={y(last.c)} stroke={rising ? ALT_UP : ALT_DOWN} strokeOpacity={0.5} strokeDasharray="2 4" />
+                        <rect x={plotW + 1} y={y(last.c) - 10} width={AXIS_W - 2} height={20} fill={rising ? ALT_UP : ALT_DOWN} />
                         <text x={plotW + 10} y={y(last.c) + 4} fontSize={11} fontWeight={600} fill="#000000" className="tabular-nums">
                             {fmt(last.c)}
                         </text>
