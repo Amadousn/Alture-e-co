@@ -13,6 +13,7 @@ import Watchlist, { fmtPct, fmtPrice } from "./os/watchlist";
 import { TIMEZONES, useSessions } from "./os/sessions";
 import { useFullscreen } from "./os/fullscreen";
 import PrivacyToggle from "./os/privacy-toggle";
+import { marketFor, marketName } from "@/utils/markets";
 import { THEMES } from "./os/design";
 import { MASK, usePrivacy } from "@/utils/workspace-store";
 import BrandChart from "./os/brand-chart";
@@ -501,7 +502,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </p>
             )}
 
-            <div className={`grid min-h-0 flex-1 gap-3 p-0 lg:p-3 lg:grid-cols-[236px_minmax(0,1fr)_300px] xl:grid-cols-[250px_minmax(0,1fr)_330px] ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
+            <div className={`grid min-h-0 flex-1 gap-3 p-0 lg:p-3 lg:grid-cols-[216px_minmax(0,1fr)_300px] xl:grid-cols-[224px_minmax(0,1fr)_320px] ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
                 {/* Markets */}
                 <aside className="hidden min-h-0 lg:flex" aria-label="Markets">
                     <WatchPanel tickers={tickers} selected={symbol} onSelect={select} levels={levels.map((level) => ({ label: level.label, price: level.price }))} />
@@ -525,8 +526,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
 
                     <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-1">
                         <div className="flex items-baseline gap-x-3">
-                            <h1 className="!text-xl md:!text-2xl text-white">{assetFor(symbol)?.name ?? symbol.replace(/USDT$/, "")}</h1>
-                            <span className="text-xs text-white/40">{symbol} · Bybit perpetual</span>
+                            <h1 className="!text-xl md:!text-2xl text-white">{marketName(symbol)}</h1>
+                            <span className="text-xs text-white/40">{marketFor(symbol)?.tracks ? `${marketFor(symbol)!.tracks} · ` : ""}{symbol} · Bybit USDT perpetual</span>
                         </div>
                         <div className="flex items-baseline gap-x-4">
                             <span className="font-logo text-3xl md:text-4xl font-light leading-none tabular-nums text-white">{ticker ? fmtPrice(ticker.price) : tickers.status === "loading" ? "…" : "Unavailable"}</span>

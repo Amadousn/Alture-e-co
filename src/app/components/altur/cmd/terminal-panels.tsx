@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Sparkline, { useCloses } from "./sparkline";
 import type { Tickers } from "@/utils/use-market-intel";
+import { MARKETS, MARKET_GROUPS, marketFor, marketName, searchMarkets } from "@/utils/markets";
 import { useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 
 // The two side columns of the command-centre terminal. Left: the watchlist with
@@ -14,48 +14,63 @@ const base = (symbol: string) => symbol.replace(/USDT$/, "");
 const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white/60");
 const price = (value: number) => value.toLocaleString("en-US", { minimumFractionDigits: value >= 100 ? 1 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 1 : value >= 1 ? 4 : 6 });
 
-const Row = ({ symbol, tickers, selected, onSelect }: { symbol: string; tickers: Tickers; selected: boolean; onSelect: () => void }) => {
-    const closes = useCloses(symbol);
-    const ticker = tickers.status === "live" ? tickers.bySymbol[symbol] : undefined;
-    return (
-        <button type="button" aria-pressed={selected} onClick={onSelect} className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-x-3 px-4 py-2.5 text-left transition-colors ${selected ? "bg-[var(--j-s2,rgba(255,255,255,0.05))]" : "hover:bg-white/[0.03]"}`}>
-            {selected && <span className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-[#4DD0E1]" aria-hidden="true" />}
-            <span className="min-w-0">
-                <span className="text-[13px] font-semibold text-white">{base(symbol)}</span>
-                <span className="ml-1.5 font-mono text-[9.5px] text-white/35">PERP</span>
-                <span className="mt-1 block">
-                    <Sparkline values={closes} width={110} height={18} />
-                </span>
-            </span>
-            <span className="text-right font-mono">
-                <span className="block text-[13px] text-white">{ticker ? price(ticker.price) : "…"}</span>
-                {ticker && <span className={`mt-1 block text-[11px] ${tone(ticker.change24h)}`}>{`${ticker.change24h >= 0 ? "+" : ""}${ticker.change24h.toFixed(2)}%`}</span>}
-            </span>
-        </button>
-    );
-};
+const GROUPS = ["Favorites", ...MARKET_GROUPS] as const;
+type Group = (typeof GROUPS)[number];
 
+// The markets: favorites, the catalogue by group, and search over every Bybit
+// USDT perpetual. A row opens that market's chart; the star keeps it in Favorites.
+// levels is kept in the signature for callers; the chart draws the plan itself.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const WatchPanel = ({ tickers, selected, onSelect, levels }: { tickers: Tickers; selected: string; onSelect: (symbol: string) => void; levels: { label: string; price: number }[] }) => {
-    const [list, , store] = useWatchlist();
+    const [favorites, setFavorites, store] = useWatchlist();
+    const [group, setGroup] = useState<Group>("Favorites");
+    const [query, setQuery] = useState("");
+    const live = tickers.status === "live" ? tickers : null;
+    const symbols = query.trim()
+        ? searchMarkets(query, live ? [...live.all].sort((a, b) => b.turnover24h - a.turnover24h).map((t) => t.symbol) : []).slice(0, 30)
+        : group === "Favorites"
+          ? favorites
+          : MARKETS.filter((m) => m.group === group).map((m) => m.symbol);
+    const star = (symbol: string) => setFavorites((list) => (list.includes(symbol) ? list.filter((s) => s !== symbol) : [...list, symbol]));
+
     return (
-        <div className="cmd-panel flex min-h-0 flex-col overflow-hidden">
-            <p className="cmd-label px-4 pb-2 pt-4">Watchlist</p>
-            <div className="min-h-0 flex-1 overflow-y-auto">{store.ready && list.map((symbol) => <Row key={symbol} symbol={symbol} tickers={tickers} selected={symbol === selected} onSelect={() => onSelect(symbol)} />)}</div>
-            <div className="border-t border-white/[0.07] px-4 py-3">
-                <p className="cmd-label">Levels on {base(selected)}</p>
-                {levels.length ? (
-                    <ul className="mt-2 space-y-1.5 font-mono text-[12px]">
-                        {levels.map((level) => (
-                            <li key={level.label} className="flex justify-between gap-3">
-                                <span className="text-white/60">{level.label}</span>
-                                <span className="text-white">{price(level.price)}</span>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="mt-2 text-xs leading-relaxed text-white/40">Your entry, stop loss and take profit appear here once a trade is planned.</p>
-                )}
+        <div className="cmd-panel flex min-h-0 w-full flex-col overflow-hidden">
+            <div className="px-3 pt-3">
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search · oil, gold, BTC" aria-label="Search markets" className="w-full rounded-md bg-white/[0.04] px-2.5 py-1.5 text-[12.5px] text-white placeholder:text-white/35 focus:outline-none" />
             </div>
+            {!query.trim() && (
+                <div className="flex flex-wrap gap-x-3 gap-y-1 px-3 pb-1 pt-2.5 text-[11.5px]" role="tablist" aria-label="Market groups">
+                    {GROUPS.map((g) => (
+                        <button key={g} type="button" role="tab" aria-selected={group === g} onClick={() => setGroup(g)} className={`pb-0.5 transition-colors ${group === g ? "border-b border-[#4DD0E1] text-white" : "text-white/45 hover:text-white"}`}>
+                            {g}
+                        </button>
+                    ))}
+                </div>
+            )}
+            <div className="min-h-0 flex-1 overflow-y-auto py-1">
+                {store.ready && symbols.length === 0 && <p className="px-3 py-3 text-[12px] text-white/40">{query.trim() ? "No Bybit market matches." : "Star a market to keep it here."}</p>}
+                {symbols.map((symbol) => {
+                    const ticker = live?.bySymbol[symbol];
+                    const market = marketFor(symbol);
+                    const on = symbol === selected;
+                    const fav = favorites.includes(symbol);
+                    return (
+                        <div key={symbol} className={`group relative flex items-center ${on ? "bg-[var(--j-s2,rgba(255,255,255,0.05))]" : "hover:bg-white/[0.03]"}`}>
+                            {on && <span className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-[#4DD0E1]" aria-hidden="true" />}
+                            <button type="button" aria-pressed={on} onClick={() => onSelect(symbol)} className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-2 py-1.5 pl-3 text-left">
+                                <span className="min-w-0 truncate text-[12.5px] text-white">{marketName(symbol)}</span>
+                                <span className="font-mono text-[12px] text-white">{ticker ? price(ticker.price) : live ? "—" : "…"}</span>
+                                <span className="truncate font-mono text-[10px] text-white/35">{market?.tracks ? `${market.tracks} · ` : ""}PERP</span>
+                                <span className={`text-right font-mono text-[10.5px] ${ticker ? tone(ticker.change24h) : "text-white/35"}`}>{ticker ? `${ticker.change24h >= 0 ? "+" : ""}${ticker.change24h.toFixed(2)}%` : ""}</span>
+                            </button>
+                            <button type="button" onClick={() => star(symbol)} aria-pressed={fav} aria-label={fav ? `Remove ${marketName(symbol)} from favorites` : `Add ${marketName(symbol)} to favorites`} className={`px-2 text-[12px] transition-opacity ${fav ? "text-[#4DD0E1]" : "text-white/30 opacity-0 group-hover:opacity-100 focus:opacity-100"}`}>
+                                {fav ? "★" : "☆"}
+                            </button>
+                        </div>
+                    );
+                })}
+            </div>
+            <p className="border-t border-white/[0.07] px-3 py-2 text-[10.5px] leading-snug text-white/35">Bybit public data · USDT perpetuals · view only</p>
         </div>
     );
 };
