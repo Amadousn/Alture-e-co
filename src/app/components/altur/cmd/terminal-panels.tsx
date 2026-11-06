@@ -21,7 +21,7 @@ type Group = (typeof GROUPS)[number];
 // USDT perpetual. A row opens that market's chart; the star keeps it in Favorites.
 // levels is kept in the signature for callers; the chart draws the plan itself.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const WatchPanel = ({ tickers, selected, onSelect, levels }: { tickers: Tickers; selected: string; onSelect: (symbol: string) => void; levels: { label: string; price: number }[] }) => {
+export const WatchPanel = ({ tickers, selected, onSelect, levels, onCollapse }: { tickers: Tickers; selected: string; onSelect: (symbol: string) => void; levels: { label: string; price: number }[]; onCollapse?: () => void }) => {
     const [favorites, setFavorites, store] = useWatchlist();
     const [group, setGroup] = useState<Group>("Favorites");
     const [query, setQuery] = useState("");
@@ -35,8 +35,13 @@ export const WatchPanel = ({ tickers, selected, onSelect, levels }: { tickers: T
 
     return (
         <div className="cmd-panel flex min-h-0 w-full flex-col overflow-hidden">
-            <div className="px-3 pt-3">
-                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search · oil, gold, BTC" aria-label="Search markets" className="w-full rounded-md bg-white/[0.04] px-2.5 py-1.5 text-[12.5px] text-white placeholder:text-white/35 focus:outline-none" />
+            <div className="flex items-center gap-1.5 px-3 pt-3">
+                {onCollapse && (
+                    <button type="button" onClick={onCollapse} title="Hide markets" aria-label="Hide markets" className="px-1 text-[13px] text-white/40 hover:text-white">
+                        ‹
+                    </button>
+                )}
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search · oil, gold, BTC" aria-label="Search markets" className="min-w-0 flex-1 rounded-md bg-white/[0.04] px-2.5 py-1.5 text-[12.5px] text-white placeholder:text-white/35 focus:outline-none" />
             </div>
             {!query.trim() && (
                 <div className="flex flex-wrap gap-x-3 gap-y-1 px-3 pb-1 pt-2.5 text-[11.5px]" role="tablist" aria-label="Market groups">

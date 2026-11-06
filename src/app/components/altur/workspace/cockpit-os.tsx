@@ -326,6 +326,55 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const [tabChoice, setTabChoice] = useState<Tab | null>(null);
     const [indicatorOpen, setIndicatorOpen] = useState(false);
     const [desktop, setDesktop] = useState(true);
+    // Column widths, kept in this browser: 0 folds the markets column to a thin rail.
+    const [layout, setLayout] = useState({ left: 224, right: 320 });
+    useEffect(() => {
+        try {
+            const saved = JSON.parse(window.localStorage.getItem("alturelock:terminal-layout") ?? "null");
+            if (saved && typeof saved.left === "number" && typeof saved.right === "number") setLayout(saved);
+        } catch {
+            // defaults
+        }
+    }, []);
+    // Below 1280px the markets fold to their rail by default, so the chart keeps a useful width.
+    const [wide, setWide] = useState(true);
+    const [openedNarrow, setOpenedNarrow] = useState(false);
+    useEffect(() => {
+        const query = window.matchMedia("(min-width: 1280px)");
+        const sync = () => setWide(query.matches);
+        sync();
+        query.addEventListener("change", sync);
+        return () => query.removeEventListener("change", sync);
+    }, []);
+    const shown = { left: wide ? layout.left : openedNarrow ? layout.left || 224 : 0, right: wide ? layout.right : Math.min(layout.right, 280) };
+    const saveLayout = (next: { left: number; right: number }) => {
+        setLayout(next);
+        try {
+            window.localStorage.setItem("alturelock:terminal-layout", JSON.stringify(next));
+        } catch {
+            // lasts for this visit
+        }
+    };
+    // Dragging a column edge: the chart takes whatever the side columns leave.
+    const dragEdge = (side: "left" | "right") => (event: React.PointerEvent) => {
+        event.preventDefault();
+        const startX = event.clientX;
+        const start = layout;
+        const move = (e: PointerEvent) => {
+            const dx = e.clientX - startX;
+            const next = side === "left" ? { ...start, left: Math.max(180, Math.min(360, (start.left || 180) + dx)) } : { ...start, right: Math.max(260, Math.min(460, start.right - dx)) };
+            setLayout(next);
+            try {
+                window.localStorage.setItem("alturelock:terminal-layout", JSON.stringify(next));
+            } catch {}
+        };
+        const up = () => {
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", up);
+        };
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", up);
+    };
     useEffect(() => {
         const query = window.matchMedia("(min-width: 1024px)");
         const sync = () => setDesktop(query.matches);
@@ -502,10 +551,20 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </p>
             )}
 
-            <div className={`grid min-h-0 flex-1 gap-3 p-0 lg:p-3 lg:grid-cols-[216px_minmax(0,1fr)_300px] xl:grid-cols-[224px_minmax(0,1fr)_320px] ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
+            <div style={desktop ? { gridTemplateColumns: `${shown.left ? `${shown.left}px` : "36px"} minmax(0,1fr) ${shown.right}px` } : undefined} className={`grid min-h-0 flex-1 gap-2 p-0 lg:p-2 ${arrival === "curtain" ? "al-reveal" : arrival === "open" ? "al-reveal al-reveal--now" : ""}`}>
                 {/* Markets */}
-                <aside className="hidden min-h-0 lg:flex" aria-label="Markets">
-                    <WatchPanel tickers={tickers} selected={symbol} onSelect={select} levels={levels.map((level) => ({ label: level.label, price: level.price }))} />
+                <aside className="relative hidden min-h-0 lg:flex" aria-label="Markets">
+                    {shown.left ? (
+                        <>
+                            <WatchPanel tickers={tickers} selected={symbol} onSelect={select} levels={levels.map((level) => ({ label: level.label, price: level.price }))} onCollapse={() => (wide ? saveLayout({ ...layout, left: 0 }) : setOpenedNarrow(false))} />
+                            <span onPointerDown={dragEdge("left")} title="Drag to resize" className="absolute inset-y-3 -right-[5px] z-10 w-[6px] cursor-col-resize rounded-full transition-colors hover:bg-[#4DD0E1]/40" />
+                        </>
+                    ) : (
+                        <button type="button" onClick={() => (wide ? saveLayout({ ...layout, left: layout.left || 224 }) : setOpenedNarrow(true))} title="Show markets" aria-label="Show markets" className="cmd-panel flex w-full flex-col items-center gap-3 py-3 text-[11px] text-white/50 hover:text-white">
+                            <span aria-hidden="true">›</span>
+                            <span className="[writing-mode:vertical-rl]">Markets</span>
+                        </button>
+                    )}
                 </aside>
 
                 {/* The chart */}
@@ -602,7 +661,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </main>
 
                 {/* What is yours: the next thing to do, the trade, the journal, and what to read */}
-                <aside className="flex min-h-0 flex-col gap-3 border-t border-white/10 lg:overflow-y-auto lg:border-t-0" aria-label="Your workspace">
+                <aside className="relative flex min-h-0 flex-col gap-2 border-t border-white/10 lg:overflow-y-auto lg:border-t-0" aria-label="Your workspace">
+                    <span onPointerDown={dragEdge("right")} title="Drag to resize" className="absolute inset-y-3 left-0 z-10 hidden w-[6px] cursor-col-resize rounded-full transition-colors hover:bg-[#4DD0E1]/40 lg:block" />
                     <div className="hidden lg:block">
                         <StatePanel demo={demo} state={first.id === "orient" ? "idle" : account.active?.stage === "prepare" ? "planning" : "active"} detail={first.id === "orient" ? "No trade is a position too. Prepare one only when your setup is there." : first.note} href={first.id === "orient" ? rulesHref : first.href} action={first.id === "orient" ? prepareItem.action : first.action} />
                     </div>
