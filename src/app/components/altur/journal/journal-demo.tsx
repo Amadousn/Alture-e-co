@@ -69,7 +69,15 @@ const sized = (instrument: string, quantity: number) => {
     return Number((Math.round(quantity / lot) * lot).toFixed(6));
 };
 
-export function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[] } {
+// The demo trader has two accounts on the same exchange; every third trade is on the second one.
+export const SAMPLE_ACCOUNTS = [
+    { id: "main", name: "Bybit · Main" },
+    { id: "sub", name: "Bybit · Sub-account" },
+] as const;
+export type SampleAccount = (typeof SAMPLE_ACCOUNTS)[number]["id"];
+const accountOf = (i: number): SampleAccount => (i % 3 === 2 ? "sub" : "main");
+
+export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; positions: OpenPosition[] } {
     const now = new Date();
     const year = now.getUTCFullYear();
     const month = now.getUTCMonth();
@@ -100,22 +108,22 @@ export function buildSample(): { trades: ClosedTrade[]; positions: OpenPosition[
         };
     })
         // The current month only shows days that have already happened.
-        .filter((trade) => trade.closedAt <= now.getTime())
+        .filter((trade, i) => trade.closedAt <= now.getTime() && (!only || accountOf(Number(trade.id.slice(7))) === only))
         .sort((a, b) => b.closedAt - a.closedAt);
     const positions: OpenPosition[] = [
         { instrument: "BTCUSDT", direction: "Long", entryPrice: 82560, markPrice: 82790, quantity: sized("BTCUSDT", 3.028), leverage: LEVERAGE, positionSize: cents(82560 * sized("BTCUSDT", 3.028)), unrealisedPnl: cents((82790 - 82560) * sized("BTCUSDT", 3.028)), openedAt: now.getTime() - 3 * 60 * 60 * 1000 },
     ];
-    return { trades, positions };
+    return { trades, positions: only === "sub" ? [] : positions };
 }
 
 // Built after mount: the dates depend on the visitor's clock, so rendering
 // them on the server would not match what the browser draws.
-const JournalDemo = ({ look }: { look?: Record<string, string> }) => {
+const JournalDemo = ({ look, account }: { look?: Record<string, string>; account?: SampleAccount }) => {
     const [data, setData] = useState<{ trades: ClosedTrade[]; positions: OpenPosition[] } | null>(null);
 
     useEffect(() => {
-        setData(buildSample());
-    }, []);
+        setData(buildSample(account));
+    }, [account]);
 
     if (!data) return <div className="max-w-6xl mx-auto h-[640px]" />;
 

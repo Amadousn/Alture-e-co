@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import JournalDemo from "./journal-demo";
+import JournalDemo, { SAMPLE_ACCOUNTS, type SampleAccount } from "./journal-demo";
 import JournalStudio from "./journal-studio";
 import { useBacktests } from "@/utils/workspace-store";
 
@@ -11,6 +11,7 @@ const DemoJournalAccounts = () => {
     const [backtests] = useBacktests();
     const trades = useMemo(() => backtests.flatMap((item) => item.trades).sort((a, b) => b.closedAt - a.closedAt), [backtests]);
     const [account, setAccount] = useState<"sample" | "backtest">("sample");
+    const [shown, setShown] = useState<SampleAccount | "all">("all");
     useEffect(() => {
         if (new URLSearchParams(window.location.search).get("account") === "backtest") setAccount("backtest");
     }, []);
@@ -19,7 +20,7 @@ const DemoJournalAccounts = () => {
             <div className="mb-6 flex items-center gap-5 text-sm" role="tablist" aria-label="Account">
                 {(
                     [
-                        ["sample", "Sample account"],
+                        ["sample", "Trading account"],
                         ["backtest", `Backtest${trades.length ? ` · ${trades.length}` : ""}`],
                     ] as const
                 ).map(([id, text]) => (
@@ -28,6 +29,15 @@ const DemoJournalAccounts = () => {
                     </button>
                 ))}
             </div>
+            {account === "sample" && (
+                <div className="mb-6 flex flex-wrap gap-2 text-xs" role="group" aria-label="Show account">
+                    {[{ id: "all" as const, name: "All accounts" }, ...SAMPLE_ACCOUNTS].map((item) => (
+                        <button key={item.id} type="button" aria-pressed={shown === item.id} onClick={() => setShown(item.id)} className={`rounded-sm border px-3 py-1.5 transition-colors ${shown === item.id ? "border-white bg-white/10 text-white" : "border-white/20 text-white/50 hover:text-white"}`}>
+                            {item.name}
+                        </button>
+                    ))}
+                </div>
+            )}
             {account === "backtest" ? (
                 <JournalStudio
                     key="backtest"
@@ -47,7 +57,7 @@ const DemoJournalAccounts = () => {
                     }
                 />
             ) : (
-                <JournalDemo />
+                <JournalDemo key={shown} account={shown === "all" ? undefined : shown} />
             )}
         </>
     );

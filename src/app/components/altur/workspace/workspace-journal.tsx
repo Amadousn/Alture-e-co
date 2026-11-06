@@ -187,7 +187,7 @@ const WorkspaceJournal = () => {
                   type="button"
                   aria-pressed={selected === item.id}
                   onClick={() => setShown(item.id)}
-                  className={`rounded-sm border px-3 py-1.5 transition-colors ${selected === item.id ? "border-white bg-white text-black" : "border-white/20 text-[#9a9aa5] hover:text-white"}`}
+                  className={`rounded-sm border px-3 py-1.5 transition-colors ${selected === item.id ? "border-white bg-white/10 text-white" : "border-white/20 text-white/50 hover:text-white"}`}
                 >
                   {item.name}
                 </button>

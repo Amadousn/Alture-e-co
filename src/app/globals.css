@@ -635,6 +635,11 @@ a:active {
 /* Account tabs above the Journal */
 .lumen [role="tablist"] .text-white { color: #0c0d10 !important; }
 .lumen [role="tablist"] .border-white { border-color: #0c0d10 !important; }
+.lumen [aria-label="Show account"] .text-white { color: #0c0d10 !important; }
+.lumen [aria-label="Show account"] [class*="text-white/"] { color: #62656e !important; }
+.lumen [aria-label="Show account"] .border-white { border-color: #0c0d10 !important; }
+.lumen [aria-label="Show account"] [class*="border-white/"] { border-color: rgba(12, 13, 16, 0.18) !important; }
+.lumen [aria-label="Show account"] [class*="bg-white/"] { background-color: rgba(12, 13, 16, 0.05) !important; }
 
 /* The Terminal in the light theme: the same white modules on a cool violet ground as the Journal. */
 .lumen-term .cmd-panel {
