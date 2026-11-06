@@ -62,7 +62,7 @@ const PLANS = [
         yearly: 33,
         text: "For the trader who wants the truth about every trade.",
         items: ["Automatic import from your exchange", "Unlimited strategies", "Trade review on the real candles", "Analysis by setup, day and session", "Backtesting on real market history"],
-        soon: ["More exchanges beyond Bybit"],
+        soon: [] as string[],
         main: false,
     },
     {
@@ -80,7 +80,7 @@ const PLANS = [
         yearly: 127,
         text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
-        soon: ["More exchanges beyond Bybit"],
+        soon: [] as string[],
         main: true,
     },
 ];
@@ -171,6 +171,18 @@ const Pricing = () => {
                             </div>
                         );
                     })}
+                </div>
+                {/* Payments are not open yet: shown greyed, without card or coin brand logos. */}
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/35" aria-label="Payment methods">
+                    <span className="inline-flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18" /></svg>
+                        Card
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M10 8h3.5a2 2 0 0 1 0 4H10m0 0h4a2 2 0 0 1 0 4h-4m0-8v8m1-9.5V8m0 8v1.5m2-11V8m0 8v1.5" /></svg>
+                        Crypto
+                    </span>
+                    <span>Payments open soon.</span>
                 </div>
                 <div className="mt-20">
                     <p className="text-xl md:text-2xl font-medium tracking-tight text-white">Indicators only</p>
