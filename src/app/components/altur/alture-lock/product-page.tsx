@@ -324,7 +324,7 @@ const ProductPage = () => {
                             <p className={`mt-4 ${body}`}>Once you are in, the cockpit keeps the plan in front of you until the trade is closed and reviewed.</p>
                         </div>
                         <div className="min-w-0 lg:col-span-7">
-                            <Shot src="/images/alturelock/terminal-plan.jpg" alt="The AltureLock terminal on Bitcoin: candles with the trade plan drawn as take profit, entry and stop loss zones, and the markets list beside it" width={1600} height={1324} caption="The terminal, from the demo. Live Bybit prices, simulated trade." />
+                            <Shot src="/images/alturelock/planner.jpg" alt="The AltureLock trade planner: a candle chart with entry, stop loss and take profit levels, and the order ticket beside it" width={1232} height={800} caption="The planner, from the guided demo. Simulated prices." />
                         </div>
                     </div>
                 </div>
