@@ -29,17 +29,16 @@ const FEATURES = [
 
 // What the ALTURE & CO All-in-One indicator draws.
 const INDICATOR = [
-    "Volume Profile, including the horizontal histogram, the Point of Control (POC), the Value Area High (VAH) and the Value Area Low (VAL)",
-    "Volume Weighted Average Price (VWAP) and its bands",
-    "Exponential Moving Average (EMA) Cloud",
-    "Market Structure, including Break of Structure (BOS) and Change of Character (CHoCH), with higher-timeframe context",
-    "Fair Value Gaps (FVG)",
-    "On-chart checklist, from market direction to entry",
+    "Volume Profile with its Point of Control (POC), Value Area High (VAH) and Value Area Low (VAL)",
+    "Footprint bubbles from real buy and sell volume",
+    "Absorption (A) and exhaustion (E) marks",
+    "CVD divergence",
+    "VWAP, market structure (BOS and CHoCH) and Fair Value Gaps",
 ];
 
 const TOOLS = [
-    ["Watchlist", "Your instruments with live prices, in your own order."],
-    ["Chart", "Candles, live order flow, and TradingView's drawing tools when you need them."],
+    ["Markets", "Crypto, WTI and Brent crude oil, gold, silver, the Nasdaq 100 and S&P 500, and crypto stocks, with live prices and your favourites."],
+    ["Chart", "Candles, live order flow with the Volume Profile, your trade plan drawn on the chart, and TradingView's drawing tools when you need them."],
     ["News and briefing", "Crypto and macro headlines from their publishers, with an AI briefing of what matters."],
     ["Economic calendar", "High-importance events, and the Asia, London, Paris and New York sessions."],
     ["Your own limits", "Set how many trades or losses end your day, and be told when you are there."],
@@ -325,7 +324,7 @@ const ProductPage = () => {
                             <p className={`mt-4 ${body}`}>Once you are in, the cockpit keeps the plan in front of you until the trade is closed and reviewed.</p>
                         </div>
                         <div className="min-w-0 lg:col-span-7">
-                            <Shot src="/images/alturelock/planner.jpg" alt="The AltureLock trade planner: a candle chart with entry, stop loss and take profit levels, and the order ticket beside it" width={1232} height={800} caption="The planner, from the guided demo. Simulated prices." />
+                            <Shot src="/images/alturelock/terminal-plan.jpg" alt="The AltureLock terminal on Bitcoin: candles with the trade plan drawn as take profit, entry and stop loss zones, and the markets list beside it" width={1600} height={1324} caption="The terminal, from the demo. Live Bybit prices, simulated trade." />
                         </div>
                     </div>
                 </div>
@@ -336,7 +335,7 @@ const ProductPage = () => {
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <div className="grid grid-cols-1 items-center gap-x-14 gap-y-10 lg:grid-cols-12">
                         <div className="min-w-0 lg:col-span-7 lg:order-1 order-2">
-                            <Shot src="/images/alturelock/order-flow.jpg" alt="The AltureLock terminal's order flow view of Bitcoin: candles with the Volume Profile histogram beside them" width={800} height={779} caption="The AltureLock terminal: order flow with the Volume Profile, from live Bybit data." />
+                            <Shot src="/images/alturelock/indicator-footprint.jpg" alt="Volume Profile + Footprint by Alture & Co on TradingView: candles with the volume profile, POC, value area, footprint bubbles, absorption and exhaustion marks" width={1600} height={900} caption="Volume Profile + Footprint · Alture & Co, on TradingView." />
                         </div>
                         <div className="min-w-0 lg:col-span-5 lg:order-2 order-1">
                             <p className={label}>The Alture Indicator</p>
@@ -350,7 +349,7 @@ const ProductPage = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="mt-6 text-sm leading-relaxed text-white/45">The indicator runs directly inside TradingView.</p>
+                            <p className="mt-6 text-sm leading-relaxed text-white/45">It runs inside TradingView, on a Premium or Ultimate plan. <Link href="/indicators" className="border-b border-white/30 text-white/70 hover:border-white hover:text-white">See all our indicators</Link>, including free ones.</p>
                         </div>
                     </div>
                 </div>
@@ -402,6 +401,9 @@ const ProductPage = () => {
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <p className={label}>Integrated tools</p>
                     <h2 className={`${heading} max-w-[18ch]`}>Everything you read before a trade, in one terminal.</h2>
+                    <div className="mt-10 max-w-4xl">
+                        <Shot src="/images/alturelock/terminal-flow.jpg" alt="The AltureLock terminal's order flow view of Bitcoin: candles with the Volume Profile, its POC and value area, and the state of each order flow layer" width={1600} height={1324} caption="The terminal's order flow view, from live Bybit trades." />
+                    </div>
                     <dl className="mt-12 grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
                         {TOOLS.map(([title, text]) => (
                             <div key={title}>

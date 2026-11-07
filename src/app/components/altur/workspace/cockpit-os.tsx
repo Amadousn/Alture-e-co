@@ -322,7 +322,11 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const [interval, setIntervalId] = useState("15");
     const [highOnly, setHighOnly] = useState(true);
     // The chart in the centre: the terminal's own candles, live order flow from real trades, the plain line, or TradingView's tools.
-    const [view, setView] = useState<"candles" | "flow" | "line" | "tools">("candles");
+    // ?view=flow (or line, tools) opens the terminal on that view, so a view can be linked to.
+    const [view, setView] = useState<"candles" | "flow" | "line" | "tools">(() => {
+        const asked = params.get("view");
+        return asked === "flow" || asked === "line" || asked === "tools" ? asked : "candles";
+    });
     const [tabChoice, setTabChoice] = useState<Tab | null>(null);
     const [indicatorOpen, setIndicatorOpen] = useState(false);
     const [desktop, setDesktop] = useState(true);
