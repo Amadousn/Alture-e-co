@@ -209,9 +209,9 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
                         </ol>
 
                         <div className="mt-9 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
-                            <p className="flex items-baseline gap-2">
-                                <span className="text-[22px] font-medium tabular-nums text-white">{item.price ? `$${item.price}` : "Free"}</span>
-                                {item.price > 0 && <span className="text-[14px] text-white/45">per month</span>}
+                            <p className="flex items-baseline">
+                                <span className="font-logo text-4xl font-light tabular-nums text-white">{item.price ? `$${item.price}` : "Free"}</span>
+                                {item.price > 0 && <span className="text-[15px] text-white/50">/month</span>}
                             </p>
                             <Link href="/#contact" className="group inline-flex items-center gap-3 rounded-sm bg-white px-7 py-4 text-sm font-semibold text-black transition-colors hover:bg-[#e4e4e8] lit">
                                 {item.price ? "Request access" : "Get it free"}
@@ -261,8 +261,8 @@ const Compare = () => (
                 <span className="col-span-2 md:col-span-1 border-t border-white/10 pt-4 md:py-5 pr-3 text-[11px] md:text-[12px] uppercase tracking-[0.1em] text-white/35">Price</span>
                 {COMPARE.map((c, j) => (
                     <span key={c.name} className={`border-white/10 pt-2 pb-5 pr-3 md:border-t md:border-l md:px-8 md:py-5 ${j ? "border-l pl-4" : ""}`}>
-                        <span className={`text-[17px] font-medium tabular-nums ${c.data === "real" ? "text-white" : "text-white/70"}`}>${c.price}</span>
-                        <span className="ml-1 text-[13px] text-white/40">per month</span>
+                        <span className={`font-logo text-2xl font-light tabular-nums ${c.data === "real" ? "text-white" : "text-white/70"}`}>${c.price}</span>
+                        <span className="text-[13px] text-white/40">/month</span>
                     </span>
                 ))}
             </div>

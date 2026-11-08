@@ -78,7 +78,7 @@ const PLANS = [
         name: "AltureLock",
         monthly: 149,
         yearly: 127,
-        text: "Terminal, Journal and our two premium indicators. $176 / month apart.",
+        text: "Terminal, Journal and our two premium indicators. $176/month apart.",
         items: ["Everything in Journal", "Everything in Terminal", "Volume Profile + Footprint and Order Flow CVD indicators on TradingView", "Rules checked before the trade, results recorded after it"],
         soon: [] as string[],
         main: true,
@@ -140,9 +140,9 @@ const Pricing = () => {
                             <div key={plan.name} className={`relative flex flex-col rounded-2xl p-8 ${main ? "border border-[#FFFFFF]/70 bg-[#0d0910] text-white shadow-[0_0_120px_-10px_rgba(255,255,255,0.55),inset_0_1px_0_rgba(255,255,255,0.25)] xl:-my-4 xl:py-12" : "border border-white/10 text-white"}`}>
                                 {main && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,0.24),transparent_70%)]" />}
                                 <p className={main ? "font-logo text-2xl font-extralight tracking-tight" : "text-lg font-medium tracking-tight"}>{main ? <>Alture<span className="font-normal accent-light">Lock</span></> : plan.name}</p>
-                                <p className="mt-6 flex items-baseline gap-2">
+                                <p className="mt-6 flex items-baseline">
                                     <span className="font-logo text-5xl font-light tabular-nums">${price}</span>
-                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? "/ month" : "forever"}</span>
+                                    <span className={`text-sm ${main ? "text-white/50" : "text-white/45"}`}>{paid ? "/month" : "forever"}</span>
                                 </p>
                                 {paid && yearly && <p className="mt-2 text-xs text-white/45">Billed ${plan.yearly * 12} yearly</p>}
                                 <p className={`mt-4 text-[15px] leading-relaxed ${main ? "text-white/70" : "text-white/60"}`}>{plan.text}</p>
@@ -194,9 +194,9 @@ const Pricing = () => {
                             <li key={item.name} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-12 md:items-center">
                                 <p className="text-[15px] font-medium text-white md:col-span-4">{item.name}</p>
                                 <p className="text-sm leading-relaxed text-white/55 md:col-span-5">{item.text}</p>
-                                <p className="flex items-baseline gap-1.5 whitespace-nowrap md:col-span-1 md:justify-end">
+                                <p className="flex items-baseline whitespace-nowrap md:col-span-1 md:justify-end">
                                     <span className="font-logo text-2xl font-light tabular-nums text-white">{item.price ? `$${yearly ? Math.round(item.price * 0.8) : item.price}` : "Free"}</span>
-                                    {item.price > 0 && <span className="whitespace-nowrap text-xs text-white/45">/ month</span>}
+                                    {item.price > 0 && <span className="whitespace-nowrap text-xs text-white/45">/month</span>}
                                 </p>
                                 <Link href="/#contact" className="text-sm text-white/80 underline-offset-4 hover:text-white hover:underline md:col-span-2 md:text-right">
                                     {item.price ? "Request access →" : "Get it free →"}
