@@ -17,8 +17,8 @@ import PrivacyToggle from "./os/privacy-toggle";
 import { marketFor, marketName } from "@/utils/markets";
 import { THEMES } from "./os/design";
 import { MASK, usePrivacy } from "@/utils/workspace-store";
-import { rulesForTrade, type AlarmRule } from "@/utils/alarms";
-import { AlarmBanner, AlarmRules, useRuleAlarms } from "./os/rule-alarms";
+import { rulesForTrade, stopDistance, type AlarmRule } from "@/utils/alarms";
+import { AlarmBanner, AlarmRules, CriticalAlarm, useRuleAlarms, type AlarmCondition } from "./os/rule-alarms";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
@@ -518,7 +518,19 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     }, [demo, demoRules, tradeRules]);
     const alarmRules = demo ? (demoRules ?? []) : storedRules;
     const setAlarmRules = (next: AlarmRule[]) => (demo ? setDemoRules(next) : setStoredRules(next));
-    const alarms = useRuleAlarms(alarmRules, (s) => live?.bySymbol[s]?.price ?? null);
+    // Situations the terminal watches by itself. Each is critical and stays until confirmed.
+    const conditions: AlarmCondition[] = [];
+    const activeSymbol = account.active?.plan.instrument ?? "BTCUSDT";
+    const activePrice = account.active ? (live?.bySymbol[activeAsset?.feed ?? ""]?.price ?? null) : null;
+    if (opened && stage !== "review" && tradePlan && tradePlan.entry !== null && tradePlan.stop !== null && activePrice !== null) {
+        const left = stopDistance(account.active!.plan.direction, tradePlan.entry, tradePlan.stop, activePrice);
+        if (left !== null && left > 0 && left <= 0.2) conditions.push({ key: `near-stop:${account.active!.openedAt}`, symbol: activeSymbol, title: "Price is close to your stop loss", detail: `${Math.round(left * 100)}% of the distance to your stop is left. Stop at ${fmtPrice(tradePlan.stop)}.` });
+    }
+    const dayKey = new Date(now).toDateString();
+    if (limitReached) conditions.push({ key: `limit:${dayKey}`, symbol: activeSymbol, title: "Your daily limit is reached", detail: `${limitText}. Your rules say the day is over.` });
+    if (limitReached && account.positions.length > 0) conditions.push({ key: `limit-open:${dayKey}`, symbol: account.positions[0].instrument, title: "A position is open past your daily limit", detail: "Your risk rule is broken while a position is still open." });
+    if (!demo && account.positions.length > 0 && account.positionsAt && now - account.positionsAt > 10 * 60_000) conditions.push({ key: `stale:${account.positionsAt}`, symbol: account.positions[0].instrument, title: "Exchange connection lost", detail: `A position is open and the last update from your exchange was ${since(now - account.positionsAt)} ago.` });
+    const alarms = useRuleAlarms(alarmRules, (s) => live?.bySymbol[s]?.price ?? null, conditions);
 
     const big = (value: number) => (value >= 1e9 ? `$${(value / 1e9).toFixed(2)}B` : `$${(value / 1e6).toFixed(1)}M`);
     const facts: [string, string][] = ticker
@@ -568,6 +580,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
             <AlarmBanner hits={alarms.shown} onDismiss={alarms.dismiss} onOpen={select} />
+            <CriticalAlarm hits={alarms.critical} onConfirm={alarms.confirm} onOpen={select} tradeHref={account.active ? rulesHref : undefined} />
             {tag && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
                     <span className="mr-2 font-semibold text-[#FACC15]">Demo environment.</span>
@@ -766,7 +779,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                     <p className="text-[13px] leading-relaxed text-white/55">{account.ready ? "No trade in progress." : " "}</p>
                                 )}
 
-                                <AlarmRules rules={alarmRules} setRules={setAlarmRules} symbol={symbol} price={ticker ? ticker.price : null} tradeRules={tradeRules} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} />
+                                <AlarmRules rules={alarmRules} setRules={setAlarmRules} symbol={symbol} price={ticker ? ticker.price : null} tradeRules={tradeRules} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} onTestCritical={alarms.testCritical} />
 
                                 {!limitReached && <RiskCalculator asset={symbol.replace(/USDT$/, "")} price={ticker ? ticker.price : null} />}
 

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { evaluateRule, rulesForTrade, type AlarmRule } from "../src/utils/alarms.ts";
+import { combined, stopDistance, evaluateRule, rulesForTrade, type AlarmRule } from "../src/utils/alarms.ts";
 
 const M15 = 900_000;
 const rule = (over: Partial<AlarmRule> = {}): AlarmRule => ({ id: "r", symbol: "BTCUSDT", kind: "close", side: "below", level: 100, timeframe: "15", closes: 1, label: "", on: true, ...over });
@@ -29,7 +29,7 @@ test("two closes in a row is an exit signal", () => {
 test("a price rule on the stop is urgent; a switched-off rule is silent", () => {
     const [entry, stop, target] = rulesForTrade({ instrument: "BTCUSDT", direction: "Long", entry: 100, stop: 95, target: 110 });
     assert.equal(entry.side, "below");
-    assert.equal(evaluateRule(stop, [], 94.9, 0)?.level, "exit");
+    assert.equal(evaluateRule(stop, [], 94.9, 0)?.level, "critical");
     assert.equal(evaluateRule(stop, [], 96, 0), null);
     assert.equal(evaluateRule(target, [], 110, 0)?.level, "check");
     assert.equal(evaluateRule({ ...stop, on: false }, [], 90, 0), null);
@@ -38,5 +38,17 @@ test("a price rule on the stop is urgent; a switched-off rule is silent", () => 
 test("a short trade watches the other side", () => {
     const [entry, stop] = rulesForTrade({ instrument: "BTCUSDT", direction: "Short", entry: 100, stop: 105, target: 90 });
     assert.equal(entry.side, "above");
-    assert.equal(evaluateRule(stop, [], 105.5, 0)?.level, "exit");
+    assert.equal(evaluateRule(stop, [], 105.5, 0)?.level, "critical");
+});
+
+test("two different rules within 15 minutes become one critical alert", () => {
+    const hit = (ruleId: string, at: number) => ({ key: ruleId + at, ruleId, symbol: "BTCUSDT", level: "check" as const, title: ruleId, detail: "", at });
+    assert.equal(combined([hit("a", 0), hit("a", 1000)], 2000), null);
+    assert.equal(combined([hit("a", 0), hit("b", 60_000)], 120_000)?.level, "critical");
+    assert.equal(combined([hit("a", 0), hit("b", 60_000)], 20 * 60_000), null);
+});
+
+test("distance to the stop for longs and shorts", () => {
+    assert.equal(stopDistance("Long", 100, 90, 92), 0.2);
+    assert.equal(stopDistance("Short", 100, 110, 108), 0.2);
 });

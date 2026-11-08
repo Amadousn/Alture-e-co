@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { evaluateRule, severity, TIMEFRAME_NAME, type AlarmCandle, type AlarmHit, type AlarmRule, type AlarmTimeframe } from "@/utils/alarms";
+import { combined, evaluateRule, severity, TIMEFRAME_NAME, type AlarmCandle, type AlarmHit, type AlarmRule, type AlarmTimeframe } from "@/utils/alarms";
 
 // The terminal's rule alarms. Rules watch the market and, when one is broken,
 // the screen says so, a sound plays and (if allowed) the browser notifies.
@@ -10,6 +10,10 @@ import { evaluateRule, severity, TIMEFRAME_NAME, type AlarmCandle, type AlarmHit
 const POLL_MS = 30_000;
 const SEEN_KEY = "alturelock:alarm-seen";
 const SOUND_KEY = "alturelock:alarm-sound";
+const LOG_KEY = "alturelock:alarm-log";
+
+// A situation the terminal itself watches (near the stop, day limit, lost connection).
+export type AlarmCondition = { key: string; symbol: string; title: string; detail: string };
 
 const readSeen = (): Set<string> => {
     try {
@@ -28,33 +32,37 @@ const writeSeen = (seen: Set<string>) => {
 function chime(level: AlarmHit["level"]) {
     try {
         const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-        const notes = level === "exit" ? [660, 520, 660] : [880, 1100];
+        const notes = level === "critical" ? [220, 165, 220, 165] : level === "exit" ? [660, 520, 660] : [880, 1100];
         notes.forEach((hz, i) => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.frequency.value = hz;
-            osc.type = "sine";
-            const t = ctx.currentTime + i * 0.22;
+            osc.type = level === "critical" ? "triangle" : "sine";
+            const t = ctx.currentTime + i * (level === "critical" ? 0.32 : 0.22);
             gain.gain.setValueAtTime(0.0001, t);
             gain.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + (level === "critical" ? 0.28 : 0.18));
             osc.connect(gain).connect(ctx.destination);
             osc.start(t);
-            osc.stop(t + 0.2);
+            osc.stop(t + (level === "critical" ? 0.3 : 0.2));
         });
-        setTimeout(() => ctx.close(), 1200);
+        setTimeout(() => ctx.close(), 1800);
     } catch {}
 }
 
-export function useRuleAlarms(rules: AlarmRule[], priceOf: (symbol: string) => number | null) {
+export function useRuleAlarms(rules: AlarmRule[], priceOf: (symbol: string) => number | null, conditions: AlarmCondition[] = []) {
     const [candles, setCandles] = useState<Record<string, AlarmCandle[]>>({});
     const [shown, setShown] = useState<AlarmHit[]>([]);
     const [history, setHistory] = useState<AlarmHit[]>([]);
+    const [critical, setCritical] = useState<AlarmHit[]>([]);
     const [sound, setSoundState] = useState(true);
     const seen = useRef<Set<string> | null>(null);
 
     useEffect(() => {
         seen.current = readSeen();
+        try {
+            setHistory(JSON.parse(localStorage.getItem(LOG_KEY) ?? "[]"));
+        } catch {}
         try {
             setSoundState(localStorage.getItem(SOUND_KEY) !== "off");
         } catch {}
@@ -96,12 +104,20 @@ export function useRuleAlarms(rules: AlarmRule[], priceOf: (symbol: string) => n
 
     const fire = useCallback(
         (hit: AlarmHit) => {
-            setShown((current) => [hit, ...current.filter((h) => h.ruleId !== hit.ruleId)].slice(0, 3));
-            setHistory((current) => [hit, ...current].slice(0, 20));
+            if (hit.level === "critical") setCritical((current) => [...current.filter((h) => h.key !== hit.key), hit]);
+            else setShown((current) => [hit, ...current.filter((h) => h.ruleId !== hit.ruleId)].slice(0, 3));
+            // Every alarm is logged, so the trader can see afterwards what fired and when.
+            setHistory((current) => {
+                const next = [hit, ...current].slice(0, 50);
+                try {
+                    localStorage.setItem(LOG_KEY, JSON.stringify(next));
+                } catch {}
+                return next;
+            });
             if (sound) chime(hit.level);
             try {
                 if (typeof Notification !== "undefined" && Notification.permission === "granted" && document.visibilityState !== "visible") {
-                    new Notification(`${hit.level === "exit" ? "Exit signal" : "Check"} · ${hit.symbol.replace(/USDT$/, "")}`, { body: `${hit.title}. ${hit.detail}`, tag: hit.key });
+                    new Notification(`${hit.level === "critical" ? "Critical" : hit.level === "exit" ? "Exit signal" : "Check"} · ${hit.symbol.replace(/USDT$/, "")}`, { body: `${hit.title}. ${hit.detail}`, tag: hit.key });
                 }
             } catch {}
         },
@@ -110,6 +126,8 @@ export function useRuleAlarms(rules: AlarmRule[], priceOf: (symbol: string) => n
 
     // Every price or candle update re-checks the rules; a hit already shown is never shown again.
     const prices = rules.map((r) => priceOf(r.symbol)).join(",");
+    const conditionKeys = conditions.map((c) => c.key).join(",");
+    const fresh = useRef<AlarmHit[]>([]);
     useEffect(() => {
         const memory = seen.current;
         if (!memory) return;
@@ -126,15 +144,27 @@ export function useRuleAlarms(rules: AlarmRule[], priceOf: (symbol: string) => n
             if (memory.has(hit.key)) continue;
             memory.add(hit.key);
             changed = true;
+            fresh.current = [...fresh.current.slice(-10), hit];
+            fire(hit);
+        }
+        // Several rules broken together, and the situations the terminal watches itself.
+        const together = combined(fresh.current, now);
+        const extra = [...(together ? [together] : []), ...conditions.map((c) => ({ ...c, ruleId: c.key, level: "critical" as const, at: now }))];
+        for (const hit of extra) {
+            if (memory.has(hit.key)) continue;
+            memory.add(hit.key);
+            changed = true;
             fire(hit);
         }
         if (changed) writeSeen(memory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rules, candles, prices, fire]);
+    }, [rules, candles, prices, fire, conditionKeys]);
 
     const dismiss = (key: string) => setShown((current) => current.filter((h) => h.key !== key));
     const test = () => fire({ key: `test:${Date.now()}`, ruleId: "test", symbol: "BTCUSDT", level: "check", title: "Test alarm", detail: "This is how a broken rule looks and sounds.", at: Date.now() });
-    return { shown, history, dismiss, test, sound, setSound };
+    const confirm = (key: string) => setCritical((current) => current.filter((h) => h.key !== key));
+    const testCritical = () => fire({ key: `test-critical:${Date.now()}`, ruleId: "test", symbol: "BTCUSDT", level: "critical", title: "Test critical alert", detail: "Price is close to your stop loss. This is how a critical alert looks and sounds.", at: Date.now() });
+    return { shown, history, critical, dismiss, confirm, test, testCritical, sound, setSound };
 }
 
 const ago = (ms: number) => (ms < 60_000 ? "just now" : ms < 3_600_000 ? `${Math.floor(ms / 60_000)} min ago` : `${Math.floor(ms / 3_600_000)} h ago`);
@@ -187,6 +217,7 @@ export function AlarmRules({
     sound,
     setSound,
     onTest,
+    onTestCritical,
 }: {
     rules: AlarmRule[];
     setRules: (next: AlarmRule[]) => void;
@@ -197,6 +228,7 @@ export function AlarmRules({
     sound: boolean;
     setSound: (on: boolean) => void;
     onTest: () => void;
+    onTestCritical: () => void;
 }) {
     const [adding, setAdding] = useState(false);
     const [draft, setDraft] = useState({ kind: "close" as AlarmRule["kind"], side: "below" as AlarmRule["side"], level: "", timeframe: "15" as AlarmTimeframe, closes: 1 });
@@ -229,7 +261,7 @@ export function AlarmRules({
             {rules.length === 0 && <p className="text-[13px] leading-relaxed text-[var(--j-mu)]">No alarm yet. Add a rule and the terminal tells you the moment it is broken.</p>}
             <ul className="divide-y divide-[var(--j-line)]">
                 {rules.map((r) => {
-                    const exit = severity(r) === "exit";
+                    const exit = severity(r) !== "check";
                     return (
                         <li key={r.id} className="flex items-center gap-3 py-2.5 text-[13px]">
                             <button type="button" role="switch" aria-checked={r.on} aria-label={r.on ? "Switch off" : "Switch on"} onClick={() => setRules(rules.map((x) => (x.id === r.id ? { ...x, on: !x.on } : x)))} className={`relative h-4 w-7 flex-shrink-0 rounded-full transition-colors ${r.on ? "bg-[var(--j-active)]" : "bg-[var(--j-s2)]"}`}>
@@ -239,7 +271,7 @@ export function AlarmRules({
                                 <span className="block truncate">{r.label || describe(r)}</span>
                                 <span className="block truncate text-[11.5px] text-[var(--j-mu)]">
                                     {r.symbol.replace(/USDT$/, "")} · {r.label ? `${describe(r)} · ` : ""}
-                                    <span className={exit ? "text-[#F48FB1]" : "text-[#4DD0E1]"}>{exit ? "exit signal" : "check"}</span>
+                                    <span className={exit ? "text-[#F48FB1]" : "text-[#4DD0E1]"}>{severity(r) === "critical" ? "critical" : exit ? "exit signal" : "check"}</span>
                                 </span>
                             </span>
                             <button type="button" onClick={() => setRules(rules.filter((x) => x.id !== r.id))} aria-label="Remove this alarm" className="text-[var(--j-mu)] hover:text-[var(--j-ink)]">
@@ -306,6 +338,9 @@ export function AlarmRules({
                     <button type="button" onClick={onTest} className="text-[var(--j-mu)] hover:text-[var(--j-ink)]">
                         Test alarm
                     </button>
+                    <button type="button" onClick={onTestCritical} className="text-[var(--j-mu)] hover:text-[var(--j-ink)]">
+                        Test critical
+                    </button>
                     {permission === "default" && (
                         <button type="button" onClick={() => Notification.requestPermission().then(setPermission)} className="text-[var(--j-mu)] hover:text-[var(--j-ink)]">
                             Notify me in other tabs
@@ -316,12 +351,12 @@ export function AlarmRules({
 
             {history.length > 0 && (
                 <div className="mt-4">
-                    <p className="mb-1 text-[11px] uppercase tracking-[0.12em] text-[var(--j-mu)]">Today</p>
+                    <p className="mb-1 text-[11px] uppercase tracking-[0.12em] text-[var(--j-mu)]">Alarm log</p>
                     <ul className="space-y-1 text-[12px]">
                         {history.slice(0, 5).map((h) => (
                             <li key={h.key} className="flex justify-between gap-3">
                                 <span className="truncate">
-                                    <span className={h.level === "exit" ? "text-[#F48FB1]" : "text-[#4DD0E1]"}>●</span> {h.title}
+                                    <span className={h.level === "check" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{h.level === "critical" ? "◆" : "●"}</span> {h.title}
                                 </span>
                                 <span className="flex-shrink-0 text-[var(--j-mu)]">{ago(Date.now() - h.at)}</span>
                             </li>
@@ -330,6 +365,42 @@ export function AlarmRules({
                 </div>
             )}
             <p className="mt-3 text-[11.5px] leading-relaxed text-[var(--j-mu)]">Alarms work while the terminal is open. They never place or close an order.</p>
+        </div>
+    );
+}
+
+// A critical alert: covers the screen and stays until the trader confirms it.
+export function CriticalAlarm({ hits, onConfirm, onOpen, tradeHref }: { hits: AlarmHit[]; onConfirm: (key: string) => void; onOpen?: (symbol: string) => void; tradeHref?: string }) {
+    const hit = hits[0];
+    if (!hit) return null;
+    return (
+        <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="alertdialog" aria-modal="true" aria-labelledby="critical-title">
+            <div className="al-critical w-full max-w-lg rounded-[var(--j-radius,12px)] border-2 border-[#F48FB1] bg-[var(--j-s1)] p-7 text-[var(--j-ink)] shadow-[0_0_80px_-10px_rgba(244,143,177,0.55)]">
+                <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#F48FB1]">
+                    <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#F48FB1]" aria-hidden="true" />
+                    Critical · {hit.symbol.replace(/USDT$/, "")}
+                    {hits.length > 1 && <span className="ml-auto normal-case tracking-normal text-[var(--j-mu)]">1 of {hits.length}</span>}
+                </p>
+                <p id="critical-title" className="mt-4 text-[22px] font-medium leading-tight">{hit.title}</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--j-mu)]">{hit.detail}</p>
+                <p className="mt-4 text-[13px] text-[var(--j-mu)]">AltureLock does not touch your position. Check it on your exchange.</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                    <button type="button" autoFocus onClick={() => onConfirm(hit.key)} className="rounded-lg bg-[var(--j-active)] px-4 py-2.5 text-[13px] font-medium text-[var(--j-activeink)]">
+                        I have seen it
+                    </button>
+                    {onOpen && hit.ruleId !== "test" && (
+                        <button type="button" onClick={() => { onOpen(hit.symbol); onConfirm(hit.key); }} className="rounded-lg border border-[var(--j-line)] px-4 py-2.5 text-[13px]">
+                            Show the chart
+                        </button>
+                    )}
+                    {tradeHref && hit.ruleId !== "test" && (
+                        <a href={tradeHref} className="rounded-lg border border-[var(--j-line)] px-4 py-2.5 text-[13px]">
+                            Open the position
+                        </a>
+                    )}
+                </div>
+                <p className="mt-4 text-[11.5px] text-[var(--j-mu)]">Logged at {new Date(hit.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}.</p>
+            </div>
         </div>
     );
 }

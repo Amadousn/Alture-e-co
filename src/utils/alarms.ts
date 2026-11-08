@@ -16,12 +16,12 @@ export type AlarmRule = {
     closes: number;
     label: string;
     on: boolean;
-    // Marks a price rule as an exit signal (the stop loss), not just a look.
+    // Marks a rule as critical (the stop loss): it stays on screen until confirmed.
     urgent?: boolean;
 };
 
 export type AlarmCandle = { t: number; c: number };
-export type AlarmHit = { key: string; ruleId: string; symbol: string; level: "check" | "exit"; title: string; detail: string; at: number };
+export type AlarmHit = { key: string; ruleId: string; symbol: string; level: "check" | "exit" | "critical"; title: string; detail: string; at: number };
 
 export const TIMEFRAME_MS: Record<AlarmTimeframe, number> = { "5": 300_000, "15": 900_000, "60": 3_600_000, "240": 14_400_000 };
 export const TIMEFRAME_NAME: Record<AlarmTimeframe, string> = { "5": "5m", "15": "15m", "60": "1h", "240": "4h" };
@@ -33,7 +33,7 @@ export function closedCandles(candles: AlarmCandle[], timeframe: AlarmTimeframe,
     return candles.filter((candle) => candle.t + TIMEFRAME_MS[timeframe] <= now);
 }
 
-export const severity = (rule: Pick<AlarmRule, "kind" | "closes" | "urgent">): AlarmHit["level"] => (rule.urgent || (rule.kind === "close" && rule.closes >= 2) ? "exit" : "check");
+export const severity = (rule: Pick<AlarmRule, "kind" | "closes" | "urgent">): AlarmHit["level"] => (rule.urgent ? "critical" : rule.kind === "close" && rule.closes >= 2 ? "exit" : "check");
 
 // One rule against the market. Returns a hit at most once per candle (its key
 // carries the candle time), so the caller can drop keys it has already shown.
@@ -68,4 +68,20 @@ export function rulesForTrade(trade: { instrument: string; direction: "Long" | "
     if (trade.stop !== null) rules.push({ id: id(), symbol: trade.instrument, kind: "price", side: against, level: trade.stop, timeframe: "5", closes: 1, label: "Stop loss reached", on: true, urgent: true });
     if (trade.target !== null) rules.push({ id: id(), symbol: trade.instrument, kind: "price", side: toward, level: trade.target, timeframe: "5", closes: 1, label: "Take profit reached", on: true });
     return rules;
+}
+
+// Several warnings against the trade within a short window add up to a critical alert.
+export function combined(hits: AlarmHit[], now: number, windowMs = 15 * 60_000): AlarmHit | null {
+    const recent = hits.filter((h) => h.level !== "critical" && h.ruleId !== "test" && now - h.at <= windowMs);
+    const rules = new Set(recent.map((h) => h.ruleId));
+    if (rules.size < 2) return null;
+    const key = `combined:${[...rules].sort().join("+")}`;
+    return { key, ruleId: "combined", symbol: recent[0].symbol, level: "critical", title: `${rules.size} rules broken at once`, detail: recent.map((h) => h.title).join(" · ") + ".", at: now };
+}
+
+// How close the price is to the stop, as a share of the entry-to-stop distance (0 = at the stop).
+export function stopDistance(direction: "Long" | "Short", entry: number, stop: number, price: number) {
+    const span = Math.abs(entry - stop);
+    if (!span) return null;
+    return (direction === "Long" ? price - stop : stop - price) / span;
 }
