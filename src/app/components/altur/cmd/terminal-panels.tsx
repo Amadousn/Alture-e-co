@@ -80,7 +80,7 @@ export const WatchPanel = ({ tickers, selected, onSelect, levels, onCollapse }: 
     );
 };
 
-export const StatePanel = ({ demo, state, detail, href, action }: { demo: boolean; state: "idle" | "planning" | "active"; detail: string; href: string; action: string }) => {
+export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot }: { demo: boolean; state: "idle" | "planning" | "active"; detail: string; href: string; action: string; rules?: React.ReactNode }) => {
     const [settings] = useWorkspaceSettings();
     const [ticked, setTicked] = useState<Record<string, boolean>>({});
     useEffect(() => setTicked({}), [state]);
@@ -129,6 +129,7 @@ export const StatePanel = ({ demo, state, detail, href, action }: { demo: boolea
                 )}
             </div>
 
+            {rulesSlot ?? (
             <div className="cmd-panel p-4">
                 <p className="cmd-label">Rules · before entry</p>
                 <ul className="mt-3 space-y-2.5">
@@ -143,6 +144,7 @@ export const StatePanel = ({ demo, state, detail, href, action }: { demo: boolea
                 </ul>
                 <p className="mt-3 rounded border border-dashed border-white/10 px-3 py-2 text-center text-[11px] text-white/40">Order entry stays on the exchange</p>
             </div>
+            )}
         </div>
     );
 };

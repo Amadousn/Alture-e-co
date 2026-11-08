@@ -17,8 +17,9 @@ import PrivacyToggle from "./os/privacy-toggle";
 import { marketFor, marketName } from "@/utils/markets";
 import { THEMES } from "./os/design";
 import { MASK, usePrivacy } from "@/utils/workspace-store";
-import { rulesForTrade, stopDistance, type AlarmRule } from "@/utils/alarms";
-import { AlarmBanner, AlarmRules, CriticalAlarm, useRuleAlarms, type AlarmCondition } from "./os/rule-alarms";
+import { stopDistance } from "@/utils/alarms";
+import { AlarmBanner, CriticalAlarm, useRuleAlarms, type AlarmCondition } from "./os/rule-alarms";
+import { ReadinessBar, RulesWorkspace, useRulesEngine } from "./os/rules-engine-ui";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
@@ -31,7 +32,7 @@ import { assetFor, derivePlan } from "@/utils/trade-plan";
 import { Briefing, News, useBriefing, useNews, useTickers } from "@/utils/use-market-intel";
 import { useSession } from "@/utils/use-session";
 import { useTheme } from "@/utils/use-theme";
-import { ActiveTrade, normaliseActiveTrade, useActiveTrade, useAlarmRules, useImports, useRecordedTrades, useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
+import { ActiveTrade, normaliseActiveTrade, useActiveTrade, useImports, useRecordedTrades, useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 
 const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
 const DAY = 24 * 60 * 60 * 1000;
@@ -506,18 +507,19 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const estimate = tradePlan && opened && stage !== "review" && tradePrice !== undefined && tradePlan.entry !== null && tradePlan.quantity !== null ? (tradePrice - tradePlan.entry) * tradePlan.quantity * tradePlan.direction : null;
     const select = (next: string) => router.replace(`${base}?symbol=${next}`, { scroll: false });
 
-    // Rule alarms. The demo keeps its rules in memory, seeded from its simulated trade.
-    const [storedRules, setStoredRules] = useAlarmRules();
-    const [demoRules, setDemoRules] = useState<AlarmRule[] | null>(null);
-    const tradeRules =
-        account.active && tradePlan && tradePlan.entry !== null
-            ? () => rulesForTrade({ instrument: account.active!.plan.instrument, direction: account.active!.plan.direction, entry: tradePlan.entry!, stop: tradePlan.stop, target: tradePlan.target })
-            : null;
-    useEffect(() => {
-        if (demo && demoRules === null && tradeRules) setDemoRules(tradeRules());
-    }, [demo, demoRules, tradeRules]);
-    const alarmRules = demo ? (demoRules ?? []) : storedRules;
-    const setAlarmRules = (next: AlarmRule[]) => (demo ? setDemoRules(next) : setStoredRules(next));
+    // The rules engine: pre-trade rules, live rules (alarms on the open trade) and alerts.
+    const [rulesOpen, setRulesOpen] = useState(false);
+    const planContext = useMemo(
+        () => (account.active && tradePlan ? { direction: account.active.plan.direction, entry: tradePlan.entry, stop: tradePlan.stop, target: tradePlan.target } : null),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [account.active?.plan.direction, tradePlan?.entry, tradePlan?.stop, tradePlan?.target],
+    );
+    const engine = useRulesEngine({
+        demo,
+        symbol,
+        trade: { key: account.active ? `${account.active.plan.instrument}:${account.active.openedAt ?? "plan"}` : "next", instrument: account.active?.plan.instrument ?? symbol, plan: planContext, open: opened && stage !== "review" },
+    });
+
     // Situations the terminal watches by itself. Each is critical and stays until confirmed.
     const conditions: AlarmCondition[] = [];
     const activeSymbol = account.active?.plan.instrument ?? "BTCUSDT";
@@ -530,7 +532,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     if (limitReached) conditions.push({ key: `limit:${dayKey}`, symbol: activeSymbol, title: "Your daily limit is reached", detail: `${limitText}. Your rules say the day is over.` });
     if (limitReached && account.positions.length > 0) conditions.push({ key: `limit-open:${dayKey}`, symbol: account.positions[0].instrument, title: "A position is open past your daily limit", detail: "Your risk rule is broken while a position is still open." });
     if (!demo && account.positions.length > 0 && account.positionsAt && now - account.positionsAt > 10 * 60_000) conditions.push({ key: `stale:${account.positionsAt}`, symbol: account.positions[0].instrument, title: "Exchange connection lost", detail: `A position is open and the last update from your exchange was ${since(now - account.positionsAt)} ago.` });
-    const alarms = useRuleAlarms(alarmRules, (s) => live?.bySymbol[s]?.price ?? null, conditions);
+    const alarms = useRuleAlarms(engine.alarmRules, (s) => live?.bySymbol[s]?.price ?? null, conditions);
 
     const big = (value: number) => (value >= 1e9 ? `$${(value / 1e9).toFixed(2)}B` : `$${(value / 1e6).toFixed(1)}M`);
     const facts: [string, string][] = ticker
@@ -580,6 +582,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
             <AlarmBanner hits={alarms.shown} onDismiss={alarms.dismiss} onOpen={select} />
+            <RulesWorkspace engine={engine} open={rulesOpen} onClose={() => setRulesOpen(false)} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} onTestCritical={alarms.testCritical} simulated={tag} />
             <CriticalAlarm hits={alarms.critical} onConfirm={alarms.confirm} onOpen={select} tradeHref={account.active ? rulesHref : undefined} />
             {tag && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
@@ -701,7 +704,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 <aside className="relative flex min-h-0 flex-col gap-2 border-t border-white/10 lg:overflow-y-auto lg:border-t-0" aria-label="Your workspace">
                     <span onPointerDown={dragEdge("right")} title="Drag to resize" className="absolute inset-y-3 left-0 z-10 hidden w-[6px] cursor-col-resize rounded-full transition-colors hover:bg-[#4DD0E1]/40 lg:block" />
                     <div className="hidden lg:block">
-                        <StatePanel demo={demo} state={first.id === "orient" ? "idle" : account.active?.stage === "prepare" ? "planning" : "active"} detail={first.id === "orient" ? "No trade is a position too. Prepare one only when your setup is there." : first.note} href={first.id === "orient" ? rulesHref : first.href} action={first.id === "orient" ? prepareItem.action : first.action} />
+                        <StatePanel demo={demo} state={first.id === "orient" ? "idle" : account.active?.stage === "prepare" ? "planning" : "active"} detail={first.id === "orient" ? "No trade is a position too. Prepare one only when your setup is there." : first.note} href={first.id === "orient" ? rulesHref : first.href} action={first.id === "orient" ? prepareItem.action : first.action} rules={<ReadinessBar engine={engine} critical={alarms.critical.length} live={engine.alarmRules.filter((r) => r.on).length} onOpen={() => setRulesOpen(true)} />} />
                     </div>
                     <div className="cmd-panel flex flex-col lg:min-h-[520px] lg:flex-shrink-0">
                     <div className="flex-shrink-0 px-4 pb-4 pt-4 lg:hidden">
@@ -779,7 +782,13 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                     <p className="text-[13px] leading-relaxed text-white/55">{account.ready ? "No trade in progress." : " "}</p>
                                 )}
 
-                                <AlarmRules rules={alarmRules} setRules={setAlarmRules} symbol={symbol} price={ticker ? ticker.price : null} tradeRules={tradeRules} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} onTestCritical={alarms.testCritical} />
+                                <button type="button" onClick={() => setRulesOpen(true)} className="flex w-full items-center justify-between border-y border-[var(--j-line)] py-3 text-left text-[13px]">
+                                    <span>
+                                        <span className="block">Live rules</span>
+                                        <span className="text-[11.5px] text-[var(--j-mu)]">{engine.alarmRules.length ? `${engine.alarmRules.filter((r) => r.on).length} watching this trade` : "Nothing to watch without an open trade"} · {alarms.history.length} alerts logged</span>
+                                    </span>
+                                    <span className="text-[var(--j-mu)]">Open rules →</span>
+                                </button>
 
                                 {!limitReached && <RiskCalculator asset={symbol.replace(/USDT$/, "")} price={ticker ? ticker.price : null} />}
 

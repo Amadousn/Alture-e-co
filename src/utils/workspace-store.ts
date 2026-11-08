@@ -126,6 +126,9 @@ const KEYS = {
     privacy: "alturelock:hide-amounts",
     homeMarkets: "alturelock:home-markets",
     alarms: "alturelock:alarms",
+    ruleBook: "alturelock:rule-book",
+    confirmations: "alturelock:rule-confirmations",
+    ruleLog: "alturelock:rule-log",
 } as const;
 
 const CHANGE_EVENT = "alturelock:store-change";
@@ -232,6 +235,9 @@ export type HomeMarkets = { show: boolean; symbols: string[]; view: "compact" | 
 export const HOME_MARKET_CHOICES = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT"];
 export const DEFAULT_HOME_MARKETS: HomeMarkets = { show: false, symbols: ["BTCUSDT", "ETHUSDT"], view: "compact" };
 export const useAlarmRules = () => useStored<import("@/utils/alarms").AlarmRule[]>(KEYS.alarms, []);
+export const useRuleBook = () => useStored<import("@/utils/rules-engine").RuleBook | null>(KEYS.ruleBook, null);
+export const useConfirmations = () => useStored<import("@/utils/rules-engine").Confirmations>(KEYS.confirmations, {});
+export const useRuleLog = () => useStored<import("@/utils/rules-engine").RuleEvent[]>(KEYS.ruleLog, []);
 export const useHomeMarkets = () => useStored<HomeMarkets>(KEYS.homeMarkets, DEFAULT_HOME_MARKETS);
 
 export const useTimezone = () => useStored<string>(KEYS.timezone, "local");

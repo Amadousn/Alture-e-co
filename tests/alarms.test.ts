@@ -52,3 +52,36 @@ test("distance to the stop for longs and shorts", () => {
     assert.equal(stopDistance("Long", 100, 90, 92), 0.2);
     assert.equal(stopDistance("Short", 100, 110, 108), 0.2);
 });
+
+test("two 5m closes below VWAP: confirmed once, never from the forming candle", async () => {
+    const { closeTests } = await import("../src/utils/alarms.ts");
+    const M5 = 300_000;
+    const day = 86_400_000 * 20000;
+    // Session starts at 00:00 UTC; volume equal, so VWAP is the running mean of typical prices.
+    const bars = [100, 102, 104, 98, 97, 96].map((c, i) => ({ t: day + i * M5, h: c, l: c, c, v: 1 }));
+    const r = rule({ source: "vwap", timeframe: "5", closes: 2, side: "below", level: 0 });
+    assert.equal(evaluateRule(r, bars.slice(0, 5), null, day + 5 * M5)?.level, "exit");
+    // One more close below: the run was already complete, no second alarm.
+    assert.equal(evaluateRule(r, bars, null, day + 6 * M5), null);
+    // Only 4 closed so far (the 5th still forming): no alarm yet.
+    assert.equal(evaluateRule(r, bars.slice(0, 5), null, day + 5 * M5 - 1), null);
+    assert.equal(closeTests(r, bars, day + 6 * M5)[0].ok, false);
+});
+
+test("VWAP is not invented when the session start is missing", async () => {
+    const { vwap } = await import("../src/utils/indicators.ts");
+    const day = 86_400_000 * 20000;
+    const v = vwap([{ t: day + 3_600_000, c: 10, v: 1 }, { t: day + 86_400_000, c: 20, v: 1 }]);
+    assert.equal(v[0], null);
+    assert.equal(v[1], 20);
+});
+
+test("RSI and moving averages need enough history", async () => {
+    const { rsi, sma, ema } = await import("../src/utils/indicators.ts");
+    const bars = Array.from({ length: 20 }, (_, i) => ({ t: i, c: 100 + i }));
+    assert.equal(sma(bars, 5)[3], null);
+    assert.equal(sma(bars, 5)[4], 102);
+    assert.equal(ema(bars, 5)[4], 102);
+    assert.equal(rsi(bars, 14)[13], null);
+    assert.equal(rsi(bars, 14)[14], 100);
+});
