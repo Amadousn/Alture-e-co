@@ -125,6 +125,7 @@ const KEYS = {
     strategies: "alturelock:strategies",
     privacy: "alturelock:hide-amounts",
     homeMarkets: "alturelock:home-markets",
+    alarms: "alturelock:alarms",
 } as const;
 
 const CHANGE_EVENT = "alturelock:store-change";
@@ -230,6 +231,7 @@ export const usePrivacy = (): [boolean, (next: boolean) => void] => {
 export type HomeMarkets = { show: boolean; symbols: string[]; view: "compact" | "expanded" };
 export const HOME_MARKET_CHOICES = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT"];
 export const DEFAULT_HOME_MARKETS: HomeMarkets = { show: false, symbols: ["BTCUSDT", "ETHUSDT"], view: "compact" };
+export const useAlarmRules = () => useStored<import("@/utils/alarms").AlarmRule[]>(KEYS.alarms, []);
 export const useHomeMarkets = () => useStored<HomeMarkets>(KEYS.homeMarkets, DEFAULT_HOME_MARKETS);
 
 export const useTimezone = () => useStored<string>(KEYS.timezone, "local");

@@ -17,6 +17,8 @@ import PrivacyToggle from "./os/privacy-toggle";
 import { marketFor, marketName } from "@/utils/markets";
 import { THEMES } from "./os/design";
 import { MASK, usePrivacy } from "@/utils/workspace-store";
+import { rulesForTrade, type AlarmRule } from "@/utils/alarms";
+import { AlarmBanner, AlarmRules, useRuleAlarms } from "./os/rule-alarms";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
@@ -29,7 +31,7 @@ import { assetFor, derivePlan } from "@/utils/trade-plan";
 import { Briefing, News, useBriefing, useNews, useTickers } from "@/utils/use-market-intel";
 import { useSession } from "@/utils/use-session";
 import { useTheme } from "@/utils/use-theme";
-import { ActiveTrade, normaliseActiveTrade, useActiveTrade, useImports, useRecordedTrades, useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
+import { ActiveTrade, normaliseActiveTrade, useActiveTrade, useAlarmRules, useImports, useRecordedTrades, useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 
 const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
 const DAY = 24 * 60 * 60 * 1000;
@@ -504,6 +506,20 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const estimate = tradePlan && opened && stage !== "review" && tradePrice !== undefined && tradePlan.entry !== null && tradePlan.quantity !== null ? (tradePrice - tradePlan.entry) * tradePlan.quantity * tradePlan.direction : null;
     const select = (next: string) => router.replace(`${base}?symbol=${next}`, { scroll: false });
 
+    // Rule alarms. The demo keeps its rules in memory, seeded from its simulated trade.
+    const [storedRules, setStoredRules] = useAlarmRules();
+    const [demoRules, setDemoRules] = useState<AlarmRule[] | null>(null);
+    const tradeRules =
+        account.active && tradePlan && tradePlan.entry !== null
+            ? () => rulesForTrade({ instrument: account.active!.plan.instrument, direction: account.active!.plan.direction, entry: tradePlan.entry!, stop: tradePlan.stop, target: tradePlan.target })
+            : null;
+    useEffect(() => {
+        if (demo && demoRules === null && tradeRules) setDemoRules(tradeRules());
+    }, [demo, demoRules, tradeRules]);
+    const alarmRules = demo ? (demoRules ?? []) : storedRules;
+    const setAlarmRules = (next: AlarmRule[]) => (demo ? setDemoRules(next) : setStoredRules(next));
+    const alarms = useRuleAlarms(alarmRules, (s) => live?.bySymbol[s]?.price ?? null);
+
     const big = (value: number) => (value >= 1e9 ? `$${(value / 1e9).toFixed(2)}B` : `$${(value / 1e6).toFixed(1)}M`);
     const facts: [string, string][] = ticker
         ? ([
@@ -551,6 +567,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
+            <AlarmBanner hits={alarms.shown} onDismiss={alarms.dismiss} onOpen={select} />
             {tag && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
                     <span className="mr-2 font-semibold text-[#FACC15]">Demo environment.</span>
@@ -748,6 +765,8 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                 ) : (
                                     <p className="text-[13px] leading-relaxed text-white/55">{account.ready ? "No trade in progress." : " "}</p>
                                 )}
+
+                                <AlarmRules rules={alarmRules} setRules={setAlarmRules} symbol={symbol} price={ticker ? ticker.price : null} tradeRules={tradeRules} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} />
 
                                 {!limitReached && <RiskCalculator asset={symbol.replace(/USDT$/, "")} price={ticker ? ticker.price : null} />}
 
