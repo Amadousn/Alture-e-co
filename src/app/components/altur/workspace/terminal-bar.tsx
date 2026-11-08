@@ -96,7 +96,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
             <div className="ml-auto flex items-center gap-6">
                 {demo && asClient ? (
                     <span className="hidden items-center gap-2 text-[12.5px] text-white/55 sm:inline-flex">
-                        <span className="cmd-live h-1.5 w-1.5 rounded-full bg-[#20B8A8]" aria-hidden="true" />
+                        <span className="cmd-live h-1.5 w-1.5 rounded-full bg-[#4DD0E1]" aria-hidden="true" />
                         Bybit Live · read-only
                     </span>
                 ) : demo ? (
@@ -104,7 +104,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
                 ) : (
                     importsStore.ready && (
                         <Link href="/alturelock/connections" className="hidden items-center gap-2 text-[12.5px] text-white/55 transition-colors hover:text-white sm:inline-flex">
-                            <span className={`h-1.5 w-1.5 rounded-full ${connected.length ? "cmd-live bg-[#20B8A8]" : "bg-white/30"}`} aria-hidden="true" />
+                            <span className={`h-1.5 w-1.5 rounded-full ${connected.length ? "cmd-live bg-[#4DD0E1]" : "bg-white/30"}`} aria-hidden="true" />
                             {connected.length ? `${connected.map((id) => id[0].toUpperCase() + id.slice(1)).join(", ")} · read-only` : "No exchange connected"}
                         </Link>
                     )

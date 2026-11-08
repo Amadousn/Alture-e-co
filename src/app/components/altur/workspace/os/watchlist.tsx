@@ -9,7 +9,7 @@ import { useWatchlist } from "@/utils/workspace-store";
 export const fmtPrice = (value: number) => `$${value.toLocaleString(undefined, { minimumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5 })}`;
 export const fmtPct = (value: number | null) => (value === null ? "—" : `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`);
 const fmtMoney = (value: number) => (value >= 1e9 ? `$${(value / 1e9).toFixed(2)}B` : value >= 1e6 ? `$${(value / 1e6).toFixed(1)}M` : `$${Math.round(value).toLocaleString()}`);
-const tone = (value: number | null) => (value === null ? "text-white/45" : value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white");
+const tone = (value: number | null) => (value === null ? "text-white/45" : value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white");
 const base = (symbol: string) => symbol.replace(/USDT$/, "");
 export const stamp = (time: number) => new Date(time).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
@@ -97,7 +97,7 @@ const Watchlist = ({ tickers, compact = false, selected, onSelect }: { tickers: 
                                             <button type="button" aria-label={`Move ${name} down`} disabled={index === list.length - 1} onClick={() => move(symbol, 1)} className="h-7 w-7 border border-white/25 text-xs text-white hover:bg-white/10 disabled:opacity-25">
                                                 ↓
                                             </button>
-                                            <button type="button" aria-label={`Remove ${name}`} onClick={() => setList((current) => current.filter((item) => item !== symbol))} className="h-7 px-2 border border-white/25 text-xs text-[#E5484D] hover:bg-white/10">
+                                            <button type="button" aria-label={`Remove ${name}`} onClick={() => setList((current) => current.filter((item) => item !== symbol))} className="h-7 px-2 border border-white/25 text-xs text-[#F48FB1] hover:bg-white/10">
                                                 Remove
                                             </button>
                                         </span>

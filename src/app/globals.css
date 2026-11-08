@@ -316,7 +316,7 @@ a:active {
 .cockpit-ready {
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(32, 184, 168, 0.55), 0 0 28px rgba(32, 184, 168, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 1px rgba(77,208,225, 0.55), 0 0 28px rgba(77,208,225, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 .cockpit-ready::after {
     content: "";
@@ -347,7 +347,7 @@ a:active {
 }
 @keyframes al-system-dot {
     from { background: rgba(255, 255, 255, 0.25); box-shadow: none; }
-    to { background: #20b8a8; box-shadow: 0 0 8px rgba(32, 184, 168, 0.8); }
+    to { background: #4DD0E1; box-shadow: 0 0 8px rgba(77,208,225, 0.8); }
 }
 @keyframes al-rise {
     from { opacity: 0; transform: translateY(14px); }
@@ -396,7 +396,7 @@ a:active {
 }
 @keyframes al-lock-dot {
     0%, 55% { opacity: 0; }
-    70% { opacity: 1; fill: #20b8a8; }
+    70% { opacity: 1; fill: #4DD0E1; }
     100% { opacity: 1; }
 }
 .al-lock__line, .al-lock__shackle {
@@ -589,8 +589,8 @@ a:active {
     }
 }
 @keyframes cmd-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(32, 184, 168, 0.45); }
-    50% { box-shadow: 0 0 0 4px rgba(32, 184, 168, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(77,208,225, 0.45); }
+    50% { box-shadow: 0 0 0 4px rgba(77,208,225, 0); }
 }
 
 /* Light theme of the AltureLock pages that offer it (the Journal). The frame
@@ -652,8 +652,8 @@ a:active {
 .lumen-term .bg-black { background-color: #ffffff !important; }
 .lumen-term [class*="border-white/"] { border-color: #e4e1ee !important; }
 .lumen-term [class*="bg-white/"] { background-color: rgba(23, 24, 26, 0.035) !important; }
-.lumen-term .text-\[\#20B8A8\] { color: #0d8a7b !important; }
-.lumen-term .text-\[\#E5484D\] { color: #C62F35 !important; }
+.lumen-term .text-\[\#4DD0E1\] { color: #0d8a7b !important; }
+.lumen-term .text-\[\#F48FB1\] { color: #C62F35 !important; }
 .lumen-term .nav-link.is-active { color: #0c0d10 !important; text-shadow: none; }
 .lumen-term .nav-link { color: #7c808a; }
 .lumen-term .nav-link:hover { color: #0c0d10; }
@@ -695,8 +695,8 @@ a:active {
 .j-term [class*="text-white/7"], .j-term [class*="text-white/8"], .j-term [class*="text-white/9"] { color: var(--j-ink); }
 .j-term [class*="border-white/"] { border-color: var(--j-line); }
 .j-term [class*="bg-white/"] { background-color: var(--j-s2); }
-.j-term .text-\[\#20B8A8\] { color: var(--j-up); }
-.j-term .text-\[\#E5484D\] { color: var(--j-dn); }
+.j-term .text-\[\#4DD0E1\] { color: var(--j-up); }
+.j-term .text-\[\#F48FB1\] { color: var(--j-dn); }
 .j-term .font-mono, .j-term .tabular-nums { font-family: var(--font-mono, inherit); }
 .j-term input[type="checkbox"] { background-color: var(--j-s2); border: 1px solid var(--j-line); border-radius: 3px; }
 .j-term .bg-black { background-color: var(--j-s1); }

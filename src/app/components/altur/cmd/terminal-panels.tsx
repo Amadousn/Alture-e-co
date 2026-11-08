@@ -11,7 +11,7 @@ import { useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 // in, their risk for the day, and their own rules before an entry.
 
 const base = (symbol: string) => symbol.replace(/USDT$/, "");
-const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white/60");
+const tone = (value: number) => (value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white/60");
 const price = (value: number) => value.toLocaleString("en-US", { minimumFractionDigits: value >= 100 ? 1 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 1 : value >= 1 ? 4 : 6 });
 
 const GROUPS = ["Favorites", ...MARKET_GROUPS] as const;
@@ -92,7 +92,7 @@ export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot
             <div className="cmd-panel p-4">
                 <div className="flex items-center justify-between">
                     <p className="cmd-label">Trade state</p>
-                    <span className={`rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] ${state === "active" ? "border-[#20B8A8]/50 text-[#20B8A8]" : "border-white/15 text-white/55"}`}>{words[state][0]}</span>
+                    <span className={`rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] ${state === "active" ? "border-[#4DD0E1]/50 text-[#4DD0E1]" : "border-white/15 text-white/55"}`}>{words[state][0]}</span>
                 </div>
                 <p className="mt-2.5 text-[15px] font-medium text-white">{words[state][1]}</p>
                 <p className="mt-1 text-[13px] leading-relaxed text-white/50">{detail}</p>
@@ -106,7 +106,7 @@ export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot
                 <div className="mt-3 flex items-center gap-5">
                     <svg viewBox="0 0 70 70" className="h-[70px] w-[70px] flex-shrink-0" role="img" aria-label="0% of the daily limit used">
                         <circle cx="35" cy="35" r="30" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" strokeDasharray="2 3" />
-                        <circle cx="35" cy="35" r="30" fill="none" stroke="#20B8A8" strokeWidth="4" strokeDasharray={`0 ${ring}`} transform="rotate(-90 35 35)" />
+                        <circle cx="35" cy="35" r="30" fill="none" stroke="#4DD0E1" strokeWidth="4" strokeDasharray={`0 ${ring}`} transform="rotate(-90 35 35)" />
                         <text x="35" y="39" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">
                             0%
                         </text>
@@ -118,7 +118,7 @@ export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot
                         </div>
                         <div className="flex justify-between gap-3">
                             <dt className="text-white/55">Stop after losses</dt>
-                            <dd className="font-mono text-[#E5484D]">{settings.limits?.maxLosses ?? "Not set"}</dd>
+                            <dd className="font-mono text-[#F48FB1]">{settings.limits?.maxLosses ?? "Not set"}</dd>
                         </div>
                     </dl>
                 </div>
@@ -136,7 +136,7 @@ export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot
                     {rules.map((rule) => (
                         <li key={rule.id}>
                             <label className="flex cursor-pointer items-start gap-2.5 text-[13px] text-white/80">
-                                <input type="checkbox" checked={Boolean(ticked[rule.id])} onChange={() => setTicked((all) => ({ ...all, [rule.id]: !all[rule.id] }))} className="mt-0.5 !h-4 !w-4 accent-[var(--j-up,#20B8A8)]" />
+                                <input type="checkbox" checked={Boolean(ticked[rule.id])} onChange={() => setTicked((all) => ({ ...all, [rule.id]: !all[rule.id] }))} className="mt-0.5 !h-4 !w-4 accent-[var(--j-up,#4DD0E1)]" />
                                 {rule.label}
                             </label>
                         </li>

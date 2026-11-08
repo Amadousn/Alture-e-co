@@ -336,7 +336,7 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                         {name} <span className="text-white/85">{fmt(value)}</span>
                     </span>
                 ))}
-                <span className={readChange >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>
+                <span className={readChange >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>
                     {readChange >= 0 ? "+" : ""}
                     {readChange.toFixed(2)}%
                 </span>

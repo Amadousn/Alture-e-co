@@ -254,9 +254,9 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
 
     const levels: ChartLevel[] = position
         ? [
-              { label: "Take profit", price: position.target, color: "#20B8A8" },
+              { label: "Take profit", price: position.target, color: "#4DD0E1" },
               { label: "Entry", price: position.entry, color: "#FFFFFF" },
-              { label: "Stop loss", price: position.stop, color: "#E5484D" },
+              { label: "Stop loss", price: position.stop, color: "#F48FB1" },
           ]
         : [];
 
@@ -350,7 +350,7 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                         {position ? (
                             <div className="mt-3">
                                 <p className="text-lg font-medium text-white">
-                                    {symbol.replace(/USDT$/, "")} <span className={position.direction === "Long" ? "text-[#20B8A8]" : "text-[#E5484D]"}>{position.direction.toLowerCase()}</span>
+                                    {symbol.replace(/USDT$/, "")} <span className={position.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{position.direction.toLowerCase()}</span>
                                 </p>
                                 <dl className="mt-3 grid grid-cols-3 gap-3 text-[13px] tabular-nums">
                                     <div>
@@ -359,11 +359,11 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                                     </div>
                                     <div>
                                         <dt className={small}>Stop</dt>
-                                        <dd className="text-[#E5484D]">{fmtPrice(position.stop)}</dd>
+                                        <dd className="text-[#F48FB1]">{fmtPrice(position.stop)}</dd>
                                     </div>
                                     <div>
                                         <dt className={small}>Target</dt>
-                                        <dd className="text-[#20B8A8]">{fmtPrice(position.target)}</dd>
+                                        <dd className="text-[#4DD0E1]">{fmtPrice(position.target)}</dd>
                                     </div>
                                     <div>
                                         <dt className={small}>Size</dt>
@@ -375,7 +375,7 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                                     </div>
                                     <div>
                                         <dt className={small}>Now</dt>
-                                        <dd className={unreal !== null && unreal >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>{unreal !== null ? `${unreal >= 0 ? "+" : ""}${unreal.toFixed(2)} R` : "—"}</dd>
+                                        <dd className={unreal !== null && unreal >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{unreal !== null ? `${unreal >= 0 ? "+" : ""}${unreal.toFixed(2)} R` : "—"}</dd>
                                     </div>
                                 </dl>
                                 <button type="button" onClick={closeNow} className="mt-4 w-full rounded-md border border-white/20 py-2 text-[13px] text-white hover:border-white">
@@ -417,10 +417,10 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                                 </label>
                                 <p className="text-[11px] leading-relaxed text-white/35">Left empty, the stop goes at the low (long) or high (short) of the last 10 candles, and the target at 2R. Entry is the close of the current candle.</p>
                                 <div className="grid grid-cols-2 gap-3">
-                                    <button type="button" disabled={!longPlan} onClick={() => open("Long")} className="rounded-md bg-[#20B8A8] py-2.5 text-[13px] font-semibold text-black disabled:opacity-30">
+                                    <button type="button" disabled={!longPlan} onClick={() => open("Long")} className="rounded-md bg-[#4DD0E1] py-2.5 text-[13px] font-semibold text-black disabled:opacity-30">
                                         Long
                                     </button>
-                                    <button type="button" disabled={!shortPlan} onClick={() => open("Short")} className="rounded-md bg-[#E5484D] py-2.5 text-[13px] font-semibold text-black disabled:opacity-30">
+                                    <button type="button" disabled={!shortPlan} onClick={() => open("Short")} className="rounded-md bg-[#F48FB1] py-2.5 text-[13px] font-semibold text-black disabled:opacity-30">
                                         Short
                                     </button>
                                 </div>
@@ -443,20 +443,20 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                                     </div>
                                     <div>
                                         <dt className={small}>Result</dt>
-                                        <dd className={totalR >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>
+                                        <dd className={totalR >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>
                                             {totalR >= 0 ? "+" : ""}
                                             {totalR.toFixed(2)} R
                                         </dd>
                                     </div>
                                 </dl>
-                                <p className={`mt-2 text-[13px] tabular-nums ${net >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{usd(net)} after fees</p>
+                                <p className={`mt-2 text-[13px] tabular-nums ${net >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{usd(net)} after fees</p>
                                 <ul className="mt-4 max-h-56 space-y-1.5 overflow-y-auto text-[12px] tabular-nums">
                                     {[...trades].reverse().map((trade) => (
                                         <li key={trade.id} className="flex justify-between gap-2 text-white/70">
                                             <span>
-                                                <span className={trade.direction === "Long" ? "text-[#20B8A8]" : "text-[#E5484D]"}>{trade.direction}</span> · {trade.exit === "manual" ? "closed" : trade.exit}
+                                                <span className={trade.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{trade.direction}</span> · {trade.exit === "manual" ? "closed" : trade.exit}
                                             </span>
-                                            <span className={trade.r >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>
+                                            <span className={trade.r >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>
                                                 {trade.r >= 0 ? "+" : ""}
                                                 {trade.r.toFixed(2)} R
                                             </span>
@@ -474,7 +474,7 @@ const BacktestStudio = ({ demo = false }: { demo?: boolean }) => {
                             <p className="text-[11px] uppercase tracking-[0.14em] text-white/45">All backtests</p>
                             <p className="mt-3 text-[13px] tabular-nums text-white/70">
                                 {sessions.filter((item) => item.trades.length > 0).length} sessions · {allTrades.length} trades · {Math.round((allTrades.filter((trade) => trade.profitLoss > 0).length / allTrades.length) * 100)}% won ·{" "}
-                                <span className={allR >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}>
+                                <span className={allR >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>
                                     {allR >= 0 ? "+" : ""}
                                     {allR.toFixed(2)} R
                                 </span>

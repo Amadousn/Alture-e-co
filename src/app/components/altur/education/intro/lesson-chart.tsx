@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Candle } from "@/utils/education-chart-data";
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
+const UP = "#4DD0E1";
+const DOWN = "#F48FB1";
 const ACCENT = "#FFFFFF";
 const AXIS_W = 62;
 const AXIS_H = 26;
@@ -221,8 +221,8 @@ const LessonChart = ({ view, className = "", onCandle, onAxis, onPrice, note, fi
                         const ring = view.rings?.[i];
                         return (
                             <g key={candle.t} opacity={(focused && !focused.has(i) ? 0.22 : 1) * fresh} style={{ transition: "opacity 350ms" }}>
-                                <line x1={x(i)} x2={x(i)} y1={y(candle.h)} y2={y(candle.l)} stroke={color} strokeWidth={1.2} />
-                                <rect x={x(i) - body / 2} y={Math.min(y(candle.o), y(candle.c))} width={body} height={Math.max(1.5, Math.abs(y(candle.o) - y(candle.c)))} fill={color} />
+                                <line x1={x(i)} x2={x(i)} y1={y(candle.h)} y2={y(candle.l)} stroke="#FFFFFF" strokeOpacity={0.75} strokeWidth={1.2} />
+                                <rect x={x(i) - body / 2} y={Math.min(y(candle.o), y(candle.c))} width={body} height={Math.max(1.5, Math.abs(y(candle.o) - y(candle.c)))} fill={color === UP ? "#9C9C9C" : "#FFFFFF"} stroke={color} strokeOpacity={color === UP ? 1 : 0.7} strokeWidth={body > 3 ? 1 : 0.6} />
                                 {ring && <rect x={x(i) - body / 2 - 5} y={y(candle.h) - 6} width={body + 10} height={y(candle.l) - y(candle.h) + 12} fill="none" stroke={ring === "good" ? UP : ring === "bad" ? DOWN : ring === "shown" ? ACCENT : "#FFFFFF"} strokeOpacity={ring === "pin" ? 0.55 : 0.9} strokeDasharray={ring === "shown" ? "4 3" : undefined} rx={2} />}
                             </g>
                         );

@@ -118,14 +118,88 @@ export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; posi
     return { trades, positions: only === "sub" ? [] : positions };
 }
 
+// The sample trades are dated relative to today, so their written prices would not
+// match the market on those days. Each trade is moved onto the real Bybit price at
+// its entry time; its move in percent and its position size in dollars are kept,
+// so every result, fee and statistic stays the same while the chart agrees with it.
+type Row = { t: number; o: number; h: number; l: number; c: number };
+const history = new Map<string, Promise<Row[]>>();
+const candles = (symbol: string, interval: string) => {
+    const key = `${symbol}|${interval}`;
+    if (!history.has(key)) history.set(key, fetch(`/api/market/klines?symbol=${symbol}&interval=${interval}&limit=1000`).then((r) => (r.ok ? r.json() : { candles: [] })).then((j) => j.candles ?? []).catch(() => []));
+    return history.get(key)!;
+};
+export async function anchorSample(data: { trades: ClosedTrade[]; positions: OpenPosition[] }) {
+    const symbols = [...new Set([...data.trades.map((t) => t.instrument), ...data.positions.map((p) => p.instrument)])];
+    const series = Object.fromEntries(await Promise.all(symbols.map(async (s) => [s, { h1: await candles(s, "60"), h4: await candles(s, "240") }] as const)));
+    const round = (value: number, like: number) => Number(value.toPrecision(like >= 1000 ? 7 : like >= 1 ? 6 : 5));
+    // On the trade's day, the entry hour whose real move over the same holding time
+    // best matches the trade's direction and size. Entry is that candle's open, exit
+    // the close of the candle where the hold ends: both are real prices.
+    const trades = data.trades.map((t) => {
+        const opened = t.openedAt ?? t.closedAt;
+        const recent = Date.now() - opened < 40 * 86_400_000;
+        const rows = recent ? series[t.instrument].h1 : series[t.instrument].h4;
+        const size = recent ? 3_600_000 : 14_400_000;
+        const steps = Math.max(1, Math.round((t.closedAt - opened) / size));
+        const day = Math.floor(opened / 86_400_000) * 86_400_000;
+        const dir = t.direction === "Long" ? 1 : -1;
+        const want = ((t.exitPrice - t.entryPrice) / t.entryPrice) * dir;
+        let best: { i: number; score: number } | null = null;
+        rows.forEach((row, i) => {
+            if (row.t < day || row.t >= day + 86_400_000) return;
+            const end = rows[i + steps - 1];
+            if (!end || end.t + size > Date.now()) return;
+            const move = ((end.c - row.o) / row.o) * dir;
+            const score = (Math.sign(move) === Math.sign(want) ? 0 : 1) * 10 + Math.abs(move - want) / Math.max(Math.abs(want), 0.0005);
+            if (!best || score < best.score) best = { i, score };
+        });
+        if (!best) return t;
+        const start = rows[(best as { i: number }).i];
+        const end = rows[(best as { i: number }).i + steps - 1];
+        const entryPrice = start.o;
+        const exitPrice = end.c;
+        const quantity = Number((t.positionSize / entryPrice).toPrecision(4));
+        const fee = cents(entryPrice * quantity * MAKER_FEE + exitPrice * quantity * TAKER_FEE);
+        const gross = (exitPrice - entryPrice) * quantity * dir;
+        const openedAt = start.t + 60_000;
+        // The plan the trade was taken with: a winner reached its target at 2R; a loser was stopped out.
+        const move = Math.abs(exitPrice - entryPrice);
+        const won = (exitPrice - entryPrice) * dir > 0;
+        const takeProfit = won ? exitPrice : entryPrice + dir * move * 2;
+        const stopLoss = won ? entryPrice - (dir * move) / 2 : exitPrice;
+        const tick = entryPrice >= 1000 ? 10 : entryPrice >= 1 ? 1000 : 10000;
+        return { ...t, entryPrice, exitPrice, quantity, positionSize: cents(entryPrice * quantity), fee, profitLoss: cents(gross - fee), openedAt, closedAt: end.t + size - 60_000, takeProfit: Math.round(takeProfit * tick) / tick, stopLoss: Math.round(stopLoss * tick) / tick };
+    });
+    const now = Date.now();
+    const positions = data.positions.map((p) => {
+        const rows = series[p.instrument].h1;
+        const mark = rows.length ? rows[rows.length - 1].c : null;
+        if (!mark) return p;
+        const f = mark / p.markPrice;
+        const quantity = Number((p.quantity / f).toPrecision(4));
+        return { ...p, entryPrice: round(p.entryPrice * f, mark), markPrice: mark, quantity, positionSize: cents(p.entryPrice * f * quantity), unrealisedPnl: p.unrealisedPnl, openedAt: p.openedAt ?? now };
+    });
+    return { trades: trades.sort((a, b) => b.closedAt - a.closedAt), positions };
+}
+
+export function useSample(account?: SampleAccount) {
+    const [data, setData] = useState<{ trades: ClosedTrade[]; positions: OpenPosition[] } | null>(null);
+    useEffect(() => {
+        let cancelled = false;
+        const base = buildSample(account);
+        anchorSample(base).then((anchored) => !cancelled && setData(anchored)).catch(() => !cancelled && setData(base));
+        return () => {
+            cancelled = true;
+        };
+    }, [account]);
+    return data;
+}
+
 // Built after mount: the dates depend on the visitor's clock, so rendering
 // them on the server would not match what the browser draws.
 const JournalDemo = ({ look, account, framed }: { look?: Record<string, string>; account?: SampleAccount; framed?: boolean }) => {
-    const [data, setData] = useState<{ trades: ClosedTrade[]; positions: OpenPosition[] } | null>(null);
-
-    useEffect(() => {
-        setData(buildSample(account));
-    }, [account]);
+    const data = useSample(account);
 
     if (!data) return <div className="max-w-6xl mx-auto h-[640px]" />;
 

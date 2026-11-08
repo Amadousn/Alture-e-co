@@ -27,7 +27,7 @@ const PlanButton = ({ plan, yearly, className, children }: { plan: string; yearl
             <button type="button" onClick={go} disabled={busy} className={className}>
                 {busy ? "Opening…" : children}
             </button>
-            {error && <p role="alert" className="mt-2 text-xs text-[#E5484D]">{error}</p>}
+            {error && <p role="alert" className="mt-2 text-xs text-[#F48FB1]">{error}</p>}
         </>
     );
 };

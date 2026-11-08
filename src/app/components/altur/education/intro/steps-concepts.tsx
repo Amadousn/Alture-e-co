@@ -13,8 +13,8 @@ const BEIGE = "#E9DCC3";
 
 const Check = ({ on, children }: { on: boolean; children: React.ReactNode }) => (
     <li className={`flex items-center gap-3 text-sm transition-colors ${on ? "text-white" : "text-white/40"}`}>
-        <span className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full border ${on ? "border-[#20B8A8]" : "border-white/25"}`} aria-hidden="true">
-            {on && <span className="h-1.5 w-1.5 rounded-full bg-[#20B8A8]" />}
+        <span className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full border ${on ? "border-[#4DD0E1]" : "border-white/25"}`} aria-hidden="true">
+            {on && <span className="h-1.5 w-1.5 rounded-full bg-[#4DD0E1]" />}
         </span>
         {children}
     </li>
@@ -73,17 +73,17 @@ export const Blocks = ({ onDone }: { onDone: Done }) => {
                 <ol className="flex min-w-max items-stretch gap-0">
                     {chain.map((block, i) => (
                         <li key={i} className="flex items-center">
-                            {i > 0 && <span className={`h-px w-8 transition-colors ${firstBroken !== -1 && i > firstBroken ? "bg-[#E5484D]" : "bg-white/35"}`} aria-hidden="true" />}
-                            <button type="button" aria-pressed={open === i} onClick={() => setOpen(open === i ? null : i)} className={`cockpit-rise w-[150px] rounded-sm border px-3.5 py-3 text-left transition-colors ${open === i ? "border-white" : firstBroken !== -1 && i >= firstBroken ? "border-[#E5484D]/70" : "border-white/25 hover:border-white/60"}`}>
+                            {i > 0 && <span className={`h-px w-8 transition-colors ${firstBroken !== -1 && i > firstBroken ? "bg-[#F48FB1]" : "bg-white/35"}`} aria-hidden="true" />}
+                            <button type="button" aria-pressed={open === i} onClick={() => setOpen(open === i ? null : i)} className={`cockpit-rise w-[150px] rounded-sm border px-3.5 py-3 text-left transition-colors ${open === i ? "border-white" : firstBroken !== -1 && i >= firstBroken ? "border-[#F48FB1]/70" : "border-white/25 hover:border-white/60"}`}>
                                 <span className="block text-xs text-white/45">Block {i + 1}</span>
                                 <span className="mt-1.5 block text-[13px] text-white">
                                     {block.txs.length} {block.txs.length === 1 ? "payment" : "payments"}
                                 </span>
                                 <span className="mt-2 block font-mono text-[11px] text-white/45">
-                                    before: <span className={firstBroken !== -1 && i > firstBroken ? "text-[#E5484D]" : "text-white/70"}>{i === 0 ? "none" : sealed[i - 1]}</span>
+                                    before: <span className={firstBroken !== -1 && i > firstBroken ? "text-[#F48FB1]" : "text-white/70"}>{i === 0 ? "none" : sealed[i - 1]}</span>
                                 </span>
                                 <span className="block font-mono text-[11px] text-white/45">
-                                    print: <span className={broken[i] ? "text-[#E5484D]" : "text-white/70"}>{now[i]}</span>
+                                    print: <span className={broken[i] ? "text-[#F48FB1]" : "text-white/70"}>{now[i]}</span>
                                 </span>
                             </button>
                         </li>
@@ -99,7 +99,7 @@ export const Blocks = ({ onDone }: { onDone: Done }) => {
                             <ul className="mt-3 space-y-1.5 text-[15px] text-white/85">
                                 {chain[open].txs.map((tx, k) => (
                                     <li key={k} className="tabular-nums">
-                                        {tx.from} pays {tx.to} <span className={k === 0 && changed(open) ? "text-[#E5484D]" : "text-white"}>{tx.amount} BTC</span>
+                                        {tx.from} pays {tx.to} <span className={k === 0 && changed(open) ? "text-[#F48FB1]" : "text-white"}>{tx.amount} BTC</span>
                                     </li>
                                 ))}
                             </ul>
@@ -186,7 +186,7 @@ export const Sort = ({ step, onDone }: { step: Extract<Step, { kind: "sort" }>; 
                 {step.categories.map((choice) => {
                     const chosen = picked.includes(choice);
                     const right = choice === item.answer;
-                    const state = right && closed ? (chosen ? "border-[#20B8A8] text-white" : "border-accent text-white") : chosen ? "border-[#E5484D]/60 text-white/45" : closed ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white";
+                    const state = right && closed ? (chosen ? "border-[#4DD0E1] text-white" : "border-accent text-white") : chosen ? "border-[#F48FB1]/60 text-white/45" : closed ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white";
                     return (
                         <button key={choice} type="button" disabled={closed || chosen} onClick={() => pick(choice)} className={`rounded-sm border px-4 py-2.5 text-sm transition-colors ${state}`}>
                             {choice}
@@ -246,7 +246,7 @@ export const Browse = ({ step, onDone }: { step: Extract<Step, { kind: "browse" 
                     return (
                         <button key={entry.key} type="button" role="tab" aria-selected={on} onClick={() => show(entry.key)} className={`grid w-full grid-cols-[7.5rem_repeat(7,minmax(0,1fr))] items-center gap-x-1.5 border-t border-white/10 py-2.5 text-left transition-colors sm:grid-cols-[9.5rem_repeat(7,minmax(0,1fr))] ${on ? "bg-white/[0.05]" : "hover:bg-white/[0.03]"}`}>
                             <span className={`flex items-center gap-2 text-[15px] font-medium ${on ? "text-white" : "text-white/60"}`}>
-                                <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full transition-colors ${seen.includes(entry.key) ? "bg-[#20B8A8]" : "bg-white/20"}`} aria-hidden="true" />
+                                <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full transition-colors ${seen.includes(entry.key) ? "bg-[#4DD0E1]" : "bg-white/20"}`} aria-hidden="true" />
                                 {entry.label}
                             </span>
                             {DAYS_OF_WEEK.map((day, i) => {
@@ -400,7 +400,7 @@ export const Styles = ({ onDone }: { onDone: Done }) => {
                     <button key={style.key} type="button" role="tab" aria-selected={open === style.key} onClick={() => show(style.key)} className={`rounded-sm border px-3.5 py-3 text-left transition-colors ${open === style.key ? "border-white" : "border-white/20 hover:border-white/60"}`}>
                         <span className="flex items-center justify-between gap-2 text-[15px] font-medium text-white">
                             {style.name}
-                            <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${seen.includes(style.key) ? "bg-[#20B8A8]" : "bg-white/20"}`} aria-hidden="true" />
+                            <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${seen.includes(style.key) ? "bg-[#4DD0E1]" : "bg-white/20"}`} aria-hidden="true" />
                         </span>
                         <span className="mt-1 block text-[13px] text-white/50">{style.hold}</span>
                     </button>
@@ -509,7 +509,7 @@ export const Calculator = ({ onDone }: { onDone: Done }) => {
         setSeen(next);
         if (next.length === DAYS.length) onDone(1);
     };
-    const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white");
+    const tone = (value: number) => (value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white");
     // What reaches the trader from the funded account on that day.
     const reaches = out ? (out.closedInADay ? -EXAMPLE.fee : out.share) : 0;
 
@@ -551,7 +551,7 @@ export const Calculator = ({ onDone }: { onDone: Done }) => {
             <div className="mt-4 flex flex-wrap gap-2.5" role="group" aria-label="The day">
                 {DAYS.map((item) => (
                     <button key={item.key} type="button" aria-pressed={day === item.key} onClick={() => open(item.key)} className={`inline-flex items-center gap-2.5 rounded-sm border px-4 py-2.5 text-sm transition-colors ${day === item.key ? "border-white text-white" : "border-white/25 text-white/75 hover:border-white hover:text-white"}`}>
-                        <span className={`h-1.5 w-1.5 rounded-full ${seen.includes(item.key) ? "bg-[#20B8A8]" : "bg-white/25"}`} aria-hidden="true" />
+                        <span className={`h-1.5 w-1.5 rounded-full ${seen.includes(item.key) ? "bg-[#4DD0E1]" : "bg-white/25"}`} aria-hidden="true" />
                         {item.label}
                         <span className="tabular-nums text-white/45">
                             {item.resultPct > 0 ? "+" : ""}
@@ -635,7 +635,7 @@ export const Compare = ({ step, onDone }: { step: Extract<Step, { kind: "compare
                     return (
                         <div key={i}>
                             <ChartOf stage={stage} className="h-[30vh] min-h-[220px]" />
-                            <button type="button" disabled={solved || chosen} onClick={() => pick(i)} className={`mt-1 rounded-sm border px-4 py-2.5 text-sm transition-colors ${chosen ? (right ? "border-[#20B8A8] text-white" : "border-[#E5484D]/60 text-white/45") : solved ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white"}`}>
+                            <button type="button" disabled={solved || chosen} onClick={() => pick(i)} className={`mt-1 rounded-sm border px-4 py-2.5 text-sm transition-colors ${chosen ? (right ? "border-[#4DD0E1] text-white" : "border-[#F48FB1]/60 text-white/45") : solved ? "border-white/10 text-white/35" : "border-white/25 text-white hover:border-white"}`}>
                                 {i === 0 ? "The first chart" : "The second chart"}
                             </button>
                         </div>

@@ -130,7 +130,7 @@ const MarketSessions = ({ compact = false }: { compact?: boolean }) => {
             <ul className={compact ? "grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-5" : "space-y-0"}>
                 {rows.map(({ session, state }) => {
                     const status = state.open ? "Open" : state.soon ? "Opens soon" : "Closed";
-                    const tone = state.open ? "text-[#20B8A8]" : state.soon ? "text-[#FACC15]" : "text-white/45";
+                    const tone = state.open ? "text-[#4DD0E1]" : state.soon ? "text-[#FACC15]" : "text-white/45";
                     const hours = `${String(session.open[0]).padStart(2, "0")}:${String(session.open[1]).padStart(2, "0")} to ${String(session.close[0]).padStart(2, "0")}:${String(session.close[1]).padStart(2, "0")} ${session.venue} time`;
                     const next = `${state.open ? "Closes" : "Opens"} in ${countdown(state.changesAt - now)}, at ${clock(state.changesAt, zone)}`;
                     if (compact)
@@ -145,7 +145,7 @@ const MarketSessions = ({ compact = false }: { compact?: boolean }) => {
                                 </p>
                                 <div className="relative mt-2 h-1 bg-white/10" aria-hidden="true">
                                     {state.intervals.map(([from, to]) => (
-                                        <span key={from} className={`absolute inset-y-0 ${state.open ? "bg-[#20B8A8]" : "bg-white/45"}`} style={{ left: position(from), width: `${((to - from) / DAY) * 100}%` }} />
+                                        <span key={from} className={`absolute inset-y-0 ${state.open ? "bg-[#4DD0E1]" : "bg-white/45"}`} style={{ left: position(from), width: `${((to - from) / DAY) * 100}%` }} />
                                     ))}
                                     <span className="absolute -inset-y-1 w-px bg-white" style={{ left: position(now) }} />
                                 </div>
@@ -161,7 +161,7 @@ const MarketSessions = ({ compact = false }: { compact?: boolean }) => {
                             </span>
                             <div className="relative col-span-2 md:col-span-1 h-1.5 bg-white/10" aria-hidden="true">
                                 {state.intervals.map(([from, to]) => (
-                                    <span key={from} className={`absolute inset-y-0 ${state.open ? "bg-[#20B8A8]" : "bg-white/45"}`} style={{ left: position(from), width: `${((to - from) / DAY) * 100}%` }} />
+                                    <span key={from} className={`absolute inset-y-0 ${state.open ? "bg-[#4DD0E1]" : "bg-white/45"}`} style={{ left: position(from), width: `${((to - from) / DAY) * 100}%` }} />
                                 ))}
                                 <span className="absolute -inset-y-1.5 w-px bg-white" style={{ left: position(now) }} />
                             </div>

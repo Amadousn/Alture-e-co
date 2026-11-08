@@ -41,7 +41,7 @@ const WhatWeOffer = () => {
                                 <span className="lg:col-span-1 font-mono text-[11px] tabular-nums text-accent">{n}</span>
                                 <span className="lg:col-span-4 flex flex-wrap items-center gap-x-3 gap-y-1">
                                     <span className="text-2xl md:text-[32px] font-medium tracking-tight text-white">{item.title}</span>
-                                    {tag && <span className="text-[10px] font-semibold uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-sm border border-[#20B8A8]/70 text-[#20B8A8]">{tag}</span>}
+                                    {tag && <span className="text-[10px] font-semibold uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-sm border border-[#4DD0E1]/70 text-[#4DD0E1]">{tag}</span>}
                                 </span>
                                 <span className="col-start-2 lg:col-start-auto lg:col-span-5 text-[15px] leading-relaxed text-white/55 max-w-lg">{item.description}</span>
                                 <span className="col-start-2 lg:col-start-auto lg:col-span-2 lg:text-right text-sm font-medium text-white/80 group-hover:text-white whitespace-nowrap">

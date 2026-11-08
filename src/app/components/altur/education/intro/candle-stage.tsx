@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
+const UP = "#4DD0E1";
+const DOWN = "#F48FB1";
 const ACCENT = "#FFFFFF";
 
 export type CandlePart = "body" | "upper" | "lower" | "open" | "high" | "low" | "close";
@@ -91,13 +91,13 @@ const CandleStage = ({ spec, className = "", pick, onPart, rings = {} }: Props) 
             <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full max-w-[640px]" role="img" aria-label={`A ${spec.kind === "bull" ? "bullish" : "bearish"} candle`}>
                 {/* The candle */}
                 <g opacity={dim("upper")} style={{ transition: "opacity 300ms" }}>
-                    <line x1={CX} x2={CX} y1={y(high)} y2={y(top)} stroke={color} strokeWidth={3} />
+                    <line x1={CX} x2={CX} y1={y(high)} y2={y(top)} stroke="#FFFFFF" strokeOpacity={0.8} strokeWidth={3} />
                 </g>
                 <g opacity={dim("lower")} style={{ transition: "opacity 300ms" }}>
-                    <line x1={CX} x2={CX} y1={y(bottom)} y2={y(low)} stroke={color} strokeWidth={3} />
+                    <line x1={CX} x2={CX} y1={y(bottom)} y2={y(low)} stroke="#FFFFFF" strokeOpacity={0.8} strokeWidth={3} />
                 </g>
                 <g opacity={dim("body")} style={{ transition: "opacity 300ms" }}>
-                    <rect x={CX - BODY / 2} y={y(top)} width={BODY} height={Math.max(2, y(bottom) - y(top))} fill={color} />
+                    <rect x={CX - BODY / 2} y={y(top)} width={BODY} height={Math.max(2, y(bottom) - y(top))} fill={color === UP ? "#9C9C9C" : "#FFFFFF"} stroke={color} strokeWidth={3} />
                 </g>
                 {(["upper", "lower", "body"] as const).map((part) => {
                     const stroke = ring(part) ?? (spec.focus === part ? ACCENT : null);

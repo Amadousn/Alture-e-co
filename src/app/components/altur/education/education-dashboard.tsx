@@ -12,7 +12,7 @@ import { useEducationProgress } from "@/utils/education-progress";
 
 const label = "text-[11px] uppercase tracking-[0.14em] text-white/45";
 const Tick = () => (
-    <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 flex-shrink-0 text-[#20B8A8]" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 flex-shrink-0 text-[#4DD0E1]" aria-hidden="true">
         <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
@@ -146,7 +146,7 @@ const EducationDashboard = () => {
                                         reset();
                                         setConfirming(false);
                                     }}
-                                    className="text-[#E5484D] border-b border-[#E5484D]/50"
+                                    className="text-[#F48FB1] border-b border-[#F48FB1]/50"
                                 >
                                     Erase
                                 </button>{" "}

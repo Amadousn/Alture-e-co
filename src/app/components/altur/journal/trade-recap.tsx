@@ -19,7 +19,7 @@ const W = 720;
 const H = 260;
 const TOP = 18;
 const BOTTOM = 22;
-const RIGHT = 6;
+const RIGHT = 74;
 
 const price = (value: number) => `$${value.toLocaleString(undefined, { maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 4 : 6 })}`;
 const when = (time: number) => new Date(time).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
@@ -116,49 +116,99 @@ const Recap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sa
         const body = Math.max(1, slot * 0.6);
         const first = shownMarks.find((m) => m.kind === "entry");
         const lastExit = [...shownMarks].reverse().find((m) => m.kind === "exit");
+        // The same drawing as the terminal: Alture candles, the plan as a risk and reward
+        // structure from entry to exit, level names on chips, prices on the scale.
+        const plotW = W - RIGHT;
+        const exitMark = lastExit;
+        const x0 = first ? x(first.at) : plotW * 0.4;
+        const x1 = exitMark ? Math.max(x0 + 2, x(exitMark.at)) : plotW;
+        const entryPrice = first?.price ?? trade.entryPrice;
+        const zone = (from: number, to: number, color: string, id: string) => (
+            <>
+                <defs>
+                    <linearGradient id={`rc-${trade.id}-${id}`} x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0" stopColor={color} stopOpacity={0.04} />
+                        <stop offset="1" stopColor={color} stopOpacity={0.18} />
+                    </linearGradient>
+                </defs>
+                <rect x={x0} width={x1 - x0} y={Math.min(y(from), y(to))} height={Math.abs(y(from) - y(to))} fill={`url(#rc-${trade.id}-${id})`} />
+            </>
+        );
+        const tag = (value: number, color: string, key: string) => (
+            <g key={`tag-${key}`}>
+                <rect x={plotW + 1} y={y(value) - 9} width={RIGHT - 2} height={18} rx={3} fill="#07080a" />
+                <rect x={plotW + 1} y={y(value) - 9} width={2} height={18} fill={color} />
+                <text x={W - 6} y={y(value) + 4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
+                    {price(value).replace("$", "")}
+                </text>
+            </g>
+        );
+        const chip = (value: number, text: string, color: string, place: "above" | "below" | "left" | "right") => {
+            const width = text.length * 6.2 + 14;
+            const cx = place === "left" ? Math.max(4, x0 - 12 - width) : place === "right" ? Math.min(x1 + 10, plotW - width - 4) : Math.min(x0 + 8, plotW - width - 4);
+            const cy = place === "above" ? y(value) - 21 : place === "below" ? y(value) + 4 : y(value) - 8.5;
+            return (
+                <g key={`chip-${text}`}>
+                    <rect x={cx} y={cy} width={width} height={17} rx={3} fill="#07080a" fillOpacity={0.88} stroke={color} strokeOpacity={0.35} />
+                    <text x={cx + 7} y={cy + 11.8} fontSize={9.5} fontWeight={600} fill={color} letterSpacing="0.09em">
+                        {text}
+                    </text>
+                </g>
+            );
+        };
+        const tp = trade.takeProfit ?? null;
+        const sl = trade.stopLoss ?? null;
+        const risk = sl !== null ? Math.abs(entryPrice - sl) : 0;
+        const reward = tp !== null ? Math.abs(tp - entryPrice) : 0;
         chart = (
             <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img" aria-label={`${trade.instrument} ${view.name} candles around the trade, with entry and exit marked`}>
-                {/* While the trade was open */}
-                {first && lastExit && <rect x={x(first.at)} y={TOP} width={Math.max(1, x(lastExit.at) - x(first.at))} height={H - TOP - BOTTOM} fill={won ? UP : DOWN} opacity={0.06} />}
+                <line x1={plotW} x2={plotW} y1={0} y2={H - BOTTOM} stroke="#232329" />
+                {first && sl !== null && zone(entryPrice, sl, DOWN, "risk")}
+                {first && tp !== null && zone(entryPrice, tp, UP, "reward")}
                 {shownCandles!.map((c) => {
                     const cx = x(c.t) + slot / 2;
-                    const color = c.c >= c.o ? UP : DOWN;
+                    const rising = c.c >= c.o;
                     return (
-                        <g key={c.t} opacity={0.75}>
-                            <line x1={cx} x2={cx} y1={y(c.h)} y2={y(c.l)} stroke={color} strokeWidth={1} />
-                            <rect x={cx - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={color} />
+                        <g key={c.t}>
+                            <line x1={cx} x2={cx} y1={y(c.h)} y2={y(c.l)} stroke="#FFFFFF" strokeOpacity={0.75} strokeWidth={1} />
+                            <rect x={cx - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={rising ? "#9C9C9C" : "#FFFFFF"} stroke={rising ? UP : DOWN} strokeOpacity={rising ? 1 : 0.7} strokeWidth={body > 3 ? 1 : 0.6} />
                         </g>
                     );
                 })}
-                {levels.map((level) => (
-                    <g key={level.label}>
-                        <line x1={0} x2={W - RIGHT} y1={y(level.value)} y2={y(level.value)} stroke={level.color} strokeWidth={1} strokeDasharray="4 5" opacity={0.8} />
-                        <text x={W - RIGHT - 4} y={y(level.value) - 4} textAnchor="end" fontSize={10} fontWeight={700} fill={level.color} letterSpacing="0.06em">
-                            {level.label} {price(level.value)}
-                        </text>
-                    </g>
-                ))}
+                {sl !== null && <line x1={first ? x0 : 0} x2={first ? x1 : plotW} y1={y(sl)} y2={y(sl)} stroke={DOWN} strokeOpacity={0.6} strokeDasharray="1 3" />}
+                {tp !== null && <line x1={first ? x0 : 0} x2={first ? x1 : plotW} y1={y(tp)} y2={y(tp)} stroke={UP} strokeOpacity={0.75} />}
+                {first && (
+                    <>
+                        <line x1={x0} x2={x1} y1={y(entryPrice)} y2={y(entryPrice)} stroke="#FFFFFF" strokeOpacity={0.75} />
+                        {(sl !== null || tp !== null) && <line x1={x0} x2={x0} y1={y(tp ?? entryPrice)} y2={y(sl ?? entryPrice)} stroke="#FFFFFF" strokeOpacity={0.35} />}
+                    </>
+                )}
                 {/* From the first entry to the last exit */}
                 {first && lastExit && <line x1={x(first.at)} y1={y(first.price)} x2={x(lastExit.at)} y2={y(lastExit.price)} stroke={won ? UP : DOWN} strokeWidth={1.25} strokeDasharray="2 4" />}
                 {shownMarks.map((mark, i) => {
-                    const entry = mark.kind === "entry";
-                    // A long is bought from below and sold from above; a short is the reverse.
-                    const below = entry ? long : !long;
                     const mx = x(mark.at);
                     const my = y(mark.price);
-                    const color = entry ? "#FFFFFF" : ACCENT;
-                    return (
-                        <g key={`${mark.kind}-${mark.at}-${i}`}>
-                            <line x1={mx} x2={mx} y1={TOP} y2={H - BOTTOM} stroke={color} strokeWidth={1} opacity={0.25} />
-                            <path d={below ? `M ${mx} ${my + 3} l -6 10 h 12 Z` : `M ${mx} ${my - 3} l -6 -10 h 12 Z`} fill={color} stroke="#000" strokeWidth={1} />
-                            <circle cx={mx} cy={my} r={2.5} fill={color} stroke="#000" strokeWidth={1} />
-                        </g>
-                    );
+                    const entry = mark.kind === "entry";
+                    const color = entry ? "#FFFFFF" : won ? UP : DOWN;
+                    return <path key={`${mark.kind}-${mark.at}-${i}`} d={`M ${mx} ${my - 6} l 6 6 l -6 6 l -6 -6 Z`} fill={entry ? "#07080a" : color} stroke={color} strokeWidth={1.4} />;
                 })}
+                {risk > 0 && reward > 0 && first && (
+                    <text x={x1 - 40} y={y(tp!) + (y(entryPrice) > y(tp!) ? 16 : -8)} textAnchor="end" fontSize={11} fill={UP} letterSpacing="0.04em" className="tabular-nums">
+                        {(reward / risk).toFixed(1)}R
+                    </text>
+                )}
+                {sl !== null && chip(sl, "STOP LOSS", DOWN, (tp ?? Infinity) > sl ? "below" : "above")}
+                {tp !== null && chip(tp, "TAKE PROFIT", UP, (sl ?? -Infinity) < tp ? "above" : "below")}
+                {first && chip(entryPrice, "ENTRY", "#FFFFFF", "left")}
+                {lastExit && chip(lastExit.price, "EXIT", won ? UP : DOWN, "right")}
+                {sl !== null && tag(sl, DOWN, "sl")}
+                {tp !== null && tag(tp, UP, "tp")}
+                {first && tag(entryPrice, "#FFFFFF", "entry")}
+                {lastExit && lastExit.price !== tp && lastExit.price !== sl && tag(lastExit.price, won ? UP : DOWN, "exit")}
                 <text x={0} y={H - 6} fontSize={10} fill="#7d7d87">
                     {when(t0)}
                 </text>
-                <text x={W - RIGHT} y={H - 6} fontSize={10} fill="#7d7d87" textAnchor="end">
+                <text x={plotW} y={H - 6} fontSize={10} fill="#7d7d87" textAnchor="end">
                     {when(t1)}
                 </text>
             </svg>

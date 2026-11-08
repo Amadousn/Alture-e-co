@@ -100,9 +100,9 @@ const TerminalSidebar = ({ demo }: { demo: boolean }) => {
                         {group.items.map((item) => {
                             const active = path === item.href;
                             return (
-                                <Link key={item.href} href={item.href} title={narrow ? item.label : undefined} aria-label={narrow ? item.label : undefined} aria-current={active ? "page" : undefined} className={`relative flex items-center gap-3 rounded-md text-[13.5px] transition-colors ${narrow ? "h-10 w-10 justify-center" : "px-2.5 py-2"} ${active ? "bg-[#20B8A8]/10 text-white" : "text-white/55 hover:bg-white/[0.05] hover:text-white"}`}>
-                                    {active && <span className={`absolute top-2 h-6 w-[2px] rounded-full bg-[#20B8A8] ${narrow ? "-left-3" : "-left-3"}`} aria-hidden="true" />}
-                                    <span className={active ? "text-[#20B8A8]" : ""}>{item.icon}</span>
+                                <Link key={item.href} href={item.href} title={narrow ? item.label : undefined} aria-label={narrow ? item.label : undefined} aria-current={active ? "page" : undefined} className={`relative flex items-center gap-3 rounded-md text-[13.5px] transition-colors ${narrow ? "h-10 w-10 justify-center" : "px-2.5 py-2"} ${active ? "bg-[#4DD0E1]/10 text-white" : "text-white/55 hover:bg-white/[0.05] hover:text-white"}`}>
+                                    {active && <span className={`absolute top-2 h-6 w-[2px] rounded-full bg-[#4DD0E1] ${narrow ? "-left-3" : "-left-3"}`} aria-hidden="true" />}
+                                    <span className={active ? "text-[#4DD0E1]" : ""}>{item.icon}</span>
                                     {!narrow && <span>{item.label}</span>}
                                 </Link>
                             );

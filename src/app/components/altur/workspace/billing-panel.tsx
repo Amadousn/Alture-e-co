@@ -29,7 +29,7 @@ const BillingPanel = () => {
                     <button type="button" onClick={manage} className="text-white border-b border-white/30 hover:border-white">Manage billing</button>
                 )}
             </div>
-            {error && <p role="alert" className="mt-2 text-xs text-[#E5484D]">{error}</p>}
+            {error && <p role="alert" className="mt-2 text-xs text-[#F48FB1]">{error}</p>}
         </div>
     );
 };

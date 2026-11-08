@@ -55,7 +55,7 @@ const LiveTV = () => {
         <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-white/45">
           {on && (
             <span
-              className="h-1.5 w-1.5 rounded-full bg-[#E5484D]"
+              className="h-1.5 w-1.5 rounded-full bg-[#F48FB1]"
               aria-hidden="true"
             />
           )}

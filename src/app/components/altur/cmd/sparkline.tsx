@@ -29,7 +29,7 @@ const Sparkline = ({ values, width = 84, height = 26 }: { values: number[] | nul
     const up = values[values.length - 1] >= values[0];
     return (
         <svg width={width} height={height} className="block flex-shrink-0" aria-hidden="true">
-            <polyline points={points} fill="none" stroke={up ? "#20B8A8" : "#E5484D"} strokeWidth="1.4" strokeLinejoin="round" />
+            <polyline points={points} fill="none" stroke={up ? "#4DD0E1" : "#F48FB1"} strokeWidth="1.4" strokeLinejoin="round" />
         </svg>
     );
 };

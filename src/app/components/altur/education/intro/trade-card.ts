@@ -26,7 +26,7 @@ export type TradeCardData = {
 };
 
 const SITE_URL = "https://www.altureandco.com/education";
-const INK = { text: "#ffffff", muted: "#8a8a94", faint: "#5c5c66", rule: "#26262c", green: "#20B8A8", greenRgb: "32, 184, 168", red: "#E5484D", redRgb: "233, 85, 168" };
+const INK = { text: "#ffffff", muted: "#8a8a94", faint: "#5c5c66", rule: "#26262c", green: "#4DD0E1", greenRgb: "77,208,225", red: "#F48FB1", redRgb: "233, 85, 168" };
 
 let qrCache: boolean[][] | null = null;
 function qrModules(): boolean[][] {

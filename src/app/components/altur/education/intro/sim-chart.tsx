@@ -34,8 +34,8 @@ type Props = {
     className?: string;
 };
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
+const UP = "#4DD0E1";
+const DOWN = "#F48FB1";
 const TONE = { entry: "#ffffff", stop: DOWN, target: UP, liq: "#FACC15", hint: "rgba(255,255,255,0.55)" } as const;
 const AXIS = 68;
 const FOOT = 24;
@@ -194,9 +194,9 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
         // The plan: profit side and loss side of the entry.
         if (zone) {
             const from = clamp(x(seen.length - 0.5), 0, plotW);
-            ctx.fillStyle = "rgba(32,184,168,0.09)";
+            ctx.fillStyle = "rgba(77,208,225,0.09)";
             ctx.fillRect(from, Math.min(y(zone.entry), y(zone.target)), plotW - from, Math.abs(y(zone.entry) - y(zone.target)));
-            ctx.fillStyle = "rgba(229, 72, 77,0.09)";
+            ctx.fillStyle = "rgba(244,143,177,0.09)";
             ctx.fillRect(from, Math.min(y(zone.entry), y(zone.stop)), plotW - from, Math.abs(y(zone.entry) - y(zone.stop)));
         }
 
@@ -205,11 +205,19 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
         list.forEach((candle, i) => {
             const px = x(i);
             if (px < -state.bar || px > plotW + state.bar) return;
-            const colour = candle.c >= candle.o ? UP : DOWN;
-            ctx.fillStyle = colour;
+            // Alture candles, as in the terminal: grey body with a cyan edge up, white with a pink edge down.
+            const rising = candle.c >= candle.o;
+            ctx.fillStyle = "rgba(255,255,255,0.75)";
             ctx.fillRect(Math.round(px) - 0.5, y(candle.h), 1, Math.max(1, y(candle.l) - y(candle.h)));
             const top = y(Math.max(candle.o, candle.c));
-            ctx.fillRect(px - body / 2, top, body, Math.max(1, y(Math.min(candle.o, candle.c)) - top));
+            const height = Math.max(1, y(Math.min(candle.o, candle.c)) - top);
+            ctx.fillStyle = rising ? "#9C9C9C" : "#FFFFFF";
+            ctx.fillRect(px - body / 2, top, body, height);
+            ctx.strokeStyle = rising ? UP : DOWN;
+            ctx.globalAlpha = rising ? 1 : 0.7;
+            ctx.lineWidth = body > 3 ? 1 : 0.6;
+            ctx.strokeRect(px - body / 2, top, body, height);
+            ctx.globalAlpha = 1;
         });
 
         // Swing points a hint has pointed out.

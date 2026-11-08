@@ -144,8 +144,8 @@ const Explore = ({ step, onDone }: { step: Extract<Step, { kind: "explore" }>; o
                 <ul className="lg:col-span-5 space-y-2 text-sm">
                     {step.items.map((entry) => (
                         <li key={entry.key} className={`flex items-center gap-3 ${found.includes(entry.key) ? "text-white" : "text-white/40"}`}>
-                            <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${found.includes(entry.key) ? "border-[#20B8A8]" : "border-white/25"}`} aria-hidden="true">
-                                {found.includes(entry.key) && <span className="h-1.5 w-1.5 rounded-full bg-[#20B8A8]" />}
+                            <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${found.includes(entry.key) ? "border-[#4DD0E1]" : "border-white/25"}`} aria-hidden="true">
+                                {found.includes(entry.key) && <span className="h-1.5 w-1.5 rounded-full bg-[#4DD0E1]" />}
                             </span>
                             {entry.label}
                         </li>
@@ -448,7 +448,7 @@ const Summary = ({ done, onDone }: { done: Record<string, number>; onDone: Done 
                 {tasks.map((task) => (
                     <li key={task.id} className="flex items-baseline justify-between gap-6 border-t border-white/15 py-3.5 text-[15px]">
                         <span className="text-white/85">{"prompt" in task ? task.prompt : task.title}</span>
-                        <span className={`flex-shrink-0 text-sm ${done[task.id] === 1 ? "text-[#20B8A8]" : "text-white/55"}`}>{!done[task.id] ? "Not done" : done[task.id] === 1 ? "First try" : done[task.id] === 2 ? "Second try" : "Answer shown"}</span>
+                        <span className={`flex-shrink-0 text-sm ${done[task.id] === 1 ? "text-[#4DD0E1]" : "text-white/55"}`}>{!done[task.id] ? "Not done" : done[task.id] === 1 ? "First try" : done[task.id] === 2 ? "Second try" : "Answer shown"}</span>
                     </li>
                 ))}
             </ul>

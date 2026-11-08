@@ -102,7 +102,7 @@ const RulesWorkflow = () => {
                     <p className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
                         {assetFor(saved.instrument)?.name ?? saved.instrument} {saved.direction}
                     </p>
-                    <p className={`text-2xl font-semibold tabular-nums mb-8 ${saved.profitLoss >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{signed(saved.profitLoss)}</p>
+                    <p className={`text-2xl font-semibold tabular-nums mb-8 ${saved.profitLoss >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{signed(saved.profitLoss)}</p>
                     <div className="flex flex-wrap gap-3">
                         <Link href="/alturelock/journal" className={`${primaryButton} inline-flex items-center`}>
                             Open Trading Journal
@@ -159,7 +159,7 @@ const RulesWorkflow = () => {
                     (confirmDiscard ? (
                         <div className="flex items-center gap-4 text-xs">
                             <span className="text-[#9a9aa5]">Discard this trade? Nothing is saved to the journal.</span>
-                            <button type="button" onClick={discard} className="text-[#E5484D] border-b border-[#E5484D]/50 hover:border-[#E5484D]">
+                            <button type="button" onClick={discard} className="text-[#F48FB1] border-b border-[#F48FB1]/50 hover:border-[#F48FB1]">
                                 Discard
                             </button>
                             <button type="button" onClick={() => setConfirmDiscard(false)} className="text-[#7d7d87] hover:text-white">
