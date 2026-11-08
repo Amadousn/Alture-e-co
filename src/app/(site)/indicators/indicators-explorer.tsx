@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-// The four TradingView indicators. Prices match the pricing on the AltureLock page.
+// The six TradingView indicators. Prices match the pricing on the AltureLock page.
 // Each feature can be clicked to read what it shows and how to use it.
 
 type Data = "real" | "estimated" | "none";
@@ -84,6 +84,39 @@ const INDICATORS: Indicator[] = [
         text: "The base of the Alture read: the volume profile, the low-volume nodes price moves through quickly, the structure of the market and its Fair Value Gaps.",
         data: "none",
         features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(MS, ...BOS_LINES), FVG],
+    },
+    {
+        id: "trend-lines",
+        name: "Trend Lines",
+        plan: "Every TradingView plan",
+        price: 0,
+        image: "/images/indicators/trend.jpg",
+        line: "The trend lines, drawn for you.",
+        text: "Lines drawn automatically from the swings of the market, on 5 minutes, 15 minutes, 1 hour, 4 hours and daily, each with its own colour and tag.",
+        data: "none",
+        features: [
+            { spots: [[47.4, 44, 19.5, 10]], name: "Lines drawn from the swings", what: "Each line joins two swing highs that fall, or two swing lows that rise. No hand drawing, and no line moved to fit the story afterwards." },
+            { spots: [[33, 41.8, 36, 5.4]], name: "Higher timeframes on the same chart", what: "5 minutes, 15 minutes, 1 hour, 4 hours and daily, each switched on or off. Only the chart's timeframe and the ones above it are drawn, so a 15-minute chart shows 15 minutes, 1 hour, 4 hours and daily." },
+            { spots: [[65, 45.5, 5, 2.6], [65, 52.5, 5, 2.6]], name: "A tag on every line", what: "The timeframe is written at the end of each line, so you know at a glance whether you are looking at a 15-minute line or a 4-hour one." },
+            { name: "Fewer, stronger lines", what: "One setting decides how big a swing must be. Raise it and only the major lines stay; lower it and the smaller ones appear." },
+        ],
+    },
+    {
+        id: "range",
+        name: "Range",
+        plan: "Every TradingView plan",
+        price: 0,
+        image: "/images/indicators/range.jpg",
+        line: "Where the market is ranging, and when it breaks.",
+        text: "Finds the range from the swings, frames its high, middle and low, and follows what happens at the edges: the approach, the break, the retest or the failed break.",
+        data: "none",
+        features: [
+            { spots: [[11.5, 41.8, 54.5, 20.8]], name: "The range, found from the swings", what: "A range is confirmed only when price has touched its top and its bottom enough times and held them for a few candles. While it is still forming, it is shown apart." },
+            { spots: [[11.5, 41.8, 72, 3.4], [11.5, 50.8, 68, 2], [11.5, 61.2, 72, 3.4]], name: "High, middle and low", what: "The three levels of the range, each with its price. The top and bottom zones mark where the range has turned before." },
+            { spots: [[34, 64.5, 13, 3.2]], name: "Breakout, retest, failed break", what: "A break counts only when candles close past a margin, not on a wick. After it, the indicator watches for the retest of the edge, or for price coming back inside: a failed break." },
+            { name: "Several timeframes, or your own range", what: "Ranges of the chart's timeframe, and of 5 minutes, 15 minutes, 1 hour or 4 hours, read on closed candles. You can also enter a range by hand." },
+            { name: "Alarms", what: "One TradingView alert covers it all: price approaching the high or the low, a break, a retest, a failed break. Each one can be switched off." },
+        ],
     },
 ];
 

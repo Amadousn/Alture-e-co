@@ -5,15 +5,17 @@ import IndicatorsExplorer from "./indicators-explorer";
 
 export const metadata: Metadata = {
     title: "Indicators | Alture & Co.",
-    description: "The Alture & Co. TradingView indicators: Volume Profile + Footprint, Volume Profile + VWAP, Order Flow CVD, and Volume Profile + FVG + MS.",
+    description: "The Alture & Co. TradingView indicators: Volume Profile + Footprint, Volume Profile + VWAP, Order Flow CVD, Volume Profile + FVG + MS, Trend Lines and Range.",
 };
 
-// Anchors for the four indicators, in page order (the sections live in IndicatorsExplorer).
+// Anchors for the six indicators, in page order (the sections live in IndicatorsExplorer).
 const LINKS = [
     { id: "all-in-one", name: "Volume Profile + Footprint" },
     { id: "standard", name: "Volume Profile + VWAP" },
     { id: "order-flow", name: "Order Flow CVD" },
     { id: "volume-profile", name: "Volume Profile + FVG + MS" },
+    { id: "trend-lines", name: "Trend Lines" },
+    { id: "range", name: "Range" },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
@@ -28,7 +30,7 @@ const IndicatorsPage = () => (
                 <h1 className="font-logo !font-extralight !tracking-[-0.02em] !text-5xl sm:!text-6xl lg:!text-[80px] !leading-[0.95] text-white">
                     Alture <span className="font-normal">Indicators</span>
                 </h1>
-                <p className={`mt-7 max-w-xl ${body}`}>Four indicators for TradingView, built on volume and order flow. They run directly on your own charts.</p>
+                <p className={`mt-7 max-w-xl ${body}`}>Six indicators for TradingView, built on volume, order flow and the structure of price. They run directly on your own charts.</p>
                 <nav className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm" aria-label="Indicators">
                     {LINKS.map((item) => (
                         <a key={item.id} href={`#${item.id}`} className="border-b border-white/25 pb-0.5 text-white/75 transition-colors hover:border-white hover:text-white">

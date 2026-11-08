@@ -91,6 +91,8 @@ const INDICATORS = [
     { name: "Volume Profile + VWAP · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
     { name: "Order Flow CVD · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
     { name: "Volume Profile + FVG + MS · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes, market structure and Fair Value Gaps." },
+    { name: "Trend Lines · Alture & Co", price: 0, text: "Trend lines drawn automatically from the swings, from 5 minutes to daily, each with its timeframe tag." },
+    { name: "Range · Alture & Co", price: 0, text: "The range found from the swings: high, middle and low, with the break, the retest and the failed break, and alerts." },
 ];
 
 const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
