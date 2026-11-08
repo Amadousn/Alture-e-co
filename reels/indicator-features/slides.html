@@ -1,0 +1,66 @@
+<!doctype html><meta charset="utf-8"><style>
+  @font-face { font-family: "Geist"; font-weight: 300; src: url("../volume-profile/fonts/geist-sans-latin-300-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 400; src: url("../volume-profile/fonts/geist-sans-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 500; src: url("../volume-profile/fonts/geist-sans-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 600; src: url("../volume-profile/fonts/geist-sans-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 400; src: url("../volume-profile/fonts/geist-mono-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 500; src: url("../volume-profile/fonts/geist-mono-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-weight: 200; src: url("../volume-profile/fonts/outfit-latin-200-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-weight: 300; src: url("../volume-profile/fonts/outfit-latin-300-normal.woff2") format("woff2"); }
+</style>
+<style>body{margin:0;background:#000}canvas{display:block}</style>
+<canvas id="c" width="1080" height="1350"></canvas>
+<script src="../volume-profile/engine/theme.js"></script>
+<script src="../volume-profile/engine/core.js"></script>
+<script src="data/hypeusdt.js"></script>
+<script src="data/orderflow.js"></script>
+<script src="layers.js"></script>
+<script src="scenes/02-features.js"></script>
+<script src="scenes/03-orderflow.js"></script>
+<script>
+// One carousel slide per indicator: ?p=allinone | standard | orderflow | vpms
+(async function () {
+  await Promise.all(["300 40px Geist", "400 40px Geist", "500 40px Geist", "400 24px 'Geist Mono'", "500 24px 'Geist Mono'", "200 40px Outfit"].map((f) => document.fonts.load(f)));
+  const REEL = window.REEL, I = REEL.indicator, ink = REEL.ink, text = REEL.text;
+  const SLIDES = {
+    allinone: ["Volume Profile + Footprint", "Premium or Ultimate plan", "Real volume profile, bubbles from real delta, CVD divergence, absorption (A) and exhaustion (E)."],
+    standard: ["Volume Profile + VWAP", "Every TradingView plan", "Volume profile, LVN, VWAP, structure, FVG, and order flow estimated from 1-minute candles."],
+    orderflow: ["Order Flow CVD", "Premium or Ultimate plan", "Inside every candle: sold at the bid × bought at the ask, at every price."],
+    vpms: ["Volume Profile + FVG + MS", "Every TradingView plan", "Volume profile, low volume nodes, Fair Value Gaps and market structure."],
+  };
+  const p = new URLSearchParams(location.search).get("p");
+  const [name, plan, line] = SLIDES[p];
+  const ctx = document.getElementById("c").getContext("2d");
+  ctx.fillStyle = "#000"; ctx.fillRect(0, 0, 1080, 1350);
+  ctx.save();
+  ctx.translate(0, -280);
+  // All-in-One: zoomed on the afternoon, where the bubbles, divergence, A and E are.
+  if (p === "allinone") { ctx.translate(1000, 1100); ctx.scale(1.5, 1.5); ctx.translate(-1000, -1100); }
+  REEL.tagSize = p === "allinone" ? 10 : 13; // VAH / POC / VAL labels, small
+  if (p === "orderflow") REEL.slideBubbles = 0.6;
+  if (p === "orderflow") REEL.scenes.find((s) => s.id === "03-orderflow").draw(ctx, 3.4);
+  else {
+    I.base(ctx, 0);
+    I.profile(ctx, 1);
+    const layers = { allinone: ["lvn", "value"], standard: ["lvn", "vwap", "fvg", "value", "structure"], vpms: ["lvn", "fvg", "value", "structure"] }[p];
+    for (const id of layers) I.LAYERS[id](ctx, 1);
+    if (p === "allinone") I.LAYERS.fvg(ctx, 1, false); // the grey box only, no label
+    if (p === "allinone") for (const k of ["bubble", "divergence", "A", "E"]) I.marks(ctx, k, 1, 1, k === "bubble" ? 0.7 : k === "divergence" ? 0.4 : 0.6);
+  }
+  ctx.restore();
+  ctx.fillStyle = "#000"; ctx.fillRect(0, 0, 1080, 302); ctx.fillRect(0, 1222, 1080, 128);
+  text(ctx, "Alture & Co.", 72, 130, { size: 42, weight: 200, family: "Outfit" });
+  text(ctx, name, 70, 228, { size: name.length > 20 ? 62 : 76, weight: 300, tracking: -1.5 });
+  text(ctx, plan, 72, 286, { size: 30, color: ink(0.6) });
+  REEL.wrap(ctx, line, 936, { size: 30 }).forEach((l, i) => text(ctx, l, 72, 1272 + i * 40, { size: 30, color: ink(0.72) }));
+  // What the profile's two lines are.
+  if (p !== "orderflow") {
+    const ly = p === "allinone" ? 362 : 400; // below the chart header when it is shown
+    ctx.fillStyle = "rgba(230,230,230,0.88)"; ctx.fillRect(72, ly - 10, 34, 6);
+    text(ctx, "Buyers", 118, ly, { size: 26, color: ink(0.8) });
+    ctx.fillStyle = "rgba(207,207,207,0.45)"; ctx.fillRect(232, ly - 10, 34, 6);
+    text(ctx, "Sellers", 278, ly, { size: 26, color: ink(0.8) });
+  }
+  window.__done = true;
+})();
+</script>

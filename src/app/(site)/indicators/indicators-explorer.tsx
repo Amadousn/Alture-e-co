@@ -213,10 +213,6 @@ const Compare = () => (
                             {c.data === "real" ? "Tick-level" : "1-minute precision"}
                         </p>
                         <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>
-                        <p className="mt-4 flex items-baseline gap-1.5">
-                            <span className="font-logo text-[40px] md:text-[52px] font-extralight leading-none tabular-nums text-white">${c.price}</span>
-                            <span className="text-[12px] text-white/35">/ month</span>
-                        </p>
                     </div>
                 ))}
                 {["Order flow from", "Sees", "TradingView plan"].map((term, i) => (
@@ -228,6 +224,13 @@ const Compare = () => (
                             </span>
                         ))}
                     </div>
+                ))}
+                <span className="border-t border-white/10 py-5 pr-3 text-[12px] uppercase tracking-[0.1em] text-white/35">Price</span>
+                {COMPARE.map((c) => (
+                    <span key={c.name} className="border-l border-t border-white/10 px-4 md:px-8 py-5">
+                        <span className={`text-[17px] font-medium tabular-nums ${c.data === "real" ? "text-white" : "text-white/70"}`}>${c.price}</span>
+                        <span className="ml-1 text-[13px] text-white/40">per month</span>
+                    </span>
                 ))}
             </div>
         </div>
