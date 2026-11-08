@@ -31,7 +31,7 @@ export type RuleTemplate = { id: string; name: string; pre: PreRule[]; live: Liv
 export type RuleBook = { active: string; templates: RuleTemplate[] };
 
 // Per trade: what the trader confirmed, when, and their note.
-export type Confirmations = Record<string, Record<string, { at: number; note?: string }>>;
+export type Confirmations = Record<string, Record<string, { at: number; note?: string; sig?: string }>>;
 export type RuleEvent = { at: number; trade: string; rule: string; what: string };
 
 export type PlanContext = { direction: "Long" | "Short"; entry: number | null; stop: number | null; target: number | null } | null;
@@ -139,3 +139,93 @@ export function mirror<T extends { side: "above" | "below" }>(rule: T, direction
 export const newPreRule = (): PreRule => pre("New rule", "", "manual", { mandatory: false });
 export const newLiveRule = (): LiveRule => live("", {});
 export const copyTemplate = (t: RuleTemplate, name: string): RuleTemplate => ({ id: uid(), name, pre: t.pre.map((r) => ({ ...r, id: uid() })), live: t.live.map((r) => ({ ...r, id: uid() })) });
+
+// --- The next trade, prepared inside the Rules workspace ----------------------
+// The stop does not have to be known before preparing: it can be a price, a
+// distance from the entry, or set right after entry (then the position size is
+// not known yet and the rule says so).
+export type StopType = "price" | "percent" | "later";
+export type TargetType = "price" | "r" | "percent";
+export type Draft = {
+    direction: "Long" | "Short";
+    entry: number | null;
+    stopType: StopType;
+    stopValue: number | null;
+    targetType: TargetType;
+    targetValue: number | null;
+    capital: number | null;
+    // Percent of capital risked on this trade, and the most the trader allows.
+    riskPct: number;
+    maxRisk: number;
+};
+
+export const newDraft = (entry: number | null, capital: number | null): Draft => ({ direction: "Long", entry, stopType: "percent", stopValue: 0.5, targetType: "r", targetValue: 2, capital, riskPct: 1, maxRisk: 1 });
+
+export type DraftPlan = {
+    entry: number | null;
+    stop: number | null;
+    target: number | null;
+    distance: number | null;
+    distancePct: number | null;
+    riskAmount: number | null;
+    quantity: number | null;
+    reward: number | null;
+    rr: number | null;
+    stopError: string | null;
+    targetError: string | null;
+    riskError: string | null;
+};
+
+export function draftPlan(d: Draft): DraftPlan {
+    const sign = d.direction === "Long" ? 1 : -1;
+    const e = d.entry && d.entry > 0 ? d.entry : null;
+    let stop: number | null = null;
+    if (e && d.stopValue && d.stopValue > 0) stop = d.stopType === "price" ? d.stopValue : d.stopType === "percent" ? e * (1 - (sign * d.stopValue) / 100) : null;
+    const distance = e && stop !== null ? Math.abs(e - stop) : null;
+    let target: number | null = null;
+    if (e && d.targetValue && d.targetValue > 0) {
+        if (d.targetType === "price") target = d.targetValue;
+        else if (d.targetType === "percent") target = e * (1 + (sign * d.targetValue) / 100);
+        else if (distance) target = e + sign * d.targetValue * distance;
+    }
+    const riskAmount = d.capital && d.capital > 0 ? (d.capital * d.riskPct) / 100 : null;
+    const quantity = riskAmount !== null && distance ? riskAmount / distance : null;
+    const reward = quantity !== null && e && target !== null ? Math.abs(target - e) * quantity : null;
+    const rr = distance && e && target !== null ? Math.abs(target - e) / distance : null;
+    const stopError = stop !== null && e && (stop - e) * sign >= 0 ? `For a ${d.direction.toLowerCase()}, the stop must be ${sign > 0 ? "below" : "above"} the entry.` : null;
+    const targetError = target !== null && e && (target - e) * sign <= 0 ? `For a ${d.direction.toLowerCase()}, the target must be ${sign > 0 ? "above" : "below"} the entry.` : null;
+    const riskError = d.riskPct > d.maxRisk ? `${d.riskPct}% is more than your ${d.maxRisk}% maximum per trade.` : null;
+    return { entry: e, stop, target, distance, distancePct: distance && e ? (distance / e) * 100 : null, riskAmount, quantity, reward, rr, stopError, targetError, riskError };
+}
+
+// What the trader confirmed is tied to the numbers they saw: change them and the rule is pending again.
+export const draftSignature = (d: Draft, check: PreCheck) =>
+    check === "stop" ? `${d.direction}|${d.entry}|${d.stopType}|${d.stopValue}|${d.capital}|${d.riskPct}|${d.maxRisk}` : check === "target" ? `${d.direction}|${d.entry}|${d.stopType}|${d.stopValue}|${d.targetType}|${d.targetValue}` : check === "rr" ? `${d.direction}|${d.entry}|${d.stopType}|${d.stopValue}|${d.targetType}|${d.targetValue}` : "";
+
+// A check on the next trade: valid numbers are not enough, the trader confirms them.
+export function evaluateDraft(rule: PreRule, d: Draft, p: DraftPlan, confirmed?: { at: number; sig?: string }): Evaluation | null {
+    const ok = confirmed && confirmed.at > 0 && confirmed.sig === draftSignature(d, rule.check);
+    const done = (detail: string): Evaluation => (ok ? { state: "confirmed", detail, at: confirmed!.at } : { state: "pending", detail: `${detail} Confirm to lock it.`, at: null });
+    const fmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: n < 10 ? 4 : 2 });
+    if (rule.check === "stop") {
+        if (!p.entry) return { state: "pending", detail: "Set the entry first.", at: null };
+        if (d.stopType === "later") return p.riskError ? { state: "not", detail: p.riskError, at: null } : done(`Set right after entry. Risk planned: ${p.riskAmount !== null ? `$${fmt(p.riskAmount)}` : "capital not set"}.`);
+        if (p.stop === null) return { state: "pending", detail: "No stop yet. Open to define it.", at: null };
+        if (p.stopError || p.riskError) return { state: "not", detail: (p.stopError ?? p.riskError)!, at: null };
+        return done(`Stop at ${fmt(p.stop)}, ${p.distancePct!.toFixed(2)}% away${p.riskAmount !== null ? `, $${fmt(p.riskAmount)} at risk` : ""}.`);
+    }
+    if (rule.check === "target") {
+        if (!p.entry) return { state: "pending", detail: "Set the entry first.", at: null };
+        if (p.target === null) return { state: "pending", detail: d.targetType === "r" && d.stopType === "later" ? "A target in R needs a stop. Use a price or a distance." : "No target yet. Open to define it.", at: null };
+        if (p.targetError) return { state: "not", detail: p.targetError, at: null };
+        return done(`Take profit at ${fmt(p.target)}${p.reward !== null ? `, $${fmt(p.reward)} if reached` : ""}.`);
+    }
+    if (rule.check === "rr") {
+        const min = rule.rr ?? 2;
+        if (d.stopType === "later") return done(`No stop yet, the ratio is checked once it is set. Minimum 1 : ${min}.`);
+        if (p.rr === null) return { state: "pending", detail: "Entry, stop and target are needed for the ratio.", at: null };
+        if (p.rr < min) return { state: "not", detail: `1 : ${p.rr.toFixed(2)}, below your minimum 1 : ${min}.`, at: null };
+        return done(`1 : ${p.rr.toFixed(2)}, minimum 1 : ${min}.`);
+    }
+    return null;
+}

@@ -20,6 +20,7 @@ import { MASK, usePrivacy } from "@/utils/workspace-store";
 import { stopDistance } from "@/utils/alarms";
 import { AlarmBanner, CriticalAlarm, useRuleAlarms, type AlarmCondition } from "./os/rule-alarms";
 import { ReadinessBar, RulesWorkspace, useRulesEngine } from "./os/rules-engine-ui";
+import type { Draft, DraftPlan } from "@/utils/rules-engine";
 import BrandChart from "./os/brand-chart";
 import FlowChart from "./os/flow-chart";
 import TerminalChart from "./os/terminal-chart";
@@ -307,7 +308,8 @@ type Tab = "trade" | "journal" | "news" | "calendar" | "markets";
 type Item = { id: "trade" | "journal" | "orient" | "position"; title: string; note: string; action: string; href: string };
 
 const HOUR = 60 * 60 * 1000;
-const since = (ms: number) => (ms < HOUR ? `${Math.max(1, Math.round(ms / 60000))} minutes` : ms < DAY ? `${Math.round(ms / HOUR)} hours` : `${Math.round(ms / DAY)} days`);
+const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? "" : "s"}`;
+const since = (ms: number) => (ms < HOUR ? plural(Math.max(1, Math.round(ms / 60000)), "minute") : ms < DAY ? plural(Math.round(ms / HOUR), "hour") : plural(Math.round(ms / DAY), "day"));
 
 const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const asClient = useClientPreview();
@@ -320,7 +322,9 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const macroNews = useNews("macro");
     const liveBriefing = useBriefing(!demo);
     const [list, , listStore] = useWatchlist();
-    const [stored, , activeStore] = useActiveTrade();
+    const [stored, setStored, activeStore] = useActiveTrade();
+    // In the demo, a trade started from the Rules workspace replaces the example trade.
+    const [demoStarted, setDemoStarted] = useState<ActiveTrade | null>(null);
     const [recorded, , tradesStore] = useRecordedTrades();
     const [imports, , importsStore] = useImports();
     const [settings, , settingsStore] = useWorkspaceSettings();
@@ -414,7 +418,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
         if (demo && btc && demoRef === null) setDemoRef(btc);
     }, [demo, btc, demoRef]);
     const account: Account = useMemo(() => {
-        if (demo) return { active: demoRef ? demoActiveTrade(demoRef, demoNow) : null, positions: btc && demoRef ? [demoPosition(btc, demoNow, demoRef)] : [], positionsAt: btc ? Date.now() : null, trades: demoTrades(demoNow), connected: true, ready: true };
+        if (demo) return { active: demoStarted ?? (demoRef ? demoActiveTrade(demoRef, demoNow) : null), positions: btc && demoRef ? [demoPosition(btc, demoNow, demoRef)] : [], positionsAt: btc ? Date.now() : null, trades: demoTrades(demoNow), connected: true, ready: true };
         const held = Object.values(imports);
         const active = stored ? normaliseActiveTrade(stored) : null;
         return {
@@ -425,7 +429,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             connected: held.some((item) => item.lastSyncAt !== null),
             ready: activeStore.ready && tradesStore.ready && importsStore.ready,
         };
-    }, [demo, btc, demoRef, demoNow, imports, stored, recorded, activeStore.ready, tradesStore.ready, importsStore.ready]);
+    }, [demo, demoStarted, btc, demoRef, demoNow, imports, stored, recorded, activeStore.ready, tradesStore.ready, importsStore.ready]);
 
     const briefing: Briefing = demo ? { status: "ready", stories: DEMO_BRIEFING, generatedAt: demoNow, model: "", headlinesRead: 0, sample: true } : liveBriefing;
 
@@ -517,8 +521,29 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
     const engine = useRulesEngine({
         demo,
         symbol,
+        price: live?.bySymbol[symbol]?.price ?? null,
         trade: { key: account.active ? `${account.active.plan.instrument}:${account.active.openedAt ?? "plan"}` : "next", instrument: account.active?.plan.instrument ?? symbol, plan: planContext, open: opened && stage !== "review" },
     });
+
+    // A trade started from the pre-trade rules: recorded as open, then watched by the live rules.
+    const launch = (d: Draft, p: DraftPlan) => {
+        const r = (n: number | null) => (n === null ? "" : String(Number(n.toPrecision(7))));
+        const trade: ActiveTrade = {
+            stage: "execute",
+            checks: { context: true, setup: true, risk: true },
+            plan: { instrument: symbol, direction: d.direction, setup: "", plannedEntry: r(p.entry), actualEntry: r(p.entry), stopLoss: r(p.stop), takeProfit: r(p.target), quantity: p.quantity !== null ? String(Number(p.quantity.toPrecision(4))) : "", leverage: "", riskAmount: p.riskAmount !== null ? String(Math.round(p.riskAmount)) : "", sizeMode: "risk" },
+            openedAt: Date.now(),
+            answers: {},
+            manualPrice: "",
+            manualPriceAt: null,
+            step: 4,
+            reached: 4,
+            version: 2,
+            events: [{ at: Date.now(), text: "Started from the pre-trade rules" }],
+        };
+        if (demo) setDemoStarted(trade);
+        else setStored(trade);
+    };
 
     // Situations the terminal watches by itself. Each is critical and stays until confirmed.
     const conditions: AlarmCondition[] = [];
@@ -582,7 +607,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
             <AlarmBanner hits={alarms.shown} onDismiss={alarms.dismiss} onOpen={select} />
-            <RulesWorkspace engine={engine} open={rulesOpen} onClose={() => setRulesOpen(false)} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} onTestCritical={alarms.testCritical} simulated={tag} />
+            <RulesWorkspace engine={engine} open={rulesOpen} onClose={() => setRulesOpen(false)} history={alarms.history} sound={alarms.sound} setSound={alarms.setSound} onTest={alarms.test} onTestCritical={alarms.testCritical} simulated={tag} onLaunch={launch} blocked={!demo && opened && stage !== "review" ? "Close or review your current trade in Rules first." : null} />
             <CriticalAlarm hits={alarms.critical} onConfirm={alarms.confirm} onOpen={select} tradeHref={account.active ? rulesHref : undefined} />
             {tag && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
