@@ -121,7 +121,7 @@ const Cockpit = ({ trade, market, now, patch, patchPlan, setAnswer, onEditPlan, 
                                             Estimated result at this price
                                             <Explain term="this estimate">Your position size multiplied by the move from your recorded entry to this price, before fees. It is not read from your broker account, so your broker&apos;s figure is the real one.</Explain>
                                         </p>
-                                        <p className={`text-xl font-semibold tabular-nums ${estimate >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{signed(estimate)}</p>
+                                        <p className={`text-xl font-semibold tabular-nums ${estimate >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{signed(estimate)}</p>
                                     </div>
                                 )}
                                 <p className="w-full text-xs text-[#7d7d87]">{reference.note}. AltureLock is not connected to your broker and does not watch the trade when this page is closed.</p>
@@ -183,8 +183,8 @@ const Cockpit = ({ trade, market, now, patch, patchPlan, setAnswer, onEditPlan, 
                             cells={[
                                 [active ? "Your entry" : "Planned entry", derived.entry !== null ? priceText(derived.entry, tick) : "—"],
                                 ["Position size", derived.quantity !== null ? `${quantityText(derived.quantity)} ${unit}` : "—"],
-                                ["Stop loss", <span key="s" className="text-[#E5484D]">{derived.stop !== null ? priceText(derived.stop, tick) : "—"}</span>],
-                                ["Take profit", <span key="t" className="text-[#20B8A8]">{derived.target !== null ? priceText(derived.target, tick) : "—"}</span>],
+                                ["Stop loss", <span key="s" className="text-[#F48FB1]">{derived.stop !== null ? priceText(derived.stop, tick) : "—"}</span>],
+                                ["Take profit", <span key="t" className="text-[#4DD0E1]">{derived.target !== null ? priceText(derived.target, tick) : "—"}</span>],
                                 ["Planned risk", derived.risk !== null ? money(derived.risk) : "—"],
                                 ["Potential reward", derived.reward !== null ? money(derived.reward) : "—"],
                                 ["Leverage", derived.leverage !== null ? `${derived.leverage}x` : "—"],
@@ -213,7 +213,7 @@ const Cockpit = ({ trade, market, now, patch, patchPlan, setAnswer, onEditPlan, 
                                 >
                                     Update plan
                                 </button>
-                                <button type="button" onClick={() => { record("Closed with the broker, moved to review"); onClose(); }} className="h-12 bg-black text-xs font-semibold uppercase tracking-[0.06em] text-[#E5484D] transition-colors hover:bg-[#E5484D] hover:text-black">
+                                <button type="button" onClick={() => { record("Closed with the broker, moved to review"); onClose(); }} className="h-12 bg-black text-xs font-semibold uppercase tracking-[0.06em] text-[#F48FB1] transition-colors hover:bg-[#F48FB1] hover:text-black">
                                     Close trade
                                 </button>
                             </>
@@ -292,7 +292,7 @@ const Cockpit = ({ trade, market, now, patch, patchPlan, setAnswer, onEditPlan, 
                                 ))}
                             </div>
                             {draftIssue && (
-                                <p role="alert" className="mt-3 text-xs text-[#E5484D]">
+                                <p role="alert" className="mt-3 text-xs text-[#F48FB1]">
                                     {draftIssue}
                                 </p>
                             )}

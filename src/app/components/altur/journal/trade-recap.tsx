@@ -8,8 +8,8 @@ import type { ClosedTrade } from "@/utils/bybit";
 
 type Candle = { t: number; o: number; h: number; l: number; c: number };
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
+const UP = "#4DD0E1";
+const DOWN = "#F48FB1";
 const ACCENT = "#FFFFFF";
 const MINUTE = 60000;
 // Bybit's candle sizes, in minutes, with the code each one is requested by.

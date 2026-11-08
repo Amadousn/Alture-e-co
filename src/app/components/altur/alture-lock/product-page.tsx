@@ -366,7 +366,7 @@ const ProductPage = () => {
                         <p className={`lg:col-span-6 ${body}`}>Every closed trade is recorded with its result, its setup and whether you followed your rules. Open one and you see it on the candles of that day, with your entry and exit marked. Try it below: click a day, hover the curve, open a trade.</p>
                     </div>
                     <p className="mb-6 border-l-2 border-[#FACC15] pl-4 text-sm text-white/70">Sample trades, not a real account.</p>
-                    <JournalDemo />
+                    <JournalDemo framed />
                 </div>
             </section>
 

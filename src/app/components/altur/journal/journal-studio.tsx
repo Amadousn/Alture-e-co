@@ -348,6 +348,8 @@ type Props = {
     status?: React.ReactNode;
     // Overrides for the theme's colours and shapes (used to compare looks).
     look?: Record<string, string>;
+    // Shown inside a page (the product page) rather than filling the workspace.
+    framed?: boolean;
 };
 type Filter = "all" | "wins" | "losses" | "long" | "short";
 
@@ -370,7 +372,7 @@ function rangeOf(preset: Preset, custom: { from: string; to: string }, first: nu
     return { from: first, to: Infinity, label: "All time" };
 }
 
-const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status, look }: Props) => {
+const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status, look, framed = false }: Props) => {
     const [theme, setTheme] = useTheme();
     const [hidden] = usePrivacy();
     HIDDEN = hidden;
@@ -497,7 +499,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     ];
 
     return (
-        <div style={vars} className="-mx-4 -mt-6 min-h-[calc(100dvh-49px)] bg-[var(--j-bg)] [background-image:var(--j-glow,none)] px-4 pb-16 pt-6 text-[var(--j-ink)] md:-mx-8 md:px-8 xl:-mx-10 xl:px-10">
+        <div style={vars} className={`bg-[var(--j-bg)] [background-image:var(--j-glow,none)] text-[var(--j-ink)] ${framed ? "rounded-[var(--j-radius,12px)] border border-white/10 px-4 pb-8 pt-6 md:px-6" : "-mx-4 -mt-6 min-h-[calc(100dvh-49px)] px-4 pb-16 pt-6 md:-mx-8 md:px-8 xl:-mx-10 xl:px-10"}`}>
             {/* Period, theme and sharing */}
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-[13px]">
                 {presets.map(([id, text]) => (

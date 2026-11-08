@@ -12,8 +12,8 @@ export const quietButton = "h-11 px-5 rounded-sm border border-white/25 text-sm 
 // What to call the price source on screen.
 export const feedName = (market: { simulated?: boolean }) => (market.simulated ? "Simulated" : "Bybit");
 
-export const UP = "#20B8A8";
-export const DOWN = "#E5484D";
+export const UP = "#4DD0E1";
+export const DOWN = "#F48FB1";
 export const AMBER = "#FACC15";
 
 export const money = (value: number) => `${value < 0 ? "-" : ""}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -41,8 +41,8 @@ export type CockpitState = "PREPARING" | "TRADE READY" | "READY" | "ACTIVE" | "R
 
 const STATE_TONE: Record<CockpitState, string> = {
     PREPARING: "border-white/25 text-[#c8c8d0]",
-    "TRADE READY": "border-[#20B8A8] text-[#20B8A8] bg-[#20B8A8]/10",
-    READY: "border-[#20B8A8] text-[#20B8A8] bg-[#20B8A8]/10",
+    "TRADE READY": "border-[#4DD0E1] text-[#4DD0E1] bg-[#4DD0E1]/10",
+    READY: "border-[#4DD0E1] text-[#4DD0E1] bg-[#4DD0E1]/10",
     ACTIVE: "border-white text-white bg-white/10",
     "REVIEW REQUIRED": "border-[#FACC15] text-[#FACC15] bg-[#FACC15]/10",
     CLOSED: "border-[#55555e] text-[#c8c8d0] bg-white/5",
@@ -81,7 +81,7 @@ export const Explain = ({ term, children }: { term: string; children: React.Reac
 };
 
 export const Chip = ({ children, tone = "plain" }: { children: React.ReactNode; tone?: "plain" | "long" | "short" }) => (
-    <span className={`text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm ${tone === "long" ? "bg-[#20B8A8] text-black" : tone === "short" ? "bg-[#E5484D] text-black" : "border border-white/25 text-[#9a9aa5]"}`}>{children}</span>
+    <span className={`text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm ${tone === "long" ? "bg-[#4DD0E1] text-black" : tone === "short" ? "bg-[#F48FB1] text-black" : "border border-white/25 text-[#9a9aa5]"}`}>{children}</span>
 );
 
 export const Cells = ({ cells, columns = "grid-cols-2" }: { cells: [string, React.ReactNode][]; columns?: string }) => (

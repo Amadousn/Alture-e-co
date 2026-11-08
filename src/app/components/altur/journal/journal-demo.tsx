@@ -120,7 +120,7 @@ export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; posi
 
 // Built after mount: the dates depend on the visitor's clock, so rendering
 // them on the server would not match what the browser draws.
-const JournalDemo = ({ look, account }: { look?: Record<string, string>; account?: SampleAccount }) => {
+const JournalDemo = ({ look, account, framed }: { look?: Record<string, string>; account?: SampleAccount; framed?: boolean }) => {
     const [data, setData] = useState<{ trades: ClosedTrade[]; positions: OpenPosition[] } | null>(null);
 
     useEffect(() => {
@@ -129,7 +129,7 @@ const JournalDemo = ({ look, account }: { look?: Record<string, string>; account
 
     if (!data) return <div className="max-w-6xl mx-auto h-[640px]" />;
 
-    return <JournalStudio sample trades={data.trades} positions={data.positions} look={look} />;
+    return <JournalStudio sample trades={data.trades} positions={data.positions} look={look} framed={framed} />;
 };
 
 export default JournalDemo;

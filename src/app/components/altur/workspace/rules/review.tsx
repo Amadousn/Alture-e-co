@@ -80,7 +80,7 @@ const Review = ({ trade, market, now, onBack, onSave, prefill }: Props) => {
                                 )}
                             </div>
                             {exit !== null && exit <= 0 && (
-                                <p role="alert" className="mt-2 text-xs text-[#E5484D]">
+                                <p role="alert" className="mt-2 text-xs text-[#F48FB1]">
                                     The exit price must be above zero.
                                 </p>
                             )}
@@ -93,7 +93,7 @@ const Review = ({ trade, market, now, onBack, onSave, prefill }: Props) => {
                             <p className="mb-3 text-[13px] text-[#9a9aa5]">Total charged by your broker, in US dollars.</p>
                             <input id="review-fees" type="number" inputMode="decimal" step="any" min="0" placeholder="0.00" value={fees} onChange={(event) => setFees(event.target.value)} className={fieldClass} />
                             {fee < 0 && (
-                                <p role="alert" className="mt-2 text-xs text-[#E5484D]">
+                                <p role="alert" className="mt-2 text-xs text-[#F48FB1]">
                                     Fees cannot be negative.
                                 </p>
                             )}
@@ -121,7 +121,7 @@ const Review = ({ trade, market, now, onBack, onSave, prefill }: Props) => {
                     <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/15 bg-[#080808] px-5 md:px-6 py-5">
                         <div>
                             <p className={`${labelClass} mb-1`}>Trade result</p>
-                            <p className={`text-3xl font-semibold tabular-nums ${result === null ? "text-[#55555e]" : result >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>{result === null ? "—" : signed(result)}</p>
+                            <p className={`text-3xl font-semibold tabular-nums ${result === null ? "text-[#55555e]" : result >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{result === null ? "—" : signed(result)}</p>
                             <p className="mt-1 text-xs tabular-nums text-[#7d7d87]">
                                 {gross === null ? "Enter your exit price to see the result." : fee > 0 ? `${signed(gross)} before ${money(fee)} in fees` : "Before fees"}
                                 {multiple !== null && ` · ${multiple >= 0 ? "+" : ""}${multiple.toFixed(2)} times your planned risk`}

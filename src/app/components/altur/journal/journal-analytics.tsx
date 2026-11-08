@@ -8,12 +8,12 @@ import { TradeReviews } from "@/utils/workspace-store";
 // Where the results come from: best and worst days, direction, asset, time of
 // day, and, once trades are reviewed, strategy, confluences, tags and rating.
 
-const UP = "#20B8A8";
-const DOWN = "#E5484D";
+const UP = "#4DD0E1";
+const DOWN = "#F48FB1";
 const label = "text-[11px] uppercase tracking-[0.08em] text-[#7d7d87]";
 const card = "rounded-sm border border-white/15 bg-black p-4";
 const money = (value: number) => `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-const tone = (value: number) => (value > 0 ? "text-[#20B8A8]" : value < 0 ? "text-[#E5484D]" : "text-white/60");
+const tone = (value: number) => (value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white/60");
 const hold = (ms: number) => {
     const minutes = Math.round(ms / 60000);
     return minutes >= 1440 ? `${(minutes / 1440).toFixed(1)} days` : minutes >= 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
@@ -164,7 +164,7 @@ const JournalAnalytics = ({ trades, reviews }: { trades: ClosedTrade[]; reviews:
                                     <tr key={year.year}>
                                         <th className="w-14 text-left font-medium text-white/60">{year.year}</th>
                                         {year.months.map((month) => (
-                                            <td key={month.label} className={`rounded-sm px-1.5 py-2 text-center tabular-nums ${month.trades === 0 ? "bg-white/[0.03] text-white/25" : month.profitLoss >= 0 ? "bg-[#20B8A8]/15 text-[#20B8A8]" : "bg-[#E5484D]/15 text-[#E5484D]"}`} title={`${month.label} ${year.year}`}>
+                                            <td key={month.label} className={`rounded-sm px-1.5 py-2 text-center tabular-nums ${month.trades === 0 ? "bg-white/[0.03] text-white/25" : month.profitLoss >= 0 ? "bg-[#4DD0E1]/15 text-[#4DD0E1]" : "bg-[#F48FB1]/15 text-[#F48FB1]"}`} title={`${month.label} ${year.year}`}>
                                                 <span className="block text-[10px] text-white/45">{month.label}</span>
                                                 {month.trades === 0 ? "-" : money(month.profitLoss)}
                                                 {month.trades > 0 && <span className="block text-[10px] text-white/40">{month.trades} trades</span>}

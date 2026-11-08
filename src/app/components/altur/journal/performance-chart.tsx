@@ -7,8 +7,8 @@ import type { ClosedTrade } from "@/utils/bybit";
 // it is given. Two modes on the same axis: the cumulative equity curve, and
 // each trade as a bar (teal above zero, magenta below). Hover reads one trade.
 
-const TEAL = "#20B8A8";
-const MAGENTA = "#E5484D";
+const TEAL = "#4DD0E1";
+const MAGENTA = "#F48FB1";
 const DAY = 24 * 60 * 60 * 1000;
 const RANGES = [
     { id: "1M", days: 30 },

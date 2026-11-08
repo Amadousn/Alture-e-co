@@ -50,7 +50,7 @@ const Sketch = ({ kind }: { kind: "long" | "short" | "continuation" | "reversal"
         continuation: "M4 46 L30 26 L44 32 L56 26 L66 31 L92 8",
         reversal: "M4 44 L24 26 L40 12 L52 10 L64 22 L92 46",
     };
-    const color = kind === "long" ? "#20B8A8" : kind === "short" ? "#E5484D" : "#FFFFFF";
+    const color = kind === "long" ? "#4DD0E1" : kind === "short" ? "#F48FB1" : "#FFFFFF";
     return (
         <svg viewBox="0 0 96 54" className="h-14 w-24 flex-shrink-0" aria-hidden="true">
             <path d={paths[kind]} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
@@ -93,7 +93,7 @@ const Stepper = ({ value, onChange, step, id, invalid }: { value: string; onChan
             <button type="button" aria-label="Lower" disabled={num(value) === null} onClick={() => bump(-1)} className={`${button} rounded-l-sm border-r-0`}>
                 −
             </button>
-            <input id={id} type="number" inputMode="decimal" step="any" min="0" value={value} aria-invalid={invalid} onChange={(event) => onChange(event.target.value)} className={`${fieldClass} !rounded-none min-w-0 flex-1 ${invalid ? "!border-[#E5484D]" : ""}`} />
+            <input id={id} type="number" inputMode="decimal" step="any" min="0" value={value} aria-invalid={invalid} onChange={(event) => onChange(event.target.value)} className={`${fieldClass} !rounded-none min-w-0 flex-1 ${invalid ? "!border-[#F48FB1]" : ""}`} />
             <button type="button" aria-label="Higher" disabled={num(value) === null} onClick={() => bump(1)} className={`${button} rounded-r-sm border-l-0`}>
                 +
             </button>
@@ -198,14 +198,14 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
         {
             level: "stop",
             label: "Stop loss",
-            color: "#E5484D",
+            color: "#F48FB1",
             meaning: "Your Stop Loss is the price where your trade should be exited if the market moves against your plan. It helps define how much you could lose.",
             example: `Example: you ${plan.direction === "Long" ? "buy at $61,800 with a stop at $61,300. If price falls to $61,300" : "sell at $61,800 with a stop at $62,300. If price rises to $62,300"}, the plan says exit, and the $500 move is your loss on each unit.`,
         },
         {
             level: "target",
             label: "Take profit",
-            color: "#20B8A8",
+            color: "#4DD0E1",
             meaning: "Your Take Profit is your planned exit price if the trade moves in your favor.",
             example: `Example: you ${plan.direction === "Long" ? "buy at $61,800 and plan to sell at $63,000" : "sell at $61,800 and plan to buy back at $60,600"}. That $1,200 move is your gain on each unit.`,
         },
@@ -291,7 +291,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                                 <>
                                                     <span className="block text-[15px] font-medium tabular-nums text-white">{priceText(quote.price)}</span>
                                                     {quote.change24h !== null && (
-                                                        <span className={`block text-xs tabular-nums ${quote.change24h >= 0 ? "text-[#20B8A8]" : "text-[#E5484D]"}`}>
+                                                        <span className={`block text-xs tabular-nums ${quote.change24h >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>
                                                             {quote.change24h >= 0 ? "+" : ""}
                                                             {quote.change24h.toFixed(2)}% 24h
                                                         </span>
@@ -343,8 +343,8 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                         You can plan a trade for a rising price or for a falling one.
                     </Question>
                     <div className="grid gap-px bg-white/15 md:grid-cols-2">
-                        <Choice selected={reached > 1 && plan.direction === "Long"} onSelect={() => choose({ direction: "Long" }, 2)} tone="#20B8A8" title="LONG" line="You expect the price to rise." detail="You buy first and aim to sell higher. You gain if the price goes up from your entry, and lose if it falls." sketch={<Sketch kind="long" />} />
-                        <Choice selected={reached > 1 && plan.direction === "Short"} onSelect={() => choose({ direction: "Short" }, 2)} tone="#E5484D" title="SHORT" line="You expect the price to fall." detail="You sell first and aim to buy back lower. You gain if the price goes down from your entry, and lose if it rises." sketch={<Sketch kind="short" />} />
+                        <Choice selected={reached > 1 && plan.direction === "Long"} onSelect={() => choose({ direction: "Long" }, 2)} tone="#4DD0E1" title="LONG" line="You expect the price to rise." detail="You buy first and aim to sell higher. You gain if the price goes up from your entry, and lose if it falls." sketch={<Sketch kind="long" />} />
+                        <Choice selected={reached > 1 && plan.direction === "Short"} onSelect={() => choose({ direction: "Short" }, 2)} tone="#F48FB1" title="SHORT" line="You expect the price to fall." detail="You sell first and aim to buy back lower. You gain if the price goes down from your entry, and lose if it rises." sketch={<Sketch kind="short" />} />
                     </div>
                     <p className="px-5 md:px-7 py-4 text-xs text-[#7d7d87]">
                         How can you sell something first?
@@ -430,7 +430,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                 )}
                                 {/* Both levels point the other way: the trader decides, nothing is changed for them. */}
                                 {derived.stop !== null && derived.target !== null && !derived.stopOnRightSide && !derived.targetOnRightSide && (
-                                    <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E5484D]/50 bg-[#E5484D]/10 px-5 md:px-7 py-3 text-sm text-white">
+                                    <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-t border-[#F48FB1]/50 bg-[#F48FB1]/10 px-5 md:px-7 py-3 text-sm text-white">
                                         <span>
                                             You chose {plan.direction.toLowerCase()}, but these levels are a {plan.direction === "Long" ? "short" : "long"}.
                                         </span>
@@ -487,7 +487,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                             </div>
                                             <Stepper id={`plan-${level}`} value={plan[field]} onChange={(next) => patchPlan({ [field]: next })} step={nudge} invalid={problem !== ""} />
                                             {problem && (
-                                                <p role="alert" className="cockpit-rise mt-2 text-xs text-[#E5484D]">
+                                                <p role="alert" className="cockpit-rise mt-2 text-xs text-[#F48FB1]">
                                                     {problem}
                                                 </p>
                                             )}
@@ -510,15 +510,15 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                         </button>
                                     </div>
                                     {plan.sizeMode === "manual" ? (
-                                        <input id="plan-size" type="number" inputMode="decimal" step="any" min="0" value={plan.quantity} aria-invalid={issues.size !== ""} onChange={(event) => patchPlan({ quantity: event.target.value })} className={`${fieldClass} ${issues.size ? "!border-[#E5484D]" : ""}`} />
+                                        <input id="plan-size" type="number" inputMode="decimal" step="any" min="0" value={plan.quantity} aria-invalid={issues.size !== ""} onChange={(event) => patchPlan({ quantity: event.target.value })} className={`${fieldClass} ${issues.size ? "!border-[#F48FB1]" : ""}`} />
                                     ) : (
                                         <div className="relative">
                                             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-[#7d7d87]">$</span>
-                                            <input id="plan-risk" type="number" inputMode="decimal" step="any" min="0" placeholder="0.00" value={plan.riskAmount ?? ""} aria-invalid={issues.size !== ""} onChange={(event) => patchPlan({ riskAmount: event.target.value })} className={`${fieldClass} !pl-7 ${issues.size ? "!border-[#E5484D]" : ""}`} />
+                                            <input id="plan-risk" type="number" inputMode="decimal" step="any" min="0" placeholder="0.00" value={plan.riskAmount ?? ""} aria-invalid={issues.size !== ""} onChange={(event) => patchPlan({ riskAmount: event.target.value })} className={`${fieldClass} !pl-7 ${issues.size ? "!border-[#F48FB1]" : ""}`} />
                                         </div>
                                     )}
                                     {issues.size && (
-                                        <p role="alert" className="cockpit-rise mt-2 text-xs text-[#E5484D]">
+                                        <p role="alert" className="cockpit-rise mt-2 text-xs text-[#F48FB1]">
                                             {issues.size}
                                         </p>
                                     )}
@@ -540,12 +540,12 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                                 </button>
                                             ))}
                                         <span className="relative">
-                                            <input id="plan-leverage" type="number" inputMode="decimal" step="any" min="1" placeholder="Other" value={plan.leverage} aria-invalid={issues.leverage !== ""} onChange={(event) => patchPlan({ leverage: event.target.value })} className={`${fieldClass} !h-8 !w-[76px] !py-0 !pr-5 !text-xs ${issues.leverage ? "!border-[#E5484D]" : ""}`} />
+                                            <input id="plan-leverage" type="number" inputMode="decimal" step="any" min="1" placeholder="Other" value={plan.leverage} aria-invalid={issues.leverage !== ""} onChange={(event) => patchPlan({ leverage: event.target.value })} className={`${fieldClass} !h-8 !w-[76px] !py-0 !pr-5 !text-xs ${issues.leverage ? "!border-[#F48FB1]" : ""}`} />
                                             <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#7d7d87]">x</span>
                                         </span>
                                     </div>
                                     {issues.leverage && (
-                                        <p role="alert" className="cockpit-rise mt-2 text-xs text-[#E5484D]">
+                                        <p role="alert" className="cockpit-rise mt-2 text-xs text-[#F48FB1]">
                                             {issues.leverage}
                                         </p>
                                     )}
@@ -561,8 +561,8 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                     ["Worth at entry", derived.notional !== null ? money(derived.notional) : "—", ""],
                                     ["Margin needed", derived.margin !== null ? money(derived.margin) : "—", ""],
                                     ["Approx. liquidation", derived.liquidation !== null ? priceText(derived.liquidation, tick) : derived.leverage === 1 ? "None at 1x" : "—", ""],
-                                    ["Estimated risk", derived.risk !== null ? money(derived.risk) : "—", derived.risk !== null ? "text-[#E5484D]" : ""],
-                                    ["Potential reward", derived.reward !== null ? money(derived.reward) : "—", derived.reward !== null ? "text-[#20B8A8]" : ""],
+                                    ["Estimated risk", derived.risk !== null ? money(derived.risk) : "—", derived.risk !== null ? "text-[#F48FB1]" : ""],
+                                    ["Potential reward", derived.reward !== null ? money(derived.reward) : "—", derived.reward !== null ? "text-[#4DD0E1]" : ""],
                                 ] as const
                             ).map(([label, value, color]) => (
                                 <div key={label} className="min-w-0">
@@ -585,8 +585,8 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                             <span className="text-xs text-[#9a9aa5]">For every $1 you risk, you aim to make ${derived.ratio.toFixed(2)}.</span>
                                         </p>
                                         <div className="mt-2.5 flex h-1 overflow-hidden rounded-[1px]" aria-hidden="true">
-                                            <span className="bg-[#E5484D] transition-all duration-200" style={{ width: `${100 / (1 + derived.ratio)}%` }} />
-                                            <span className="flex-1 bg-[#20B8A8]" />
+                                            <span className="bg-[#F48FB1] transition-all duration-200" style={{ width: `${100 / (1 + derived.ratio)}%` }} />
+                                            <span className="flex-1 bg-[#4DD0E1]" />
                                         </div>
                                     </>
                                 ) : (
@@ -652,11 +652,11 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                             role="switch"
                                             aria-checked={on}
                                             onClick={() => (check.locked ? go(3) : toggleCheck(check.id))}
-                                            className={`flex w-full items-start gap-4 px-5 md:px-7 py-5 text-left transition-colors hover:bg-[#0c0c0c] ${on ? "bg-[#20B8A8]/[0.06]" : ""}`}
+                                            className={`flex w-full items-start gap-4 px-5 md:px-7 py-5 text-left transition-colors hover:bg-[#0c0c0c] ${on ? "bg-[#4DD0E1]/[0.06]" : ""}`}
                                         >
                                             <span
-                                                className={`mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-sm border text-sm font-bold transition-all duration-200 ${on ? "border-[#20B8A8] bg-[#20B8A8] text-black" : "border-[#55555e] text-transparent"}`}
-                                                style={on ? { boxShadow: "0 0 16px rgba(32,184,168,0.55)" } : undefined}
+                                                className={`mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-sm border text-sm font-bold transition-all duration-200 ${on ? "border-[#4DD0E1] bg-[#4DD0E1] text-black" : "border-[#55555e] text-transparent"}`}
+                                                style={on ? { boxShadow: "0 0 16px rgba(77,208,225,0.55)" } : undefined}
                                                 aria-hidden="true"
                                             >
                                                 ✓
@@ -664,7 +664,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                             <span className="min-w-0 flex-1">
                                                 <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                                                     <span className={`text-base font-semibold ${on ? "text-white" : "text-[#e4e4e8]"}`}>{check.title}</span>
-                                                    <span className={`text-[11px] font-bold uppercase tracking-[0.1em] ${on ? "text-[#20B8A8]" : "text-[#7d7d87]"}`}>{on ? "Confirmed" : check.locked ? "Not ready" : "Tap to confirm"}</span>
+                                                    <span className={`text-[11px] font-bold uppercase tracking-[0.1em] ${on ? "text-[#4DD0E1]" : "text-[#7d7d87]"}`}>{on ? "Confirmed" : check.locked ? "Not ready" : "Tap to confirm"}</span>
                                                 </span>
                                                 <span className="mt-1 block text-[13px] leading-relaxed text-[#9a9aa5]">{check.locked || check.text}</span>
                                                 {notes.length > 0 && !check.locked && <span className="mt-1.5 block text-xs text-[#7d7d87]">Your rules: {notes.join(" · ")}</span>}
@@ -677,8 +677,8 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                                 const on = Boolean(trade.checks[item.id]);
                                 return (
                                     <li key={item.id}>
-                                        <button type="button" role="switch" aria-checked={on} onClick={() => toggleCheck(item.id)} className={`flex w-full items-center gap-4 px-5 md:px-7 py-4 text-left transition-colors hover:bg-[#0c0c0c] ${on ? "bg-[#20B8A8]/[0.06]" : ""}`}>
-                                            <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-sm border text-sm font-bold transition-all duration-200 ${on ? "border-[#20B8A8] bg-[#20B8A8] text-black" : "border-[#55555e] text-transparent"}`} aria-hidden="true">
+                                        <button type="button" role="switch" aria-checked={on} onClick={() => toggleCheck(item.id)} className={`flex w-full items-center gap-4 px-5 md:px-7 py-4 text-left transition-colors hover:bg-[#0c0c0c] ${on ? "bg-[#4DD0E1]/[0.06]" : ""}`}>
+                                            <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-sm border text-sm font-bold transition-all duration-200 ${on ? "border-[#4DD0E1] bg-[#4DD0E1] text-black" : "border-[#55555e] text-transparent"}`} aria-hidden="true">
                                                 ✓
                                             </span>
                                             <span className="flex-1 text-[15px] text-[#e4e4e8]">{item.label}</span>
@@ -698,12 +698,12 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
 
                     <div className={`${panelClass} overflow-hidden self-start ${tradeReady ? "cockpit-ready" : ""}`}>
                         <div className="px-5 py-5 border-b border-white/15">
-                            <p className={`text-2xl font-semibold tracking-tight transition-colors ${tradeReady ? "text-[#20B8A8]" : "text-[#55555e]"}`} style={tradeReady ? { textShadow: "0 0 22px rgba(32,184,168,0.55)" } : undefined} aria-live="polite">
+                            <p className={`text-2xl font-semibold tracking-tight transition-colors ${tradeReady ? "text-[#4DD0E1]" : "text-[#55555e]"}`} style={tradeReady ? { textShadow: "0 0 22px rgba(77,208,225,0.55)" } : undefined} aria-live="polite">
                                 {tradeReady ? "TRADE READY" : "NOT READY YET"}
                             </p>
                             <div className="mt-3 flex gap-1" aria-hidden="true">
                                 {confirmed.map((done, i) => (
-                                    <span key={i} className={`h-1 flex-1 transition-colors duration-300 ${done ? "bg-[#20B8A8]" : "bg-white/20"}`} />
+                                    <span key={i} className={`h-1 flex-1 transition-colors duration-300 ${done ? "bg-[#4DD0E1]" : "bg-white/20"}`} />
                                 ))}
                             </div>
                             <p className="mt-3 text-[13px] leading-relaxed text-[#9a9aa5]">
@@ -717,7 +717,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                         <Cells
                             cells={[
                                 ["Asset", asset ? `${asset.name} · ${asset.ticker}` : "—"],
-                                ["Direction", <span key="d" className={plan.direction === "Long" ? "text-[#20B8A8]" : "text-[#E5484D]"}>{plan.direction.toUpperCase()}</span>],
+                                ["Direction", <span key="d" className={plan.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{plan.direction.toUpperCase()}</span>],
                                 ["Entry", derived.entry !== null ? priceText(derived.entry, tick) : "—"],
                                 ["Position size", derived.quantity !== null && derived.quantity > 0 ? `${quantityText(derived.quantity)} ${unit}` : "—"],
                                 ["Stop loss", derived.stop !== null ? priceText(derived.stop, tick) : "—"],
