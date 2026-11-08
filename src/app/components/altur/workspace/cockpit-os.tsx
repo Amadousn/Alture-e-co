@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientPreview } from "@/utils/client-preview";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -306,6 +307,8 @@ const HOUR = 60 * 60 * 1000;
 const since = (ms: number) => (ms < HOUR ? `${Math.max(1, Math.round(ms / 60000))} minutes` : ms < DAY ? `${Math.round(ms / HOUR)} hours` : `${Math.round(ms / DAY)} days`);
 
 const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
+    const asClient = useClientPreview();
+    const tag = demo && !asClient;
     const [theme] = useTheme();
     const params = useSearchParams();
     const router = useRouter();
@@ -548,7 +551,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
             <TerminalSidebar demo={demo} />
             {arrival === "curtain" && <EnterCurtain onDone={arrived} />}
             <TerminalBar demo={demo} themed />
-            {demo && (
+            {tag && (
                 <p className="flex-shrink-0 border-b border-white/10 px-4 py-1.5 text-xs leading-relaxed text-white/55">
                     <span className="mr-2 font-semibold text-[#FACC15]">Demo environment.</span>
                     Prices, charts, news and the calendar are public and real. The account, the trade and the results are simulated.
@@ -672,7 +675,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                     </div>
                     <div className="cmd-panel flex flex-col lg:min-h-[520px] lg:flex-shrink-0">
                     <div className="flex-shrink-0 px-4 pb-4 pt-4 lg:hidden">
-                        <p className={label}>{demo ? "Simulated account" : name ? `Welcome back, ${name}` : "Your workspace"}</p>
+                        <p className={label}>{tag ? "Simulated account" : demo ? "Your workspace" : name ? `Welcome back, ${name}` : "Your workspace"}</p>
                         {first.id === "orient" ? (
                             <>
                                 <p className="mt-2 text-[15px] font-medium text-white">{account.ready ? "Nothing pending." : " "}</p>
@@ -711,7 +714,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                             <span className="text-lg font-medium tracking-tight text-white">
                                                 {activeAsset.name} <span className={account.active.plan.direction === "Long" ? "text-[#20B8A8]" : "text-[#E5484D]"}>{account.active.plan.direction.toLowerCase()}</span>
                                             </span>
-                                            <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">{stage === "review" ? "Closed, not recorded" : STAGE[account.active.stage]}{demo ? " · simulated" : ""}</span>
+                                            <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">{stage === "review" ? "Closed, not recorded" : STAGE[account.active.stage]}{tag ? " · simulated" : ""}</span>
                                         </p>
                                         <dl className="mt-4 grid grid-cols-3 gap-x-3 gap-y-4 text-[13px] tabular-nums">
                                             {(
@@ -765,7 +768,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
 
                                 <div>
                                     <p className={`${label} mb-2 flex items-baseline justify-between`}>
-                                        <span>Exchange positions{demo ? " · simulated" : ""}</span>
+                                        <span>Exchange positions{tag ? " · simulated" : ""}</span>
                                         {account.positionsAt && !demo && <span className="normal-case tracking-normal">{since(now - account.positionsAt)} ago</span>}
                                     </p>
                                     {account.positions.length > 0 ? (
@@ -805,7 +808,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
 
                         {tab === "journal" && (
                             <div>
-                                <p className={`${label} mb-2`}>{demo ? "Simulated results" : "Net result"} · last 30 days</p>
+                                <p className={`${label} mb-2`}>{tag ? "Simulated results" : "Net result"} · last 30 days</p>
                                 {month.length > 0 ? (
                                     <>
                                         <p className={`font-logo text-4xl font-light leading-none tabular-nums ${tone(net)}`}>{signed(net)}</p>
@@ -902,7 +905,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                 </aside>
             </div>
 
-            <StatusLine source={live ? `Bybit public data · ${hhmm(live.fetchedAt)}` : tickers.status === "loading" ? "Connecting to the market…" : "Market data unavailable"} demo={demo} />
+            <StatusLine source={live ? `Bybit public data · ${hhmm(live.fetchedAt)}` : tickers.status === "loading" ? "Connecting to the market…" : "Market data unavailable"} demo={tag} />
         </div>
     );
 };

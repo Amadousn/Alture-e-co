@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientPreview } from "@/utils/client-preview";
 import TerminalBar from "./terminal-bar";
 import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import { useWorkspaceSettings } from "@/utils/workspace-store";
@@ -13,6 +14,7 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false, themed = 
     const [, , store] = useWorkspaceSettings();
     const [theme] = useTheme();
     const full = width === "full";
+    const asClient = useClientPreview();
 
 
     return (
@@ -20,7 +22,7 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false, themed = 
             <TerminalSidebar demo={demo} />
             <div className="sticky top-0 z-40">
                 <TerminalBar demo={demo} />
-                {demo && (
+                {demo && !asClient && (
                     <p className="sr-only">Demo environment: the account, the trades and the results on this page are simulated.</p>
                 )}
             </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientPreview } from "@/utils/client-preview";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -31,6 +32,7 @@ const span = (ms: number) => {
 };
 
 const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean }) => {
+    const asClient = useClientPreview();
     const [theme, setTheme] = useTheme();
     const path = usePathname();
     const session = useSession();
@@ -80,7 +82,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
             <p className="hidden items-baseline gap-3 lg:flex">
                 <span className="text-[15px] font-semibold tracking-tight text-white">AltureLock</span>
                 <span className="text-sm text-white/45">/ {PAGES[path] ?? ""}</span>
-                {demo && <span className="rounded-sm border border-[#FACC15]/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#FACC15]">Demo</span>}
+                {demo && !asClient && <span className="rounded-sm border border-[#FACC15]/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#FACC15]">Demo</span>}
             </p>
             {/* On a wide screen these places are in the rail. */}
             <nav aria-label="AltureLock" className="order-3 flex w-full items-center gap-x-6 overflow-x-auto lg:hidden">
@@ -92,7 +94,12 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
             </nav>
 
             <div className="ml-auto flex items-center gap-6">
-                {demo ? (
+                {demo && asClient ? (
+                    <span className="hidden items-center gap-2 text-[12.5px] text-white/55 sm:inline-flex">
+                        <span className="cmd-live h-1.5 w-1.5 rounded-full bg-[#20B8A8]" aria-hidden="true" />
+                        Bybit · read-only
+                    </span>
+                ) : demo ? (
                     <span className="hidden text-[11.5px] text-[#d9b75a] sm:inline">Simulated account</span>
                 ) : (
                     importsStore.ready && (
@@ -120,7 +127,9 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
                         {full ? <path d="M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" /> : <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" />}
                     </svg>
                 </button>
-                {demo ? (
+                {demo && asClient ? (
+                    <span className="ml-1 text-xs text-white/45">Sign out</span>
+                ) : demo ? (
                     <Link href="/alturelock/login" className="text-[12.5px] font-medium text-white transition-colors hover:text-white/70">
                         Log in
                     </Link>

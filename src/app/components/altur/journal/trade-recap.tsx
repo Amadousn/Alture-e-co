@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientPreview } from "@/utils/client-preview";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePlan } from "@/utils/use-plan";
@@ -36,6 +37,7 @@ function windowFor(trade: ClosedTrade) {
 // What happened, drawn: the real candles of the trade's instrument, with the
 // entry, the exit and the plan's levels marked where they actually were.
 const Recap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sample?: boolean; bare?: boolean }) => {
+    const asClient = useClientPreview();
     const [state, setState] = useState<{ id: string; candles: Candle[] | null } | null>(null);
     const view = windowFor(trade);
     // The replay: how many candles have been revealed, or null when the whole trade is shown.
@@ -249,7 +251,7 @@ const Recap = ({ trade, sample = false, bare = false }: { trade: ClosedTrade; sa
                     {!trade.openedAt && !trade.executions?.length && <li className="text-[#7d7d87]">Entry time was not recorded, so only the exit is marked. Entry price: {price(trade.entryPrice)}.</li>}
                 </ul>
             )}
-            {chart && sample && <p className="px-5 pb-3 text-[11px] text-[#7d7d87]">Sample trade on real candles: its prices sit inside that day&apos;s range, but its times are illustrative.</p>}
+            {chart && sample && !asClient && <p className="px-5 pb-3 text-[11px] text-[#7d7d87]">Sample trade on real candles: its prices sit inside that day&apos;s range, but its times are illustrative.</p>}
         </div>
     );
 };
