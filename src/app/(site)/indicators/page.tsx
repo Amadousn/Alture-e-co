@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import IndicatorsExplorer from "./indicators-explorer";
 
 export const metadata: Metadata = {
@@ -21,7 +22,8 @@ const body = "text-[15px] md:text-base leading-relaxed text-white/60";
 const IndicatorsPage = () => (
     <div className="bg-black">
         <section className="bg-black !pt-32 md:!pt-40 !pb-12 md:!pb-20">
-            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+            <div className="container mx-auto grid max-w-7xl gap-12 px-4 md:px-6 lg:grid-cols-12 lg:items-center">
+                <div className="lg:col-span-5">
                 <p className={label}>TradingView indicators</p>
                 <h1 className="font-logo !font-extralight !tracking-[-0.02em] !text-5xl sm:!text-6xl lg:!text-[80px] !leading-[0.95] text-white">
                     Alture <span className="font-normal">Indicators</span>
@@ -34,6 +36,13 @@ const IndicatorsPage = () => (
                         </a>
                     ))}
                 </nav>
+                </div>
+                <figure className="lg:col-span-7">
+                    <div className="overflow-hidden rounded-sm border border-white/15">
+                        <Image src="/images/alturelock/indicator-footprint.jpg" alt="Volume Profile + Footprint by Alture & Co on a TradingView chart: Alture candles, volume profile, footprint bubbles and absorption marks" width={1600} height={900} priority sizes="(min-width: 1024px) 720px, 100vw" className="block h-auto w-full" />
+                    </div>
+                    <figcaption className="mt-3 text-xs text-white/40">Volume Profile + Footprint · Alture & Co, on TradingView.</figcaption>
+                </figure>
             </div>
         </section>
 

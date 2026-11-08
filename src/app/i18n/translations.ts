@@ -13,6 +13,7 @@ type Dictionary = {
     nav: {
         home: string;
         alturelock: string;
+        indicators: string;
         education: string;
         contact: string;
     };
@@ -100,7 +101,7 @@ export const translations: Record<Language, Dictionary> = {
     // direct, no corporate padding). Left untouched here; the other languages
     // are adapted to read the same way natively, not translated word-for-word.
     en: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", education: "EDUCATION", contact: "CONTACT" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", indicators: "INDICATORS", education: "EDUCATION", contact: "CONTACT" },
         hero: {
             headline: "We trade crypto. With",
             headlineAccent: "rules",
@@ -197,7 +198,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     fr: {
-        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", education: "FORMATION", contact: "CONTACT" },
+        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", indicators: "INDICATEURS", education: "FORMATION", contact: "CONTACT" },
         hero: {
             // "On" reads more confident and modern here than the stiffer "Nous tradons".
             headline: "On trade la crypto. Avec des",
@@ -295,7 +296,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     it: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", education: "FORMAZIONE", contact: "CONTATTI" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", indicators: "INDICATORI", education: "FORMAZIONE", contact: "CONTATTI" },
         hero: {
             headline: "Facciamo trading di crypto. Con",
             headlineAccent: "regole, non emozioni.",
@@ -392,7 +393,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     ru: {
-        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", education: "ОБУЧЕНИЕ", contact: "КОНТАКТЫ" },
+        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", indicators: "ИНДИКАТОРЫ", education: "ОБУЧЕНИЕ", contact: "КОНТАКТЫ" },
         hero: {
             headline: "Мы торгуем крипту. По",
             headlineAccent: "правилам, а не на эмоциях.",

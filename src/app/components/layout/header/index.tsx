@@ -66,6 +66,7 @@ const Header: React.FC = () => {
   const menuItems = [
     { label: t.nav.home, href: "/" },
     { label: t.nav.alturelock, href: "/alturelock" },
+    { label: t.nav.indicators, href: "/indicators" },
     { label: t.nav.contact, href: "/#contact" },
   ];
 
