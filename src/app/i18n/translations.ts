@@ -173,7 +173,7 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Incorrect username or password.",
             errorGeneric: "Something went wrong. Please try again.",
         },
-        mobile: { cockpit: "Cockpit", logIn: "Log in", workspace: "Workspace" },
+        mobile: { cockpit: "AltureLock", logIn: "Log in", workspace: "Workspace" },
         entry: {
             headline: "Your copilot for consistent trading.",
             pillars: "Trading Rules. Risk Management. Trading Journal.",
@@ -278,7 +278,7 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Nom d'utilisateur ou mot de passe incorrect.",
             errorGeneric: "Une erreur est survenue. Merci de réessayer.",
         },
-        mobile: { cockpit: "Cockpit", logIn: "Connexion", workspace: "Mon espace" },
+        mobile: { cockpit: "AltureLock", logIn: "Connexion", workspace: "Mon espace" },
         entry: {
             headline: "Votre copilote pour trader avec constance.",
             pillars: "Règles de trading. Gestion du risque. Journal de trading.",
@@ -382,7 +382,7 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Nome utente o password errati.",
             errorGeneric: "Qualcosa è andato storto. Riprova.",
         },
-        mobile: { cockpit: "Cockpit", logIn: "Accedi", workspace: "Il mio spazio" },
+        mobile: { cockpit: "AltureLock", logIn: "Accedi", workspace: "Il mio spazio" },
         entry: {
             headline: "Il tuo copilota per fare trading con costanza.",
             pillars: "Regole di trading. Gestione del rischio. Diario di trading.",
@@ -486,7 +486,7 @@ export const translations: Record<Language, Dictionary> = {
             errorIncorrect: "Неверное имя пользователя или пароль.",
             errorGeneric: "Что-то пошло не так. Попробуйте ещё раз.",
         },
-        mobile: { cockpit: "Кокпит", logIn: "Войти", workspace: "Кабинет" },
+        mobile: { cockpit: "AltureLock", logIn: "Войти", workspace: "Кабинет" },
         entry: {
             headline: "Ваш второй пилот для стабильной торговли.",
             pillars: "Торговые правила. Управление риском. Дневник сделок.",

@@ -918,12 +918,12 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                 const missing = [!r?.rating && "rating", !strategyOf(t) && "strategy", !(r?.notes || t.reflection) && "note"].filter(Boolean) as string[];
                                 return (
                                     <div key={t.id} className={`border-t border-[var(--j-line)] first:border-t-0 ${isOpen ? "pb-4" : ""}`}>
-                                        <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : t.id)} className="grid w-full grid-cols-[4.5rem_minmax(0,1fr)_5rem_7rem] items-center gap-3 py-3 text-left text-[14px]">
+                                        <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : t.id)} className="grid w-full grid-cols-[3.4rem_minmax(0,1fr)_auto] items-center gap-2 py-3 text-left text-[14px] sm:grid-cols-[4.5rem_minmax(0,1fr)_5rem_7rem] sm:gap-3">
                                             <span className="font-mono text-[12.5px] text-[var(--j-mu)]">{shortDay(t.closedAt)}</span>
                                             <span className="truncate">
                                                 {asset(t.instrument)} <span className="text-[var(--j-mu)]">{t.direction.toLowerCase()}{strategyOf(t) ? ` · ${strategyOf(t)}` : ""}</span>
                                             </span>
-                                            <span className="text-[12px] tracking-[0.12em] text-[var(--j-fa)]">{r?.rating ? "★".repeat(r.rating) : ""}</span>
+                                            <span className="hidden text-[12px] tracking-[0.12em] text-[var(--j-fa)] sm:block">{r?.rating ? "★".repeat(r.rating) : ""}</span>
                                             <span className={`text-right font-mono ${tone(t.profitLoss)}`}>{money(t.profitLoss)}</span>
                                         </button>
                                         {isOpen && (

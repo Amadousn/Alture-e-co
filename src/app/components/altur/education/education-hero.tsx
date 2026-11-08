@@ -11,12 +11,7 @@ const EducationHero = () => {
     return (
         <section className="bg-black !pt-28 md:!pt-32 !pb-14 md:!pb-20">
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
-                <div className="flex items-baseline gap-4 border-t border-white/15 pt-3.5 text-[11px] uppercase tracking-[0.14em]">
-                    <span className="text-white/70">{education.badge}</span>
-                    <span className="ml-auto font-mono normal-case tracking-normal text-white/45">{String(MODULES.length).padStart(2, "0")}</span>
-                </div>
-
-                <div className="grid lg:grid-cols-12 gap-x-10 gap-y-12 pt-10 md:pt-16">
+                <div className="grid lg:grid-cols-12 gap-x-10 gap-y-12 pt-2 md:pt-6">
                     <div className="lg:col-span-7">
                         <h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !leading-[1.06] mb-7 text-white">
                             {education.headlineLine1}
