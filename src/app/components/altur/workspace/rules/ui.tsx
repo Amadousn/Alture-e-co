@@ -13,7 +13,7 @@ export const quietButton = "h-11 px-5 rounded-sm border border-white/25 text-sm 
 export const feedName = (market: { simulated?: boolean }) => (market.simulated ? "Simulated" : "Bybit");
 
 export const UP = "#4DD0E1";
-export const DOWN = "#F48FB1";
+export const DOWN = "#E955A8";
 export const AMBER = "#FACC15";
 
 export const money = (value: number) => `${value < 0 ? "-" : ""}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -81,7 +81,7 @@ export const Explain = ({ term, children }: { term: string; children: React.Reac
 };
 
 export const Chip = ({ children, tone = "plain" }: { children: React.ReactNode; tone?: "plain" | "long" | "short" }) => (
-    <span className={`text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm ${tone === "long" ? "bg-[#4DD0E1] text-black" : tone === "short" ? "bg-[#F48FB1] text-black" : "border border-white/25 text-[#9a9aa5]"}`}>{children}</span>
+    <span className={`text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm ${tone === "long" ? "bg-[#4DD0E1] text-black" : tone === "short" ? "bg-[#E955A8] text-black" : "border border-white/25 text-[#9a9aa5]"}`}>{children}</span>
 );
 
 export const Cells = ({ cells, columns = "grid-cols-2" }: { cells: [string, React.ReactNode][]; columns?: string }) => (

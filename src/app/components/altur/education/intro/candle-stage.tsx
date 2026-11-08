@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const UP = "#4DD0E1";
-const DOWN = "#F48FB1";
+const DOWN = "#E955A8";
 const ACCENT = "#FFFFFF";
 
 export type CandlePart = "body" | "upper" | "lower" | "open" | "high" | "low" | "close";

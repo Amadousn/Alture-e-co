@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Candle } from "@/utils/education-chart-data";
 
 const UP = "#4DD0E1";
-const DOWN = "#F48FB1";
+const DOWN = "#E955A8";
 const ACCENT = "#FFFFFF";
 const AXIS_W = 62;
 const AXIS_H = 26;

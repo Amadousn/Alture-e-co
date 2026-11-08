@@ -42,7 +42,7 @@ const STAGE = { prepare: "Preparing", execute: "Active", manage: "Active", revie
 let HIDE = false;
 const money = (value: number) => HIDE ? MASK : `${value < 0 ? "-" : ""}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const signed = (value: number) => HIDE ? `${value < 0 ? "−" : "+"}${MASK}` : `${value >= 0 ? "+" : "-"}$${Math.abs(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-const tone = (value: number | null | undefined) => (value == null ? "text-white/45" : value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white");
+const tone = (value: number | null | undefined) => (value == null ? "text-white/45" : value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#E955A8]" : "text-white");
 const ago = (time: number, now: number) => {
     const minutes = Math.max(0, Math.round((now - time) / 60000));
     return minutes < 60 ? `${minutes}m ago` : minutes < 1440 ? `${Math.floor(minutes / 60)}h ago` : `${Math.floor(minutes / 1440)}d ago`;
@@ -136,7 +136,7 @@ type Account = { active: ActiveTrade | null; positions: OpenPosition[]; position
 
 // ---------- Right: intelligence ----------
 
-const LEAN = { Bullish: "text-[#4DD0E1]", Bearish: "text-[#F48FB1]", Mixed: "text-[#FACC15]", Unclear: "text-white/55" } as const;
+const LEAN = { Bullish: "text-[#4DD0E1]", Bearish: "text-[#E955A8]", Mixed: "text-[#FACC15]", Unclear: "text-white/55" } as const;
 
 const BriefingPanel = ({ briefing }: { briefing: Briefing }) => {
     const [open, setOpen] = useState(0);
@@ -436,7 +436,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
         ? [
               ...(plan.target !== null ? [{ label: "Take profit", price: plan.target, color: "#4DD0E1" }] : []),
               ...(plan.entry !== null ? [{ label: "Entry", price: plan.entry, color: "#FFFFFF" }] : []),
-              ...(plan.stop !== null ? [{ label: "Stop loss", price: plan.stop, color: "#F48FB1" }] : []),
+              ...(plan.stop !== null ? [{ label: "Stop loss", price: plan.stop, color: "#E955A8" }] : []),
           ]
         : [];
 
@@ -745,7 +745,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                     <div>
                                         <p className="flex items-baseline justify-between gap-3">
                                             <span className="text-lg font-medium tracking-tight text-white">
-                                                {activeAsset.name} <span className={account.active.plan.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{account.active.plan.direction.toLowerCase()}</span>
+                                                {activeAsset.name} <span className={account.active.plan.direction === "Long" ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{account.active.plan.direction.toLowerCase()}</span>
                                             </span>
                                             <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">{stage === "review" ? "Closed, not recorded" : STAGE[account.active.stage]}{tag ? " · simulated" : ""}</span>
                                         </p>
@@ -753,7 +753,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                             {(
                                                 [
                                                     [opened ? "Entry" : "Planned entry", tradePlan.entry !== null ? fmtPrice(tradePlan.entry) : "—", "text-white"],
-                                                    ["Stop loss", tradePlan.stop !== null ? fmtPrice(tradePlan.stop) : "—", "text-[#F48FB1]"],
+                                                    ["Stop loss", tradePlan.stop !== null ? fmtPrice(tradePlan.stop) : "—", "text-[#E955A8]"],
                                                     ["Take profit", tradePlan.target !== null ? fmtPrice(tradePlan.target) : "—", "text-[#4DD0E1]"],
                                                     ["Size", tradePlan.quantity !== null ? `${tradePlan.quantity} ${activeAsset.unit}` : "—", "text-white"],
                                                     ["Planned risk", tradePlan.risk !== null ? money(tradePlan.risk) : "—", "text-white"],
@@ -817,7 +817,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                             {account.positions.map((position) => (
                                                 <li key={`${position.instrument}-${position.direction}`} className="flex items-baseline justify-between gap-3 text-[13px] tabular-nums">
                                                     <span className="text-white">
-                                                        {position.instrument.replace(/USDT$/, "")} <span className={position.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{position.direction.toLowerCase()}</span>
+                                                        {position.instrument.replace(/USDT$/, "")} <span className={position.direction === "Long" ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{position.direction.toLowerCase()}</span>
                                                         <span className="ml-2 text-white/40">
                                                             {position.quantity} at {fmtPrice(position.entryPrice)}
                                                         </span>
@@ -877,7 +877,7 @@ const CockpitOS = ({ demo = false }: { demo?: boolean }) => {
                                                 <Link href={journalHref} className="grid grid-cols-[3.2rem_1fr_auto] items-baseline gap-x-3 py-1.5 text-[13px] hover:bg-white/[0.04] transition-colors">
                                                     <span className="text-[11px] tabular-nums text-white/40">{new Date(trade.closedAt).toLocaleDateString(undefined, { day: "numeric", month: "short" })}</span>
                                                     <span className="truncate text-white">
-                                                        {assetFor(trade.instrument)?.name ?? trade.instrument} <span className={`text-xs ${trade.direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{trade.direction.toLowerCase()}</span>
+                                                        {assetFor(trade.instrument)?.name ?? trade.instrument} <span className={`text-xs ${trade.direction === "Long" ? "text-[#4DD0E1]" : "text-[#E955A8]"}`}>{trade.direction.toLowerCase()}</span>
                                                     </span>
                                                     <span className={`tabular-nums ${tone(trade.profitLoss)}`}>{signed(trade.profitLoss)}</span>
                                                 </Link>

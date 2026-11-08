@@ -9,7 +9,7 @@ import { MASK, usePrivacy } from "@/utils/workspace-store";
 
 export type EquityTrade = { id: string; instrument: string; direction: "Long" | "Short"; profitLoss: number; closedAt: number };
 const TEAL = "#4DD0E1";
-const MAGENTA = "#F48FB1";
+const MAGENTA = "#E955A8";
 
 // Set by the chart from the shared Hide amounts choice.
 let HIDE = false;
@@ -153,11 +153,11 @@ const EquityChart = ({ trades, height = 300, bars = false, drawdown = false }: {
                     <dl className="mt-2 space-y-1 font-mono text-xs">
                         <div className="flex justify-between">
                             <dt className="text-white/50">Realized</dt>
-                            <dd className={active.trade.profitLoss >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{money(active.trade.profitLoss)}</dd>
+                            <dd className={active.trade.profitLoss >= 0 ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{money(active.trade.profitLoss)}</dd>
                         </div>
                         <div className="flex justify-between">
                             <dt className="text-white/50">{drawdown ? "From peak" : "Cumulative"}</dt>
-                            <dd className={series[hover] >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{money(series[hover])}</dd>
+                            <dd className={series[hover] >= 0 ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{money(series[hover])}</dd>
                         </div>
                     </dl>
                 </div>

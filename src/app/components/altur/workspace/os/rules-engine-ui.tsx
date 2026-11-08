@@ -114,8 +114,8 @@ export function useRulesEngine({ demo, trade, symbol }: { demo: boolean; trade: 
 
 export type RulesEngine = ReturnType<typeof useRulesEngine>;
 
-const DOT: Record<RuleState, string> = { confirmed: "bg-[#4DD0E1]", pending: "border border-[var(--j-mu)]", not: "bg-[#F48FB1]/60", failed: "bg-[#F48FB1]", waiting: "border border-dashed border-[var(--j-mu)]", unavailable: "bg-[var(--j-line)]" };
-const TEXT: Record<RuleState, string> = { confirmed: "text-[#4DD0E1]", pending: "text-[var(--j-mu)]", not: "text-[#F48FB1]", failed: "text-[#F48FB1]", waiting: "text-[var(--j-mu)]", unavailable: "text-[var(--j-mu)]" };
+const DOT: Record<RuleState, string> = { confirmed: "bg-[#4DD0E1]", pending: "border border-[var(--j-mu)]", not: "bg-[#E955A8]/60", failed: "bg-[#E955A8]", waiting: "border border-dashed border-[var(--j-mu)]", unavailable: "bg-[var(--j-line)]" };
+const TEXT: Record<RuleState, string> = { confirmed: "text-[#4DD0E1]", pending: "text-[var(--j-mu)]", not: "text-[#E955A8]", failed: "text-[#E955A8]", waiting: "text-[var(--j-mu)]", unavailable: "text-[var(--j-mu)]" };
 const clock = (at: number | null) => (at ? new Date(at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "—");
 const field = "rounded-md border border-[var(--j-line)] bg-[var(--j-s2)] px-2 py-1.5 text-[12.5px] text-[var(--j-ink)] outline-none focus:border-[var(--j-mu)]";
 const chip = (on: boolean) => `rounded-md px-2.5 py-1 text-[12px] transition-colors ${on ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "text-[var(--j-mu)] hover:text-[var(--j-ink)]"}`;
@@ -134,7 +134,7 @@ export function ReadinessBar({ engine, critical, live, onOpen }: { engine: Rules
                     {status.confirmed}/{status.total}
                 </span>
                 <span className="text-[13px] text-[var(--j-mu)]">confirmed</span>
-                <span className={`ml-auto rounded border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${status.failed || critical ? "border-[#F48FB1]/60 text-[#F48FB1]" : status.ready ? "border-[#4DD0E1]/50 text-[#4DD0E1]" : "border-[var(--j-line)] text-[var(--j-mu)]"}`}>
+                <span className={`ml-auto rounded border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${status.failed || critical ? "border-[#E955A8]/60 text-[#E955A8]" : status.ready ? "border-[#4DD0E1]/50 text-[#4DD0E1]" : "border-[var(--j-line)] text-[var(--j-mu)]"}`}>
                     {status.failed || critical ? "Violation" : status.ready ? "Ready" : "Not ready"}
                 </span>
             </span>
@@ -142,12 +142,12 @@ export function ReadinessBar({ engine, critical, live, onOpen }: { engine: Rules
                 {evaluations
                     .filter((e) => e.rule.enabled)
                     .map((e) => (
-                        <span key={e.rule.id} className={`h-1.5 flex-1 rounded-full ${e.result.state === "confirmed" ? "bg-[#4DD0E1]" : e.result.state === "failed" || e.result.state === "not" ? "bg-[#F48FB1]" : "bg-[var(--j-line)]"}`} />
+                        <span key={e.rule.id} className={`h-1.5 flex-1 rounded-full ${e.result.state === "confirmed" ? "bg-[#4DD0E1]" : e.result.state === "failed" || e.result.state === "not" ? "bg-[#E955A8]" : "bg-[var(--j-line)]"}`} />
                     ))}
             </span>
             <span className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-[var(--j-mu)]">
                 <span>{status.pending} pending</span>
-                <span className={status.failed + critical ? "text-[#F48FB1]" : ""}>
+                <span className={status.failed + critical ? "text-[#E955A8]" : ""}>
                     {status.failed + critical} critical {status.failed + critical === 1 ? "violation" : "violations"}
                 </span>
                 <span>{live ? `${live} live rules watching` : "No open position to watch"}</span>
@@ -293,7 +293,7 @@ function PreTab({ engine }: { engine: RulesEngine }) {
                                                 <button type="button" onClick={() => save({ ...rule, enabled: !rule.enabled })} className="hover:text-[var(--j-ink)]">{rule.enabled ? "Switch off" : "Switch on"}</button>
                                                 <button type="button" onClick={() => editTemplate((t) => ({ ...t, pre: move(t.pre, i, -1) }))} className="hover:text-[var(--j-ink)]">Move up</button>
                                                 <button type="button" onClick={() => editTemplate((t) => ({ ...t, pre: move(t.pre, i, 1) }))} className="hover:text-[var(--j-ink)]">Move down</button>
-                                                <button type="button" onClick={() => editTemplate((t) => ({ ...t, pre: t.pre.filter((r) => r.id !== rule.id) }))} className="hover:text-[#F48FB1]">Delete</button>
+                                                <button type="button" onClick={() => editTemplate((t) => ({ ...t, pre: t.pre.filter((r) => r.id !== rule.id) }))} className="hover:text-[#E955A8]">Delete</button>
                                             </div>
                                         </>
                                     )}
@@ -415,7 +415,7 @@ function LiveTab({ engine }: { engine: RulesEngine }) {
                                     <span className="block truncate text-[14px]">{rule.label || liveText(rule)}</span>
                                     <span className="block truncate text-[11.5px] text-[var(--j-mu)]">
                                         {rule.label ? `${liveText(rule)} · ` : ""}
-                                        <span className={level === "check" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{level === "critical" ? "Critical (V2)" : level === "exit" ? "Exit signal (V1)" : "Check (V1)"}</span>
+                                        <span className={level === "check" ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{level === "critical" ? "Critical (V2)" : level === "exit" ? "Exit signal (V1)" : "Check (V1)"}</span>
                                     </span>
                                 </button>
                             </div>
@@ -457,7 +457,7 @@ function LiveTab({ engine }: { engine: RulesEngine }) {
                                     <div className="flex gap-4 text-[12px] text-[var(--j-mu)]">
                                         <button type="button" onClick={() => editTemplate((t) => ({ ...t, live: move(t.live, i, -1) }))} className="hover:text-[var(--j-ink)]">Move up</button>
                                         <button type="button" onClick={() => editTemplate((t) => ({ ...t, live: move(t.live, i, 1) }))} className="hover:text-[var(--j-ink)]">Move down</button>
-                                        <button type="button" onClick={() => editTemplate((t) => ({ ...t, live: t.live.filter((r) => r.id !== rule.id) }))} className="hover:text-[#F48FB1]">Delete</button>
+                                        <button type="button" onClick={() => editTemplate((t) => ({ ...t, live: t.live.filter((r) => r.id !== rule.id) }))} className="hover:text-[#E955A8]">Delete</button>
                                         <button type="button" onClick={() => setEditing(null)} className="ml-auto text-[var(--j-ink)]">Done</button>
                                     </div>
                                 </div>
@@ -489,8 +489,8 @@ function AlertsTab({ engine, history, sound, setSound, onTest, onTestCritical }:
     }, []);
     const levels = [
         ["Check", "V1", "A condition worth a look. Banner and short sound.", "text-[#4DD0E1]"],
-        ["Exit signal", "V1", "An obvious break your rule calls an exit. Banner and lower sound.", "text-[#F48FB1]"],
-        ["Critical", "V2", "Risk event. Covers the screen, deeper sound, stays until you confirm.", "text-[#F48FB1]"],
+        ["Exit signal", "V1", "An obvious break your rule calls an exit. Banner and lower sound.", "text-[#E955A8]"],
+        ["Critical", "V2", "Risk event. Covers the screen, deeper sound, stays until you confirm.", "text-[#E955A8]"],
     ];
     const events = [...history.map((h) => ({ at: h.at, text: `${h.title}`, tone: h.level })), ...engine.log.map((e) => ({ at: e.at, text: `${e.what}: ${e.rule}`, tone: "log" as const }))].sort((a, b) => b.at - a.at).slice(0, 40);
     return (
@@ -521,7 +521,7 @@ function AlertsTab({ engine, history, sound, setSound, onTest, onTestCritical }:
                         {events.map((e, i) => (
                             <li key={i} className="flex gap-3">
                                 <span className="w-12 flex-shrink-0 tabular-nums text-[var(--j-mu)]">{clock(e.at)}</span>
-                                <span className={e.tone === "check" ? "text-[#4DD0E1]" : e.tone === "log" ? "text-[var(--j-mu)]" : "text-[#F48FB1]"}>{e.tone === "critical" ? "◆" : e.tone === "log" ? "·" : "●"}</span>
+                                <span className={e.tone === "check" ? "text-[#4DD0E1]" : e.tone === "log" ? "text-[var(--j-mu)]" : "text-[#E955A8]"}>{e.tone === "critical" ? "◆" : e.tone === "log" ? "·" : "●"}</span>
                                 <span className="min-w-0 truncate">{e.text}</span>
                             </li>
                         ))}
@@ -554,7 +554,7 @@ function TemplatesTab({ engine }: { engine: RulesEngine }) {
                         <span className="flex gap-3 text-[12px] text-[var(--j-mu)]">
                             <button type="button" onClick={() => setRenaming(t.id)} className="hover:text-[var(--j-ink)]">Rename</button>
                             <button type="button" onClick={() => setBook((b) => { const c = copyTemplate(t, `${t.name} copy`); return { active: c.id, templates: [...b.templates, c] }; })} className="hover:text-[var(--j-ink)]">Duplicate</button>
-                            {book.templates.length > 1 && <button type="button" onClick={() => setBook((b) => { const templates = b.templates.filter((x) => x.id !== t.id); return { active: b.active === t.id ? templates[0].id : b.active, templates }; })} className="hover:text-[#F48FB1]">Delete</button>}
+                            {book.templates.length > 1 && <button type="button" onClick={() => setBook((b) => { const templates = b.templates.filter((x) => x.id !== t.id); return { active: b.active === t.id ? templates[0].id : b.active, templates }; })} className="hover:text-[#E955A8]">Delete</button>}
                         </span>
                     </li>
                 ))}

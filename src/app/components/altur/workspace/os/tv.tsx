@@ -68,7 +68,7 @@ const INDICATOR_CANDLES = {
     "mainSeriesProperties.candleStyle.borderUpColor": "#4DD0E1",
     "mainSeriesProperties.candleStyle.wickUpColor": "#FFFFFF",
     "mainSeriesProperties.candleStyle.downColor": "#FFFFFF",
-    "mainSeriesProperties.candleStyle.borderDownColor": "#F48FB1",
+    "mainSeriesProperties.candleStyle.borderDownColor": "#E955A8",
     "mainSeriesProperties.candleStyle.wickDownColor": "#FFFFFF",
 };
 export const tradingViewUrl = (symbol: string, interval?: string) => `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(tradingViewSymbol(symbol))}${interval ? `&interval=${interval}` : ""}`;

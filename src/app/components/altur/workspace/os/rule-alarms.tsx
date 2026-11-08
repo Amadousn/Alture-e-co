@@ -177,10 +177,10 @@ export function AlarmBanner({ hits, onDismiss, onOpen }: { hits: AlarmHit[]; onD
             {hits.map((hit) => {
                 const exit = hit.level === "exit";
                 return (
-                    <div key={hit.key} className={`al-alarm pointer-events-auto flex w-full max-w-xl items-start gap-4 rounded-[var(--j-radius,12px)] border bg-[var(--j-s1)] px-5 py-4 text-[var(--j-ink)] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.7)] ${exit ? "border-[#F48FB1]" : "border-[#4DD0E1]"}`}>
-                        <span className={`mt-1 h-2.5 w-2.5 flex-shrink-0 animate-pulse rounded-full ${exit ? "bg-[#F48FB1]" : "bg-[#4DD0E1]"}`} aria-hidden="true" />
+                    <div key={hit.key} className={`al-alarm pointer-events-auto flex w-full max-w-xl items-start gap-4 rounded-[var(--j-radius,12px)] border bg-[var(--j-s1)] px-5 py-4 text-[var(--j-ink)] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.7)] ${exit ? "border-[#E955A8]" : "border-[#4DD0E1]"}`}>
+                        <span className={`mt-1 h-2.5 w-2.5 flex-shrink-0 animate-pulse rounded-full ${exit ? "bg-[#E955A8]" : "bg-[#4DD0E1]"}`} aria-hidden="true" />
                         <div className="min-w-0 flex-1">
-                            <p className={`text-[11px] font-semibold uppercase tracking-[0.12em] ${exit ? "text-[#F48FB1]" : "text-[#4DD0E1]"}`}>
+                            <p className={`text-[11px] font-semibold uppercase tracking-[0.12em] ${exit ? "text-[#E955A8]" : "text-[#4DD0E1]"}`}>
                                 {exit ? "Exit signal" : "Check"} · {hit.symbol.replace(/USDT$/, "")}
                             </p>
                             <p className="mt-1 text-[15px] font-medium">{hit.title}</p>
@@ -271,7 +271,7 @@ export function AlarmRules({
                                 <span className="block truncate">{r.label || describe(r)}</span>
                                 <span className="block truncate text-[11.5px] text-[var(--j-mu)]">
                                     {r.symbol.replace(/USDT$/, "")} · {r.label ? `${describe(r)} · ` : ""}
-                                    <span className={exit ? "text-[#F48FB1]" : "text-[#4DD0E1]"}>{severity(r) === "critical" ? "critical" : exit ? "exit signal" : "check"}</span>
+                                    <span className={exit ? "text-[#E955A8]" : "text-[#4DD0E1]"}>{severity(r) === "critical" ? "critical" : exit ? "exit signal" : "check"}</span>
                                 </span>
                             </span>
                             <button type="button" onClick={() => setRules(rules.filter((x) => x.id !== r.id))} aria-label="Remove this alarm" className="text-[var(--j-mu)] hover:text-[var(--j-ink)]">
@@ -356,7 +356,7 @@ export function AlarmRules({
                         {history.slice(0, 5).map((h) => (
                             <li key={h.key} className="flex justify-between gap-3">
                                 <span className="truncate">
-                                    <span className={h.level === "check" ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>{h.level === "critical" ? "◆" : "●"}</span> {h.title}
+                                    <span className={h.level === "check" ? "text-[#4DD0E1]" : "text-[#E955A8]"}>{h.level === "critical" ? "◆" : "●"}</span> {h.title}
                                 </span>
                                 <span className="flex-shrink-0 text-[var(--j-mu)]">{ago(Date.now() - h.at)}</span>
                             </li>
@@ -375,9 +375,9 @@ export function CriticalAlarm({ hits, onConfirm, onOpen, tradeHref }: { hits: Al
     if (!hit) return null;
     return (
         <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="alertdialog" aria-modal="true" aria-labelledby="critical-title">
-            <div className="al-critical w-full max-w-lg rounded-[var(--j-radius,12px)] border-2 border-[#F48FB1] bg-[var(--j-s1)] p-7 text-[var(--j-ink)] shadow-[0_0_80px_-10px_rgba(244,143,177,0.55)]">
-                <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#F48FB1]">
-                    <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#F48FB1]" aria-hidden="true" />
+            <div className="al-critical w-full max-w-lg rounded-[var(--j-radius,12px)] border-2 border-[#E955A8] bg-[var(--j-s1)] p-7 text-[var(--j-ink)] shadow-[0_0_80px_-10px_rgba(233,85,168,0.55)]">
+                <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#E955A8]">
+                    <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#E955A8]" aria-hidden="true" />
                     Critical · {hit.symbol.replace(/USDT$/, "")}
                     {hits.length > 1 && <span className="ml-auto normal-case tracking-normal text-[var(--j-mu)]">1 of {hits.length}</span>}
                 </p>

@@ -95,8 +95,8 @@ const RiskCalculator = ({ asset, price }: { asset: string; price: number | null 
                 <>
                     <dl className="mt-4 grid grid-cols-3 gap-x-3 gap-y-4 text-[13px] tabular-nums">
                         {row("Size", `${qty(size!)} ${asset}`)}
-                        {row("Risk", usd(risk!), "text-[#F48FB1]")}
-                        {row("Direction", direction!, direction === "Long" ? "text-[#4DD0E1]" : "text-[#F48FB1]")}
+                        {row("Risk", usd(risk!), "text-[#E955A8]")}
+                        {row("Direction", direction!, direction === "Long" ? "text-[#4DD0E1]" : "text-[#E955A8]")}
                         {row("Exposure", usd(exposure!))}
                         {row("Stop distance", `${((distance! / e!) * 100).toFixed(2)}%`)}
                         {row("Reward : risk", reward !== null ? `${reward.toFixed(2)} R` : "—", reward !== null ? (reward >= 2 ? "text-[#4DD0E1]" : "text-white") : "text-white/40")}

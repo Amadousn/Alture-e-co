@@ -33,7 +33,7 @@ const Strategies = () => {
                     <li key={item.id} className="border-t border-white/10 pt-3">
                         <div className="flex items-baseline justify-between gap-4">
                             <p className="text-[15px] font-medium text-white">{item.name}</p>
-                            <button type="button" onClick={() => setStrategies((list) => list.filter((entry) => entry.id !== item.id))} className="text-xs text-white/40 hover:text-[#F48FB1]">
+                            <button type="button" onClick={() => setStrategies((list) => list.filter((entry) => entry.id !== item.id))} className="text-xs text-white/40 hover:text-[#E955A8]">
                                 Remove
                             </button>
                         </div>

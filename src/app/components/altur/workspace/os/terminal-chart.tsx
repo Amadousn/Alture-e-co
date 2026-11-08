@@ -10,7 +10,7 @@ export type ChartLevel = { label: string; price: number; color: string };
 const ACCENT = "#FFFFFF";
 // The trade structure takes the borders of the Alture & Co. indicator candles.
 const ALT_UP = "#4DD0E1";
-const ALT_DOWN = "#F48FB1";
+const ALT_DOWN = "#E955A8";
 const AXIS_W = 74;
 const AXIS_H = 24;
 const TOP = 30;
@@ -336,7 +336,7 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                         {name} <span className="text-white/85">{fmt(value)}</span>
                     </span>
                 ))}
-                <span className={readChange >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}>
+                <span className={readChange >= 0 ? "text-[#4DD0E1]" : "text-[#E955A8]"}>
                     {readChange >= 0 ? "+" : ""}
                     {readChange.toFixed(2)}%
                 </span>

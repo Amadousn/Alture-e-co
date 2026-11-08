@@ -11,7 +11,7 @@ type Pick = { type: "bubble"; bubble: Bubble } | { type: "signal"; signal: Signa
 type Hit = { x: number; y: number; r: number; pick: Pick };
 
 const STORE = "alturelock.flow.v1";
-const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#4DD0E1", sellColor: "#F48FB1", exhColor: "#C792EA", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
+const DEFAULT_PREFS: Prefs = { profile: true, bubbles: true, absorption: true, exhaustion: true, divergence: true, buyColor: "#4DD0E1", sellColor: "#E955A8", exhColor: "#C792EA", opacity: 0.55, settings: DEFAULT_FLOW_SETTINGS };
 const LABELS: Record<string, string> = { "1": "1 minute", "3": "3 minutes", "5": "5 minutes", "15": "15 minutes", "30": "30 minutes", "60": "1 hour", "240": "4 hours", D: "1 day" };
 
 const fmtPrice = (value: number) => value.toLocaleString(undefined, { minimumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 2 : value >= 1 ? 3 : 5 });
@@ -125,7 +125,7 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
         const bw = Math.max(3, cw - 3);
         ctx.fillStyle = up ? "rgba(156,156,156,0.9)" : "rgba(255,255,255,0.88)";
         ctx.fillRect(cx - bw / 2, bodyTop, bw, bodyH);
-        ctx.strokeStyle = up ? "#4DD0E1" : "rgba(244,143,177,0.75)";
+        ctx.strokeStyle = up ? "#4DD0E1" : "rgba(233,85,168,0.75)";
         ctx.strokeRect(cx - bw / 2 + 0.5, bodyTop + 0.5, bw - 1, Math.max(0, bodyH - 1));
     });
 
@@ -173,7 +173,7 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
             const py = y(price) - rowH / 2;
             ctx.fillStyle = `rgba(77,208,225,${inside ? 0.42 : 0.14})`;
             ctx.fillRect(plotW - upWidth, py, upWidth, rowH);
-            ctx.fillStyle = `rgba(244,143,177,${inside ? 0.42 : 0.14})`;
+            ctx.fillStyle = `rgba(233,85,168,${inside ? 0.42 : 0.14})`;
             ctx.fillRect(plotW - width, py, width - upWidth, rowH);
         });
         ctx.textAlign = "left";
@@ -297,7 +297,7 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, rows: Kline[
     return hits;
 }
 
-const STATE_TONE = { on: "text-[#4DD0E1]", wait: "text-white/45", none: "text-white/45", off: "text-white/30", bad: "text-[#F48FB1]" } as const;
+const STATE_TONE = { on: "text-[#4DD0E1]", wait: "text-white/45", none: "text-white/45", off: "text-white/30", bad: "text-[#E955A8]" } as const;
 const Toggle = ({ on, onChange, children, state }: { on: boolean; onChange: (next: boolean) => void; children: React.ReactNode; state?: { text: string; tone: keyof typeof STATE_TONE; note?: string } }) => (
     <button type="button" aria-pressed={on} onClick={() => onChange(!on)} title={state?.note} className={`nav-link pb-1 text-xs font-medium ${on ? "is-active" : "!text-white/35"}`}>
         {children}
@@ -338,8 +338,8 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
             const saved = JSON.parse(window.localStorage.getItem(STORE) ?? "null");
             if (saved && typeof saved === "object") {
                 // The old default colours give way to the Alture palette; colours the trader chose stay.
-                const old: Record<string, string> = { buyColor: "#20B8A8", sellColor: "#E5484D", exhColor: "#FFFFFF" };
-                for (const k of Object.keys(old)) if (saved[k] === old[k]) delete saved[k];
+                const old: Record<string, string[]> = { buyColor: ["#20B8A8"], sellColor: ["#E5484D", "#E955A8"], exhColor: ["#FFFFFF"] };
+                for (const k of Object.keys(old)) if (old[k].includes(saved[k])) delete saved[k];
                 setPrefs({ ...DEFAULT_PREFS, ...saved, settings: { ...DEFAULT_FLOW_SETTINGS, ...(saved.settings ?? {}) } });
             }
         } catch {
@@ -461,7 +461,7 @@ const FlowChart = ({ symbol, interval, fill = false }: { symbol: string; interva
         <div className={`flex flex-col ${fill ? "h-full" : ""}`}>
             <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
                 <p className="flex items-center gap-2 text-[11px] text-white/45" role="status">
-                    <span className={`inline-flex h-1.5 w-1.5 shrink-0 rounded-full ${flow.status === "live" && snapshot?.since ? "bg-[#20B8A8]" : flow.status === "reconnecting" ? "bg-[#E5484D]" : "bg-white/40"}`} />
+                    <span className={`inline-flex h-1.5 w-1.5 shrink-0 rounded-full ${flow.status === "live" && snapshot?.since ? "bg-[#20B8A8]" : flow.status === "reconnecting" ? "bg-[#E955A8]" : "bg-white/40"}`} />
                     {statusText}
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1" role="group" aria-label="Order flow layers">

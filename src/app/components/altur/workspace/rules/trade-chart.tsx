@@ -136,7 +136,7 @@ const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], 
                             return (
                                 <g key={c.t} clipPath={`url(#${clip})`}>
                                     <line x1={x} x2={x} y1={y(c.h)} y2={y(c.l)} stroke="#FFFFFF" strokeOpacity={0.75} strokeWidth={1} />
-                                    <rect x={x - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={rising ? "#9C9C9C" : "#FFFFFF"} stroke={rising ? "#4DD0E1" : "#F48FB1"} strokeOpacity={rising ? 1 : 0.6} />
+                                    <rect x={x - body / 2} y={Math.min(y(c.o), y(c.c))} width={body} height={Math.max(1, Math.abs(y(c.o) - y(c.c)))} fill={rising ? "#9C9C9C" : "#FFFFFF"} stroke={rising ? "#4DD0E1" : "#E955A8"} strokeOpacity={rising ? 1 : 0.6} />
                                 </g>
                             );
                         })}

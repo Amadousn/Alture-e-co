@@ -67,7 +67,7 @@ export const extendedConfig = {
 
     // Market direction: teal for gains, pink for losses. Never green and red.
     up: "#4DD0E1",
-    down: "#F48FB1",
+    down: "#E955A8",
 
     // Backgrounds - Pure black
     background: "#000000",     // Pure black

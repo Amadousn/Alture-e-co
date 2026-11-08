@@ -11,7 +11,7 @@ import { useWatchlist, useWorkspaceSettings } from "@/utils/workspace-store";
 // in, their risk for the day, and their own rules before an entry.
 
 const base = (symbol: string) => symbol.replace(/USDT$/, "");
-const tone = (value: number) => (value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#F48FB1]" : "text-white/60");
+const tone = (value: number) => (value > 0 ? "text-[#4DD0E1]" : value < 0 ? "text-[#E955A8]" : "text-white/60");
 const price = (value: number) => value.toLocaleString("en-US", { minimumFractionDigits: value >= 100 ? 1 : value >= 1 ? 3 : 5, maximumFractionDigits: value >= 100 ? 1 : value >= 1 ? 4 : 6 });
 
 const GROUPS = ["Favorites", ...MARKET_GROUPS] as const;
@@ -118,7 +118,7 @@ export const StatePanel = ({ demo, state, detail, href, action, rules: rulesSlot
                         </div>
                         <div className="flex justify-between gap-3">
                             <dt className="text-white/55">Stop after losses</dt>
-                            <dd className="font-mono text-[#F48FB1]">{settings.limits?.maxLosses ?? "Not set"}</dd>
+                            <dd className="font-mono text-[#E955A8]">{settings.limits?.maxLosses ?? "Not set"}</dd>
                         </div>
                     </dl>
                 </div>

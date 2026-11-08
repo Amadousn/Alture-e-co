@@ -103,7 +103,7 @@ const RulesDemo = () => {
                         <p className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
                             {assetFor(finished.instrument)?.name ?? finished.instrument} {finished.direction}
                         </p>
-                        <p className={`text-2xl font-semibold tabular-nums ${finished.profitLoss >= 0 ? "text-[#4DD0E1]" : "text-[#F48FB1]"}`}>{signed(finished.profitLoss)}</p>
+                        <p className={`text-2xl font-semibold tabular-nums ${finished.profitLoss >= 0 ? "text-[#4DD0E1]" : "text-[#E955A8]"}`}>{signed(finished.profitLoss)}</p>
                         <p className="mt-4 max-w-lg text-sm leading-relaxed text-[#9a9aa5]">That is the whole process: plan, confirm, trade, review. In your workspace this trade would now be in your Trading Journal. Nothing was saved here, because none of it was real.</p>
                     </div>
                     <Cells

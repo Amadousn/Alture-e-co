@@ -35,7 +35,7 @@ type Props = {
 };
 
 const UP = "#4DD0E1";
-const DOWN = "#F48FB1";
+const DOWN = "#E955A8";
 const TONE = { entry: "#ffffff", stop: DOWN, target: UP, liq: "#FACC15", hint: "rgba(255,255,255,0.55)" } as const;
 const AXIS = 68;
 const FOOT = 24;
@@ -196,7 +196,7 @@ const SimChart = forwardRef<SimChartHandle, Props>(function SimChart(props, ref)
             const from = clamp(x(seen.length - 0.5), 0, plotW);
             ctx.fillStyle = "rgba(77,208,225,0.09)";
             ctx.fillRect(from, Math.min(y(zone.entry), y(zone.target)), plotW - from, Math.abs(y(zone.entry) - y(zone.target)));
-            ctx.fillStyle = "rgba(244,143,177,0.09)";
+            ctx.fillStyle = "rgba(233,85,168,0.09)";
             ctx.fillRect(from, Math.min(y(zone.entry), y(zone.stop)), plotW - from, Math.abs(y(zone.entry) - y(zone.stop)));
         }
 

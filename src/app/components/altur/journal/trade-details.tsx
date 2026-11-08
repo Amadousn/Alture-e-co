@@ -143,7 +143,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
     };
 
     const up = pnl >= 0;
-    const accent = up ? "#4DD0E1" : "#F48FB1";
+    const accent = up ? "#4DD0E1" : "#E955A8";
 
     return createPortal(
         <div style={colours} className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-label={`${source.instrument} trade details`}>
@@ -156,7 +156,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-[var(--j-line,rgba(255,255,255,0.15))]">
                     <div className="flex items-center gap-2.5 min-w-0">
                         <p className="text-lg font-semibold tracking-tight text-[var(--j-ink,#fff)]">{source.instrument}</p>
-                        <span className="text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-[var(--j-activeink,#000)]" style={{ backgroundColor: source.direction === "Long" ? "#4DD0E1" : "#F48FB1" }}>
+                        <span className="text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm text-[var(--j-activeink,#000)]" style={{ backgroundColor: source.direction === "Long" ? "#4DD0E1" : "#E955A8" }}>
                             {source.direction} {source.leverage.toLocaleString(undefined, { maximumFractionDigits: 1 })}×
                         </span>
                         <span className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase px-1.5 py-0.5 rounded-sm border ${isOpen ? "border-primary/60 text-primary" : "border-[var(--j-line,rgba(255,255,255,0.25))] text-[var(--j-mu,#9a9aa5)]"}`}>
@@ -230,7 +230,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                     <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Price move</span>
                     <span className="text-[15px] font-medium tabular-nums text-[var(--j-ink,#fff)]">
                         {formatPrice(source.entryPrice)} <span className="text-[var(--j-fa,#55555e)]">→</span> {formatPrice(reference)}
-                        <span className="ml-3" style={{ color: priceMove >= 0 ? "#4DD0E1" : "#F48FB1" }}>
+                        <span className="ml-3" style={{ color: priceMove >= 0 ? "#4DD0E1" : "#E955A8" }}>
                             {formatSigned(priceMove, "%")}
                         </span>
                     </span>
@@ -239,7 +239,7 @@ const TradeDetails = ({ detail, onClose, onPrevious, onNext, position, reviewabl
                 {detail.kind === "closed" && detail.trade.rulesFollowed !== undefined && (
                     <div className="flex items-center justify-between gap-4 px-5 py-4 border-t border-[var(--j-line,rgba(255,255,255,0.15))]">
                         <span className="text-[11px] uppercase tracking-[0.08em] text-[var(--j-mu,#7d7d87)]">Rules followed</span>
-                        <span className="text-[15px] font-medium" style={{ color: detail.trade.rulesFollowed ? "#4DD0E1" : "#F48FB1" }}>
+                        <span className="text-[15px] font-medium" style={{ color: detail.trade.rulesFollowed ? "#4DD0E1" : "#E955A8" }}>
                             {detail.trade.rulesFollowed ? "Yes" : "No"}
                         </span>
                     </div>
