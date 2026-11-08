@@ -28,6 +28,7 @@ type Dictionary = {
         alturelock: { label: string; title: string; description: string; cta: string };
         journal: { label: string; title: string; description: string; cta: string };
         education: { label: string; title: string; description: string; cta: string };
+        indicators: { label: string; title: string; description: string; cta: string; available: string };
     };
     contact: {
         label: string;
@@ -133,6 +134,13 @@ export const translations: Record<Language, Dictionary> = {
                 description: "Structured trading education focused on market analysis, strategy development, execution, and risk management.",
                 cta: "Explore Education →",
             },
+            indicators: {
+                label: "TradingView",
+                title: "Alture Indicators",
+                description: "Volume profile, footprint and order flow indicators, running on your own charts.",
+                cta: "See the indicators",
+                available: "Available on TradingView",
+            },
         },
         contact: { label: "Contact", title: "Talk to the desk.", text: "For AltureLock access, education, or performance on request, write to us directly. We reply personally.", cta: "Write to us →", email: "Email", location: "Location" },
         footer: {
@@ -231,6 +239,13 @@ export const translations: Record<Language, Dictionary> = {
                 description: "Une formation au trading structurée : analyse de marché, construction de stratégie, exécution et gestion du risque.",
                 cta: "Découvrir la formation →",
             },
+            indicators: {
+                label: "TradingView",
+                title: "Alture Indicators",
+                description: "Volume profile, footprint et order flow, directement sur vos propres graphiques.",
+                cta: "Voir les indicateurs",
+                available: "Disponible sur TradingView",
+            },
         },
         contact: { label: "Contact", title: "Parlons-en.", text: "Pour un accès à AltureLock, la formation ou nos performances sur demande, écrivez-nous directement. Nous répondons personnellement.", cta: "Nous écrire →", email: "Email", location: "Adresse" },
         footer: {
@@ -328,6 +343,13 @@ export const translations: Record<Language, Dictionary> = {
                 description: "Formazione al trading strutturata: analisi di mercato, sviluppo della strategia, esecuzione e gestione del rischio.",
                 cta: "Scopri la formazione →",
             },
+            indicators: {
+                label: "TradingView",
+                title: "Alture Indicators",
+                description: "Volume profile, footprint e order flow, direttamente sui tuoi grafici.",
+                cta: "Scopri gli indicatori",
+                available: "Disponibile su TradingView",
+            },
         },
         contact: { label: "Contatti", title: "Parliamone.", text: "Per l'accesso ad AltureLock, la formazione o le performance su richiesta, scrivici direttamente. Rispondiamo di persona.", cta: "Scrivici →", email: "Email", location: "Sede" },
         footer: {
@@ -424,6 +446,13 @@ export const translations: Record<Language, Dictionary> = {
                 title: "Alture Education",
                 description: "Системное обучение трейдингу: анализ рынка, разработка стратегии, исполнение и управление рисками.",
                 cta: "Подробнее об обучении →",
+            },
+            indicators: {
+                label: "TradingView",
+                title: "Alture Indicators",
+                description: "Профиль объёма, футпринт и ордер-флоу прямо на ваших графиках.",
+                cta: "Смотреть индикаторы",
+                available: "Доступно на TradingView",
             },
         },
         contact: { label: "Контакты", title: "Свяжитесь с нами.", text: "Напишите нам напрямую по поводу доступа к AltureLock, обучения или показателей по запросу. Отвечаем лично.", cta: "Написать нам →", email: "Email", location: "Локация" },

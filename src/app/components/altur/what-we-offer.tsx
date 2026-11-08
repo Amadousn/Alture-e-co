@@ -3,16 +3,26 @@ import Link from "next/link";
 import { SectionMark } from "@/app/components/altur/brand/desk-mark";
 import { useLanguage } from "@/app/i18n/language-context";
 
-// The firm's four activities as an index, not a grid of cards: each row is
+// The firm's five activities as an index, not a grid of cards: each row is
 // one link, and the first is given the room its importance deserves.
+// The TradingView mark, drawn in white: the indicators run there.
+const TradingViewMark = () => (
+    <svg viewBox="0 0 36 28" className="h-3.5 w-auto" fill="#FFFFFF" aria-hidden="true">
+        <path d="M14 22H7V11H0V4h14v18z" />
+        <circle cx="20" cy="8" r="4" />
+        <path d="M28 22h-8l7.5-18h8L28 22z" />
+    </svg>
+);
+
 const WhatWeOffer = () => {
     const { t } = useLanguage();
     const { offer } = t;
 
     const rest = [
         { n: "02", href: "/alturelock#journal", item: offer.journal, tag: "" },
-        { n: "03", href: "/education", item: offer.education, tag: "" },
-        { n: "04", href: "/contact", item: offer.trading, tag: "" },
+        { n: "03", href: "/indicators", item: offer.indicators, tag: "" },
+        { n: "04", href: "/education", item: offer.education, tag: "" },
+        { n: "05", href: "/contact", item: offer.trading, tag: "" },
     ];
 
     return (
@@ -43,7 +53,15 @@ const WhatWeOffer = () => {
                                     <span className="text-2xl md:text-[32px] font-medium tracking-tight text-white">{item.title}</span>
                                     {tag && <span className="text-[10px] font-semibold uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-sm border border-[#4DD0E1]/70 text-[#4DD0E1]">{tag}</span>}
                                 </span>
-                                <span className="col-start-2 lg:col-start-auto lg:col-span-5 text-[15px] leading-relaxed text-white/55 max-w-lg">{item.description}</span>
+                                <span className="col-start-2 lg:col-start-auto lg:col-span-5 text-[15px] leading-relaxed text-white/55 max-w-lg">
+                                    {item.description}
+                                    {"available" in item && typeof item.available === "string" && (
+                                        <span className="mt-3 flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">
+                                            <TradingViewMark />
+                                            {item.available}
+                                        </span>
+                                    )}
+                                </span>
                                 <span className="col-start-2 lg:col-start-auto lg:col-span-2 lg:text-right text-sm font-medium text-white/80 group-hover:text-white whitespace-nowrap">
                                     {item.cta.replace(/\s*→\s*$/, "")}{" "}
                                     <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
