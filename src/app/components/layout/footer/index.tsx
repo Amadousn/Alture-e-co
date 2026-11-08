@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icon } from "@iconify/react";
 import SocialLinks from "@/app/components/altur/brand/social-links";
 import { useLanguage } from "@/app/i18n/language-context";
 
@@ -35,12 +34,7 @@ const Footer = () => {
                 <FooterLink href="/" label={t.footer.home} />
                 <FooterLink href="/alturelock" label={t.footer.alturelock} />
                 <FooterLink href="/#contact" label={t.footer.contactLink} />
-                <li>
-                  <Link href="/education" className="inline-flex items-center gap-2 nav-link is-inline font-light text-sm tracking-wide">
-                    <Icon icon="ph:lock-simple-thin" className="w-4 h-4 flex-shrink-0" style={{ color: "#FFFFFF", filter: "drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))" }} />
-                    {t.footer.education}
-                  </Link>
-              </li>
+                <FooterLink href="/education" label={t.footer.education} />
               </ul>
             </div>
 

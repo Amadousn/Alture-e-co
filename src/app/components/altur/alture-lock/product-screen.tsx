@@ -5,8 +5,7 @@ import Image from "next/image";
 
 // The terminal itself, shown the way the visitor would see it on their own
 // device. Wide screens get the desktop capture, floating and turned toward
-// the reader; phones get the same desktop capture on a monitor, scaled to the
-// screen. The terminal is a desktop workspace for now, and is shown as one.
+// the reader; phones get the chart alone, readable at their size.
 const ProductScreen = ({ caption, leaving = false }: { caption: string; leaving?: boolean }) => {
     const ref = useRef<HTMLDivElement>(null);
     // As the visitor enters, the screen turns to face them and comes forward.
@@ -50,13 +49,9 @@ const ProductScreen = ({ caption, leaving = false }: { caption: string; leaving?
                 </div>
             </div>
 
-            {/* On a phone the terminal is still shown as what it is today: a desktop workspace, on a screen. */}
+            {/* On a phone, only the chart: the symbol, its price and the trade on the candles. */}
             <figure className="lg:hidden mx-auto w-full max-w-[560px]">
-                <div className="rounded-[10px] border border-white/20 bg-[#0b0b0d] p-[5px] shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(255, 255, 255,0.06)]">
-                    <Image src="/images/alturelock/cockpit.jpg" alt="The AltureLock terminal on a desktop screen: the watchlist, the chart and the trade in progress" width={1440} height={900} sizes="(max-width: 600px) 100vw, 560px" className="block h-auto w-full rounded-[5px]" />
-                </div>
-                <div className="mx-auto h-[10px] w-[22%] bg-gradient-to-b from-white/15 to-white/5" aria-hidden="true" />
-                <div className="mx-auto h-[3px] w-[38%] rounded-full bg-white/20" aria-hidden="true" />
+                <Image src="/images/alturelock/cockpit-chart.jpg" alt="The AltureLock terminal chart: Bitcoin on Alture candles, with the entry, stop loss and take profit of the trade in progress" width={1000} height={1232} sizes="(max-width: 600px) 100vw, 560px" className="block h-auto w-full rounded-xl border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.9)]" />
                 <figcaption className="mt-3 text-center text-[11px] text-white/40">{caption}</figcaption>
             </figure>
         </>

@@ -216,11 +216,17 @@ export const Plot = ({ candles, size, count, offset, setCount, setOffset, symbol
                     );
                     // On the scale: the price alone, marked by the level's colour. Its name sits in the
                     // chart on a compact chip beside the structure, so neither covers the scale.
+                    // A level's price steps aside when the live price tag sits on it, so both stay readable.
+                    const tagY = (price: number) => {
+                        const py = y(price);
+                        const live = y(last.c);
+                        return shift === 0 && Math.abs(py - live) < 20 ? live + (py >= live ? 20 : -20) : py;
+                    };
                     const tag = (level: ChartLevel, color: string) => (
                         <g key={`tag-${level.label}`}>
-                            <rect x={plotW + 1} y={y(level.price) - 9} width={AXIS_W - 2} height={18} rx={3} fill="#07080a" />
-                            <rect x={plotW + 1} y={y(level.price) - 9} width={2} height={18} fill={color} />
-                            <text x={plotW + AXIS_W - 6} y={y(level.price) + 4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
+                            <rect x={plotW + 1} y={tagY(level.price) - 9} width={AXIS_W - 2} height={18} rx={3} fill="#07080a" />
+                            <rect x={plotW + 1} y={tagY(level.price) - 9} width={2} height={18} fill={color} />
+                            <text x={plotW + AXIS_W - 6} y={tagY(level.price) + 4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
                                 {fmt(level.price)}
                             </text>
                         </g>

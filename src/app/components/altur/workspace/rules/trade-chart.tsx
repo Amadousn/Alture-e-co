@@ -88,20 +88,24 @@ const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], 
 
     const ready = w > 0 && h > 0 && domain !== null;
     const entry = levels.entry;
+    const x0 = plotW * 0.58;
     const zone = (other: number | null, color: string, text?: string) => {
         if (entry === null || other === null || !ready) return null;
         const top = Math.min(y(entry), y(other));
         const height = Math.abs(y(entry) - y(other));
         return (
             <g>
-                <rect x={0} y={top} width={plotW} height={height} fill={color} opacity={0.11} style={{ transition: dragging ? "none" : "y 0.18s, height 0.18s" }} />
-                {text && height > 44 && (
-                    <>
-                        <rect x={8} y={top + height / 2 - 9} width={text.length * 7 + 14} height={18} fill="#0b0b0d" opacity={0.85} />
-                        <text x={14} y={top + height / 2 + 4} fontSize={11} fontWeight={600} fill={color} letterSpacing="0.06em">
-                            {text}
-                        </text>
-                    </>
+                <defs>
+                    <linearGradient id={`${clip}-${color.slice(1)}`} x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0" stopColor={color} stopOpacity={0.02} />
+                        <stop offset="1" stopColor={color} stopOpacity={0.16} />
+                    </linearGradient>
+                </defs>
+                <rect x={x0} y={top} width={plotW - x0} height={height} fill={`url(#${clip}-${color.slice(1)})`} style={{ transition: dragging ? "none" : "y 0.18s, height 0.18s" }} />
+                {text && height > 30 && (
+                    <text x={plotW - 10} y={top + height / 2 + 4} fontSize={10.5} fontWeight={600} fill={color} textAnchor="end" letterSpacing="0.06em" className="tabular-nums">
+                        {text}
+                    </text>
                 )}
             </g>
         );
@@ -198,6 +202,10 @@ const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], 
                             />
                         ))}
 
+                        {entry !== null && (levels.stop !== null || levels.target !== null) && (
+                            <line x1={x0} x2={x0} y1={y(levels.target ?? entry)} y2={y(levels.stop ?? entry)} stroke="#FFFFFF" strokeOpacity={0.35} />
+                        )}
+
                         {/* Plan levels */}
                         {LEVELS.map((level) => {
                             const value = levels[level.id];
@@ -246,13 +254,28 @@ const TradeChart = ({ candles: allCandles, levels, marker, tick, editable = [], 
                                 >
                                     {/* Generous grab area */}
                                     <rect x={0} y={-13} width={w} height={26} fill="transparent" />
-                                    <line x1={0} x2={plotW} y1={0} y2={0} stroke={level.color} strokeWidth={dragging === level.id ? 2 : 1.25} strokeDasharray={level.dash} />
-                                    <rect x={8} y={-9} width={level.label.length * 6.6 + 12} height={18} fill="#0b0b0d" stroke={level.color} strokeWidth={1} />
-                                    <text x={14} y={4} fontSize={10} fontWeight={700} fill={level.color} letterSpacing="0.08em">
-                                        {level.label}
-                                    </text>
-                                    <rect x={plotW + 1} y={-10} width={GUTTER - 2} height={20} fill={level.color} />
-                                    <text x={plotW + 8} y={4} fontSize={11} fontWeight={700} fill={dark ? "#000000" : "#000000"}>
+                                    {/* The terminal's structure: hairline levels from the entry spine, a chip naming each one. */}
+                                    {dark && <line x1={0} x2={x0} y1={0} y2={0} stroke="#FFFFFF" strokeOpacity={0.14} />}
+                                    <line x1={x0} x2={plotW} y1={0} y2={0} stroke={level.color} strokeOpacity={dark ? 0.75 : level.id === "target" ? 0.7 : 0.55} strokeWidth={dragging === level.id ? 2 : 1} strokeDasharray={level.id === "stop" ? "1 3" : undefined} />
+                                    {level.id === "target" && <path d={`M ${plotW - 14} 0 l 5 -5 l 5 5 l -5 5 Z`} fill="none" stroke={level.color} strokeWidth={1.2} />}
+                                    {dark && <path d={`M ${x0} -6 l 6 6 l -6 6 l -6 -6 Z`} fill="#07080a" stroke="#FFFFFF" strokeWidth={1.4} />}
+                                    {(() => {
+                                        const width = level.label.length * 6.2 + 14;
+                                        const below = level.id === "stop" ? (levels.target ?? Infinity) > value : level.id === "target" ? (levels.stop ?? Infinity) > value : false;
+                                        const cx = dark ? Math.max(4, x0 - 12 - width) : Math.min(x0 + 10, plotW - width - 4);
+                                        const cy = dark ? -8.5 : below ? 4 : -21;
+                                        return (
+                                            <g>
+                                                <rect x={cx} y={cy} width={width} height={17} rx={3} fill="#07080a" fillOpacity={0.88} stroke={level.color} strokeOpacity={0.35} />
+                                                <text x={cx + 7} y={cy + 11.8} fontSize={9.5} fontWeight={600} fill={level.color} letterSpacing="0.09em">
+                                                    {level.label}
+                                                </text>
+                                            </g>
+                                        );
+                                    })()}
+                                    <rect x={plotW + 1} y={-9} width={GUTTER - 2} height={18} rx={3} fill="#07080a" />
+                                    <rect x={plotW + 1} y={-9} width={2} height={18} fill={level.color} />
+                                    <text x={plotW + GUTTER - 6} y={4} fontSize={10.5} fill="#e9e9ec" textAnchor="end" className="tabular-nums">
                                         {fmt(value)}
                                     </text>
                                     {canEdit && (

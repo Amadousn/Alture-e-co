@@ -145,7 +145,7 @@ export function ReadinessBar({ engine, critical, live, onOpen }: { engine: Rules
     return (
         <button type="button" onClick={onOpen} className="cmd-panel group block w-full p-4 text-left">
             <span className="flex items-center justify-between">
-                <span className="cmd-label">Rules · {template.name}</span>
+                <span className="cmd-label">Next trade · {template.name}</span>
                 <span className="text-[11.5px] text-[var(--j-mu)] transition-colors group-hover:text-[var(--j-ink)]">Open →</span>
             </span>
             <span className="mt-3 flex items-baseline gap-2">
