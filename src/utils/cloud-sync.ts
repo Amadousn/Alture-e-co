@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/utils/supabase/client";
+import { hasAccounts, supabase } from "@/utils/supabase/client";
 import { moveImagesToAccount } from "@/utils/trade-shots";
 
 // Keeps a signed-in customer's workspace in their account. localStorage stays the
@@ -52,6 +52,7 @@ const wipe = (keys: string[], images = true) => {
 
 export const startSync = (keys: string[], changeEvent: string) =>
     (started ??= (async () => {
+        if (!hasAccounts) return;
         const { data } = await supabase().auth.getUser();
         const id = data.user?.id;
         if (!id) return;
@@ -80,7 +81,7 @@ export const endSync = async (keys: string[]) => {
     await Promise.all(unsynced().map(push));
     // An image that could not be sent stays in this browser rather than being lost.
     const moved = await moveImagesToAccount();
-    await supabase().auth.signOut();
+    if (hasAccounts) await supabase().auth.signOut();
     userId = null;
     started = null;
     wipe(keys, moved);

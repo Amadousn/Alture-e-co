@@ -5,7 +5,7 @@
 // account they stay in this browser's IndexedDB, keyed by trade id. Each image is
 // resized and re-encoded as JPEG before it is kept.
 
-import { supabase } from "@/utils/supabase/client";
+import { hasAccounts, supabase } from "@/utils/supabase/client";
 
 export type Shot = { id: string; src: string; addedAt: number };
 
@@ -37,6 +37,7 @@ const run = async <T>(mode: IDBTransactionMode, act: (store: IDBObjectStore) => 
 
 // The account's folder for a trade, or null when nobody is signed in.
 export const accountFolder = async (tradeId: string) => {
+    if (!hasAccounts) return null;
     const { data } = await supabase().auth.getUser();
     return data.user ? `${data.user.id}/${tradeId.replace(/[^\w-]/g, "_")}` : null;
 };

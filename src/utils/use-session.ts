@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { supabase } from "@/utils/supabase/client";
+import { hasAccounts, supabase } from "@/utils/supabase/client";
 import { signOutOfWorkspace } from "@/utils/workspace-store";
 
 // Whether this browser is signed in to AltureLock: a customer account, or the
@@ -11,7 +11,7 @@ export function useSession() {
     useEffect(() => {
         let cancelled = false;
         Promise.all([
-            supabase().auth.getUser().then(({ data }) => Boolean(data.user)).catch(() => false),
+            (hasAccounts ? supabase().auth.getUser().then(({ data }) => Boolean(data.user)).catch(() => false) : Promise.resolve(false)),
             fetch("/api/alturelock-login", { cache: "no-store" }).then((res) => res.json()).then((json) => Boolean(json.signedIn)).catch(() => false),
         ]).then(([customer, owner]) => !cancelled && setSignedIn(customer || owner));
         return () => {
