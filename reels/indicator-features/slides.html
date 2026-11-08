@@ -35,7 +35,7 @@
   ctx.save();
   ctx.translate(0, -280);
   // All-in-One: zoomed on the afternoon, where the bubbles, divergence, A and E are.
-  if (p === "allinone") { ctx.translate(1000, 1100); ctx.scale(1.5, 1.5); ctx.translate(-1000, -1100); }
+  if (p === "allinone") { ctx.translate(1080, 1100); ctx.scale(1.5, 1.5); ctx.translate(-1080, -1100); }
   REEL.tagSize = p === "allinone" ? 10 : 13; // VAH / POC / VAL labels, small
   if (p === "orderflow") REEL.slideBubbles = 0.6;
   if (p === "orderflow") REEL.scenes.find((s) => s.id === "03-orderflow").draw(ctx, 3.4);

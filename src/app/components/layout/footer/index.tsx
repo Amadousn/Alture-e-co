@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-12 md:mb-20">
 
           {/* Brand Column */}
-          <div className="md:col-span-4 col-span-12">
+          <div className="md:col-span-4">
             <Link href="/" className="inline-block mb-6 md:mb-8">
               <div className="font-logo text-2xl md:text-3xl font-extralight text-white whitespace-nowrap">
                 Alture <span className="accent-light">&</span> Co.
@@ -28,7 +28,7 @@ const Footer = () => {
           </div>
 
           {/* Navigation Columns */}
-          <div className="md:col-span-8 col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
+          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
             <div>
               <h4 className="text-[11px] !font-normal uppercase tracking-[0.14em] mb-4 md:mb-6 text-white/45">{t.footer.explore}</h4>
               <ul className="space-y-3 md:space-y-4">

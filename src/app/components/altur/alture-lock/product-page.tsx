@@ -14,7 +14,7 @@ import PlanButton from "./plan-button";
 
 const STEPS = [
     { title: "You define the rules", text: "Risk per trade, stop distance, sessions, loss limits, entry confirmations." },
-    { title: "AltureLock locks them", text: "Every order passes the checklist first." },
+    { title: "AltureLock checks them", text: "Every trade goes through your pre-trade rules before you enter." },
     { title: "You execute. It monitors.", text: "Open trades are watched against your rules, and every result is recorded." },
 ];
 
@@ -37,11 +37,12 @@ const INDICATOR = [
 ];
 
 const TOOLS = [
-    ["Markets", "Crypto, WTI and Brent crude oil, gold, silver, the Nasdaq 100 and S&P 500, and crypto stocks, with live prices and your favourites."],
+    ["Trading rules", "Pre-trade rules for every setup: stop loss, take profit, risk/reward, position size and technical conditions checked on closed candles. The trade is ready only when every mandatory rule is confirmed."],
+    ["Alarms", "Live rules watch your open trade. Check (V1) when a condition needs a look, exit signal (V1) on a clear break of your structure, critical (V2) when your risk is at stake: full screen and sound until you confirm."],
     ["Chart", "Candles, live order flow with the Volume Profile, your trade plan drawn on the chart, and TradingView's drawing tools when you need them."],
+    ["Markets", "Crypto, WTI and Brent crude oil, gold, silver, the Nasdaq 100 and S&P 500, and crypto stocks, with live prices and your favourites."],
     ["News and briefing", "Crypto and macro headlines from their publishers, with an AI briefing of what matters."],
     ["Economic calendar", "High-importance events, and the Asia, London, Paris and New York sessions."],
-    ["Your own limits", "Set how many trades or losses end your day, and be told when you are there."],
 ];
 
 // Prices. Only what exists today is listed as included; what is being built says so.
@@ -301,7 +302,7 @@ const ProductPage = () => {
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <p className={label}>How it works</p>
                     <h2 className={`${heading} max-w-[16ch]`}>Your trading. Your rules. One system.</h2>
-                    <p className={`mt-6 max-w-xl ${body}`}>Experience does not stop a broken rule. AltureLock does: you set your rules once, and it enforces them on every trade.</p>
+                    <p className={`mt-6 max-w-xl ${body}`}>Experience does not stop a broken rule. AltureLock catches it: you set your rules once, it checks them before every trade and sounds the alarm when one breaks.</p>
                     <div className="mt-14 grid gap-x-12 gap-y-10 md:grid-cols-3">
                         {STEPS.map((step) => (
                             <div key={step.title}>
@@ -400,7 +401,7 @@ const ProductPage = () => {
             <section className="bg-black !py-16 md:!py-24">
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <p className={label}>Integrated tools</p>
-                    <h2 className={`${heading} max-w-[18ch]`}>Everything you read before a trade, in one terminal.</h2>
+                    <h2 className={`${heading} max-w-[18ch]`}>Your rules, your alarms and the market, in one terminal.</h2>
                     <div className="mt-10 max-w-4xl">
                         <Shot src="/images/alturelock/terminal-flow.jpg" alt="The AltureLock terminal's order flow view of Bitcoin: candles with the Volume Profile, its POC and value area, and the state of each order flow layer" width={1600} height={1324} caption="The terminal's order flow view, from live Bybit trades." />
                     </div>

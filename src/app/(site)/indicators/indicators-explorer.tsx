@@ -35,15 +35,15 @@ const INDICATORS: Indicator[] = [
         text: "Market context, structure and entry timing together. The order flow comes from TradingView's footprint data: the real volume bought and sold at each price.",
         data: "real",
         features: [
-            at(VP, [55.5, 33, 28.5, 57.5]),
+            at(VP, [51.8, 33, 28.5, 57.5]),
             VWAP,
             EMA,
             at(LVN, [0, 36.5, 84, 4.6], [0, 75.4, 84, 5.7]),
-            at(MS, [0, 30.5, 5.5, 3.5], [36.8, 66, 4.6, 3]),
-            at(FVG, [44.2, 57.5, 8.6, 12.4]),
-            { spots: [[43.5, 46.8, 5.2, 5.4], [12, 60.3, 4.2, 4.2], [44.5, 72.3, 4.6, 4.6], [48.2, 77.6, 4, 4]], name: "Delta bubbles", what: "Each bubble is the difference between what was bought at the ask and sold at the bid in a candle, taken from the real footprint. A large bubble at a level shows where one side pushed hard." },
-            { spots: [[12.5, 60.5, 27, 7.2]], name: "CVD divergence", what: "Cumulative volume delta adds every candle's delta. When price makes a new high but CVD does not, buyers are no longer behind the move: a warning before the reversal." },
-            { spots: [[40.8, 53, 6.4, 7.2]], name: "Absorption (A) and exhaustion (E)", what: "Absorption: heavy selling or buying hits a level and price does not move, someone large is absorbing it. Exhaustion: the push runs out of volume at the end of a move. Both are read from the real footprint." },
+            at(MS, [0, 30.5, 5.5, 3.5], [33.1, 66, 4.6, 3]),
+            at(FVG, [40.5, 57.5, 8.6, 12.4]),
+            { spots: [[39.8, 46.8, 5.2, 5.4], [8.3, 60.3, 4.2, 4.2], [40.8, 72.3, 4.6, 4.6], [44.5, 77.6, 4, 4]], name: "Delta bubbles", what: "Each bubble is the difference between what was bought at the ask and sold at the bid in a candle, taken from the real footprint. A large bubble at a level shows where one side pushed hard." },
+            { spots: [[8.8, 60.5, 27, 7.2]], name: "CVD divergence", what: "Cumulative volume delta adds every candle's delta. When price makes a new high but CVD does not, buyers are no longer behind the move: a warning before the reversal." },
+            { spots: [[37.1, 53, 6.4, 7.2]], name: "Absorption (A) and exhaustion (E)", what: "Absorption: heavy selling or buying hits a level and price does not move, someone large is absorbing it. Exhaustion: the push runs out of volume at the end of a move. Both are read from the real footprint." },
         ],
     },
     {
@@ -129,7 +129,7 @@ const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature
                 ))}
             </svg>
             {spots.length > 0 && (
-                <span key={feature.name} className="spot-in absolute bottom-3 left-3 rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-white backdrop-blur">
+                <span key={feature.name} className="spot-in absolute right-3 top-3 max-w-[70%] truncate rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-white backdrop-blur">
                     {String(index + 1).padStart(2, "0")} · {feature.name}
                 </span>
             )}
@@ -177,8 +177,8 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
 
                         <div className="mt-9 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
                             <p className="flex items-baseline gap-2">
-                                <span className="font-logo text-4xl font-light tabular-nums text-white">{item.price ? `$${item.price}` : "Free"}</span>
-                                {item.price > 0 && <span className="text-sm text-white/45">/ month</span>}
+                                <span className="text-[22px] font-medium tabular-nums text-white">{item.price ? `$${item.price}` : "Free"}</span>
+                                {item.price > 0 && <span className="text-[14px] text-white/45">per month</span>}
                             </p>
                             <Link href="/#contact" className="group inline-flex items-center gap-3 rounded-sm bg-white px-7 py-4 text-sm font-semibold text-black transition-colors hover:bg-[#e4e4e8] lit">
                                 {item.price ? "Request access" : "Get it free"}
@@ -203,10 +203,10 @@ const Compare = () => (
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
             <p className={label}>Tick-level or 1-minute</p>
             <h2 className="text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Same read. Different source.</h2>
-            <div className="mt-12 grid grid-cols-[minmax(0,7rem)_1fr_1fr] md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
-                <span />
-                {COMPARE.map((c) => (
-                    <div key={c.name} className="relative border-l border-white/10 px-4 md:px-8 pt-7 pb-6">
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
+                <span className="hidden md:block" />
+                {COMPARE.map((c, j) => (
+                    <div key={c.name} className={`relative border-white/10 pr-3 md:border-l md:px-8 pt-7 pb-6 ${j ? "border-l pl-4" : ""}`}>
                         {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white shadow-[0_0_18px_2px_rgba(255, 255, 255,0.55)]" />}
                         <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-white" : "text-white/40"}`}>
                             <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-white shadow-[0_0_8px_#FFFFFF]" : "border border-white/40"}`} />
@@ -217,17 +217,17 @@ const Compare = () => (
                 ))}
                 {["Order flow from", "Sees", "TradingView plan"].map((term, i) => (
                     <div key={term} className="contents">
-                        <span className="border-t border-white/10 py-4 pr-3 text-[12px] uppercase tracking-[0.1em] text-white/35">{term}</span>
-                        {COMPARE.map((c) => (
-                            <span key={c.name} className={`border-l border-t border-white/10 px-4 md:px-8 py-4 ${c.data === "real" ? "text-white" : "text-white/50"}`}>
+                        <span className="col-span-2 md:col-span-1 border-t border-white/10 pt-4 md:py-4 pr-3 text-[11px] md:text-[12px] uppercase tracking-[0.1em] text-white/35">{term}</span>
+                        {COMPARE.map((c, j) => (
+                            <span key={c.name} className={`border-white/10 pt-2 pb-4 pr-3 ${j ? "border-l pl-4" : ""} md:border-t md:border-l md:px-8 md:py-4 ${c.data === "real" ? "text-white" : "text-white/50"}`}>
                                 {c.rows[i]}
                             </span>
                         ))}
                     </div>
                 ))}
-                <span className="border-t border-white/10 py-5 pr-3 text-[12px] uppercase tracking-[0.1em] text-white/35">Price</span>
-                {COMPARE.map((c) => (
-                    <span key={c.name} className="border-l border-t border-white/10 px-4 md:px-8 py-5">
+                <span className="col-span-2 md:col-span-1 border-t border-white/10 pt-4 md:py-5 pr-3 text-[11px] md:text-[12px] uppercase tracking-[0.1em] text-white/35">Price</span>
+                {COMPARE.map((c, j) => (
+                    <span key={c.name} className={`border-white/10 pt-2 pb-5 pr-3 md:border-t md:border-l md:px-8 md:py-5 ${j ? "border-l pl-4" : ""}`}>
                         <span className={`text-[17px] font-medium tabular-nums ${c.data === "real" ? "text-white" : "text-white/70"}`}>${c.price}</span>
                         <span className="ml-1 text-[13px] text-white/40">per month</span>
                     </span>

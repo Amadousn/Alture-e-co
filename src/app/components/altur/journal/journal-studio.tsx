@@ -499,15 +499,17 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     ];
 
     return (
-        <div style={vars} className={`bg-[var(--j-bg)] [background-image:var(--j-glow,none)] text-[var(--j-ink)] ${framed ? "rounded-[var(--j-radius,12px)] border border-white/10 px-4 pb-8 pt-6 md:px-6" : "-mx-4 -mt-6 min-h-[calc(100dvh-49px)] px-4 pb-16 pt-6 md:-mx-8 md:px-8 xl:-mx-10 xl:px-10"}`}>
+        <div style={vars} className={`bg-[var(--j-bg)] [background-image:var(--j-glow,none)] text-[var(--j-ink)] ${framed ? "-mx-4 px-3 pb-8 pt-4 md:mx-0 md:rounded-[var(--j-radius,12px)] md:border md:border-white/10 md:px-6 md:pt-6" : "-mx-4 -mt-6 min-h-[calc(100dvh-49px)] px-4 pb-16 pt-6 md:-mx-8 md:px-8 xl:-mx-10 xl:px-10"}`}>
             {/* Period, theme and sharing */}
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-[13px]">
+                <span className="-mx-3 flex w-[calc(100%+1.5rem)] gap-1 overflow-x-auto whitespace-nowrap px-3 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:overflow-visible sm:px-0">
                 {presets.map(([id, text]) => (
                     <button key={id} type="button" aria-pressed={preset === id} onClick={() => setPreset(id)} className={`rounded-lg px-3 py-1.5 transition-colors ${preset === id ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : quiet}`}>
                         {text}
                     </button>
                 ))}
-                <span className={`ml-1 flex items-center gap-1.5 rounded-lg px-2.5 py-1 ${preset === "custom" ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "bg-[var(--j-s1)] shadow-[var(--j-shadow)]"}`}>
+                </span>
+                <span className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 sm:ml-1 ${preset === "custom" ? "bg-[var(--j-active)] text-[var(--j-activeink)]" : "bg-[var(--j-s1)] shadow-[var(--j-shadow)]"}`}>
                     <input type="date" aria-label="From" value={custom.from} onChange={(e) => { setCustom({ ...custom, from: e.target.value }); if (custom.to) setPreset("custom"); }} className="!w-[8.6rem] !border-0 !bg-transparent !p-0 !text-[13px] !text-inherit [color-scheme:inherit]" />
                     <span className="opacity-50">–</span>
                     <input type="date" aria-label="To" value={custom.to} onChange={(e) => { setCustom({ ...custom, to: e.target.value }); if (custom.from) setPreset("custom"); }} className="!w-[8.6rem] !border-0 !bg-transparent !p-0 !text-[13px] !text-inherit" />
@@ -558,8 +560,8 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
             )}
 
             {/* 1. Overview */}
-            <Module label="Overview" className="!py-0 mt-4 grid overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.25fr_repeat(5,1fr)]">
-                <div className="p-5 sm:col-span-3 xl:col-span-1">
+            <Module label="Overview" className="!py-0 mt-4 grid grid-cols-2 overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.25fr_repeat(5,1fr)]">
+                <div className="col-span-2 p-4 sm:col-span-3 sm:p-5 xl:col-span-1">
                     <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
                     <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-logo text-[40px] font-extralight ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
                     {inRange.length ? (
@@ -579,10 +581,10 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                     const redDays = days.filter((v) => v < 0).length;
                     const avgW = stats.wins ? stats.averageWin : 0;
                     const avgL = stats.losses ? Math.abs(stats.averageLoss) : 0;
-                    const cell = "flex items-center gap-3.5 border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0";
+                    const cell = "flex flex-col items-start gap-2.5 border-t border-[var(--j-line)] p-4 sm:flex-row sm:items-center sm:gap-3.5 sm:border-l sm:p-5 xl:border-t-0";
                     const head = (k: string, text = k) => <p className="text-[12.5px] text-[var(--j-mu)]" title={DEFINE[k]}>{text}</p>;
                     const big = "mt-1.5 font-mono text-[22px] leading-none";
-                    const small = "mt-1.5 whitespace-nowrap text-[11.5px] text-[var(--j-fa)]";
+                    const small = "mt-1.5 sm:whitespace-nowrap text-[11.5px] text-[var(--j-fa)]";
                     return (
                         <>
                             <div className={cell}>
@@ -593,7 +595,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                     <p className={small}>{inRange.length ? `${stats.wins} won · ${stats.losses} lost` : ""}</p>
                                 </div>
                             </div>
-                            <div className={cell}>
+                            <div className={`${cell} border-l`}>
                                 <Gauge value={stats.profitFactor} />
                                 <div className="min-w-0">
                                     {head("Profit factor")}
@@ -609,7 +611,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                     <p className={small}>{days.length ? `${greenDays} green · ${redDays} red days` : ""}</p>
                                 </div>
                             </div>
-                            <div className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
+                            <div className="border-l border-t border-[var(--j-line)] p-4 sm:p-5 xl:border-t-0">
                                 {head("Win / loss")}
                                 <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)} ×` : empty}</p>
                                 <div className="mt-3 flex h-[7px] gap-[3px] overflow-hidden rounded-full">
@@ -621,7 +623,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                     <span className="text-[var(--j-dn)]">{avgL ? money(-avgL, 0) : ""}</span>
                                 </p>
                             </div>
-                            <div className="border-t border-[var(--j-line)] p-5 sm:border-l xl:border-t-0">
+                            <div className="border-t border-[var(--j-line)] p-4 sm:border-l sm:p-5 xl:border-t-0">
                                 {head("Trades")}
                                 <p className={big}>{inRange.length ? stats.totalTrades : empty}</p>
                                 <p className={small}>{inRange.length ? (stats.maxDrawdown < 0.005 ? "No drawdown yet" : `Max drawdown ${hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`}`) : ""}</p>
