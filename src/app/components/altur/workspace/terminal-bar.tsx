@@ -14,14 +14,14 @@ import { useTheme } from "@/utils/use-theme";
 // exchange is connected, the next session change, the time in UTC, and full screen.
 
 const PAGES: Record<string, string> = {
-    "/alturelock/home": "Command",
+    "/alturelock/home": "Home",
     "/alturelock/workspace": "Terminal",
     "/alturelock/journal": "Journal",
     "/alturelock/rules": "Plan a trade",
     "/alturelock/connections": "Connections",
     "/alturelock/settings": "Settings",
     "/alturelock/help": "Help",
-    "/alturelock/demo/home": "Command",
+    "/alturelock/demo/home": "Home",
     "/alturelock/demo": "Terminal",
     "/alturelock/demo/journal": "Journal",
     "/alturelock/demo/trade": "Guided trade",
@@ -97,7 +97,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
                 {demo && asClient ? (
                     <span className="hidden items-center gap-2 text-[12.5px] text-white/55 sm:inline-flex">
                         <span className="cmd-live h-1.5 w-1.5 rounded-full bg-[#20B8A8]" aria-hidden="true" />
-                        Bybit · read-only
+                        Bybit Live · read-only
                     </span>
                 ) : demo ? (
                     <span className="hidden text-[11.5px] text-[#d9b75a] sm:inline">Simulated account</span>

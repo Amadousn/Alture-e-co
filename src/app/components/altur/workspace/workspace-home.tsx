@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientPreview } from "@/utils/client-preview";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import WorkspaceShell from "./workspace-shell";
@@ -164,7 +165,9 @@ const WorkspaceHome = ({ demoTrades }: { demoTrades?: ClosedTrade[] }) => {
     const fees = trades.reduce((sum, trade) => sum + trade.fee, 0);
 
     // The demo has no profile, so it never shows a name.
-    const name = demo ? "" : settings.name.trim();
+    // The local client preview (?as=client) shows the owner's name as a customer would see theirs.
+    const asClient = useClientPreview();
+    const name = demo && !asClient ? "" : settings.name.trim() || (asClient ? "Diva" : "");
     const part = hour === null ? "Hello" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
     const greeting = name ? `${part}, ${name}.` : `${part}.`;
     const next = now === null ? null : [...rows].sort((a, b) => a.state.changesAt - b.state.changesAt)[0];
