@@ -699,3 +699,4 @@ a:active {
 .j-term .text-\[\#E5484D\] { color: var(--j-dn); }
 .j-term .font-mono, .j-term .tabular-nums { font-family: var(--font-mono, inherit); }
 .j-term input[type="checkbox"] { background-color: var(--j-s2); border: 1px solid var(--j-line); border-radius: 3px; }
+.j-term .bg-black { background-color: var(--j-s1); }

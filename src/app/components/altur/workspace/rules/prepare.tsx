@@ -332,7 +332,7 @@ const Prepare = ({ trade, settings, market, quotes, patch, patchPlan, toggleChec
                             : quotes.status === "loading"
                               ? "Loading prices…"
                               : "Live prices are unavailable right now. You can still choose an asset and plan with prices from your own chart."}{" "}
-                        Bybit also lists some stocks and forex pairs, such as AAPL and EURUSD. A market without a feed opens on TradingView, and you enter its prices yourself.
+                        Bybit also lists oil, gold, stocks and ETFs, such as CLUSDT, XAUUSDT and AAPLUSDT. A market without a feed opens on TradingView, and you enter its prices yourself.
                     </p>
                 </div>
             )}

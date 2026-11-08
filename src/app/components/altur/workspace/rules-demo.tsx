@@ -147,7 +147,7 @@ const RulesDemo = () => {
             </div>
 
             {/* The guide: always in reach, always says what Next will do. */}
-            <div className="fixed inset-x-0 bottom-[58px] lg:bottom-0 z-40 border-t border-white/25 bg-black/95 backdrop-blur" role="region" aria-label="Demo guide">
+            <div className="rail-pad fixed inset-x-0 bottom-[58px] lg:bottom-0 z-40 border-t border-white/25 bg-black/95 backdrop-blur" role="region" aria-label="Demo guide">
                 <div className="h-px bg-accent transition-all duration-500 ease-out" style={{ width: `${(guide.n / TOTAL) * 100}%`, boxShadow: "0 0 10px rgba(255, 255, 255,0.7)" }} aria-hidden="true" />
                 <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-5 gap-y-2 px-4 md:px-6 py-3">
                     <span className="font-mono text-[11px] tabular-nums text-accent">

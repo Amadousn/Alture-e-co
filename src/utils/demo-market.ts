@@ -7,11 +7,12 @@ import type { Candle, Market, Quotes } from "@/utils/use-market";
 const SOURCE = "Simulated data for this demo, not real prices";
 
 const SPEC: Record<string, { price: number; rules: MarketRules }> = {
-    BTCUSDT: { price: 60000, rules: { tickSize: 0.1, qtyStep: 0.001, minQty: 0.001, maxLeverage: 50 } },
-    ETHUSDT: { price: 2500, rules: { tickSize: 0.01, qtyStep: 0.01, minQty: 0.01, maxLeverage: 50 } },
-    SOLUSDT: { price: 100, rules: { tickSize: 0.01, qtyStep: 0.1, minQty: 0.1, maxLeverage: 50 } },
-    XRPUSDT: { price: 1.5, rules: { tickSize: 0.0001, qtyStep: 1, minQty: 1, maxLeverage: 50 } },
-    HYPEUSDT: { price: 80, rules: { tickSize: 0.01, qtyStep: 0.01, minQty: 0.01, maxLeverage: 50 } },
+    BTCUSDT: { price: 76000, rules: { tickSize: 0.1, qtyStep: 0.001, minQty: 0.001, maxLeverage: 50 } },
+    ETHUSDT: { price: 2250, rules: { tickSize: 0.01, qtyStep: 0.01, minQty: 0.01, maxLeverage: 50 } },
+    SOLUSDT: { price: 90, rules: { tickSize: 0.01, qtyStep: 0.1, minQty: 0.1, maxLeverage: 50 } },
+    XRPUSDT: { price: 1.16, rules: { tickSize: 0.0001, qtyStep: 1, minQty: 1, maxLeverage: 50 } },
+    HYPEUSDT: { price: 78, rules: { tickSize: 0.01, qtyStep: 0.01, minQty: 0.01, maxLeverage: 50 } },
+    QQQUSDT: { price: 650, rules: { tickSize: 0.01, qtyStep: 0.01, minQty: 0.01, maxLeverage: 20 } },
 };
 
 // Small deterministic generator, so the demo chart looks the same every time.

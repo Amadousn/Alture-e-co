@@ -26,7 +26,7 @@ export const ASSETS: Asset[] = [
     { id: "SOL", name: "Solana", ticker: "SOL", glyph: "◎", instrument: "SOLUSDT", feed: "SOLUSDT", unit: "SOL" },
     { id: "XRP", name: "XRP", ticker: "XRP", glyph: "✕", instrument: "XRPUSDT", feed: "XRPUSDT", unit: "XRP" },
     { id: "HYPE", name: "Hyperliquid", ticker: "HYPE", glyph: "H", instrument: "HYPEUSDT", feed: "HYPEUSDT", unit: "HYPE" },
-    { id: "NASDAQ", name: "Nasdaq", ticker: "NASDAQ", glyph: "N", instrument: "NASDAQ", feed: null, unit: "units" },
+    { id: "QQQ", name: "Nasdaq 100", ticker: "QQQ", glyph: "N", instrument: "QQQUSDT", feed: "QQQUSDT", unit: "QQQ" },
 ];
 
 export const FEED_PATTERN = /^[A-Z0-9]{2,20}USDT$/;

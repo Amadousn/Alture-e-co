@@ -4,6 +4,7 @@ import TerminalBar from "./terminal-bar";
 import TerminalSidebar, { SIDEBAR_WIDTH } from "./terminal-sidebar";
 import { useWorkspaceSettings } from "@/utils/workspace-store";
 import { useTheme } from "@/utils/use-theme";
+import { THEMES } from "./os/design";
 
 // Frame shared by every AltureLock page outside the terminal itself: the same bar on top, then the page.
 // width="full" lets the page use the whole screen (Home, Journal), with a full-screen control.
@@ -15,7 +16,7 @@ const WorkspaceShell = ({ children, width = "max-w-7xl", demo = false, themed = 
 
 
     return (
-        <div className={`cmd-ground min-h-[100dvh] overflow-y-auto text-white ${SIDEBAR_WIDTH} ${themed && theme === "light" ? `lumen${paper ? " lumen-term" : ""}` : ""}`}>
+        <div style={themed ? undefined : (THEMES.dark as unknown as React.CSSProperties)} className={`cmd-ground min-h-[100dvh] overflow-y-auto text-white ${SIDEBAR_WIDTH} ${themed ? (theme === "light" ? `lumen${paper ? " lumen-term" : ""}` : "") : "j-term"}`}>
             <TerminalSidebar demo={demo} />
             <div className="sticky top-0 z-40">
                 <TerminalBar demo={demo} />
