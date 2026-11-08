@@ -41,18 +41,18 @@ export function demoTrades(now: number): ClosedTrade[] {
 // A simulated open position, priced from the real market so the screen behaves as it would live.
 // The entry is set once from the price seen on arrival; after that only the real price moves.
 export function demoPosition(price: number, now: number, reference = price): OpenPosition {
-    const entry = Math.round(reference * 0.994 * 10) / 10;
-    const quantity = 0.25;
+    const entry = Math.round(reference * 0.999 * 10) / 10;
+    const quantity = 0.65;
     return { instrument: "BTCUSDT", direction: "Long", entryPrice: entry, markPrice: price, quantity, leverage: 10, positionSize: entry * quantity, unrealisedPnl: (price - entry) * quantity, openedAt: now - 95 * 60 * 1000 };
 }
 
 export function demoActiveTrade(price: number, now: number): ActiveTrade {
-    const entry = price * 0.994;
+    const entry = price * 0.999;
     const round = (value: number) => String(Math.round(value * 10) / 10);
     return {
         stage: "execute",
         checks: { context: true, setup: true, risk: true },
-        plan: { instrument: "BTCUSDT", direction: "Long", setup: "Continuation", plannedEntry: round(entry), actualEntry: round(entry), stopLoss: round(entry * 0.99), takeProfit: round(entry * 1.025), quantity: "0.25", leverage: "10", riskAmount: "150", sizeMode: "risk" },
+        plan: { instrument: "BTCUSDT", direction: "Long", setup: "Continuation", plannedEntry: round(entry), actualEntry: round(entry), stopLoss: round(entry * 0.997), takeProfit: round(entry * 1.0075), quantity: "0.65", leverage: "10", riskAmount: String(Math.round(entry * 0.003 * 0.65)), sizeMode: "risk" },
         openedAt: now - 95 * 60 * 1000,
         answers: {},
         manualPrice: "",
