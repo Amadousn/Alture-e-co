@@ -82,7 +82,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
             <p className="hidden items-baseline gap-3 lg:flex">
                 <span className="text-[15px] font-semibold tracking-tight text-white">AltureLock</span>
                 <span className="text-sm text-white/45">/ {PAGES[path] ?? ""}</span>
-                {demo && !asClient && <span className="rounded-sm border border-[#FACC15]/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#FACC15]">Demo</span>}
+                {demo && !asClient && <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#FACC15]">Demo</span>}
             </p>
             {/* On a wide screen these places are in the rail. */}
             <nav aria-label="AltureLock" className="order-3 flex w-full items-center gap-x-6 overflow-x-auto lg:hidden">
@@ -100,7 +100,7 @@ const TerminalBar = ({ demo, themed = false }: { demo: boolean; themed?: boolean
                         Bybit Live · read-only
                     </span>
                 ) : demo ? (
-                    <span className="hidden text-[11.5px] text-[#d9b75a] sm:inline">Simulated account</span>
+                    null
                 ) : (
                     importsStore.ready && (
                         <Link href="/alturelock/connections" className="hidden items-center gap-2 text-[12.5px] text-white/55 transition-colors hover:text-white sm:inline-flex">

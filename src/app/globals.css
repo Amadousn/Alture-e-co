@@ -677,10 +677,10 @@ a:active {
 .lumen-term .bg-accent { background-color: #0c0d10 !important; }
 .lumen-term .border-accent { border-color: #0c0d10 !important; }
 
-/* Room for the AltureLock rail on wide screens: labelled, or folded to icons. */
+/* Room for the AltureLock rail on wide screens: icons only by default, labelled when opened. */
 @media (min-width: 1024px) {
-    .rail-pad { padding-left: 14rem; transition: padding-left 0.2s; }
-    html[data-rail="narrow"] .rail-pad { padding-left: 4rem; }
+    .rail-pad { padding-left: 4rem; transition: padding-left 0.2s; }
+    html[data-rail="wide"] .rail-pad { padding-left: 14rem; }
 }
 
 /* Terminal on the Journal's design language. The root carries THEMES[theme]

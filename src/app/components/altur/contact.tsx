@@ -1,6 +1,6 @@
 "use client";
 
-import { DubaiTime, SectionMark } from "@/app/components/altur/brand/desk-mark";
+import { SectionMark } from "@/app/components/altur/brand/desk-mark";
 import SocialLinks from "@/app/components/altur/brand/social-links";
 import { useLanguage } from "@/app/i18n/language-context";
 
@@ -15,9 +15,7 @@ const Contact = () => {
     return (
         <section id="contact" className="bg-black !py-20 md:!py-28 scroll-mt-20">
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
-                <SectionMark label={contact.label}>
-                    <DubaiTime />
-                </SectionMark>
+                <SectionMark label={contact.label} />
 
                 <div className="grid lg:grid-cols-12 gap-x-10 gap-y-10 pt-10 md:pt-16 items-end">
                     <div className="lg:col-span-7">

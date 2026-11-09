@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Ticker from "../ticker";
 import HeroBtcChart from "./hero-btc-chart";
-import { DubaiTime } from "@/app/components/altur/brand/desk-mark";
 import { useLanguage } from "@/app/i18n/language-context";
 
 const Hero = () => {
@@ -29,13 +28,6 @@ const Hero = () => {
                <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="100">
                   <HeroBtcChart />
                </div>
-            </div>
-
-            {/* Where the desk is, and what time it is there. */}
-            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t border-white/15 py-3.5 text-[11px] uppercase tracking-[0.14em] text-white/45">
-               <span className="text-white/70">Business Bay, Dubai</span>
-               <span className="hidden sm:inline font-mono normal-case tracking-normal">25.19° N, 55.27° E</span>
-               <DubaiTime className="normal-case tracking-normal" />
             </div>
          </div>
 
