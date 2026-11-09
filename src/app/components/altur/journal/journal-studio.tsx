@@ -104,7 +104,38 @@ function useWidth<T extends HTMLElement>() {
 // ---------- the performance chart ----------
 
 type Mode = "equity" | "drawdown" | "daily" | "cumulative" | "outcomes";
-const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
+// A smooth line through the points that never overshoots them (monotone cubic),
+// so a curve never shows a value the data does not have.
+const smoothPath = (pts: [number, number][]) => {
+    const n = pts.length;
+    if (n < 2) return n ? `M${pts[0][0]},${pts[0][1]}` : "";
+    const dx = pts.slice(1).map((p, i) => p[0] - pts[i][0]);
+    const sl = pts.slice(1).map((p, i) => (dx[i] ? (p[1] - pts[i][1]) / dx[i] : 0));
+    const m = pts.map((_, i) => (i === 0 ? sl[0] : i === n - 1 ? sl[n - 2] : sl[i - 1] * sl[i] <= 0 ? 0 : (sl[i - 1] + sl[i]) / 2));
+    for (let i = 0; i < n - 1; i++) {
+        if (!sl[i]) {
+            m[i] = 0;
+            m[i + 1] = 0;
+            continue;
+        }
+        const a = m[i] / sl[i];
+        const b = m[i + 1] / sl[i];
+        const h = a * a + b * b;
+        if (h > 9) {
+            const t = 3 / Math.sqrt(h);
+            m[i] = t * a * sl[i];
+            m[i + 1] = t * b * sl[i];
+        }
+    }
+    let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+    for (let i = 0; i < n - 1; i++) {
+        const h = dx[i] / 3;
+        d += ` C${(pts[i][0] + h).toFixed(1)},${(pts[i][1] + m[i] * h).toFixed(1)} ${(pts[i + 1][0] - h).toFixed(1)},${(pts[i + 1][1] - m[i + 1] * h).toFixed(1)} ${pts[i + 1][0].toFixed(1)},${pts[i + 1][1].toFixed(1)}`;
+    }
+    return d;
+};
+
+const Chart = ({ trades, mode, fill = true }: { trades: ClosedTrade[]; mode: Mode; fill?: boolean }) => {
     const { ref, width } = useWidth<HTMLDivElement>();
     const [hover, setHover] = useState<number | null>(null);
     const [drawn, setDrawn] = useState(false);
@@ -139,7 +170,7 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
         });
     }, [trades, byDayMode]);
     const n = points.length;
-    const bars = mode === "outcomes" || mode === "daily";
+    const bars = mode === "outcomes";
     const series = points.map((p) => (mode === "equity" || mode === "cumulative" ? p.equity : mode === "drawdown" ? p.drawdown : p.pnl));
     let max = Math.max(0, ...series);
     let min = Math.min(0, ...series);
@@ -163,9 +194,9 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
         if (!labels.length || labels[labels.length - 1].text !== text) labels.push({ i, text });
     });
     const shown = labels.filter((_, k) => k % Math.ceil(labels.length / 7) === 0);
-    const line = series.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
-    const base = y(mode === "drawdown" ? 0 : Math.max(min, 0));
-    const stroke = mode === "drawdown" ? "var(--j-dn)" : "var(--j-up)";
+    const line = smoothPath(series.map((v, i) => [x(i), y(v)]));
+    const base = y(0);
+    const zero = y(0);
     const active = hover !== null ? points[hover] : null;
     const hx = hover === null ? 0 : bars ? bx(hover) : x(hover);
     const pick = (clientX: number, el: HTMLElement) => {
@@ -178,9 +209,13 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
             {width > 0 && n > 0 && (
                 <svg width={width} height={height} className="block overflow-visible">
                     <defs>
-                        <linearGradient id="jr-fill" x1="0" x2="0" y1="0" y2="1">
-                            <stop offset="0" style={{ stopColor: mode === "drawdown" ? "var(--j-dn)" : "var(--j-up)" }} stopOpacity={mode === "drawdown" ? 0.02 : 0.2} />
-                            <stop offset="1" style={{ stopColor: mode === "drawdown" ? "var(--j-dn)" : "var(--j-up)" }} stopOpacity={mode === "drawdown" ? 0.2 : 0.01} />
+                        <linearGradient id="jr-up-fill" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0" style={{ stopColor: "var(--j-up)" }} stopOpacity="0.18" />
+                            <stop offset="1" style={{ stopColor: "var(--j-up)" }} stopOpacity="0" />
+                        </linearGradient>
+                        <linearGradient id="jr-dn-fill" x1="0" x2="0" y1="1" y2="0">
+                            <stop offset="0" style={{ stopColor: "var(--j-dn)" }} stopOpacity="0.16" />
+                            <stop offset="1" style={{ stopColor: "var(--j-dn)" }} stopOpacity="0" />
                         </linearGradient>
                         <filter id="jr-glow" x="-5%" y="-30%" width="110%" height="160%">
                             <feGaussianBlur stdDeviation="3.5" />
@@ -210,23 +245,35 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
                             })
                         ) : (
                             <>
-                                <path d={`${line} L${x(n - 1)},${base} L${x(0)},${base} Z`} fill="url(#jr-fill)" />
-                                <path d={line} fill="none" style={{ stroke }} strokeWidth="5" opacity="0.18" filter="url(#jr-glow)" />
-                                <path d={line} fill="none" style={{ stroke }} strokeWidth="2" strokeLinejoin="round" />
-                                <circle cx={x(n - 1)} cy={y(series[n - 1])} r="4" style={{ fill: stroke }} />
+                                {/* Above zero in cyan, below zero in pink: the same line, clipped at the zero line. */}
+                                <clipPath id="jr-above">
+                                    <rect x="-10" y="-10" width={width + 20} height={Math.max(0, zero + 10)} />
+                                </clipPath>
+                                <clipPath id="jr-below">
+                                    <rect x="-10" y={zero} width={width + 20} height={Math.max(0, height - zero + 10)} />
+                                </clipPath>
+                                {fill && (
+                                    <>
+                                        <path d={`${line} L${x(n - 1)},${base} L${x(0)},${base} Z`} fill="url(#jr-up-fill)" clipPath="url(#jr-above)" />
+                                        <path d={`${line} L${x(n - 1)},${base} L${x(0)},${base} Z`} fill="url(#jr-dn-fill)" clipPath="url(#jr-below)" />
+                                    </>
+                                )}
+                                <path d={line} fill="none" style={{ stroke: "var(--j-up)" }} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" clipPath="url(#jr-above)" />
+                                <path d={line} fill="none" style={{ stroke: "var(--j-dn)" }} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" clipPath="url(#jr-below)" />
+                                <circle cx={x(n - 1)} cy={y(series[n - 1])} r="3.5" style={{ fill: series[n - 1] >= 0 ? "var(--j-up)" : "var(--j-dn)" }} />
                             </>
                         )}
                     </g>
                     {active && hover !== null && (
                         <g>
                             <line x1={hx} x2={hx} y1="2" y2={plotH} style={{ stroke: "var(--j-fa)" }} strokeDasharray="3 3" />
-                            {!bars && <circle cx={hx} cy={y(series[hover])} r="5" style={{ fill: "var(--j-s1)", stroke }} strokeWidth="2" />}
+                            {!bars && <circle cx={hx} cy={y(series[hover])} r="4.5" style={{ fill: "var(--j-s1)", stroke: series[hover] >= 0 ? "var(--j-up)" : "var(--j-dn)" }} strokeWidth="2" />}
                         </g>
                     )}
                 </svg>
             )}
             {active && hover !== null && (
-                <div className="pointer-events-none absolute z-10 w-56 rounded-xl bg-[var(--j-tip)] px-3.5 py-3 text-[12.5px] text-[var(--j-tipink)] shadow-xl" style={{ left: Math.min(hx + 16, Math.max(0, plotW - 230)), top: 10 }}>
+                <div className="pointer-events-none absolute z-10 w-56 rounded-lg border border-white/10 bg-[#141217] px-3.5 py-3 text-[12.5px] text-[#ededee] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.8)]" style={{ left: Math.min(hx + 16, Math.max(0, plotW - 230)), top: 10 }}>
                     <p className="opacity-60">
                         {active.trade ? `Trade ${hover + 1} of ${n} · ${shortDay(active.at)}` : longDay(active.id)}
                     </p>
