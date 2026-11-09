@@ -30,11 +30,14 @@ const DemoJournalAccounts = () => {
                 ))}
             </div>
             {account === "sample" && (
-                <div className="mb-6 flex flex-wrap gap-2 text-xs" role="group" aria-label="Show account">
-                    {[{ id: "all" as const, name: "All accounts" }, ...SAMPLE_ACCOUNTS].map((item) => (
-                        <button key={item.id} type="button" aria-pressed={shown === item.id} onClick={() => setShown(item.id)} className={`rounded-sm border px-3 py-1.5 transition-colors ${shown === item.id ? "border-white bg-white/10 text-white" : "border-white/20 text-white/50 hover:text-white"}`}>
-                            {item.name}
-                        </button>
+                <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13.5px]" role="group" aria-label="Show account">
+                    {[{ id: "all" as const, name: "All accounts" }, ...SAMPLE_ACCOUNTS].map((item, i) => (
+                        <span key={item.id} className="flex items-center gap-3">
+                            {i > 0 && <span className="text-white/20" aria-hidden="true">·</span>}
+                            <button type="button" aria-pressed={shown === item.id} onClick={() => setShown(item.id)} className={`border-b pb-0.5 transition-colors ${shown === item.id ? "border-white font-medium text-white" : "border-transparent text-white/65 hover:text-white"}`}>
+                                {item.name}
+                            </button>
+                        </span>
                     ))}
                 </div>
             )}

@@ -72,8 +72,8 @@ const Header: React.FC = () => {
 
   const LanguageSwitcher = ({ className }: { className?: string }) => (
     <div className={`flex items-center gap-1.5 text-xs font-medium tracking-wide ${className ?? ""}`}>
-      {/* Account access, kept quiet: the page stays about the product. */}
-      <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="nav-link is-inline mr-4 whitespace-nowrap">
+      {/* Account access: a clear, quiet outlined action beside the languages. */}
+      <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="mr-5 rounded-full border border-white/35 px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-white transition-colors hover:border-[#4DD0E1] hover:text-[#4DD0E1] whitespace-nowrap">
         {session.signedIn ? t.mobile.workspace : t.mobile.logIn}
       </Link>
       {translated && LANGUAGES.map((lang, i) => (
@@ -159,7 +159,7 @@ const Header: React.FC = () => {
 
         {/* Phones: language and login only. The three destinations are in the tab bar. */}
         <div className="flex items-center gap-4 lg:hidden text-xs font-medium">
-          <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="nav-link is-inline whitespace-nowrap">
+          <Link href={session.signedIn ? "/alturelock/workspace" : "/alturelock/login"} className="rounded-full border border-white/35 px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-white transition-colors hover:border-[#4DD0E1] hover:text-[#4DD0E1] whitespace-nowrap">
             {session.signedIn ? t.mobile.workspace : t.mobile.logIn}
           </Link>
           {translated && (

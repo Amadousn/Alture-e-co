@@ -2,7 +2,7 @@
 
 import FileImport from "./file-import";
 import { insightsOf, Insight, MIN_SCORE_TRADES, Score, scoreOf } from "@/utils/journal-insights";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { ClosedTrade, OpenPosition } from "@/utils/bybit";
 import { computeJournalStats } from "@/utils/journal-stats";
 import { useTradeReviews, TradeReviews, usePrivacy } from "@/utils/workspace-store";
@@ -103,7 +103,7 @@ function useWidth<T extends HTMLElement>() {
 
 // ---------- the performance chart ----------
 
-type Mode = "equity" | "drawdown" | "outcomes";
+type Mode = "equity" | "drawdown" | "daily" | "cumulative" | "outcomes";
 const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
     const { ref, width } = useWidth<HTMLDivElement>();
     const [hover, setHover] = useState<number | null>(null);
@@ -113,20 +113,34 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
         const t = setTimeout(() => setDrawn(true), 40);
         return () => clearTimeout(t);
     }, [mode, trades.length]);
-    const height = 300;
+    const height = 240;
     const plotW = Math.max(0, width - 60);
     const plotH = height - 28;
+    // Per trade for equity, drawdown and outcomes; per UTC day for daily and cumulative P&L.
+    const byDayMode = mode === "daily" || mode === "cumulative";
     const points = useMemo(() => {
+        const items: { id: string; at: number; pnl: number; count: number; trade: ClosedTrade | null }[] = [];
+        if (byDayMode) {
+            for (const t of trades) {
+                const k = dayKey(t.closedAt);
+                const last = items[items.length - 1];
+                if (last && last.id === k) {
+                    last.pnl += t.profitLoss;
+                    last.count += 1;
+                } else items.push({ id: k, at: startOfDay(k), pnl: t.profitLoss, count: 1, trade: null });
+            }
+        } else for (const t of trades) items.push({ id: t.id, at: t.closedAt, pnl: t.profitLoss, count: 1, trade: t });
         let total = 0;
         let peak = 0;
-        return trades.map((trade) => {
-            total += trade.profitLoss;
+        return items.map((item) => {
+            total += item.pnl;
             peak = Math.max(peak, total);
-            return { trade, equity: total, drawdown: total - peak };
+            return { ...item, equity: total, drawdown: total - peak };
         });
-    }, [trades]);
+    }, [trades, byDayMode]);
     const n = points.length;
-    const series = points.map((p) => (mode === "equity" ? p.equity : mode === "drawdown" ? p.drawdown : p.trade.profitLoss));
+    const bars = mode === "outcomes" || mode === "daily";
+    const series = points.map((p) => (mode === "equity" || mode === "cumulative" ? p.equity : mode === "drawdown" ? p.drawdown : p.pnl));
     let max = Math.max(0, ...series);
     let min = Math.min(0, ...series);
     if (max === min) max += 1;
@@ -144,8 +158,8 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
     for (let v = Math.ceil(min / step) * step; v <= max; v += step) ticks.push(v);
     const labels: { i: number; text: string }[] = [];
     points.forEach((p, i) => {
-        const d = new Date(p.trade.closedAt);
-        const text = n > 20 ? MONTHS[d.getUTCMonth()].slice(0, 3) : shortDay(p.trade.closedAt);
+        const d = new Date(p.at);
+        const text = n > 20 ? MONTHS[d.getUTCMonth()].slice(0, 3) : shortDay(p.at);
         if (!labels.length || labels[labels.length - 1].text !== text) labels.push({ i, text });
     });
     const shown = labels.filter((_, k) => k % Math.ceil(labels.length / 7) === 0);
@@ -153,11 +167,11 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
     const base = y(mode === "drawdown" ? 0 : Math.max(min, 0));
     const stroke = mode === "drawdown" ? "var(--j-dn)" : "var(--j-up)";
     const active = hover !== null ? points[hover] : null;
-    const hx = hover === null ? 0 : mode === "outcomes" ? bx(hover) : x(hover);
+    const hx = hover === null ? 0 : bars ? bx(hover) : x(hover);
     const pick = (clientX: number, el: HTMLElement) => {
         const px = clientX - el.getBoundingClientRect().left;
         if (!n || px < 0 || px > plotW) return setHover(null);
-        setHover(mode === "outcomes" ? Math.min(n - 1, Math.floor(px / slot)) : Math.round((px / plotW) * (n - 1)));
+        setHover(bars ? Math.min(n - 1, Math.floor(px / slot)) : Math.round((px / plotW) * (n - 1)));
     };
     return (
         <div ref={ref} className="relative select-none" style={{ height }} onMouseMove={(e) => pick(e.clientX, e.currentTarget)} onMouseLeave={() => setHover(null)} role="img" aria-label={n ? `${mode} over ${n} trades` : "No trades in this period"}>
@@ -184,15 +198,15 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
                         </g>
                     ))}
                     {shown.map((l) => (
-                        <text key={l.text + l.i} x={Math.min(plotW - 30, mode === "outcomes" ? bx(l.i) : x(l.i))} y={height - 4} style={{ fill: "var(--j-fa)" }} fontSize="11.5">
+                        <text key={l.text + l.i} x={Math.min(plotW - 30, bars ? bx(l.i) : x(l.i))} y={height - 4} style={{ fill: "var(--j-fa)" }} fontSize="11.5">
                             {l.text}
                         </text>
                     ))}
                     <g clipPath="url(#jr-reveal)">
-                        {mode === "outcomes" ? (
+                        {bars ? (
                             points.map((p, i) => {
-                                const v = p.trade.profitLoss;
-                                return <rect key={p.trade.id} x={bx(i) - Math.max(1, slot * 0.32)} width={Math.max(2, slot * 0.64)} y={Math.min(y(v), y(0))} height={Math.max(1, Math.abs(y(v) - y(0)))} style={{ fill: v >= 0 ? "var(--j-up)" : "var(--j-dn)" }} opacity={hover === null || hover === i ? 0.95 : 0.35} rx="2" />;
+                                const v = p.pnl;
+                                return <rect key={p.id} x={bx(i) - Math.max(1, slot * 0.32)} width={Math.max(2, slot * 0.64)} y={Math.min(y(v), y(0))} height={Math.max(1, Math.abs(y(v) - y(0)))} style={{ fill: v >= 0 ? "var(--j-up)" : "var(--j-dn)" }} opacity={hover === null || hover === i ? 0.95 : 0.35} rx="2" />;
                             })
                         ) : (
                             <>
@@ -206,7 +220,7 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
                     {active && hover !== null && (
                         <g>
                             <line x1={hx} x2={hx} y1="2" y2={plotH} style={{ stroke: "var(--j-fa)" }} strokeDasharray="3 3" />
-                            {mode !== "outcomes" && <circle cx={hx} cy={y(series[hover])} r="5" style={{ fill: "var(--j-s1)", stroke }} strokeWidth="2" />}
+                            {!bars && <circle cx={hx} cy={y(series[hover])} r="5" style={{ fill: "var(--j-s1)", stroke }} strokeWidth="2" />}
                         </g>
                     )}
                 </svg>
@@ -214,15 +228,21 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
             {active && hover !== null && (
                 <div className="pointer-events-none absolute z-10 w-56 rounded-xl bg-[var(--j-tip)] px-3.5 py-3 text-[12.5px] text-[var(--j-tipink)] shadow-xl" style={{ left: Math.min(hx + 16, Math.max(0, plotW - 230)), top: 10 }}>
                     <p className="opacity-60">
-                        Trade {hover + 1} of {n} · {shortDay(active.trade.closedAt)}
+                        {active.trade ? `Trade ${hover + 1} of ${n} · ${shortDay(active.at)}` : longDay(active.id)}
                     </p>
-                    <p className="mt-1">
-                        {asset(active.trade.instrument)} {active.trade.direction.toLowerCase()}
-                        {active.trade.setup ? <span className="opacity-60"> · {active.trade.setup}</span> : null}
-                    </p>
+                    {active.trade ? (
+                        <p className="mt-1">
+                            {asset(active.trade.instrument)} {active.trade.direction.toLowerCase()}
+                            {active.trade.setup ? <span className="opacity-60"> · {active.trade.setup}</span> : null}
+                        </p>
+                    ) : (
+                        <p className="mt-1">
+                            {active.count} {active.count === 1 ? "trade" : "trades"}
+                        </p>
+                    )}
                     <p className="mt-2 flex justify-between">
-                        <span className="opacity-60">Net</span>
-                        <span className="font-mono">{money(active.trade.profitLoss)}</span>
+                        <span className="opacity-60">{active.trade ? "Net" : "Day P&L"}</span>
+                        <span className="font-mono">{money(active.pnl)}</span>
                     </p>
                     <p className="mt-0.5 flex justify-between">
                         <span className="opacity-60">{mode === "drawdown" ? "Below the high" : "Running total"}</span>
@@ -234,75 +254,91 @@ const Chart = ({ trades, mode }: { trades: ClosedTrade[]; mode: Mode }) => {
     );
 };
 
-// A donut split between wins and losses, the share of wins written inside.
-const Ring = ({ win, loss, size = 54 }: { win: number; loss: number; size?: number }) => {
-    const r = 15.5;
-    const c = 2 * Math.PI * r;
-    const total = win + loss;
-    const share = total ? win / total : 0;
-    return (
-        <svg viewBox="0 0 36 36" width={size} height={size} className="flex-shrink-0 -rotate-90" aria-hidden="true">
-            <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-s3)" strokeWidth="3.2" />
-            {total > 0 && <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-dn)" strokeWidth="3.2" strokeDasharray={`${c} ${c}`} />}
-            {total > 0 && <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-up)" strokeWidth="3.2" strokeDasharray={`${share * c} ${c}`} strokeLinecap={share > 0 && share < 1 ? "round" : "butt"} />}
-        </svg>
-    );
+// What to work on when a factor is the weakest. Each line points to something the
+// trader can check in their own journal; the figure comes from the factor itself.
+const IMPROVE: Record<string, (detail: string) => string> = {
+    "Win rate": (d) => `${d}. Compare your strategies in Analysis and keep the setups that win most often.`,
+    "Profit factor": (d) => `${d}. Your losing trades take back too much: check how far your stops sit on them.`,
+    "Win / loss size": (d) => `${d}. Let winners reach their target, or cut losers sooner, to widen that gap.`,
+    Consistency: (d) => `${d}. A daily loss limit in your rules stops one bad day from spreading.`,
+    "Drawdown control": (d) => `${d}. Reduce size after two losses in a row to keep the next fall shallower.`,
+    Discipline: (d) => `${d}. Confirm every rule before the entry, not after.`,
 };
 
-// A half dial for the profit factor: 0 to 3, with 1 (break-even) marked.
-const Gauge = ({ value }: { value: number | null }) => {
-    const v = value === null ? 0 : Math.min(3, value);
-    const len = Math.PI * 15;
-    const color = value === null ? "var(--j-s3)" : value >= 1 ? "var(--j-up)" : "var(--j-dn)";
-    return (
-        <svg viewBox="0 0 36 20" width={60} height={34} className="flex-shrink-0" aria-hidden="true">
-            <path d="M3 18 A15 15 0 0 1 33 18" fill="none" stroke="var(--j-s3)" strokeWidth="3.2" strokeLinecap="round" />
-            <path d="M3 18 A15 15 0 0 1 33 18" fill="none" stroke={color} strokeWidth="3.2" strokeLinecap="round" strokeDasharray={`${(v / 3) * len} ${len}`} />
-            <line x1="18" y1="1.2" x2="18" y2="5.6" stroke="var(--j-mu)" strokeWidth="0.8" transform="rotate(-30 18 18)" />
-        </svg>
-    );
-};
-
-// The Alture Score: a large ring, the parts it is made of, and what the trades say.
+// The Alture Score: the ring, each factor as a figure out of 100, and what it means.
 const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight[]; count: number }) => {
     const r = 15.5;
     const c = 2 * Math.PI * r;
     const color = (v: number) => (v >= 70 ? "var(--j-up)" : v >= 45 ? "var(--j-ink)" : "var(--j-dn)");
+    const parts = score?.parts ?? [];
+    const sorted = [...parts].sort((x, y) => y.value - x.value);
+    const strong = sorted[0];
+    const weak = sorted[sorted.length - 1];
     return (
-        <div className="grid gap-x-8 gap-y-6 p-5 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1.25fr)] lg:items-center">
-            <div className="flex items-center gap-5">
-                <div className="relative h-[112px] w-[112px] flex-shrink-0">
-                    <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" aria-hidden="true">
-                        <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-s3)" strokeWidth="2.4" />
-                        {score && <circle cx="18" cy="18" r={r} fill="none" stroke={color(score.total)} strokeWidth="2.4" strokeLinecap="round" strokeDasharray={`${(score.total / 100) * c} ${c}`} className="transition-[stroke-dasharray] duration-700" />}
-                    </svg>
-                    <span className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="font-logo text-[34px] font-extralight leading-none">{score ? score.total : "–"}</span>
-                        <span className="mt-1 text-[10.5px] text-[var(--j-fa)]">of 100</span>
-                    </span>
-                </div>
-                <div className="lg:hidden xl:block">
-                    <p className="text-[16px] font-medium">Alture Score</p>
-                    <p className="mt-1 max-w-[13rem] text-[12px] leading-relaxed text-[var(--j-mu)]">{score ? "From your own trades in this period." : `Shows from ${MIN_SCORE_TRADES} closed trades. ${count} so far.`}</p>
-                </div>
-            </div>
-            <ul className="space-y-2.5">
-                {(score?.parts ?? []).map((p) => (
-                    <li key={p.label} className="grid grid-cols-[7.5rem_minmax(0,1fr)_2rem] items-center gap-3 text-[12.5px]" title={p.detail}>
-                        <span className="truncate text-[var(--j-mu)]">{p.label}</span>
-                        <span className="h-[5px] rounded-full bg-[var(--j-s2)]">
-                            <span className="block h-full rounded-full transition-[width] duration-700" style={{ width: `${p.value}%`, background: color(p.value) }} />
+        <div className="px-5 py-5">
+            <div className="grid gap-x-10 gap-y-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center">
+                <div className="flex items-center gap-5">
+                    <div className="relative h-[96px] w-[96px] flex-shrink-0">
+                        <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90" aria-hidden="true">
+                            <circle cx="18" cy="18" r={r} fill="none" stroke="var(--j-s3)" strokeWidth="2" />
+                            {score && <circle cx="18" cy="18" r={r} fill="none" stroke={color(score.total)} strokeWidth="2" strokeLinecap="round" strokeDasharray={`${(score.total / 100) * c} ${c}`} className="transition-[stroke-dasharray] duration-700" />}
+                        </svg>
+                        <span className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="font-logo text-[32px] font-extralight leading-none">{score ? score.total : "–"}</span>
+                            <span className="mt-1 text-[10.5px] text-[var(--j-fa)]">of 100</span>
                         </span>
-                        <span className="text-right font-mono tabular-nums">{Math.round(p.value)}</span>
-                    </li>
-                ))}
-            </ul>
-            <div className="lg:border-l lg:border-[var(--j-line)] lg:pl-8">
+                    </div>
+                    <div>
+                        <p className="text-[16px] font-medium">Alture Score</p>
+                        <p className="mt-1 max-w-[13rem] text-[12px] leading-relaxed text-[var(--j-mu)]">{score ? "From your own trades in this period." : `Shows from ${MIN_SCORE_TRADES} closed trades. ${count} so far.`}</p>
+                    </div>
+                </div>
+                {parts.length > 0 && (
+                    <dl className={`grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 ${parts.length > 5 ? "xl:grid-cols-6" : "xl:grid-cols-5"}`}>
+                        {parts.map((p) => (
+                            <div key={p.label} className="min-w-0 lg:border-l lg:border-[var(--j-line)] lg:pl-5">
+                                <dt className="truncate text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-mu)]">{p.label}</dt>
+                                <dd className="mt-2 leading-none">
+                                    <span className="font-logo text-[30px] font-extralight" style={{ color: color(p.value) }}>{Math.round(p.value)}</span>
+                                    <span className="ml-1 font-mono text-[11px] text-[var(--j-fa)]">/100</span>
+                                </dd>
+                                <dd className="mt-2 text-[11.5px] leading-snug text-[var(--j-fa)]">{p.detail}</dd>
+                            </div>
+                        ))}
+                    </dl>
+                )}
+            </div>
+            {score && strong && weak && (
+                <div className="mt-6 border-t border-[var(--j-line)] pt-5">
+                    <p className="text-[12.5px] text-[var(--j-mu)]">What your score tells you</p>
+                    <dl className="mt-3 grid gap-x-10 gap-y-4 text-[13.5px] leading-relaxed md:grid-cols-[minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,1.4fr)]">
+                        <div>
+                            <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-up)]">Strongest</dt>
+                            <dd className="mt-1">
+                                {strong.label} <span className="font-mono text-[var(--j-mu)]">{Math.round(strong.value)}</span>
+                                <span className="block text-[12.5px] text-[var(--j-mu)]">{strong.detail}</span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-dn)]">Weakest</dt>
+                            <dd className="mt-1">
+                                {weak.label} <span className="font-mono text-[var(--j-mu)]">{Math.round(weak.value)}</span>
+                                <span className="block text-[12.5px] text-[var(--j-mu)]">{weak.detail}</span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt className="text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-mu)]">To improve</dt>
+                            <dd className="mt-1">{(IMPROVE[weak.label] ?? ((d: string) => d))(weak.detail)}</dd>
+                        </div>
+                    </dl>
+                </div>
+            )}
+            <div className="mt-5 border-t border-[var(--j-line)] pt-4">
                 <p className="text-[12.5px] text-[var(--j-mu)]">What your trades say</p>
                 {insights.length === 0 ? (
                     <p className="mt-2 text-[13px] leading-relaxed text-[var(--j-fa)]">{score ? "No clear pattern yet in this period. Findings appear when a difference is large enough to matter." : "Findings appear once there are enough trades to compare."}</p>
                 ) : (
-                    <ul className="mt-2 space-y-2.5">
+                    <ul className="mt-2 grid gap-x-10 gap-y-2 md:grid-cols-2">
                         {insights.map((i) => (
                             <li key={i.text} className="flex gap-3 text-[13.5px] leading-relaxed">
                                 <span className="mt-[8px] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: i.tone === "up" ? "var(--j-up)" : i.tone === "down" ? "var(--j-dn)" : "var(--j-mu)" }} />
@@ -559,147 +595,74 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                 </Module>
             )}
 
-            {/* 1. Overview */}
-            <Module label="Overview" className="!py-0 mt-4 grid grid-cols-2 overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.25fr_repeat(5,1fr)]">
-                <div className="col-span-2 p-4 sm:col-span-3 sm:p-5 xl:col-span-1">
-                    <p className="text-[12.5px] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
-                    <p className={`mt-2 leading-none tracking-tight ${inRange.length ? `font-logo text-[40px] font-extralight ${tone(stats.totalPnl)}` : "text-[26px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
-                    {inRange.length ? (
-                        <dl className="mt-3 grid grid-cols-3 gap-2 border-t border-[var(--j-line)] pt-3 text-[11.5px]">
-                            <div title="Closed trades, after fees"><dt className="text-[var(--j-fa)]">Realised</dt><dd className={`mt-0.5 font-mono ${tone(stats.totalPnl)}`}>{money(stats.totalPnl, 0)}</dd></div>
-                            <div title="Trading fees paid on these trades, already taken off"><dt className="text-[var(--j-fa)]">Fees</dt><dd className="mt-0.5 font-mono text-[var(--j-mu)]">{hidden ? plain(fees) : `−${plain(fees)}`}</dd></div>
-                            <div title="Open positions right now, not counted in the result"><dt className="text-[var(--j-fa)]">Unrealised</dt><dd className={`mt-0.5 font-mono ${positions.length ? tone(unrealised) : "text-[var(--j-fa)]"}`}>{positions.length ? money(unrealised, 0) : "–"}</dd></div>
-                        </dl>
-                    ) : (
-                        <p className="mt-2 text-[12px] text-[var(--j-fa)]">{ordered.length ? "Choose another period" : ""}</p>
-                    )}
-                </div>
-                {(() => {
-                    const empty = <span className="text-[var(--j-fa)]">–</span>;
-                    const days = [...new Set(inRange.map((t) => dayKey(t.closedAt)))].map((k) => inRange.filter((t) => dayKey(t.closedAt) === k).reduce((s, t) => s + t.profitLoss, 0));
-                    const greenDays = days.filter((v) => v > 0).length;
-                    const redDays = days.filter((v) => v < 0).length;
-                    const avgW = stats.wins ? stats.averageWin : 0;
-                    const avgL = stats.losses ? Math.abs(stats.averageLoss) : 0;
-                    const cell = "flex flex-col items-start gap-2.5 border-t border-[var(--j-line)] p-4 sm:flex-row sm:items-center sm:gap-3.5 sm:border-l sm:p-5 xl:border-t-0";
-                    const head = (k: string, text = k) => <p className="text-[12.5px] text-[var(--j-mu)]" title={DEFINE[k]}>{text}</p>;
-                    const big = "mt-1.5 font-mono text-[22px] leading-none";
-                    const small = "mt-1.5 sm:whitespace-nowrap text-[11.5px] text-[var(--j-fa)]";
-                    return (
-                        <>
-                            <div className={cell}>
-                                <Ring win={stats.wins} loss={stats.losses} />
-                                <div className="min-w-0">
-                                    {head("Win rate")}
-                                    <p className={big}>{inRange.length ? `${Math.round(stats.winRate)}%` : empty}</p>
-                                    <p className={small}>{inRange.length ? `${stats.wins} won · ${stats.losses} lost` : ""}</p>
-                                </div>
-                            </div>
-                            <div className={`${cell} border-l`}>
-                                <Gauge value={stats.profitFactor} />
-                                <div className="min-w-0">
-                                    {head("Profit factor")}
-                                    <p className={big}>{stats.profitFactor === null ? empty : stats.profitFactor.toFixed(2)}</p>
-                                    <p className={small}>{stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Above 1 earns"}</p>
-                                </div>
-                            </div>
-                            <div className={cell}>
-                                <Ring win={greenDays} loss={redDays} />
-                                <div className="min-w-0">
-                                    {head("Day win rate")}
-                                    <p className={big}>{days.length ? `${Math.round((greenDays / Math.max(1, greenDays + redDays)) * 100)}%` : empty}</p>
-                                    <p className={small}>{days.length ? `${greenDays} green · ${redDays} red days` : ""}</p>
-                                </div>
-                            </div>
-                            <div className="border-l border-t border-[var(--j-line)] p-4 sm:p-5 xl:border-t-0">
-                                {head("Win / loss")}
-                                <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)} ×` : empty}</p>
-                                <div className="mt-3 flex h-[7px] gap-[3px] overflow-hidden rounded-full">
-                                    <span className="rounded-l-full bg-[var(--j-up)]" style={{ flex: avgW || (avgL ? 0 : 1) }} />
-                                    <span className="rounded-r-full bg-[var(--j-dn)]" style={{ flex: avgL || (avgW ? 0 : 1) }} />
-                                </div>
-                                <p className="mt-1.5 flex justify-between font-mono text-[11.5px]">
-                                    <span className="text-[var(--j-up)]">{avgW ? money(avgW, 0) : ""}</span>
-                                    <span className="text-[var(--j-dn)]">{avgL ? money(-avgL, 0) : ""}</span>
+            {/* 1. Overview: the figures, compact */}
+            {(() => {
+                const empty = <span className="text-[var(--j-fa)]">–</span>;
+                const days = [...new Set(inRange.map((t) => dayKey(t.closedAt)))].map((k) => inRange.filter((t) => dayKey(t.closedAt) === k).reduce((s, t) => s + t.profitLoss, 0));
+                const greenDays = days.filter((v) => v > 0).length;
+                const redDays = days.filter((v) => v < 0).length;
+                const avgW = stats.wins ? stats.averageWin : 0;
+                const avgL = stats.losses ? Math.abs(stats.averageLoss) : 0;
+                const cell = "min-w-0 border-t border-[var(--j-line)] px-4 py-3.5 sm:border-l xl:border-t-0";
+                const head = (k: string, text = k) => <p className="truncate text-[11px] uppercase tracking-[0.1em] text-[var(--j-mu)]" title={DEFINE[k]}>{text}</p>;
+                const big = "mt-1.5 font-mono text-[20px] leading-none";
+                const small = "mt-1.5 truncate text-[11px] text-[var(--j-fa)]";
+                return (
+                    <Module label="Overview" className="!py-0 mt-4 grid grid-cols-2 overflow-hidden sm:grid-cols-3 xl:grid-cols-[1.5fr_repeat(6,minmax(0,1fr))]">
+                        <div className="col-span-2 px-4 py-3.5 sm:col-span-3 xl:col-span-1">
+                            <p className="text-[11px] uppercase tracking-[0.1em] text-[var(--j-mu)]" title="Realised result of closed trades, after fees. Open positions count once closed.">Net P&amp;L · {range.label}</p>
+                            <p className={`mt-1.5 leading-none tracking-tight ${inRange.length ? `font-logo text-[30px] font-extralight ${tone(stats.totalPnl)}` : "text-[22px] text-[var(--j-fa)]"}`}>{inRange.length ? money(stats.totalPnl) : "No trades yet"}</p>
+                            {inRange.length ? (
+                                <p className="mt-2 flex flex-wrap gap-x-3 font-mono text-[11px] text-[var(--j-fa)]">
+                                    <span title="Trading fees paid on these trades, already taken off">Fees {hidden ? plain(fees) : `−${plain(fees)}`}</span>
+                                    <span title="Open positions right now, not counted in the result">
+                                        Open <span className={positions.length ? tone(unrealised) : ""}>{positions.length ? money(unrealised, 0) : "–"}</span>
+                                    </span>
                                 </p>
-                            </div>
-                            <div className="border-t border-[var(--j-line)] p-4 sm:border-l sm:p-5 xl:border-t-0">
-                                {head("Trades")}
-                                <p className={big}>{inRange.length ? stats.totalTrades : empty}</p>
-                                <p className={small}>{inRange.length ? (stats.maxDrawdown < 0.005 ? "No drawdown yet" : `Max drawdown ${hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`}`) : ""}</p>
-                            </div>
-                        </>
-                    );
-                })()}
-            </Module>
-
-            {/* 1b. Score and findings */}
-            {inRange.length > 0 && (
-                <Module label="Alture Score" className="!py-0 mt-4">
-                    <ScoreCard score={score} insights={insights} count={inRange.length} />
-                </Module>
-            )}
-
-            {/* 2. Performance and months */}
-            <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.75fr)_minmax(0,1fr)]">
-                <Module label="Performance" className="p-5">
-                    <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-                        <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">Performance</h2>
-                        <span className="ml-auto flex gap-4 text-[13px]" role="tablist" aria-label="Chart">
-                            {(
-                                [
-                                    ["equity", "Equity"],
-                                    ["drawdown", "Drawdown"],
-                                    ["outcomes", "Trade outcomes"],
-                                ] as const
-                            ).map(([id, text]) => (
-                                <button key={id} type="button" role="tab" aria-selected={mode === id} onClick={() => setMode(id)} className={mode === id ? "border-b-[1.5px] border-[var(--j-ink)] pb-1 text-[var(--j-ink)]" : `pb-1 ${quiet}`}>
-                                    {text}
-                                </button>
-                            ))}
-                        </span>
-                    </div>
-                    <div className="mt-4">{inRange.length ? <Chart trades={inRange} mode={mode} /> : <p className="flex h-[300px] items-center justify-center text-sm text-[var(--j-mu)]">{ordered.length ? "No trade closed in this period." : "Your curve appears with your first recorded trade."}</p>}</div>
-                </Module>
-
-                <Module label="By month" className="flex flex-col p-5">
-                    <div className="flex items-baseline justify-between">
-                        <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">By month</h2>
-                        <span className="text-[12.5px] text-[var(--j-fa)]">Choose a month to filter</span>
-                    </div>
-                    {months.length ? (
-                        <div className="mt-4 flex flex-1 items-stretch gap-2" style={{ minHeight: 210 }}>
-                            {months.map((mo) => {
-                                const inside = mo.list.some((t) => t.closedAt >= range.from && t.closedAt < range.to);
-                                const h = (Math.abs(mo.total) / monthMax) * 100;
-                                return (
-                                    <button key={`${mo.y}-${mo.m}`} type="button" onClick={() => pickMonth(mo.y, mo.m)} title={`${MONTHS[mo.m]} ${mo.y}: ${money(mo.total)} over ${mo.list.length} trades`} className="group flex min-w-0 flex-1 flex-col items-center">
-                                        <span className={`font-mono text-[11.5px] ${tone(mo.total)}`}>{axisMoney(mo.total)}</span>
-                                        <span className="relative mt-1.5 flex w-full flex-1 items-end justify-center">
-                                            <span className="w-full max-w-[64px] rounded-md transition-all group-hover:opacity-80" style={{ height: `${Math.max(3, h)}%`, background: mo.total >= 0 ? (inside ? "var(--j-up)" : "var(--j-upsoft)") : inside ? "var(--j-dn)" : "var(--j-dnbg)" }} />
-                                        </span>
-                                        <span className={`mt-2 text-[12px] ${inside ? "text-[var(--j-ink)]" : "text-[var(--j-mu)]"}`}>{MONTHS[mo.m].slice(0, 3)}</span>
-                                        <span className="text-[11px] text-[var(--j-fa)]">{mo.list.length} trades</span>
-                                    </button>
-                                );
-                            })}
+                            ) : (
+                                <p className="mt-2 text-[12px] text-[var(--j-fa)]">{ordered.length ? "Choose another period" : ""}</p>
+                            )}
                         </div>
-                    ) : (
-                        <p className="mt-6 text-sm text-[var(--j-mu)]">Months appear with your first trade.</p>
-                    )}
-                    <p className="mt-4 border-t border-[var(--j-line)] pt-3 text-[12.5px] text-[var(--j-mu)]">
-                        Fees in this period <span className="font-mono text-[var(--j-ink)]">{plain(fees)}</span>
-                        {positions.length > 0 && (
-                            <>
-                                {" · "}Unrealised on open positions <span className={`font-mono ${tone(unrealised)}`}>{money(unrealised)}</span>
-                            </>
-                        )}
-                    </p>
-                </Module>
-            </div>
+                        <div className={`${cell} border-l`}>
+                            {head("Win rate")}
+                            <p className={big}>{inRange.length ? `${Math.round(stats.winRate)}%` : empty}</p>
+                            <p className={small}>{inRange.length ? <><span className="text-[var(--j-up)]">{stats.wins} won</span> · <span className="text-[var(--j-dn)]">{stats.losses} lost</span></> : ""}</p>
+                        </div>
+                        <div className={cell}>
+                            {head("Profit factor")}
+                            <p className={`${big} ${stats.profitFactor === null ? "" : stats.profitFactor >= 1 ? "text-[var(--j-up)]" : "text-[var(--j-dn)]"}`}>{stats.profitFactor === null ? empty : stats.profitFactor.toFixed(2)}</p>
+                            <p className={small}>{stats.profitFactor === null ? (stats.losses === 0 && stats.wins ? "No losing trade" : "") : "Above 1 earns"}</p>
+                        </div>
+                        <div className={`${cell} border-l`}>
+                            {head("Day win rate")}
+                            <p className={big}>{days.length ? `${Math.round((greenDays / Math.max(1, greenDays + redDays)) * 100)}%` : empty}</p>
+                            <p className={small}>{days.length ? `${greenDays} green · ${redDays} red days` : ""}</p>
+                        </div>
+                        <div className={cell}>
+                            {head("Win / loss")}
+                            <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)}×` : empty}</p>
+                            <p className={`${small} font-mono`}>
+                                <span className="text-[var(--j-up)]">{avgW ? money(avgW, 0) : ""}</span>
+                                {avgW && avgL ? " / " : ""}
+                                <span className="text-[var(--j-dn)]">{avgL ? money(-avgL, 0) : ""}</span>
+                            </p>
+                        </div>
+                        <div className={`${cell} border-l`}>
+                            {head("Trades")}
+                            <p className={big}>{inRange.length ? stats.totalTrades : empty}</p>
+                            <p className={small}>{inRange.length ? `${days.length} trading ${days.length === 1 ? "day" : "days"}` : ""}</p>
+                        </div>
+                        <div className={cell}>
+                            {head("Max drawdown")}
+                            <p className={`${big} ${inRange.length && stats.maxDrawdown >= 0.005 ? "text-[var(--j-dn)]" : ""}`}>{inRange.length ? (stats.maxDrawdown < 0.005 ? "–" : hidden ? `−${MASK}` : `−$${stats.maxDrawdown.toLocaleString("en-US", { maximumFractionDigits: 0 })}`) : empty}</p>
+                            <p className={small}>{inRange.length ? (stats.maxDrawdown < 0.005 ? "No drawdown yet" : "Deepest fall from a high") : ""}</p>
+                        </div>
+                    </Module>
+                );
+            })()}
 
             {/* 3. Calendar and the chosen day */}
-            <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.75fr)_minmax(0,1fr)]">
+            <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)]">
                 <Module label="Calendar" className="p-5">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <button type="button" aria-label="Previous month" onClick={() => shift(-1)} className={`h-8 w-8 rounded-lg text-lg ${quiet} hover:bg-[var(--j-s2)]`}>
@@ -726,49 +689,101 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                             {calTrades.length} trades · <span className={`font-mono ${tone(calTotal)}`}>{calTrades.length ? money(calTotal, 0) : "–"}</span> · days in UTC
                         </span>
                     </div>
-                    <div className="mt-4 grid grid-cols-7 gap-1.5">
-                        {WEEK.map((w) => (
-                            <span key={w} className="px-2 pb-1 text-[12px] text-[var(--j-mu)]">
-                                {w}
-                            </span>
-                        ))}
-                        {Array.from({ length: lead }, (_, i) => (
-                            <span key={`lead-${i}`} />
-                        ))}
-                        {Array.from({ length: daysIn }, (_, i) => {
-                            const k = `${cal.y}-${String(cal.m + 1).padStart(2, "0")}-${String(i + 1).padStart(2, "0")}`;
-                            const list = byDay.get(k) ?? [];
-                            const total = list.reduce((s, t) => s + t.profitLoss, 0);
-                            const outside = list.length > 0 && !list.some((t) => t.closedAt >= range.from && t.closedAt < range.to);
-                            return (
-                                <button
-                                    key={k}
-                                    type="button"
-                                    aria-pressed={day === k}
-                                    aria-label={`${longDay(k)}${list.length ? `, ${list.length} ${list.length === 1 ? "trade" : "trades"}, ${money(total)}` : ", no trade"}${notes?.[k] ? ", has a note" : ""}`}
-                                    onClick={() => selectDay(k)}
-                                    className={`flex h-[74px] flex-col justify-between rounded-xl p-2 text-left transition-transform hover:-translate-y-0.5 ${day === k ? "ring-2 ring-[var(--j-ink)]" : k === today ? "ring-1 ring-[var(--j-fa)]" : ""} ${outside ? "opacity-45" : ""}`}
-                                    style={{ background: list.length ? (total >= 0 ? "var(--j-upbg)" : "var(--j-dnbg)") : "var(--j-s2)" }}
-                                >
-                                    <span className="flex items-center justify-between">
-                                        <span className={`text-[12px] ${k === today ? "font-semibold text-[var(--j-ink)]" : "text-[var(--j-mu)]"}`}>{i + 1}</span>
-                                        {notes?.[k] && <span className="h-1.5 w-1.5 rounded-full bg-[var(--j-mu)]" aria-hidden="true" />}
-                                    </span>
-                                    {list.length > 0 && (
-                                        <span className="block leading-tight">
-                                            <span className={`block font-mono text-[13.5px] ${tone(total)}`}>{axisMoney(total).replace(/^(?!−)/, "+")}</span>
-                                            <span className="block text-[11px] text-[var(--j-mu)]">
-                                                {list.length} {list.length === 1 ? "trade" : "trades"}
-                                            </span>
+                    {(() => {
+                        const rows = Math.ceil((lead + daysIn) / 7);
+                        const keyAt = (offset: number) => dayKey(Date.UTC(cal.y, cal.m, 1 + offset - lead));
+                        const winLine = (list: ClosedTrade[]) => {
+                            const w = list.filter((t) => t.profitLoss > 0).length;
+                            const l = list.filter((t) => t.profitLoss < 0).length;
+                            return { w, l, rate: w + l ? Math.round((w / (w + l)) * 100) : null };
+                        };
+                        const weeks = Array.from({ length: rows }, (_, r) => {
+                            const keys = Array.from({ length: 7 }, (_, c) => keyAt(r * 7 + c));
+                            const list = keys.flatMap((k) => byDay.get(k) ?? []);
+                            return { r, list, total: list.reduce((sum, t) => sum + t.profitLoss, 0), days: keys.filter((k) => byDay.has(k)).length, ...winLine(list), crosses: keys.some((k) => Number(k.slice(5, 7)) !== cal.m + 1) };
+                        });
+                        const weekText = (wk: (typeof weeks)[number]) => `${wk.days} ${wk.days === 1 ? "day" : "days"} · ${wk.list.length} ${wk.list.length === 1 ? "trade" : "trades"}`;
+                        return (
+                            <>
+                                <div className="mt-4 grid grid-cols-7 gap-1 sm:grid-cols-[repeat(7,minmax(0,1fr))_minmax(0,1.2fr)] sm:gap-1.5">
+                                    {WEEK.map((w) => (
+                                        <span key={w} className="px-1 pb-1 text-[11px] sm:px-2 sm:text-[12px] text-[var(--j-mu)]">
+                                            {w}
                                         </span>
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
+                                    ))}
+                                    <span className="hidden px-2 pb-1 text-[12px] text-[var(--j-mu)] sm:block">Week</span>
+                                    {weeks.map((wk) => (
+                                        <Fragment key={wk.r}>
+                                            {Array.from({ length: 7 }, (_, c) => {
+                                                const i = wk.r * 7 + c - lead;
+                                                if (i < 0 || i >= daysIn) return <span key={`pad-${wk.r}-${c}`} />;
+                                                const k = keyAt(wk.r * 7 + c);
+                                                const list = byDay.get(k) ?? [];
+                                                const total = list.reduce((sum, t) => sum + t.profitLoss, 0);
+                                                const outside = list.length > 0 && !list.some((t) => t.closedAt >= range.from && t.closedAt < range.to);
+                                                const wl = winLine(list);
+                                                return (
+                                                    <button
+                                                        key={k}
+                                                        type="button"
+                                                        aria-pressed={day === k}
+                                                        aria-label={`${longDay(k)}${list.length ? `, ${list.length} ${list.length === 1 ? "trade" : "trades"}, ${money(total)}${wl.rate !== null ? `, ${wl.rate}% won` : ""}` : ", no trade"}${notes?.[k] ? ", has a note" : ""}`}
+                                                        onClick={() => selectDay(k)}
+                                                        className={`flex h-[58px] min-w-0 flex-col justify-between overflow-hidden rounded-lg p-1 text-left transition-transform hover:-translate-y-0.5 sm:h-[86px] sm:p-2 ${day === k ? "ring-1 ring-[var(--j-ink)]" : k === today ? "ring-1 ring-[var(--j-fa)]" : list.length ? "" : "hover:bg-[var(--j-s2)]"} ${outside ? "opacity-45" : ""}`}
+                                                        style={{ background: list.length ? (total >= 0 ? "var(--j-upbg)" : "var(--j-dnbg)") : "transparent" }}
+                                                    >
+                                                        <span className="flex items-center justify-between">
+                                                            <span className={`text-[12px] ${k === today ? "font-semibold text-[var(--j-ink)]" : "text-[var(--j-mu)]"}`}>{i + 1}</span>
+                                                            {notes?.[k] && <span className="h-1.5 w-1.5 rounded-full bg-[var(--j-mu)]" aria-hidden="true" />}
+                                                        </span>
+                                                        {list.length > 0 && (
+                                                            <span className="block leading-tight">
+                                                                <span className={`hidden font-mono text-[13.5px] sm:block ${tone(total)}`}>{axisMoney(total).replace(/^(?!−)/, "+")}</span>
+                                                                <span className={`block text-[10px] font-medium tracking-tight sm:hidden ${tone(total)}`}>{axisMoney(total).replace("$", "").replace(/^(?![−•])/, "+")}</span>
+                                                                <span className="hidden truncate text-[11px] text-[var(--j-mu)] sm:block">
+                                                                    {list.length} {list.length === 1 ? "trade" : "trades"}
+                                                                </span>
+                                                                {wl.rate !== null && (
+                                                                    <span className="hidden truncate text-[11px] text-[var(--j-fa)] sm:block" title={`${wl.w} won, ${wl.l} lost`}>
+                                                                        {wl.rate}% <span className="hidden lg:inline">· {wl.w}W {wl.l}L</span>
+                                                                    </span>
+                                                                )}
+                                                            </span>
+                                                        )}
+                                                    </button>
+                                                );
+                                            })}
+                                            <div className={`hidden min-w-0 flex-col justify-between rounded-lg border-l-2 py-1.5 pl-3 pr-1 sm:flex ${wk.list.length ? (wk.total >= 0 ? "border-[var(--j-up)]" : "border-[var(--j-dn)]") : "border-[var(--j-line)]"}`} title={wk.crosses ? "This week runs into the next or previous month: its total counts all seven days." : undefined}>
+                                                <span className="text-[11px] text-[var(--j-mu)]">Week {wk.r + 1}</span>
+                                                {wk.list.length ? (
+                                                    <span className="block leading-tight">
+                                                        <span className={`block font-mono text-[13.5px] ${tone(wk.total)}`}>{axisMoney(wk.total).replace(/^(?![−•])/, "+")}</span>
+                                                        <span className="block truncate text-[11px] text-[var(--j-mu)]">{weekText(wk)}</span>
+                                                        {wk.rate !== null && <span className="block truncate text-[11px] text-[var(--j-fa)]">{wk.rate}% won</span>}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-[11px] text-[var(--j-fa)]">No trade</span>
+                                                )}
+                                            </div>
+                                        </Fragment>
+                                    ))}
+                                </div>
+                                <ul className="mt-4 divide-y divide-[var(--j-line)] border-t border-[var(--j-line)] text-[12.5px] sm:hidden">
+                                    {weeks.map((wk) => (
+                                        <li key={wk.r} className="flex items-baseline justify-between gap-3 py-2">
+                                            <span>
+                                                Week {wk.r + 1} <span className="text-[var(--j-fa)]">{wk.list.length ? `${weekText(wk)}${wk.rate !== null ? ` · ${wk.rate}% won` : ""}` : "No trade"}</span>
+                                            </span>
+                                            {wk.list.length > 0 && <span className={`font-mono ${tone(wk.total)}`}>{axisMoney(wk.total).replace(/^(?![−•])/, "+")}</span>}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        );
+                    })()}
                 </Module>
 
-                <Module label="Day" className="p-5">
+                <Module label="Day" className="flex flex-col p-5">
                     {day ? (
                         <>
                             <div className="flex items-baseline justify-between gap-3">
@@ -781,8 +796,23 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                 <>
                                     <p className={`mt-3 font-mono text-[28px] leading-none ${tone(dayTotal)}`}>{money(dayTotal)}</p>
                                     <p className="mt-2 text-[12.5px] text-[var(--j-mu)]">
-                                        {dayTrades.length} {dayTrades.length === 1 ? "trade" : "trades"} · {dayTrades.filter((t) => t.profitLoss > 0).length} won · fees {plain(dayTrades.reduce((s, t) => s + t.fee, 0))}
+                                        {dayTrades.length} {dayTrades.length === 1 ? "trade" : "trades"} · fees {plain(dayTrades.reduce((s, t) => s + t.fee, 0))}
                                     </p>
+                                    {(() => {
+                                        const won = dayTrades.filter((t) => t.profitLoss > 0);
+                                        const lost = dayTrades.filter((t) => t.profitLoss < 0);
+                                        const best = Math.max(...dayTrades.map((t) => t.profitLoss));
+                                        const worst = Math.min(...dayTrades.map((t) => t.profitLoss));
+                                        return (
+                                            <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 border-t border-[var(--j-line)] pt-3.5 text-[12.5px]">
+                                                <div><dt className="text-[var(--j-fa)]">Won · lost</dt><dd className="mt-0.5 font-mono"><span className="text-[var(--j-up)]">{won.length}</span> · <span className="text-[var(--j-dn)]">{lost.length}</span></dd></div>
+                                                <div><dt className="text-[var(--j-fa)]">Win rate</dt><dd className="mt-0.5 font-mono">{Math.round((won.length / dayTrades.length) * 100)}%</dd></div>
+                                                <div><dt className="text-[var(--j-fa)]">Best trade</dt><dd className={`mt-0.5 font-mono ${tone(best)}`}>{money(best, 0)}</dd></div>
+                                                <div><dt className="text-[var(--j-fa)]">Worst trade</dt><dd className={`mt-0.5 font-mono ${tone(worst)}`}>{money(worst, 0)}</dd></div>
+                                            </dl>
+                                        );
+                                    })()}
+                                    <p className="mt-4 text-[12px] text-[var(--j-fa)]">The trades list below shows this day only.</p>
                                     <ul className="mt-4 divide-y divide-[var(--j-line)] text-[13.5px]">
                                         {dayTrades.map((t) => (
                                             <li key={t.id} className="flex justify-between gap-3 py-2">
@@ -862,11 +892,98 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                             )}
                         </>
                     )}
+                    <div className="mt-auto border-t border-[var(--j-line)] pt-4">
+                        {(() => {
+                            const keys = [...new Set(calTrades.map((t) => dayKey(t.closedAt)))];
+                            const totals = keys.map((k) => ({ k, total: (byDay.get(k) ?? []).reduce((sum, t) => sum + t.profitLoss, 0) })).sort((x, y) => y.total - x.total);
+                            const won = calTrades.filter((t) => t.profitLoss > 0).length;
+                            const lost = calTrades.filter((t) => t.profitLoss < 0).length;
+                            return (
+                                <>
+                                    <p className="text-[12.5px] text-[var(--j-mu)]">
+                                        {MONTHS[cal.m]} {cal.y}
+                                    </p>
+                                    {calTrades.length ? (
+                                        <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5 text-[12.5px]">
+                                            <div><dt className="text-[var(--j-fa)]">Net</dt><dd className={`mt-0.5 font-mono ${tone(calTotal)}`}>{money(calTotal, 0)}</dd></div>
+                                            <div><dt className="text-[var(--j-fa)]">Positive days</dt><dd className="mt-0.5 font-mono">{totals.filter((d) => d.total > 0).length} of {totals.length}</dd></div>
+                                            <div><dt className="text-[var(--j-fa)]">Best day</dt><dd className={`mt-0.5 font-mono ${tone(totals[0].total)}`}>{money(totals[0].total, 0)} <span className="text-[var(--j-fa)]">{shortDay(startOfDay(totals[0].k))}</span></dd></div>
+                                            <div><dt className="text-[var(--j-fa)]">Worst day</dt><dd className={`mt-0.5 font-mono ${tone(totals[totals.length - 1].total)}`}>{money(totals[totals.length - 1].total, 0)} <span className="text-[var(--j-fa)]">{shortDay(startOfDay(totals[totals.length - 1].k))}</span></dd></div>
+                                            <div><dt className="text-[var(--j-fa)]">Won · lost</dt><dd className="mt-0.5 font-mono"><span className="text-[var(--j-up)]">{won}</span> · <span className="text-[var(--j-dn)]">{lost}</span></dd></div>
+                                            <div><dt className="text-[var(--j-fa)]">Win rate</dt><dd className="mt-0.5 font-mono">{won + lost ? `${Math.round((won / (won + lost)) * 100)}%` : "–"}</dd></div>
+                                        </dl>
+                                    ) : (
+                                        <p className="mt-2 text-[12.5px] text-[var(--j-fa)]">No trade closed this month.</p>
+                                    )}
+                                </>
+                            );
+                        })()}
+                    </div>
+                </Module>
+            </div>
+
+            {/* 1b. Score and findings */}
+            {inRange.length > 0 && (
+                <Module label="Alture Score" className="!py-0 mt-4">
+                    <ScoreCard score={score} insights={insights} count={inRange.length} />
+                </Module>
+            )}
+
+            {/* 2. Performance and months */}
+            <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)]">
+                <Module label="Performance" className="p-5">
+                    <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+                        <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">Performance</h2>
+                        <span className="ml-auto flex gap-4 text-[13px]" role="tablist" aria-label="Chart">
+                            {(
+                                [
+                                    ["equity", "Equity"],
+                                    ["drawdown", "Drawdown"],
+                                    ["daily", "Daily P&L"],
+                                    ["cumulative", "Cumulative P&L"],
+                                    ["outcomes", "Trade outcomes"],
+                                ] as const
+                            ).map(([id, text]) => (
+                                <button key={id} type="button" role="tab" aria-selected={mode === id} onClick={() => setMode(id)} className={mode === id ? "border-b-[1.5px] border-[var(--j-ink)] pb-1 text-[var(--j-ink)]" : `pb-1 ${quiet}`}>
+                                    {text}
+                                </button>
+                            ))}
+                        </span>
+                    </div>
+                    <div className="mt-4">{inRange.length ? <Chart trades={inRange} mode={mode} /> : <p className="flex h-[260px] items-center justify-center text-sm text-[var(--j-mu)]">{ordered.length ? "No trade closed in this period." : "Your curve appears with your first recorded trade."}</p>}</div>
+                </Module>
+
+                <Module label="By month" className="flex flex-col p-5">
+                    <div className="flex items-baseline justify-between">
+                        <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">By month</h2>
+                        <span className="text-[12.5px] text-[var(--j-fa)]">Choose a month to filter</span>
+                    </div>
+                    {months.length ? (
+                        <div className="mt-4 flex flex-1 items-stretch gap-2" style={{ minHeight: 200 }}>
+                            {months.map((mo) => {
+                                const inside = mo.list.some((t) => t.closedAt >= range.from && t.closedAt < range.to);
+                                const h = (Math.abs(mo.total) / monthMax) * 100;
+                                return (
+                                    <button key={`${mo.y}-${mo.m}`} type="button" onClick={() => pickMonth(mo.y, mo.m)} title={`${MONTHS[mo.m]} ${mo.y}: ${money(mo.total)} over ${mo.list.length} trades`} className="group flex min-w-0 flex-1 flex-col items-center">
+                                        <span className={`font-mono text-[11.5px] ${tone(mo.total)}`}>{axisMoney(mo.total)}</span>
+                                        <span className="relative mt-1.5 flex w-full flex-1 items-end justify-center">
+                                            <span className="w-full max-w-[64px] rounded-md transition-all group-hover:opacity-80" style={{ height: `${Math.max(3, h)}%`, background: mo.total >= 0 ? (inside ? "var(--j-up)" : "var(--j-upsoft)") : inside ? "var(--j-dn)" : "var(--j-dnbg)" }} />
+                                        </span>
+                                        <span className={`mt-2 text-[12px] ${inside ? "text-[var(--j-ink)]" : "text-[var(--j-mu)]"}`}>{MONTHS[mo.m].slice(0, 3)}</span>
+                                        <span className="text-[11px] text-[var(--j-fa)]">{mo.list.length} trades</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <p className="mt-6 text-sm text-[var(--j-mu)]">Months appear with your first trade.</p>
+                    )}
+
                 </Module>
             </div>
 
             {/* 4. History and 5. analysis */}
-            <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.75fr)_minmax(0,1fr)]">
+            <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)]">
                 <Module label="Trades" className="p-5">
                     <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-[13px]">
                         <h2 className="mr-2 !text-[16px] !font-medium !text-[var(--j-ink)]">Trades</h2>
