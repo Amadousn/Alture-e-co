@@ -45,13 +45,13 @@ const ProductScreen = ({ caption, leaving = false }: { caption: string; leaving?
         <>
             <div ref={ref} className="al-screen hidden lg:block" aria-hidden="true">
                 <div className="al-screen__body">
-                    <Image src="/images/alturelock/cockpit.jpg" alt="" width={1440} height={900} priority className="block h-auto w-full" />
+                    <Image src="/images/alturelock/cockpit.jpg" alt="" width={2400} height={1500} priority className="block h-auto w-full" />
                 </div>
             </div>
 
             {/* On a phone, only the chart: the symbol, its price and the trade on the candles. */}
             <figure className="lg:hidden mx-auto w-full max-w-[560px]">
-                <Image src="/images/alturelock/cockpit-chart.jpg" alt="The AltureLock terminal chart: Bitcoin on Alture candles, with the entry, stop loss and take profit of the trade in progress" width={1000} height={1232} sizes="(max-width: 600px) 100vw, 560px" className="block h-auto w-full rounded-xl border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.9)]" />
+                <Image src="/images/alturelock/cockpit-chart.jpg" alt="The AltureLock terminal chart: Bitcoin on Alture candles, with the entry, stop loss and take profit of the trade in progress" width={1200} height={1066} sizes="(max-width: 600px) 100vw, 560px" className="block h-auto w-full rounded-xl border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.9)]" />
                 <figcaption className="mt-3 text-center text-[11px] text-white/40">{caption}</figcaption>
             </figure>
         </>
