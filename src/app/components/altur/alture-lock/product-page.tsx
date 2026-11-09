@@ -102,10 +102,10 @@ const body = "text-[15px] md:text-base leading-relaxed text-white/60";
 
 // A real capture of the product on a desktop screen. On a phone it is scaled
 // to the screen's width: the workspace is shown whole, as a desktop layout.
-const Shot = ({ src, alt, width, height, caption }: { src: string; alt: string; width: number; height: number; caption: string }) => (
+const Shot = ({ src, alt, width, height, caption, sizes = "(min-width: 1024px) 640px, 100vw" }: { src: string; alt: string; width: number; height: number; caption: string; sizes?: string }) => (
     <figure>
         <div className="overflow-hidden rounded-sm border border-white/15">
-            <Image src={src} alt={alt} width={width} height={height} sizes="(min-width: 1024px) 640px, 100vw" className="block h-auto w-full" />
+            <Image src={src} alt={alt} width={width} height={height} sizes={sizes} className="block h-auto w-full" />
         </div>
         <figcaption className="mt-3 text-xs text-white/40">
             {caption}
@@ -405,8 +405,9 @@ const ProductPage = () => {
                 <div className="container mx-auto max-w-7xl px-4 md:px-6">
                     <p className={label}>Integrated tools</p>
                     <h2 className={`${heading} max-w-[18ch]`}>Your rules, your alarms and the market, in one terminal.</h2>
-                    <div className="mt-10 max-w-4xl">
-                        <Shot src="/images/alturelock/terminal-flow.jpg" alt="The AltureLock terminal's order flow view of Bitcoin: candles with the Volume Profile, its POC and value area, and the state of each order flow layer" width={1600} height={1324} caption="The terminal's order flow view, from live Bybit trades." />
+                    <div className="mt-10 grid gap-10">
+                        <Shot src="/images/alturelock/alarm-exit.jpg" alt="An exit signal in the AltureLock terminal: a 15-minute Bitcoin candle closes below the structure of a long trade" width={2000} height={1250} sizes="(min-width: 1280px) 1230px, 100vw" caption="Exit signal: a 15-minute candle closes below the structure of the trade." />
+                        <Shot src="/images/alturelock/alarm-critical.jpg" alt="A critical alert in the AltureLock terminal: price is close to the stop loss, shown full screen until the trader confirms" width={2000} height={1250} sizes="(min-width: 1280px) 1230px, 100vw" caption="Critical alert: price close to the stop, full screen until you confirm." />
                     </div>
                     <dl className="mt-12 grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
                         {TOOLS.map(([title, text]) => (
