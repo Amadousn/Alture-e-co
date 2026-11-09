@@ -10,7 +10,7 @@ import { useState } from "react";
 type Data = "real" | "estimated" | "none";
 // spots: boxes on the indicator's image, in % of its width and height [x, y, w, h].
 type Feature = { name: string; what: string; spots?: number[][]; draw?: "ema" | "vwap" | "fvg" };
-type Indicator = { id: string; name: string; plan: string; price: number; image: string; line: string; text: string; data: Data; features: Feature[] };
+type Indicator = { id: string; name: string; edition?: string; plan: string; price: number; image: string; line: string; text: string; data: Data; features: Feature[] };
 
 const at = (feature: Feature, ...spots: number[][]): Feature => ({ ...feature, spots });
 const LVN_BANDS = [[2.3, 44.6, 84, 3.2], [2.3, 50.7, 84, 2], [2.3, 70.4, 84, 3.9], [2.3, 79, 84, 1.6]];
@@ -28,6 +28,7 @@ const INDICATORS: Indicator[] = [
     {
         id: "all-in-one",
         name: "Volume Profile + Footprint",
+        edition: "All-in-One",
         plan: "TradingView Premium or Ultimate",
         price: 39,
         image: "/images/indicators/allinone.jpg",
@@ -49,6 +50,7 @@ const INDICATORS: Indicator[] = [
     {
         id: "standard",
         name: "Volume Profile + VWAP",
+        edition: "All-in-One",
         plan: "Every TradingView plan",
         price: 19,
         image: "/images/indicators/standard.jpg",
@@ -124,20 +126,12 @@ const label = "mb-5 text-[11px] uppercase tracking-[0.14em] text-accent";
 const body = "text-[15px] md:text-base leading-relaxed text-white/60";
 
 // The badge that tells the two order-flow sources apart at a glance.
+// The data source, set in type alone: white for the real footprint, quieter for the 1-minute read.
 const DataBadge = ({ data }: { data: Data }) =>
     data === "real" ? (
-        <span className="inline-flex items-center gap-2 rounded-sm border border-white/60 bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_0_22px_rgba(255, 255, 255,0.28)]">
-            <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-            </span>
-            Real footprint data
-        </span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">Real footprint data</span>
     ) : data === "estimated" ? (
-        <span className="inline-flex items-center gap-2 rounded-sm border border-dashed border-white/30 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
-            <span className="h-1.5 w-1.5 rounded-full border border-white/50" />
-            1-minute order flow
-        </span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/55">1-minute order flow</span>
     ) : null;
 
 // The indicator's image with the chosen feature lit: the rest of the chart dims,
@@ -162,8 +156,8 @@ const Spotlight = ({ item, feature, index }: { item: Indicator; feature: Feature
                 ))}
             </svg>
             {spots.length > 0 && (
-                <span key={feature.name} className="spot-in absolute right-3 top-3 max-w-[70%] truncate rounded-sm bg-black/80 px-2 py-1 font-mono text-[11px] text-white backdrop-blur">
-                    {String(index + 1).padStart(2, "0")} · {feature.name}
+                <span key={feature.name} className="spot-in absolute right-3 top-3 max-w-[70%] truncate rounded-sm bg-black/80 px-2 py-1 text-[12px] text-white backdrop-blur">
+                    {feature.name}
                 </span>
             )}
         </div>
@@ -185,7 +179,8 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
                             <DataBadge data={item.data} />
                             <p className="text-[11px] uppercase tracking-[0.14em] text-white/40">{item.plan}</p>
                         </div>
-                        <p className="mt-5 text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">{item.name}</p>
+                        {item.edition && <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-white/45">{item.edition}</p>}
+                        <p className={`${item.edition ? "mt-1.5" : "mt-5"} text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white`}>{item.name}</p>
                         <p className="mt-3 font-logo text-xl font-light text-white/70">{item.line}</p>
 
                         <ol className="mt-9 border-t border-white/10" aria-label={`${item.name} features`}>
@@ -193,10 +188,9 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
                                 const active = open === i;
                                 return (
                                     <li key={f.name} className="border-b border-white/10">
-                                        <button type="button" aria-expanded={active} onClick={() => setOpen(i)} onMouseEnter={() => setOpen(i)} className="group grid w-full grid-cols-[2.25rem_1fr_auto] items-baseline gap-3 py-3.5 text-left">
-                                            <span className={`font-mono text-[12px] tabular-nums transition-colors ${active ? "text-white" : "text-white/30"}`}>{String(i + 1).padStart(2, "0")}</span>
+                                        <button type="button" aria-expanded={active} onClick={() => setOpen(i)} onMouseEnter={() => setOpen(i)} className="group grid w-full grid-cols-[2.25rem_1fr] items-baseline gap-3 py-3.5 text-left">
+                                            <span className={`w-4 text-[13px] tabular-nums transition-colors ${active ? "text-white" : "text-white/30"}`}>{i + 1}</span>
                                             <span className={`text-[15px] transition-colors ${active ? "text-white" : "text-white/60 group-hover:text-white/90"}`}>{f.name}</span>
-                                            <span className={`text-[12px] transition-all ${active ? "text-white" : "text-white/0 group-hover:text-white/40"}`}>{f.spots ? "●" : "→"}</span>
                                         </button>
                                         <div className={`grid transition-[grid-template-rows] duration-300 ${active ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                                             <p className="overflow-hidden pl-[3rem] pr-4 text-[14px] leading-relaxed text-white/55">
@@ -225,50 +219,100 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
     );
 };
 
-// Footprint against 1-minute order flow: why two volume-profile indicators cost differently.
-// A spec sheet, not cards: two columns, three facts, the price.
-const COMPARE = [
-    { name: "Volume Profile + Footprint", price: 39, data: "real" as const, rows: ["TradingView footprint", "Every trade, bid and ask", "Premium or Ultimate"] },
-    { name: "Volume Profile + VWAP", price: 19, data: "estimated" as const, rows: ["1-minute data", "Buying and selling pressure, minute by minute", "Every plan"] },
-];
-const Compare = () => (
-    <section className="bg-black !py-10 md:!py-16">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-            <p className={label}>Tick-level or 1-minute</p>
-            <h2 className="text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white">Same read. Different source.</h2>
-            <div className="mt-12 grid grid-cols-2 md:grid-cols-[10rem_1fr_1fr] border-t border-white/10 text-[14px]">
-                <span className="hidden md:block" />
-                {COMPARE.map((c, j) => (
-                    <div key={c.name} className={`relative border-white/10 pr-3 md:border-l md:px-8 pt-7 pb-6 ${j ? "border-l pl-4" : ""}`}>
-                        {c.data === "real" && <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white shadow-[0_0_18px_2px_rgba(255, 255, 255,0.55)]" />}
-                        <p className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] ${c.data === "real" ? "text-white" : "text-white/40"}`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${c.data === "real" ? "bg-white shadow-[0_0_8px_#FFFFFF]" : "border border-white/40"}`} />
-                            {c.data === "real" ? "Tick-level" : "1-minute precision"}
-                        </p>
-                        <p className="mt-3 text-[15px] md:text-lg font-medium text-white">{c.name}</p>
+// The two resolutions of the same read, side by side, with a switch that draws the difference.
+const PRECISION = [
+    { id: "minute", label: "1-Minute", price: 19, name: "Volume Profile + VWAP", text: "Minute-by-minute aggregated buying and selling pressure.", plan: "Available on every TradingView plan." },
+    { id: "tick", label: "Tick-Level", price: 39, name: "Volume Profile + Footprint", text: "Individual trades at bid and ask, with trade-by-trade detail.", plan: "Requires TradingView Premium or Ultimate." },
+] as const;
+
+// A fixed, made-up half hour of trades, so the drawing is the same on every visit. It illustrates the two resolutions; it is not market data.
+const TRADES = (() => {
+    let seed = 11;
+    const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    const raw: { t: number; p: number; q: number; buy: boolean }[] = [];
+    let price = 0, trend = 0;
+    for (let i = 0; i < 420; i++) {
+        if (i % 35 === 0) trend = (rand() - 0.45) * 0.5;
+        const step = trend + (rand() - 0.5) * 1.4;
+        price += step;
+        raw.push({ t: (i / 420) * 30 + rand() * 0.06, p: price, q: 0.7 + Math.pow(rand(), 4) * 4.5, buy: step > 0 });
+    }
+    const lo = Math.min(...raw.map((x) => x.p)), hi = Math.max(...raw.map((x) => x.p));
+    return raw.map((x) => ({ ...x, p: 12 + ((x.p - lo) / (hi - lo)) * 76 }));
+})();
+const MINUTES = Array.from({ length: 30 }, (_, m) => {
+    const inside = TRADES.filter((x) => x.t >= m && x.t < m + 1);
+    const net = inside.reduce((sum, x) => sum + (x.buy ? x.q : -x.q), 0);
+    const close = inside.length ? inside[inside.length - 1].p : 50;
+    return { m, net, close };
+});
+
+const PrecisionDemo = ({ mode }: { mode: "minute" | "tick" }) => {
+    const W = 1000, H = 200, x = (t: number) => 12 + (t / 30) * (W - 24), y = (p: number) => H - 22 - (p / 100) * (H - 44);
+    const maxNet = Math.max(...MINUTES.map((m) => Math.abs(m.net)));
+    return (
+        <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full" role="img" aria-label={mode === "tick" ? "Each trade drawn on its own, at the bid or the ask" : "The same trades grouped into one bar per minute"}>
+            <line x1="12" x2={W - 12} y1={H / 2} y2={H / 2} stroke="rgba(255,255,255,0.08)" />
+            {mode === "minute"
+                ? MINUTES.map((m) => {
+                      const h = (Math.abs(m.net) / maxNet) * (H / 2 - 26);
+                      const w = (W - 24) / 30 - 4;
+                      return <rect key={m.m} x={x(m.m) + 2} width={w} y={m.net >= 0 ? H / 2 - h : H / 2} height={Math.max(1, h)} rx="1.5" fill={m.net >= 0 ? "#4DD0E1" : "#E955A8"} opacity="0.85" />;
+                  })
+                : TRADES.map((tr, i) => <circle key={i} cx={x(tr.t)} cy={y(tr.p)} r={1.5 + tr.q * 2.4} fill={tr.buy ? "#4DD0E1" : "#E955A8"} opacity="0.55" />)}
+        </svg>
+    );
+};
+
+const Compare = () => {
+    const [mode, setMode] = useState<"minute" | "tick">("tick");
+    return (
+        <section className="bg-black !py-10 md:!py-16">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                <p className={label}>Data resolution</p>
+                <h2 className="text-[26px] md:text-[32px] md:leading-[1.1] font-medium tracking-tight text-white">Choose Your Level of Precision.</h2>
+                <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-2">
+                    {PRECISION.map((o) => {
+                        const on = mode === o.id;
+                        return (
+                            <button key={o.id} type="button" onClick={() => setMode(o.id)} aria-pressed={on} className={`flex flex-col bg-black px-6 py-5 text-left transition-colors md:px-8 md:py-6 ${on ? "bg-[#0b0c0e]" : "hover:bg-[#08090a]"}`}>
+                                <span className="flex items-baseline justify-between gap-4">
+                                    <span className={`text-[11px] uppercase tracking-[0.16em] transition-colors ${on ? "text-white" : "text-white/45"}`}>{o.label}</span>
+                                    <span className="whitespace-nowrap">
+                                        <span className="font-logo text-2xl font-light tabular-nums text-white">${o.price}</span>
+                                        <span className="text-[13px] text-white/40">/month</span>
+                                    </span>
+                                </span>
+                                <span className="mt-4 text-lg font-medium tracking-tight text-white md:text-xl">{o.name}</span>
+                                <span className="mt-1.5 text-[14.5px] leading-relaxed text-white/65">{o.text}</span>
+                                <span className="mt-2 text-[13px] text-white/40">{o.plan}</span>
+                                <span aria-hidden="true" className={`mt-5 h-px w-full origin-left transition-transform duration-500 ${on ? "scale-x-100 bg-white/70" : "scale-x-0 bg-white/70"}`} />
+                            </button>
+                        );
+                    })}
+                </div>
+                <div className="mt-5 rounded-2xl border border-white/10 bg-[#060708] p-5 md:px-8 md:py-6">
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div className="inline-flex rounded-full border border-white/15 p-1" role="tablist" aria-label="Data resolution">
+                            {PRECISION.map((o) => (
+                                <button key={o.id} type="button" role="tab" aria-selected={mode === o.id} onClick={() => setMode(o.id)} className={`rounded-full px-5 py-2 text-[13px] transition-colors ${mode === o.id ? "bg-white font-medium text-black" : "text-white/60 hover:text-white"}`}>
+                                    {o.label}
+                                </button>
+                            ))}
+                        </div>
+                        <p className="text-[13px] text-white/45">{mode === "tick" ? "Every trade on its own: buys at the ask, sells at the bid." : "The same trades, grouped into one bar of net pressure per minute."}</p>
                     </div>
-                ))}
-                {["Order flow from", "Sees", "TradingView plan"].map((term, i) => (
-                    <div key={term} className="contents">
-                        <span className="col-span-2 md:col-span-1 border-t border-white/10 pt-4 md:py-4 pr-3 text-[11px] md:text-[12px] uppercase tracking-[0.1em] text-white/35">{term}</span>
-                        {COMPARE.map((c, j) => (
-                            <span key={c.name} className={`border-white/10 pt-2 pb-4 pr-3 ${j ? "border-l pl-4" : ""} md:border-t md:border-l md:px-8 md:py-4 ${c.data === "real" ? "text-white" : "text-white/50"}`}>
-                                {c.rows[i]}
-                            </span>
-                        ))}
-                    </div>
-                ))}
-                <span className="col-span-2 md:col-span-1 border-t border-white/10 pt-4 md:py-5 pr-3 text-[11px] md:text-[12px] uppercase tracking-[0.1em] text-white/35">Price</span>
-                {COMPARE.map((c, j) => (
-                    <span key={c.name} className={`border-white/10 pt-2 pb-5 pr-3 md:border-t md:border-l md:px-8 md:py-5 ${j ? "border-l pl-4" : ""}`}>
-                        <span className={`font-logo text-2xl font-light tabular-nums ${c.data === "real" ? "text-white" : "text-white/70"}`}>${c.price}</span>
-                        <span className="text-[13px] text-white/40">/month</span>
-                    </span>
-                ))}
+                    <div className="mt-4"><PrecisionDemo mode={mode} /></div>
+                    <p className="mt-3 flex gap-5 text-[12px] text-white/40">
+                        <span><span className="text-[#4DD0E1]">Cyan</span> buying</span>
+                        <span><span className="text-[#E955A8]">Pink</span> selling</span>
+                        <span className="ml-auto">Illustration of the same 30 minutes, read two ways.</span>
+                    </p>
+                </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
+};
 
 const IndicatorsExplorer = () => (
     <>

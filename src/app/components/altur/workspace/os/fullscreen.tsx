@@ -17,7 +17,9 @@ export function useFullscreen<T extends HTMLElement>() {
     }, []);
 
     const toggle = useCallback(() => {
-        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        // Only leave when this panel is the one in full screen. If the whole terminal is already full screen,
+        // the panel goes full screen on top of it, and leaving it returns to the full-screen terminal.
+        if (document.fullscreenElement && document.fullscreenElement === ref.current) document.exitFullscreen().catch(() => {});
         else ref.current?.requestFullscreen().catch(() => {});
     }, []);
 

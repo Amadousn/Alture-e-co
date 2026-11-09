@@ -88,8 +88,8 @@ const PLANS = [
 
 // The TradingView indicators, also sold on their own.
 const INDICATORS = [
-    { name: "Volume Profile + Footprint · Alture & Co", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
-    { name: "Volume Profile + VWAP · Alture & Co", price: 19, text: "The same read without the footprint, for every TradingView plan." },
+    { name: "Volume Profile + Footprint · Alture & Co", edition: "All-in-One", price: 39, text: "Structure, Volume Profile, VWAP, FVG and real footprint order flow. Needs TradingView Premium or Ultimate." },
+    { name: "Volume Profile + VWAP · Alture & Co", edition: "All-in-One", price: 19, text: "The same read without the footprint, for every TradingView plan." },
     { name: "Order Flow CVD · Alture & Co", price: 39, text: "Bid × ask on the candles, imbalances, CVD divergence and volume bubbles. Needs TradingView Premium or Ultimate." },
     { name: "Volume Profile + FVG + MS · Alture & Co", price: 0, text: "Volume Profile, low-volume nodes, market structure and Fair Value Gaps." },
     { name: "Trend Lines · Alture & Co", price: 0, text: "Trend lines drawn automatically from the swings, from 5 minutes to daily, each with its timeframe tag." },
@@ -193,7 +193,7 @@ const Pricing = () => {
                     <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
                         {INDICATORS.map((item) => (
                             <li key={item.name} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-12 md:items-center">
-                                <p className="text-[15px] font-medium text-white md:col-span-4">{item.name}</p>
+                                <p className="text-[15px] font-medium text-white md:col-span-4">{"edition" in item && item.edition && <span className="mb-1 block text-[10.5px] font-normal uppercase tracking-[0.18em] text-white/40">{item.edition}</span>}{item.name}</p>
                                 <p className="text-sm leading-relaxed text-white/55 md:col-span-5">{item.text}</p>
                                 <p className="flex items-baseline whitespace-nowrap md:col-span-1 md:justify-end">
                                     <span className="font-logo text-2xl font-light tabular-nums text-white">{item.price ? `$${yearly ? Math.round(item.price * 0.8) : item.price}` : "Free"}</span>

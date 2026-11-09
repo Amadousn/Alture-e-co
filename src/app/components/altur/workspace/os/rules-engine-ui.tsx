@@ -565,7 +565,7 @@ function PreTab({ engine }: { engine: RulesEngine }) {
                             {confirmed && <span key={`${rule.id}-${result.at}`} aria-hidden="true" className="rk-sweep pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#4DD0E1]/15 to-transparent" />}
                             <div className="relative flex items-center gap-3 px-3 py-2.5">
                                 <CheckMark state={result.state} label={rule.title} onClick={manual && rule.enabled ? () => confirm(rule, !confirmed) : rule.enabled ? () => setOpenId(expanded ? null : rule.id) : undefined} />
-                                <button type="button" onClick={() => setOpenId(expanded ? null : rule.id)} aria-expanded={expanded} className="flex min-w-0 flex-1 items-center gap-3 text-left">
+                                <button type="button" onClick={manual && rule.enabled ? () => confirm(rule, !confirmed) : () => setOpenId(expanded ? null : rule.id)} aria-expanded={manual ? undefined : expanded} className="flex min-w-0 flex-1 items-center gap-3 text-left">
                                     <span className="min-w-0 flex-1">
                                         <span className={`block truncate text-[14px] transition-colors ${confirmed ? "text-[var(--j-ink)]" : ""}`}>{rule.title}</span>
                                         <span className="mt-0.5 block truncate text-[11.5px] text-[var(--j-mu)]">
@@ -575,8 +575,13 @@ function PreTab({ engine }: { engine: RulesEngine }) {
                                     </span>
                                     {!manual && rule.check !== "condition" && <span className="rounded-md border border-[var(--j-line)] px-2 py-0.5 text-[11px] text-[var(--j-mu)]">{expanded ? "Close" : "Set"}</span>}
                                     <span className="text-[11px] tabular-nums text-[var(--j-mu)]">{clock(result.at)}</span>
-                                    <span className={`text-[var(--j-mu)] transition-transform duration-200 ${expanded ? "rotate-90" : ""}`} aria-hidden="true">›</span>
+                                    {!manual && <span className={`text-[var(--j-mu)] transition-transform duration-200 ${expanded ? "rotate-90" : ""}`} aria-hidden="true">›</span>}
                                 </button>
+                                {manual && (
+                                    <button type="button" onClick={() => setOpenId(expanded ? null : rule.id)} aria-expanded={expanded} aria-label={`Details of ${rule.title}`} className={`-mr-1 px-1.5 text-[var(--j-mu)] transition-transform duration-200 hover:text-[var(--j-ink)] ${expanded ? "rotate-90" : ""}`}>
+                                        ›
+                                    </button>
+                                )}
                             </div>
                             {expanded && (
                                 <div className="relative px-3 pb-3">
@@ -856,10 +861,10 @@ function TemplatesTab({ engine }: { engine: RulesEngine }) {
                         {renaming === t.id ? (
                             <input autoFocus defaultValue={t.name} onBlur={(e) => { const name = e.target.value.trim(); if (name) setBook((b) => ({ ...b, templates: b.templates.map((x) => (x.id === t.id ? { ...x, name } : x)) })); setRenaming(null); }} onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()} className={`${field} flex-1`} aria-label="Template name" />
                         ) : (
-                            <span className="min-w-0 flex-1">
+                            <button type="button" onClick={() => setBook((b) => ({ ...b, active: t.id }))} className="min-w-0 flex-1 cursor-pointer text-left">
                                 <span className="block text-[14px]">{t.name}</span>
                                 <span className="text-[11.5px] text-[var(--j-mu)]">{t.pre.length} pre-trade · {t.live.length} live</span>
-                            </span>
+                            </button>
                         )}
                         <span className="flex gap-3 text-[12px] text-[var(--j-mu)]">
                             <button type="button" onClick={() => setRenaming(t.id)} className="hover:text-[var(--j-ink)]">Rename</button>

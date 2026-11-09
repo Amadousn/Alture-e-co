@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import TiltScreen from "./tilt-screen";
 import IndicatorsExplorer from "./indicators-explorer";
 
 export const metadata: Metadata = {
@@ -40,9 +40,7 @@ const IndicatorsPage = () => (
                 </nav>
                 </div>
                 <figure className="lg:col-span-7">
-                    <div className="overflow-hidden rounded-sm border border-white/15">
-                        <Image src="/images/alturelock/indicator-footprint.jpg" alt="Volume Profile + Footprint by Alture & Co on a TradingView chart: Alture candles, volume profile, footprint bubbles and absorption marks" width={1600} height={900} priority sizes="(min-width: 1024px) 720px, 100vw" className="block h-auto w-full" />
-                    </div>
+                    <TiltScreen src="/images/alturelock/indicator-footprint.jpg" alt="Volume Profile + Footprint by Alture & Co on a TradingView chart: Alture candles, volume profile, footprint bubbles and absorption marks" width={1600} height={900} />
                     <figcaption className="mt-3 text-xs text-white/40">Volume Profile + Footprint · Alture & Co, on TradingView.</figcaption>
                 </figure>
             </div>
