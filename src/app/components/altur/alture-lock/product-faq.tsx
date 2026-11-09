@@ -4,56 +4,42 @@ import { useState } from "react";
 
 // The public FAQ on the AltureLock page. Every answer describes the product as it is today:
 // read-only, alarms only, no orders, no promised results.
+// Text in [brackets] is a placeholder waiting for confirmation: it is highlighted on the page
+// and must be replaced before this is published.
 const GROUPS: { title: string; items: [string, string][] }[] = [
     {
         title: "AltureLock",
         items: [
-            ["What is AltureLock?", "A trading terminal and a journal in one place. You set your rules before the trade, AltureLock checks them and sounds the alarm when one is broken, and every finished trade is recorded and reviewed in the journal."],
-            ["Does AltureLock place or close trades for me?", "No. AltureLock is read-only. You place and close your trades on your exchange. AltureLock reads them, checks them against your rules and alerts you; the decision stays yours."],
-            ["What are the pre-trade rules?", "Before you enter, AltureLock prepares the next trade with you: entry, stop loss, take profit, risk in dollars and in percent of your capital, and the ratio. Each rule stays pending until you confirm it. The stop loss can be set after the entry."],
-            ["What happens when I break one of my rules?", "AltureLock sounds the alarm and shows which rule was broken, so you can check the chart. Rules on a candle close ask you to look; only a clear break of structure says the trade is no longer valid."],
-            ["What do the V1 and V2 alarms mean?", "V1 is the exit signal, on a clear break of your structure. V2 is critical, when your risk is at stake: full screen and sound until you confirm you have seen it."],
-            ["Which markets does the terminal show?", "Crypto, WTI and Brent crude oil, gold, silver, the Nasdaq 100 and the S&P 500, and crypto stocks, with live prices, news and the economic calendar."],
-            ["Does the AI tell me what to buy or sell?", "No. The market briefing summarises the news and what it may mean. It never gives a buy or sell signal."],
+            ["What is AltureLock?", "A trading terminal and a journal in one place. You set your rules before the trade, AltureLock checks them and alerts you the moment one is broken, and every finished trade is recorded and reviewed in the journal."],
+            ["Does AltureLock place or close trades for me?", "No. AltureLock is read-only. You place and close your trades on your exchange; AltureLock reads them, checks them against your rules and sounds the alarm. Every decision stays yours."],
+            ["How is AltureLock different from a trading journal or TradingView alerts?", "A journal looks back at trades once they are closed. An alert watches a price. AltureLock covers the whole trade: your rules before the entry, alarms while the trade is open, and the review once it is closed, in one workspace."],
+            ["Is AltureLock suitable for beginners?", "AltureLock is built for traders who already have a strategy and want to follow it with discipline. If you are starting out, Alture Education is the place to begin."],
             ["Does AltureLock guarantee results?", "No. It helps you follow your own plan and see your trading clearly. It does not remove the risk of trading, and no win rate is promised."],
         ],
     },
     {
-        title: "Trading journal",
+        title: "Accounts and data",
         items: [
-            ["What does the journal record?", "Every finished trade: entry, exit, size, fees and result, shown on the real candles of the moment. You see your P&L calendar, your equity curve and your results by setup, day and session."],
-            ["How do my trades get into the journal?", "With an exchange connected, your closed trades are imported automatically. Without one, you enter them by hand: instrument, direction, entry, exit and size."],
-            ["Can I add notes and screenshots to a trade?", "Yes. Each trade has its notes, its setup and its screenshots, so you can see later what you saw at the time."],
-            ["Can I review a trade on the chart?", "Yes. Open a trade and it is drawn on the real candles of that moment, with its entry, its exit, its stop loss and its take profit."],
-            ["Does the journal include backtesting?", "Yes. You can replay real market history and test a setup before you trade it."],
-        ],
-    },
-    {
-        title: "Exchanges and your data",
-        items: [
-            ["Which exchanges can I connect?", "Bybit, Binance, OKX, Bitget and Hyperliquid, with a read-only key. Trading, transfers and withdrawals stay off, so the key can only read your trades."],
-            ["Is a read-only key safe?", "A read-only key cannot place an order, move funds or withdraw. It only lets AltureLock read your trades and positions. Never create a key with trading or withdrawal rights for AltureLock."],
-            ["Can I use AltureLock without connecting an exchange?", "Yes. You can enter your trades by hand in the journal. The demo runs on a simulated account, with no account needed."],
+            ["Which exchanges can I connect, and is it safe?", "Bybit, Binance, OKX, Bitget and Hyperliquid, with a read-only API key. A read-only key cannot place an order, move funds or withdraw: it only lets AltureLock read your trades and positions. You can also use the journal without connecting an exchange, by entering your trades by hand."],
+            ["Does AltureLock work with prop firm accounts?", "Prop firm accounts have not been tested with AltureLock yet, so we cannot confirm compatibility today. If you trade a prop firm account, tell us which platform you use before you request access."],
+            ["What happens to my data?", "Your journal stays between you and your exchange. We have no access to it: we cannot see your trades, your notes or your results, and nobody at Alture & Co can open it. Your exchange key is read-only. The only things we keep are your email and your subscription, to run your account."],
+            ["Does AltureLock work on a phone?", "The journal and your results work on a phone. The terminal is built as a desktop workspace and is best used on a computer."],
         ],
     },
     {
         title: "Indicators",
         items: [
-            ["How do I find the indicators on TradingView?", "In TradingView, open Indicators and search for the name, for example \u201cRange \u00b7 Alture & Co\u201d. For a paid indicator, access is added to your TradingView username once you have subscribed; it then appears under Invite-only scripts."],
-            ["How do I add an indicator to my chart?", "Click its name in the Indicators list and it is added to the chart you have open. Its settings open from the gear next to its name on the chart."],
-            ["Which TradingView plan do the indicators need?", "Volume Profile + Footprint and Order Flow CVD read TradingView's footprint data, so they need a Premium or Ultimate plan. Volume Profile + VWAP, Volume Profile + FVG + MS, Trend Lines and Range run on every plan."],
-            ["What is the difference between Footprint and VWAP?", "Volume Profile + Footprint reads every trade at the bid and the ask from TradingView's footprint. Volume Profile + VWAP rebuilds the buying and selling pressure from 1-minute data, so it runs on every plan."],
-            ["Are the indicators included in AltureLock?", "Yes. The AltureLock plan includes Volume Profile + Footprint and Order Flow CVD. The free indicators are free for everyone."],
-            ["Do the indicators work on any market?", "They run on any TradingView chart. The order flow ones need a market where TradingView has footprint data."],
+            ["How do I find the Alture indicators on TradingView?", "In TradingView, open Indicators and search for the name, for example \u201cRange \u00b7 Alture & Co\u201d. For a paid indicator, send us your TradingView username after you subscribe: we add your access within 1 hour, and the indicator then appears under Invite-only scripts."],
+            ["Which TradingView plan do the indicators need?", "Volume Profile + Footprint and Order Flow CVD read TradingView's footprint data, so they need a Premium or Ultimate plan. Volume Profile + VWAP, Volume Profile + FVG + MS, Trend Lines and Range run on every plan, and the last three are free."],
         ],
     },
     {
-        title: "Plans and access",
+        title: "Payments and support",
         items: [
-            ["Is there a free plan?", "Yes. The free plan gives you the trading journal with your trades entered by hand, the P&L calendar, the equity curve and the analysis, with one strategy."],
-            ["What is the difference between Journal, Terminal and AltureLock?", "Journal adds the automatic import from your exchange and unlimited strategies. Terminal gives you the pre-trade rules, the position size calculator, the live charts and the news. AltureLock includes both, plus the two premium indicators."],
-            ["Can I pay yearly?", "Yes. Each paid plan has a yearly price, lower per month than the monthly one."],
-            ["How do I get access?", "AltureLock is offered by request. Send a request from the contact form and we will come back to you."],
+            ["How can I pay?", "Card and crypto payments are coming soon. Until then, AltureLock is offered by request: send a request from the contact form and we will come back to you."],
+            ["Can I cancel at any time?", "Yes. You can cancel at any time, and you keep full access until the end of the period you have already paid for."],
+            ["Do you offer refunds?", "On a yearly plan, if you cancel within the first month, we refund the yearly payment minus one month charged at the monthly price, not the discounted yearly rate."],
+            ["How do I contact support?", "Write to contact@altureandco.com. We reply within 24 hours. Since we cannot see your journal, a screenshot of the problem helps us answer faster."],
         ],
     },
 ];
@@ -84,7 +70,7 @@ const ProductFaq = () => {
                                                 </button>
                                                 <div id={`faq-${i}`} className={`grid transition-[grid-template-rows] duration-300 ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                                                     <p className="overflow-hidden pr-10 text-[15px] leading-relaxed text-white/60">
-                                                        <span className="block pb-6">{a}</span>
+                                                        <span className="block pb-6">{a.split(/(\[[^\]]+\])/).map((part, k) => (part.startsWith("[") ? <mark key={k} className="rounded-sm bg-[#FACC15]/15 px-1 text-[#FACC15]">{part}</mark> : part))}</span>
                                                     </p>
                                                 </div>
                                             </li>
