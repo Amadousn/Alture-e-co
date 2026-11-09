@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ProductFaq from "./product-faq";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -440,6 +441,9 @@ const ProductPage = () => {
 
             {/* Pricing */}
             <Pricing />
+
+            {/* Common questions */}
+            <ProductFaq />
 
             {/* Who it is for */}
             <section className="bg-black !pt-16 md:!pt-24 !pb-24 md:!pb-32">
