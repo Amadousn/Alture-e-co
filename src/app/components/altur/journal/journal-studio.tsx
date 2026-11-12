@@ -466,7 +466,11 @@ function rangeOf(preset: Preset, custom: { from: string; to: string }, first: nu
 }
 
 const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, reviewable = false, status, look, framed = false }: Props) => {
-    const [theme, setTheme] = useTheme();
+    // The demo on the public site always opens in black; the member's saved choice applies only to their own journal.
+    const [savedTheme, saveTheme] = useTheme();
+    const [demoTheme, setDemoTheme] = useState<"light" | "dark">("dark");
+    const theme = sample ? demoTheme : savedTheme;
+    const setTheme = sample ? setDemoTheme : saveTheme;
     const [hidden] = usePrivacy();
     HIDDEN = hidden;
     const [stored] = useTradeReviews();
