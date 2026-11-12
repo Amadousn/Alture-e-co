@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ProductFaq from "./product-faq";
 import Link from "next/link";
+import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ProductScreen from "./product-screen";
@@ -47,7 +48,7 @@ const TOOLS = [
 ];
 
 // Prices. Only what exists today is listed as included; what is being built says so.
-const PLANS = [
+export const PLANS = [
     {
         name: "Free",
         monthly: 0,
@@ -84,6 +85,30 @@ const PLANS = [
         soon: [] as string[],
         main: true,
     },
+];
+
+// The plan comparison, in plan order: Free, Journal, Terminal, AltureLock.
+type Cell = boolean | string;
+const COMPARE: [string, [string, Cell, Cell, Cell, Cell][]][] = [
+    ["Journal", [
+        ["Trading journal, trades entered by hand", true, true, true, true],
+        ["P&L calendar, equity curve and analysis", true, true, true, true],
+        ["Read-only exchange connections", "None", "1", "1", "Unlimited"],
+        ["Strategies", "1", "Unlimited", "1", "Unlimited"],
+        ["Trade review on the real candles", false, true, false, true],
+        ["Analysis by setup, day and session", false, true, false, true],
+        ["Backtesting on real market history", false, true, false, true],
+    ]],
+    ["Terminal", [
+        ["Pre-trade checklist and daily loss limits", false, false, true, true],
+        ["Position size calculator", false, false, true, true],
+        ["Live charts and order flow", false, false, true, true],
+        ["News, economic calendar and live TV", false, false, true, true],
+    ]],
+    ["Only in AltureLock", [
+        ["Rules checked before the trade, results recorded after it", false, false, false, true],
+        ["Volume Profile + Footprint and Order Flow CVD on TradingView", false, false, false, true],
+    ]],
 ];
 
 // The TradingView indicators, also sold on their own.
@@ -186,6 +211,37 @@ const Pricing = () => {
                         Crypto
                     </span>
                     <span>Payments open soon.</span>
+                </div>
+                {/* Every plan side by side. Each line comes from the plan cards above; exchange connections follow the billing limits. */}
+                <div className="mt-20">
+                    <p className="text-xl md:text-2xl font-medium tracking-tight text-white">Compare the plans</p>
+                    <div className="mt-8 overflow-x-auto rounded-[10px] border border-white/10">
+                        <table className="w-full min-w-[640px] text-left text-[13.5px] md:text-[14px]">
+                            <thead className="text-[11px] uppercase tracking-[0.12em] text-white/40">
+                                <tr className="border-b border-white/10">
+                                    <th className="px-4 py-4 font-normal md:px-5"><span className="sr-only">Feature</span></th>
+                                    {PLANS.map((p) => (
+                                        <th key={p.name} className={`px-4 py-4 font-normal md:px-5 ${p.main ? "text-white" : ""}`}>{p.name}<span className="block normal-case tracking-normal text-white/40">${yearly ? p.yearly : p.monthly}/mo</span></th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {COMPARE.map(([group, rows]) => (
+                                    <Fragment key={group}>
+                                        <tr><td colSpan={5} className="px-4 pb-2 pt-6 text-[11px] uppercase tracking-[0.14em] text-white/40 md:px-5">{group}</td></tr>
+                                        {rows.map(([name, ...cells]) => (
+                                            <tr key={name} className="border-b border-white/[0.06]">
+                                                <td className="px-4 py-3 text-white/80 md:px-5">{name}</td>
+                                                {cells.map((c, i) => (
+                                                    <td key={i} className="px-4 py-3 md:px-5">{typeof c === "string" ? <span className="text-white/75">{c}</span> : c ? <span className="text-[#4DD0E1]">✓</span> : <span className="text-white/25">—</span>}</td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </Fragment>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div className="mt-20">
                     <p className="text-xl md:text-2xl font-medium tracking-tight text-white">Indicators only</p>
@@ -371,6 +427,7 @@ const ProductPage = () => {
                     </div>
                     <p className="mb-6 border-l-2 border-[#FACC15] pl-4 text-sm text-white/70">Sample trades, not a real account.</p>
                     <JournalDemo framed />
+                    <Link href="/journal" className="mt-8 inline-block border-b border-white/25 pb-0.5 text-sm text-white/70 transition-colors hover:border-white hover:text-white">How the journal works, and what is included →</Link>
                 </div>
             </section>
 

@@ -13,7 +13,7 @@ const EducationHero = () => {
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
                 <div className="grid lg:grid-cols-12 gap-x-10 gap-y-12 pt-2 md:pt-6">
                     <div className="lg:col-span-7">
-                        <h1 className="!text-4xl sm:!text-5xl lg:!text-6xl !leading-[1.06] mb-7 text-white">
+                        <h1 className="font-logo !font-extralight !tracking-[-0.02em] !text-4xl sm:!text-5xl lg:!text-6xl !leading-[1.06] mb-7 text-white">
                             {education.headlineLine1}
                             <br />
                             {education.headlinePrefix} <span className="text-primary">{education.headlineAccent}</span>.
@@ -37,7 +37,7 @@ const EducationHero = () => {
                         {MODULES.map((item, i) => (
                             <li key={i}>
                                 <Link href={`/education/programme#module-${i + 1}`} className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-3 border-t border-white/15 py-3.5 text-left transition-colors hover:bg-white/[0.03]">
-                                    <span className="font-mono text-[11px] tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</span>
+                                    <span className="font-sans font-medium text-[12px] tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</span>
                                     <span className="text-[15px] text-white/75 group-hover:text-white transition-colors">{item.title}</span>
                                     <span aria-hidden="true" className="text-white/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">→</span>
                                 </Link>

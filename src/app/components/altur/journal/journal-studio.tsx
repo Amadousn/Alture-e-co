@@ -22,9 +22,9 @@ import { useRecordedTrades } from "@/utils/workspace-store";
 // from the trades given, so all of them agree.
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+export const WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const DAY = 86400000;
-const SESSIONS = [
+export const SESSIONS = [
     { name: "Asia", from: 0, to: 7 },
     { name: "London", from: 7, to: 13 },
     { name: "New York", from: 13, to: 21 },
@@ -84,8 +84,8 @@ const edgeOf = (list: ClosedTrade[]) => {
     const rs = list.map((t) => (t as ClosedTrade & { r?: number }).r).filter((r): r is number => typeof r === "number");
     return { avgWin, avgLoss, payoff: avgWin !== null && avgLoss ? avgWin / avgLoss : null, bestWin, bestLoss, current: run, expectancyR: rs.length === list.length && rs.length ? rs.reduce((s, r) => s + r, 0) / rs.length : null };
 };
-type Group = { label: string; count: number; wins: number; total: number };
-const group = (label: string, list: ClosedTrade[]): Group => ({ label, count: list.length, wins: list.filter((t) => t.profitLoss > 0).length, total: list.reduce((s, t) => s + t.profitLoss, 0) });
+export type Group = { label: string; count: number; wins: number; total: number };
+export const group = (label: string, list: ClosedTrade[]): Group => ({ label, count: list.length, wins: list.filter((t) => t.profitLoss > 0).length, total: list.reduce((s, t) => s + t.profitLoss, 0) });
 
 function useWidth<T extends HTMLElement>() {
     const ref = useRef<T>(null);
@@ -103,7 +103,7 @@ function useWidth<T extends HTMLElement>() {
 
 // ---------- the performance chart ----------
 
-type Mode = "equity" | "drawdown" | "daily" | "cumulative" | "outcomes";
+export type Mode = "equity" | "drawdown" | "daily" | "cumulative" | "outcomes";
 // A smooth line through the points that never overshoots them (monotone cubic),
 // so a curve never shows a value the data does not have.
 const smoothPath = (pts: [number, number][]) => {
@@ -135,7 +135,7 @@ const smoothPath = (pts: [number, number][]) => {
     return d;
 };
 
-const Chart = ({ trades, mode, fill = true }: { trades: ClosedTrade[]; mode: Mode; fill?: boolean }) => {
+export const Chart = ({ trades, mode, fill = true }: { trades: ClosedTrade[]; mode: Mode; fill?: boolean }) => {
     const { ref, width } = useWidth<HTMLDivElement>();
     const [hover, setHover] = useState<number | null>(null);
     const [drawn, setDrawn] = useState(false);
@@ -303,7 +303,7 @@ const Chart = ({ trades, mode, fill = true }: { trades: ClosedTrade[]; mode: Mod
 
 // What to work on when a factor is the weakest. Each line points to something the
 // trader can check in their own journal; the figure comes from the factor itself.
-const IMPROVE: Record<string, (detail: string) => string> = {
+export const IMPROVE: Record<string, (detail: string) => string> = {
     "Win rate": (d) => `${d}. Compare your strategies in Analysis and keep the setups that win most often.`,
     "Profit factor": (d) => `${d}. Your losing trades take back too much: check how far your stops sit on them.`,
     "Win / loss size": (d) => `${d}. Let winners reach their target, or cut losers sooner, to widen that gap.`,
@@ -312,8 +312,11 @@ const IMPROVE: Record<string, (detail: string) => string> = {
     Discipline: (d) => `${d}. Confirm every rule before the entry, not after.`,
 };
 
+// Short names so every factor fits its column; the full name shows on hover.
+const SHORT: Record<string, string> = { "Win / loss size": "Win / loss", "Drawdown control": "Drawdown" };
+
 // The Alture Score: the ring, each factor as a figure out of 100, and what it means.
-const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight[]; count: number }) => {
+export const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight[]; count: number }) => {
     const r = 15.5;
     const c = 2 * Math.PI * r;
     const color = (v: number) => (v >= 70 ? "var(--j-up)" : v >= 45 ? "var(--j-ink)" : "var(--j-dn)");
@@ -338,13 +341,20 @@ const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight
                     <div>
                         <p className="text-[16px] font-medium">Alture Score</p>
                         <p className="mt-1 max-w-[13rem] text-[12px] leading-relaxed text-[var(--j-mu)]">{score ? "From your own trades in this period." : `Shows from ${MIN_SCORE_TRADES} closed trades. ${count} so far.`}</p>
+                        {score && (
+                            <p className="mt-2 flex gap-2.5 text-[10.5px] text-[var(--j-fa)]">
+                                <span><span className="text-[var(--j-up)]">●</span> 70+</span>
+                                <span><span className="text-[var(--j-ink)]">●</span> 45–69</span>
+                                <span><span className="text-[var(--j-dn)]">●</span> under 45</span>
+                            </p>
+                        )}
                     </div>
                 </div>
                 {parts.length > 0 && (
                     <dl className={`grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 ${parts.length > 5 ? "xl:grid-cols-6" : "xl:grid-cols-5"}`}>
                         {parts.map((p) => (
                             <div key={p.label} className="min-w-0 lg:border-l lg:border-[var(--j-line)] lg:pl-5">
-                                <dt className="truncate text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-mu)]">{p.label}</dt>
+                                <dt className="truncate text-[10.5px] uppercase tracking-[0.12em] text-[var(--j-mu)]" title={p.label}>{SHORT[p.label] ?? p.label}</dt>
                                 <dd className="mt-2 leading-none">
                                     <span className="font-logo text-[30px] font-extralight" style={{ color: color(p.value) }}>{Math.round(p.value)}</span>
                                     <span className="ml-1 font-mono text-[11px] text-[var(--j-fa)]">/100</span>
@@ -399,7 +409,7 @@ const ScoreCard = ({ score, insights, count }: { score: Score; insights: Insight
     );
 };
 
-const Bars = ({ rows, sub = false }: { rows: Group[]; sub?: boolean }) => {
+export const Bars = ({ rows, sub = false }: { rows: Group[]; sub?: boolean }) => {
     const largest = Math.max(1, ...rows.map((r) => Math.abs(r.total)));
     return (
         <ul className="mt-2.5 space-y-2.5">
@@ -745,9 +755,9 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                             return { w, l, rate: w + l ? Math.round((w / (w + l)) * 100) : null };
                         };
                         const weeks = Array.from({ length: rows }, (_, r) => {
-                            const keys = Array.from({ length: 7 }, (_, c) => keyAt(r * 7 + c));
+                            const keys = Array.from({ length: 7 }, (_, c) => keyAt(r * 7 + c)).filter((k) => Number(k.slice(5, 7)) === cal.m + 1);
                             const list = keys.flatMap((k) => byDay.get(k) ?? []);
-                            return { r, list, total: list.reduce((sum, t) => sum + t.profitLoss, 0), days: keys.filter((k) => byDay.has(k)).length, ...winLine(list), crosses: keys.some((k) => Number(k.slice(5, 7)) !== cal.m + 1) };
+                            return { r, list, total: list.reduce((sum, t) => sum + t.profitLoss, 0), days: keys.filter((k) => byDay.has(k)).length, ...winLine(list), crosses: keys.length < 7 };
                         });
                         const weekText = (wk: (typeof weeks)[number]) => `${wk.days} ${wk.days === 1 ? "day" : "days"} · ${wk.list.length} ${wk.list.length === 1 ? "trade" : "trades"}`;
                         return (
@@ -800,7 +810,7 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                                                     </button>
                                                 );
                                             })}
-                                            <div className={`hidden min-w-0 flex-col justify-between rounded-lg border-l-2 py-1.5 pl-3 pr-1 sm:flex ${wk.list.length ? (wk.total >= 0 ? "border-[var(--j-up)]" : "border-[var(--j-dn)]") : "border-[var(--j-line)]"}`} title={wk.crosses ? "This week runs into the next or previous month: its total counts all seven days." : undefined}>
+                                            <div className={`hidden min-w-0 flex-col justify-between rounded-lg border-l-2 py-1.5 pl-3 pr-1 sm:flex ${wk.list.length ? (wk.total >= 0 ? "border-[var(--j-up)]" : "border-[var(--j-dn)]") : "border-[var(--j-line)]"}`} title={wk.crosses ? "Only the days of this month are counted, so the weeks add up to the month." : undefined}>
                                                 <span className="text-[11px] text-[var(--j-mu)]">Week {wk.r + 1}</span>
                                                 {wk.list.length ? (
                                                     <span className="block leading-tight">
@@ -885,45 +895,8 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                         </>
                     ) : (
                         <>
-                            <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">{range.label}</h2>
-                            <p className="mt-1 text-[12.5px] text-[var(--j-mu)]">Choose a day in the calendar to read it here.</p>
-                            {inRange.length > 0 && (() => {
-                                const dayTotals = [...new Set(inRange.map((t) => dayKey(t.closedAt)))].map((k) => ({ k, total: (byDay.get(k) ?? []).reduce((s, t) => s + t.profitLoss, 0) })).sort((a, b) => b.total - a.total);
-                                const green = dayTotals.filter((d) => d.total > 0).length;
-                                return (
-                                    <dl className="mt-5 space-y-3 text-[13.5px]">
-                                        {(
-                                            [
-                                                ["Best day", dayTotals[0]],
-                                                ["Worst day", dayTotals[dayTotals.length - 1]],
-                                            ] as const
-                                        ).map(([k, d]) => (
-                                            <div key={k} className="flex justify-between gap-3">
-                                                <dt className="text-[var(--j-mu)]">{k}</dt>
-                                                <dd>
-                                                    <button type="button" onClick={() => { const dd = new Date(startOfDay(d.k)); setCal({ y: dd.getUTCFullYear(), m: dd.getUTCMonth() }); selectDay(d.k); }} className="text-right">
-                                                        <span className={`font-mono ${tone(d.total)}`}>{money(d.total, 0)}</span> <span className="text-[var(--j-fa)]">{shortDay(startOfDay(d.k))}</span>
-                                                    </button>
-                                                </dd>
-                                            </div>
-                                        ))}
-                                        <div className="flex justify-between gap-3">
-                                            <dt className="text-[var(--j-mu)]">Positive days</dt>
-                                            <dd className="font-mono">
-                                                {green} of {dayTotals.length}
-                                            </dd>
-                                        </div>
-                                        <div className="flex justify-between gap-3">
-                                            <dt className="text-[var(--j-mu)]">Best trade</dt>
-                                            <dd className={`font-mono ${tone(stats.bestTrade)}`}>{money(stats.bestTrade, 0)}</dd>
-                                        </div>
-                                        <div className="flex justify-between gap-3">
-                                            <dt className="text-[var(--j-mu)]">Worst trade</dt>
-                                            <dd className={`font-mono ${tone(stats.worstTrade)}`}>{money(stats.worstTrade, 0)}</dd>
-                                        </div>
-                                    </dl>
-                                );
-                            })()}
+                            <h2 className="!text-[16px] !font-medium !text-[var(--j-ink)]">Choose a day</h2>
+                            <p className="mt-1 text-[12.5px] text-[var(--j-mu)]">Click a day in the calendar to see its result and its trades here.</p>
                             {positions.length > 0 && (
                                 <div className="mt-6 border-t border-[var(--j-line)] pt-4">
                                     <p className="text-[13px] font-medium">Open now · not counted above</p>

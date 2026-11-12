@@ -19,7 +19,7 @@ const WhatWeOffer = () => {
     const { offer } = t;
 
     const rest = [
-        { n: "02", href: "/alturelock#journal", item: offer.journal, tag: "" },
+        { n: "02", href: "/journal", item: offer.journal, tag: "" },
         { n: "03", href: "/indicators", item: offer.indicators, tag: "" },
         { n: "04", href: "/education", item: offer.education, tag: "" },
         { n: "05", href: "/contact", item: offer.trading, tag: "" },

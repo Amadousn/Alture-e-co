@@ -45,7 +45,7 @@ const ProductScreen = ({ caption, leaving = false }: { caption: string; leaving?
         <>
             <div ref={ref} className="al-screen hidden lg:block" aria-hidden="true">
                 <div className="al-screen__body">
-                    <Image src="/images/alturelock/cockpit.jpg" alt="" width={2400} height={1500} priority className="block h-auto w-full" />
+                    <Image src="/images/alturelock/cockpit.jpg" alt="" width={2400} height={1500} priority sizes="(min-width: 1024px) 52vw, 1px" className="block h-auto w-full" />
                 </div>
             </div>
 

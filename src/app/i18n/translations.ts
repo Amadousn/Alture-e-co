@@ -13,6 +13,7 @@ type Dictionary = {
     nav: {
         home: string;
         alturelock: string;
+        journal: string;
         indicators: string;
         education: string;
         contact: string;
@@ -102,7 +103,7 @@ export const translations: Record<Language, Dictionary> = {
     // direct, no corporate padding). Left untouched here; the other languages
     // are adapted to read the same way natively, not translated word-for-word.
     en: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", indicators: "INDICATORS", education: "EDUCATION", contact: "CONTACT" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", journal: "JOURNAL", indicators: "INDICATORS", education: "EDUCATION", contact: "CONTACT" },
         hero: {
             headline: "We trade crypto. With",
             headlineAccent: "rules",
@@ -126,7 +127,7 @@ export const translations: Record<Language, Dictionary> = {
                 label: "Free",
                 title: "Trading Journal",
                 description: "Record your trades, track your performance and review your trading decisions.",
-                cta: "Open Trading Journal",
+                cta: "Explore the Journal",
             },
             education: {
                 label: "Education",
@@ -206,7 +207,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     fr: {
-        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", indicators: "INDICATEURS", education: "FORMATION", contact: "CONTACT" },
+        nav: { home: "ACCUEIL", alturelock: "ALTURELOCK", journal: "JOURNAL", indicators: "INDICATEURS", education: "FORMATION", contact: "CONTACT" },
         hero: {
             // "On" reads more confident and modern here than the stiffer "Nous tradons".
             headline: "On trade la crypto. Avec des",
@@ -231,7 +232,7 @@ export const translations: Record<Language, Dictionary> = {
                 label: "Gratuit",
                 title: "Journal de trading",
                 description: "Enregistrez vos trades, suivez vos performances et revoyez vos décisions de trading.",
-                cta: "Ouvrir le journal",
+                cta: "Découvrir le journal",
             },
             education: {
                 label: "Formation",
@@ -311,7 +312,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     it: {
-        nav: { home: "HOME", alturelock: "ALTURELOCK", indicators: "INDICATORI", education: "FORMAZIONE", contact: "CONTATTI" },
+        nav: { home: "HOME", alturelock: "ALTURELOCK", journal: "JOURNAL", indicators: "INDICATORI", education: "FORMAZIONE", contact: "CONTATTI" },
         hero: {
             headline: "Facciamo trading di crypto. Con",
             headlineAccent: "regole, non emozioni.",
@@ -335,7 +336,7 @@ export const translations: Record<Language, Dictionary> = {
                 label: "Gratis",
                 title: "Diario di trading",
                 description: "Registra le tue operazioni, monitora le performance e rivedi le tue decisioni di trading.",
-                cta: "Apri il diario",
+                cta: "Scopri il diario",
             },
             education: {
                 label: "Formazione",
@@ -415,7 +416,7 @@ export const translations: Record<Language, Dictionary> = {
         },
     },
     ru: {
-        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", indicators: "ИНДИКАТОРЫ", education: "ОБУЧЕНИЕ", contact: "КОНТАКТЫ" },
+        nav: { home: "ГЛАВНАЯ", alturelock: "ALTURELOCK", journal: "ЖУРНАЛ", indicators: "ИНДИКАТОРЫ", education: "ОБУЧЕНИЕ", contact: "КОНТАКТЫ" },
         hero: {
             headline: "Мы торгуем крипту. По",
             headlineAccent: "правилам, а не на эмоциях.",
@@ -439,7 +440,7 @@ export const translations: Record<Language, Dictionary> = {
                 label: "Бесплатно",
                 title: "Дневник трейдера",
                 description: "Записывайте сделки, отслеживайте результаты и разбирайте свои торговые решения.",
-                cta: "Открыть дневник",
+                cta: "Подробнее о дневнике",
             },
             education: {
                 label: "Обучение",

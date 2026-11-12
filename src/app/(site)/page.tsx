@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from "next";
 import Hero from '../components/home/hero';
-import WhatWeOffer from '../components/altur/what-we-offer';
+import HomeProducts from '../components/home/home-products';
 import Contact from '../components/altur/contact';
 
 const title = "Alture & Co. | Proprietary Trading";
@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <WhatWeOffer />
+      <HomeProducts />
       <Contact />
     </main>
   )

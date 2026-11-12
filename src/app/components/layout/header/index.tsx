@@ -66,6 +66,7 @@ const Header: React.FC = () => {
   const menuItems = [
     { label: t.nav.home, href: "/" },
     { label: t.nav.alturelock, href: "/alturelock" },
+    { label: t.nav.journal, href: "/journal" },
     { label: t.nav.indicators, href: "/indicators" },
     { label: t.nav.contact, href: "/#contact" },
   ];
@@ -138,7 +139,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Centered Desktop Navigation */}
-        <nav className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-8">
+        <nav className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-5 xl:space-x-8">
           {menuItems.map((item, index) => (
             <HeaderLink key={index} item={item} />
           ))}

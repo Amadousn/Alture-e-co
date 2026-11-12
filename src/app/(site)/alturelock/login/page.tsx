@@ -6,7 +6,7 @@ import { LockMark } from "@/app/components/altur/workspace/alturelock-logo";
 import { useSession } from "@/utils/use-session";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/app/i18n/language-context";
-import { DEMO_OPEN, LOGIN_OPEN } from "@/utils/launch";
+import { LOGIN_OPEN } from "@/utils/launch";
 import { supabase } from "@/utils/supabase/client";
 
 type Mode = "signin" | "signup" | "forgot" | "reset";
@@ -30,12 +30,13 @@ const AltureLockLoginPage = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const session = useSession();
-    // Temporary: compares the two login directions with ?style=1 or ?style=2.
-    const [style, setStyle] = useState("1");
     const [reveal, setReveal] = useState(false);
+    // Sign-up consents: the terms are required, marketing is optional and stored on its own.
+    const [terms, setTerms] = useState(false);
+    const [marketing, setMarketing] = useState(false);
+    const [done, setDone] = useState(false);
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        setStyle(params.get("style") ?? "1");
         if (params.get("mode") === "reset") setMode("reset");
         if (params.get("link") === "expired") setError(copy.expired);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,7 +63,10 @@ const AltureLockLoginPage = () => {
                 await auth.resetPasswordForEmail(username, { redirectTo: `${back}?reset=1` });
                 setNotice(copy.resetSent);
             } else if (mode === "signup") {
-                const { error } = await auth.signUp({ email: username, password, options: { emailRedirectTo: back } });
+                if (!terms) return setError("Please accept the Terms of Use to create your account.");
+                const now = new Date().toISOString();
+                // Kept in the account's own data, separately: the terms acceptance, and the marketing choice the trader can change later.
+                const { error } = await auth.signUp({ email: username, password, options: { emailRedirectTo: back, data: { terms_accepted_at: now, marketing_opt_in: marketing, marketing_updated_at: now } } });
                 if (error) setError(error.code === "weak_password" ? copy.weak : error.status === 429 ? copy.tooMany : alturelockLogin.errorGeneric);
                 else setNotice(copy.checkMail);
             } else {
@@ -70,6 +74,7 @@ const AltureLockLoginPage = () => {
                 if (!error) {
                     // A full load, so the workspace starts from this account's data.
                     leaving = true;
+                    setDone(true);
                     window.location.assign("/alturelock/workspace");
                     return;
                 }
@@ -92,15 +97,16 @@ const AltureLockLoginPage = () => {
     const button = { signin: [alturelockLogin.signInButton, alturelockLogin.signingInButton], signup: [copy.create, copy.creating], forgot: [copy.send, copy.sending], reset: [copy.save, copy.saving] }[mode];
 
     const label = "block text-[12px] font-medium text-white/70";
-    const field = "!mt-2 !block !h-12 !w-full !rounded-md !border !border-white/15 !bg-white/[0.04] !px-4 !text-[15px] !text-white placeholder:!text-white/30 transition-colors hover:!border-white/30 focus:!border-[#4DD0E1] focus:!bg-white/[0.06] focus:!outline-none focus:!ring-2 focus:!ring-[#4DD0E1]/20 disabled:!cursor-not-allowed disabled:!opacity-40";
+    const field = "!mt-2 !block !h-12 !w-full !rounded-md !border !border-white/12 !bg-white/[0.035] !px-4 !text-[15px] !text-white placeholder:!text-white/25 transition-colors hover:!border-white/25 focus:!border-[#4DD0E1]/70 focus:!bg-white/[0.05] focus:!outline-none focus:!ring-[3px] focus:!ring-[#4DD0E1]/15 disabled:!cursor-not-allowed disabled:!opacity-40";
+    const box = "mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer appearance-none rounded-[4px] border border-white/30 bg-transparent transition-colors checked:border-[#4DD0E1] checked:bg-[#4DD0E1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4DD0E1]/40 bg-center bg-no-repeat checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><path d=%22M4 8.5l2.5 2.5L12 5.5%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')]";
     const form = (
-        <form onSubmit={handleSubmit} className="w-full space-y-5 text-left" noValidate={false}>
+        <form onSubmit={handleSubmit} className="w-full space-y-5 text-left">
             {needsEmail && (
                 <div>
                     <label htmlFor="login-email" className={label}>
                         {copy.email}
                     </label>
-                    <input id="login-email" type="email" required value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="email" placeholder="you@example.com" disabled={!LOGIN_OPEN} className={field} />
+                    <input id="login-email" type="email" required value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="email" placeholder="you@example.com" disabled={!LOGIN_OPEN || done} className={field} />
                 </div>
             )}
             {needsPassword && (
@@ -110,42 +116,63 @@ const AltureLockLoginPage = () => {
                             {mode === "reset" ? copy.newPassword : alturelockLogin.passwordLabel}
                         </label>
                         {LOGIN_OPEN && mode === "signin" && (
-                            <button type="button" onClick={() => go("forgot")} className="text-[12px] text-white/50 transition-colors hover:text-[#4DD0E1]">
+                            <button type="button" onClick={() => go("forgot")} className="text-[12px] text-white/45 transition-colors hover:text-white">
                                 {copy.forgot}
                             </button>
                         )}
                     </div>
                     <div className="relative">
-                        <input id="login-password" type={reveal ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "signin" ? "current-password" : "new-password"} disabled={!LOGIN_OPEN} className={`${field} !pr-16`} />
-                        <button type="button" onClick={() => setReveal((v) => !v)} aria-label={reveal ? "Hide password" : "Show password"} aria-pressed={reveal} className="absolute right-3 top-1/2 mt-1 -translate-y-1/2 rounded px-1.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/45 transition-colors hover:text-white">
+                        <input id="login-password" type={reveal ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "signin" ? "current-password" : "new-password"} disabled={!LOGIN_OPEN || done} className={`${field} !pr-16`} />
+                        <button type="button" onClick={() => setReveal((v) => !v)} aria-label={reveal ? "Hide password" : "Show password"} aria-pressed={reveal} className="absolute right-3 top-1/2 mt-1 -translate-y-1/2 rounded px-1.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/40 transition-colors hover:text-white">
                             {reveal ? "Hide" : "Show"}
                         </button>
                     </div>
+                    {mode === "signup" && <p className="mt-2 text-[11.5px] text-white/35">{copy.short}</p>}
+                </div>
+            )}
+            {mode === "signup" && (
+                <div className="space-y-3 pt-1">
+                    <label className="flex cursor-pointer gap-3 text-[12.5px] leading-relaxed text-white/65">
+                        <input type="checkbox" required checked={terms} onChange={(e) => setTerms(e.target.checked)} className={box} />
+                        <span>
+                            I agree to the{" "}
+                            <Link href="/terms-of-service" target="_blank" className="text-white underline decoration-white/30 underline-offset-2 hover:decoration-white">
+                                Terms of Use
+                            </Link>{" "}
+                            and acknowledge that I have read the{" "}
+                            <Link href="/privacy-policy" target="_blank" className="text-white underline decoration-white/30 underline-offset-2 hover:decoration-white">
+                                Privacy Policy
+                            </Link>
+                            .
+                        </span>
+                    </label>
+                    <label className="flex cursor-pointer gap-3 text-[12.5px] leading-relaxed text-white/50">
+                        <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className={box} />
+                        <span>
+                            Send me product updates, trading insights, tips and exclusive offers from Alture &amp; Co. <span className="text-white/30">Optional.</span>
+                        </span>
+                    </label>
                 </div>
             )}
             {error && (
-                <p role="alert" className="rounded-md border border-[#E955A8]/30 bg-[#E955A8]/[0.07] px-3.5 py-2.5 text-[13px] text-[#E955A8]">
+                <p role="alert" className="border-l-2 border-[#E955A8] pl-3 text-[13px] leading-relaxed text-[#E955A8]">
                     {error}
                 </p>
             )}
             {notice && (
-                <p role="status" className="rounded-md border border-[#4DD0E1]/25 bg-[#4DD0E1]/[0.06] px-3.5 py-2.5 text-[13px] text-white/85">
+                <p role="status" className="border-l-2 border-[#4DD0E1] pl-3 text-[13px] leading-relaxed text-white/80">
                     {notice}
                 </p>
             )}
             {/* Access has not begun: said to screen readers, and the button stays off. */}
             {!LOGIN_OPEN && <p className="sr-only">{loginPage.closed}</p>}
-            <button type="submit" disabled={!LOGIN_OPEN || loading} aria-busy={loading} className="group flex h-12 w-full items-center justify-center gap-2.5 rounded-md bg-[#4DD0E1] text-[14px] font-semibold text-black transition-[background-color,box-shadow] hover:bg-[#6fdbe9] hover:shadow-[0_0_0_4px_rgba(77,208,225,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4DD0E1] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/40 disabled:shadow-none">
-                {loading && <span aria-hidden="true" className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-black/25 border-t-black" />}
-                {loading ? button[1] : button[0]}
-                {!loading && (
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                    </span>
-                )}
+            <button type="submit" disabled={!LOGIN_OPEN || loading || done || (mode === "signup" && !terms)} aria-busy={loading} className={`relative flex h-12 w-full items-center justify-center gap-2.5 overflow-hidden rounded-md text-[14px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4DD0E1] focus-visible:ring-offset-2 focus-visible:ring-offset-black ${done ? "bg-[#4DD0E1]/15 text-[#4DD0E1]" : "bg-[#4DD0E1] text-black hover:bg-[#6fdbe9] disabled:cursor-not-allowed disabled:bg-white/[0.07] disabled:text-white/35"}`}>
+                {done ? "Signed in · opening your workspace" : loading ? button[1] : button[0]}
+                {/* While waiting: a thin line runs along the bottom of the button. Nothing spins. */}
+                {loading && <span aria-hidden="true" className="auth-wait absolute inset-x-0 bottom-0 h-[2px] bg-black/50" />}
             </button>
-            {LOGIN_OPEN && mode !== "reset" && (
-                <p className="text-center text-[13px] text-white/50">
+            {LOGIN_OPEN && mode !== "reset" && !done && (
+                <p className="text-center text-[13px] text-white/45">
                     {mode === "signin" ? copy.noAccount : copy.haveAccount}{" "}
                     <button type="button" onClick={() => go(mode === "signin" ? "signup" : "signin")} className="font-medium text-white transition-colors hover:text-[#4DD0E1]">
                         {mode === "signin" ? copy.signUp : copy.signIn}
@@ -154,85 +181,33 @@ const AltureLockLoginPage = () => {
             )}
             {LOGIN_OPEN && mode === "forgot" && (
                 <p className="text-center text-[13px]">
-                    <button type="button" onClick={() => go("signin")} className="text-white/50 transition-colors hover:text-white">
+                    <button type="button" onClick={() => go("signin")} className="text-white/45 transition-colors hover:text-white">
                         ← {copy.signIn}
                     </button>
                 </p>
             )}
         </form>
     );
-    const others = (
-        <p className="text-[12px] text-white/40">
-            {loginPage.noAccount}{" "}
-            {DEMO_OPEN ? (
-                <Link href="/alturelock/demo" className="text-white/75 hover:text-white">
-                    {loginPage.tryDemo}
-                </Link>
-            ) : (
-                <span className="text-white/75">{({ en: "Coming soon", fr: "Bientôt disponible", it: "Presto disponibile", ru: "Скоро" } as Record<string, string>)[language] ?? "Coming soon"}</span>
-            )}{" "}
-            {loginPage.or}{" "}
-            <Link href="/alturelock" className="text-white/75 hover:text-white">
-                {loginPage.explore}
-            </Link>
-        </p>
-    );
-    const wordmark = (size: string) => (
-        <span className={`inline-flex items-center gap-3 font-logo leading-none text-white ${size}`}>
-            <LockMark className="h-[0.95em] w-[0.95em]" weight={1} />
-            <span>
-                <span className="font-extralight">Alture</span>
-                <span className="font-normal">Lock</span>
-            </span>
-        </span>
-    );
     const heading = mode === "signup" ? copy.create : mode === "forgot" ? copy.forgot : mode === "reset" ? copy.newPassword : loginPage.title;
 
-    // Direction 2: premium trading technology. The brand and what it does on the left, a defined panel on the right.
-    if (style === "2")
-        return (
-            <section className="bg-black min-h-[100dvh] flex items-center !py-0">
-                <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 pb-16 pt-28 md:px-8 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-20 lg:pt-24">
-                    <div className="hidden lg:block">
-                        {wordmark("text-[40px]")}
-                        <p className="mt-6 max-w-md text-[17px] leading-relaxed text-white/60">{t.entry.headline}</p>
-                        <dl className="mt-12 grid max-w-md grid-cols-3 border-t border-white/10 pt-6">
-                            {[
-                                ["Before", "Your rules"],
-                                ["During", "Your alarms"],
-                                ["After", "Your journal"],
-                            ].map(([k, v]) => (
-                                <div key={k}>
-                                    <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#4DD0E1]">{k}</dt>
-                                    <dd className="mt-1.5 text-[13px] text-white/70">{v}</dd>
-                                </div>
-                            ))}
-                        </dl>
-                        <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.14em] text-white/35">Read-only exchange access · No order is ever placed</p>
-                    </div>
-                    <div className="w-full rounded-xl border border-white/10 bg-[#0b0b0d] p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] sm:p-9">
-                        <div className="lg:hidden">{wordmark("text-[28px]")}</div>
-                        <h1 className="!mt-7 !text-[24px] !font-medium !leading-tight text-white lg:!mt-0">{heading}</h1>
-                        <p className="mt-2 text-[13px] text-white/45">AltureLock workspace</p>
-                        <div className="mt-8">{form}</div>
-                        <div className="mt-8 border-t border-white/10 pt-5 text-center">{others}</div>
-                    </div>
-                </div>
-            </section>
-        );
-
-    // Direction 1: minimal private fintech. One centred column, the brand directly above the form.
+    // One focused column: the mark, the heading, the form. Nothing else competes with it.
     return (
-        <section className="bg-black min-h-[100dvh] flex flex-col items-center justify-center px-5 !pt-28 !pb-16">
-            <div className="w-full max-w-[400px]">
+        <section className="bg-black min-h-[100dvh] !py-0">
+            <div className="mx-auto flex min-h-[100dvh] w-full max-w-[420px] flex-col justify-center px-5 pb-16 pt-28">
                 <div className="text-center">
-                    {wordmark("text-[30px] sm:text-[34px]")}
-                    <h1 className="!mt-8 !text-[22px] !font-medium !leading-tight text-white">{heading}</h1>
-                    <p className="mt-2 text-[13px] text-white/45">{t.entry.headline}</p>
+                    <span className="inline-flex items-center gap-3 font-logo text-[34px] leading-none text-white">
+                        <LockMark className="h-[0.95em] w-[0.95em]" weight={1} />
+                        <span>
+                            <span className="font-extralight">Alture</span>
+                            <span className="font-normal">Lock</span>
+                        </span>
+                    </span>
+                    {/* Signing in, the logo is the heading. Other steps (create, forgot, reset) say what they are. */}
+                    {mode === "signin" ? <h1 className="sr-only">{heading}</h1> : <h1 className="!mt-8 !text-[24px] !font-light !leading-tight !tracking-tight text-white">{heading}</h1>}
                 </div>
-                <div className="mt-9 rounded-xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-7">{form}</div>
-                <div className="mt-6 text-center">{others}</div>
+                <div className="mt-10">{form}</div>
             </div>
+            <style>{`@keyframes auth-wait{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}.auth-wait{animation:auth-wait 1.1s cubic-bezier(.4,0,.2,1) infinite}@media (prefers-reduced-motion: reduce){.auth-wait{animation:none}}`}</style>
         </section>
     );
 };

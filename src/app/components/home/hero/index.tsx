@@ -13,16 +13,22 @@ const Hero = () => {
             {/* The statement sits left; the live market runs off to the right. */}
             <div className="flex-grow grid lg:grid-cols-12 gap-x-10 gap-y-14 items-end pb-10 md:pb-14">
                <div className="lg:col-span-6" data-aos="fade-up">
-                  <h1 className="!text-4xl sm:!text-5xl lg:!text-[64px] text-white !leading-[1.04] mb-7 max-w-[13ch]">
+                  <h1 className="font-logo !font-extralight !tracking-[-0.02em] !text-[44px] sm:!text-5xl lg:!text-[68px] text-white !leading-[1.02] mb-7 max-w-[13ch]">
                      {t.hero.headline} <span className="text-primary">{t.hero.headlineAccent}</span>{t.hero.headlineSuffix}
                   </h1>
                   <p className="text-white/60 text-[15px] md:text-base leading-relaxed max-w-md">
                      {t.hero.subtext}
                   </p>
-                  <Link href="/alturelock" className="group inline-flex items-baseline gap-3 mt-9 text-sm font-medium text-white border-b border-white/30 pb-1.5 hover:border-white transition-colors">
-                     {t.offer.alturelock.cta}
-                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                  </Link>
+                  <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+                     <Link href="/alturelock" className="group inline-flex items-center gap-3 rounded-sm bg-white px-6 py-3.5 text-sm font-semibold text-black transition-colors hover:bg-[#e4e4e8]">
+                        {t.offer.alturelock.cta}
+                        <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                     </Link>
+                     <Link href="/education" className="group inline-flex items-baseline gap-3 text-sm font-medium text-white border-b border-white/30 pb-1 hover:border-white transition-colors">
+                        {t.offer.education.cta.replace(/\s*→\s*$/, "")}
+                        <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                     </Link>
+                  </div>
                </div>
 
                <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="100">

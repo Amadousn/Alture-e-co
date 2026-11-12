@@ -10,7 +10,7 @@ import { useState } from "react";
 type Data = "real" | "estimated" | "none";
 // spots: boxes on the indicator's image, in % of its width and height [x, y, w, h].
 type Feature = { name: string; what: string; spots?: number[][]; draw?: "ema" | "vwap" | "fvg" };
-type Indicator = { id: string; name: string; edition?: string; plan: string; price: number; image: string; line: string; text: string; data: Data; features: Feature[] };
+type Indicator = { id: string; name: string; edition?: string; plan: string; price: number; image: string; line: string; problem: string; text: string; data: Data; features: Feature[] };
 
 const at = (feature: Feature, ...spots: number[][]): Feature => ({ ...feature, spots });
 const LVN_BANDS = [[2.3, 44.6, 84, 3.2], [2.3, 50.7, 84, 2], [2.3, 70.4, 84, 3.9], [2.3, 79, 84, 1.6]];
@@ -33,6 +33,7 @@ const INDICATORS: Indicator[] = [
         price: 39,
         image: "/images/indicators/allinone.jpg",
         line: "The whole read on one chart, from real order flow.",
+        problem: "One chart instead of five. Context, structure, value and the real order flow behind each move, so you stop switching tools to decide where to enter.",
         text: "Market context, structure and entry timing together. The order flow comes from TradingView's footprint data: the real volume bought and sold at each price.",
         data: "real",
         features: [
@@ -55,6 +56,7 @@ const INDICATORS: Indicator[] = [
         price: 19,
         image: "/images/indicators/standard.jpg",
         line: "The same read, on any TradingView plan.",
+        problem: "The full read without paying for TradingView Premium. For traders on any plan who want profile, structure, VWAP and an estimate of the order flow.",
         text: "Everything in Volume Profile + Footprint, with the order flow built from 1-minute data, the closest read to the footprint on any TradingView plan.",
         data: "estimated",
         features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(VWAP, [21.5, 46.5, 44.5, 14.5]), at(MS, ...BOS_LINES), at(FVG, [60.3, 58.3, 5.6, 8.8]), at(EMA, [24.5, 44.5, 41.5, 17.5]), { spots: [[2.5, 42, 63, 42]], name: "1-minute order flow", what: "Buying and selling pressure rebuilt from the 1-minute data inside each candle: the closest read to the footprint without a Premium plan. It tracks the footprint closely, without the trade-by-trade split at the bid and the ask." }],
@@ -66,6 +68,7 @@ const INDICATORS: Indicator[] = [
         price: 39,
         image: "/images/indicators/orderflow.jpg",
         line: "Inside every candle.",
+        problem: "Candles hide who pushed. This shows who was aggressive at each price, so you can tell a real move from one nobody is backing.",
         text: "What was sold at the bid and bought at the ask, at every price, from TradingView's real footprint data. Made for traders who read the tape, not the structure.",
         data: "real",
         features: [
@@ -83,6 +86,7 @@ const INDICATORS: Indicator[] = [
         price: 0,
         image: "/images/indicators/vpms.jpg",
         line: "Where volume traded, and where it did not.",
+        problem: "Where is the market fair, and where will it move fast? A free start to reading price through volume and structure.",
         text: "The base of the Alture read: the volume profile, the low-volume nodes price moves through quickly, the structure of the market and its Fair Value Gaps.",
         data: "none",
         features: [at(VP, [68, 42, 19, 41.5]), at(LVN, ...LVN_BANDS), at(MS, ...BOS_LINES), FVG],
@@ -94,6 +98,7 @@ const INDICATORS: Indicator[] = [
         price: 0,
         image: "/images/indicators/trend.jpg",
         line: "The trend lines, drawn for you.",
+        problem: "Hand-drawn lines are late, subjective and moved to fit the story. These are drawn the same way every time, on several timeframes.",
         text: "Lines drawn automatically from the swings of the market, on 5 minutes, 15 minutes, 1 hour, 4 hours and daily, each with its own colour and tag.",
         data: "none",
         features: [
@@ -110,6 +115,7 @@ const INDICATORS: Indicator[] = [
         price: 0,
         image: "/images/indicators/range.jpg",
         line: "Where the market is ranging, and when it breaks.",
+        problem: "Most breakouts from a range fail. This frames the range and tells you whether a break held, was retested or failed.",
         text: "Finds the range from the swings, frames its high, middle and low, and follows what happens at the edges: the approach, the break, the retest or the failed break.",
         data: "none",
         features: [
@@ -182,6 +188,16 @@ const Section = ({ item, index }: { item: Indicator; index: number }) => {
                         {item.edition && <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-white/45">{item.edition}</p>}
                         <p className={`${item.edition ? "mt-1.5" : "mt-5"} text-3xl md:text-[40px] md:leading-[1.1] font-medium tracking-tight text-white`}>{item.name}</p>
                         <p className="mt-3 font-logo text-xl font-light text-white/70">{item.line}</p>
+                        <dl className="mt-7 grid gap-5 text-[14px] leading-relaxed sm:grid-cols-2">
+                            <div>
+                                <dt className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">The problem</dt>
+                                <dd className="mt-1.5 text-white/70">{item.problem}</dd>
+                            </div>
+                            <div>
+                                <dt className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">What it does</dt>
+                                <dd className="mt-1.5 text-white/70">{item.text}</dd>
+                            </div>
+                        </dl>
 
                         <ol className="mt-9 border-t border-white/10" aria-label={`${item.name} features`}>
                             {item.features.map((f, i) => {
@@ -306,7 +322,6 @@ const Compare = () => {
                     <p className="mt-3 flex gap-5 text-[12px] text-white/40">
                         <span><span className="text-[#4DD0E1]">Cyan</span> buying</span>
                         <span><span className="text-[#E955A8]">Pink</span> selling</span>
-                        <span className="ml-auto">Illustration of the same 30 minutes, read two ways.</span>
                     </p>
                 </div>
             </div>

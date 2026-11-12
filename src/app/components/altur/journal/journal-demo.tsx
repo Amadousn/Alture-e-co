@@ -188,9 +188,19 @@ export function useSample(account?: SampleAccount) {
     useEffect(() => {
         let cancelled = false;
         const base = buildSample(account);
-        anchorSample(base).then((anchored) => !cancelled && setData(anchored)).catch(() => !cancelled && setData(base));
+        // Market prices make the sample match real candles. If they take longer than
+        // 2.5 seconds, the sample shows as built, so the page is never left empty.
+        let settled = false;
+        const settle = (value: typeof base) => {
+            if (cancelled || settled) return;
+            settled = true;
+            setData(value);
+        };
+        const timer = setTimeout(() => settle(base), 2500);
+        anchorSample(base).then(settle).catch(() => settle(base));
         return () => {
             cancelled = true;
+            clearTimeout(timer);
         };
     }, [account]);
     return data;
@@ -201,7 +211,20 @@ export function useSample(account?: SampleAccount) {
 const JournalDemo = ({ look, account, framed }: { look?: Record<string, string>; account?: SampleAccount; framed?: boolean }) => {
     const data = useSample(account);
 
-    if (!data) return <div className="max-w-6xl mx-auto h-[640px]" />;
+    if (!data)
+        return (
+            <div className="mx-auto max-w-6xl" role="status" aria-label="Loading the sample journal">
+                <div className="grid h-[86px] grid-cols-4 gap-px overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.06]">
+                    {Array.from({ length: 4 }, (_, i) => (
+                        <span key={i} className="animate-pulse bg-[#0b090e]" />
+                    ))}
+                </div>
+                <div className="mt-4 grid gap-4 lg:grid-cols-[2.1fr_1fr]">
+                    <span className="h-[480px] animate-pulse rounded-[10px] border border-white/10 bg-[#0b090e]" />
+                    <span className="h-[480px] animate-pulse rounded-[10px] border border-white/10 bg-[#0b090e]" />
+                </div>
+            </div>
+        );
 
     return <JournalStudio sample trades={data.trades} positions={data.positions} look={look} framed={framed} />;
 };

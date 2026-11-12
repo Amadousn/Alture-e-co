@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { admin, affiliateByCode, attribute, cleanCode, REF_COOKIE } from "@/integrations/affiliates";
 import { findCustomer, Interval, PAID, planOf, priceKey, signedInUser, stripe } from "@/integrations/billing";
 
 const NO_STORE = { "Cache-Control": "no-store" };
@@ -20,10 +22,23 @@ export async function POST(req: NextRequest) {
         const { data: prices } = await api.prices.list({ lookup_keys: [priceKey(body.plan!, interval)], active: true, limit: 1 });
         if (!prices[0]) return fail("This plan is not available.", 400);
         const customer = (await findCustomer(api, user.id, user.email)) ?? (await api.customers.create({ email: user.email, metadata: { user_id: user.id } }));
+        // A partner's link ties this customer to the partner (the first one stays, for life),
+        // and gives the partner's discount when they have one. Without a link, a code can be typed on Stripe's page.
+        let promotion: string | null = null;
+        const db = admin();
+        const code = cleanCode((await cookies()).get(REF_COOKIE)?.value);
+        if (db && code) {
+            const partner = await affiliateByCode(db, code);
+            if (partner) {
+                const kept = await attribute(db, customer.id, partner.id, "link", user.id);
+                if (kept === partner.id && partner.customer_discount && partner.stripe_promotion_code) promotion = partner.stripe_promotion_code;
+            }
+        }
         const session = await api.checkout.sessions.create({
             mode: "subscription",
             customer: customer.id,
             line_items: [{ price: prices[0].id, quantity: 1 }],
+            ...(promotion ? { discounts: [{ promotion_code: promotion }] } : { allow_promotion_codes: true }),
             success_url: `${req.nextUrl.origin}/alturelock/settings?paid=1`,
             cancel_url: `${req.nextUrl.origin}/alturelock#pricing`,
         });
