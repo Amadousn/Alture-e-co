@@ -75,9 +75,58 @@ const sized = (instrument: string, quantity: number) => {
 export const SAMPLE_ACCOUNTS = [
     { id: "main", name: "Bybit · Main" },
     { id: "sub", name: "Bybit · Sub-account" },
+    { id: "prop", name: "Prop firm · 50K · Tradovate" },
 ] as const;
 export type SampleAccount = (typeof SAMPLE_ACCOUNTS)[number]["id"];
 const accountOf = (i: number): SampleAccount => (i % 3 === 2 ? "sub" : "main");
+
+// A funded futures account, as it arrives from a Tradovate Performance file.
+// Invented trades: [months ago, day, contract, direction, entry, stop, target, exit, contracts, setup].
+// Micro E-mini Nasdaq-100 is $2 a point, Micro E-mini S&P 500 $5 a point; fees are a flat round-trip per contract.
+const POINT: Record<string, number> = { MNQ: 2, MES: 5 };
+const PROP_FEE = 1.5;
+const PROP: [number, number, "MNQ" | "MES", "Long" | "Short", number, number, number, number, number, "Continuation" | "Reversal"][] = [
+    [0, 3, "MNQ", "Long", 21012.25, 20987.25, 21062.25, 21062.25, 4, "Continuation"],
+    [0, 4, "MES", "Short", 6031.5, 6039.5, 6015.5, 6039.5, 3, "Reversal"],
+    [0, 6, "MNQ", "Short", 21140.5, 21165.5, 21090.5, 21101.75, 4, "Continuation"],
+    [0, 10, "MNQ", "Long", 20955.0, 20930.0, 21005.0, 20930.0, 4, "Reversal"],
+    [0, 11, "MES", "Long", 6002.25, 5994.25, 6018.25, 6018.25, 3, "Continuation"],
+    [0, 12, "MNQ", "Long", 21030.75, 21005.75, 21080.75, 21071.0, 4, "Continuation"],
+    [1, 6, "MNQ", "Short", 20880.5, 20905.5, 20830.5, 20830.5, 4, "Continuation"],
+    [1, 8, "MES", "Long", 5961.0, 5953.0, 5977.0, 5953.0, 3, "Reversal"],
+    [1, 13, "MNQ", "Long", 20790.25, 20765.25, 20840.25, 20840.25, 4, "Continuation"],
+    [1, 15, "MNQ", "Short", 20912.0, 20937.0, 20862.0, 20937.0, 4, "Reversal"],
+    [1, 20, "MES", "Short", 5988.75, 5996.75, 5972.75, 5972.75, 3, "Continuation"],
+    [1, 22, "MNQ", "Long", 20844.5, 20819.5, 20894.5, 20879.25, 4, "Continuation"],
+    [1, 27, "MNQ", "Long", 20968.0, 20943.0, 21018.0, 21018.0, 4, "Continuation"],
+    [2, 9, "MES", "Long", 5902.5, 5894.5, 5918.5, 5918.5, 3, "Continuation"],
+    [2, 14, "MNQ", "Short", 20610.75, 20635.75, 20560.75, 20635.75, 4, "Reversal"],
+    [2, 21, "MNQ", "Long", 20705.0, 20680.0, 20755.0, 20755.0, 4, "Continuation"],
+];
+const buildProp = (now: Date): ClosedTrade[] =>
+    PROP.map(([monthsAgo, day, contract, direction, entryPrice, stopLoss, takeProfit, exitPrice, quantity, setup], i) => {
+        const dir = direction === "Long" ? 1 : -1;
+        const fee = cents(PROP_FEE * quantity);
+        // US session, 15:30 to 20:00 UTC.
+        const openedAt = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - monthsAgo, day, 15, 35 + ((i * 11) % 50));
+        return {
+            id: `prop-${i}`,
+            instrument: contract,
+            direction,
+            setup,
+            entryPrice,
+            exitPrice,
+            stopLoss,
+            takeProfit,
+            quantity,
+            leverage: 1,
+            positionSize: cents(entryPrice * POINT[contract] * quantity),
+            fee,
+            profitLoss: cents((exitPrice - entryPrice) * dir * POINT[contract] * quantity - fee),
+            openedAt,
+            closedAt: openedAt + (20 + ((i * 37) % 140)) * 60 * 1000,
+        } as ClosedTrade;
+    });
 
 export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; positions: OpenPosition[] } {
     const now = new Date();
@@ -109,13 +158,16 @@ export function buildSample(only?: SampleAccount): { trades: ClosedTrade[]; posi
             closedAt,
         };
     })
+        .filter((trade) => only !== "prop" && (!only || accountOf(Number(trade.id.slice(7))) === only) as boolean)
+        .map((trade) => trade as ClosedTrade)
+        .concat(!only || only === "prop" ? buildProp(now) : [])
         // The current month only shows days that have already happened.
-        .filter((trade, i) => trade.closedAt <= now.getTime() && (!only || accountOf(Number(trade.id.slice(7))) === only))
+        .filter((trade) => trade.closedAt <= now.getTime())
         .sort((a, b) => b.closedAt - a.closedAt);
     const positions: OpenPosition[] = [
         { instrument: "BTCUSDT", direction: "Long", entryPrice: 82560, markPrice: 82790, quantity: sized("BTCUSDT", 3.028), leverage: LEVERAGE, positionSize: cents(82560 * sized("BTCUSDT", 3.028)), unrealisedPnl: cents((82790 - 82560) * sized("BTCUSDT", 3.028)), openedAt: now.getTime() - 3 * 60 * 60 * 1000 },
     ];
-    return { trades, positions: only === "sub" ? [] : positions };
+    return { trades, positions: only === "sub" || only === "prop" ? [] : positions };
 }
 
 // The sample trades are dated relative to today, so their written prices would not
@@ -130,13 +182,14 @@ const candles = (symbol: string, interval: string) => {
     return history.get(key)!;
 };
 export async function anchorSample(data: { trades: ClosedTrade[]; positions: OpenPosition[] }) {
-    const symbols = [...new Set([...data.trades.map((t) => t.instrument), ...data.positions.map((p) => p.instrument)])];
+    const symbols = [...new Set([...data.trades.filter((t) => !t.id.startsWith("prop-")).map((t) => t.instrument), ...data.positions.map((p) => p.instrument)])];
     const series = Object.fromEntries(await Promise.all(symbols.map(async (s) => [s, { h1: await candles(s, "60"), h4: await candles(s, "240") }] as const)));
     const round = (value: number, like: number) => Number(value.toPrecision(like >= 1000 ? 7 : like >= 1 ? 6 : 5));
     // On the trade's day, the entry hour whose real move over the same holding time
     // best matches the trade's direction and size. Entry is that candle's open, exit
     // the close of the candle where the hold ends: both are real prices.
     const trades = data.trades.map((t) => {
+        if (t.id.startsWith("prop-")) return t;
         const opened = t.openedAt ?? t.closedAt;
         const recent = Date.now() - opened < 40 * 86_400_000;
         const rows = recent ? series[t.instrument].h1 : series[t.instrument].h4;

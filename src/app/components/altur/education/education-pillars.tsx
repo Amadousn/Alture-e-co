@@ -33,9 +33,9 @@ const PILLARS = [
     },
     {
         n: "04",
-        name: "In-Person Events · Dubai & Paris",
+        name: "In-Person Events · Dubai, Paris & Nashville",
         line: "Selected community events and meetups, to meet the members and the Alture team in person.",
-        points: ["Dubai", "Paris"],
+        points: ["Dubai, United Arab Emirates", "Paris, France", "Nashville, TN, USA"],
         note: "Planned community events. Dates and details are announced to members.",
     },
 ] as const;
@@ -108,7 +108,7 @@ const EducationPillars = () => {
                                 ["Chart exercises and a simulated trade", true, true],
                                 ["Two trade sessions every month", false, true],
                                 ["Private trader community", false, true],
-                                ["Events and meetups, Dubai and Paris", false, true],
+                                ["Events and meetups in Dubai, Paris and Nashville", false, true],
                             ] as [string, string | boolean, string | boolean][]).map(([name, free, paid]) => (
                                 <tr key={name} className="border-b border-white/[0.06] last:border-0">
                                     <td className="px-4 py-3.5 text-white/80 md:px-5">{name}</td>

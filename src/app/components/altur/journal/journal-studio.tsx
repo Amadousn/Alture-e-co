@@ -61,7 +61,7 @@ const DEFINE: Record<string, string> = {
     "Profit factor": "Gross profit divided by gross loss.",
     "Average trade": "Net result divided by the number of trades.",
     "Day win rate": "Share of trading days that closed with a net gain.",
-    "Win / loss": "Average winning trade divided by average losing trade.",
+    "Average RR": "Reward to risk: the average winning trade against the average losing trade. 1 : 2 means winners earn twice what losers cost. Planned: the take profit against the stop loss, on trades where both were set.",
     Trades: "Closed trades in the period.",
     "Max drawdown": "The largest fall of the equity curve from a previous high.",
 };
@@ -503,6 +503,14 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
     const range = rangeOf(preset, custom, first);
     const inRange = useMemo(() => ordered.filter((t) => t.closedAt >= range.from && t.closedAt < range.to), [ordered, range.from, range.to]);
     const stats = useMemo(() => computeJournalStats(inRange), [inRange]);
+    // Planned reward to risk, only from trades that recorded both a stop loss and a take profit.
+    const plannedRR = useMemo(() => {
+        const rr = inRange.flatMap((t) => {
+            const risk = t.stopLoss ? Math.abs(t.entryPrice - t.stopLoss) : 0;
+            return risk && t.takeProfit ? [Math.abs(t.takeProfit - t.entryPrice) / risk] : [];
+        });
+        return rr.length ? rr.reduce((a, b) => a + b, 0) / rr.length : null;
+    }, [inRange]);
     const score = useMemo(() => scoreOf(inRange, reviews), [inRange, reviews]);
     const fees = inRange.reduce((s, t) => s + t.fee, 0);
     const unrealised = positions.reduce((s, p) => s + p.unrealisedPnl, 0);
@@ -700,12 +708,13 @@ const JournalStudio = ({ trades, positions, notes, onSaveNote, sample = false, r
                             <p className={small}>{days.length ? `${greenDays} green · ${redDays} red days` : ""}</p>
                         </div>
                         <div className={cell}>
-                            {head("Win / loss")}
-                            <p className={big}>{avgW && avgL ? `${(avgW / avgL).toFixed(2)}×` : empty}</p>
+                            {head("Average RR")}
+                            <p className={big}>{avgW && avgL ? `1 : ${(avgW / avgL).toFixed(2)}` : empty}</p>
                             <p className={`${small} font-mono`}>
                                 <span className="text-[var(--j-up)]">{avgW ? money(avgW, 0) : ""}</span>
                                 {avgW && avgL ? " / " : ""}
                                 <span className="text-[var(--j-dn)]">{avgL ? money(-avgL, 0) : ""}</span>
+                                {plannedRR !== null && <span title="Take profit against stop loss, on trades where both were set"> · plan 1 : {plannedRR.toFixed(1)}</span>}
                             </p>
                         </div>
                         <div className={`${cell} border-l`}>

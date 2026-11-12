@@ -6,6 +6,7 @@ import { useImports } from "@/utils/workspace-store";
 import { mergeTrades } from "@/integrations/bybit/positions.ts";
 import { parseMt5, rowsFromHtml, type FileImport as Parsed } from "@/integrations/files/mt5.ts";
 import { parseIbkr } from "@/integrations/files/ibkr.ts";
+import { parseTradovate } from "@/integrations/files/tradovate.ts";
 
 // Imports a platform's own history file into the journal: MetaTrader 5's HTML
 // report, or Interactive Brokers' Activity Statement CSV. The file is read in
@@ -14,6 +15,7 @@ import { parseIbkr } from "@/integrations/files/ibkr.ts";
 const SOURCES = {
     metatrader5: { name: "MetaTrader 5", accept: ".htm,.html", how: "In MetaTrader 5, open the History tab, choose Positions, set the period, then right-click → Report → HTML." },
     ibkr: { name: "Interactive Brokers", accept: ".csv", how: "In the IBKR Portal: Performance & Reports → Statements → Activity, choose the period, and download it as CSV. Stocks, ETFs and forex are imported." },
+    tradovate: { name: "Tradovate", accept: ".csv", how: "In Tradovate: Reports → Performance, choose the account and the period, then Download as CSV. Prop firm accounts on Tradovate (such as Lucid, Apex or Topstep) export the same way." },
 } as const;
 type Source = keyof typeof SOURCES;
 
@@ -37,7 +39,7 @@ const FileImport = ({ onClose }: { onClose: () => void }) => {
         if (!file) return;
         try {
             const text = await readText(file);
-            const result = source === "metatrader5" ? parseMt5(rowsFromHtml(text)) : parseIbkr(text);
+            const result = source === "metatrader5" ? parseMt5(rowsFromHtml(text)) : source === "tradovate" ? parseTradovate(text) : parseIbkr(text);
             if (!result.trades.length) throw new Error("No closed trade was found in this file for the period it covers.");
             setParsed(result);
         } catch (e) {
@@ -86,7 +88,7 @@ const FileImport = ({ onClose }: { onClose: () => void }) => {
                         <p className="mt-4 text-[13px] leading-relaxed text-[var(--j-mu)]">{SOURCES[source].how}</p>
                         <label className="mt-4 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[var(--j-line)] px-4 py-7 text-center text-[13px] text-[var(--j-mu)] transition-colors hover:border-[var(--j-mu)]">
                             <span className="text-lg leading-none">+</span>
-                            Choose the {source === "metatrader5" ? "HTML report" : "CSV statement"}
+                            Choose the {source === "metatrader5" ? "HTML report" : source === "tradovate" ? "Performance CSV" : "CSV statement"}
                             <input key={source} type="file" accept={SOURCES[source].accept} hidden onChange={(e) => read(e.target.files?.[0])} />
                         </label>
 
@@ -102,6 +104,7 @@ const FileImport = ({ onClose }: { onClose: () => void }) => {
                                 </p>
                                 {parsed.skipped > 0 && <p className="mt-1 text-[var(--j-mu)]">{parsed.skipped} {parsed.skipped === 1 ? "row was" : "rows were"} set aside (deposits, options, futures or unreadable lines).</p>}
                                 {source === "metatrader5" && <p className="mt-1 text-[var(--j-mu)]">Times are your broker&apos;s server time. Sizes are in lots.</p>}
+                                {source === "tradovate" && <p className="mt-1 text-[var(--j-mu)]">Sizes are in contracts. The P&amp;L is the one Tradovate calculated for each trade.</p>}
                             </div>
                         )}
                         <div className="mt-6 flex gap-2">

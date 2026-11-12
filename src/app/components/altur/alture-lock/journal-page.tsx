@@ -38,6 +38,52 @@ const Logo = ({ x, size = "h-7 w-7" }: { x: (typeof EXCHANGES)[number]; size?: s
     x.logo === "mark" ? <BrandMark name={x.id} className={size} /> : <img src={`/images/brokers/${x.id}.png`} alt="" className={`${size} rounded-sm object-contain`} />;
 
 // Pick an exchange, see the three steps. Nothing is connected from this page.
+// Every way trades get in, grouped by how. Only sources the journal actually reads are listed as imports.
+const SOURCE_GROUPS: { title: string; note: string; items: [string, string][] }[] = [
+    { title: "Automatic", note: "Read-only key. New trades arrive on their own.", items: [["Bybit", "Crypto"], ["Binance", "Crypto"], ["OKX", "Crypto"], ["Bitget", "Crypto"], ["Hyperliquid", "Crypto"]] },
+    {
+        title: "File import",
+        note: "Download the history from the platform, drop the file in.",
+        items: [
+            ["MetaTrader 5", "Forex, indices, CFDs · HTML report"],
+            ["Prop firms on MetaTrader 5", "Such as FTMO, FundedNext, The5ers"],
+            ["Tradovate", "Futures · Performance CSV"],
+            ["Prop firms on Tradovate", "Such as Lucid, Apex, Topstep, Take Profit Trader"],
+            ["Interactive Brokers", "Stocks, ETFs, forex · Activity CSV"],
+        ],
+    },
+    { title: "By hand", note: "Any other platform or broker.", items: [["Any platform", "Enter the trade: entry, exit, size, fees"]] },
+];
+
+const Sources = () => {
+    const [open, setOpen] = useState(false);
+    return (
+        <div className="mt-6 overflow-hidden rounded-[10px] border border-white/10">
+            <button type="button" aria-expanded={open} onClick={() => setOpen((o) => !o)} className="flex w-full items-center justify-between px-5 py-4 text-left text-[14px] text-white transition-colors hover:bg-white/[0.03] md:px-6">
+                <span>Every accepted source <span className="text-white/40">· automatic, file import, by hand</span></span>
+                <span aria-hidden="true" className={`text-xl leading-none text-[#4DD0E1] transition-transform duration-300 ${open ? "rotate-45" : ""}`}>+</span>
+            </button>
+            {open && (
+                <div className="max-h-[360px] overflow-y-auto border-t border-white/10">
+                    {SOURCE_GROUPS.map((g) => (
+                        <div key={g.title} className="border-b border-white/[0.06] px-5 py-4 last:border-0 md:px-6">
+                            <p className="text-[11px] uppercase tracking-[0.14em] text-white/40">{g.title} <span className="normal-case tracking-normal text-white/30">· {g.note}</span></p>
+                            <ul className="mt-3 space-y-2.5">
+                                {g.items.map(([name, what]) => (
+                                    <li key={name} className="flex flex-wrap items-baseline justify-between gap-x-4 text-[14px]">
+                                        <span className="text-white/85">{name}</span>
+                                        <span className="text-[12.5px] text-white/45">{what}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
 const Connect = () => {
     const [pick, setPick] = useState(0);
     const x = EXCHANGES[pick];
@@ -54,7 +100,7 @@ const Connect = () => {
                         <p className={label}>Connect your exchange</p>
                         <h2 className={heading}>Automatic. In two minutes.</h2>
                         <p className={`mt-6 ${body}`}>Connect once with a read-only key and every trade is journaled for you. A read-only key cannot place an order, move funds or withdraw.</p>
-                        <p className="mt-4 text-sm text-white/40">MetaTrader 5 and Interactive Brokers: import the history file. Anything else: enter trades by hand.</p>
+                        <p className="mt-4 text-sm text-white/40">MetaTrader 5, Tradovate and Interactive Brokers: import the history file, prop firm accounts included. Anything else: enter trades by hand.</p>
                     </div>
                     <div className="lg:col-span-7">
                         <div role="tablist" aria-label="Exchanges" className="grid grid-cols-5 gap-px overflow-hidden rounded-[10px] border border-white/10 bg-white/10">
@@ -76,6 +122,7 @@ const Connect = () => {
                                 </li>
                             ))}
                         </ol>
+                        <Sources />
                         <style>{`@keyframes jp-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion: reduce){[style*=jp-in]{animation:none!important}}`}</style>
                     </div>
                 </div>
