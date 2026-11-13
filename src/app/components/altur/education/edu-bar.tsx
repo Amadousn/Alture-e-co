@@ -2,6 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+// Full screen for the whole learning page; Escape or the same button leaves it.
+const FullScreen = () => {
+    const [on, setOn] = useState(false);
+    useEffect(() => {
+        const sync = () => setOn(!!document.fullscreenElement);
+        document.addEventListener("fullscreenchange", sync);
+        return () => document.removeEventListener("fullscreenchange", sync);
+    }, []);
+    const toggle = () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()).catch(() => {});
+    return (
+        <button type="button" onClick={toggle} aria-label={on ? "Exit full screen" : "Full screen"} title={on ? "Exit full screen" : "Full screen"} className="text-white/55 transition-colors hover:text-white">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" className="h-4 w-4" aria-hidden="true">
+                {on ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+            </svg>
+        </button>
+    );
+};
 import { TRADE_LINK } from "./intro/course";
 
 const LINKS = [
@@ -29,11 +48,12 @@ const EduBar = ({ percent }: { percent: number | null }) => {
                         </Link>
                     ))}
                     {/* A full page load, so that it works from inside the Introduction too. */}
-                    <a href={TRADE_LINK} className="flex-shrink-0 rounded-sm border border-white/30 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.06em] text-white transition-colors hover:border-white">
+                    <a href={TRADE_LINK} className="flex-shrink-0 whitespace-nowrap rounded-full border border-white/35 px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-white transition-colors hover:border-[#4DD0E1] hover:text-[#4DD0E1]">
                         Try a trade
                     </a>
                 </nav>
                 <div className="ml-auto flex items-center gap-3 text-xs text-white/55">
+                    <FullScreen />
                     {percent !== null && (
                         <>
                             <span className="hidden sm:inline">Introduction</span>

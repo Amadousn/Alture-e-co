@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BRAND_MARKS } from "../brand/brand-marks";
 import { useState } from "react";
 import CandleExercise from "./candle-exercise";
 
@@ -40,10 +41,17 @@ const PILLARS = [
     },
 ] as const;
 
+// One-to-one mentors, by market. No price is shown; requests go by email.
+const MENTORS = [
+    { market: "Crypto", name: "Céline", focus: "Bitcoin and the crypto markets: structure, order flow and your rules.", email: "celine@altureandco.com", instagram: "celinealture" },
+    { market: "Stocks · Nasdaq", name: "Astra", focus: "US stocks and the Nasdaq: reading the session, planning and review.", email: "astra@altureandco.com", instagram: "astraalture" },
+];
+
 const EducationPillars = () => {
     const [pick, setPick] = useState(0);
     const p = PILLARS[pick];
     return (
+        <>
         <section className="border-t border-white/10 bg-black !py-16 md:!py-24">
             <div className="container mx-auto max-w-7xl px-4 md:px-6">
                 <p className="mb-5 text-[11px] uppercase tracking-[0.14em] text-white/45">What the programme includes</p>
@@ -135,6 +143,39 @@ const EducationPillars = () => {
                 <style>{`@keyframes ep-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion: reduce){[style*=ep-in]{animation:none!important}}`}</style>
             </div>
         </section>
+
+        {/* One-to-one: no price, requests by email. */}
+        <section id="one-to-one" className="bg-black !pt-4 !pb-20 md:!pb-28">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6">
+                <div className="grid gap-x-14 gap-y-10 border-t border-white/15 pt-14 lg:grid-cols-12">
+                    <div className="lg:col-span-5">
+                        <p className="mb-5 text-[11px] uppercase tracking-[0.14em] text-accent">One-to-one</p>
+                        <h2 className="font-logo !text-[34px] md:!text-[48px] !font-extralight !leading-[1.05] !tracking-[-0.02em] text-white">One trader. One mentor.</h2>
+                        <p className="mt-6 text-[15px] leading-relaxed text-white/60">Private sessions built around your own trading: your charts, your journal, your rules. You choose the market; the sessions follow your pace.</p>
+                        <p className="mt-4 text-[13px] text-white/40">Availability is limited. Sessions are arranged by email.</p>
+                    </div>
+                    <div className="grid gap-px self-start overflow-hidden rounded-[10px] border border-white/10 bg-white/10 sm:grid-cols-2 lg:col-span-7">
+                        {MENTORS.map((m) => (
+                            <div key={m.market} className="flex flex-col bg-black p-6 md:p-7">
+                                <p className="text-[11px] uppercase tracking-[0.14em] text-white/40">{m.market}</p>
+                                <p className="mt-3 text-[20px] text-white">{m.name}</p>
+                                <p className="mt-2 text-[14px] leading-relaxed text-white/50">{m.focus}</p>
+                                <a href={`mailto:${m.email}?subject=${encodeURIComponent(`One-to-one request · ${m.market}`)}`} className="group mt-7 inline-flex w-fit items-center gap-3 rounded-sm bg-white px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#e4e4e8]">
+                                    Request access
+                                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                                </a>
+                                <p className="mt-3 font-mono text-[12.5px] text-white/45">{m.email}</p>
+                                <a href={`https://www.instagram.com/${m.instagram}/`} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Instagram`} className="mt-4 inline-flex w-fit items-center gap-2 text-[12.5px] text-white/55 transition-colors hover:text-white">
+                                    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true" dangerouslySetInnerHTML={{ __html: BRAND_MARKS.instagram.body }} />
+                                    @{m.instagram}
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+        </>
     );
 };
 
